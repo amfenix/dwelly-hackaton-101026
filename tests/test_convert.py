@@ -182,16 +182,21 @@ def test_every_attachment_path_exists_inside_the_repository(track: Path, repo: P
     assert copied == (["log.txt", "statement.pdf", "unnamed.csv"] if whole_cases else ["log.txt", "statement.pdf"])
 
 
-def test_a_rerun_leaves_only_the_attachments_its_cases_name(track: Path, repo: Path) -> None:
-    stale = repo / "track" / "attachments" / "banking" / "999" / "old.pdf"
+def test_a_rerun_replaces_only_the_attachments_of_the_cases_it_converts(track: Path, repo: Path) -> None:
+    stale = repo / "track" / "attachments" / "banking" / "001" / "old.pdf"
     stale.parent.mkdir(parents=True)
     stale.write_text("x", encoding="utf-8")
+    # another folder with the same track slug (e.g. our synthetic banking cases) keeps its files
+    other_case = repo / "track" / "attachments" / "banking" / "S48" / "keep.csv"
+    other_case.parent.mkdir(parents=True)
+    other_case.write_text("x", encoding="utf-8")
     other_track = repo / "track" / "attachments" / "insurance" / "001" / "keep.pdf"
     other_track.parent.mkdir(parents=True)
     other_track.write_text("x", encoding="utf-8")
     make_case(track)
     convert.convert(track)
-    assert not stale.exists() and other_track.exists()
+    assert not stale.exists() and other_case.exists() and other_track.exists()
+    assert (repo / "track" / "attachments" / "banking" / "001" / "statement.pdf").exists()
 
 
 def test_attachments_outside_the_repository_are_refused(track: Path, tmp_path: Path) -> None:

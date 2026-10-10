@@ -313,8 +313,12 @@ def available_attachments(case: Case, whole_case: bool) -> list[Path]:
 
 
 def place_attachments(case: Case, files: list[Path], attachments: Path, root: Path) -> dict[Path, str]:
-    """Copies the files to <attachments>/<track slug>/<case>/ and gives each one's path from `root`."""
+    """Copies the files to <attachments>/<track slug>/<case>/ and gives each one's path from `root`.
+
+    The case's folder is cleared first, so it holds exactly what its points name; other cases'
+    folders are left alone (another source folder can share the track slug)."""
     target = attachments / track_slug(case.track) / _case_dir(case.number)
+    shutil.rmtree(target, ignore_errors=True)
     placed = {}
     for source in files:
         target.mkdir(parents=True, exist_ok=True)
@@ -339,14 +343,13 @@ def convert(
     """Every case folder of a track → the desk cases and, unless whole, the expected entries.
 
     The attachments available at some point are copied under `attachments` (default ATTACHMENTS),
-    which must lie inside `root` (default REPO, the repository). The track's earlier copies there
-    are removed first, so the folder holds exactly what the cases name."""
+    which must lie inside `root` (default REPO, the repository). Each converted case's earlier
+    copies there are replaced; other cases' copies are kept."""
     attachments = attachments if attachments is not None else ATTACHMENTS
     root = root if root is not None else REPO
     if not attachments.resolve().is_relative_to(root.resolve()):
         raise ValueError(f"the attachments folder {attachments} is not inside {root}")
     report = report if report is not None else Report()
-    shutil.rmtree(attachments / track_slug(track_folder.resolve().name), ignore_errors=True)
     cases: list[dict[str, Any]] = []
     expected: dict[str, dict[str, Any]] = {}
     for folder in _case_folders(track_folder):
