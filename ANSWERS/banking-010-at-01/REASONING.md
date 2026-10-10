@@ -68,10 +68,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6684 tokens in, 401 out, 3.608 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6684 tokens in, 402 out, 4.935 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the incoming system for the £42.80 refund from Northmere Home Supplies. The query went through, but the case has no result from it yet. I can't confirm whether the refund has reached your account.
-> 
-> The only entry on record is your outgoing transfer of £42.80. No incoming credit from Northmere is recorded, and the case has no confirmation from the supplier that it has sent a refund.
+> I've asked the incoming payments system to check for the £42.80 refund from Northmere Home Supplies. The system accepted the request, but its answer isn't in the case yet. So I can't say whether the refund has arrived. The only entry on record is your outgoing transfer, and nothing confirms a refund. This step is now closed, and the case will go to a person if the answer doesn't arrive.

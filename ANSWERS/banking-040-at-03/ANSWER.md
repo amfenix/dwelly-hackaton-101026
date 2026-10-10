@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked through secure chat for a document showing the stage of her £74.00 payment, reference HV-040, to give to her repair contractor. The desk classed it as a document question, found the documents system had already been asked, and closed the case as waiting because no answer has come back. A second request to the documents system was refused because the rules only allow it while the case is triaged. Nothing has been sent to Mara, she is still marked unverified, and the record does not say whether a document is ready, so the case is waiting on the documents system's reply.
+Mara Ellison, a customer on secure chat whose identity was not verified, asked for a document showing the stage of her £74.00 payment HV-040 to give to her repair contractor. The desk treated it as a document question, found the documents system had already been asked, and closed the case in a final WAITING state because no answer from that system is in yet. A second request to the documents system was refused because the case was no longer in the triaged state, no document was produced, and no reply has been sent to Mara, so a person needs to pick it up.
 
 _Written by a model from the record below; the sections below are the record._
 

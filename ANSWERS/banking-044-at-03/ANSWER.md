@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, an unverified viewer writing over secure chat, asked the desk to check whether row SUP-17 in a batch marked processed was actually paid. The desk classified it as a read-only question about the batch, found that a payment lookup was needed, and closed the case in WAITING with no actions taken. Both the agent's later payment lookup and its escalation to a person were refused because the case was no longer in the TRIAGED state, so the status of SUP-17 is still unknown and the requester remains unverified, and no one has been handed the case.
+Leona Voss, a viewer whose identity was not verified, asked over secure chat whether row SUP-17 in a batch marked processed was actually paid. The desk treated it as a question about payments and put the case into waiting because the payment system had been asked but no row-level status has come back. The agent's repeat query to the payment system and its attempt to escalate to a person were both refused because the case was already in waiting, so nothing has been told to Leona and the status of SUP-17 is still unknown. A person still needs to verify the requester and check the SUP-17 row status.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -74,10 +74,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6941 tokens in, 479 out, 4.382 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6818 tokens in, 414 out, 3.874 s, cost $0.0140; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to the customer. The documents system had already confirmed that the January 2024 statement is ready, so the answer was in the case and I didn't need to ask any other system.
+> I sent the reply. The documents system shows that an archived copy of the January 2024 statement is ready. The case is now closed with that reply.
 > 
-> The customer is not verified, and the reply desk writes the message, so I haven't seen the wording it sent. The case is now marked as replied and closed.
+> Mara Ellison is not yet verified in this chat. The reply therefore only confirms that the statement is available.

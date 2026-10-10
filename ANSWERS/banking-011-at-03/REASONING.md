@@ -65,19 +65,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "recurring"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring).
-64. The agent asked for `redirect_secure` {}.
-65. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question).
 
 ## Model calls
 
-5 calls, 10718 tokens in, 852 out, 8.853 s, cost $0.0261; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7581 tokens in, 704 out, 7.885 s, cost $0.0184; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I can't give Mara the next run date yet, and I've stopped working the case.
+> I've stopped here without answering the customer. The case is in a final WAITING state, and I haven't been able to give Mara Ellison her next due date.
 > 
-> - **Why I stopped:** The case is in a waiting state, and every move I tried was refused. The recurring-payments system was already asked, but no answer came back, so there is no date on the record to report. A second ask was refused because it had already been made.
-> - **Verification:** Mara is still unverified. I haven't given her any account details.
-> - **Secure-process redirect:** This was also refused, because this is a question rather than a sign-in problem.
-> 
-> The case stays open for a person to pick up.
+> The recurring system has already been asked once, so the desk refused a second ask. No due date has been recorded in the case. Mara is also not verified. I didn't want to reply with a date the records don't show, so I'm leaving the case with the desk until the recurring system's answer is in it.

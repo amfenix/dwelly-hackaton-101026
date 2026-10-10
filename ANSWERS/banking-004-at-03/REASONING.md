@@ -71,10 +71,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8641 tokens in, 494 out, 4.411 s, cost $0.0184; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8639 tokens in, 542 out, 5.42 s, cost $0.0189; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't look up the transfer, so I can't yet tell Mara why it wasn't completed. The payment system refused my request because the case is in a WAITING state, not TRIAGED. The case status shows that state as final, with the outcome "wait".
+> I couldn't look up Mara Ellery's 14 July transfer to Northmere Housing Co-operative, so I can't yet say why it wasn't completed.
 > 
-> I haven't tried anything else. No other system holds the answer, and nothing in the case shows why the transfer to Northmere Housing Co-operative on 14 July 2025 failed. The case stays open and goes to a person.
+> I asked the payment system for the details. The desk refused because the case is in a WAITING state, and the payment lookup only runs when a case is in TRIAGED. The case status shows this WAITING state as final, with the outcome "wait". No other tool I have would get around that without guessing at the reason, and I can't state a reason the records haven't shown.
+> 
+> The case stays in WAITING and goes to a person, who can check the payment record and explain the reason to her.

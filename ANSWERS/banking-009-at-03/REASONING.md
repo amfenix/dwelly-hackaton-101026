@@ -55,8 +55,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
-55. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.98 → transfer.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+55. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.95 → transfer.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → transfer (by `triage`).
 58. State `READING` → `TRIAGED` (by `triage`).
@@ -67,11 +67,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. The case closed in `WAITING`: **wait**.
 64. The agent asked for `ask_system` {"system": "payment"}.
 65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-66. The agent asked for `reply` {}.
-67. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).
-68. The agent asked for `escalate` {"note": "Verified customer Mara Ellwood asks which amount H&V actually sent. She recalls entering £684.20 in the draft, but the portal's final payment line shows £648.20 to her property manager. The desk could not run the payment check. The case is in WAITING, and both ask_system(payment) and reply were refused. No payment_status is on record. Please check the executed payment record, confirm the sent amount, and tell her whether it matches the £648.20 shown. Do not rely on her memory of the draft."}.
-69. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+66. The agent asked for `escalate` {"note": "Verified customer Mara Ellwood asks which amount H&V actually sent. She remembers entering £684.20, but the portal's final payment line shows £648.20 to her property manager. The payment system could not be queried because the case is in WAITING state, so the executed amount is not confirmed (confirmation: none). Please check the completed instruction in payment records and confirm the sent amount to her. Do not rely on her memory of the draft."}.
+67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12760 tokens in, 724 out, 6.461 s, cost $0.0289; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12452 tokens in, 866 out, 10.289 s, cost $0.0297; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I couldn't confirm the amount sent, and the case is still waiting.
+> 
+> - **Payment check refused:** the payment system won't take a query while the case is in WAITING state. The refusal says the case has to be in TRIAGED state first, and I have no tool that changes that.
+> - **Escalation refused:** the escalation to a person was refused for the same reason.
+> - **What the record shows:** the portal's final payment line reads £648.20, sent to the property manager. Nothing has confirmed that figure against the completed instruction, and the customer's £684.20 is only her memory of the draft. I'm not stating either amount as what was sent.
+> 
+> Someone needs to check the completed instruction in the payment records and then tell Mara Ellwood the amount that went out.

@@ -75,12 +75,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 9607 tokens in, 579 out, 5.987 s, cost $0.0211; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9638 tokens in, 540 out, 6.072 s, cost $0.0208; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is closed and I haven't checked the processing stage of your standing order. The desk refused my check on the recurring system. The case had already moved to "confirmation sent" with the outcome "send for confirmation", so no more checks can be run on it.
+> The case is closed with the outcome "send for confirmation". The change has gone to you for secure confirmation, and I have nothing further to do on it.
 > 
-> I haven't checked whether the 18 September run can still be moved to 22 September. I also haven't changed the standing order to Willow Yard Studios. Nothing has been changed on your account.
+> I did not get to check the processing stage of the 18 September run. My check of the recurring-payments records was refused because the case had already moved to the confirmation step. So I can't yet tell you whether that run can still be moved to 22 September 2025.
 > 
-> You haven't been verified yet, and no confirmation from you is recorded. Your request is marked as made outside the portal. Please use the bank's secure confirmation to approve or decline the change. If the confirmation doesn't reach you, contact us again and we'll pick the case up from there.
+> The change isn't made until you confirm it through the secure process. Your identity is also not yet verified, and the confirmation status still shows "none".

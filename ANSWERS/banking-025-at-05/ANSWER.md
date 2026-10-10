@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked why her £18.40 card payment at North Quay Books was declined. The desk checked the card authorisation journal, found the matching attempt declined for insufficient available balance, and replied to her on the call with that recorded reason. The reply said it does not establish a different cause or authorise a retry, no card change was made, and nothing is left for a person.
+Mara Ellison, a verified customer on a call, asked why her £18.40 card payment at North Quay Books was declined. The desk checked the card authorisation journal, found the matching attempt declined because her available balance was insufficient, and replied to her on the call with that recorded reason, noting it doesn't establish another cause or authorise a retry. No card change was made, and the case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

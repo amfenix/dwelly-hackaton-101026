@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, an unverified customer on secure chat, asked what stage her transfer had reached and whether the beneficiary had received it. The desk found no confirmation of receipt on record, so it sent a status question about the transfer to the payment system and closed the case at that step. No answer from the payment system has come back yet, so the question of whether the beneficiary received the money is still open.
+Mara Ellwood, a customer on secure chat whose identity is not verified, asked what stage her transfer had reached and whether there was confirmation that the beneficiary received it. The desk found no confirmation on record and asked the payment system about the transfer, then closed the case at that step. The payment system's answer is not in the record, so the transfer's current stage and whether the beneficiary received it are still unanswered for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

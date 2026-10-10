@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara asked why her £18.40 card payment at North Quay Books was declined. The desk classified this as a card payment question and sent a query to the card system, which accepted it, but no answer is in the case yet. Nothing has been decided about the reason for the decline, so what remains is waiting for the card system's reply before Mara can be told anything.
+Mara asked why her £18.40 card payment at North Quay Books was declined. The desk classed it as a card payment question and sent an enquiry about it to the card system, which accepted the request. The record shows no reason for the decline yet, since the card system's answer hasn't come back, so a person still needs to pass on the reason once it arrives.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -46,7 +46,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 42. `confirmation`: not known → none (by `read-confirmation`).
 43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 44. Rule `triage` fired: state = READING → true (state=READING).
-45. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+45. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
 46. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
 47. `request_type`: not known → question (by `triage`).
 48. `subject`: not known → incoming_payment (by `triage`).
@@ -65,10 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6481 tokens in, 469 out, 7.312 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6481 tokens in, 477 out, 7.818 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the incoming-payments system whether the kiln contribution has arrived. It accepted the request, but its answer isn't in the case yet. The case facts still show no confirmation of the payment. So I can't tell you whether the money has arrived, and I haven't made any claim about it.
+> I asked the incoming-payments system whether the kiln contribution has arrived. The case is now closed at that step, and the records it returned don't show an incoming payment. The case status still lists the confirmation as "none".
 > 
-> The case is now closed at this step. I'm stopping here, as I'm meant to after one tool call.
+> I haven't drafted a reply to the customer, and I'm not claiming the money has arrived or hasn't. The one thing we know is that no confirmation of the transfer is on record yet.

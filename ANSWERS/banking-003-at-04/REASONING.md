@@ -74,10 +74,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7200 tokens in, 470 out, 4.676 s, cost $0.0153; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7241 tokens in, 505 out, 5.806 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The payment system shows the transfer instruction as saved but awaiting authorisation. It hasn't been sent, which is why you have no sent confirmation. The reply tells Elise it still needs to be authorised before the bank can submit it. The case is closed.
+> I sent the customer a reply, and the case is now closed as replied.
 > 
-> The requester is not verified. The reply is based only on the status the payment record shows.
+> The payment records show the saved transfer is at the stage "awaiting authorisation". It hasn't been sent yet, which is why there is no sent confirmation. The reply answers her question about authorising it: the transfer still needs authorising before it can go out.
+> 
+> The customer is not verified on this chat. The reply only reports what the payment record shows. I took no action on the transfer.

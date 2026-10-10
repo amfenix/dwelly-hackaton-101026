@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer writing through the secure portal, asked for a bank document confirming her account relationship to be made available to her there, and said she was not asking for a transfer. The desk classified this as a question about a document and sent a query to the documents system, which was accepted and returned nothing further. The record shows no document yet provided to her, so what remains is a reply to her once the documents system responds.
+Mara Ellison, a verified customer using the secure portal, asked for a bank document confirming her account relationship to be made available to her there; she said she was not asking for a transfer. The desk classified this as a document question and sent an inquiry to the documents system, and the case closed in the "asked" state. The documents system's answer is not in the record, so it is not known whether the document can be provided, and nothing has been sent to Mara yet.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -78,8 +78,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4936 tokens in, 473 out, 6.228 s, cost $0.0108; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4894 tokens in, 449 out, 6.33 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to the customer. The case record shows the £420 transfer to Alder & Reed Workshop with status SENT, and no confirmation is recorded for it. The reply is limited to what the record shows.
+> I've replied to the customer. The payment record shows the £420 transfer to Alder & Reed Workshop as SENT, with no confirmation recorded. The case is closed.
+> 
+> The facts also show the customer as not verified. I didn't check what the desk's reply included.

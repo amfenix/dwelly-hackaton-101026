@@ -69,9 +69,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 65. `ask_system` found {}.
 66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 67. The case closed in `ASKED`: **ask_system**.
-68. The agent asked for `reply` {}.
-69. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-5 calls, 9854 tokens in, 455 out, 5.91 s, cost $0.0204; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 9470 tokens in, 562 out, 6.53 s, cost $0.0207; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I asked the payment system about batch HV-042, and the desk accepted the request. The case is now closed at that step.
+> 
+> The payment system's answer hasn't been added to the case yet. That means I can't tell Nadia which rows failed validation, and I haven't told her anything about them. Her identity is also still unverified. She is a viewer on the account, so any release of the row-level report would have to follow the bank's access rules.

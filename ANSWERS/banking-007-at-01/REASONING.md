@@ -65,10 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6541 tokens in, 425 out, 4.258 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6525 tokens in, 418 out, 4.189 s, cost $0.0134; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I queried the payment system about your international transfer. The case is now closed at that step.
+> I checked the payment system for your international transfer. The case now shows only that H&V recorded it as sent. It has no confirmation that the beneficiary received the money, so I can't say it has arrived.
 > 
-> The query returned no new facts about the transfer's stage. The only status on record is that H&V has recorded your instruction as sent. The record shows no confirmation that the beneficiary has received the money, so I can't tell you it has arrived.
+> The payment system's answer didn't add any detail on the transfer's current stage. I can't tell you more than the record shows.

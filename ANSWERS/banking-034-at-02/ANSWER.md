@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, who is not verified, wrote through secure chat asking the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal and how it accounts for the amount. The desk classed it as a fee question and sent a query to the tariff system about the £3.20 fee, which went through without error. The tariff system's answer isn't in the record, so what the fee was and why remains unexplained, and no reply to the customer or escalation is recorded.
+Mara Ellery, a customer on secure chat whose identity is not verified, asked the desk to escalate and check which tariff entry applied to the £3.20 fee on a withdrawal and how it accounts for that amount. The desk classified it as a fee question and sent a query about the £3.20 fee to the tariff system, then closed the case as "ask_system". The tariff system's answer is not in the record, so the question about the entry and the amount is still unanswered and nothing has been sent back to her.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an unverified customer writing by external message, asked for the address used for her correspondence to be updated after a move within the UK. The desk did not change her profile, because a change has to be confirmed by the customer in the secure portal rather than by email, and it sent her a confirmation request instead. The change is still not made, and what remains is for Mara to confirm it in the secure portal.
+Mara Ellison, an unverified customer, emailed asking the bank to update her correspondence address after a move within the UK, noting that the email alone doesn't change her profile. The desk did not change the profile; it sent her a request to confirm the change, since changes must be confirmed by the customer in the secure portal rather than by email. The case is closed at "confirmation sent," and the address stays as it is until she confirms.
 
 _Written by a model from the record below; the sections below are the record._
 

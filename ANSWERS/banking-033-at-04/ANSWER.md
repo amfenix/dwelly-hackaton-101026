@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat to be told when her CSV export of transactions for 6–9 May 2025 is available in her secure portal. The desk checked the documents system, which showed the export as created, and replied in secure chat that the document is available, while noting this does not confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied, and nothing is left for a person, though the record shows the requester was not verified.
+Mara Ellison asked, over secure chat, to be told when her CSV export of transactions for 6–9 May 2025 is available in her secure portal. The desk checked the document record, found the export was created, and replied in secure chat that the document is available, while noting this doesn't confirm it was downloaded and that no email was sent. The case is closed as replied; she was not verified on this channel, and nothing further is recorded as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

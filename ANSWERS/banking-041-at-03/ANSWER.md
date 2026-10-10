@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an uploader who is not verified on secure chat, asked only whether batch-041.csv (ref HV-041, £420.00 line) was received, and said she was not asking for any payment to be approved or released. The desk asked the business system, which has not yet answered, so the case closed in WAITING with no actions taken; a second ask and an attempt to escalate were both refused because the case was no longer in the triaged state. What is left for a person is to check the import record for HV-041, verify the requester, and tell her the receipt status, without saying the file was received until a record shows it.
+Mara Ellison, an unverified uploader writing over secure chat, asked only whether batch-041.csv (reference HV-041) had been received, and said she was not asking for any payment to be approved or released. The desk asked the business system to check its import journal; that answer is not in yet, so the case closed in a waiting state with no receipt confirmation. A second request to the business system and an attempt to escalate to a person were both refused because the case was already in WAITING, so no one has been handed the case and nothing has been told to the requester about the file's status.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `confirmation`: not known → requested (by `read-confirmation`).
 53. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
+55. Classifier (jev jev-latest) on `request_type`: change, confidence 0.98 → change.
 56. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 57. `request_type`: not known → change (by `triage`).
 58. `subject`: not known → standing_order (by `triage`).
@@ -66,17 +66,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 62. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested); registration_asked absent → true (registration_asked=not known). The change was sent to the portal; the customer has not confirmed it yet.
 63. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
 64. The case closed in `WAITING`: **wait**.
-65. The agent asked for `reply` {}.
-66. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=recurring); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-4 calls, 8137 tokens in, 681 out, 5.799 s, cost $0.0192; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5176 tokens in, 491 out, 3.914 s, cost $0.0114; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The change to your standing order has not been made yet. The case is now waiting for you to confirm it.
+> The change to your standing order is already waiting for your confirmation, so there's nothing more for me to do on this case. I'm leaving it as it is.
 > 
-> The desk checked that the next run to Willow Yard Studios isn't being processed yet. It has sent you the change from 18 September to 22 September 2025 for secure confirmation. Nothing changes on your standing order until you confirm it.
-> 
-> I tried to send you a reply through the desk, but it was refused because the case is already in a waiting state. There is nothing more for the desk to do until you confirm.
+> The request to move the Willow Yard Studios payment from 18 September to 22 September 2025 was sent to you for secure confirmation. Nothing has been changed on your instruction yet. The change only takes effect after you confirm it through the secure portal.

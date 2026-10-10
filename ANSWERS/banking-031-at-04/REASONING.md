@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `confirmation`: not known → none (by `read-confirmation`).
 53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: question, confidence 0.52 → question.
+55. Classifier (jev jev-latest) on `request_type`: question, confidence 0.50 → question.
 56. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
 57. `request_type`: not known → question (by `triage`).
 58. `subject`: not known → statement (by `triage`).
@@ -75,10 +75,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7221 tokens in, 491 out, 4.603 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7274 tokens in, 483 out, 4.348 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply to the customer, and the case is now closed as replied. The documents system shows her June 2025 statement is ready as `statement-031.pdf`. The desk writes the reply text, so I haven't seen its exact wording.
+> I sent the customer a reply. The documents system had already confirmed that her June 2025 statement (statement-031.pdf) is ready, and the desk accepted the reply.
 > 
-> The case facts list the requester as not verified, and I did not check or change that. I also did not make the statement available in the portal myself. The reply only reports what the documents record shows.
+> She is not verified, so the reply should only point her to the document in the secure portal. It should not include anything from the statement itself. The case is now closed with that reply.

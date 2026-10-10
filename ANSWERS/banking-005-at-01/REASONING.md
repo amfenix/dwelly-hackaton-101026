@@ -46,7 +46,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 42. `check_confirmation` found {}.
 43. Rule `triage` fired: state = READING → true (state=READING).
 44. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
-45. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
+45. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
 46. `request_type`: not known → register (by `triage`).
 47. `subject`: not known → transfer (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -66,11 +66,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 11699 tokens in, 649 out, 7.413 s, cost $0.0261; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 9653 tokens in, 561 out, 6.681 s, cost $0.0211; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The records can't be queried for this kind of request, so the next step is to register the return request with the team that handles it.
-> I've registered your request to seek the return of the £286.40 transfer that went to the wrong saved recipient. It's now with the team that handles returns, and the case is closed on my side.
+> I've submitted your request to the team that handles returns of misdirected payments. It covers the £286.40 transfer you sent to the wrong saved recipient for the pottery-studio bill. The case is now registered.
 > 
-> I couldn't check the payment records first, because the desk wouldn't run that lookup for a registration request. I haven't confirmed the payment or the recipient from the bank's records, so the team will need to do that.
+> I haven't confirmed the transfer details against your payment records, and I can't say whether the money will come back. Returning a payment usually depends on the recipient's bank and the recipient. I don't have an update on that yet.

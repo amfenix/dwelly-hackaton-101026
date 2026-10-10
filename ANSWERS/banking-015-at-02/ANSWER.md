@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked the bank to cancel her Northmere Fitness Direct Debit mandate, and she acknowledged this is an instruction to the bank rather than an end to her agreement with the recipient. The desk classed it as a direct debit instruction and registered a request with the recurring team, and the case closed in the REQUESTED state. The record does not show the mandate as cancelled yet, so carrying out the cancellation is left to the recurring team.
+Mara Ellison, verified on a call, asked the desk to cancel her Northmere Fitness Direct Debit mandate, noting this is an instruction to her bank and not an end to her agreement with the recipient. The desk classed it as a Direct Debit instruction, routed it to the recurring team and registered the request with that team, and the case closed as requested. The record shows only that the request was registered, not that the mandate has been cancelled, and it lists nothing further left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 

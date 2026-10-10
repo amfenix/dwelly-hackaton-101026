@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira Ellery asked over secure chat to raise her standing order from £42.00 to £68.00 a month. She had not confirmed the change, was not verified, and had made the request outside the portal. The desk did not apply the change and instead sent her a confirmation request for the £68.00 amount, closing the case at that point. The change stays unapplied until she confirms it, which the desk's rule says she must do in the secure portal rather than in chat or by email.
+Mira Ellery asked over secure chat to raise her standing order from £42.00 to £68.00 a month. She had not yet confirmed the change, and the desk did not verify her. The desk made no change itself and sent her a confirmation request for the £68.00 amount, since a change has to be confirmed by the customer in the secure portal rather than in chat or by email. The case is closed, and the record shows nothing further for a person to do beyond Mira confirming the change herself.
 
 _Written by a model from the record below; the sections below are the record._
 

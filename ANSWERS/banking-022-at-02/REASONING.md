@@ -76,10 +76,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7793 tokens in, 582 out, 5.063 s, cost $0.0176; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7782 tokens in, 549 out, 4.659 s, cost $0.0173; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted your request to block the missing debit card. The call was identified and verified, and the instruction was clear, so no further questions were needed. The case is now marked as requested.
+> I've submitted the request to block your missing debit card. The desk accepted it and the case is now marked as requested. I haven't seen confirmation that the block is actually in place yet.
 > 
-> I tried to look up your cards first, but the system wouldn't allow a lookup on a block instruction. I can't confirm from the records which card the block applies to. The block should go through on the debit card you reported missing after Alder Quay Market.
+> I first tried to look the card up in the card system, but the desk refused because this is a clear instruction from a verified caller. So I submitted the block directly.

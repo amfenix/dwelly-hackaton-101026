@@ -72,13 +72,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8703 tokens in, 637 out, 5.677 s, cost $0.0200; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8586 tokens in, 723 out, 6.602 s, cost $0.0206; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The customer is verified and has identified the payment (£18.40 at North Quay Books). The facts point to the card system as the next place to look, so I'll ask it why the payment was declined.
-> I've stopped here and left the case open for a person to pick up. It is in a final WAITING state, and my request to the card system was refused.
+> I haven't taken a further step on this case. It's in a waiting state, and the desk won't accept another lookup right now.
 > 
-> The desk had already recorded the card question (`card_asked` is true). A further card lookup isn't allowed from this state. So I can't yet tell Mara why her £18.40 payment at North Quay Books was declined, and I haven't guessed at a reason.
+> My request to check the card system was refused. The case is in state WAITING, not TRIAGED, and the desk already records the card as asked (`card_asked=True`). I can't reach the card records until the case is triaged again. Nothing from the card system is on file, so I can't say why the £18.40 payment at North Quay Books was declined.
 > 
-> I haven't changed anything on the account.
+> The only message from the merchant side says "Payment not accepted. Please contact your bank," which gives no reason. I'm not going to guess one. The case stays open and goes to a person to pick up.

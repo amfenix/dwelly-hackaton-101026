@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked for the £18.40 Direct Debit to Northmere Water Services, dated 9 July 2025, to be investigated because they dispute the amount debited. The desk registered the request with the recurring team under direct_debit, and the case closed as requested. The desk refused the agent's earlier attempt to query the recurring system, since this was a request to register rather than a lookup, so nothing has been confirmed about the mandate or why the amount differs, and that is left for the recurring team.
+The customer asked for the £18.40 Direct Debit to Northmere Water Services (9 July 2025) to be investigated because they dispute the amount debited. The desk classified it as a registration about a direct debit, refused a lookup in the recurring-payments system as not allowed for this kind of request, and instead registered the request with the recurring team. The case is closed as requested, and the record gives no outcome or timing from that team, so the dispute itself is still with them.
 
 _Written by a model from the record below; the sections below are the record._
 

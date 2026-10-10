@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `confirmation`: not known → given (by `read-confirmation`).
 53. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: change, confidence 0.96 → change.
+55. Classifier (jev jev-latest) on `request_type`: change, confidence 0.98 → change.
 56. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 57. `request_type`: not known → change (by `triage`).
 58. `subject`: not known → standing_order (by `triage`).
@@ -71,12 +71,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9356 tokens in, 815 out, 6.949 s, cost $0.0217; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 9305 tokens in, 744 out, 6.516 s, cost $0.0209; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't changed the standing order. The bank's system refused my request to carry out the change, so the order still runs on 18 September 2025.
+> I haven't changed the standing order, and the case is now waiting with nothing further for me to do.
 > 
-> Maeve Ellery is verified and has confirmed the move to 22 September 2025 through the secure portal. The system refused because the case is in a waiting state rather than a ready-to-act state. It also reads the request as a "change" rather than an "instruction", which the recurring-payments system will not accept.
-> 
-> The case status shows this as final with the outcome "wait". Because the case is left open, it goes to a person to pick up. I did not retry, since the policy would refuse it again for the same reasons.
+> Maeve Ellery is verified, and she confirmed the move from 18 to 22 September 2025 in the secure portal. I tried to submit the change to the recurring system. The desk refused it because the case is in a waiting state, not the triaged state that submitting requires. The case also has the request type "change", and the instruction route only accepts "instruction". The case status shows the case as final with the outcome "wait". Under the desk's rules, a case left open like this is handed to a person.

@@ -59,7 +59,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 56. Rule `triage` fired: state = READING → true (state=READING).
 57. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
-58. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+58. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
 59. `request_type`: not known → register (by `triage`).
 60. `subject`: not known → transfer (by `triage`).
 61. State `READING` → `TRIAGED` (by `triage`).
@@ -80,4 +80,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10990 tokens in, 562 out, 6.529 s, cost $0.0238; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11369 tokens in, 740 out, 8.927 s, cost $0.0263; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> Asking is refused, so the next step is to submit the request.

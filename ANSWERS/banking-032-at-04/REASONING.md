@@ -65,20 +65,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "documents"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
-64. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks whether an archived January 2024 statement is available. The documents system was already queried, but no availability result (document_ready) is in the case. The case is stuck in WAITING and a repeat documents query was refused. Please check the statement archive and verify the customer's identity before sharing any copy."}.
+64. The agent asked for `escalate` {"note": "Customer (Mara Ellison, secure chat, identity not verified) asks whether an archived January 2024 statement is available. The documents system was already queried, but no availability result (document_ready unknown) is on the case. The case is in WAITING and a new documents query was refused. Please verify the customer and check the statement archive."}.
 65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 10577 tokens in, 944 out, 9.583 s, cost $0.0268; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10572 tokens in, 922 out, 8.179 s, cost $0.0266; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't move this case forward, and I haven't answered the customer about her January 2024 statement.
+> I've taken this case as far as the desk allows, and I couldn't confirm whether the January 2024 statement is available.
 > 
-> - **Where it stands:** The case is in WAITING. The documents system was already asked, but its answer on whether an archived copy exists isn't in the case.
-> - **Retry refused:** My second query to the documents system was refused because that check had already been made.
-> - **Escalation refused:** My attempt to hand it to a person was also refused, because the desk only accepts escalation from a TRIAGED state.
-> - **Verification:** Mara Ellison is not verified, so the bank couldn't share a copy even if one exists.
+> - **Documents check:** The documents system was already asked, but its answer isn't on the case. The desk shows `document_ready` as not known. A second query was refused because the case is in WAITING, not TRIAGED.
+> - **Escalation:** I tried to hand the case to a person with a note, and that was refused for the same reason.
+> - **Identity:** Mara Ellison is not verified yet, so I can't confirm anything about her statements.
 > 
-> The case stays open for a person to pick up, as the desk rules say. It needs someone to check the statement archive and verify her identity first.
+> The case stays in WAITING and is left open for a person to pick up. It needs identity verification and a check of the statement archive.

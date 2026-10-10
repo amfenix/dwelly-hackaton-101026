@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7115 tokens in, 530 out, 4.705 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4881 tokens in, 523 out, 4.072 s, cost $0.0112; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system for the stage of the Alder Quay Supplies payment. The case is now closed at that step, so there is no answer from the records yet.
+> I've queried the payment system for the stage of the Alder Quay Supplies payment. The request was accepted and the case is marked as asked. The answer isn't in the case yet, so the reply to Mara Ellison comes next, once the payment record is back.
 > 
-> One thing to know: the desk shows Mara Ellison as not verified on this secure chat. The next step, a reply to her, should only report what the payment record shows, and the desk should check that it can share that with an unverified requester.
+> One thing to keep in mind when replying: Mara Ellison is not yet verified. The reply should give only what the payment record shows, and nothing beyond it.

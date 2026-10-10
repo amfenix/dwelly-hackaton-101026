@@ -73,14 +73,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 14069 tokens in, 776 out, 6.912 s, cost $0.0321; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 14268 tokens in, 963 out, 8.337 s, cost $0.0343; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I could not move this case forward. The case is in a WAITING state, and the desk marks that state as final.
+> I haven't changed anything, and the case stays in WAITING, which the desk treats as final. Both of my attempts were refused.
 > 
-> - **Tariff check:** the desk refused it. Every system check requires the case to be in TRIAGED state first.
-> - **Dispute registration:** the desk refused it for the same reason. Registering the review of the £4.50 paper statement fee dated 18 June 2025 also requires TRIAGED state.
-> - **Case facts:** Mara Ellison is verified on the call. She has asked for the review and nothing has been confirmed or changed. The tariff system has not been checked, so I can't say whether the fee was applied correctly.
+> - **Tariff check:** I asked the tariff system whether the £4.50 paper statement fee was applied correctly. The desk refused because the case isn't in the TRIAGED state.
+> - **Submitting the review:** I tried to submit Mara's fee review to the team. This was refused for the same reason. The desk also shows the registration step as already done (`registration_asked` is true), so there is nothing further to register.
 > 
-> I'm stopping here. The case stays open and goes to a person, and Mara should be told the review has not yet been registered.
+> The desk's record gives no sign that the review has been confirmed. I haven't escalated, because the case is already waiting and no further step is open to me. The case is left for a person to pick up. Mara should not be told the fee will be changed or that the review has been registered.

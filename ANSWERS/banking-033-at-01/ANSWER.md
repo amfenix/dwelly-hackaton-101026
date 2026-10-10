@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer writing through the secure portal, asked for a CSV export of her transactions from 6 to 9 May 2025 and said she wasn't sure how to tell whether it had been created. The desk classified this as a question about a document and asked the documents system about it, then closed the case. The record shows no answer from that system and no reply to Mara, so whether the export exists and when she will see it is still unconfirmed for a person to follow up.
+Mara Ellison, a verified customer using the secure portal, asked for a CSV export of her transactions from 6 to 9 May 2025 and wanted to know how to tell whether it had been created. The desk classified this as a question about a document and sent an inquiry to the documents system. That inquiry returned nothing, so the record does not show whether the export exists, and the case closed with that question still open. Someone will need to find out from the documents system whether the export was created and tell Mara.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -70,8 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4608 tokens in, 350 out, 3.118 s, cost $0.0089; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6714 tokens in, 450 out, 4.49 s, cost $0.0141; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've queried the documents system about Mara Ellison's request for an account-relationship confirmation document. Her identity is verified and she asked through the secure portal. The query was accepted. The next step is to reply to her using whatever the documents system returns.
+> I asked the documents system about Mara Ellison's request for a document confirming her account relationship. The desk accepted the request. The case is now in the "ASKED" state and is marked final.
+> 
+> The documents system's answer hasn't come back yet, so I haven't replied to Mara and I don't know whether the document can be made available. Nothing else is needed from me now. If the case stays open, it goes to a person.

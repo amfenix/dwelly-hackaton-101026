@@ -65,19 +65,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "business"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
-64. The agent asked for `escalate` {"note": "Maeve Calder (viewer role, secure chat, identity not verified) asks for the current outgoing-payment limit on the company profile. The business system has already been queried, but no limit value is in the case. Further business asks are refused because the case is in WAITING. Nothing has been disclosed. Please verify the requester and provide the limit if she is entitled to see it. She has not submitted the planned supplier payout."}.
+64. The agent asked for `escalate` {"note": "Maeve Calder (role: viewer, unverified, secure chat) asks for the current outgoing-payment limit on the company profile. The business system was already asked, but no limit value is in the case. A second business ask was refused because the case is WAITING and business_asked is already true. The requester is not verified, so I have not disclosed anything. Please verify her identity and viewer permission, then confirm the limit from the business record. No payment has been submitted."}.
 65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11165 tokens in, 1072 out, 9.421 s, cost $0.0293; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11219 tokens in, 1213 out, 10.697 s, cost $0.0308; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't move this case forward, and it is still waiting. Nothing has been disclosed to Maeve.
+> The case is still waiting, and I couldn't move it forward. Nothing has been disclosed to Maeve.
 > 
-> - **No limit in the case:** The business system has already been queried, but its answer contains no limit value, so there is nothing I can report to Maeve.
-> - **Further actions refused:** The case is in a waiting state. Asking the business system again was refused, and so was escalating to a person.
-> - **Verification:** Maeve is a viewer and has not been verified in secure chat. That would need resolving before any limit is shared.
+> - **Business system:** It was already asked, but no limit value came back into the case. A second ask was refused because the case is in WAITING, not TRIAGED, and the business query has already been made.
+> - **Escalation:** I tried to hand the case to a person with a note, and that was refused for the same reason (the case isn't TRIAGED).
+> - **Identity:** Maeve is a viewer and is not verified, so I haven't given her any limit information.
+> - **Payment:** No payment has been submitted.
 > 
-> The case now stays open for a person to pick up. They would need to verify her and confirm the company payment limit. She has not submitted the planned supplier payout.
+> The case stays open and goes to a person. They need to verify Maeve and her viewer permission, then confirm the company payment limit from the business record.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, an unverified customer on secure chat, asked the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal. The desk had already queried the tariff system, and it closed the case as waiting because that system's answer was not yet in. A repeat tariff request and an escalation to a person were both refused because the case was already in the waiting state, so nothing has reached a person and she has not been given an explanation of the fee. The case stays open for a person to pick up, and she still needs identity verification before any account details are shared.
+Mara Ellery, who is not yet verified and wrote over secure chat, asked what a £3.20 fee on a withdrawal was for and asked for escalation and a check of which tariff entry applied. The desk classed it as a fee question, queried the tariff system and put the case in a waiting state because that answer had not come back. A second tariff query and the agent's escalation were both refused because the case was already waiting, so no one has been told what the fee is for, and nothing was refunded or changed. What remains is for the tariff answer to arrive or a person to pick the case up, and Mara's identity still needs verifying before any account details are shared.
 
 _Written by a model from the record below; the sections below are the record._
 

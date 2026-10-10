@@ -70,12 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9806 tokens in, 646 out, 7.577 s, cost $0.0223; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7174 tokens in, 509 out, 6.329 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the lookup to the payment system, and the desk accepted it. The case is now closed at that step.
+> I've sent the question to the payment system to look up the purpose text recorded on your Mallow Pottery Works transfer. The system hasn't returned an answer yet, so I can't tell you what the purpose text says.
 > 
-> The payment system's answer isn't in the case yet, so I can't tell you what purpose text your transfer to Mallow Pottery Works recorded. The desk still lists you as not verified, even though you said you finished the identity checks in the chat. I didn't treat your statement as a completed verification.
-> 
-> The purpose text will go in the reply once the payment record comes back.
+> The desk's records still show you as not verified, even though you've completed the identity checks in this chat. That may affect what can be shared with you.

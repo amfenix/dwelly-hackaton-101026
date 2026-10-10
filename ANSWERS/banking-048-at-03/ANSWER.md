@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing for Alder Quay Studio Ltd. over secure chat, asked the desk to check whether an identifiable credit for a workshop invoice had reached the company's account. The desk asked the incoming-payments system, had no answer yet, and closed the case as waiting; a second request to that system was refused because the case was already waiting on it. Nothing has been confirmed to the requester, who is not verified, and the case stays open until the incoming-payments answer arrives or a person picks it up.
+Mara Ellison, writing for Alder Quay Studio Ltd. over secure chat, asked the desk to check whether an identifiable credit had arrived for a workshop invoice her buyer says was paid. The desk looked at the incoming account activity, but no result has come back yet, so it closed the case as "wait" in the WAITING state; a second request to query the incoming system was refused because that check had already been made. Nothing has been confirmed about whether the payment arrived, Ellison is not verified on this chat, and no reply or escalation was sent, so the case stays open for a person to pick up.
 
 _Written by a model from the record below; the sections below are the record._
 

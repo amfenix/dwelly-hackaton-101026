@@ -52,7 +52,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-51. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+51. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
 52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → transfer (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
@@ -70,10 +70,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7022 tokens in, 488 out, 4.498 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4807 tokens in, 419 out, 4.164 s, cost $0.0100; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the payment system about the transfer. The case is now closed with that step as its outcome.
-> 
-> The check hasn't produced an answer yet. Nothing has been confirmed about whether the instruction was submitted, what stage it is at, or whether you need to authorise it. The records still show no sent confirmation for it. Your identity is also not verified in this chat.
+> I've asked the payment system to look up your saved transfer instruction and its current stage. I don't have its answer yet, so I can't say whether the instruction was submitted or whether you need to authorise it. The reply will go to you once the payment system's answer is in the case.

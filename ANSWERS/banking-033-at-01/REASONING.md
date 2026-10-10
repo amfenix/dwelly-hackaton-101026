@@ -72,10 +72,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6855 tokens in, 417 out, 4.1 s, cost $0.0140; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6777 tokens in, 450 out, 4.746 s, cost $0.0142; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the documents system about Mara's CSV export request. The case is now closed with the outcome "ask_system".
+> I asked the documents system about the export. The case now shows as closed with the outcome "ask_system".
 > 
-> The case record has no answer from that system yet. It still shows no confirmation that an export exists, and no reply has gone to Mara. I haven't told her whether the file is ready or when it will appear in her secure portal.
+> The documents system's answer isn't in the case facts. The only confirmation field reads "none". So I can't yet tell Mara whether the CSV for 6–9 May 2025 has been created or when it will appear in her secure portal. I haven't made any claim about that to her.
+> 
+> No further step is available to me.

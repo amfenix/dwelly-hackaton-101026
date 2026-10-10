@@ -51,8 +51,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.98 → authority.
-51. Classifier (jev jev-latest) on `subject`: role, confidence 0.75 → role.
+50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
+51. Classifier (jev jev-latest) on `subject`: role, confidence 0.82 → role.
 52. `request_type`: not known → authority (by `triage`).
 53. `subject`: not known → role (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
@@ -72,10 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 12673 tokens in, 623 out, 8.013 s, cost $0.0277; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12947 tokens in, 779 out, 8.324 s, cost $0.0298; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent Nadia's request to the company administrator for approval, and the desk accepted it. The case is now forwarded and closed on our side.
+> I sent Nadia's request to the company administrator for approval. It is now with them, and the case is closed on our side.
 > 
-> I first tried to look up the administrator record in the business system, but the desk refused that lookup for this type of request. Nothing has been granted. Nadia isn't the administrator and her identity isn't verified, so the new colleague's portal access depends on the administrator approving it.
+> I first tried to check the administrator record in the business system, but the desk refused that lookup for this type of request. Forwarding was accepted instead. I haven't confirmed who the authorised administrator is, and nobody has granted the new colleague any access yet. That depends on the administrator approving it.

@@ -73,10 +73,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4837 tokens in, 488 out, 3.765 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4854 tokens in, 464 out, 4.079 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted your instruction to cancel the Northmere Fitness Direct Debit mandate to the team that handles mandates. The request was accepted, but the cancellation itself isn't confirmed yet.
-> 
-> This cancels the mandate at H&V, so Northmere Fitness shouldn't be able to collect through it in future. Your agreement with Northmere Fitness is not cancelled, and you would need to end that with them directly.
+> I've submitted your instruction to cancel the active Northmere Fitness Direct Debit mandate, and the bank accepted it. This is an instruction to your bank only, so your agreement with Northmere Fitness is unchanged. If you want to end that agreement, you'll need to tell them yourself.

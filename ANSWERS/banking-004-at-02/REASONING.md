@@ -73,8 +73,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6824 tokens in, 397 out, 4.193 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6824 tokens in, 377 out, 4.285 s, cost $0.0136; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've queried the payment system about your 14 July transfer to Northmere Housing Co-operative. The case is now at the "asked" stage, and the payment system's answer hasn't come through yet. The records so far don't show why the transfer wasn't completed, so I can't give you a reason yet. Once the payment system's answer is in the case, we'll reply to you with the reason it shows.
+> I've asked the payment system about your 14 July transfer to Northmere Housing Co-operative. The case is now closed at this step. The payment system's answer hasn't come back into the case yet, so I can't tell you why the transfer wasn't completed. I won't guess at a reason. The case record doesn't show one yet.

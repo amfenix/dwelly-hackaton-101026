@@ -73,8 +73,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4825 tokens in, 366 out, 2.982 s, cost $0.0095; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4824 tokens in, 396 out, 2.983 s, cost $0.0098; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system for the receipt status of batch-041.csv (reference HV-041). The case is now waiting on its answer, and I'm not authorising or approving anything for the company.
+> I've asked the payment system for the receipt status of batch-041.csv (reference HV-041). Its answer isn't in the case yet, so I haven't told the customer anything about the file. Once the answer arrives, the next step is to reply to Mara Ellison with only what the record shows.

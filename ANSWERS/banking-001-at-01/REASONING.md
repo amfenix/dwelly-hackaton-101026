@@ -68,13 +68,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6601 tokens in, 452 out, 6.943 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6599 tokens in, 413 out, 6.982 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The facts point to the payment system as the next place to look, so I'll ask it whether H&V sent the transfer.
-> I asked the payment system whether H&V sent the £420 transfer to Alder & Reed Workshop. The case is now marked as asked, but no answer has come back yet. So I can't yet tell you whether the payment was sent.
-> 
-> What the records show so far is the £420 debit in your account activity. There is no confirmation of the transfer on file.
-> 
-> I'm stopping here. The next step is to wait for the payment system's answer and then reply to you with it.
+> The case says the next system is payment, and the answer isn't in the case yet. So I'll ask the payment system.
+> I asked the payment system whether H&V sent the £420 transfer to Alder & Reed Workshop. The case is now closed at that step, and the system's answer is not in the case record yet. So I can't yet tell the customer whether the payment was sent. All the record shows so far is the debit in their account activity and no confirmation.

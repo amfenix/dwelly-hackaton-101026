@@ -54,7 +54,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-53. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+53. Classifier (jev jev-latest) on `subject`: document, confidence 0.99 → document.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → document (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
@@ -72,8 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6642 tokens in, 371 out, 3.376 s, cost $0.0132; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6642 tokens in, 389 out, 3.399 s, cost $0.0134; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the documents system about the acquiring report for 1–7 July 2025. The request was accepted and the case is now marked ASKED. I haven't yet seen what the documents system answered, and `case_status` shows no new facts from it. So I can't tell Mara whether the report exists or give her the file.
+> I asked the documents system about the acquiring report for 1–7 July 2025. It accepted the request, but no answer has come back yet. The case status shows no new facts about the report and no refusals.
+> 
+> The case is marked final with the outcome "ask_system", so I'm stopping here. There's nothing yet for me to tell Mara Venn about the report or its contents.

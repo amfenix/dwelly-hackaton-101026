@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat as the company signatory, asked the desk to check the stage of a transfer that the supplier Alder Quay Supplies says it has not received. The desk looked up the payment record, which shows the transfer as sent, and replied to her that this does not confirm the recipient bank has received or credited it, and that no new transfer was made. Her identity was not verified, and the case closed as replied with nothing further recorded for a person to do.
+Mara Ellison, writing on secure chat as the company signatory, asked the desk to check what stage her transfer to Alder Quay Supplies had reached, since the supplier says it hasn't received the funds. The desk replied that the payment record shows the transfer as sent, that this does not confirm the recipient bank received or credited it, and that no new transfer was made. A second attempt to query the payment system was refused because it had already been checked, and the case is closed with nothing further assigned. Mara Ellison was not verified on this chat, though the record does not show that this changed the reply.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -88,6 +88,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment)
 
 ## Final result
 

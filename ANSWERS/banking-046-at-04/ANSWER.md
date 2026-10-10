@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, on a verified call, said her administrator mandate had been checked and asked H&V to revoke former employee Owen Bell's Payroll Approver role, keeping any review of his earlier operations separate. The desk passed the instruction to the business system, which processed it and returned a status of role_revoked. The desk then replied to her on the verified call, giving that status and saying that no other role or permission change was established and no additional approval or role change was made. The case is closed, and the record shows nothing left for a person to do.
+Mara Ellery, on a verified call, asked H&V to revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The desk passed the instruction to the business administration process, which returned a status of role_revoked, and replied to her on the call reporting that status. The reply also said that no other role or permission change was established or made, and the case is closed; the record shows nothing left for a person, and the review of earlier operations was not part of this step.
 
 _Written by a model from the record below; the sections below are the record._
 

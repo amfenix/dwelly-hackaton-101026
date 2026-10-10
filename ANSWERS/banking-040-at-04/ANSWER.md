@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat for a document showing the stage of her £74.00 payment (HV-040) to give to her repair contractor. The desk had the document service generate the record, which shows a bank status of SENT, and replied on secure chat that the document is available, while stating that this does not confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied, and the record lists nothing left for a person, though she was not verified on this chat.
+Mara Ellison asked over secure chat for a document showing the stage of her £74.00 payment (reference HV-040) to give to her repair contractor. The desk found that the document service had generated the record, and replied on secure chat that the document is available, that this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied with nothing left for a person, though the requester was not verified.
 
 _Written by a model from the record below; the sections below are the record._
 

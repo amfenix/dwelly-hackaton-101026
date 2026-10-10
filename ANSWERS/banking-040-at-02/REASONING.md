@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: document, confidence 0.95 → document.
+55. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → document (by `triage`).
 58. State `READING` → `TRIAGED` (by `triage`).
@@ -71,11 +71,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 67. `ask_system` found {}.
 68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 69. The case closed in `ASKED`: **ask_system**.
+70. The agent asked for `reply` {}.
+71. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=documents); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-3 calls, 4990 tokens in, 424 out, 3.357 s, cost $0.0104; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> The documents system has been asked about the record for payment HV-040. The case is now with that system, and the next step is to reply to the customer once its answer is in.
+5 calls, 10235 tokens in, 467 out, 4.656 s, cost $0.0213; models: claude-sonnet-5-5, jev-1.13.0.

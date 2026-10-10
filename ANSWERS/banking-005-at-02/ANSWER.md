@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Mercer, a customer verified on a call, asked the desk to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient. The desk registered that request with the payment team about the transfer, and the case closed as requested. Its attempt to ask the payment system about the transfer first was refused, so the transfer was not checked in the bank's records, and nothing in the record says whether the money will come back.
+Leona Mercer, verified on a call, said she sent a £286.40 transfer to the wrong saved recipient and asked for a request to be registered to seek its return. The desk registered that request with the payment team, and the case closed as requested. The desk refused the payment lookup because the request was a register type, so the request rests on what she said, no recipient details are in the case, and whether the money comes back is not decided here.
 
 _Written by a model from the record below; the sections below are the record._
 

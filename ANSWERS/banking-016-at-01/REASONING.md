@@ -70,12 +70,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8103 tokens in, 646 out, 5.247 s, cost $0.0188; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8030 tokens in, 584 out, 5.686 s, cost $0.0181; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the dispute about the £18.40 Direct Debit to Northmere Water Services (9 July 2025) to the team that handles disputes. The desk accepted it and the case is now marked as requested.
+> I've submitted the dispute about the £18.40 Direct Debit to Northmere Water Services (9 July 2025) to the team that handles disputes. The case is now marked as requested.
 > 
-> My first step was to look the Direct Debit up in the recurring payments records. The desk refused that check because this case is a request to register a dispute, not a query.
+> I didn't look up the Direct Debit record first. The desk refused that lookup because the request is a registration of a dispute, not a query. The dispute was accepted without it.
 > 
-> I haven't confirmed anything about the Direct Debit itself, such as whether the mandate is valid or why the amount differs.
+> I have no information yet on how long the team will take or what they will decide.

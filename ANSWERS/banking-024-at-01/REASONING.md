@@ -64,4 +64,4 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8588 tokens in, 324 out, 3.765 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8588 tokens in, 324 out, 3.745 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.

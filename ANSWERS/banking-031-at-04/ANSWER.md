@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, a customer on secure chat whose identity is not verified, said she still couldn't find her June statement in the portal and wanted it made available there, not sent by email. The desk checked the documents record, which shows the statement is available as statement-031.pdf, and replied in secure chat saying so. The reply also said this doesn't confirm it was downloaded, and that no email was sent. The case is closed as replied, and nothing in the record is left for a person, though her verification status was not checked or changed.
+Elowen Marr wrote over secure chat that she still couldn't find her June statement in the portal and wanted it made available there, not sent by email. The desk checked with the documents system, which showed the statement (statement-031.pdf) was ready, and replied in secure chat that the document is available, without confirming it was downloaded. No email was sent, she was not verified, and the reply gave no statement contents. The case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

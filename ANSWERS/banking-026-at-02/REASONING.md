@@ -65,16 +65,14 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `redirect_secure` {}.
 63. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING).
-64. The agent asked for `ask_system` {"system": "access"}.
-65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access).
 
 ## Model calls
 
-5 calls, 9705 tokens in, 552 out, 5.497 s, cost $0.0211; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6926 tokens in, 544 out, 4.908 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The customer needs the bank's secure PIN process, so I'm pointing her to it.
-> I couldn't send Maren to the secure PIN process. The desk refused the redirect because the case is in WAITING and not TRIAGED. It also refused a request to the access system, because that system has already been asked (`access_asked` is true).
+> This is a forgotten PIN, so the right step is to send Maren to the bank's secure process. The bank never handles a PIN in chat, and she hasn't been verified.
+> I couldn't send Maren to the secure PIN process. The desk refused the redirect because it only accepts one once the case has been triaged, and this case is in WAITING. The case is marked final with the outcome "wait", so nothing more can be done from here.
 > 
-> The case is final with outcome "wait", and no other tool applies. Maren is not verified, and nothing in her request involves a PIN being shared. I'm leaving the case open for a person to pick up.
+> Maren hasn't been verified. She hasn't been told anything yet, and no PIN or other sensitive detail has been handled. The case stays open for a person to pick up.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer who called in, asked the desk to check whether two future £34.80 payments to Northmere Heating are duplicates and to remove the duplicate, but she could not say which line it is. The desk treated this as a standing-order instruction and moved the case to waiting for the payment system's answer, which has not come in. Its later attempts to query the payment system and to escalate were both refused because the case was already in the waiting state, so nothing was cancelled or changed and the lines have not been checked. A person still needs to check both lines and confirm with Ms Ellison which one to remove.
+Mara Ellison, a verified caller, asked the desk to check two future £34.80 payments to Northmere Heating and remove whichever is a duplicate; she doesn't know which line it is. The desk classed this as a standing-order instruction, marked the payment system as asked with its answer not yet in, and closed the case in WAITING. The agent's later attempts to query the payment system again and to escalate were both refused because the case was no longer in the TRIAGED state, so no comparison was made and nothing was cancelled or changed. The record doesn't show anyone assigned to follow up, so whether either payment is a duplicate is still unresolved and needs a person to review.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -67,8 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6342 tokens in, 378 out, 3.876 s, cost $0.0127; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6342 tokens in, 360 out, 3.874 s, cost $0.0125; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the card system about the declined £18.40 payment at North Quay Books. The system accepted the request, but its answer isn't in the case yet. The only facts on file are the amount and that the customer's question is why it was declined. Until the card records come back, I can't tell Mara the reason, and I haven't guessed at one.
+> I asked the card system about Mara's declined £18.40 payment at North Quay Books. The system accepted the request, but its answer hasn't come back into the case yet. The case record shows no reason for the decline. I can't tell her why it was declined until that answer arrives.

@@ -181,7 +181,19 @@ triggers:
     set: { reason: UNVERIFIED }
     to: ESCALATED
 
-  - name: change-needs-confirmation   # 012, 019, 028: a chat or an email is not an authorisation
+  # 028, 036: a profile change goes into the bank's protected change process, which asks the
+  # customer to confirm by itself; the desk does not send its own confirmation request
+  - name: profile-change-waits-for-the-process
+    when: "state = TRIAGED and request_type = change and subject = profile and access_asked and confirmation in [none, requested]"
+    note: The protected change process is running; it asks the customer to confirm.
+    to: WAITING
+
+  - name: profile-change-to-the-process
+    when: "state = TRIAGED and request_type = change and subject = profile and access_asked absent and verified and registration_asked absent"
+    note: A verified customer's profile change is started in the protected change process.
+    to: REQUEST_PENDING
+
+  - name: change-needs-confirmation   # 012, 019: a chat or an email is not an authorisation
     when: "state = TRIAGED and request_type = change and confirmation = none and registration_asked absent"
     note: A change is confirmed by the customer in the secure portal, not in chat or by email.
     to: CONFIRM_PENDING

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, a verified customer writing through the secure portal, said she couldn't find her June 2025 statement there and asked for help accessing it. The desk classified this as a question about a statement and asked the documents system about it, and the case closed in the asked state. The record doesn't show an answer from the documents system or whether the statement exists, so nothing has yet been delivered to her.
+Elowen Marr, a verified customer writing through the secure portal, asked for help accessing her June 2025 statement, which she couldn't find there. The desk classified it as a statement question and asked the documents system about the statement, then closed the case at that step. The documents system's answer isn't in the record, so whether the statement is available in the portal is still unknown and nothing has been delivered to her yet.
 
 _Written by a model from the record below; the sections below are the record._
 

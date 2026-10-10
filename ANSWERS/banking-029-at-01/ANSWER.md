@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer on the secure portal, asked whether registering her new tablet in the H&V app had finished, since she left the screen before she could tell. The desk classed it as an access question and asked the access system about it, but the system returned nothing, so the case holds no facts on whether the tablet is registered. The agent's attempt to reply was refused for lack of a basis, the case closed in the "asked" state, and Mara has not been told anything about the tablet's status, so that answer is still outstanding.
+Mara Ellison, a verified customer on the secure portal, asked whether registering her new tablet in the H&V app had finished, since she left the screen before she could tell. The desk classified it as an access question and sent it to the access system, which returned no registration facts, so the desk could not say whether the tablet is registered. The desk refused the agent's attempt to reply, the case closed as asked, and Mara has not been given an answer, so a person would need to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -72,12 +72,14 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8776 tokens in, 627 out, 8.414 s, cost $0.0200; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8814 tokens in, 651 out, 8.537 s, cost $0.0203; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't check the transfer status, and the case is now on hold. The desk refused the payment lookup because the case is in a WAITING state, not the TRIAGED state the lookup needs. It's marked final with the outcome "wait".
+> I couldn't check the transfer status, and I haven't been able to tell Mara whether H&V sent the £420 payment to Alder & Reed Workshop.
 > 
-> The case still shows Mara Ellison as not verified, and no confirmation of the £420 payment to Alder & Reed Workshop is on record. So I can't say whether H&V sent it. The only thing confirmed is the debit in her account activity.
+> The desk refused my request to ask the payment system. The case is in a WAITING state, which the desk treats as final, and the request needs the case to be TRIAGED. The case also shows the payment system as already asked (`payment_asked=True`), but it holds no answer from it.
 > 
-> I haven't escalated, because nothing in the case points to a conflict a person would need to resolve. Since the case is left open, it will be handed to a person.
+> Mara is not verified. The only confirmation we hold is the debit shown in her account activity, and a debit alone doesn't show the payment was sent. I haven't told her it was.
+> 
+> I'm stopping here, so the case stays open and is handed to a person.

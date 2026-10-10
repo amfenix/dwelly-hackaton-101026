@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellwood wrote in secure chat that she had forgotten her debit card PIN and asked for the safe way to deal with it, saying she would not send the PIN in chat. The desk replied that the access record shows "other", that this does not establish a password, PIN or access change, and that no secret was handled and no access change was made. The case is closed as replied; the reply did not give her the PIN route the Access team's notes describe (opening the procedure in the secure portal), and she is still unverified in the record.
+Maren Ellwood, writing over secure chat, said she had forgotten her debit card PIN and asked for the safe way to deal with it, noting she would not send the PIN in chat. The desk checked the access record, which came back as "other", and replied in secure chat that this does not establish a password, PIN or access change and that no secret was handled and no access change was made. The reply did not give her the PIN procedure the access team's notes described, and the record shows no further action, so she is still without a confirmed way to reset the PIN, and she is marked as not verified.
 
 _Written by a model from the record below; the sections below are the record._
 

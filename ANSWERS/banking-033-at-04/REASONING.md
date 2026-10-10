@@ -76,11 +76,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7241 tokens in, 435 out, 4.952 s, cost $0.0150; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7266 tokens in, 480 out, 5.273 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The documents system has already been asked, and it shows the file is ready. I'll reply to the customer with that.
-> I sent the reply. The documents system showed the CSV export for 6–9 May 2025 as ready, and the reply tells Mara Ellison that. The case is now closed as replied.
+> The documents system has already answered: the file is ready. I'll reply to the customer with that.
+> I replied to Mara Ellison, and the case is now closed as replied. The documents system confirmed that the CSV export for her period is ready, and the reply passes that on. I didn't read the reply text, so I can't say exactly what it tells her about finding the file in her secure portal.
 > 
-> The customer is not verified. The reply only reports what the record shows, which is that the file is ready.
+> She isn't verified on this channel. The reply only reports the record that the file is ready, and no account changes were made.

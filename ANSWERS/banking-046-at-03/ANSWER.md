@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified by call as an administrator, asked the desk to revoke former employee Owen Bell's Payroll Approver role for Larkmere Studio Ltd and to keep review of earlier operations separate. The desk had already submitted this to the business system, and the case closed in WAITING because that system's answer is not in yet. The agent's later attempts to submit the request again and to escalate were both refused because the case was no longer in the TRIAGED state, so no role change is recorded and nothing has been escalated to a person.
+Mara Ellery, a verified administrator on a verified call, asked the desk to revoke former employee Owen Bell's Payroll Approver role for Larkmere Studio Ltd, with any review of his earlier operations kept separate. The desk had already put the instruction to the business system and closed the case as waiting, because that system's answer is not yet in. The agent's later attempts to submit the request and to escalate were both refused because the case was no longer in the state those steps require, so nothing was revoked and no actions were taken. The role revocation is still outstanding, and a person needs to look at why the case is waiting and then carry out or confirm it.
 
 _Written by a model from the record below; the sections below are the record._
 

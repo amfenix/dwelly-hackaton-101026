@@ -67,19 +67,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. The case closed in `WAITING`: **wait**.
 64. The agent asked for `ask_system` {"system": "tariff"}.
 65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=tariff); next_system = payment is false (next_system=tariff); next_system absent is false (next_system=tariff); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=tariff); next_system = incoming is false (next_system=tariff); next_system absent is false (next_system=tariff); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=tariff); next_system = recurring is false (next_system=tariff); next_system absent is false (next_system=tariff); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=tariff); next_system = card is false (next_system=tariff); next_system absent is false (next_system=tariff); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=tariff); next_system = access is false (next_system=tariff); next_system absent is false (next_system=tariff); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=tariff); next_system = business is false (next_system=tariff); next_system absent is false (next_system=tariff); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=tariff); next_system = documents is false (next_system=tariff); next_system absent is false (next_system=tariff); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=tariff); tariff_asked absent is false (tariff_asked=True).
-66. The agent asked for `escalate` {"note": "Customer Mara Ellery (unverified, secure chat) asks what a £3.20 fee on a foreign-currency cash withdrawal is for and which tariff entry applied. The tariff system was already queried (tariff_asked=True) but no tariff answer is in the case. A repeat tariff ask was refused because the case is in WAITING state. The customer explicitly asked for escalation. Please check the tariff entry that applied to this transaction and explain how £3.20 was calculated. Verify identity before sharing account details."}.
+66. The agent asked for `escalate` {"note": "Customer Mara Ellery (unverified, secure chat) asks what a £3.20 fee on a foreign-currency cash withdrawal is for and which tariff entry applied. The tariff system was already queried, but the case holds no tariff answer, and a repeat query was refused because the state is WAITING. The customer has asked for escalation. Please confirm the applicable tariff entry and how the £3.20 was calculated. Verify the customer's identity before sharing account-specific details."}.
 67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11095 tokens in, 911 out, 7.72 s, cost $0.0274; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11111 tokens in, 916 out, 8.117 s, cost $0.0275; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is still open and waiting. I could not get the tariff answer for the £3.20 fee, and my attempt to escalate was also refused.
+> I couldn't move this case forward, and it is still waiting.
 > 
-> - **Tariff check:** The case shows the tariff system was already asked, but no answer is recorded. My repeat request was refused because the case is in the WAITING state, not TRIAGED.
-> - **Escalation:** The escalation was refused for the same reason, so the case has not reached a person. I included a note explaining the fee question, the missing tariff answer and that the customer is unverified.
-> - **Customer:** Mara Ellery has not received an explanation of the fee or which tariff entry applied. She also isn't verified yet, so no account details should be shared until she is.
+> - **Tariff check:** The tariff system was already queried earlier, but the case holds no tariff answer. My second query was refused because the case is in a waiting state, not the triaged state the desk requires.
+> - **Escalation:** My escalation to a person was refused for the same reason. I had written up the case for them.
+> - **What the customer has been told:** Nothing. We still can't say what the £3.20 fee is for, which tariff entry applied, or how the amount was worked out.
+> - **Verification:** The customer, Mara Ellery, is not yet verified. That needs to happen before anyone shares account-specific details with her.
 > 
-> I'm stopping here. A case left open is handed to a person.
+> The case stays open for a person to pick up.

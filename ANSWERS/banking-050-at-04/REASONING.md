@@ -62,22 +62,27 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 58. State `READING` → `TRIAGED` (by `triage`).
 59. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 60. `next_system`: not known → payment (by `asked-payment`).
-61. The agent asked for `reply` {}.
-62. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
-63. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-65. Called `reply_customer` (attempt 1, key banking-050-at-04:do-reply:17).
-66. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The payment record shows your transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
-67. `reply_customer` found {}.
-68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-69. The case closed in `REPLIED`: **reply**.
+61. The agent asked for `ask_system` {"system": "payment"}.
+62. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+63. The agent asked for `reply` {}.
+64. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+65. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+67. Called `reply_customer` (attempt 1, key banking-050-at-04:do-reply:17).
+68. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The payment record shows your transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
+69. `reply_customer` found {}.
+70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+71. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7437 tokens in, 728 out, 6.547 s, cost $0.0183; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10742 tokens in, 695 out, 6.784 s, cost $0.0246; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Mara. H&V's records show the payment to Alder Quay Supplies at stage SENT. There is no confirmation on record that the supplier has received it, so the reply goes no further than that.
+> The payment system has already been checked, so the answer is in the case. I'll reply with it.
+> I sent the reply. The payment to Alder Quay Supplies is shown as SENT in H&V's records, with no confirmation recorded.
 > 
-> The requester isn't verified yet, so the desk's checks haven't confirmed Mara is a signatory. The desk accepted the reply, and the case is now closed as replied.
+> I didn't need to query the payment system again. It had already been checked, and when I tried to ask it a second time the desk refused. The case is closed.
+> 
+> The requester, Mara Ellison, is not verified on this chat.

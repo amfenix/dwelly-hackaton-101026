@@ -54,7 +54,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `confirmation`: not known → none (by `read-confirmation`).
 51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
-53. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.89 → instruction.
+53. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.88 → instruction.
 54. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
 55. `request_type`: not known → instruction (by `triage`).
 56. `subject`: not known → standing_order (by `triage`).
@@ -73,10 +73,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6938 tokens in, 463 out, 4.249 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6962 tokens in, 478 out, 4.321 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system for the records on the two £34.80 Northmere Heating payments. That answer isn't in the case yet, so I don't yet know whether the two lines are duplicates or which one would be.
+> I've checked the recurring payments system for the two £34.80 Northmere Heating payments. The check ran, but the record it returned hasn't been added to the case, so I can't yet say whether the two lines are duplicates. I haven't removed or changed anything.
 > 
-> I haven't removed or cancelled anything. Mara can't say which line is the duplicate, so the standing order records need to show that first. Once they're in the case, the next step is to tell her what they show and, if they confirm a duplicate, submit the cancellation for it.
+> The next step is to read the standing order details from that check. If they show the two lines are identical, the cancellation can go ahead. If they show different schedules or references, we'll need Ms Ellison to confirm which one she means before anything is removed.

@@ -1,10 +1,10 @@
 # Case banking-037-at-04: Profile Name Typo
 
-**Decision: reply**  (final state `REPLIED`)
+**Decision: escalate**  (final state `ESCALATED`)
 
 ## Summary
 
-Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk did not change the profile: it logged the request as HV-037 with the H&V data team, whose protected name review is open and has not yet validated the basis for the correction. It sent the customer a reply, and the case closed as replied. What remains is the data team's review of HV-037 and its decision on what supporting information is needed, and the name stays unchanged until then.
+Elowen Marr, a verified caller, asked for the name on her profile to be corrected from "Elowen Mar" to "Elowen Marr". The request was already registered as HV-037. The desk refused both a standard submission and a system lookup because the request is a change type, and it escalated the case instead. No change has been made to the profile and nothing has been confirmed to the customer, so the data team still has to decide what supporting information is needed and carry out the correction.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -50,12 +50,8 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `registration-reply` accepted it.
+- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - registration_asked → true (registration_asked=True)
-  - registered present → true (registered=True)
-- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
-  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -71,6 +67,7 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **change**
 - next_system: **access**
+- reason: **AGENT_ESCALATED**
 
 Where they came from:
 
@@ -81,7 +78,8 @@ Where they came from:
 
 ## Escalated
 
-No.
+Yes: the case ended as **escalate** in `ESCALATED`.
+A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
 
 ## What failed
 
@@ -94,4 +92,4 @@ Requests the policy refused:
 
 ## Final result
 
-reply (REPLIED)
+escalate (ESCALATED)

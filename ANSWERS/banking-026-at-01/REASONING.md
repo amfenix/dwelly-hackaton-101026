@@ -70,8 +70,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4689 tokens in, 390 out, 3.179 s, cost $0.0095; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4647 tokens in, 347 out, 2.696 s, cost $0.0090; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed Maren to the bank's secure process for a forgotten PIN, so she doesn't need to share the PIN in chat. The desk accepted the redirect and closed the case. Nothing else is needed from the desk.
+> The customer needs the bank's secure process for a forgotten PIN. The bank never handles PINs, so I'm redirecting her to that process.
+> I've sent Maren to the bank's secure process for a forgotten PIN, and the case is closed. She didn't share her PIN in chat, and the bank doesn't handle PINs, so nothing more is needed from us here.

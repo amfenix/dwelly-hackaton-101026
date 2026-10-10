@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, a verified customer using the secure portal, asked to cancel the next run of her recurring studio-rent payment instruction. The desk treated it as a standing-order instruction and registered a request with the recurring team, which closed the case as submitted. The record does not show the run actually being cancelled, so that outcome is still with the recurring team.
+Elodie Mercer, a verified customer on the secure portal, asked to cancel the future run of her recurring studio-rent payment instruction. The desk classified it as a standing-order instruction and registered a request with the recurring team, and the case closed as requested. Nothing in the record shows the cancellation itself has been carried out, so that remains with the recurring team. The record also shows the confirmation check returned "none", which conflicts with the agent's statement that her portal confirmation was on file.
 
 _Written by a model from the record below; the sections below are the record._
 

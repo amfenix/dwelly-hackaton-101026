@@ -67,8 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8928 tokens in, 342 out, 3.605 s, cost $0.0175; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8928 tokens in, 342 out, 3.748 s, cost $0.0175; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The answer sits in the card system, so I'll query it.
+> The card system holds the answer, so I'll ask it.

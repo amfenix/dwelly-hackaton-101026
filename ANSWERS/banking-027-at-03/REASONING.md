@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7930 tokens in, 817 out, 7.5 s, cost $0.0202; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7508 tokens in, 615 out, 5.186 s, cost $0.0174; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is in a waiting state, and the desk has marked it final with the outcome "wait". I'm stopping here.
+> I didn't send a new redirect. The desk refused it because the case is already in a waiting state, and the case status shows it as final with the outcome "wait".
 > 
-> I tried to send Mara Ellison to the bank's secure recovery process. The desk refused because it only accepts that step on a triaged case, and this one is waiting. The case already shows the customer was redirected to that process earlier (`bank_redirected` is true). The case record shows no further step the desk will accept from here.
+> The customer, Mara Ellison, has already been pointed to H&V's secure recovery process in the portal. She has completed identification on the call and hasn't shared any password or verification code. Nothing more is needed from the bank until she completes the recovery checks in the portal.

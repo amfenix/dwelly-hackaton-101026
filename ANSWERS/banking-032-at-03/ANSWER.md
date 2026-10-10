@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk asked the documents system about the statement, and that request went through, so the case is closed as asked. Her identity is still unverified, and the record shows the document is not yet ready. The archive notes say the statement is available to order, with any charge subject to the current tariff, and the desk has not yet given her an answer.
+Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk treated it as a question and sent a request to the documents system about the statement, which went through; the case is closed in the asked state. Her identity is still unverified and the statement is not yet ready, so what remains is the documents system's reply and the identity check before anything is released.
 
 _Written by a model from the record below; the sections below are the record._
 

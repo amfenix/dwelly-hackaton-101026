@@ -71,12 +71,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4951 tokens in, 552 out, 4.236 s, cost $0.0116; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5046 tokens in, 601 out, 5.64 s, cost $0.0123; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> Mira's request to raise the Westmere Garden Cooperative standing order from £42.00 to £68.00 has not been applied. The case is closed with the outcome "send for confirmation". That means a confirmation request has gone to her, and nothing changes until she confirms.
-> 
-> She is not verified yet, and she has not authorised the change. She asked in secure chat rather than through the portal. The portal still shows £42.00, which matches the record.
-> 
-> No further action is needed from the desk.
+> The case is already closed. Its state is CONFIRMATION_SENT and the outcome is "send_for_confirmation". Mira has not confirmed the change to £68.00, and she isn't verified. The bank can't make the change for her, so it has asked her to confirm it herself. The standing order stays at £42.00 until she does. I'm taking no further action.

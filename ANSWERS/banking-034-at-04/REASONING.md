@@ -76,10 +76,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7336 tokens in, 465 out, 3.923 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7332 tokens in, 473 out, 4.422 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The tariff check had already been run, and it showed the £3.20 fee matches the tariff entry that applied to that foreign-currency cash withdrawal. The case is closed on that reply.
+> I've sent the reply. The tariff check on the £3.20 fee came back as a match, so the answer was already in the case and I didn't need to query another system or escalate. The desk writes the reply text itself, so I haven't seen its wording.
 > 
-> The customer isn't verified, so the reply is limited to what the tariff record shows. It doesn't go beyond that.
+> The customer's identity is still marked unverified. I went ahead because this is a question about a fee, not an instruction to change anything.

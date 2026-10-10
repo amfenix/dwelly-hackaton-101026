@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, an unverified customer on secure chat, asked what stage her transfer had reached and whether the beneficiary had confirmed receipt. The desk checked the payment record, which shows the transfer as sent with downstream processing pending and no confirmation of receipt, and replied to her saying exactly that. The reply also said no new transfer was made, and the case closed as replied with nothing left for a person.
+Mara Ellwood asked over secure chat what stage her transfer had reached and whether the beneficiary had received it. The desk checked the payment record, which shows the transfer as sent with no confirmation of receipt, and replied on secure chat saying exactly that and that no new transfer was made. The case is closed as replied, and nothing is left for a person; her identity was not verified, though the reply made no change to the account.
 
 _Written by a model from the record below; the sections below are the record._
 

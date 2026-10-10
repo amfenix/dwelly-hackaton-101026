@@ -62,28 +62,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 58. State `READING` → `TRIAGED` (by `triage`).
 59. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
 60. `next_system`: not known → incoming (by `asked-incoming`).
-61. The agent asked for `ask_system` {"system": "incoming"}.
-62. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=incoming); next_system = tariff is false (next_system=incoming); next_system absent is false (next_system=incoming).
-63. The agent asked for `reply` {}.
-64. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=False).
-65. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
-66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-67. Called `reply_customer` (attempt 1, key banking-048-at-04:do-reply:17).
-68. Action in the world: `reply` {"to": "Mara Ellison, Alder Quay Studio Ltd.", "channel": "secure_chat", "text": "The incoming-payment record shows no incoming payment found. This does not establish that the sender did not pay. No payment was made."}.
-69. `reply_customer` found {}.
-70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-71. The case closed in `REPLIED`: **reply**.
+61. The agent asked for `reply` {}.
+62. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=False).
+63. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
+64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+65. Called `reply_customer` (attempt 1, key banking-048-at-04:do-reply:17).
+66. Action in the world: `reply` {"to": "Mara Ellison, Alder Quay Studio Ltd.", "channel": "secure_chat", "text": "The incoming-payment record shows no incoming payment found. This does not establish that the sender did not pay. No payment was made."}.
+67. `reply_customer` found {}.
+68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+69. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 10444 tokens in, 581 out, 5.545 s, cost $0.0229; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7292 tokens in, 531 out, 5.069 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The incoming-payments check had already been run on this case, and it found no identifiable credit for the workshop invoice on the account. The reply reports only that result.
-> 
-> Two points about what the reply can and can't say:
-> - The requester isn't verified, so the reply gives nothing beyond what the check found.
-> - The check finding nothing doesn't prove the payment wasn't sent. It may still be in transit.
-> 
-> I did not re-run the incoming check. The desk refused a second call because the check was already on file.
+> I've sent the reply. The incoming-payments check found no identifiable credit from the buyer's payment on the account. The requester isn't verified, so the reply can only report what the record shows. It can't confirm that the payment arrived or share any account details. The case is now closed.

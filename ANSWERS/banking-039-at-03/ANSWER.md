@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nerys Wren, a verified customer on the secure portal, sent a message about access that the desk classed as a question; the message said she wants the permitted session extract for her profile delivered through the portal. The desk routed it to the access system and sent that system an ask about access, and the case closed in the asked state. A later attempt to send a reply was refused because the case was no longer in the triaged state and no access status had come back, so no reply has gone to her yet.
+Nerys Wren, a verified customer on the secure portal, asked a question about access, confirming she wanted the permitted session extract for her profile delivered through the portal. The desk classified it as an access question and asked the access system about it; that request went out and the case closed as asked. The desk's later attempt to send a reply was refused because the case was already closed, and the record shows no answer from the access system, so nothing has yet been delivered to her.
 
 _Written by a model from the record below; the sections below are the record._
 

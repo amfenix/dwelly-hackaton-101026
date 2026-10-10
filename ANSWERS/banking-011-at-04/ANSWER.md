@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, who was not verified, asked over secure chat when her active monthly standing order is next due. The desk checked the standing-order record, which shows it as active with the next run on 2025-09-03, and replied on secure chat with that date. The reply also said this does not guarantee the future payment will execute, and that no change or instruction was made. The case is closed with nothing left for a person.
+Mara Ellison asked over secure chat when her active monthly standing order is next due. The desk checked the standing-order record, then replied that it shows active with its next run on 2025-09-03, that this does not guarantee the future payment will execute, and that no change or additional instruction was made. She was not verified, but the request was a read-only question; the case is closed as replied and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

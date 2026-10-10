@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder asked over secure chat for the company's current payment limit. The desk checked the business record, which showed a maximum of £20,000.00 per outgoing payment and a status of "other" that it did not recognise as an established status. It replied to her with that limit, said the status was not established, and noted that no approval or role change had been made. Her identity was not verified, though the record shows her role as viewer and a mandate check confirming she may view limits; the case is closed with nothing left for a person.
+Maeve Calder, a viewer writing over secure chat, asked for the company's current payment limit. The desk checked the business limit register, which showed a maximum of £20,000.00 per outgoing payment, and replied to her on secure chat with that figure. The reply also said the record's status of "other" does not establish a recognised business-record status, and that no approval or role change was made. She was marked as not verified and the case closed as replied without escalation, so whether that should have been checked is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

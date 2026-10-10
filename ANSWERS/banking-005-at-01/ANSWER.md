@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked the desk to register a request to seek the return of a £286.40 transfer that went to the wrong saved recipient. The desk classified it as a registration request about a transfer, and the one attempt to look up the payment system was refused. It then registered the request with the payment team and closed the case as requested. The record shows no confirmation of the payment or the recipient from the bank's records, so the payment team has to establish that.
+The customer asked the desk to register a request to seek the return of a £286.40 transfer sent to the wrong saved recipient. The desk classified it as a register request about a transfer, tried to ask the payment system first but was refused because a registration was the right step, then registered a request with the payment team and closed the case as requested. Nothing is recorded about whether the money will be returned, so that remains open for the payment team to handle.
 
 _Written by a model from the record below; the sections below are the record._
 

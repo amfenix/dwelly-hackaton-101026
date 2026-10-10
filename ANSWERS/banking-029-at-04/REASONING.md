@@ -74,11 +74,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7249 tokens in, 505 out, 5.293 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7195 tokens in, 456 out, 4.904 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The access system has already answered: the registration is awaiting confirmation. I'll reply with that.
-> I sent the reply. The access system shows the tablet registration as awaiting confirmation. The reply therefore tells Mara Ellison the tablet is not yet confirmed as linked, and that no confirmation has been recorded. The case is now closed.
+> The access system's answer is already in the case, so I'll reply with it.
+> I've sent the reply. The access system shows the tablet's registration as awaiting confirmation. The reply tells Mara that the tablet isn't confirmed as linked yet, so it shouldn't be used for banking until that confirmation is completed.
 > 
-> Her identity is not marked as verified in this chat. The reply reports only what the record shows.
+> The case is now closed with that reply.

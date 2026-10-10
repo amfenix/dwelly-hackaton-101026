@@ -44,7 +44,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 40. `check_confirmation` found {}.
 41. Rule `triage` fired: state = READING → true (state=READING).
 42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-43. Classifier (jev jev-latest) on `subject`: batch, confidence 0.95 → batch.
+43. Classifier (jev jev-latest) on `subject`: batch, confidence 0.96 → batch.
 44. `request_type`: not known → question (by `triage`).
 45. `subject`: not known → batch (by `triage`).
 46. State `READING` → `TRIAGED` (by `triage`).
@@ -62,8 +62,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8177 tokens in, 401 out, 5.392 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8177 tokens in, 408 out, 5.27 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the payment system about the Fenwick Workshop batch. Its answer hasn't come back into the case yet. The case now shows as final with the outcome "ask_system", and no new facts were added. I don't have the row-level error report or the reason the batch failed validation, so I can't tell you what needs correcting.
+> I asked the payment system about the Fenwick Workshop batch. The case is now closed on that step, and nothing else is left for me to do.
+> 
+> The case shows no answer from the payment system yet. It lists no facts about the batch and no row-level error report. I haven't confirmed why the batch failed validation, and I haven't made the report available to you.

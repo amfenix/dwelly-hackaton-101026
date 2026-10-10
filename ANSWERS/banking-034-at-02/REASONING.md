@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.70 → question.
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.73 → question.
 53. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → fee (by `triage`).
@@ -72,10 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7096 tokens in, 515 out, 4.552 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7112 tokens in, 469 out, 4.862 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the tariff system about the £3.20 fee on Mara Ellery's foreign-currency cash withdrawal. The request was accepted and the case is now marked final under "ask_system".
+> I asked the tariff system about the £3.20 fee, and the desk accepted the request. The case is now marked final with the outcome "ask_system".
 > 
-> The tariff system's answer isn't in the case yet, so I can't say which tariff entry applied or how the £3.20 was worked out. I haven't replied to the customer. She is not verified, and the case holds no tariff answer to base a reply on. I also haven't escalated, because the tariff lookup hasn't been refused or contradicted. If the case stays open, it goes to a person.
+> The tariff system's answer isn't in the case yet. The case record still shows only the facts from before, so I can't yet say which tariff entry applied or how the amount was worked out. Nothing has been sent to Mara Ellery. Her identity is also still unverified.

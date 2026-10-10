@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira Ellison, writing over secure chat, asked the desk to check whether her transfer instructions were separate and whether the pending one had been stopped or returned. The desk classed it as a question about a transfer and sent an ask to the payment system, which returned nothing, so the case closed as asked with no answer on whether the pending transfer was stopped or returned. Her identity is still unverified, and the desk did not stop or return anything, so a person would need to verify her before any such request and pick up the payment system's reply once it arrives.
+Mira Ellison, writing over secure chat and not yet verified, asked whether two transfers were separate instructions and whether the pending one had been stopped or returned. The desk classed it as a question about a transfer and sent an inquiry to the payment system, which accepted it, but no answer has come back yet. Nothing was changed on either payment, and what the entries are and whether the pending one was stopped or returned remains unanswered, with Mira's identity still unverified.
 
 _Written by a model from the record below; the sections below are the record._
 

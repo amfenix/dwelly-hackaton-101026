@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked about their monthly rent payment to Elm Quay Property Services, and the desk's checks found no sign of it for this cycle. The desk classified the message as a question about a standing order and put that question to the recurring payments system, which was the only step taken. No answer has come back yet, so whether the payment was sent, or why it might not have been, is still unknown, and nothing has been confirmed to the customer.
+The request was a question about a standing order, apparently whether the monthly rent payment to Elm Quay Property Services for this cycle had gone out, since no payment was visible and no confirmation was on file. The desk classified it as a standing order question and put it to the recurring payments system, and the case closed in the asked state. The recurring system's answer had not come back, so it is not yet known whether the payment was sent or why it might not have been, and the reply to the customer still has to be written once that answer arrives.
 
 _Written by a model from the record below; the sections below are the record._
 

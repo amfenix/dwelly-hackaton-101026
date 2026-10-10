@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, a viewer writing on secure chat whose identity was not verified, asked whether row SUP-17 in a payout batch marked processed had actually been paid. The desk classified it as a question about the batch and sent an inquiry about SUP-17 to the payment system, then closed the case in the asked state. The payment system's answer is not in the record, so whether the row was paid is still open, and nothing has yet been passed back to Leona.
+Leona Voss, a viewer whose identity is not verified, wrote on secure chat that the batch shows processed but she can't tell whether row SUP-17, for the studio materials supplier, was paid, and asked for that row's status. The desk classed it as a question about a batch, routed it to the payment system, and sent that system a query about SUP-17, which went through, and the case closed at that step. The payment system's answer is not in the record, so whether SUP-17 was paid is still unknown and nothing has been sent back to Leona.
 
 _Written by a model from the record below; the sections below are the record._
 

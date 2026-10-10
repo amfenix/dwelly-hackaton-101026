@@ -67,8 +67,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4653 tokens in, 351 out, 3.093 s, cost $0.0090; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6686 tokens in, 439 out, 4.987 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The documents system has been asked about the payment record, and the case now shows as asked. I'm stopping here because the next step depends on its answer.
+> I asked the documents system about the customer's request for a record of the £74.00 payment (reference HV-040, status SENT). The desk accepted the request and the case is now closed with the outcome "ask_system".
+> 
+> The documents system's reply isn't in the case yet. The case facts still show no confirmation, and nothing has been refused. The customer hasn't been told anything about the document.

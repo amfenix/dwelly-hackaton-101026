@@ -58,21 +58,27 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 56. `next_system`: not known → access (by `route-access`).
-57. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-58. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-59. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-60. Called `send_for_confirmation` (attempt 1, key banking-036-at-02:do-confirm:17).
-61. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Mara Ellison"}.
-62. `send_for_confirmation` found {}.
-63. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-64. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+57. Rule `profile-change-to-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked absent → true (access_asked=not known); verified → true (verified=True); registration_asked absent → true (registration_asked=not known). A verified customer's profile change is started in the protected change process.
+58. State `TRIAGED` → `REQUEST_PENDING` (by `profile-change-to-the-process`).
+59. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+60. Called `register_request` (attempt 1, key banking-036-at-02:do-request:17).
+61. Action in the world: `register_request` {"team": "access", "about": "profile"}.
+62. `register_request` found {}.
+63. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+64. The case closed in `REQUESTED`: **submit_request**.
+65. The agent asked for `submit_request` {}.
+66. Refused `submit_request` in `REQUESTED`: register: state = TRIAGED is false (state=REQUESTED); request_type = register is false (request_type=change); payment-instruction: state = TRIAGED is false (state=REQUESTED); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=REQUESTED); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=REQUESTED); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=REQUESTED); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=REQUESTED); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=REQUESTED); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=REQUESTED); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change).
+67. The agent asked for `ask_system` {"system": "access"}.
+68. Refused `ask_system` in `REQUESTED`: payment-ask: state = TRIAGED is false (state=REQUESTED); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=REQUESTED); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=REQUESTED); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=REQUESTED); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=REQUESTED); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=REQUESTED); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=REQUESTED); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=REQUESTED); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-3 calls, 4860 tokens in, 502 out, 4.411 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10891 tokens in, 1001 out, 9.753 s, cost $0.0280; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed: the desk has sent the address change to Mara for confirmation, and the case is final. Nothing else needs doing from me, so I'm not calling any other tool.
+> I couldn't submit the address change, and the case is closed. Nothing has been changed on Mara Ellison's profile.
 > 
-> The change isn't applied yet. Mara is verified in the secure portal, but her confirmation is still "none". She has said she will confirm when the profile process asks her to. Once she does, the change can go through.
+> - **What the records show:** Mara is verified in the secure portal and has asked to change her correspondence address. She has not yet confirmed the change, so confirmation is recorded as "none".
+> - **Why it was refused:** The policy refused my `submit_request` call because the case is still at "requested" and has not been triaged. My attempt to ask the access system was refused for the same reason.
+> - **What happens next:** The case is recorded as closed with `submit_request` as its outcome, even though the change was never submitted. It needs a person to triage it. The profile process should then ask Mara to confirm the new address.

@@ -72,10 +72,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4942 tokens in, 469 out, 4.015 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5037 tokens in, 517 out, 4.151 s, cost $0.0114; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is with the recurring payments system, which holds Direct Debit mandate records. I asked it whether the Northmere Water Services mandate is currently active. The case is marked as asked, so the next step is to read its answer and reply to the customer.
-> 
-> I haven't cancelled or changed anything on the mandate, as Mara asked. I also haven't made any assessment of what she owes.
+> I've asked the recurring payments system for the current status of the Northmere Water Services Direct Debit mandate. I haven't cancelled or changed anything, as Mara asked. The next step is to reply to her with what the system returns.

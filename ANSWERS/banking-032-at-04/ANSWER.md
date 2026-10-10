@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat and not verified, asked whether an archived copy of her January 2024 statement is available. The desk had already queried the documents system and closed the case as waiting, because no answer on availability had come back. A second documents query and an attempt to escalate to a person were both refused, since the case was no longer in the triaged state, so nothing has been sent to her. A person still needs to check the statement archive and verify her identity before any copy is shared.
+Mara Ellison, writing over secure chat and not yet verified as the account holder, asked whether an archived copy of her January 2024 statement is available. The desk had already queried the documents system, but its answer had not come back, so the case closed in WAITING with no actions taken. A second documents query and an attempt to escalate with a note were both refused because the case was no longer in the triaged state, so nothing has reached a person yet; the statement's availability and Ellison's identity both remain unconfirmed.
 
 _Written by a model from the record below; the sections below are the record._
 

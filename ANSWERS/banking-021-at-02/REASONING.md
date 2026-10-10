@@ -70,8 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4882 tokens in, 465 out, 3.992 s, cost $0.0106; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7092 tokens in, 510 out, 4.552 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the card system whether dispatch has been registered for the replacement card. The request was accepted, and the case is now waiting on that system's answer. I haven't replied to Mara yet. Once the card system's answer is in the case, the desk can reply with exactly what it shows.
+> I've asked the card system whether the replacement card has been dispatched. The request was accepted and the case is now closed at this step.
+> 
+> The card system's answer isn't in the case yet. The only facts on record are the portal's "accepted" message and the fact that the customer, Mara Ellison, isn't verified. So I can't say yet whether the card has been dispatched, and I won't claim it has.

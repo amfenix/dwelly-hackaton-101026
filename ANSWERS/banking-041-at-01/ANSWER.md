@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified authorised file uploader on the business portal, asked whether the desk had received her batch file batch-041.csv (reference HV-041, listing Staff A at £420.00 and Staff B at £385.00). The desk classified it as a question about a batch and sent a query to the payment system about reference HV-041 and the £420.00 amount. That query returned nothing, so the case is closed in the asked state with no answer yet on whether the file was received, and nothing was approved or authorised.
+Mara Ellison, a verified authorised file uploader on the business portal, asked whether the desk had received batch-041.csv (reference HV-041, with a first line of £420.00). The desk classed it as a question about a batch and put a query to the payment system about that reference and amount. The payment system's answer is not yet in the case, so nothing has been confirmed to Mara, and replying to her is still left to be done once that answer arrives.
 
 _Written by a model from the record below; the sections below are the record._
 

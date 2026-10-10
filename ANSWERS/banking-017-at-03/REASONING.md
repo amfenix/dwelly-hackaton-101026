@@ -65,20 +65,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "recurring"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring).
-64. The agent asked for `escalate` {"note": "Customer Mara Ellery (secure chat, not verified) asks whether her monthly rent standing order was executed this cycle and what status the bank recorded. The recurring system was already queried, but no status is in the case and further queries are refused because the case is WAITING. Please check the standing-order run record, verify the customer's identity, and tell her the recorded status."}.
+64. The agent asked for `escalate` {"note": "Customer Mara Ellery (secure chat, not verified) asks whether her monthly rent standing order was executed this cycle and what status the bank recorded. The recurring system was already queried (recurring_asked=True), but no result is in the case, and a second query was refused because the case is in WAITING state. Please check the standing-order run and its recorded status, and reply to the customer. Share details only after verification."}.
 65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11096 tokens in, 1017 out, 9.892 s, cost $0.0285; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10907 tokens in, 915 out, 9.151 s, cost $0.0271; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't answer Mara's question about her rent standing order, and the case is still open, waiting on the recurring-payments check.
+> I couldn't move this case forward. It is in a WAITING state and I can't act on it further, so it stays open for a person to pick up.
 > 
-> - **What the case holds:** The recurring system was already asked about this standing order, but no result is recorded, so I can't say whether it was executed or what status the bank logged.
-> - **Second ask refused:** When I asked the recurring system again, the desk refused. The case is in a waiting state and that question has already been asked.
-> - **Escalation refused:** The desk also refused my escalation to a person for the same reason.
-> - **Verification:** Mara is not verified, which may matter before any payment details are shared with her.
+> - **What's missing:** The recurring (standing-order) system was already queried for this case, but no answer is recorded. I can't tell Mara whether her rent standing order was sent or what status the bank recorded for it.
+> - **Second query refused:** Asking the recurring system again was refused, because the case isn't in the state that allows a new query.
+> - **Escalation refused:** Handing the case to a person was also refused for the same reason.
+> - **Verification:** Mara is not verified on this chat, so no account details should be shared with her until that is done.
 > 
-> Nothing more can be done from here until the recurring check returns something. A person will need to pick the case up from there.
+> Someone needs to check this month's standing-order run and its recorded status, then reply to Mara once she is verified.

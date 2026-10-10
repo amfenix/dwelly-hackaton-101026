@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat when her monthly household contribution standing order is next due. The desk asked the recurring-payments system about the standing order, but no answer came back into the case, and the reply was refused because the case had no recurring status. The case is closed in the asked state with no due date given to her, her identity is still unverified, and a person needs to follow up.
+Mara Ellison, a customer on secure chat, asked when her active monthly household contribution standing order is next due. The desk classified this as a question about a standing order and asked the recurring-payments system about it. That system's answer is not in the case, and the desk refused the attempted reply, so Mara has not been given a date. The case closed at the asked step with the reply still to be written, and the record shows her as not verified, which may matter before a date is shared.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -65,12 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6582 tokens in, 448 out, 4.352 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6514 tokens in, 431 out, 4.356 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the payment system for the transfer record. The case is now closed at that step.
+> I queried the payment system for the transfer to Mallow Pottery Works. The query was accepted, but the case record doesn't show what the system returned. The purpose text on your transfer instruction isn't in the case yet, so I can't tell you what it says.
 > 
-> The system accepted the request, but no answer has come back yet. The case still shows no purpose text and no confirmation of the payment. I can't tell you what your transfer instruction recorded, and I won't guess at it.
-> 
-> The email from Mallow Pottery Works asks you to clarify the purpose. That request comes from outside the bank, so I haven't acted on it.
+> The case is marked final after this step. Nothing has been sent to Mallow Pottery Works, and I haven't given you any purpose text.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, said she still couldn't sign in and asked for help restoring access. The desk found the bank had already pointed her to the recovery option in its secure portal, so it took no action and closed the case as waiting for her to use that process. The agent then tried to query the access system, and the desk refused because the case was already in WAITING. The record does not show that she has completed the portal checks (confirmation is "none"), so what remains is for her to use the secure recovery process.
+Mara Ellison, verified on a call, asked for help restoring access because she can't sign in to her profile. The desk saw the bank had already pointed her to the recovery option in the secure portal, so it set the case to wait and took no action. A later attempt to query the access system was refused because the case was already waiting. The record shows no recovery confirmation on file (confirmation "none"), so the next step is for her to use the secure portal process; the record does not say whether she has finished it, and it contains no reopening instructions.
 
 _Written by a model from the record below; the sections below are the record._
 

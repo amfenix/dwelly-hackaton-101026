@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, writing over secure chat and not verified, said she is the authorised manager for North Quay Printworks. She asked the desk to escalate a request for the acquiring report covering 1–7 July 2025, which wasn't showing as available. The desk treated it as a question about a document and asked the documents system about it, and the case closed at that step. The system's answer isn't in the record, so whether the report is available is still unknown, nothing was escalated or changed, and her authority was not verified.
+Mara Venn, writing over secure chat, asked the desk to escalate a request for North Quay Printworks' acquiring report for 1–7 July 2025, which wasn't showing as available. The desk classified it as a question about a document and asked the documents system about it, and that is where the case closed. The system's answer isn't in the case yet, nothing has been escalated, and she hasn't been told whether the file is available. She is also not verified on this chat, so her claim to be the authorised manager was not acted on.
 
 _Written by a model from the record below; the sections below are the record._
 

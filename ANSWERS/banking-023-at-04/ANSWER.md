@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified on a call, said she doesn't recognise a £38.40 card purchase at Fern & Finch Books on 14 July 2025. She asked for the card team to look into it and for advice on protecting her card. The desk registered the enquiry as case HV-023, which records the enquiry only and is not a finding of fraud or a decision to refund, and sent her a reply. The record does not show what the reply said about protecting her card, and it lists nothing further left for a person.
+Mara Ellery, verified on a call, asked the desk to raise the £38.40 Fern & Finch Books card purchase of 14 July 2025, which she doesn't recognise, with the card team and to tell her how to protect her card. The desk registered it as case HV-023, which records the enquiry only and is not a finding of fraud or a decision to refund, and then sent a reply to her; two attempts to ask the card system and to submit the request were refused because registration was already done. The record does not show what the reply said about protecting her card, and nothing further is recorded as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

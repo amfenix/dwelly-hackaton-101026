@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an unverified customer on secure chat, asked the desk to check whether dispatch has been registered for her replacement card, since the portal only says the request was accepted. The desk classified this as a card question and sent a query to the card system, and the case closed in the asked state. The record shows no answer from the card system yet and no reply to Mara, so both are still outstanding.
+Mara Ellison, writing over secure chat and not verified, asked the desk to check whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk classified it as a question about a card and sent a query to the card system. That query is the only action taken, and the case closed at that step. The card system's answer is not in the record, so whether the card has been dispatched is still unknown and nothing has yet gone back to her.
 
 _Written by a model from the record below; the sections below are the record._
 

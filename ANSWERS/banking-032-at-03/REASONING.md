@@ -74,10 +74,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6853 tokens in, 488 out, 4.558 s, cost $0.0148; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6892 tokens in, 466 out, 4.188 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system whether an archived copy of the January 2024 statement exists. The request was accepted, and the case now shows as asked. The answer isn't in yet, so I can't say whether the statement is available. Once the documents system replies, the reply to Mara can report what it found.
+> I've asked the documents system whether an archived copy of the January 2024 statement exists. The request was accepted, and I'm stopping here until its answer comes back.
 > 
-> Mara's identity is also still unverified. That matters if a copy turns out to be available.
+> Mara Ellison hasn't been verified yet, so no statement should be released until that is done.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, a verified caller, raised a question about a transfer, and the desk found the final instruction showing £648.20, not the £684.20 she remembered from the draft. The desk asked the payment system about the transfer for £648.20 and closed the case on that step. The payment system's answer has not come back into the case, and no confirmation of the payment is on record, so the amount actually sent is still unconfirmed.
+Mara Ellwood, verified on a call, raised a question about a transfer: she remembered the draft as £684.20, but the final line shows £648.20. The desk identified her, read the amount as £648.20 and asked the payment system about the transfer for that amount, then closed the case at that step. Nothing has confirmed that £648.20 is what was actually sent, so the answer is still pending from the payment system's record.
 
 _Written by a model from the record below; the sections below are the record._
 

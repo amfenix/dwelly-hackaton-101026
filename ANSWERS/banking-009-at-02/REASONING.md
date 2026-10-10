@@ -54,7 +54,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-53. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.93 → transfer.
+53. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → transfer (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
@@ -72,10 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6937 tokens in, 466 out, 4.304 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6983 tokens in, 480 out, 5.581 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system to check the transfer, and the case is now closed on that step. The payment system's answer hasn't come back into the case yet, so I can't confirm the amount H&V sent.
+> I've queried the payment system for the transfer record. The case is marked final at this step, so I'm stopping here.
 > 
-> The only figure on record so far is the £648.20 on the final payment line in the secure portal. That doesn't confirm what was actually sent, and the case shows no confirmation of the payment. Nothing in the case supports £684.20 either, since that comes from your memory of the draft.
+> The answer on the amount H&V sent should come from that record, not from the customer's memory of the draft or from the portal line alone. The only amount the desk has so far is £648.20, taken from the final payment line in the secure portal. The case shows no confirmation yet, so I can't tell Mara that £648.20 is what was actually sent.

@@ -74,10 +74,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 7799 tokens in, 796 out, 6.24 s, cost $0.0180; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 7775 tokens in, 812 out, 6.124 s, cost $0.0181; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply to Maren, and the case is now closed as replied.
+> I used `reply` to answer Maren, and the desk accepted it. The case is now in the REPLIED state and closed.
 > 
-> The access system had already been asked and its answer was in the case. That answer came back as "OTHER", and the desk rules say an "OTHER" answer is still an answer to report, so I used `reply` and not `redirect_secure`. I did not read the reply text, so I can't confirm it points her to the bank's secure PIN process. Maren is also not verified, and the reply did not change that.
+> I chose `reply` over `redirect_secure` because the access system had already been asked and its answer was in the case. The answer came back as OTHER, which still has to be reported to the customer. I didn't see the text of the reply the desk wrote, so I can't confirm it points her to the bank's secure PIN process.
+> 
+> Maren isn't verified, and nothing in the case involved handling her PIN.

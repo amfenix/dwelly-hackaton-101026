@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat why a £3.20 fee appeared against a withdrawal, and asked for the tariff entry applied to be checked and for the case to be escalated. The desk ran the tariff check, which found the fee matches the entry for a foreign-currency cash withdrawal on its processing date. It replied to her saying so, and that the reply does not authorise a refund or account change and that none was made. The case is closed on that reply; the record shows no escalation and nothing left for a person, though she was not verified.
+Mara Ellery asked over secure chat why a £3.20 fee appeared against a withdrawal, and asked the desk to escalate and check which tariff entry applied. The tariff review found that the fee matches the entry for a foreign-currency cash withdrawal on its processing date, so the desk replied to her with that result and did not escalate. The reply states that no refund or account change was authorised or made. Her identity was still unverified, and the record shows nothing left open for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

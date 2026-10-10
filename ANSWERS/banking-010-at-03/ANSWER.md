@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, an unverified customer on secure chat, asked whether an incoming £42.80 entry from Northmere Home Supplies is the refund for her specific transfer. The desk requested the incoming-payments check and closed the case as waiting because no result had come back, so nothing confirms whether the refund has arrived. The agent's attempts to re-ask the incoming system and to escalate to a person were both refused because the case was already in WAITING, so no one has been handed the case and it is still open.
+Elowen Marr, a customer on secure chat who is not verified, asked whether a possible £42.80 refund from Northmere Home Supplies had arrived and wanted it matched to the specific transfer. The desk recorded that the incoming system had been asked but no answer was on file, so it closed the case as "wait" with no actions taken. A later repeat ask of the incoming system and an escalation to a person were both refused because the case was already in WAITING, so nothing was confirmed or matched, and someone still needs to check the incoming entries against that transfer and verify her identity.
 
 _Written by a model from the record below; the sections below are the record._
 

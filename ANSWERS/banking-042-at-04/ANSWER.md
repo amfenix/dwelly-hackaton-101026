@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Fenwick, a viewer on secure chat, asked for help seeing which rows of batch HV-042 need attention. The desk asked the bank, which returned a status of validation failed, and replied to her on secure chat that the record shows that status, that it does not establish a corrected file was received or any payment made, and that no approval or role change was made. The case is closed as replied; the reply did not list the row-level errors, and she was not verified on this chat.
+Nadia Fenwick, a viewer on secure chat, asked for help seeing which rows of batch HV-042 needed attention. The desk checked with the bank, which reported the batch as validation failed, and replied on secure chat that the record shows validation_failed, that it doesn't establish a corrected file was received or any payment made, and that no approval or role change was made. The reply gave no row-level details, though the bank's report names a missing payee label on row 2, and the case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

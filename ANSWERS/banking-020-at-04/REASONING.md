@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
-55. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
+55. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.68 → standing_order.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → standing_order (by `triage`).
 58. State `READING` → `TRIAGED` (by `triage`).
@@ -74,10 +74,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7267 tokens in, 538 out, 4.886 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7235 tokens in, 532 out, 4.969 s, cost $0.0160; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Elena. It draws on the recurring-payments check, which shows her standing order is still active. The case is now closed as replied.
+> I've sent the reply to Elena, based on the recurring-payments record, which shows an active standing order. The desk accepted it and the case is closed.
 > 
-> One thing to know: the desk's records still show her as not verified, even though she says she completed the account-holder checks in secure chat. I didn't act on her account. I only used the recurring-payments answer already on the case to reply to her question.
+> The case facts still list her as not verified, even though she says she completed the account-holder checks. The desk didn't refuse the reply, so I sent it.

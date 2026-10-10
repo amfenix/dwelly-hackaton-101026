@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, an unverified customer on secure chat, asked what stage her transfer has reached and whether the beneficiary has confirmed receipt. The desk classified it as a question about a transfer, found no receipt confirmation on record, and put the case in a waiting state because the payment system had been asked but had not yet answered. The agent's later attempts to ask the payment system again, send a reply and escalate were all refused because the case was no longer in the triaged state, so nothing was sent to the customer, and a person still needs to verify her and check the transfer's status.
+Mara Ellwood, an unverified customer on secure chat, asked what stage her transfer had reached and whether the beneficiary's receipt is confirmed. The desk classified this as a question about a transfer, asked the payment system, and put the case into waiting, since the payment system's answer had not come in and the only confirmation on record is "none". The agent's later attempts to ask the payment system again, send a reply and escalate were all refused because the case was already in the waiting state, so nothing was sent to her and no one has been handed the case; a person still needs to check the payment record and answer her, without claiming beneficiary receipt and after verifying her identity.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked Harrow & Vale to cancel their active Direct Debit mandate to Northmere Fitness so it can't be used for future collections. The desk classified this as a Direct Debit instruction and routed it to the recurring payments system. It then asked that system about the Direct Debit, and the case closed in the asked state. The desk did not submit the cancellation itself: that attempt was refused because the requester was not verified, and the record shows no cancellation carried out, so nothing further is recorded as pending for a person.
+The request was to have the bank cancel an active Direct Debit mandate to Northmere Fitness so it could not be used for future collections. The desk classified it as an instruction about a direct debit and sent a query to the recurring-payments system about it. It did not submit the cancellation itself, because the attempt to submit was refused when the requester had not been verified (the requester lookup returned nothing), and the case closed in the asked state. The record shows no cancellation carried out and does not say what happens after the query.
 
 _Written by a model from the record below; the sections below are the record._
 

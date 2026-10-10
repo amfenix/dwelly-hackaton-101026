@@ -74,10 +74,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7712 tokens in, 559 out, 5.159 s, cost $0.0172; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7650 tokens in, 526 out, 4.561 s, cost $0.0168; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the request to block your missing debit card. It was accepted and the case is now closed on our side.
+> I've submitted the request to block your missing debit card. The desk accepted it, and the case is now marked as requested.
 > 
-> You were verified on the call and your instruction was clear, so no further checks were needed. I tried to look up your card records first, but the desk refused that lookup for a verified instruction like this one. I haven't seen the card records, so I can't confirm which card was blocked or whether you hold more than one H&V debit card.
+> Your identity was verified on the call, and you clearly asked for the block. Checking the card system first wasn't needed for this type of request, and the desk refused that lookup. I didn't check how many cards you hold. The block request doesn't name a specific card, so I can't confirm which card it applies to.

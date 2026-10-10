@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marsh, writing on secure chat and not verified, asked the desk to check whether the transfer for her pottery studio's kiln contribution had reached H&V, since it wasn't showing in her account. The desk classified it as a question about an incoming payment and put it to the incoming-payments system, and the case closed at that step. The system's answer hasn't come back into the record, so whether the money has arrived is still unknown, and the only evidence of a transfer is the sender's word, with no confirmation on file.
+Elowen Marsh, writing over secure chat, asked the desk to check whether H&V had received a transfer for her pottery studio's kiln contribution that wasn't showing in her account. The desk classified this as a question about an incoming payment and sent an inquiry to the incoming-payments system, then closed the case at that step. The system's answer is not in the record, so whether the payment has arrived is still unknown, and Elowen is recorded as not verified, which a person needs to take into account before replying.
 
 _Written by a model from the record below; the sections below are the record._
 

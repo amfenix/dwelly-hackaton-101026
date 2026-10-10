@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10197 tokens in, 574 out, 6.546 s, cost $0.0223; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10205 tokens in, 589 out, 5.91 s, cost $0.0224; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed your dispute for the £38.40 Fern & Finch Books purchase on 14 July 2025 to the team that handles card disputes. The request was accepted and the case is now marked as requested. The desk didn't check the card records first, so nothing has been confirmed about who made the payment.
+> I've passed your dispute to the team that investigates card transactions. It covers the £38.40 purchase at Fern & Finch Books on 14 July 2025, which you don't recognise. The case is now with them. Their findings aren't in yet, so nothing has been decided about who made the purchase.
 > 
-> I haven't taken any action on your card itself. If you want to protect it now, use the bank's secure process to block or freeze the card. Don't share your PIN or password with anyone, including in messages to us.
+> I haven't said anything yet about protecting your card, and no change has been made to it. If you want it blocked or replaced, tell me which card you mean. The bank will only act on that instruction from you. It will never ask for your PIN or password.

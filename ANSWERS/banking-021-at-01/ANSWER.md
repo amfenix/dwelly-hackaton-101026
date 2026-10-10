@@ -4,7 +4,7 @@
 
 ## Summary
 
-The desk treated the message as a question about a replacement card and asked the card system about it. The query went through and the case closed at that step, but the card system's reply has not come back into the case. The only confirmation on record is the bank's message that the replacement card request was accepted, which shows it was received and not that the card has been dispatched or delivered. Whether the card has shipped is still unknown and is left for a person to find out.
+The customer asked a question about a replacement card, apparently whether it had been dispatched. The desk classified it as a card question and sent it to the card system, and the query was accepted. The record holds no answer from the card system, so dispatch is unconfirmed: the only confirmation is the bank's message that the replacement card request was received, which says nothing about dispatch or delivery. The case is closed at this step, and what the card system replies is left for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

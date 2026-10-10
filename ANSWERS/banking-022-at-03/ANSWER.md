@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk classed this as a card instruction, found that the card system had already been asked (the block was submitted under case HV-022), and closed the case in WAITING because the card system's answer is not in yet. The agent's later attempts to ask the card system again and to submit a request were both refused because the case was no longer in the triaged state, so no block confirmation is on record and nothing is left for a person beyond waiting for that answer.
+Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk classified this as a card instruction, found the card system had already been asked, and closed the case in WAITING because that system's answer is not yet in. The agent's later attempts to ask the card system again and to submit the block request were both refused, so no block has been made by the desk. What remains is for a person to pick up the case once the card system answers.
 
 _Written by a model from the record below; the sections below are the record._
 

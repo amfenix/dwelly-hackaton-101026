@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was classified as a question about a batch, and the desk routed it to the payment system and sent that system a query about the batch. The case closed as final with that query as its outcome. The record shows no answer from the payment system and no other facts found, so the desk has no row-level error report or reason the batch failed validation, and a person will need to follow up on the payment system's reply.
+The request was a question about a batch, and the desk routed it to the payment system and sent that system a query about the batch. The case closed at that step, and the record shows no answer back from the payment system. Why the batch failed validation has not been confirmed and no error report has been provided, so a person would need to follow up on the payment system's reply.
 
 _Written by a model from the record below; the sections below are the record._
 

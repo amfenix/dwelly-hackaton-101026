@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was an instruction about a role, and the desk's checks turned up nothing on the requester or the subject. The only note on file was a confirmation record showing Owen Bell as the active Payroll Approver for Larkmere Studio Ltd. The desk did not submit the request, because submission was refused: the case was not verified and did not meet any submission rule. Instead it asked the business system about the role, and the case closed in the asked state. The record lists nothing further for a person to do.
+The request was an instruction concerning a role, and the desk's records show Owen Bell's Payroll Approver role at Larkmere Studio Ltd as active, with no confirmation of a change on file. The desk decided to ask the business system about the role, did so, and closed the case with that as its outcome. The business system returned nothing, and the role was not revoked, so whether and how the revocation is carried out is still left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -67,10 +67,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `submit_request`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=business); verified is not known (verified=not known); incoming-instruction: next_system = incoming is false (next_system=business); verified is not known (verified=not known); recurring-instruction: next_system = recurring is false (next_system=business); verified is not known (verified=not known); card-instruction: next_system = card is false (next_system=business); verified is not known (verified=not known); access-instruction: next_system = access is false (next_system=business); verified is not known (verified=not known); business-instruction: verified is not known (verified=not known); documents-instruction: next_system = documents is false (next_system=business); verified is not known (verified=not known)
 
 ## Final result
 

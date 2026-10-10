@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an unverified customer on secure chat, asked whether her tablet is currently linked before she tries to use it for banking. The desk classified this as an access question and passed it to the access system, which is where the case closed. The desk's own attempt to send a reply was refused because no access status had come back, so nothing has been said to her about whether the tablet is linked and that answer is still outstanding.
+Mara Ellison, writing over secure chat and not verified, asked whether her tablet is linked before she uses it for banking. The desk classified this as an access question and sent it to the access system, and the case closed in the asked state. The access system returned no status, so Mara has not been told whether the tablet is linked, and the desk refused a follow-up reply because there was nothing to base it on. A person needs to pick up the case.
 
 _Written by a model from the record below; the sections below are the record._
 

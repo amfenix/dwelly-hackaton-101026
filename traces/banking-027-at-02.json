@@ -1,7 +1,7 @@
 {
   "id": "banking-027-at-02",
-  "outcome": "ask_system",
-  "state": "ASKED",
+  "outcome": "redirect_secure",
+  "state": "REDIRECTED",
   "final": true,
   "fields": {
     "requester": "Mara Ellison",
@@ -51,10 +51,11 @@
   },
   "actions": [
     {
-      "type": "ask_system",
+      "type": "redirect_secure",
       "args": {
-        "system": "access",
-        "about": "access"
+        "to": "Mara Ellison",
+        "channel": "verified_call",
+        "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."
       }
     }
   ],
@@ -97,7 +98,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Mara Ellison, a customer on a verified call, said she still can't sign in to her profile and asked for help restoring access; she did not share any password or code. The desk classified it as an access request and asked the access system about it. That question was sent and the case closed in the asked state, with no answer recorded yet and nothing changed on her profile. What happens once the access system replies is left for a person, since no reply to her is in the record.",
+  "summary": "Mara Ellison, a verified caller, said she still couldn't sign in to her profile and asked for help restoring access. The desk classified this as an access request and redirected her to the secure process in her portal, telling her it checks her identity there, that the bank never asks for passwords, PINs or codes, and that nothing on her profile was changed. The case is closed as redirected, and nothing is left for a person on the desk, though restoring her access depends on her completing the secure process herself.",
   "journal": [
     {
       "seq": 1,
@@ -481,7 +482,7 @@
     },
     {
       "seq": 35,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "call",
       "function": "check_tariff",
       "attempt": 1,
@@ -490,14 +491,14 @@
     },
     {
       "seq": 36,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "returned",
       "function": "check_tariff",
       "values": {}
     },
     {
       "seq": 37,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "trigger",
       "name": "read-bank-actions",
       "on": null,
@@ -515,7 +516,7 @@
     },
     {
       "seq": 38,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "call",
       "function": "check_bank_actions",
       "attempt": 1,
@@ -645,7 +646,7 @@
     },
     {
       "seq": 50,
-      "at": 0.243,
+      "at": 0.24,
       "kind": "choice",
       "field": "request_type",
       "raw": "access",
@@ -657,7 +658,7 @@
     },
     {
       "seq": 51,
-      "at": 0.243,
+      "at": 0.24,
       "kind": "choice",
       "field": "subject",
       "raw": "access",
@@ -669,7 +670,7 @@
     },
     {
       "seq": 52,
-      "at": 0.243,
+      "at": 0.24,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -678,7 +679,7 @@
     },
     {
       "seq": 53,
-      "at": 0.243,
+      "at": 0.24,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -687,7 +688,7 @@
     },
     {
       "seq": 54,
-      "at": 0.243,
+      "at": 0.24,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
@@ -695,7 +696,7 @@
     },
     {
       "seq": 55,
-      "at": 0.243,
+      "at": 0.24,
       "kind": "trigger",
       "name": "route-access",
       "on": null,
@@ -727,7 +728,7 @@
     },
     {
       "seq": 56,
-      "at": 0.243,
+      "at": 0.24,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -736,20 +737,18 @@
     },
     {
       "seq": 57,
-      "at": 2.987,
+      "at": 2.472,
       "kind": "signal",
-      "signal": "ask_system",
-      "args": {
-        "system": "access"
-      }
+      "signal": "redirect_secure",
+      "args": {}
     },
     {
       "seq": 58,
-      "at": 2.987,
+      "at": 2.472,
       "kind": "trigger",
-      "name": "access-ask",
-      "on": "ask_system",
-      "when": "state = TRIAGED and args.system = access and (next_system = access or next_system absent) and access_asked absent and request_type not in [register, change, authority]",
+      "name": "redirect-to-the-secure-process",
+      "on": "redirect_secure",
+      "when": "state = TRIAGED and request_type = access",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -759,35 +758,7 @@
           }
         },
         {
-          "test": "args.system = access",
-          "result": true,
-          "values": {
-            "args.system": "access"
-          }
-        },
-        {
-          "test": "next_system = access",
-          "result": true,
-          "values": {
-            "next_system": "access"
-          }
-        },
-        {
-          "test": "next_system absent",
-          "result": false,
-          "values": {
-            "next_system": "access"
-          }
-        },
-        {
-          "test": "access_asked absent",
-          "result": true,
-          "values": {
-            "access_asked": null
-          }
-        },
-        {
-          "test": "request_type not in [register, change, authority]",
+          "test": "request_type = access",
           "result": true,
           "values": {
             "request_type": "access"
@@ -798,25 +769,25 @@
     },
     {
       "seq": 59,
-      "at": 2.987,
+      "at": 2.472,
       "kind": "state",
       "frm": "TRIAGED",
-      "to": "ASK_PENDING",
-      "by": "access-ask"
+      "to": "REDIRECT_PENDING",
+      "by": "redirect-to-the-secure-process"
     },
     {
       "seq": 60,
-      "at": 2.987,
+      "at": 2.472,
       "kind": "trigger",
-      "name": "do-ask",
+      "name": "do-redirect",
       "on": null,
-      "when": "state = ASK_PENDING",
+      "when": "state = REDIRECT_PENDING",
       "why": [
         {
-          "test": "state = ASK_PENDING",
+          "test": "state = REDIRECT_PENDING",
           "result": true,
           "values": {
-            "state": "ASK_PENDING"
+            "state": "REDIRECT_PENDING"
           }
         }
       ],
@@ -824,46 +795,47 @@
     },
     {
       "seq": 61,
-      "at": 2.987,
+      "at": 2.472,
       "kind": "call",
-      "function": "ask_system",
+      "function": "redirect_secure",
       "attempt": 1,
-      "key": "banking-027-at-02:do-ask:17",
+      "key": "banking-027-at-02:do-redirect:17",
       "args": {}
     },
     {
       "seq": 62,
-      "at": 2.987,
+      "at": 2.472,
       "kind": "action",
-      "type": "ask_system",
+      "type": "redirect_secure",
       "args": {
-        "system": "access",
-        "about": "access"
+        "to": "Mara Ellison",
+        "channel": "verified_call",
+        "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."
       },
-      "by": "do-ask",
-      "key": "banking-027-at-02:do-ask:17"
+      "by": "do-redirect",
+      "key": "banking-027-at-02:do-redirect:17"
     },
     {
       "seq": 63,
-      "at": 2.987,
+      "at": 2.472,
       "kind": "returned",
-      "function": "ask_system",
+      "function": "redirect_secure",
       "values": {}
     },
     {
       "seq": 64,
-      "at": 2.987,
+      "at": 2.472,
       "kind": "state",
-      "frm": "ASK_PENDING",
-      "to": "ASKED",
-      "by": "do-ask"
+      "frm": "REDIRECT_PENDING",
+      "to": "REDIRECTED",
+      "by": "do-redirect"
     },
     {
       "seq": 65,
-      "at": 2.987,
+      "at": 2.472,
       "kind": "final",
-      "state": "ASKED",
-      "outcome": "ask_system"
+      "state": "REDIRECTED",
+      "outcome": "redirect_secure"
     }
   ],
   "calls": [
@@ -958,7 +930,7 @@
           }
         }
       },
-      "seconds": 0.24194079998414963,
+      "seconds": 0.2392314999597147,
       "input_tokens": 904,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1107,23 +1079,21 @@
         ]
       },
       "response": {
-        "id": "msg_011CftZyphG3p2XkSarj1CGn",
+        "id": "msg_011CftaxsCAvv8xFn7dgbb17",
         "container": null,
         "content": [
           {
-            "signature": "CAQSmQoKEAgSGAI4AUIIdGhpbmtpbmcSDAESPrQ21DTy5xVAmRoMj1lXC5MMZ5ZPDI6xIjC/j7y1OMQMOsA7e1A1UCFHBgSrZfqHv73xuznSSxCq8TPGtgeNxK7Qa3NDO237lakqtgl7eHnBoJapz/TwEPtSoXeK4H+ia1iQfvnGTbiG9AelEfb6g9IFeHITEit1aGBViQOqqOJyzqjPG5Jd6HtvT9erdCiXOdAbjM6C+nEGpzPxw3KKdFqj5pZEuC8ah0dAsfzfu2K0+omqLQagSyz2pozLEj3Dsqbi8UNFY8v8MGyW9S3aLeRF4SkZUCj4XpWPR795CH9Lg8sPGqK5s1AHD5V4COkbmaW6CBLq1dviFaPwneIF3OYQdw3NHOXNSMr6oefTHkofdPikwm31vyoZdHnlubSEzt6YPFwKCz7qWwaZHQISMPAlglM84WqJOo9Y4EntWUkapBjXn1vPF44TATOeCa4SFASRUGxnLLdgnIsiTAwYHxPNX2LhEwtM7hl1mxe6H8hnfv8QkPR8I8c+u+gOfwPVgzzCAwY5Dm3yV4p1ots/v7iCTOi7/hIp+PXeRfV7of1ZPxaFpXdIBBOBUY32HD/0j+2wD46tOaSLucAD0yWZYxF3z2SwEjoofGLw7Ns25MBBKS/V3hxMmuotLQdDU3AUsqGb+ROMY5bylEuWlYfWV6MsQzoddfFfkO7o7gItxL9+G4OAra9vb3hNT4bJwefGY8zYqZTt3KtWOMWLQQaJYw+Na1cpatLaYTZfBejcQ5uJSl1eLZ5X1QJw6k1xS/uH3pH6AmAk/jMVE+M3WSfp38UPOy4IHWeeEbg/7nCwhViWdfqn9r2/W0um8K0j0WMXqlVtfVAFhlkVawe+IEKgAISacGhR/2ykQsWVwStX5OV/K3jTNxThsTMwwKsj78cHVGuflMt2HHxa3yk50+diM1HUnR/bWVwxG953rYGEeJ/T/2GqHIlAsYPtKFGgQa7D3qSi1c67bDQXp1hgmqKvrKgegFh13rxez263nUliRedAOjoyB6ao/h6dVkFnV4J6IN1MNG0BFMEv8mcAOUjsmPLvo2RCyRpvla71UuTkLn+6Zlvrn2lVdr523pcLbeqn3bR48cZm376GHDZ2rWTdmCGqYCmM/xHBqA4E+193kB/Gb4UJCH25mCzO4Im9cHTnrXazu6iCfkCuA53XZ7KzPSWyO2AjkUCS2RbFC6e9PSWK5v7Jn7ZxrcweDVcqlqkayyQlqckSvdq3iajmGC7ivK+ji6MTiLvQGmjDQlArNNuysR8pUIGwvlV2Ep5m3NBdKVJRMAdOB60dXMt/G2uDPRMPkN5D9/rK+wOcP5U8BDnZjjWIU/l6e9iRqQw7o5NeXKUTfiZ8NnKt4txCeTIARsPiWqlcqtJm44qkA010LpIVRX2iuBFoR1wDl+reLY7DjaMFzeqgGMvbhCqxa8MiZhRqUlvvJENpq+9WQ1Ix+lbkJRN9/CeaWuUMgkBwG5XmLafa7d+gXUM4W8xhE0TME2j1odF61e5gLwedK4xE4Y+vIUa6EEfxCeFUk/uldJROkLvoKomqmEnS1/dnenlCCEMIl7rJGITrIpK9GHHKxcrYxoJVIrsp5cPQEQZA6BA20FJBe5zyGT0/CvjDiiGfG3s6HQr4WyQ7VWw2JThQ3XU0h3NQJUaMnf2xE33Y+aPti27O8kgej5OvTIZmq4BjkVO7pRavA0b80DaOBA/0zyRL4fYYAQ==",
+            "signature": "CAQSiAkKEAgSGAI4AUIIdGhpbmtpbmcSDNPWFqwQDL37kP1zCRoM26zkRJLM02tXGnCgIjBowgWCp49ARaxI21eCR9gR+7Ju6gVC5/9VpoJcCHHr4SaXUdQMMCMhrzBoIkknOP8qpQhfKQmIyMo6t4ajuKsGWbKG9YGFLEFYXqfMjIbUaeFBC+rooBYwIS7smKM8Z24LQrDpoplUjVsJj/+4Af48P55GxhhoXsJDz8iwQMpqmXKOH2IoGJN/wVvvIOks4E8dd9/ZOtmY7d7LHQ2WxDwevKAMkkFkpke989lQMZNFErTcKMr0prpSmI/ReZVCb5yPD7jrtWg11a2WG3jVtG9VJ1QX/rUhU5wuhAYH4pTYFH3AIMf5XZGv2V5wpmq08OhO4PGC2qhcC2g/8BBj+MHxJS1hj2E4STLnkvRMZ9U5RpczAmv64dCptTpSysQDIzKK4smVKgudBi4UUuJrzwCURFsWfaLy/ycxJdVhLRt2x5ta81Trrso66vbrX2w8CkZgeyRBDicviZ5wHGKdF+tYjmjyUPxKAOa1xLfHI3Mkm0clYGqnpANGZ8V+WBjPrZhIxHXd0zxuzLtj7mccvVhXEzNiuNlNeCOCVYm/ISYaRR9HqVqan0gsrfHAO7x6R+LgbkWyOu/BxNAXLB0p6HLw75IRCT3s7yusEmNoZTLr7NAZGUbX0+7fa/zJLxiuZA+DX2CLKsWCOm84uCklThl8iCxdC0anYLNrjNzHwag+wPQjnqrTkj3SCrx8VxnsXuc0AT6t4U3IRsqwMzoZXg5432ILjqyj+Tm0QEHF88UiR7J6vPp4JAA+JdF/es1T6ee6OyKZkLt3WRx9N47DBMszxUUk2TvZQcM8qm3bWeIdwBR8a55aTSeoxfk524KlPfZOnCnBBuyOwMXcJbC9nHNknV+JiCDvUnLn6CZSxPlwSb5tHXMs0O29+4oFoF8VwX7mw2AAZOBz4aOlteM2I41BdbP2nf5F+Ci8U4Fq0Q4/sblc6rUEKexfOScidrLi2KZue0AYH3i1XrlZxuIAw0y6LBpg7F41MUvCkANi34ww2t67X7BepONZXq9Q5PxfXyAa/fwXC+U+8com9daPwT3hgaJlsOa5TT4+NokxmXPmB7InOU9PtxkmYbyPc4Rj3q5FmKg6V595srdC+OGT/8SB/ie2kpf+bgOyxJVxsD21EgRUAZTO3qr+AjZ6ZyL9+kmhIt85pr2ZxXoKT1EXA3+z2DDLk5CkjWUBXMt+8s500EOIUK5CnpUg6YJMI4JImHmaefNDt/sPwNiUoc2EZ/bsR9YrWFoYsaoxmfnj28JThMyKolbKe6Wr6Tpjx8dTulkOa0C2VeHqvEiqcqgCvPboyujiCe307e5rE9FBxAS8KxFnIqY5JRwPzOUPAq5n/nMn232vNawP5cElEcuJio7VoDth7sfarKOkNivP/iF3co/3bcngMped35z6XBBSqAnEoV7J6gcf7xMMMFKgsk9FY9I7kWeHQO7I5D8Y1hrSSsY6/qiO8i/1typPt5rVuh4BaAPlgi3nrBgB",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01LEW3ZZBoNUdQDpPmGYtz8q",
+            "id": "toolu_01X4wp9C7ZgyaEPkD1Hdcsnz",
             "caller": {
               "type": "direct"
             },
-            "input": {
-              "system": "access"
-            },
-            "name": "ask_system",
+            "input": {},
+            "name": "redirect_secure",
             "type": "tool_use",
             "toolset_name": null
           }
@@ -1144,18 +1114,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1843,
-          "output_tokens": 279,
+          "output_tokens": 225,
           "output_tokens_details": {
-            "thinking_tokens": 230
+            "thinking_tokens": 195
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 2.743958399980329,
+      "seconds": 2.231256300001405,
       "input_tokens": 1843,
-      "output_tokens": 279,
-      "cost_usd": 0.006476,
+      "output_tokens": 225,
+      "cost_usd": 0.005936,
       "error": null,
       "replayed": false,
       "digest": "9850181f03f2119b6595e8fa13879dfd931fadc3e151368ce64b9413756a19ae"
@@ -1302,19 +1272,17 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSmQoKEAgSGAI4AUIIdGhpbmtpbmcSDAESPrQ21DTy5xVAmRoMj1lXC5MMZ5ZPDI6xIjC/j7y1OMQMOsA7e1A1UCFHBgSrZfqHv73xuznSSxCq8TPGtgeNxK7Qa3NDO237lakqtgl7eHnBoJapz/TwEPtSoXeK4H+ia1iQfvnGTbiG9AelEfb6g9IFeHITEit1aGBViQOqqOJyzqjPG5Jd6HtvT9erdCiXOdAbjM6C+nEGpzPxw3KKdFqj5pZEuC8ah0dAsfzfu2K0+omqLQagSyz2pozLEj3Dsqbi8UNFY8v8MGyW9S3aLeRF4SkZUCj4XpWPR795CH9Lg8sPGqK5s1AHD5V4COkbmaW6CBLq1dviFaPwneIF3OYQdw3NHOXNSMr6oefTHkofdPikwm31vyoZdHnlubSEzt6YPFwKCz7qWwaZHQISMPAlglM84WqJOo9Y4EntWUkapBjXn1vPF44TATOeCa4SFASRUGxnLLdgnIsiTAwYHxPNX2LhEwtM7hl1mxe6H8hnfv8QkPR8I8c+u+gOfwPVgzzCAwY5Dm3yV4p1ots/v7iCTOi7/hIp+PXeRfV7of1ZPxaFpXdIBBOBUY32HD/0j+2wD46tOaSLucAD0yWZYxF3z2SwEjoofGLw7Ns25MBBKS/V3hxMmuotLQdDU3AUsqGb+ROMY5bylEuWlYfWV6MsQzoddfFfkO7o7gItxL9+G4OAra9vb3hNT4bJwefGY8zYqZTt3KtWOMWLQQaJYw+Na1cpatLaYTZfBejcQ5uJSl1eLZ5X1QJw6k1xS/uH3pH6AmAk/jMVE+M3WSfp38UPOy4IHWeeEbg/7nCwhViWdfqn9r2/W0um8K0j0WMXqlVtfVAFhlkVawe+IEKgAISacGhR/2ykQsWVwStX5OV/K3jTNxThsTMwwKsj78cHVGuflMt2HHxa3yk50+diM1HUnR/bWVwxG953rYGEeJ/T/2GqHIlAsYPtKFGgQa7D3qSi1c67bDQXp1hgmqKvrKgegFh13rxez263nUliRedAOjoyB6ao/h6dVkFnV4J6IN1MNG0BFMEv8mcAOUjsmPLvo2RCyRpvla71UuTkLn+6Zlvrn2lVdr523pcLbeqn3bR48cZm376GHDZ2rWTdmCGqYCmM/xHBqA4E+193kB/Gb4UJCH25mCzO4Im9cHTnrXazu6iCfkCuA53XZ7KzPSWyO2AjkUCS2RbFC6e9PSWK5v7Jn7ZxrcweDVcqlqkayyQlqckSvdq3iajmGC7ivK+ji6MTiLvQGmjDQlArNNuysR8pUIGwvlV2Ep5m3NBdKVJRMAdOB60dXMt/G2uDPRMPkN5D9/rK+wOcP5U8BDnZjjWIU/l6e9iRqQw7o5NeXKUTfiZ8NnKt4txCeTIARsPiWqlcqtJm44qkA010LpIVRX2iuBFoR1wDl+reLY7DjaMFzeqgGMvbhCqxa8MiZhRqUlvvJENpq+9WQ1Ix+lbkJRN9/CeaWuUMgkBwG5XmLafa7d+gXUM4W8xhE0TME2j1odF61e5gLwedK4xE4Y+vIUa6EEfxCeFUk/uldJROkLvoKomqmEnS1/dnenlCCEMIl7rJGITrIpK9GHHKxcrYxoJVIrsp5cPQEQZA6BA20FJBe5zyGT0/CvjDiiGfG3s6HQr4WyQ7VWw2JThQ3XU0h3NQJUaMnf2xE33Y+aPti27O8kgej5OvTIZmq4BjkVO7pRavA0b80DaOBA/0zyRL4fYYAQ==",
+                "signature": "CAQSiAkKEAgSGAI4AUIIdGhpbmtpbmcSDNPWFqwQDL37kP1zCRoM26zkRJLM02tXGnCgIjBowgWCp49ARaxI21eCR9gR+7Ju6gVC5/9VpoJcCHHr4SaXUdQMMCMhrzBoIkknOP8qpQhfKQmIyMo6t4ajuKsGWbKG9YGFLEFYXqfMjIbUaeFBC+rooBYwIS7smKM8Z24LQrDpoplUjVsJj/+4Af48P55GxhhoXsJDz8iwQMpqmXKOH2IoGJN/wVvvIOks4E8dd9/ZOtmY7d7LHQ2WxDwevKAMkkFkpke989lQMZNFErTcKMr0prpSmI/ReZVCb5yPD7jrtWg11a2WG3jVtG9VJ1QX/rUhU5wuhAYH4pTYFH3AIMf5XZGv2V5wpmq08OhO4PGC2qhcC2g/8BBj+MHxJS1hj2E4STLnkvRMZ9U5RpczAmv64dCptTpSysQDIzKK4smVKgudBi4UUuJrzwCURFsWfaLy/ycxJdVhLRt2x5ta81Trrso66vbrX2w8CkZgeyRBDicviZ5wHGKdF+tYjmjyUPxKAOa1xLfHI3Mkm0clYGqnpANGZ8V+WBjPrZhIxHXd0zxuzLtj7mccvVhXEzNiuNlNeCOCVYm/ISYaRR9HqVqan0gsrfHAO7x6R+LgbkWyOu/BxNAXLB0p6HLw75IRCT3s7yusEmNoZTLr7NAZGUbX0+7fa/zJLxiuZA+DX2CLKsWCOm84uCklThl8iCxdC0anYLNrjNzHwag+wPQjnqrTkj3SCrx8VxnsXuc0AT6t4U3IRsqwMzoZXg5432ILjqyj+Tm0QEHF88UiR7J6vPp4JAA+JdF/es1T6ee6OyKZkLt3WRx9N47DBMszxUUk2TvZQcM8qm3bWeIdwBR8a55aTSeoxfk524KlPfZOnCnBBuyOwMXcJbC9nHNknV+JiCDvUnLn6CZSxPlwSb5tHXMs0O29+4oFoF8VwX7mw2AAZOBz4aOlteM2I41BdbP2nf5F+Ci8U4Fq0Q4/sblc6rUEKexfOScidrLi2KZue0AYH3i1XrlZxuIAw0y6LBpg7F41MUvCkANi34ww2t67X7BepONZXq9Q5PxfXyAa/fwXC+U+8com9daPwT3hgaJlsOa5TT4+NokxmXPmB7InOU9PtxkmYbyPc4Rj3q5FmKg6V595srdC+OGT/8SB/ie2kpf+bgOyxJVxsD21EgRUAZTO3qr+AjZ6ZyL9+kmhIt85pr2ZxXoKT1EXA3+z2DDLk5CkjWUBXMt+8s500EOIUK5CnpUg6YJMI4JImHmaefNDt/sPwNiUoc2EZ/bsR9YrWFoYsaoxmfnj28JThMyKolbKe6Wr6Tpjx8dTulkOa0C2VeHqvEiqcqgCvPboyujiCe307e5rE9FBxAS8KxFnIqY5JRwPzOUPAq5n/nMn232vNawP5cElEcuJio7VoDth7sfarKOkNivP/iF3co/3bcngMped35z6XBBSqAnEoV7J6gcf7xMMMFKgsk9FY9I7kWeHQO7I5D8Y1hrSSsY6/qiO8i/1typPt5rVuh4BaAPlgi3nrBgB",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01LEW3ZZBoNUdQDpPmGYtz8q",
+                "id": "toolu_01X4wp9C7ZgyaEPkD1Hdcsnz",
                 "caller": {
                   "type": "direct"
                 },
-                "input": {
-                  "system": "access"
-                },
-                "name": "ask_system",
+                "input": {},
+                "name": "redirect_secure",
                 "type": "tool_use",
                 "toolset_name": null
               }
@@ -1325,20 +1293,20 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01LEW3ZZBoNUdQDpPmGYtz8q",
-                "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
+                "tool_use_id": "toolu_01X4wp9C7ZgyaEPkD1Hdcsnz",
+                "content": "{\"accepted\": true, \"state\": \"REDIRECTED\", \"case_closed\": \"redirect_secure\"}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011CftZz2K1foXTvrRwv1yjc",
+        "id": "msg_011Cftay2dD6FnXbf4P5RZ4f",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I asked the access system about Mara Ellison's sign-in problem, and the desk accepted the request. Its answer isn't in the case yet, so I haven't replied to her. When the answer arrives, the next step is to reply to her or point her to the bank's secure recovery process. Nothing has been changed on her profile.",
+            "text": "I've pointed the customer to H&V's secure recovery process to get back into their profile. The desk accepted this and the case is closed.\n\nI didn't look up the profile in the access system first. Recovery goes through the secure process whatever the cause of the lockout. The bank never handles passwords or codes, and the customer didn't share any.",
             "type": "text"
           }
         ],
@@ -1357,8 +1325,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2157,
-          "output_tokens": 102,
+          "input_tokens": 2108,
+          "output_tokens": 105,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1366,13 +1334,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.4399775000056252,
-      "input_tokens": 2157,
-      "output_tokens": 102,
-      "cost_usd": 0.005334,
+      "seconds": 1.4457543999888003,
+      "input_tokens": 2108,
+      "output_tokens": 105,
+      "cost_usd": 0.005266,
       "error": null,
       "replayed": false,
-      "digest": "16fa0ee48883f195e7760ec2b5ea32a6c6982546adea844935c4c292471a84fa"
+      "digest": "7d8a555014f574131adb9b938a8b9a4f1099f41b15c0263d693fb9413ffa379d"
     },
     {
       "kind": "generate",
@@ -1385,17 +1353,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"access\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"access\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"access\",\n        \"about\": \"access\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-027-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-027-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellison): I’ve completed H&V’s identification checks for this call. I still can’t sign in to my profile, and I need help restoring access; I’m not sharing any password or verification code. [facts: requester='Mara Ellison', role='customer', channel='verified_call', verified=True]\n5. `identify_requester` found {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n6. `requester`: not known → Mara Ellison (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → verified_call (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-027-at-02:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-027-at-02:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-027-at-02:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-027-at-02:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-027-at-02:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-027-at-02:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-027-at-02:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-027-at-02:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-027-at-02:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n38. Called `check_bank_actions` (attempt 1, key banking-027-at-02:read-bank-actions:11).\n39. `check_bank_actions` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-027-at-02:read-registration:12).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-027-at-02:read-confirmation:13).\n45. Note from `read-confirmation`: event 2 (Mara Ellison): I’ve completed H&V’s identification checks for this call. I still can’t sign in to my profile, and I need help restoring access; I’m not sharing any password or verification code. [facts: confirmation='none', instructed_outside_portal=False]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.\n51. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.\n52. `request_type`: not known → access (by `triage`).\n53. `subject`: not known → access (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).\n56. `next_system`: not known → access (by `route-access`).\n57. The agent asked for `ask_system` {\"system\": \"access\"}.\n58. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=access).\n59. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).\n60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n61. Called `ask_system` (attempt 1, key banking-027-at-02:do-ask:17).\n62. Action in the world: `ask_system` {\"system\": \"access\", \"about\": \"access\"}.\n63. `ask_system` found {}.\n64. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n65. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n3 calls, 4904 tokens in, 580 out, 4.426 s, cost $0.0118; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the access system about Mara Ellison's sign-in problem, and the desk accepted the request. Its answer isn't in the case yet, so I haven't replied to her. When the answer arrives, the next step is to reply to her or point her to the bank's secure recovery process. Nothing has been changed on her profile.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"redirect_secure\",\n  \"state\": \"REDIRECTED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"access\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"access\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"redirect_secure\",\n      \"args\": {\n        \"to\": \"Mara Ellison\",\n        \"channel\": \"verified_call\",\n        \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-027-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-027-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellison): I’ve completed H&V’s identification checks for this call. I still can’t sign in to my profile, and I need help restoring access; I’m not sharing any password or verification code. [facts: requester='Mara Ellison', role='customer', channel='verified_call', verified=True]\n5. `identify_requester` found {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n6. `requester`: not known → Mara Ellison (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → verified_call (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-027-at-02:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-027-at-02:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-027-at-02:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-027-at-02:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-027-at-02:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-027-at-02:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-027-at-02:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-027-at-02:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-027-at-02:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n38. Called `check_bank_actions` (attempt 1, key banking-027-at-02:read-bank-actions:11).\n39. `check_bank_actions` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-027-at-02:read-registration:12).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-027-at-02:read-confirmation:13).\n45. Note from `read-confirmation`: event 2 (Mara Ellison): I’ve completed H&V’s identification checks for this call. I still can’t sign in to my profile, and I need help restoring access; I’m not sharing any password or verification code. [facts: confirmation='none', instructed_outside_portal=False]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.\n51. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.\n52. `request_type`: not known → access (by `triage`).\n53. `subject`: not known → access (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).\n56. `next_system`: not known → access (by `route-access`).\n57. The agent asked for `redirect_secure` {}.\n58. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).\n59. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).\n60. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).\n61. Called `redirect_secure` (attempt 1, key banking-027-at-02:do-redirect:17).\n62. Action in the world: `redirect_secure` {\"to\": \"Mara Ellison\", \"channel\": \"verified_call\", \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"}.\n63. `redirect_secure` found {}.\n64. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).\n65. The case closed in `REDIRECTED`: **redirect_secure**.\n\n## Model calls\n\n3 calls, 4855 tokens in, 529 out, 3.916 s, cost $0.0112; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've pointed the customer to H&V's secure recovery process to get back into their profile. The desk accepted this and the case is closed.\n> \n> I didn't look up the profile in the access system first. Recovery goes through the secure process whatever the cause of the lockout. The bank never handles passwords or codes, and the customer didn't share any.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftZz8aYaWGPb9zPAC9YZ",
+        "id": "msg_011Cftay8vTzNBL7ajsyvtYS",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Mara Ellison, a customer on a verified call, said she still can't sign in to her profile and asked for help restoring access; she did not share any password or code. The desk classified it as an access request and asked the access system about it. That question was sent and the case closed in the asked state, with no answer recorded yet and nothing changed on her profile. What happens once the access system replies is left for a person, since no reply to her is in the record.",
+            "text": "Mara Ellison, a verified caller, said she still couldn't sign in to her profile and asked for help restoring access. The desk classified this as an access request and redirected her to the secure process in her portal, telling her it checks her identity there, that the bank never asks for passwords, PINs or codes, and that nothing on her profile was changed. The case is closed as redirected, and nothing is left for a person on the desk, though restoring her access depends on her completing the secure process herself.",
             "type": "text"
           }
         ],
@@ -1414,8 +1382,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2647,
-          "output_tokens": 131,
+          "input_tokens": 2777,
+          "output_tokens": 151,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1423,13 +1391,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.171091499971226,
-      "input_tokens": 2647,
-      "output_tokens": 131,
-      "cost_usd": 0.006604,
+      "seconds": 1.9722420000471175,
+      "input_tokens": 2777,
+      "output_tokens": 151,
+      "cost_usd": 0.007064,
       "error": null,
       "replayed": false,
-      "digest": "1e63743fb4e0205ec72038ba94c58101639af511b676ada63b6f8ffbdead5180"
+      "digest": "146f3cd7a85d15fd0a07dfe5880b321e83b021b0672478414e5b1c0f80970b32"
     }
   ]
 }

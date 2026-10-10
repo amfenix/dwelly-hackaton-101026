@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara asked for a review of whether a £4.50 paper statement fee, dated 18 June 2025, was correctly applied, since she says she had chosen electronic statements. The desk registered this as a request to the tariff team about the fee. Its attempt to check the tariff system first was refused because the case is a registration request, so the fee has not been verified and nothing on her account has been changed. Whether the fee stands is left for the tariff team to decide.
+Mara asked the bank to review whether a £4.50 paper statement fee dated 18 June 2025 was correctly applied, saying she had chosen electronic statements. The desk's attempt to look the fee up in the tariff system was refused because it treated the case as a request to register, so it registered a request with the tariff team about the fee and closed the case as requested. The fee itself has not been checked and nothing has been decided about whether it will be changed; that review is left to the tariff team.
 
 _Written by a model from the record below; the sections below are the record._
 

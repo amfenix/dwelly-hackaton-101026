@@ -4,7 +4,7 @@
 
 ## Summary
 
-The desk read the message as a question about a transfer and sent it on to the payment system by asking it about the transfer. That ask went through and the case closed there. The only fact found was a portal event recording the payment authorisation for the Alder Quay Supplies materials invoice, so the record doesn't show whether the payment was sent, is pending, or was held or rejected. Nothing else was done, and no further step for a person is recorded.
+The request was treated as a question about a transfer, and the desk decided to ask the payment system about it, which it did. The case is closed with that query sent, but the record shows no answer from the payment system. The only related entry is a portal note that a payment authorisation was recorded for the Alder Quay Supplies materials invoice, so the payment's current stage is not known and nothing further is recorded as pending for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

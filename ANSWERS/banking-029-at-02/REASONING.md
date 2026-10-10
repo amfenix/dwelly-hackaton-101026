@@ -72,4 +72,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9848 tokens in, 445 out, 4.521 s, cost $0.0203; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10855 tokens in, 665 out, 6.281 s, cost $0.0245; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I asked the access system about the tablet's registration, and the case is now closed at that step. I have no registration result yet, so I can't tell Mara whether the tablet is linked or whether it can be used for banking.
+> 
+> I also tried to send a reply straight after, but the desk refused it. The access system hadn't returned any registration or status information, so there was nothing to base a reply on. That reply attempt was a mistake on my part.
+> 
+> The case record also shows the requester as not verified. A person will need to pick up the case from here, since nothing more can be done in this session.

@@ -73,10 +73,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7331 tokens in, 501 out, 4.435 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5020 tokens in, 432 out, 3.218 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system for the receipt status of batch-041.csv (reference HV-041). The case is now closed at that step, and the system hasn't returned a result yet. I can't confirm whether the file was received until it does.
-> 
-> Mara Ellison's identity is still marked as unverified on this secure chat. Her request is only a status question. She isn't asking the bank to approve or release any payment.
+> I've queried the payment system for the receipt status of batch-041.csv (reference HV-041). The request was accepted and the answer will come back into the case. I'm not approving or releasing anything, only checking receipt, as Mara Ellison asked.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, said she still can't sign in to her profile and asked for help restoring access. The desk classified it as an access request and found that an H&V service agent had already pointed her to the recovery option in the secure portal, so it set the case to wait until she uses it. The agent then tried to send her to the secure process again, but the desk refused because the case was no longer in the triaged state, and no actions were taken. Nothing further is recorded for a person to do beyond waiting for her to complete the portal checks.
+Mara Ellison, a customer verified on a call, asked for help restoring access to her profile because she can't sign in. The desk decided to wait: a service agent had already pointed her to the recovery option in H&V's secure portal, so there is nothing to do until she completes the checks there. The agent's attempt to send another secure-process redirect was refused because the case was already in the waiting state, so no new redirect went out, and nothing is left for a person unless she uses the portal and comes back.
 
 _Written by a model from the record below; the sections below are the record._
 

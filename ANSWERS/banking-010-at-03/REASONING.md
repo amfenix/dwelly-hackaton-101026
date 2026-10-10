@@ -68,17 +68,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 64. The case closed in `WAITING`: **wait**.
 65. The agent asked for `ask_system` {"system": "incoming"}.
 66. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=incoming); next_system = tariff is false (next_system=incoming); next_system absent is false (next_system=incoming).
-67. The agent asked for `escalate` {"note": "Customer (Elowen Marr, not verified, secure chat) asks whether a £42.80 refund from Northmere Home Supplies has arrived for the specific outgoing transfer of £42.80. The incoming check was already requested (incoming_asked=True) but no result is in the case, and the case is stuck in WAITING. A further incoming ask was refused by policy. Please check incoming entries, match them to that transfer, and confirm status only after verifying the customer. Do not state a refund has arrived without a record."}.
+67. The agent asked for `escalate` {"note": "Customer Elowen Marr (secure chat, not verified) asks whether a possible £42.80 refund from Northmere Home Supplies has arrived, and wants it matched to the specific outgoing £42.80 transfer rather than another payment. The incoming system lookup was refused because the case is in WAITING state, not TRIAGED, and no incoming result is on file. Please check incoming entries against that transfer and verify the customer's identity before confirming anything."}.
 68. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11363 tokens in, 950 out, 9.28 s, cost $0.0284; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11469 tokens in, 959 out, 10.075 s, cost $0.0287; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't confirm whether the £42.80 refund from Northmere Home Supplies has reached your account. The case is waiting on the incoming-payments check, and that check has not returned a result.
+> I couldn't check the incoming entries for you, and the case is now waiting for a person to pick it up.
 > 
-> I tried to re-run the check and then to pass the case to a person. The desk refused both because the case is in a waiting state. I've left it as it is, so it stays open and will be handed to a person.
+> - **Incoming check refused:** the desk wouldn't run the lookup because the case is in a waiting state, not the triaged state it needs. No incoming result is on file, so I can't say whether the £42.80 refund from Northmere Home Supplies has arrived.
+> - **Escalation refused:** my attempt to hand the case to a person was also refused for the same reason.
+> - **Verification:** your identity is still marked as not verified.
 > 
-> Nothing in the case shows a refund has arrived, and nothing shows it hasn't. You also haven't been verified on this chat yet, which is needed before any payment details are confirmed.
+> I haven't confirmed anything about the refund or matched it to your outgoing £42.80 transfer. A person will need to check the incoming entries against that specific transfer, after verifying your identity.

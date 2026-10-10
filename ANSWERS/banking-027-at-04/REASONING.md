@@ -68,12 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 9078 tokens in, 633 out, 5.646 s, cost $0.0207; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9174 tokens in, 677 out, 5.524 s, cost $0.0213; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I took no further action on this case. It is in a final WAITING state, which means the next move is Mara's.
+> The case is closed in a waiting state, and no further bank action is needed. It is waiting for Mara Ellison to sign in again.
 > 
-> The recovery checks in the secure portal are complete. She now needs to return to the sign-in page and sign in again. I did not ask her for a password or verification code, and I did not restore access on her behalf.
+> She finished the recovery checks in the secure portal, and the portal's last message told her to return to sign-in. I tried to query the access system, but the desk refused because the case is in a waiting state. I made no other changes, and no password or code was shared at any point.
 > 
-> I tried to query the access system for more detail, but the desk refused because the case is not in a state that allows it. If she still can't sign in after this attempt, she should contact the bank again and the case can be reopened.
+> If she still can't sign in after the recovery, she should contact the bank again and the case can be reopened.

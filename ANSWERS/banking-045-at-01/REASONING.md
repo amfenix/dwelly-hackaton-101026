@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
+50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.98 → authority.
 51. Classifier (jev jev-latest) on `subject`: role, confidence 0.75 → role.
 52. `request_type`: not known → authority (by `triage`).
 53. `subject`: not known → role (by `triage`).
@@ -70,12 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7283 tokens in, 623 out, 5.914 s, cost $0.0170; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4964 tokens in, 614 out, 5.485 s, cost $0.0122; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I forwarded Nadia's request to the company administrator, and the desk accepted it. The case is now in the FORWARDED state and closed on our side.
+> I forwarded the request to the company administrator for approval, and the desk accepted it. The case is now closed on our side.
 > 
-> Nadia isn't the administrator and can't assign roles. The portal access for the new colleague therefore needs the administrator's approval, and nothing has been granted yet.
-> 
-> Nadia's identity is still unverified (`verified` is False). I didn't ask the business system who the administrator is.
+> Nadia isn't the administrator and can't assign roles. So the new colleague gets no portal access until the administrator approves. I didn't look up who the administrator is, and Nadia's identity is still unverified.

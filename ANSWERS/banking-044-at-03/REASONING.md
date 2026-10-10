@@ -67,18 +67,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. The case closed in `WAITING`: **wait**.
 64. The agent asked for `ask_system` {"system": "payment"}.
 65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-66. The agent asked for `escalate` {"note": "Leona Voss (viewer, unverified, secure chat) asks whether row SUP-17 in a batch marked processed was paid or rejected. This is a read-only question. The payment system lookup was refused because the case is in state WAITING, not TRIAGED, so the row status is not yet known. Please verify the requester and check the SUP-17 row status in the payment system."}.
+66. The agent asked for `escalate` {"note": "Leona Voss (viewer role, secure chat, identity not verified) asks whether row SUP-17 in a batch marked processed was paid or rejected. The payment system is already marked as asked, but no row-level status is in the case. A repeat payment query was refused because the case is in WAITING. Please verify the requester and check the SUP-17 row status. Do not state paid or rejected until the record shows it."}.
 67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 10496 tokens in, 765 out, 7.64 s, cost $0.0248; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12625 tokens in, 1028 out, 9.394 s, cost $0.0317; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't check row SUP-17, and the case is still open. The case is in state WAITING and not TRIAGED, so the desk refused both of my attempts.
+> I couldn't get an answer on SUP-17, and the case is still open and waiting.
 > 
-> - **Payment lookup:** the desk refused it because it only accepts a payment lookup once the case is TRIAGED.
-> - **Escalation:** the desk refused this for the same reason.
+> - **Payment check:** My query to the payment system was refused. The case is in a waiting state, and the desk shows the payment query as already made. No row-level status for SUP-17 is in the case, so I can't say whether it was paid or rejected.
+> - **Escalation:** My escalation to a person was also refused for the same reason, the case state.
+> - **Verification:** The requester, Leona Voss, is a viewer and is not verified. That has to be settled before any payment detail is shared with her.
 > 
-> So I don't know whether SUP-17 was paid or rejected, and I can't tell Leona either way yet. Nothing was changed on the case, and the desk has left it waiting. The case also still shows the requester as unverified.
+> Nothing has been told to the customer. The next step is for the case to leave the waiting state, then either re-run the payment check or hand it to a person.

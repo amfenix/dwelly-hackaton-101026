@@ -35,7 +35,7 @@ SYSTEMS: dict[str, tuple[str, ...]] = {
         "protected instruction process",
     ),
     "card": ("card authorisation journal", "card journal", "card team", "card system"),
-    "access": ("access log", "access team", "security team", "recovery system"),
+    "access": ("access log", "access team", "security team", "recovery system", "profile change process"),
     "business": (
         "signing log",
         "import journal",

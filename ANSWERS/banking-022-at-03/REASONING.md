@@ -74,12 +74,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 12849 tokens in, 823 out, 7.744 s, cost $0.0301; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12943 tokens in, 897 out, 8.388 s, cost $0.0311; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't blocked the card yet, and the case is now waiting.
+> I haven't blocked the card, and the block request is still open. The case is in WAITING, and the desk refused both of my attempts.
 > 
-> The desk accepted neither of my two attempts. A card lookup and a block request both failed because the case is in WAITING, not TRIAGED. The desk has already asked the customer which card and registration they mean (`card_asked` and `registration_asked` are both true). There is no answer on file yet.
+> - **Card lookup:** The desk refused it because the card question has already been asked (`card_asked` is true), and the case is no longer in the state that allows another one.
+> - **Block request:** The desk refused it for the same reason. The card-instruction route needs the case to be in TRIAGED with the card question not yet asked.
 > 
-> Mara Ellison is verified and her instruction is clear. Once she says which card she means, the case should go back to TRIAGED. The block can then go through as a card instruction. I haven't escalated, because the case is only waiting for her reply.
+> The caller is verified and the instruction is clear, but the records don't say which card to block. The case looks to be waiting on Mara Ellison's answer about which card she means. Once her answer is recorded and the case returns to TRIAGED, the block can go through. Until then I'm leaving the case open for a person to pick up.

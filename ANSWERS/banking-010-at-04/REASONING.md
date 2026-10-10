@@ -78,9 +78,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7612 tokens in, 516 out, 4.511 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7473 tokens in, 449 out, 5.462 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The incoming system has already answered, so the next step is to reply.
-> I sent the reply, and the case is now closed as replied. The incoming check found an entry for £42.80, the same amount as your transfer to Northmere Home Supplies. The records don't confirm that this entry is the refund of that specific transfer, so the reply shouldn't present it as a confirmed match. I haven't seen the wording the desk wrote.
+> I've sent the reply. The incoming records show an entry for £42.80, which matches the amount you asked about. The case is now closed.
+> 
+> Two limits on what the records show. The incoming check confirmed an amount, not that the entry is the refund for your Northmere transfer. Your identity also isn't verified on this chat channel.

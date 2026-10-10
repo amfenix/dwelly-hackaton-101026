@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellery, a verified customer in secure chat, asked whether her replacement card is being made and whether it has been sent. The desk classified this as a question about the card and put it to the card system, which accepted it and returned nothing, and the case closed as asked. Whether the card is being made or has been sent is still unknown, and no reply has gone to Maren and nothing on her account was changed.
+Maren Ellery, a verified customer on secure chat, asked whether her replacement card is being made and whether it has been sent. The desk classified it as a card question and sent a query to the card system, then closed the case as "asked". The card system's answer is not in the record, so the desk has not told her whether the card is being made or sent, and someone still needs to relay what the card record shows once it is available.
 
 _Written by a model from the record below; the sections below are the record._
 

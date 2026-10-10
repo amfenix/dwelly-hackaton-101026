@@ -4,7 +4,7 @@
 
 ## Summary
 
-The requester wanted to know whether the payment on row SUP-17 in their supplier batch was paid or rejected, since the batch showed as processed. The desk classified this as a question about a batch and sent an ask to the payment system about SUP-17, and the case closed in the asked state. No answer from the payment system is in the record, and the desk's attempt to reply to the requester was refused because no payment status was known, so the requester has not yet been told whether the payment was paid or rejected.
+The requester wanted to know whether the payment on row SUP-17 in their supplier batch was paid or rejected, since the batch only showed as processed. The desk classified this as a question about a batch and sent an inquiry about SUP-17 to the payment system, and the case closed in the asked state. The desk then tried to send a reply, but that was refused because no payment status had come back, so the requester has not yet been told whether the payment was paid or rejected.
 
 _Written by a model from the record below; the sections below are the record._
 

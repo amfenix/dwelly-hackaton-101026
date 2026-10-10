@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk registered a request to the card team about the card, and the case is closed as requested. The desk's lookup of the card records was refused, so it never saw them, and the record does not confirm that the card is actually blocked or which card it is; nothing further is recorded as left for a person.
+Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk classified this as a card instruction and registered a request with the card team, and the case closed as requested. The desk refused a lookup of the card system as unnecessary for this request type; nothing in the record shows the card being blocked yet or which specific card it applies to, so the card team still has to act on the request.
 
 _Written by a model from the record below; the sections below are the record._
 

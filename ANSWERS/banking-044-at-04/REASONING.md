@@ -77,10 +77,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7404 tokens in, 588 out, 5.576 s, cost $0.0169; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7348 tokens in, 560 out, 5.27 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to Leona. The payment records show row SUP-17 as **rejected**, not paid. The recorded reason is that the beneficiary details didn't match the receiving institution's records. The reply doesn't go beyond that record.
+> The payment system's answer is already in the case, so the next step is to reply.
+> I've sent the reply, and the desk accepted it. The case is now closed as replied.
 > 
-> The case facts list Leona as not verified. She is a viewer, and this was a read-only status question over secure chat. I treated it as safe to answer and made no changes. The case is now closed as replied.
+> The payment records show row SUP-17 as **rejected**, not paid. The reason on record is that the beneficiary details didn't match the receiving institution's records. The batch can show "processed" even though an individual row was rejected.
+> 
+> The case shows Leona Voss as a viewer, and she hasn't been verified in this chat. I didn't act on her behalf or change anything.

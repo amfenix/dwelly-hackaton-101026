@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing over secure chat as a customer, said their card was declined at a grocery payment and asked what category of restriction applies and whether it has been lifted. The desk treated it as a card question and sent a query to the card system, which returned nothing yet, so Rowan has not been given any answer about the restriction. Rowan is not verified on this chat, so a person still needs to handle the reply once the card system answers, keeping that in mind.
+Rowan Ellery, writing over secure chat and not yet verified, said their card was declined at a grocery payment and asked what category of restriction applies and whether it has been lifted. The desk classed this as a card question and sent a query to the card system, then closed the case at that step. The card system's answer isn't in the record, so the restriction category and whether it's lifted remain unanswered, and since Rowan is still unverified, a person needs to verify them before any card details are shared.
 
 _Written by a model from the record below; the sections below are the record._
 

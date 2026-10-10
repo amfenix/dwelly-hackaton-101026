@@ -4,7 +4,7 @@
 
 ## Summary
 
-The question was about a transfer: the payment activity shows two similar £84.20 outgoing entries to North Quay Utilities, one marked Completed and the other Pending. The desk classed it as a question and sent a query to the payment system about the transfer, and the case closed with that query as the only action. No answer from the payment system is in the record, and no other step was taken, so what happens to the pending entry is still open.
+The request was a question about two similar outgoing transfers of £84.20 to North Quay Utilities, one marked Completed and one Pending. The desk classified it as a transfer question, found no confirmation and nothing instructed outside the portal, and asked the payment system about the transfer. That query is the only action taken; the question about stopping or returning the second entry hasn't been answered, and what's left is to read the payment system's reply.
 
 _Written by a model from the record below; the sections below are the record._
 

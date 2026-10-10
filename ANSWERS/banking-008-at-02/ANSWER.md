@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Marlow asked, in a secure chat, for the desk to look up the purpose text she entered on her payment to Mallow Pottery Works for a kiln repair. The desk classified this as a question about a transfer and sent a lookup to the payment system, then closed the case at that step. The payment system's answer is not in the record, so the purpose text is still unknown, and the desk still lists her as not verified despite her saying she had completed the identity checks.
+Elena Marlow asked the desk to look up the purpose text her instruction recorded for a payment to Mallow Pottery Works for a kiln repair, as she couldn't remember what she entered. The desk classified this as a question about a transfer and sent it to the payment system, which has returned nothing so far, so the purpose text is still unknown. The desk's records still show her as not verified despite her saying she completed the identity checks in the chat, and what is left is for the payment system's answer to come back and be passed on to her.
 
 _Written by a model from the record below; the sections below are the record._
 

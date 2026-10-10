@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk registered a request about her profile with the access team, and the case is closed in the requested state. The record does not show that the profile has actually been changed, and the data team may still ask her for supporting information.
+Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk treated it as a verified customer's profile change and registered a request with the access team, and the case closed as submitted. The record shows no refusals or errors and names no remaining step for the desk, though it doesn't say whether the data team will ask for supporting information.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,9 +42,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `register` accepted it.
+- `TRIAGED` → `REQUEST_PENDING`: rule `profile-change-to-the-process` — A verified customer's profile change is started in the protected change process.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type = register → true (request_type=register)
+  - request_type = change → true (request_type=change)
+  - subject = profile → true (subject=profile)
+  - access_asked absent → true (access_asked=not known)
+  - verified → true (verified=True)
   - registration_asked absent → true (registration_asked=not known)
 - `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
   - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
@@ -58,7 +61,7 @@ Facts established:
 - subject: **profile**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **register**
+- request_type: **change**
 - next_system: **access**
 
 Where they came from:

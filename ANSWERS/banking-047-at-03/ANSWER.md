@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder, a viewer on secure chat whose identity was not verified, asked for the current company payment limit. The desk asked the business system, which had not yet answered, so the case closed as waiting and nothing was disclosed. The agent's later attempts to ask the business system again and to escalate to a person were both refused because the case was already in the waiting state, so no escalation was recorded; the limit still has to be provided and Maeve's identity verified by a person.
+Maeve Calder, a viewer who is not verified and wrote over secure chat, asked for the company's current payment limit. The desk asked the business system, and the case closed in WAITING because its answer has not come back. A second business ask and the escalation note were both refused because the case was no longer in TRIAGED, so nothing was disclosed to her and no payment was submitted. What is left is for a person to verify Maeve and her viewer permission and confirm the limit from the business record, though the escalation that would have handed this over did not go through.
 
 _Written by a model from the record below; the sections below are the record._
 

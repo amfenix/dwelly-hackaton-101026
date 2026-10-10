@@ -72,4 +72,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9654 tokens in, 324 out, 4.626 s, cost $0.0187; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 9692 tokens in, 343 out, 4.912 s, cost $0.0190; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> The session information sits in the access system, so I'll ask it.

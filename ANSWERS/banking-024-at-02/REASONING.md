@@ -70,10 +70,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6849 tokens in, 483 out, 4.949 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6825 tokens in, 478 out, 5.363 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the card system for the restriction category and whether it has been lifted. That is the next step for this case. The system's answer isn't in the case yet, so I can't tell Rowan anything about the restriction.
-> 
-> Rowan is not verified on this chat. That matters when the reply is written, because card details shouldn't go to an unverified requester.
+> I've asked the card system about Rowan's declined card. The case is now closed with that request as its outcome. The card system's answer isn't in the case yet, so I can't say what category the restriction falls into or whether it has been lifted. Rowan's identity is also still unverified (`verified` is false), so nothing about the card should be shared until the desk verifies them.

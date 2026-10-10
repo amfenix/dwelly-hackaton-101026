@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Mercer, verified on a call, asked H&V to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient. The record shows the payment team had already registered the return request (reference HV-005), so the desk refused its own attempts to ask the payment system and to submit a new request, and sent Leona a reply instead. The record notes that registration does not confirm the money will be returned, and it lists nothing left for a person to do.
+Leona Mercer, a verified customer on a call, asked H&V to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient. The desk found the payment team had already registered the return request under reference HV-005, so it did not submit a new one and sent her a reply instead. Registration does not confirm the money will be returned, and the record shows nothing further left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 

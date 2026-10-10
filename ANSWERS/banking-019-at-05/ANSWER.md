@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Ellery, verified in the secure portal, asked to move the next run of her monthly standing order to Willow Yard Studios from 18 September to 22 September 2025, and she confirmed the change. The desk decided to wait: its rule says the system applies a customer-confirmed change, so no action was taken by the desk, and the case closed in a waiting state. The agent's later attempt to submit the request was refused because the case was no longer in a state that allows it, so nothing was submitted and the order still shows 18 September. The record does not say who picks the case up next or when the system will apply the change.
+Maeve Ellery, a verified customer, asked the desk to move the next run of her monthly standing order to Willow Yard Studios from 18 September to 22 September 2025, and she confirmed that change in the secure portal. The desk decided the system applies a confirmed change itself, so it closed the case as "wait" and took no action. The agent's later attempt to submit the request was refused because the case was already in the waiting state. The record does not show that the standing order was actually changed, and it names no next step for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

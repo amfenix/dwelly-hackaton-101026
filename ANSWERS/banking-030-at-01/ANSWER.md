@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was classified as a question about a card, and the desk routed it to the card system and sent the query there. The case closed in the asked state. The agent's later attempt to send a reply was refused, so no answer has gone back to the requester yet, and the card system's response is still awaited.
+The request was classified as a question about a card, and the desk sent it to the card system to answer. That query went out and the case closed as "asked". The agent then tried to send a reply, but the desk refused it because the case was already closed and no answer from the card system was on record. Nothing further is recorded as done, so the question is still waiting on the card system's answer.
 
 _Written by a model from the record below; the sections below are the record._
 

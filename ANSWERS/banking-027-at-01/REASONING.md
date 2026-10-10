@@ -65,10 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4568 tokens in, 460 out, 3.459 s, cost $0.0099; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4572 tokens in, 482 out, 3.931 s, cost $0.0102; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed the customer to H&V's secure recovery process, and the desk accepted it. The case is now marked as redirected and closed.
+> I've pointed the customer to H&V's secure recovery process, and the case is now closed as redirected. The portal had already declined the sign-in and said to use that process. The bank never handles passwords or PINs, so recovery has to go through the secure process and not through this desk.
 > 
-> The bank doesn't handle sign-in recovery in the chat, and it never handles passwords or PINs. The customer needs to restore access through that process before they can review their household spending.
+> I didn't query the access system first. The request was plain sign-in recovery, so I didn't see a need.

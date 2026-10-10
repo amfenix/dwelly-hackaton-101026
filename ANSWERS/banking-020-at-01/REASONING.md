@@ -51,8 +51,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.71 → standing_order.
 52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → standing_order (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
@@ -72,12 +72,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10475 tokens in, 573 out, 5.536 s, cost $0.0229; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10505 tokens in, 601 out, 6.013 s, cost $0.0232; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the recurring-payments system, which is the one step this case allows, and I've stopped there. The case is now closed at the "asked" stage.
+> I asked the recurring-payments system about the standing orders and Direct Debits linked to Elena's account. That is the one step for this case, so I'm stopping here.
 > 
-> The system's answer isn't in the case yet, so I haven't replied to Elena. My reply attempt was refused because the case hasn't moved on from "asked" to "triaged". It also has no recurring-payments result to base a reply on.
+> The case is now marked final in the ASKED state. The system's answer isn't in the case yet, so no reply can be written. When I tried `reply`, it was refused because it requires the case to be in the TRIAGED state and no recurring status is recorded.
 > 
-> Elena's identity is also still unverified. Nothing has been told to her yet about standing orders, Direct Debits or what to consider before closing the account.
+> Elena is also not verified. Any reply that lists her instructions would have to account for that.

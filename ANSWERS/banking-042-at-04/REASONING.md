@@ -58,7 +58,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 55. Rule `triage` fired: state = READING → true (state=READING).
 56. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-57. Classifier (jev jev-latest) on `subject`: batch, confidence 0.97 → batch.
+57. Classifier (jev jev-latest) on `subject`: batch, confidence 0.96 → batch.
 58. `request_type`: not known → question (by `triage`).
 59. `subject`: not known → batch (by `triage`).
 60. State `READING` → `TRIAGED` (by `triage`).
@@ -76,8 +76,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7234 tokens in, 556 out, 5.649 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7238 tokens in, 559 out, 5.495 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The bank's records show batch HV-042 for Fenwick Workshop with the status "validation failed". They don't contain the row-level error report, so the reply doesn't include one. The requester isn't verified on this chat and only has viewer access, so I didn't try to release any more detail. The case is closed.
+> I sent a reply to Nadia. It says batch HV-042 failed validation, which is all the business system's record shows. I didn't include any row-level error details, because they aren't in the case. Nadia is also not yet verified and has a viewer role. The case is now closed as replied.

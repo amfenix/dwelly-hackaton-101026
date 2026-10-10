@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Mercer emailed asking to change the phone number on her profile because she no longer has her old phone, and she asked for the approved way to confirm a replacement. Her identity was not verified and the request came from outside the portal, so the desk did not make the change and instead sent her a confirmation request for the profile change, closing the case at that point. A later attempt to query the access system was refused because the case had already closed, and nothing in the record shows a further step left for a person.
+Elowen Mercer emailed to change the phone number on her profile because she no longer has her old phone, and asked for the approved way to confirm a replacement. The desk did not make the change: it sent her a confirmation request, since a change must be confirmed by the customer in the secure portal and not by email or chat, and the case closed in that state. A later attempt to query the access system was refused because the case had already moved past triage, and the profile is unchanged until Elowen completes the confirmation herself.
 
 _Written by a model from the record below; the sections below are the record._
 

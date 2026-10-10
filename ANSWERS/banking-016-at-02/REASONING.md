@@ -74,8 +74,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5072 tokens in, 641 out, 4.696 s, cost $0.0127; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5067 tokens in, 607 out, 4.563 s, cost $0.0124; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed Tamsin Rook's dispute to the team that handles Direct Debit disputes, and the desk accepted it. She has been verified, and the £18.40 Direct Debit to Northmere Water Services on 9 July 2025 is clearly identified. The dispute is about the amount debited. I didn't need to check any other records first. The case is now closed on our side, with the dispute with that team.
+> I've passed your dispute over the £18.40 Direct Debit to Northmere Water Services (9 July 2025) to the team that handles Direct Debit disputes. The request was accepted. I haven't checked the Direct Debit record itself, so I can't yet say why the amount differs. The team will look into that.

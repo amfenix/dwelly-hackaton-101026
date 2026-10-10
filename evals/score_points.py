@@ -28,7 +28,7 @@ _AUTOMATIC = re.compile(r"system|\bapp\b|process|journal|\blog\b|portal", re.IGN
 _BANK_SIDE = re.compile(r"h&v|harrow|\bbank\b", re.IGNORECASE)
 _SUBMITS = re.compile(
     r"\bsubmit|\bregister(?:ed)?\b.{0,25}\b(?:request|review|enquiry|case)\b|open(?:ed)?\b.{0,20}\bcase\b"
-    r"|\bfor review\b|\breview of\b|escalated\b.{0,40}\brequest",
+    r"|\bfor review\b|\breview of\b|escalated\b.{0,40}\brequest|\b(?:start|open)\w*\b.{0,40}\bprocess\b|\breferred\b",
     re.IGNORECASE,
 )
 _ASKS_TO_CONFIRM = re.compile(

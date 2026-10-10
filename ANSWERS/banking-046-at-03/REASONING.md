@@ -65,18 +65,18 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `submit_request` {}.
 63. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business).
-64. The agent asked for `escalate` {"note": "Verified administrator Mara Ellery (verified call) instructs revocation of former employee Owen Bell's Payroll Approver role for Larkmere Studio Ltd, and asks that review of earlier operations be kept separate. The instruction is clear, but submit_request was refused: case state is WAITING, not TRIAGED, and the business system is already marked as asked. Please action the role revocation or confirm how to proceed."}.
+64. The agent asked for `escalate` {"note": "Verified administrator Mara Ellery (verified call) instructs revoking Owen Bell's Payroll Approver role for Larkmere Studio Ltd; earlier operations to be reviewed separately. Direct submission was refused: the case is in WAITING state, and the business-instruction route requires business_asked to be absent, but it is already True. The business system has been consulted, yet no answer or confirmation is recorded. Please review and carry out or confirm the role revocation."}.
 65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 10635 tokens in, 962 out, 9.165 s, cost $0.0271; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11752 tokens in, 1097 out, 10.932 s, cost $0.0306; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't revoke Owen Bell's Payroll Approver role, and the case is still open.
+> I haven't revoked Owen Bell's Payroll Approver role. The case is stuck in a waiting state and has been left open for a person to pick up.
 > 
-> - **Instruction refused:** The desk refused my `submit_request` because the case is in the WAITING state and not TRIAGED. It also records the business system as already asked, which blocks a business instruction from going through.
-> - **Escalation refused:** My escalation to a person was refused for the same reason, so no one has picked this up yet.
+> - **Revocation:** The desk refused my request to carry out the instruction. The case is in a WAITING state rather than TRIAGED. The business route also only accepts the instruction if the business system hasn't been asked yet, and it already has been. No answer from the business system is recorded in the case.
+> - **Escalation:** The desk refused that too, for the same reason: the case isn't in the TRIAGED state.
 > 
-> Mara Ellery's verified call is clear: she confirmed her identity and administrator mandate and asked for the role to be revoked. Reviewing earlier operations stays separate, as she asked. Nothing more can be done from here until the case moves out of WAITING, and Bell's role is still active.
+> Mara Ellery's verified instruction is recorded, and the review of Owen Bell's earlier operations stays separate, as she asked. Someone needs to look at why the case is waiting and then revoke the role or confirm it has been revoked.

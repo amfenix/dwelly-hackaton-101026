@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
 55. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → incoming_payment (by `triage`).
@@ -74,8 +74,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7308 tokens in, 474 out, 7.142 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7167 tokens in, 470 out, 7.506 s, cost $0.0152; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to the customer. The incoming-payments check found no sign of the kiln contribution in her H&V account, so the reply reports that and nothing more. The bank can't confirm the sender's payment from its own records. The case is now closed as replied.
+> I've replied to the customer. The bank's incoming-payments records show no matching payment from the sender for the kiln contribution. The reply says only that, and it doesn't confirm the transfer was sent or when it might arrive. The case is closed with that reply.
+> 
+> The requester isn't verified, so the check was only a record lookup. Nothing was changed on the account.

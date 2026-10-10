@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, writing over secure chat, said the acquiring report for 1–7 July 2025 was not showing as available and asked for the file request to be escalated. The desk checked the documents record, found the report was already placed in the secure portal, and replied in secure chat that the document is available, without confirming any download or credit, and that no email was sent. The case is closed as replied, nothing is left for a person, and Mara Venn's identity was not verified.
+Mara Venn, writing over secure chat, asked the desk to escalate a file request because the acquiring report for 1–7 July 2025 was not showing as available. The desk checked the documents system, found the report had been placed in the secure portal, and sent her a reply saying the document is available, that this does not confirm it was downloaded or that funds were credited, and that no email was sent. Her identity was not verified and the file itself was not attached; the record shows no further steps for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was classified as a registration request about the customer's profile, and the desk submitted it by registering a request with the access team. The desk's attempt to ask the access system directly was refused, and it then submitted the request instead; the case closed as requested. The record shows no confirmation that the change has been made, so whether and when it shows on the profile is still open, and the checks run on the case returned nothing.
+The desk treated the message as a request to register a change to the customer's profile and filed it with the access team. The `register_request` action ran, and the case closed as requested. The desk's own reading of the request type was low-confidence (0.43), and its attempt to ask the access system a question was refused before it submitted. The record does not show the name correction itself being made, so the profile change is still left to the access team.
 
 _Written by a model from the record below; the sections below are the record._
 

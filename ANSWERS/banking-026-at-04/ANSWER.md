@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellwood wrote in secure chat that she had forgotten her debit card PIN and asked for the safe way to deal with it. The desk classed it as an access request about a card and found that the bank had already opened the prescribed PIN procedure for her in the secure portal. It took no action and closed the case as waiting, since nothing more can happen until she uses that procedure. The desk's own attempt to send a reply was refused because the case was already in the waiting state, so no reply went out from the desk, and nothing is left for a person unless she does not complete the portal steps.
+Maren Ellwood asked, over secure chat, how to safely deal with a forgotten debit card PIN, and said she would not send the PIN in chat. The desk found that the bank had already opened the prescribed PIN procedure for her in the secure portal, so it took no action and closed the case as waiting. The desk's attempt to send a further reply was refused because the case was already in the waiting state. What is left is for Maren to continue the procedure in the portal; the record still lists her as not verified.
 
 _Written by a model from the record below; the sections below are the record._
 

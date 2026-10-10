@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, writing on secure chat and not yet verified, said she still can't find her June statement in the portal and wants it made available there rather than emailed. The desk had already asked the documents system about the June 2025 statement, and the case closed in WAITING because that system's answer hasn't come back. A second ask to the documents system and an attempt to escalate to a person were both refused because the case was no longer in the triaged state, so nothing has been sent or changed. Her identity still needs verifying, and the statement's status in the documents system is still open, though the record shows no person has been assigned to either.
+Elowen Marr, who is not yet verified, wrote on secure chat that she still can't find her June statement in the portal and wants it made available there rather than emailed. The desk asked the documents system to check June 2025 and place the document in her portal, and the case closed as waiting because that system's answer hasn't come back. A second query to the documents system and the agent's escalation to a person were both refused because the case was already in WAITING. Nothing has been sent to the customer, and her identity is still unverified, so someone will need to check whether the statement exists and is published, verify her, and reply.
 
 _Written by a model from the record below; the sections below are the record._
 

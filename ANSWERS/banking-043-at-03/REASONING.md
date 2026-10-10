@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.96 → question.
 55. Classifier (jev jev-latest) on `subject`: payment_package, confidence 1.00 → payment_package.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → payment_package (by `triage`).
@@ -65,13 +65,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
 62. State `TRIAGED` → `WAITING` (by `business-waits`).
 63. The case closed in `WAITING`: **wait**.
-64. The agent asked for `reply` {}.
-65. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=business); tariff_status present is false (tariff_status=not known).
-66. The agent asked for `ask_system` {"system": "business"}.
-67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
-68. The agent asked for `escalate` {"note": "Mara Ellery (unverified, secure chat) asks whether Northmere Studio Ltd's payroll payment package, which she gave first consent to, is waiting for her co-signer or has moved on. The business system was already queried, but no package status came back (business_status unknown, confirmation none). The case is stuck in WAITING, and reply and ask_system were both refused. Please check the package status and whether the second signatory still needs to act. Verify the customer's identity before sharing any detail."}.
-69. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11827 tokens in, 933 out, 9.709 s, cost $0.0291; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5037 tokens in, 586 out, 5.501 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I'm not taking another step on this case. The business system has already been asked about the payroll package, and the case is now in a final WAITING state.
+> 
+> The case holds no package status. It doesn't show whether the package is waiting for the second signatory or has moved on, so I can't tell Mara either way. The requester is also not verified, so I shouldn't give out company payment details in this chat anyway. The case stays open for a person to pick up.

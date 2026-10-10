@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing on secure chat as the company signatory, asked the desk to check what stage a payment had reached, because Alder Quay Supplies says it has not received the funds. The desk classified this as a question about a transfer and sent a query to the payment system, then closed the case at that step with no answer back yet. Her identity was not verified, and no reply has been sent to her, so a person still needs to give her the payment stage and check that it can be shared with an unverified requester.
+Mara Ellison, writing as company signatory over secure chat, asked the desk to check what stage a transfer to Alder Quay Supplies had reached, since the supplier says it has not received the funds. The desk classified this as a question about a transfer and sent a query to the payment system; the request went through and the case is marked as asked, but no answer is recorded yet. What is left is replying to Mara once the payment record comes back, and her identity is still unverified, so that reply should stick to what the payment record shows.
 
 _Written by a model from the record below; the sections below are the record._
 

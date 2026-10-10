@@ -4,7 +4,7 @@
 
 ## Summary
 
-Verified customer Nerys Wren asked, through the secure portal, for the permitted list of sign-in sessions on her profile. The desk classified this as an access question, marked the access system as asked, and closed the case in WAITING because that system's answer has not come in. A later request to ask the access system again and an attempt to escalate to a person were both refused because the case was no longer in the TRIAGED state, so no session extract has been delivered and no reply or other action was taken; the case still needs someone to retrieve the extract and deliver it through the portal.
+Nerys Wren, a verified customer on the secure portal, asked for the permitted list of her sign-in sessions to be delivered through the portal. The desk classified it as an access question, found the access system had already been asked, and closed the case in WAITING because that system's answer has not come back. A second request to the access system and an attempt to escalate were both refused because the case was no longer in the TRIAGED state, so no session list has been produced or delivered and the escalation note was not passed on.
 
 _Written by a model from the record below; the sections below are the record._
 

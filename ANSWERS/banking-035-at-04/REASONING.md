@@ -68,21 +68,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 64. `next_system`: not known → tariff (by `route-tariff`).
 65. The agent asked for `ask_system` {"system": "tariff"}.
 66. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=tariff); next_system = payment is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=tariff); next_system = incoming is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=tariff); next_system = recurring is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=tariff); next_system = card is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=tariff); next_system = access is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=tariff); next_system = business is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=tariff); next_system = documents is false (next_system=tariff); next_system absent is false (next_system=tariff); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register).
-67. The agent asked for `reply` {}.
-68. Rule `registration-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered present → true (registered=True).
-69. State `TRIAGED` → `REPLY_PENDING` (by `registration-reply`).
-70. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-71. Called `reply_customer` (attempt 1, key banking-035-at-04:do-reply:17).
-72. `reply_customer` found {}.
-73. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-74. The case closed in `REPLIED`: **reply**.
+67. The agent asked for `submit_request` {}.
+68. Refused `submit_request` in `TRIAGED`: register: registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=tariff); request_type = instruction is false (request_type=register); incoming-instruction: next_system = incoming is false (next_system=tariff); request_type = instruction is false (request_type=register); recurring-instruction: next_system = recurring is false (next_system=tariff); request_type = instruction is false (request_type=register); card-instruction: next_system = card is false (next_system=tariff); request_type = instruction is false (request_type=register); access-instruction: next_system = access is false (next_system=tariff); request_type = instruction is false (request_type=register); business-instruction: next_system = business is false (next_system=tariff); request_type = instruction is false (request_type=register); documents-instruction: next_system = documents is false (next_system=tariff); request_type = instruction is false (request_type=register).
+69. The agent asked for `reply` {}.
+70. Rule `registration-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered present → true (registered=True).
+71. State `TRIAGED` → `REPLY_PENDING` (by `registration-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-035-at-04:do-reply:17).
+74. `reply_customer` found {}.
+75. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+76. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 8755 tokens in, 730 out, 7.063 s, cost $0.0210; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> The case is closed with a reply to Mara. I did not check whether the fee was correctly applied.
-> 
-> I first tried to ask the tariff system about the fee, but the desk refused. The case is a registration request, and that type of request can't go to the tariff system. Mara's dispute of the £4.50 paper statement fee dated 18 June 2025 was already registered under reference HV-035. The reply therefore confirms that registration only. It does not say whether the fee will be changed, because nothing in the records shows that yet.
+5 calls, 11857 tokens in, 665 out, 6.27 s, cost $0.0265; models: claude-sonnet-5-5, jev-1.13.0.

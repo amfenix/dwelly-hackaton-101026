@@ -72,13 +72,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10710 tokens in, 663 out, 7.178 s, cost $0.0242; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10533 tokens in, 618 out, 7.219 s, cost $0.0234; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The recurring-payments system accepted the request, so the next step is to read its answer and reply to the customer.
-> I asked the recurring-payments system about the standing order, but I can't give Mara Ellison a due date yet, and the case has stopped here.
+> I've asked the recurring-payments system for the next run date of your standing order. The case now has nothing more to do on this step. The system's answer isn't in the case yet, so I couldn't write a reply to you.
 > 
-> The system accepted the request, but its answer never reached the case. The case has no recurring-payments status, and the reply tool refused to run without one. The case is final in the ASKED state, so nothing more can be done from here and it goes to a person.
+> I tried to reply straight away and the desk refused. The case was still in the "asked" state, and the standing-order result hadn't come back. I haven't given you a date, because I won't state one the records haven't shown me. The case is now final at this step, so it goes to a person to finish.
 > 
-> The customer's identity is also still unverified (`verified: false`). The case has no standing-order details on record, so I have not told her anything about the schedule.
+> One thing for whoever picks it up: the desk shows you as not verified. That may need sorting out before the date can be shared.

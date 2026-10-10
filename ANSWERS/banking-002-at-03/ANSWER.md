@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marsh, an unverified customer on secure chat, asked whether H&V has received a transfer for her pottery studio's kiln contribution. The desk checked the incoming-payment records and then put the case on hold, because the system's answer had not come back; nothing is confirmed as received. The agent's later attempts to reply, ask the incoming system again and escalate were all refused because the case was already in the waiting state, so no reply was sent and a person still needs to check the incoming records and verify her identity.
+Elowen Marsh, an unverified customer on secure chat, asked whether H&V had received a transfer for a pottery studio kiln contribution. The desk queried the incoming-payment system, but no answer had come back when the case closed in a waiting state, so no reply was sent. The agent's attempts to reply, re-ask the system and escalate were all refused because the case was already in WAITING, and nobody has yet checked the incoming payment or verified her identity.
 
 _Written by a model from the record below; the sections below are the record._
 

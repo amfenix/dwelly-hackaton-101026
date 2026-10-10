@@ -65,17 +65,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "card"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
-64. The agent asked for `escalate` {"note": "Rowan Ellery asks via secure chat why their card was restricted after a declined grocery purchase and whether the restriction has been lifted. The requester is not verified. The card system lookup is marked as already done, but no card record is in the case. A new card query was refused because the case is in WAITING state. Please verify the customer's identity and check the card restriction category and status before replying."}.
-65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 10763 tokens in, 938 out, 8.13 s, cost $0.0271; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8569 tokens in, 595 out, 6.278 s, cost $0.0193; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is in WAITING and I can't move it with any tool. The card lookup and the escalation were both refused because the case isn't in the TRIAGED state.
+> I've stopped here, and the case is waiting. I couldn't tell Rowan the restriction category or whether it has been lifted.
 > 
-> - **What the case holds:** Rowan Ellery is not verified. No card record is in the case, so the restriction category and whether it has been lifted are not known.
-> - **Next step:** I'm leaving the case open for a person to pick up. They need to verify Rowan's identity and then check the card's restriction and its status.
-> - **What I haven't done:** I haven't told Rowan anything about the card, because nothing in the records supports an answer yet.
+> The card system refused my lookup. The case is in a waiting state, and the card question has already been asked. The facts also show Rowan is not verified. Until Rowan is verified and replies, I have nothing from the card records to report. I haven't guessed at a restriction category or a lifted status.

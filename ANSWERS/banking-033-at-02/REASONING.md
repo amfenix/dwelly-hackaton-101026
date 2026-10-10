@@ -53,8 +53,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
-53. Classifier (jev jev-latest) on `subject`: document, confidence 0.99 → document.
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.92 → question.
+53. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → document (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
@@ -72,10 +72,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7085 tokens in, 467 out, 4.262 s, cost $0.0150; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7125 tokens in, 504 out, 4.97 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system about your CSV export for 6 to 9 May 2025. The case is now closed on my side. The documents system hasn't given an answer yet, so I can't tell you whether the file exists or when it will be in your secure portal.
+> I've asked the documents system about the export for 6–9 May 2025. That is the next step. The case is now marked final and no answer has come back yet. So I can't say whether the CSV file exists or when it will appear in your secure portal.
 > 
-> Your identity also isn't verified in this chat. Until it is, I can't confirm anything about your account records here.
+> Two other things from the case record:
+> - Your identity is not verified on this chat, so the desk may limit what it shares until you're verified.
+> - The record shows no export confirmation yet.

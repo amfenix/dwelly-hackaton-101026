@@ -51,29 +51,26 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: register, confidence 0.46 → register.
+50. Classifier (jev jev-latest) on `request_type`: change, confidence 0.50 → change.
 51. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-52. `request_type`: not known → register (by `triage`).
+52. `request_type`: not known → change (by `triage`).
 53. `subject`: not known → profile (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 56. `next_system`: not known → access (by `route-access`).
-57. The agent asked for `submit_request` {}.
-58. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-59. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-60. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-61. Called `register_request` (attempt 1, key banking-037-at-02:do-request:17).
-62. Action in the world: `register_request` {"team": "access", "about": "profile"}.
-63. `register_request` found {}.
-64. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-65. The case closed in `REQUESTED`: **submit_request**.
+57. Rule `profile-change-to-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked absent → true (access_asked=not known); verified → true (verified=True); registration_asked absent → true (registration_asked=not known). A verified customer's profile change is started in the protected change process.
+58. State `TRIAGED` → `REQUEST_PENDING` (by `profile-change-to-the-process`).
+59. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+60. Called `register_request` (attempt 1, key banking-037-at-02:do-request:17).
+61. Action in the world: `register_request` {"team": "access", "about": "profile"}.
+62. `register_request` found {}.
+63. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+64. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 7106 tokens in, 584 out, 5.987 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4842 tokens in, 486 out, 4.254 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the name correction request. Elowen's profile shows "Elowen Mar" and the correct spelling is "Elowen Marr". She was verified on the call and asked for the correction to be escalated. The request is now with the team that handles it, and the case is closed on our side.
-> 
-> The data team may come back to her for supporting information, which she said she expects. I haven't confirmed that the profile has changed.
+> The case is already closed with the outcome "submit_request". The name correction from "Elowen Mar" to "Elowen Marr" has been passed to the team that handles profile changes. The customer was verified on the call, and no step was refused. Nothing further is needed from the desk.

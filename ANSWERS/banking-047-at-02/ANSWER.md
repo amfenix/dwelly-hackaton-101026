@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder, a viewer who is not verified, asked over secure chat for the company's current payment limit ahead of a substantial supplier payment. The desk classified this as a question about the limit and asked the business system about it, then closed the case at that step. No limit figure has come back, so nothing has been confirmed to Maeve, and the record does not say what happens next or who follows up.
+Maeve Calder, a viewer whose identity is unverified, asked over secure chat for the company's current payment limit ahead of a substantial supplier payment. The desk classified this as a question about the limit and asked the business system about it, then closed the case at that step. No limit figure came back in the record, so nothing has been given to Maeve, and no payment was changed.
 
 _Written by a model from the record below; the sections below are the record._
 

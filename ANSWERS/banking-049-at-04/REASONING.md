@@ -76,10 +76,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7192 tokens in, 463 out, 4.151 s, cost $0.0152; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7258 tokens in, 514 out, 4.622 s, cost $0.0159; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The documents system shows the acquiring report for 1–7 July 2025 as ready, so no escalation was needed. The case is closed.
+> I've sent the reply, and the case is closed. The documents system shows the acquiring report for 1–7 July 2025 as ready, so the file didn't need escalating. The reply covers that status only.
 > 
-> The requester isn't verified, so the reply only says what the record shows.
+> Mara Venn isn't verified, so I didn't release or attach the file itself.

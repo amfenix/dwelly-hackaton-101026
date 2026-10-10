@@ -69,10 +69,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4713 tokens in, 586 out, 4.843 s, cost $0.0115; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4699 tokens in, 490 out, 4.022 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> This case needs no further action from me. It is already in the state CONFIRMATION_SENT and is marked final, with the outcome "send for confirmation".
+> The case is already closed, and I took no further action. Its state is "confirmation sent" and its outcome is "send for confirmation".
 > 
-> Mara Ellison is not verified, and her email alone can't change her profile. The bank has therefore sent her a confirmation request, and she needs to complete it through the secure process before the correspondence address can be updated. I made no changes and no tool calls beyond reading the case status.
+> Mara Ellison isn't verified, and her request came by email, outside the portal. The email can't change her profile by itself, as she says herself. The address change needs her confirmation through the bank's secure process first.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, a verified customer on the secure portal, confirmed she wanted to cancel the future run of her recurring studio-rent payment instruction. The desk's check of the recurring system showed instruction HV-013 as cancelled, with no payment in progress when the cancellation was recorded. The desk's attempt to submit the cancellation as a request was refused, and it instead replied on
+Elodie Mercer, a verified customer on the secure portal, confirmed she wanted to cancel the future run of her recurring studio-rent payment instruction. The desk's check of the instruction log showed HV-013 with its future run cancelled and no payment in progress. The desk's attempt to submit a new request was refused, so it replied on the portal that the standing-order record shows cancelled, that this does not establish a refund or a future payment outcome, and that no
 
 _Written by a model from the record below; the sections below are the record._
 

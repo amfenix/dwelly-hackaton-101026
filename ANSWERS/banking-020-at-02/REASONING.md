@@ -51,8 +51,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
-51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.69 → standing_order.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
 52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → standing_order (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
@@ -67,9 +67,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. `ask_system` found {}.
 64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 65. The case closed in `ASKED`: **ask_system**.
-66. The agent asked for `reply` {}.
-67. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=recurring); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=recurring); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-5 calls, 9874 tokens in, 443 out, 4.477 s, cost $0.0204; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4863 tokens in, 487 out, 3.779 s, cost $0.0108; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I've asked the recurring payments system, which holds standing orders and Direct Debits, for the active instructions linked to Elena's account. The request was accepted. Once the answer is in the case, the next step is to reply to her with what is active and what to consider before closing.

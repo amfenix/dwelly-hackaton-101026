@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
+50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.98 → authority.
 51. Classifier (jev jev-latest) on `subject`: role, confidence 0.78 → role.
 52. `request_type`: not known → authority (by `triage`).
 53. `subject`: not known → role (by `triage`).
@@ -70,8 +70,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4931 tokens in, 498 out, 4.921 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4965 tokens in, 491 out, 4.587 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've forwarded the access request to Merefield Design Studio's company administrator. The bank can't assign the new colleague's role without their approval, and Nadia can't give it. Once the administrator responds, the request can go ahead. Nadia's identity is not verified in this case, which is worth knowing, but it didn't block the forwarding.
+> I've forwarded the access request to the company administrator for approval. Nadia can't approve or assign roles herself. The new colleague gets no portal access until the administrator approves it. The case is now closed on our side.

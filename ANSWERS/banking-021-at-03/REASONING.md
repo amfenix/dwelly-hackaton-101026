@@ -65,19 +65,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "card"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
-64. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks whether her replacement card has been dispatched. The portal only confirmed the request was accepted. The card system was already queried (card_asked=True), but no dispatch record is in the case. A new card query was refused because the case is in WAITING state. Please check the dispatch status of the replacement card after verifying the customer's identity, and reply to her. Dispatch must not be claimed until a record shows it."}.
-65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12571 tokens in, 946 out, 8.418 s, cost $0.0308; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8865 tokens in, 760 out, 6.842 s, cost $0.0215; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't tell the customer whether the replacement card has been dispatched, and the case is left in WAITING for a person to pick up.
+> I haven't been able to confirm whether Mara Ellison's replacement card has been dispatched. The case is in a final WAITING state, and the desk refused my request to query the card system.
 > 
-> - **Card system query:** refused. The case is in WAITING, not TRIAGED, and the desk's rules only allow a system query from TRIAGED. The card system had already been asked once (`card_asked=True`), but no dispatch record came back into the case.
-> - **Escalation:** also refused, for the same reason.
-> - **What's known:** the portal only confirmed that the request was accepted. Mara Ellison is not verified, and nothing in the case shows a dispatch.
+> - **Why it was refused:** the card system can only be queried while the case is TRIAGED. This case is WAITING, and the records show the card system was already asked (`card_asked` is True).
+> - **What the case holds:** only the portal's "request accepted" message, which says nothing about dispatch or delivery. The facts show `confirmation: none`.
+> - **Verification:** the requester is not verified (`verified: False`), so the bank shouldn't share card details in this chat yet.
 > 
-> The case is marked final with outcome "wait", so nothing more can be done from here. Nobody should tell her the card has been dispatched until a record shows it.
+> I'm making no further calls. The case stays open and goes to a person. Until they review it, we can only tell the customer that the request was received, not that the card has been sent.

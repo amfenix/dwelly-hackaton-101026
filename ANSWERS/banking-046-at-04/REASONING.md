@@ -74,8 +74,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5017 tokens in, 481 out, 4.379 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4988 tokens in, 480 out, 4.282 s, cost $0.0109; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer, and the case is now closed. The business system's record shows Owen Bell's Payroll Approver role as revoked. The reply reports that result. I didn't call `case_status` before replying. The review of his earlier operations stays separate, as the customer asked.
+> I've sent the reply to the customer. The business system shows Owen Bell's Payroll Approver role as revoked, so the reply reports that result. The case is closed as replied.
+> 
+> I did not call `case_status` before replying. I relied on the facts already listed for the case.
+> 
+> The review of operations he approved earlier was not part of this step, so the reply doesn't cover it.

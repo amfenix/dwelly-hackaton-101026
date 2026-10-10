@@ -60,7 +60,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 57. Rule `triage` fired: state = READING → true (state=READING).
 58. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-59. Classifier (jev jev-latest) on `subject`: document, confidence 0.91 → document.
+59. Classifier (jev jev-latest) on `subject`: document, confidence 0.93 → document.
 60. `request_type`: not known → question (by `triage`).
 61. `subject`: not known → document (by `triage`).
 62. State `READING` → `TRIAGED` (by `triage`).
@@ -78,10 +78,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7477 tokens in, 522 out, 5.529 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7431 tokens in, 504 out, 5.502 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to the customer. The documents system had already confirmed that the record for payment HV-040 (£74.00) is ready. The case is now closed.
+> I've sent the reply, and the case is now closed as replied. The documents system had already confirmed that the record for the £74.00 payment (reference HV-040) is ready. The desk wrote the reply from that answer.
 > 
-> The customer isn't verified on this chat. The reply only covers what the bank's record shows. Her payment's status is SENT, and the bank has no confirmation of receipt from the contractor.
+> The customer is not verified. The request was a question about a document, so I didn't treat that as a reason to hold the reply. I didn't check what the reply contains.

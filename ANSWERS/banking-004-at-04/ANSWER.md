@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a verified customer on the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk checked the payment record, found the transfer marked as declined with the recorded reason "The receiving bank declined the transfer," and replied to her on the portal with that. The reply says this does not establish a different cause or authorise a retry, and that no new transfer was made. The case is closed and nothing is left for a person.
+Mara Ellery, a verified customer writing through the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk checked the payment record, which shows the transfer as declined with the recorded reason "The receiving bank declined the transfer," and sent that to her in a portal reply. The reply also says this does not establish a different cause or authorise a retry, and that no new transfer was made. The case is closed as replied, and the record lists nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk found the card journal already showing BLOCKED, with a block request already escalated under case HV-022, so it made no further card change. It replied by verified call that the journal shows blocked, that this does not establish why or whether the card can be used, and that nothing more was changed; the case is closed with nothing left for a person.
+Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk checked the card record, which already showed the card as BLOCKED under case HV-022, and replied on the verified call that the journal shows blocked, that this does not establish why it is blocked or whether it can be used, and that no additional card change was made. The case is closed as replied, and the record lists nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 

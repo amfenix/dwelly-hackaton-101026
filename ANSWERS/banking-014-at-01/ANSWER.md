@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked whether the Direct Debit mandate to Northmere Water Services is currently active, after seeing a March statement collection and no later one, and said they did not want it cancelled or any amount owed assessed. The desk classed it as a question about a direct debit and asked the recurring system about the mandate; the request was accepted. The recurring system's answer is not yet in the record, so the customer still has no answer on whether the mandate is active.
+The customer asked whether the Direct Debit mandate to Northmere Water Services is still active, and said they did not want it cancelled or any amount owed assessed. The desk treated it as a question about a direct debit and sent it to the recurring system, which accepted it but has not yet returned a mandate status. Nothing has been cancelled or changed, and whether the mandate is active is still unanswered; the only record so far is the March 2025 statement entry showing a past collection.
 
 _Written by a model from the record below; the sections below are the record._
 

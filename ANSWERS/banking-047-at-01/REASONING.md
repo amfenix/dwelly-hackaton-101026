@@ -70,10 +70,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6604 tokens in, 421 out, 3.875 s, cost $0.0136; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6604 tokens in, 429 out, 4.019 s, cost $0.0137; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the business system for the current outgoing-payment limit on Maeve's company profile. The desk accepted the request and closed the case at that step.
-> 
-> The business system's answer isn't in the case facts yet. That means I can't give Maeve a figure, and I haven't stated one. The next step is the reply to her, once that answer is available.
+> I queried the business system for the outgoing-payment limit on Maeve's company profile. The desk accepted the request and closed the case at that step. The case record doesn't show the limit figure, and it has no new facts from the business system. So I can't give Maeve a number, and I haven't stated one. I also haven't taken any action on the planned supplier payout, which she hasn't submitted.

@@ -59,35 +59,29 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. `confirmation`: not known → none (by `read-confirmation`).
 56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 57. Rule `triage` fired: state = READING → true (state=READING).
-58. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.91 → instruction.
+58. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.89 → instruction.
 59. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.67 → standing_order.
 60. `request_type`: not known → instruction (by `triage`).
 61. `subject`: not known → standing_order (by `triage`).
 62. State `READING` → `TRIAGED` (by `triage`).
 63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 64. `next_system`: not known → payment (by `asked-payment`).
-65. The agent asked for `ask_system` {"system": "recurring"}.
-66. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-67. The agent asked for `reply` {}.
-68. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
-69. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-70. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-71. Called `reply_customer` (attempt 1, key banking-018-at-04:do-reply:17).
-72. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The payment record shows 2 separate payment instructions. Their individual status is recorded without a single combined outcome. This does not establish execution or the recipient's outcome. No new transfer was made."}.
-73. `reply_customer` found {}.
-74. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-75. The case closed in `REPLIED`: **reply**.
+65. The agent asked for `reply` {}.
+66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
+67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+69. Called `reply_customer` (attempt 1, key banking-018-at-04:do-reply:17).
+70. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The payment record shows 2 separate payment instructions. Their individual status is recorded without a single combined outcome. This does not establish execution or the recipient's outcome. No new transfer was made."}.
+71. `reply_customer` found {}.
+72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-6 calls, 11282 tokens in, 823 out, 7.931 s, cost $0.0249; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8069 tokens in, 843 out, 7.285 s, cost $0.0186; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the customer a reply, and the case is now closed as replied.
+> I've replied to the customer with what the payment records show: two £34.80 payments to Northmere Heating. The records don't show which one is a duplicate, and the customer doesn't know either. No payment has been removed, because nobody has confirmed which line to cancel. The case is closed as replied.
 > 
-> The payment system found two £34.80 payments to Northmere Heating. Its answer came back as "OTHER", so it did not show whether they are duplicates or which line would be the duplicate. The customer also doesn't know which line is the duplicate. Because of that, I didn't cancel or remove anything.
-> 
-> I also tried to check the standing orders in the recurring system, but the desk refused. It requires the payment answer to be reported first.
-> 
-> I didn't see the text of the reply, because the desk writes it.
+> I didn't check the standing orders system, even though the case subject is a standing order. If the customer wants to follow this up, that is the next place to look.

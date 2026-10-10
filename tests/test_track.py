@@ -151,6 +151,19 @@ def test_an_instruction_does_not_wait_on_a_case_opened_with_the_team() -> None:
     assert case.send("submit_request").accepted
 
 
+def test_a_profile_change_goes_through_the_protected_process() -> None:
+    phone = (
+        "Verified call",
+        CUSTOMER,
+        "H&V service agent",
+        "After the identity checks: please change my phone number.",
+    )
+    case = started(phone, request_type="change", subject="profile")
+    assert case.state == "REQUESTED" and acts(case) == ["register_request"]  # not the desk's own confirmation
+    opened = ("Internal note", "H&V service agent", "H&V profile change process", "I have opened the change process.")
+    assert started(phone, opened, request_type="change", subject="profile").state == "WAITING"
+
+
 def test_a_review_is_registered_not_asked() -> None:
     case = started(ASK, request_type="register")
     assert not case.send("ask_system", {"system": "payment"}).accepted

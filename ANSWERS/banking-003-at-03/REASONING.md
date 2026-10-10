@@ -54,7 +54,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+53. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → transfer (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
@@ -65,19 +65,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "payment"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-64. The agent asked for `escalate` {"note": "Elise Rowan (unverified, secure chat) asks whether a saved invoice transfer instruction in the portal was submitted, what stage it is at, and whether she must authorise it. No sent confirmation exists. The payment system lookup is flagged as already asked, but no result is in the case. A new payment query was refused because the case is in WAITING state. Please check the instruction's stage and authorisation requirement, and verify the customer before sharing details."}.
-65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12652 tokens in, 926 out, 8.264 s, cost $0.0307; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8785 tokens in, 578 out, 5.423 s, cost $0.0195; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't check the transfer, and the case is now waiting with nothing more I can do from here.
+> I couldn't check the transfer's stage, so the customer has no answer yet. The payment system refused my request because the case is in a WAITING state, and the payment check only runs once the case is TRIAGED.
 > 
-> - **Payment lookup refused:** The desk won't run it while the case is in the WAITING state. The case record also says a payment lookup was already made, but it holds no result.
-> - **Escalation refused:** The desk blocked that for the same reason.
-> - **Customer not verified:** Elise Rowan is not verified, so no payment details could be shared with her yet in any case.
+> The case status shows this as final with the outcome "wait". Nothing else is available to me now, so I'm stopping here. The case stays open and will be handed to a person.
 > 
-> I have no information on whether the instruction was submitted, what stage it is at, or whether she needs to authorise it. The case stays open and goes to a person.
+> Elise Rowan is also not verified, so even with a stage lookup the reply would have needed to stay within what the bank can share with an unverified requester.

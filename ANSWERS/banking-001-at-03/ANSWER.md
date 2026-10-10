@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, who is not verified, asked over secure chat whether H&V had sent her £420 payment to Alder & Reed Workshop, and the desk put the case in a waiting state, saying the payment system had been asked but its answer was not in yet. The follow-up request to the payment system was refused because the case was already in WAITING, so no transfer status was retrieved and no actions were taken. The record shows nothing about who picks the case up next, so whether a person takes it over is not settled by it. The agent's note saying it will be handed to a person is not supported by the record.
+Mara Ellison, who is not verified, asked over secure chat whether H&V had sent her one-off £420 payment to Alder & Reed Workshop, since she could see the debit. The desk classed it as a transfer question, noted the payment system had been asked but no answer was in yet, and closed the case as waiting without taking any action. The agent's later attempt to ask the payment system again was refused because the case was already in WAITING, so Mara has not been told whether the payment was sent, and a person needs to pick the case up.
 
 _Written by a model from the record below; the sections below are the record._
 

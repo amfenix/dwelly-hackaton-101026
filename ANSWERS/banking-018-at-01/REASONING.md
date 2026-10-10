@@ -49,8 +49,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.92 → instruction.
-49. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.65 → standing_order.
+48. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.86 → instruction.
+49. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.69 → standing_order.
 50. `request_type`: not known → instruction (by `triage`).
 51. `subject`: not known → standing_order (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6605 tokens in, 437 out, 4.015 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6611 tokens in, 443 out, 4.264 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system to check the two £34.80 payments to Northmere Heating. The case still shows no answer from it. Because of that, I haven't established whether the two payments are duplicates, and I haven't cancelled or removed anything.
+> I've asked the recurring payments system about the two £34.80 payments to Northmere Heating. I haven't removed anything, because it isn't yet established whether they are duplicates.
 > 
-> The next step is to read the recurring system's answer once it's in the case. If the records show the two payments are duplicates, the removal can go ahead after that.
+> The system accepted the request, but its answer isn't in the case yet. The case facts still list the payments as standing orders with no confirmation. I'll compare the two lines once the records arrive. Only then can I say whether one can be removed.

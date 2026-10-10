@@ -61,25 +61,22 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. State `READING` → `TRIAGED` (by `triage`).
 58. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
 59. `next_system`: not known → card (by `route-card`).
-60. The agent asked for `ask_system` {"system": "card"}.
-61. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register).
-62. The agent asked for `submit_request` {}.
-63. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-64. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-65. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-66. Called `register_request` (attempt 1, key banking-023-at-02:do-request:17).
-67. Action in the world: `register_request` {"team": "card", "about": "card_payment"}.
-68. `register_request` found {}.
-69. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-70. The case closed in `REQUESTED`: **submit_request**.
+60. The agent asked for `submit_request` {}.
+61. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+62. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+63. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+64. Called `register_request` (attempt 1, key banking-023-at-02:do-request:17).
+65. Action in the world: `register_request` {"team": "card", "about": "card_payment"}.
+66. `register_request` found {}.
+67. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+68. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 8670 tokens in, 736 out, 6.43 s, cost $0.0208; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7456 tokens in, 617 out, 5.18 s, cost $0.0172; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> Asking the card system isn't allowed for a register-type request, so I'll pass the dispute to the team that handles it.
-> I've passed Mara Ellery's dispute about the £38.40 Fern & Finch Books purchase on 14 July 2025 to the team that handles card disputes. The desk accepted it and closed the case at that point.
+> I've passed Mara Ellery's dispute to the card team. It covers the £38.40 Fern & Finch Books purchase posted on 14 July 2025, which she doesn't recognise. She was identified on a verified call, and the desk accepted the request.
 > 
-> I first tried to ask the card system about the purchase, but the desk refused that because this is a register-type request. I haven't checked which card was used, and I haven't given the customer any advice yet on protecting her card.
+> I haven't written the reply to her yet. It should say that the team is now looking at the purchase and that its appearance in her transaction list doesn't show who made it. The bank also can't act for her or take a PIN or password, so any card-protection steps need to go through the bank's secure process.

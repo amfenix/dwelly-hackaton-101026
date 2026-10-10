@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren, an unverified customer writing from outside the portal, asked which active instructions are linked to her account and what to consider before closing it. The desk classed this as a question about standing orders and put it to the recurring-payments system; the case closed at that point. The ask returned no result, and the desk's attempt to reply was refused, so nothing has been sent to Elena. A reply to her about her standing orders and what to consider before closing is still outstanding, and her identity remains unverified.
+Elena Wren, an unverified customer writing from outside the portal, asked what active instructions are linked to her account and what to consider before closing it. The desk classed this as a question about a standing order and asked the recurring-payments system about it, and the case closed in the ASKED state. No answer has come back from that system, and an attempted reply was refused, so Elena has received nothing yet and a person would need to pick up the case once the recurring-payments response is in.
 
 _Written by a model from the record below; the sections below are the record._
 

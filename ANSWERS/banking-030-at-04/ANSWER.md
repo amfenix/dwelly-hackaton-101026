@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellery, a verified customer in secure chat, asked whether her replacement card was being made and whether it had been sent. The desk checked the card journal, which shows the replacement (reference HV-030) as in manufacture and does not confirm dispatch or delivery, and replied to her on secure chat saying exactly that. No change was made to her card or account, the case is closed as replied, and nothing is left for a person.
+Maren Ellery, a verified customer in secure chat, asked whether her replacement card is being made and whether it has been sent. The desk checked the card journal, which shows the replacement as in manufacture with no record of dispatch or delivery, and replied to her in secure chat saying exactly that and that no card change was made. The case is closed with the reply sent, and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

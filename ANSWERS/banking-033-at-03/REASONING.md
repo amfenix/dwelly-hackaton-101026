@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.92 → question.
 55. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → document (by `triage`).
@@ -65,13 +65,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
 62. State `TRIAGED` → `WAITING` (by `documents-waits`).
 63. The case closed in `WAITING`: **wait**.
+64. The agent asked for `ask_system` {"system": "documents"}.
+65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
 
 ## Model calls
 
-3 calls, 5019 tokens in, 585 out, 4.986 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8860 tokens in, 513 out, 4.756 s, cost $0.0190; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I'm making no further tool call on this case. The documents system has already been asked about the export, and it has not confirmed that a CSV for 6–9 May 2025 exists. The case is in a final waiting state.
+> I've stopped here. The case is now in a final WAITING state, so I can't take another step on it.
 > 
-> Mara Ellison is also not verified, so the desk can't claim the file is ready or promise when it will appear in the secure portal. She should check the export section of her secure portal for the file. The case stays open until the documents system confirms the export.
+> The documents system was already asked, and it hasn't said whether the CSV export for 6–9 May 2025 is ready. My second request to it was refused for that reason. The case is also marked as not verified. I haven't told the customer the file is available, because nothing in the records shows that.
+> 
+> The case stays open for the export to be created. It will go to a person if it isn't picked up.

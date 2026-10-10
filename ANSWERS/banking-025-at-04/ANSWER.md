@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked why her £18.40 payment at North Quay Books was declined. The desk treated it as a card-payment question, noted that the card system had already been asked, and closed the case as waiting because that system's answer hasn't come in. A second request to the card system was refused because the case was already in the waiting state; no actions were taken on the account, and the reason for the decline is still unknown until the card system's answer arrives.
+Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk identified her, classified the request as a card question and asked the card system, and the case closed as "wait" because that system's answer had not come back. A second attempt to ask the card system was refused because the case was already in the waiting state and the card had already been asked, so no reason for the decline is on record and nothing was done for her; the case is left for a person to pick up.
 
 _Written by a model from the record below; the sections below are the record._
 

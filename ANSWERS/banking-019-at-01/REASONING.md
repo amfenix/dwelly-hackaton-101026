@@ -66,8 +66,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10209 tokens in, 718 out, 6.628 s, cost $0.0237; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10172 tokens in, 573 out, 5.472 s, cost $0.0222; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> Next step is to check the recurring system for whether the run can still be changed.
+> Next system is recurring; need to check whether the next run can be changed.

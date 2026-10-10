@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7092 tokens in, 533 out, 7.361 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7124 tokens in, 528 out, 8.243 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the incoming-payments system whether the kiln contribution has arrived in Elowen Marsh's account. The case is now closed at this step, and the system's answer hasn't come back into the case yet. So I can't yet say whether the money has arrived.
+> I've asked the incoming-payments system whether the kiln contribution has arrived in Elowen Marsh's account. The case is now closed on that step. The system's answer isn't in the case yet, so I can't say whether the money has arrived.
 > 
-> Elowen Marsh is not verified on this chat, so any reply has to stay within what the record shows. Her only evidence so far is the sender's say-so, which isn't a confirmation.
+> The case also shows Elowen as not verified. Whoever writes the reply should keep to what the records show and not confirm account details until verification is done.

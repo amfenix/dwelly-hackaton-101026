@@ -4,7 +4,7 @@
 
 ## Summary
 
-Tamsin Rook, a verified customer, asked the desk to have the Direct Debit team investigate an £18.40 Direct Debit to Northmere Water Services that she disputes. The desk classified it as a registration request, found the team had already been asked to register the review, and closed the case in WAITING because that team's answer is not yet in. Nothing was submitted, and the agent's later attempts to submit the request, ask the recurring system, and escalate were all refused because the case was no longer in the triaged state, so the case is left waiting on the team's reply.
+Verified customer Tamsin Rook asked, on a verified call, for the Direct Debit team to investigate an £18.40 Direct Debit to Northmere Water Services that she disputes. The desk classed it as a registration request for the recurring-payments system and put the case in WAITING, because the team had already been asked to register the review and its answer had not come back. The agent then tried to submit the request, ask the recurring system and escalate, and all three were refused because the case was no longer in the triaged state, so nothing was registered or sent on. What is left is the Direct Debit team's reply, and the dispute has not been escalated to a person.
 
 _Written by a model from the record below; the sections below are the record._
 

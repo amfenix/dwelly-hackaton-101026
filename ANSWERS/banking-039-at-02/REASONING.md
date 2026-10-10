@@ -70,11 +70,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6868 tokens in, 408 out, 4.38 s, cost $0.0140; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6874 tokens in, 387 out, 4.222 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The customer is verified and wants a list of sign-in sessions. That information sits in the access system, which I haven't queried yet.
-> I asked the access system for the list of sign-in sessions on Nerys Wren's profile. The desk accepted the request and the case is now closed at that step.
-> 
-> The system's answer isn't in the case yet. No session details are listed in the case status either, so I have nothing to report to the customer about her sessions.
+> The facts show the customer is verified and the question concerns access. The session list isn't in the case yet, so I'll ask the access system for it.
+> I asked the access system for the list of sign-in sessions on Nerys Wren's profile. The desk accepted the request and the case is closed at this step. No session details have come back yet, so there is nothing to report to the customer.

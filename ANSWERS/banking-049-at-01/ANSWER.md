@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, a verified customer on the business portal, asked for the acquiring report covering 1–7 July 2025 so she could review card sales and adjustments. The desk treated it as a question about a document and sent an ask to the documents system, which went through and closed the case as ASKED. No answer from the documents system is in the record, so whether the report exists is still unknown and the file has not been given to her; that follow-up is left to a person.
+Mara Venn, a verified customer on the business portal, asked for the acquiring report covering 1–7 July 2025 so she could review card sales and adjustments. The desk classified this as a question about a document and sent a query to the documents system, which accepted it without returning an answer. The case closed in that asked state, so the report itself has not been provided and nothing further is recorded as being done.
 
 _Written by a model from the record below; the sections below are the record._
 

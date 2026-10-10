@@ -4,7 +4,9 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, without cancelling it. The desk checked the mandate record, found it active, and sent her a reply saying so. The reply also said this does not guarantee a future payment will execute, and that no instruction or change was made. The case is closed; the record shows she was not verified, and it lists nothing left for a person to do.
+Mara Ellery asked over secure chat whether her Direct Debit mandate with Northmere Water Services is still active, without cancelling it. The desk checked the mandate record, which shows it as active, and replied to her on secure chat saying so. The reply also said this doesn't guarantee a future payment will execute, and that no change was made; the requester was not verified, and the case is closed with nothing left for a person.
+
+One wrinkle: the reply text calls it a "standing-order record", while the record itself describes a Direct Debit mandate.
 
 _Written by a model from the record below; the sections below are the record._
 
