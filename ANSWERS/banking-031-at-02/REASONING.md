@@ -38,39 +38,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-tariff` fired: state = READING → true (state=READING).
 35. Called `check_tariff` (attempt 1, key banking-031-at-02:read-tariff:10).
 36. `check_tariff` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-031-at-02:read-registration:11).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-031-at-02:read-confirmation:12).
-42. Note from `read-confirmation`: event 2 (Elowen Marr): I’m escalating this because I still can’t find my June statement in the portal. I need the statement itself made available there; I’m not asking for it by email. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.53 → question.
-48. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → statement (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=statement).
-53. `next_system`: not known → documents (by `route-documents`).
-54. The agent asked for `ask_system` {"system": "documents"}.
-55. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-031-at-02:do-ask:16).
-59. Action in the world: `ask_system` {"system": "documents", "about": "statement"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-031-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-031-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-031-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Elowen Marr): I’m escalating this because I still can’t find my June statement in the portal. I need the statement itself made available there; I’m not asking for it by email. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.57 → question.
+51. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+52. `request_type`: not known → question (by `triage`).
+53. `subject`: not known → statement (by `triage`).
+54. State `READING` → `TRIAGED` (by `triage`).
+55. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=statement).
+56. `next_system`: not known → documents (by `route-documents`).
+57. The agent asked for `ask_system` {"system": "documents"}.
+58. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
+59. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+61. Called `ask_system` (attempt 1, key banking-031-at-02:do-ask:17).
+62. Action in the world: `ask_system` {"system": "documents", "about": "statement"}.
+63. `ask_system` found {}.
+64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+65. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7001 tokens in, 491 out, 4.523 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7007 tokens in, 516 out, 4.809 s, cost $0.0154; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the documents system about the June 2025 statement. The case is now closed at that step, and the system's answer isn't in the case yet. I haven't confirmed whether the statement exists or why it isn't showing in the portal.
+> I asked the documents system about the June 2025 statement. That was the one step for this case, and the case is now closed at that step.
 > 
-> The requester, Elowen Marr, is still unverified, so nothing has been changed or released. No reply has gone to the customer.
+> The documents system has not returned any facts about the statement yet. I don't know whether the June statement exists or whether it can be shown in the portal. The case status still lists Elowen Marr as not verified.
+> 
+> Nothing has been sent by email. The customer asked for the statement to be available in the portal, not emailed.

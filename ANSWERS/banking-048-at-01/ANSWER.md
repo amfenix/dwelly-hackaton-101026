@@ -4,7 +4,7 @@
 
 ## Summary
 
-A buyer asked to be told when their payment for the workshop invoice arrives. The desk classified this as a question about an incoming payment and sent an inquiry to the incoming-payments system. That inquiry returned no result, so the record shows no confirmation that the payment has arrived. The case is closed at that step, and the record lists no further action for a person.
+A buyer asked to be told when their payment for a workshop invoice reaches the account. The desk classed it as a question about an incoming payment and sent an inquiry to the incoming-payments system, then closed the case at that step. No answer from that system is in the record, so whether the payment has arrived is still unknown, and the only evidence is the buyer's own message saying they sent it. Someone will need to look at the incoming-payments system's reply to tell the buyer.
 
 _Written by a model from the record below; the sections below are the record._
 

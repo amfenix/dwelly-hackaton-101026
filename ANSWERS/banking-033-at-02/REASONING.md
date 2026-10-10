@@ -40,37 +40,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-033-at-02:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-033-at-02:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-033-at-02:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Mara Ellison): I’m escalating this because the export process is unclear to me. Please let me know when the file for that period is available in my secure portal. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
-50. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → document (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
-55. `next_system`: not known → documents (by `route-documents`).
-56. The agent asked for `ask_system` {"system": "documents"}.
-57. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-58. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-60. Called `ask_system` (attempt 1, key banking-033-at-02:do-ask:16).
-61. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
-62. `ask_system` found {}.
-63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-64. The case closed in `ASKED`: **ask_system**.
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-033-at-02:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-033-at-02:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-033-at-02:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mara Ellison): I’m escalating this because the export process is unclear to me. Please let me know when the file for that period is available in my secure portal. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
+53. Classifier (jev jev-latest) on `subject`: document, confidence 0.99 → document.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → document (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+58. `next_system`: not known → documents (by `route-documents`).
+59. The agent asked for `ask_system` {"system": "documents"}.
+60. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
+61. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+63. Called `ask_system` (attempt 1, key banking-033-at-02:do-ask:17).
+64. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
+65. `ask_system` found {}.
+66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+67. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4883 tokens in, 430 out, 3.738 s, cost $0.0102; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7085 tokens in, 467 out, 4.262 s, cost $0.0150; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system whether the CSV export for 6–9 May 2025 has been created. Its answer isn't in the case yet, so I can't tell Mara whether the file is available in her portal. The next step is to reply to her with whatever the documents system returns.
+> I've asked the documents system about your CSV export for 6 to 9 May 2025. The case is now closed on my side. The documents system hasn't given an answer yet, so I can't tell you whether the file exists or when it will be in your secure portal.
+> 
+> Your identity also isn't verified in this chat. Until it is, I can't confirm anything about your account records here.

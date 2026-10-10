@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -95,7 +98,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Mara Ellery, who was not verified, asked over secure chat why a £3.20 fee appeared against a withdrawal and asked for the tariff entry that applied to be checked. The desk classed it as a fee question and sent a query about the £3.20 fee to the tariff system, then closed the case at that step. The tariff system's answer is not in the record, so the question of which entry applied and how it accounts for the amount is still open for a person to follow up and reply to her.",
+  "summary": "Mara Ellery, who is not verified, wrote through secure chat asking the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal and how it accounts for the amount. The desk classed it as a fee question and sent a query to the tariff system about the £3.20 fee, which went through without error. The tariff system's answer isn't in the record, so what the fee was and why remains unexplained, and no reply to the customer or escalation is recorded.",
   "journal": [
     {
       "seq": 1,
@@ -515,7 +518,7 @@
       "seq": 39,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -533,23 +536,23 @@
       "seq": 40,
       "at": 0.001,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-034-at-02:read-registration:11",
+      "key": "banking-034-at-02:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 41,
       "at": 0.001,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 42,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -567,20 +570,54 @@
       "seq": 43,
       "at": 0.001,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-034-at-02:read-confirmation:12",
+      "key": "banking-034-at-02:read-registration:12",
       "args": {}
     },
     {
       "seq": 44,
+      "at": 0.001,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 45,
+      "at": 0.001,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 46,
+      "at": 0.001,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-034-at-02:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 47,
       "at": 0.001,
       "kind": "note",
       "text": "event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 45,
+      "seq": 48,
       "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
@@ -590,7 +627,7 @@
       }
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.001,
       "kind": "set",
       "field": "confirmation",
@@ -599,7 +636,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 47,
+      "seq": 50,
       "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -608,7 +645,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 48,
+      "seq": 51,
       "at": 0.001,
       "kind": "trigger",
       "name": "triage",
@@ -626,8 +663,8 @@
       "note": ""
     },
     {
-      "seq": 49,
-      "at": 0.298,
+      "seq": 52,
+      "at": 0.259,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -638,8 +675,8 @@
       "attempt": 1
     },
     {
-      "seq": 50,
-      "at": 0.298,
+      "seq": 53,
+      "at": 0.259,
       "kind": "choice",
       "field": "subject",
       "raw": "fee",
@@ -650,8 +687,8 @@
       "attempt": 1
     },
     {
-      "seq": 51,
-      "at": 0.298,
+      "seq": 54,
+      "at": 0.259,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -659,8 +696,8 @@
       "by": "triage"
     },
     {
-      "seq": 52,
-      "at": 0.298,
+      "seq": 55,
+      "at": 0.259,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -668,16 +705,16 @@
       "by": "triage"
     },
     {
-      "seq": 53,
-      "at": 0.298,
+      "seq": 56,
+      "at": 0.259,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 54,
-      "at": 0.299,
+      "seq": 57,
+      "at": 0.259,
       "kind": "trigger",
       "name": "route-tariff",
       "on": null,
@@ -708,8 +745,8 @@
       "note": ""
     },
     {
-      "seq": 55,
-      "at": 0.299,
+      "seq": 58,
+      "at": 0.259,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -717,8 +754,8 @@
       "by": "route-tariff"
     },
     {
-      "seq": 56,
-      "at": 2.007,
+      "seq": 59,
+      "at": 1.863,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -726,8 +763,8 @@
       }
     },
     {
-      "seq": 57,
-      "at": 2.007,
+      "seq": 60,
+      "at": 1.864,
       "kind": "trigger",
       "name": "tariff-ask",
       "on": "ask_system",
@@ -779,16 +816,16 @@
       "note": ""
     },
     {
-      "seq": 58,
-      "at": 2.007,
+      "seq": 61,
+      "at": 1.864,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "tariff-ask"
     },
     {
-      "seq": 59,
-      "at": 2.007,
+      "seq": 62,
+      "at": 1.864,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -805,17 +842,17 @@
       "note": ""
     },
     {
-      "seq": 60,
-      "at": 2.007,
+      "seq": 63,
+      "at": 1.864,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-034-at-02:do-ask:16",
+      "key": "banking-034-at-02:do-ask:17",
       "args": {}
     },
     {
-      "seq": 61,
-      "at": 2.007,
+      "seq": 64,
+      "at": 1.864,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -824,26 +861,26 @@
         "amount": "3.20"
       },
       "by": "do-ask",
-      "key": "banking-034-at-02:do-ask:16"
+      "key": "banking-034-at-02:do-ask:17"
     },
     {
-      "seq": 62,
-      "at": 2.007,
+      "seq": 65,
+      "at": 1.864,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 63,
-      "at": 2.007,
+      "seq": 66,
+      "at": 1.864,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 64,
-      "at": 2.007,
+      "seq": 67,
+      "at": 1.864,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -941,7 +978,7 @@
           }
         }
       },
-      "seconds": 0.2976552000036463,
+      "seconds": 0.2580639999359846,
       "input_tokens": 933,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1090,16 +1127,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYbotunBHEgEVC7em64",
+        "id": "msg_011Cfta1oNCWHTyGir2mVHid",
         "container": null,
         "content": [
           {
-            "signature": "CAQSxAUKEAgSGAI4AUIIdGhpbmtpbmcSDGLJllcIOmzb5nWVhxoMO75mwOUe6npJW8jtIjBC/4EXu5ES3ALAgSGi6SIL7ff5KvCDRL/TBdhGa59StRes15tmuNRIFOIT45cA4jMq4QSIl2Ou15qHNZRU/Tm5uLevw5Q+Y3X83uEJ0IlP/3pNwjzhL3r2+eAIqLUTg9/lhXqmpHYOdiHejfaYMjLPvwzPde79tmbXX7c/iEQ2F+IyuVGkianQgHgQMRV4iuTXcya6Xp+fFBOGy/fBUDq7U+bEch69u+Z7j5hKIcifZLEQ9hOp9ynm393mZ+ZrUOl49XEW53d4pwUVZ+XkDdbYzIfJpDjmDzLgGHdPbLJeDX1WHuYQJqrDmKU8Ztrnc+rShKEtxB9voghpP91DgNRYI/mN7XgmxkToYL9vo3x3Bz5wESq0t4XX8G66jZ0qyjaJXOd6WAkIe4pm391sMkN8xRRz9qez+2GuA5oOZ9vscPDyQe8r0Px0m7TZjf2sQYbrHSVVEXydfi7TPRwvS1iEPr4Q17Dhi8rvx2zcoIFVVdS4xuLLPj3n47kknOlzc9Cg+nLSyUqda7pitPs/Kr7OFgYq7SWIjxhAizCO7Gg97v58Ncat6KfYat+O+lclSk4zOe1bjIGmDQv/chfKPwOlCau9F7jRxHwuqUSHI0PYSHO4s7c1Gp+wXAhPof5laJLP5W4omV24rW7pxcLZett0xs8epaqhRd3HCOW5PiTW+mHe+Qly9GelFmYhSY8/QoCir/UJoxy6STOu7HvAbtZxM/TtBaS+J+3AHM7v8du0Opn4eXSNPHGDDz4wdqEKQ2RYQmFM9HxetWHDETSDpi33oKcS4pJnUW0eXCE2Oz9s5VBENG6f4cgzRS0QCm9Mbt3VsGCjnwFTzbz4UuEhsN3IXomv8xDLw2UvF99JzQQ1VvSc8dYYAQ==",
+            "signature": "CAQStwUKEAgSGAI4AUIIdGhpbmtpbmcSDN1XGllmcAX+WAU0OhoMIQOSKgDljbutUxjCIjCOYXS6ZhUCYh0/QLTy4ASsN+jmeYj/wiHlgpiro72dgJUiklzc5+g0AN+CFj/MeRAq1AQAFzTy7rmp1sOEJnPD57Mu/1HRV3J3SFDX4+bweDScgDD3dtJMndqrssdANl9VCWq8Fe95ivPEfdL7aBANp+T+dEaQdGX32AqrwXr1nTmSD4r8eqWF46Oo0wIhPNBz5r0OKr6GzsetnFBor4Nq4lW3XfdPn41x9Q66267gTb6io3h2HByhEbsSV6CBIlKDVxX5TzWPJY2vT8AX48H49IKZLOnJoQhljyMElkYKpKgOa/ZnaDIcpR8hyhIwSkmMnBLrXr2rzVdMCcmzXwHpWYgEnt8Qe5p5yoCCTivOrspykicNiQqrrWX7wV0o2aDTLNoHg8boFVynoXT/6oFW313eOYg5n3tOhDzWq6ulybREWwtnKNhBEzPuz5QMuoOxfrKmYinDWU2ECIgfh3+3LjW6S5aAfgUv7h9K0jZgZlKuJgUU6BZwuQXCrCYuydXUVz+2FCb3fe7B/xeiCRrF8NbQiQkxVSJQ/Ufg6WbWfTPDCSKHXUx4XvHYCP/7//8EJmFkx2xz1AXfnvfUK2gXeyVIjjq0TP2qGigK8PVJxSGUIjrLMF5U01zv/+MSxFdqwGzTg5bEwuI4/Ejo8jfY7Z99SCe4vHpBvSJFMIp8JV2nvRM5IjehfVxlrB4+52+U1W8q/0X77Gyc7TLEr4u1OcSna7MzbMW8xvVV8i7nQxMupy8me/d+ojqIY+6Al55aj/ihWAVF+nS8eq4tuMH4dz1OhSft0QoAAXe/cUK0j9ElD4Yj5qkfr7+voJMmCu57h9RQd6paGOf14Xi9wVIyfr/w4uGpSRgB",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01F3u7yemYT91C2Z1cFKdTmr",
+            "id": "toolu_017xAgJ58kBJdEAKeuUF8T7Q",
             "caller": {
               "type": "direct"
             },
@@ -1127,18 +1164,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1907,
-          "output_tokens": 109,
+          "output_tokens": 104,
           "output_tokens_details": {
-            "thinking_tokens": 58
+            "thinking_tokens": 53
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.7078086999244988,
+      "seconds": 1.6042382000014186,
       "input_tokens": 1907,
-      "output_tokens": 109,
-      "cost_usd": 0.004904,
+      "output_tokens": 104,
+      "cost_usd": 0.004854,
       "error": null,
       "replayed": false,
       "digest": "4bcf9b300cc5bfb6c409ea173cd1cea8113190f35af9bdb3742ee97e62b1b0ad"
@@ -1285,12 +1322,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSxAUKEAgSGAI4AUIIdGhpbmtpbmcSDGLJllcIOmzb5nWVhxoMO75mwOUe6npJW8jtIjBC/4EXu5ES3ALAgSGi6SIL7ff5KvCDRL/TBdhGa59StRes15tmuNRIFOIT45cA4jMq4QSIl2Ou15qHNZRU/Tm5uLevw5Q+Y3X83uEJ0IlP/3pNwjzhL3r2+eAIqLUTg9/lhXqmpHYOdiHejfaYMjLPvwzPde79tmbXX7c/iEQ2F+IyuVGkianQgHgQMRV4iuTXcya6Xp+fFBOGy/fBUDq7U+bEch69u+Z7j5hKIcifZLEQ9hOp9ynm393mZ+ZrUOl49XEW53d4pwUVZ+XkDdbYzIfJpDjmDzLgGHdPbLJeDX1WHuYQJqrDmKU8Ztrnc+rShKEtxB9voghpP91DgNRYI/mN7XgmxkToYL9vo3x3Bz5wESq0t4XX8G66jZ0qyjaJXOd6WAkIe4pm391sMkN8xRRz9qez+2GuA5oOZ9vscPDyQe8r0Px0m7TZjf2sQYbrHSVVEXydfi7TPRwvS1iEPr4Q17Dhi8rvx2zcoIFVVdS4xuLLPj3n47kknOlzc9Cg+nLSyUqda7pitPs/Kr7OFgYq7SWIjxhAizCO7Gg97v58Ncat6KfYat+O+lclSk4zOe1bjIGmDQv/chfKPwOlCau9F7jRxHwuqUSHI0PYSHO4s7c1Gp+wXAhPof5laJLP5W4omV24rW7pxcLZett0xs8epaqhRd3HCOW5PiTW+mHe+Qly9GelFmYhSY8/QoCir/UJoxy6STOu7HvAbtZxM/TtBaS+J+3AHM7v8du0Opn4eXSNPHGDDz4wdqEKQ2RYQmFM9HxetWHDETSDpi33oKcS4pJnUW0eXCE2Oz9s5VBENG6f4cgzRS0QCm9Mbt3VsGCjnwFTzbz4UuEhsN3IXomv8xDLw2UvF99JzQQ1VvSc8dYYAQ==",
+                "signature": "CAQStwUKEAgSGAI4AUIIdGhpbmtpbmcSDN1XGllmcAX+WAU0OhoMIQOSKgDljbutUxjCIjCOYXS6ZhUCYh0/QLTy4ASsN+jmeYj/wiHlgpiro72dgJUiklzc5+g0AN+CFj/MeRAq1AQAFzTy7rmp1sOEJnPD57Mu/1HRV3J3SFDX4+bweDScgDD3dtJMndqrssdANl9VCWq8Fe95ivPEfdL7aBANp+T+dEaQdGX32AqrwXr1nTmSD4r8eqWF46Oo0wIhPNBz5r0OKr6GzsetnFBor4Nq4lW3XfdPn41x9Q66267gTb6io3h2HByhEbsSV6CBIlKDVxX5TzWPJY2vT8AX48H49IKZLOnJoQhljyMElkYKpKgOa/ZnaDIcpR8hyhIwSkmMnBLrXr2rzVdMCcmzXwHpWYgEnt8Qe5p5yoCCTivOrspykicNiQqrrWX7wV0o2aDTLNoHg8boFVynoXT/6oFW313eOYg5n3tOhDzWq6ulybREWwtnKNhBEzPuz5QMuoOxfrKmYinDWU2ECIgfh3+3LjW6S5aAfgUv7h9K0jZgZlKuJgUU6BZwuQXCrCYuydXUVz+2FCb3fe7B/xeiCRrF8NbQiQkxVSJQ/Ufg6WbWfTPDCSKHXUx4XvHYCP/7//8EJmFkx2xz1AXfnvfUK2gXeyVIjjq0TP2qGigK8PVJxSGUIjrLMF5U01zv/+MSxFdqwGzTg5bEwuI4/Ejo8jfY7Z99SCe4vHpBvSJFMIp8JV2nvRM5IjehfVxlrB4+52+U1W8q/0X77Gyc7TLEr4u1OcSna7MzbMW8xvVV8i7nQxMupy8me/d+ojqIY+6Al55aj/ihWAVF+nS8eq4tuMH4dz1OhSft0QoAAXe/cUK0j9ElD4Yj5qkfr7+voJMmCu57h9RQd6paGOf14Xi9wVIyfr/w4uGpSRgB",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01F3u7yemYT91C2Z1cFKdTmr",
+                "id": "toolu_017xAgJ58kBJdEAKeuUF8T7Q",
                 "caller": {
                   "type": "direct"
                 },
@@ -1308,7 +1345,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01F3u7yemYT91C2Z1cFKdTmr",
+                "tool_use_id": "toolu_017xAgJ58kBJdEAKeuUF8T7Q",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1316,11 +1353,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYbw9yLi89U4FPX26mE",
+        "id": "msg_011Cfta1vDhUM1Tsw5n2g6WK",
         "container": null,
         "content": [
           {
-            "id": "toolu_011vovZkBtcARiAjJ9jA8zTr",
+            "id": "toolu_01CxnxyBHVnHfZeZXY1c7dhW",
             "caller": {
               "type": "direct"
             },
@@ -1345,7 +1382,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2051,
+          "input_tokens": 2046,
           "output_tokens": 26,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1354,13 +1391,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.7501945999683812,
-      "input_tokens": 2051,
+      "seconds": 0.7313469999935478,
+      "input_tokens": 2046,
       "output_tokens": 26,
-      "cost_usd": 0.004362,
+      "cost_usd": 0.004352,
       "error": null,
       "replayed": false,
-      "digest": "e2b134780b27922906bb6d66301c3bca1634f2a88650157398ae5ddc729c56bf"
+      "digest": "f7362d17ea7deb489a0736634516d759a3addab4e7d3e5a19ab5569515a1af69"
     },
     {
       "kind": "agent",
@@ -1504,12 +1541,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSxAUKEAgSGAI4AUIIdGhpbmtpbmcSDGLJllcIOmzb5nWVhxoMO75mwOUe6npJW8jtIjBC/4EXu5ES3ALAgSGi6SIL7ff5KvCDRL/TBdhGa59StRes15tmuNRIFOIT45cA4jMq4QSIl2Ou15qHNZRU/Tm5uLevw5Q+Y3X83uEJ0IlP/3pNwjzhL3r2+eAIqLUTg9/lhXqmpHYOdiHejfaYMjLPvwzPde79tmbXX7c/iEQ2F+IyuVGkianQgHgQMRV4iuTXcya6Xp+fFBOGy/fBUDq7U+bEch69u+Z7j5hKIcifZLEQ9hOp9ynm393mZ+ZrUOl49XEW53d4pwUVZ+XkDdbYzIfJpDjmDzLgGHdPbLJeDX1WHuYQJqrDmKU8Ztrnc+rShKEtxB9voghpP91DgNRYI/mN7XgmxkToYL9vo3x3Bz5wESq0t4XX8G66jZ0qyjaJXOd6WAkIe4pm391sMkN8xRRz9qez+2GuA5oOZ9vscPDyQe8r0Px0m7TZjf2sQYbrHSVVEXydfi7TPRwvS1iEPr4Q17Dhi8rvx2zcoIFVVdS4xuLLPj3n47kknOlzc9Cg+nLSyUqda7pitPs/Kr7OFgYq7SWIjxhAizCO7Gg97v58Ncat6KfYat+O+lclSk4zOe1bjIGmDQv/chfKPwOlCau9F7jRxHwuqUSHI0PYSHO4s7c1Gp+wXAhPof5laJLP5W4omV24rW7pxcLZett0xs8epaqhRd3HCOW5PiTW+mHe+Qly9GelFmYhSY8/QoCir/UJoxy6STOu7HvAbtZxM/TtBaS+J+3AHM7v8du0Opn4eXSNPHGDDz4wdqEKQ2RYQmFM9HxetWHDETSDpi33oKcS4pJnUW0eXCE2Oz9s5VBENG6f4cgzRS0QCm9Mbt3VsGCjnwFTzbz4UuEhsN3IXomv8xDLw2UvF99JzQQ1VvSc8dYYAQ==",
+                "signature": "CAQStwUKEAgSGAI4AUIIdGhpbmtpbmcSDN1XGllmcAX+WAU0OhoMIQOSKgDljbutUxjCIjCOYXS6ZhUCYh0/QLTy4ASsN+jmeYj/wiHlgpiro72dgJUiklzc5+g0AN+CFj/MeRAq1AQAFzTy7rmp1sOEJnPD57Mu/1HRV3J3SFDX4+bweDScgDD3dtJMndqrssdANl9VCWq8Fe95ivPEfdL7aBANp+T+dEaQdGX32AqrwXr1nTmSD4r8eqWF46Oo0wIhPNBz5r0OKr6GzsetnFBor4Nq4lW3XfdPn41x9Q66267gTb6io3h2HByhEbsSV6CBIlKDVxX5TzWPJY2vT8AX48H49IKZLOnJoQhljyMElkYKpKgOa/ZnaDIcpR8hyhIwSkmMnBLrXr2rzVdMCcmzXwHpWYgEnt8Qe5p5yoCCTivOrspykicNiQqrrWX7wV0o2aDTLNoHg8boFVynoXT/6oFW313eOYg5n3tOhDzWq6ulybREWwtnKNhBEzPuz5QMuoOxfrKmYinDWU2ECIgfh3+3LjW6S5aAfgUv7h9K0jZgZlKuJgUU6BZwuQXCrCYuydXUVz+2FCb3fe7B/xeiCRrF8NbQiQkxVSJQ/Ufg6WbWfTPDCSKHXUx4XvHYCP/7//8EJmFkx2xz1AXfnvfUK2gXeyVIjjq0TP2qGigK8PVJxSGUIjrLMF5U01zv/+MSxFdqwGzTg5bEwuI4/Ejo8jfY7Z99SCe4vHpBvSJFMIp8JV2nvRM5IjehfVxlrB4+52+U1W8q/0X77Gyc7TLEr4u1OcSna7MzbMW8xvVV8i7nQxMupy8me/d+ojqIY+6Al55aj/ihWAVF+nS8eq4tuMH4dz1OhSft0QoAAXe/cUK0j9ElD4Yj5qkfr7+voJMmCu57h9RQd6paGOf14Xi9wVIyfr/w4uGpSRgB",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01F3u7yemYT91C2Z1cFKdTmr",
+                "id": "toolu_017xAgJ58kBJdEAKeuUF8T7Q",
                 "caller": {
                   "type": "direct"
                 },
@@ -1527,7 +1564,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01F3u7yemYT91C2Z1cFKdTmr",
+                "tool_use_id": "toolu_017xAgJ58kBJdEAKeuUF8T7Q",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1536,7 +1573,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_011vovZkBtcARiAjJ9jA8zTr",
+                "id": "toolu_01CxnxyBHVnHfZeZXY1c7dhW",
                 "caller": {
                   "type": "direct"
                 },
@@ -1552,7 +1589,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_011vovZkBtcARiAjJ9jA8zTr",
+                "tool_use_id": "toolu_01CxnxyBHVnHfZeZXY1c7dhW",
                 "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"requester\": \"Mara Ellery\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false, \"subject\": \"fee\", \"amount\": \"3.20\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"tariff\"}, \"refused\": []}"
               }
             ]
@@ -1560,12 +1597,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYbzMTbPUvSWP4gpxz4",
+        "id": "msg_011Cfta1yJVGCudC6DFdpS9s",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I asked the tariff system about the £3.20 fee on the foreign-currency cash withdrawal, and the desk accepted the request. The case is now closed at this step.\n\nThe tariff system's answer hasn't come back into the case yet. So I can't yet tell Mara which tariff entry applied or how it produces £3.20. The next step is to reply to her once that answer is in the case.",
+            "text": "I asked the tariff system about the £3.20 fee on Mara Ellery's foreign-currency cash withdrawal. The request was accepted and the case is now marked final under \"ask_system\".\n\nThe tariff system's answer isn't in the case yet, so I can't say which tariff entry applied or how the £3.20 was worked out. I haven't replied to the customer. She is not verified, and the case holds no tariff answer to base a reply on. I also haven't escalated, because the tariff lookup hasn't been refused or contradicted. If the case stays open, it goes to a person.",
             "type": "text"
           }
         ],
@@ -1584,8 +1621,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2215,
-          "output_tokens": 123,
+          "input_tokens": 2210,
+          "output_tokens": 186,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1593,13 +1630,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.60063729993999,
-      "input_tokens": 2215,
-      "output_tokens": 123,
-      "cost_usd": 0.00566,
+      "seconds": 1.9579667000798509,
+      "input_tokens": 2210,
+      "output_tokens": 186,
+      "cost_usd": 0.00628,
       "error": null,
       "replayed": false,
-      "digest": "e912f47b8b4a2c27519cd7861a81889873b97f6db2e834a0d583a514b0da7227"
+      "digest": "2b63efa2e5c2785f73475b87de2af4d49641cc7e838e856d665e18b65047af5a"
     },
     {
       "kind": "generate",
@@ -1612,17 +1649,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellery\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"fee\",\n    \"amount\": \"3.20\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"tariff\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"tariff\",\n        \"about\": \"fee\",\n        \"amount\": \"3.20\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-034-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-034-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: requester='Mara Ellery', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Mara Ellery\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Mara Ellery (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-034-at-02:read-subject:2).\n12. Note from `read-subject`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: amount='3.20']\n13. `find_subject` found {\"amount\": \"3.20\"}.\n14. `amount`: not known → 3.20 (by `read-subject`).\n15. Rule `read-payment` fired: state = READING → true (state=READING).\n16. Called `check_payment` (attempt 1, key banking-034-at-02:read-payment:3).\n17. `check_payment` found {}.\n18. Rule `read-incoming` fired: state = READING → true (state=READING).\n19. Called `check_incoming` (attempt 1, key banking-034-at-02:read-incoming:4).\n20. `check_incoming` found {}.\n21. Rule `read-recurring` fired: state = READING → true (state=READING).\n22. Called `check_recurring` (attempt 1, key banking-034-at-02:read-recurring:5).\n23. `check_recurring` found {}.\n24. Rule `read-card` fired: state = READING → true (state=READING).\n25. Called `check_card` (attempt 1, key banking-034-at-02:read-card:6).\n26. `check_card` found {}.\n27. Rule `read-access` fired: state = READING → true (state=READING).\n28. Called `check_access` (attempt 1, key banking-034-at-02:read-access:7).\n29. `check_access` found {}.\n30. Rule `read-business` fired: state = READING → true (state=READING).\n31. Called `check_business` (attempt 1, key banking-034-at-02:read-business:8).\n32. `check_business` found {}.\n33. Rule `read-documents` fired: state = READING → true (state=READING).\n34. Called `check_documents` (attempt 1, key banking-034-at-02:read-documents:9).\n35. `check_documents` found {}.\n36. Rule `read-tariff` fired: state = READING → true (state=READING).\n37. Called `check_tariff` (attempt 1, key banking-034-at-02:read-tariff:10).\n38. `check_tariff` found {}.\n39. Rule `read-registration` fired: state = READING → true (state=READING).\n40. Called `check_registration` (attempt 1, key banking-034-at-02:read-registration:11).\n41. `check_registration` found {}.\n42. Rule `read-confirmation` fired: state = READING → true (state=READING).\n43. Called `check_confirmation` (attempt 1, key banking-034-at-02:read-confirmation:12).\n44. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]\n45. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n46. `confirmation`: not known → none (by `read-confirmation`).\n47. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n48. Rule `triage` fired: state = READING → true (state=READING).\n49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.70 → question.\n50. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.\n51. `request_type`: not known → question (by `triage`).\n52. `subject`: not known → fee (by `triage`).\n53. State `READING` → `TRIAGED` (by `triage`).\n54. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).\n55. `next_system`: not known → tariff (by `route-tariff`).\n56. The agent asked for `ask_system` {\"system\": \"tariff\"}.\n57. Rule `tariff-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = tariff → true (args.system=tariff); next_system = tariff → true (next_system=tariff); next_system absent → false (next_system=tariff); tariff_asked absent → true (tariff_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n58. State `TRIAGED` → `ASK_PENDING` (by `tariff-ask`).\n59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n60. Called `ask_system` (attempt 1, key banking-034-at-02:do-ask:16).\n61. Action in the world: `ask_system` {\"system\": \"tariff\", \"about\": \"fee\", \"amount\": \"3.20\"}.\n62. `ask_system` found {}.\n63. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n64. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7106 tokens in, 457 out, 4.356 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the tariff system about the £3.20 fee on the foreign-currency cash withdrawal, and the desk accepted the request. The case is now closed at this step.\n> \n> The tariff system's answer hasn't come back into the case yet. So I can't yet tell Mara which tariff entry applied or how it produces £3.20. The next step is to reply to her once that answer is in the case.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellery\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"fee\",\n    \"amount\": \"3.20\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"tariff\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"tariff\",\n        \"about\": \"fee\",\n        \"amount\": \"3.20\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-034-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-034-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: requester='Mara Ellery', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Mara Ellery\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Mara Ellery (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-034-at-02:read-subject:2).\n12. Note from `read-subject`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: amount='3.20']\n13. `find_subject` found {\"amount\": \"3.20\"}.\n14. `amount`: not known → 3.20 (by `read-subject`).\n15. Rule `read-payment` fired: state = READING → true (state=READING).\n16. Called `check_payment` (attempt 1, key banking-034-at-02:read-payment:3).\n17. `check_payment` found {}.\n18. Rule `read-incoming` fired: state = READING → true (state=READING).\n19. Called `check_incoming` (attempt 1, key banking-034-at-02:read-incoming:4).\n20. `check_incoming` found {}.\n21. Rule `read-recurring` fired: state = READING → true (state=READING).\n22. Called `check_recurring` (attempt 1, key banking-034-at-02:read-recurring:5).\n23. `check_recurring` found {}.\n24. Rule `read-card` fired: state = READING → true (state=READING).\n25. Called `check_card` (attempt 1, key banking-034-at-02:read-card:6).\n26. `check_card` found {}.\n27. Rule `read-access` fired: state = READING → true (state=READING).\n28. Called `check_access` (attempt 1, key banking-034-at-02:read-access:7).\n29. `check_access` found {}.\n30. Rule `read-business` fired: state = READING → true (state=READING).\n31. Called `check_business` (attempt 1, key banking-034-at-02:read-business:8).\n32. `check_business` found {}.\n33. Rule `read-documents` fired: state = READING → true (state=READING).\n34. Called `check_documents` (attempt 1, key banking-034-at-02:read-documents:9).\n35. `check_documents` found {}.\n36. Rule `read-tariff` fired: state = READING → true (state=READING).\n37. Called `check_tariff` (attempt 1, key banking-034-at-02:read-tariff:10).\n38. `check_tariff` found {}.\n39. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n40. Called `check_bank_actions` (attempt 1, key banking-034-at-02:read-bank-actions:11).\n41. `check_bank_actions` found {}.\n42. Rule `read-registration` fired: state = READING → true (state=READING).\n43. Called `check_registration` (attempt 1, key banking-034-at-02:read-registration:12).\n44. `check_registration` found {}.\n45. Rule `read-confirmation` fired: state = READING → true (state=READING).\n46. Called `check_confirmation` (attempt 1, key banking-034-at-02:read-confirmation:13).\n47. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]\n48. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n49. `confirmation`: not known → none (by `read-confirmation`).\n50. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n51. Rule `triage` fired: state = READING → true (state=READING).\n52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.70 → question.\n53. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.\n54. `request_type`: not known → question (by `triage`).\n55. `subject`: not known → fee (by `triage`).\n56. State `READING` → `TRIAGED` (by `triage`).\n57. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).\n58. `next_system`: not known → tariff (by `route-tariff`).\n59. The agent asked for `ask_system` {\"system\": \"tariff\"}.\n60. Rule `tariff-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = tariff → true (args.system=tariff); next_system = tariff → true (next_system=tariff); next_system absent → false (next_system=tariff); tariff_asked absent → true (tariff_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n61. State `TRIAGED` → `ASK_PENDING` (by `tariff-ask`).\n62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n63. Called `ask_system` (attempt 1, key banking-034-at-02:do-ask:17).\n64. Action in the world: `ask_system` {\"system\": \"tariff\", \"about\": \"fee\", \"amount\": \"3.20\"}.\n65. `ask_system` found {}.\n66. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n67. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7096 tokens in, 515 out, 4.552 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the tariff system about the £3.20 fee on Mara Ellery's foreign-currency cash withdrawal. The request was accepted and the case is now marked final under \"ask_system\".\n> \n> The tariff system's answer isn't in the case yet, so I can't say which tariff entry applied or how the £3.20 was worked out. I haven't replied to the customer. She is not verified, and the case holds no tariff answer to base a reply on. I also haven't escalated, because the tariff lookup hasn't been refused or contradicted. If the case stays open, it goes to a person.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYc7FCiGwKJmrFYQxHF",
+        "id": "msg_011Cfta27kjxig9NY1rsS41U",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Mara Ellery, who was not verified, asked over secure chat why a £3.20 fee appeared against a withdrawal and asked for the tariff entry that applied to be checked. The desk classed it as a fee question and sent a query about the £3.20 fee to the tariff system, then closed the case at that step. The tariff system's answer is not in the record, so the question of which entry applied and how it accounts for the amount is still open for a person to follow up and reply to her.",
+            "text": "Mara Ellery, who is not verified, wrote through secure chat asking the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal and how it accounts for the amount. The desk classed it as a fee question and sent a query to the tariff system about the £3.20 fee, which went through without error. The tariff system's answer isn't in the record, so what the fee was and why remains unexplained, and no reply to the customer or escalation is recorded.",
             "type": "text"
           }
         ],
@@ -1641,8 +1678,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2766,
-          "output_tokens": 150,
+          "input_tokens": 2916,
+          "output_tokens": 155,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1650,13 +1687,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.8810967999743298,
-      "input_tokens": 2766,
-      "output_tokens": 150,
-      "cost_usd": 0.007032,
+      "seconds": 1.939503200002946,
+      "input_tokens": 2916,
+      "output_tokens": 155,
+      "cost_usd": 0.007382,
       "error": null,
       "replayed": false,
-      "digest": "746f3a1cb049b03d6569f9850a37acb9c044d3cc7fb5bf9c78bc1d2e8d17ba1f"
+      "digest": "3612984ccef1e24b7b4b51ebcf4a1d20a316cdc66dff1e885519a791fa16bf29"
     }
   ]
 }

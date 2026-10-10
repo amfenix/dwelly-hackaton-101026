@@ -46,41 +46,48 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 42. Rule `read-tariff` fired: state = READING → true (state=READING).
 43. Called `check_tariff` (attempt 1, key banking-018-at-04:read-tariff:10).
 44. `check_tariff` found {}.
-45. Rule `read-registration` fired: state = READING → true (state=READING).
-46. Called `check_registration` (attempt 1, key banking-018-at-04:read-registration:11).
-47. `check_registration` found {}.
-48. Rule `read-confirmation` fired: state = READING → true (state=READING).
-49. Called `check_confirmation` (attempt 1, key banking-018-at-04:read-confirmation:12).
-50. Note from `read-confirmation`: event 2 (Mara Ellison): After completing H&V's identity checks, I asked you to escalate this and remove the duplicate. I do not know which line is the duplicate. [facts: confirmation='none', instructed_outside_portal=False]
-51. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-52. `confirmation`: not known → none (by `read-confirmation`).
-53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.88 → instruction.
-56. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.68 → standing_order.
-57. `request_type`: not known → instruction (by `triage`).
-58. `subject`: not known → standing_order (by `triage`).
-59. State `READING` → `TRIAGED` (by `triage`).
-60. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-61. `next_system`: not known → payment (by `asked-payment`).
-62. The agent asked for `reply` {}.
-63. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
-64. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-66. Called `reply_customer` (attempt 1, key banking-018-at-04:do-reply:16).
-67. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The payment record shows 2 separate payment instructions. Their individual status is recorded without a single combined outcome. This does not establish execution or the recipient's outcome. No new transfer was made."}.
-68. `reply_customer` found {}.
-69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-70. The case closed in `REPLIED`: **reply**.
+45. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+46. Called `check_bank_actions` (attempt 1, key banking-018-at-04:read-bank-actions:11).
+47. `check_bank_actions` found {}.
+48. Rule `read-registration` fired: state = READING → true (state=READING).
+49. Called `check_registration` (attempt 1, key banking-018-at-04:read-registration:12).
+50. `check_registration` found {}.
+51. Rule `read-confirmation` fired: state = READING → true (state=READING).
+52. Called `check_confirmation` (attempt 1, key banking-018-at-04:read-confirmation:13).
+53. Note from `read-confirmation`: event 2 (Mara Ellison): After completing H&V's identity checks, I asked you to escalate this and remove the duplicate. I do not know which line is the duplicate. [facts: confirmation='none', instructed_outside_portal=False]
+54. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+55. `confirmation`: not known → none (by `read-confirmation`).
+56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+57. Rule `triage` fired: state = READING → true (state=READING).
+58. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.91 → instruction.
+59. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.67 → standing_order.
+60. `request_type`: not known → instruction (by `triage`).
+61. `subject`: not known → standing_order (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+64. `next_system`: not known → payment (by `asked-payment`).
+65. The agent asked for `ask_system` {"system": "recurring"}.
+66. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+67. The agent asked for `reply` {}.
+68. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
+69. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+70. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+71. Called `reply_customer` (attempt 1, key banking-018-at-04:do-reply:17).
+72. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The payment record shows 2 separate payment instructions. Their individual status is recorded without a single combined outcome. This does not establish execution or the recipient's outcome. No new transfer was made."}.
+73. `reply_customer` found {}.
+74. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+75. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 7949 tokens in, 804 out, 9.273 s, cost $0.0180; models: claude-sonnet-5-5, jev-1.13.0.
+6 calls, 11282 tokens in, 823 out, 7.931 s, cost $0.0249; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the customer a reply, and the case is now closed as replied.
+> I sent the customer a reply, and the case is now closed as replied.
 > 
-> The payment records show two future payments of £34.80 to Northmere Heating. They don't show whether the two are duplicates, so I didn't submit a removal. Mara doesn't know which line would be the duplicate, and removing the wrong one could cancel a payment she wants.
+> The payment system found two £34.80 payments to Northmere Heating. Its answer came back as "OTHER", so it did not show whether they are duplicates or which line would be the duplicate. The customer also doesn't know which line is the duplicate. Because of that, I didn't cancel or remove anything.
 > 
-> I didn't check the standing-order records. The case lists the subject as a standing order, so those records might show how the two payments are related. The payment system had already answered, and its answer was what the reply reported.
+> I also tried to check the standing orders in the recurring system, but the desk refused. It requires the payment answer to be reported first.
+> 
+> I didn't see the text of the reply, because the desk writes it.

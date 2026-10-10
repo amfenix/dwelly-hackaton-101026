@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -85,7 +88,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The request asked whether the payment on row SUP-17 in the supplier batch was paid or rejected, since the batch was marked processed. The desk classified it as a question about a batch and sent an ask to the payment system about SUP-17, and the case closed in the asked state. The payment system's answer is not in the record, and a later attempt to send a reply to the requester was refused because no payment status had been obtained, so the requester has not yet been told whether the payment was paid or rejected.",
+  "summary": "The requester wanted to know whether the payment on row SUP-17 in their supplier batch was paid or rejected, since the batch showed as processed. The desk classified this as a question about a batch and sent an ask to the payment system about SUP-17, and the case closed in the asked state. No answer from the payment system is in the record, and the desk's attempt to reply to the requester was refused because no payment status was known, so the requester has not yet been told whether the payment was paid or rejected.",
   "journal": [
     {
       "seq": 1,
@@ -210,14 +213,14 @@
     },
     {
       "seq": 12,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_payment",
       "values": {}
     },
     {
       "seq": 13,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "trigger",
       "name": "read-incoming",
       "on": null,
@@ -235,7 +238,7 @@
     },
     {
       "seq": 14,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "call",
       "function": "check_incoming",
       "attempt": 1,
@@ -457,7 +460,7 @@
       "seq": 34,
       "at": 0.002,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -475,23 +478,23 @@
       "seq": 35,
       "at": 0.002,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-044-at-01:read-registration:11",
+      "key": "banking-044-at-01:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 36,
       "at": 0.002,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 37,
       "at": 0.002,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -509,20 +512,54 @@
       "seq": 38,
       "at": 0.002,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-044-at-01:read-confirmation:12",
+      "key": "banking-044-at-01:read-registration:12",
       "args": {}
     },
     {
       "seq": 39,
       "at": 0.002,
       "kind": "returned",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "values": {}
     },
     {
       "seq": 40,
+      "at": 0.002,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 41,
+      "at": 0.002,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-044-at-01:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 42,
+      "at": 0.002,
+      "kind": "returned",
+      "function": "check_confirmation",
+      "values": {}
+    },
+    {
+      "seq": 43,
       "at": 0.002,
       "kind": "trigger",
       "name": "triage",
@@ -540,8 +577,8 @@
       "note": ""
     },
     {
-      "seq": 41,
-      "at": 0.275,
+      "seq": 44,
+      "at": 0.287,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -552,8 +589,8 @@
       "attempt": 1
     },
     {
-      "seq": 42,
-      "at": 0.275,
+      "seq": 45,
+      "at": 0.287,
       "kind": "choice",
       "field": "subject",
       "raw": "batch",
@@ -564,8 +601,8 @@
       "attempt": 1
     },
     {
-      "seq": 43,
-      "at": 0.275,
+      "seq": 46,
+      "at": 0.287,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -573,8 +610,8 @@
       "by": "triage"
     },
     {
-      "seq": 44,
-      "at": 0.275,
+      "seq": 47,
+      "at": 0.287,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -582,16 +619,16 @@
       "by": "triage"
     },
     {
-      "seq": 45,
-      "at": 0.275,
+      "seq": 48,
+      "at": 0.287,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 46,
-      "at": 0.275,
+      "seq": 49,
+      "at": 0.287,
       "kind": "trigger",
       "name": "route-payment",
       "on": null,
@@ -622,8 +659,8 @@
       "note": ""
     },
     {
-      "seq": 47,
-      "at": 0.275,
+      "seq": 50,
+      "at": 0.287,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -631,8 +668,8 @@
       "by": "route-payment"
     },
     {
-      "seq": 48,
-      "at": 2.326,
+      "seq": 51,
+      "at": 2.181,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -640,8 +677,8 @@
       }
     },
     {
-      "seq": 49,
-      "at": 2.326,
+      "seq": 52,
+      "at": 2.181,
       "kind": "trigger",
       "name": "payment-ask",
       "on": "ask_system",
@@ -693,16 +730,16 @@
       "note": ""
     },
     {
-      "seq": 50,
-      "at": 2.326,
+      "seq": 53,
+      "at": 2.181,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "payment-ask"
     },
     {
-      "seq": 51,
-      "at": 2.326,
+      "seq": 54,
+      "at": 2.182,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -719,17 +756,17 @@
       "note": ""
     },
     {
-      "seq": 52,
-      "at": 2.326,
+      "seq": 55,
+      "at": 2.182,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-044-at-01:do-ask:16",
+      "key": "banking-044-at-01:do-ask:17",
       "args": {}
     },
     {
-      "seq": 53,
-      "at": 2.326,
+      "seq": 56,
+      "at": 2.182,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -738,43 +775,43 @@
         "reference": "SUP-17"
       },
       "by": "do-ask",
-      "key": "banking-044-at-01:do-ask:16"
+      "key": "banking-044-at-01:do-ask:17"
     },
     {
-      "seq": 54,
-      "at": 2.326,
+      "seq": 57,
+      "at": 2.182,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 55,
-      "at": 2.326,
+      "seq": 58,
+      "at": 2.182,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 56,
-      "at": 2.326,
+      "seq": 59,
+      "at": 2.182,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
     },
     {
-      "seq": 57,
-      "at": 3.047,
+      "seq": 60,
+      "at": 2.945,
       "kind": "signal",
       "signal": "reply",
       "args": {}
     },
     {
-      "seq": 58,
-      "at": 3.047,
+      "seq": 61,
+      "at": 2.945,
       "kind": "refused",
       "signal": "reply",
-      "reason": "registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)",
+      "reason": "registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)",
       "state": "ASKED"
     }
   ],
@@ -870,7 +907,7 @@
           }
         }
       },
-      "seconds": 0.27303899999242276,
+      "seconds": 0.2847726000472903,
       "input_tokens": 907,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1019,11 +1056,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYedNj414XLVpVmC5yQ",
+        "id": "msg_011Cfta4iBzLCZoi4e7tZeSy",
         "container": null,
         "content": [
           {
-            "id": "toolu_01AMdTGTRowa46KjdWX1Sb2D",
+            "id": "toolu_01BVwm1PnHHgAcGPpezdtQBE",
             "caller": {
               "type": "direct"
             },
@@ -1057,7 +1094,7 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.1424815999343991,
+      "seconds": 1.1274602999910712,
       "input_tokens": 1680,
       "output_tokens": 26,
       "cost_usd": 0.00362,
@@ -1207,7 +1244,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01AMdTGTRowa46KjdWX1Sb2D",
+                "id": "toolu_01BVwm1PnHHgAcGPpezdtQBE",
                 "caller": {
                   "type": "direct"
                 },
@@ -1223,7 +1260,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01AMdTGTRowa46KjdWX1Sb2D",
+                "tool_use_id": "toolu_01BVwm1PnHHgAcGPpezdtQBE",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"batch\", \"reference\": \"SUP-17\", \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1231,11 +1268,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYeiHexiqXa5WkgzscT",
+        "id": "msg_011Cfta4ntWkzj1uoM6nR8hb",
         "container": null,
         "content": [
           {
-            "id": "toolu_01WS8PUzCSxQoNxBUqJHwEJR",
+            "id": "toolu_01WuDCyJhKxJ4MicxKBqvz2a",
             "caller": {
               "type": "direct"
             },
@@ -1271,13 +1308,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.9073797001037747,
+      "seconds": 0.766487600049004,
       "input_tokens": 1784,
       "output_tokens": 49,
       "cost_usd": 0.004058,
       "error": null,
       "replayed": false,
-      "digest": "42cf35ae05f299d068a297ff090a4a7512d0b5928209357017e147aa4d0e1b68"
+      "digest": "af18dd0de0ee603feb6902987b096ce051ff918a700bcc2c5d1912d29961520c"
     },
     {
       "kind": "agent",
@@ -1421,7 +1458,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01AMdTGTRowa46KjdWX1Sb2D",
+                "id": "toolu_01BVwm1PnHHgAcGPpezdtQBE",
                 "caller": {
                   "type": "direct"
                 },
@@ -1437,7 +1474,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01AMdTGTRowa46KjdWX1Sb2D",
+                "tool_use_id": "toolu_01BVwm1PnHHgAcGPpezdtQBE",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"batch\", \"reference\": \"SUP-17\", \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1446,7 +1483,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01WS8PUzCSxQoNxBUqJHwEJR",
+                "id": "toolu_01WuDCyJhKxJ4MicxKBqvz2a",
                 "caller": {
                   "type": "direct"
                 },
@@ -1464,7 +1501,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01WS8PUzCSxQoNxBUqJHwEJR",
+                "tool_use_id": "toolu_01WuDCyJhKxJ4MicxKBqvz2a",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1472,11 +1509,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYen6r1HBVV3RUBEqMg",
+        "id": "msg_011Cfta4r9UHyGrX9k2gXfAb",
         "container": null,
         "content": [
           {
-            "id": "toolu_01X6TjoQQ9vqUrM5wc2qAREt",
+            "id": "toolu_01UzMBFDGyWDCttgitDvFYHk",
             "caller": {
               "type": "direct"
             },
@@ -1510,13 +1547,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.7212294999044389,
+      "seconds": 0.7629725999431685,
       "input_tokens": 1868,
       "output_tokens": 25,
       "cost_usd": 0.003986,
       "error": null,
       "replayed": false,
-      "digest": "d61f2049035fd134c6fa398b3a447cc6f25c5f15f69fba495bd08227f8be437c"
+      "digest": "35608f36d0a5e368973889620862e9652ce22b8da53a46a28d21b608ffe22947"
     },
     {
       "kind": "agent",
@@ -1660,7 +1697,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01AMdTGTRowa46KjdWX1Sb2D",
+                "id": "toolu_01BVwm1PnHHgAcGPpezdtQBE",
                 "caller": {
                   "type": "direct"
                 },
@@ -1676,7 +1713,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01AMdTGTRowa46KjdWX1Sb2D",
+                "tool_use_id": "toolu_01BVwm1PnHHgAcGPpezdtQBE",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"batch\", \"reference\": \"SUP-17\", \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1685,7 +1722,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01WS8PUzCSxQoNxBUqJHwEJR",
+                "id": "toolu_01WuDCyJhKxJ4MicxKBqvz2a",
                 "caller": {
                   "type": "direct"
                 },
@@ -1703,7 +1740,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01WS8PUzCSxQoNxBUqJHwEJR",
+                "tool_use_id": "toolu_01WuDCyJhKxJ4MicxKBqvz2a",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1712,7 +1749,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01X6TjoQQ9vqUrM5wc2qAREt",
+                "id": "toolu_01UzMBFDGyWDCttgitDvFYHk",
                 "caller": {
                   "type": "direct"
                 },
@@ -1728,19 +1765,19 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01X6TjoQQ9vqUrM5wc2qAREt",
-                "content": "{\"accepted\": false, \"state\": \"ASKED\", \"refused_because\": \"registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)\", \"case_closed\": \"ask_system\"}"
+                "tool_use_id": "toolu_01UzMBFDGyWDCttgitDvFYHk",
+                "content": "{\"accepted\": false, \"state\": \"ASKED\", \"refused_because\": \"registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)\", \"case_closed\": \"ask_system\"}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYeqDczMVYDmh9R9oWC",
+        "id": "msg_011Cfta4uQR3KvrmiQgtyB16",
         "container": null,
         "content": [
           {
-            "id": "toolu_01TzzxLrfjdizLv2HM9SFbPk",
+            "id": "toolu_019aygnTXYpp13NPJY67VvHz",
             "caller": {
               "type": "direct"
             },
@@ -1774,13 +1811,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.79367370007094,
+      "seconds": 0.6988540000747889,
       "input_tokens": 2422,
       "output_tokens": 26,
       "cost_usd": 0.005104,
       "error": null,
       "replayed": false,
-      "digest": "ba48d7b9dd25f3b078ce9d64904a9ca926c186c1304f36d5ac7132c6cb13c0db"
+      "digest": "8c8fa5af645b67ee63b7757f70b1ea4c565100c999604900cf546797370a8499"
     },
     {
       "kind": "generate",
@@ -1793,17 +1830,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"batch\",\n    \"reference\": \"SUP-17\",\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"batch\",\n        \"reference\": \"SUP-17\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-044-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-044-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-044-at-01:read-subject:2).\n7. Note from `read-subject`: initial request (system): I can see that our supplier batch is marked processed, but I need to know whether the payment on row SUP-17 was paid or rejected. [facts: reference='SUP-17']\n8. `find_subject` found {\"reference\": \"SUP-17\"}.\n9. `reference`: not known → SUP-17 (by `read-subject`).\n10. Rule `read-payment` fired: state = READING → true (state=READING).\n11. Called `check_payment` (attempt 1, key banking-044-at-01:read-payment:3).\n12. `check_payment` found {}.\n13. Rule `read-incoming` fired: state = READING → true (state=READING).\n14. Called `check_incoming` (attempt 1, key banking-044-at-01:read-incoming:4).\n15. `check_incoming` found {}.\n16. Rule `read-recurring` fired: state = READING → true (state=READING).\n17. Called `check_recurring` (attempt 1, key banking-044-at-01:read-recurring:5).\n18. `check_recurring` found {}.\n19. Rule `read-card` fired: state = READING → true (state=READING).\n20. Called `check_card` (attempt 1, key banking-044-at-01:read-card:6).\n21. `check_card` found {}.\n22. Rule `read-access` fired: state = READING → true (state=READING).\n23. Called `check_access` (attempt 1, key banking-044-at-01:read-access:7).\n24. `check_access` found {}.\n25. Rule `read-business` fired: state = READING → true (state=READING).\n26. Called `check_business` (attempt 1, key banking-044-at-01:read-business:8).\n27. `check_business` found {}.\n28. Rule `read-documents` fired: state = READING → true (state=READING).\n29. Called `check_documents` (attempt 1, key banking-044-at-01:read-documents:9).\n30. `check_documents` found {}.\n31. Rule `read-tariff` fired: state = READING → true (state=READING).\n32. Called `check_tariff` (attempt 1, key banking-044-at-01:read-tariff:10).\n33. `check_tariff` found {}.\n34. Rule `read-registration` fired: state = READING → true (state=READING).\n35. Called `check_registration` (attempt 1, key banking-044-at-01:read-registration:11).\n36. `check_registration` found {}.\n37. Rule `read-confirmation` fired: state = READING → true (state=READING).\n38. Called `check_confirmation` (attempt 1, key banking-044-at-01:read-confirmation:12).\n39. `check_confirmation` found {}.\n40. Rule `triage` fired: state = READING → true (state=READING).\n41. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n42. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.\n43. `request_type`: not known → question (by `triage`).\n44. `subject`: not known → batch (by `triage`).\n45. State `READING` → `TRIAGED` (by `triage`).\n46. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).\n47. `next_system`: not known → payment (by `route-payment`).\n48. The agent asked for `ask_system` {\"system\": \"payment\"}.\n49. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n50. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n51. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n52. Called `ask_system` (attempt 1, key banking-044-at-01:do-ask:16).\n53. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"batch\", \"reference\": \"SUP-17\"}.\n54. `ask_system` found {}.\n55. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n56. The case closed in `ASKED`: **ask_system**.\n57. The agent asked for `reply` {}.\n58. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).\n\n## Model calls\n\n5 calls, 8661 tokens in, 325 out, 3.838 s, cost $0.0168; models: claude-sonnet-5-5, jev-1.13.0.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"batch\",\n    \"reference\": \"SUP-17\",\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"batch\",\n        \"reference\": \"SUP-17\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-044-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-044-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-044-at-01:read-subject:2).\n7. Note from `read-subject`: initial request (system): I can see that our supplier batch is marked processed, but I need to know whether the payment on row SUP-17 was paid or rejected. [facts: reference='SUP-17']\n8. `find_subject` found {\"reference\": \"SUP-17\"}.\n9. `reference`: not known → SUP-17 (by `read-subject`).\n10. Rule `read-payment` fired: state = READING → true (state=READING).\n11. Called `check_payment` (attempt 1, key banking-044-at-01:read-payment:3).\n12. `check_payment` found {}.\n13. Rule `read-incoming` fired: state = READING → true (state=READING).\n14. Called `check_incoming` (attempt 1, key banking-044-at-01:read-incoming:4).\n15. `check_incoming` found {}.\n16. Rule `read-recurring` fired: state = READING → true (state=READING).\n17. Called `check_recurring` (attempt 1, key banking-044-at-01:read-recurring:5).\n18. `check_recurring` found {}.\n19. Rule `read-card` fired: state = READING → true (state=READING).\n20. Called `check_card` (attempt 1, key banking-044-at-01:read-card:6).\n21. `check_card` found {}.\n22. Rule `read-access` fired: state = READING → true (state=READING).\n23. Called `check_access` (attempt 1, key banking-044-at-01:read-access:7).\n24. `check_access` found {}.\n25. Rule `read-business` fired: state = READING → true (state=READING).\n26. Called `check_business` (attempt 1, key banking-044-at-01:read-business:8).\n27. `check_business` found {}.\n28. Rule `read-documents` fired: state = READING → true (state=READING).\n29. Called `check_documents` (attempt 1, key banking-044-at-01:read-documents:9).\n30. `check_documents` found {}.\n31. Rule `read-tariff` fired: state = READING → true (state=READING).\n32. Called `check_tariff` (attempt 1, key banking-044-at-01:read-tariff:10).\n33. `check_tariff` found {}.\n34. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n35. Called `check_bank_actions` (attempt 1, key banking-044-at-01:read-bank-actions:11).\n36. `check_bank_actions` found {}.\n37. Rule `read-registration` fired: state = READING → true (state=READING).\n38. Called `check_registration` (attempt 1, key banking-044-at-01:read-registration:12).\n39. `check_registration` found {}.\n40. Rule `read-confirmation` fired: state = READING → true (state=READING).\n41. Called `check_confirmation` (attempt 1, key banking-044-at-01:read-confirmation:13).\n42. `check_confirmation` found {}.\n43. Rule `triage` fired: state = READING → true (state=READING).\n44. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n45. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.\n46. `request_type`: not known → question (by `triage`).\n47. `subject`: not known → batch (by `triage`).\n48. State `READING` → `TRIAGED` (by `triage`).\n49. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).\n50. `next_system`: not known → payment (by `route-payment`).\n51. The agent asked for `ask_system` {\"system\": \"payment\"}.\n52. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n53. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n55. Called `ask_system` (attempt 1, key banking-044-at-01:do-ask:17).\n56. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"batch\", \"reference\": \"SUP-17\"}.\n57. `ask_system` found {}.\n58. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n59. The case closed in `ASKED`: **ask_system**.\n60. The agent asked for `reply` {}.\n61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).\n\n## Model calls\n\n5 calls, 8661 tokens in, 325 out, 3.641 s, cost $0.0168; models: claude-sonnet-5-5, jev-1.13.0.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYetdVqPfLtwo7C5HaH",
+        "id": "msg_011Cfta4xSVKCvZN12Z3cpE2",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The request asked whether the payment on row SUP-17 in the supplier batch was paid or rejected, since the batch was marked processed. The desk classified it as a question about a batch and sent an ask to the payment system about SUP-17, and the case closed in the asked state. The payment system's answer is not in the record, and a later attempt to send a reply to the requester was refused because no payment status had been obtained, so the requester has not yet been told whether the payment was paid or rejected.",
+            "text": "The requester wanted to know whether the payment on row SUP-17 in their supplier batch was paid or rejected, since the batch showed as processed. The desk classified this as a question about a batch and sent an ask to the payment system about SUP-17, and the case closed in the asked state. No answer from the payment system is in the record, and the desk's attempt to reply to the requester was refused because no payment status was known, so the requester has not yet been told whether the payment was paid or rejected.",
             "type": "text"
           }
         ],
@@ -1822,8 +1859,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2655,
-          "output_tokens": 151,
+          "input_tokens": 2742,
+          "output_tokens": 152,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1831,13 +1868,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.9491931999800727,
-      "input_tokens": 2655,
-      "output_tokens": 151,
-      "cost_usd": 0.00682,
+      "seconds": 1.8146303000394255,
+      "input_tokens": 2742,
+      "output_tokens": 152,
+      "cost_usd": 0.007004,
       "error": null,
       "replayed": false,
-      "digest": "16b2b62ae6abf060a73083ff4c8d72726b026442a1f4605cde5f4d890a5e4e8a"
+      "digest": "21dd26146f467d4d594ae85e0d7aabb8ca6c7ea5e35a414fc6a35cbc48eafa42"
     }
   ]
 }

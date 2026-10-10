@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara asked why her £18.40 card payment at North Quay Books was declined. The desk classified it as a card payment question and put it to the card system, which accepted the request; the terminal's only message was "Payment not accepted. Please contact your bank." No answer from the card system is in the record yet, so the reason for the decline is still unknown, and what happens once an answer arrives is not recorded.
+Mara asked why her £18.40 card payment at North Quay Books was declined. The desk classified this as a card payment question and sent a query to the card system, which accepted it, but no answer is in the case yet. Nothing has been decided about the reason for the decline, so what remains is waiting for the card system's reply before Mara can be told anything.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=question)
+  - request_type not in [register, change, authority, instruction] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

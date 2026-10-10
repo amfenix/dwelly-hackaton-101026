@@ -46,37 +46,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 42. Rule `read-tariff` fired: state = READING → true (state=READING).
 43. Called `check_tariff` (attempt 1, key banking-004-at-04:read-tariff:10).
 44. `check_tariff` found {}.
-45. Rule `read-registration` fired: state = READING → true (state=READING).
-46. Called `check_registration` (attempt 1, key banking-004-at-04:read-registration:11).
-47. `check_registration` found {}.
-48. Rule `read-confirmation` fired: state = READING → true (state=READING).
-49. Called `check_confirmation` (attempt 1, key banking-004-at-04:read-confirmation:12).
-50. Note from `read-confirmation`: event 2 (Mara Ellery): I am the account holder and this was my transfer. Please tell me why it was not completed; the portal shows the status but no reason. [facts: confirmation='none', instructed_outside_portal=False]
-51. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-52. `confirmation`: not known → none (by `read-confirmation`).
-53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-56. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-57. `request_type`: not known → question (by `triage`).
-58. `subject`: not known → transfer (by `triage`).
-59. State `READING` → `TRIAGED` (by `triage`).
-60. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-61. `next_system`: not known → payment (by `asked-payment`).
-62. The agent asked for `reply` {}.
-63. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=DECLINED).
-64. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-66. Called `reply_customer` (attempt 1, key banking-004-at-04:do-reply:16).
-67. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_portal", "text": "The payment record shows your transfer to Northmere Housing Co-operative as declined (recorded reason: : “The receiving bank declined the transfer.). This does not establish a different cause or authorise a retry. No new transfer was made."}.
-68. `reply_customer` found {}.
-69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-70. The case closed in `REPLIED`: **reply**.
+45. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+46. Called `check_bank_actions` (attempt 1, key banking-004-at-04:read-bank-actions:11).
+47. `check_bank_actions` found {}.
+48. Rule `read-registration` fired: state = READING → true (state=READING).
+49. Called `check_registration` (attempt 1, key banking-004-at-04:read-registration:12).
+50. `check_registration` found {}.
+51. Rule `read-confirmation` fired: state = READING → true (state=READING).
+52. Called `check_confirmation` (attempt 1, key banking-004-at-04:read-confirmation:13).
+53. Note from `read-confirmation`: event 2 (Mara Ellery): I am the account holder and this was my transfer. Please tell me why it was not completed; the portal shows the status but no reason. [facts: confirmation='none', instructed_outside_portal=False]
+54. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+55. `confirmation`: not known → none (by `read-confirmation`).
+56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+57. Rule `triage` fired: state = READING → true (state=READING).
+58. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+59. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+60. `request_type`: not known → question (by `triage`).
+61. `subject`: not known → transfer (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+64. `next_system`: not known → payment (by `asked-payment`).
+65. The agent asked for `reply` {}.
+66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=DECLINED).
+67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+69. Called `reply_customer` (attempt 1, key banking-004-at-04:do-reply:17).
+70. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_portal", "text": "The payment record shows your transfer to Northmere Housing Co-operative as declined (recorded reason: : “The receiving bank declined the transfer.). This does not establish a different cause or authorise a retry. No new transfer was made."}.
+71. `reply_customer` found {}.
+72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7299 tokens in, 440 out, 3.913 s, cost $0.0152; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4862 tokens in, 404 out, 3.55 s, cost $0.0099; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Mara. The bank's payment record shows the 14 July transfer to Northmere Housing Co-operative as declined. The reason it gives is that the receiving bank declined the transfer. The record doesn't say why the receiving bank declined it, so the reply doesn't either. The case is now closed.
+> I sent the reply to Mara Ellery, and the case is closed. The records show the 14 July 2025 transfer to Northmere Housing Co-operative as declined. The reason on record is that the receiving bank declined it. The reply sticks to that and doesn't guess at why the receiving bank declined it.

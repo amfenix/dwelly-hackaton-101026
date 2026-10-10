@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked the desk to cancel her Northmere Fitness Direct Debit mandate. The desk classified it as an instruction about a direct debit and registered a request with the recurring team, and the case closed as requested. The record shows no further steps for a person on the desk; the cancellation itself is now with the recurring team and is not recorded as completed.
+Mara Ellison, verified on a call, asked the bank to cancel her Northmere Fitness Direct Debit mandate, and she acknowledged this is an instruction to the bank rather than an end to her agreement with the recipient. The desk classed it as a direct debit instruction and registered a request with the recurring team, and the case closed in the REQUESTED state. The record does not show the mandate as cancelled yet, so carrying out the cancellation is left to the recurring team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,8 +48,6 @@ How the case moved:
   - recurring_asked absent → true (recurring_asked=not known)
   - verified → true (verified=True)
   - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
 - `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
   - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 

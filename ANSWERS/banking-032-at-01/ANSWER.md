@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk classified this as a question about a statement and sent an inquiry to the documents system, then closed the case at that step. The record shows no answer from the documents system, so whether the statement exists is still unknown. Mara's identity is marked unverified, and the record shows nothing was sent to her from her account.
+Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk classified this as a question about a statement and sent an inquiry to the documents system; her identity was not verified, and the record shows no confirmation was given. The case is closed in the asked state with no answer yet from the documents system, so what the system replies and passing that on to her is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,6 +44,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
+  - document_ready = false → not known (document_ready=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)

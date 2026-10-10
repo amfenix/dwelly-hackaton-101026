@@ -43,43 +43,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. Rule `read-tariff` fired: state = READING → true (state=READING).
 40. Called `check_tariff` (attempt 1, key banking-006-at-04:read-tariff:10).
 41. `check_tariff` found {}.
-42. Rule `read-registration` fired: state = READING → true (state=READING).
-43. Called `check_registration` (attempt 1, key banking-006-at-04:read-registration:11).
-44. `check_registration` found {}.
-45. Rule `read-confirmation` fired: state = READING → true (state=READING).
-46. Called `check_confirmation` (attempt 1, key banking-006-at-04:read-confirmation:12).
-47. Note from `read-confirmation`: event 2 (Mira Ellison): I own this account and only meant to make one transfer. Please check whether these are separate instructions, and whether the pending one has been stopped or returned. [facts: confirmation='none', instructed_outside_portal=False]
-48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-49. `confirmation`: not known → none (by `read-confirmation`).
-50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.73 → question.
-53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → transfer (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-58. `next_system`: not known → payment (by `asked-payment`).
-59. The agent asked for `ask_system` {"system": "payment"}.
-60. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-61. The agent asked for `reply` {}.
-62. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
-63. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-65. Called `reply_customer` (attempt 1, key banking-006-at-04:do-reply:16).
-66. Action in the world: `reply` {"to": "Mira Ellison", "channel": "secure_chat", "text": "The payment record shows 2 separate payment instructions. Their individual status is recorded without a single combined outcome. This does not establish execution or the recipient's outcome. No new transfer was made."}.
-67. `reply_customer` found {}.
-68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-69. The case closed in `REPLIED`: **reply**.
+42. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+43. Called `check_bank_actions` (attempt 1, key banking-006-at-04:read-bank-actions:11).
+44. `check_bank_actions` found {}.
+45. Rule `read-registration` fired: state = READING → true (state=READING).
+46. Called `check_registration` (attempt 1, key banking-006-at-04:read-registration:12).
+47. `check_registration` found {}.
+48. Rule `read-confirmation` fired: state = READING → true (state=READING).
+49. Called `check_confirmation` (attempt 1, key banking-006-at-04:read-confirmation:13).
+50. Note from `read-confirmation`: event 2 (Mira Ellison): I own this account and only meant to make one transfer. Please check whether these are separate instructions, and whether the pending one has been stopped or returned. [facts: confirmation='none', instructed_outside_portal=False]
+51. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+52. `confirmation`: not known → none (by `read-confirmation`).
+53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+54. Rule `triage` fired: state = READING → true (state=READING).
+55. Classifier (jev jev-latest) on `request_type`: question, confidence 0.77 → question.
+56. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+57. `request_type`: not known → question (by `triage`).
+58. `subject`: not known → transfer (by `triage`).
+59. State `READING` → `TRIAGED` (by `triage`).
+60. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+61. `next_system`: not known → payment (by `asked-payment`).
+62. The agent asked for `reply` {}.
+63. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
+64. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+66. Called `reply_customer` (attempt 1, key banking-006-at-04:do-reply:17).
+67. Action in the world: `reply` {"to": "Mira Ellison", "channel": "secure_chat", "text": "The payment record shows 2 separate payment instructions. Their individual status is recorded without a single combined outcome. This does not establish execution or the recipient's outcome. No new transfer was made."}.
+68. `reply_customer` found {}.
+69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+70. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 10613 tokens in, 635 out, 7.307 s, cost $0.0238; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7274 tokens in, 512 out, 5.174 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Mira. The payment system had already been checked. It returned a status of OTHER for the two transfers to North Quay Utilities, and the reply reports that answer.
+> I've sent the reply to Mira. The payment records show two similar transfer entries to North Quay Utilities for £84.20, and the case is closed on that reply.
 > 
-> My attempt to query the payment system again was refused because that check was already done.
+> The payment system's status on them came back as "OTHER". That is still an answer, so I reported it rather than looking further.
 > 
-> I didn't submit any stop or return request. Mira's identity isn't verified yet, and the records don't show that the pending transfer has been stopped or returned.
+> I didn't submit a stop or return request. Mira isn't verified yet, and nothing in the records confirms the entries are one instruction shown twice or two separate ones.

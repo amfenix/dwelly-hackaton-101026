@@ -42,43 +42,48 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. Rule `read-tariff` fired: state = READING → true (state=READING).
 39. Called `check_tariff` (attempt 1, key banking-048-at-04:read-tariff:10).
 40. `check_tariff` found {}.
-41. Rule `read-registration` fired: state = READING → true (state=READING).
-42. Called `check_registration` (attempt 1, key banking-048-at-04:read-registration:11).
-43. `check_registration` found {}.
-44. Rule `read-confirmation` fired: state = READING → true (state=READING).
-45. Called `check_confirmation` (attempt 1, key banking-048-at-04:read-confirmation:12).
-46. Note from `read-confirmation`: event 2 (Mara Ellison, Alder Quay Studio Ltd.): I'm the authorised accountant for our business. Our buyer says they sent payment for the workshop invoice, but I can't reconcile it in our incoming activity. Please check whether an identifiable credit has reached our account. [facts: confirmation='none', instructed_outside_portal=False]
-47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-48. `confirmation`: not known → none (by `read-confirmation`).
-49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-52. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-53. `request_type`: not known → question (by `triage`).
-54. `subject`: not known → incoming_payment (by `triage`).
-55. State `READING` → `TRIAGED` (by `triage`).
-56. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
-57. `next_system`: not known → incoming (by `asked-incoming`).
-58. The agent asked for `ask_system` {"system": "incoming"}.
-59. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming); tariff-ask: args.system = tariff is false (args.system=incoming); next_system = tariff is false (next_system=incoming); next_system absent is false (next_system=incoming).
-60. The agent asked for `reply` {}.
-61. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=False).
-62. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
-63. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-64. Called `reply_customer` (attempt 1, key banking-048-at-04:do-reply:16).
-65. Action in the world: `reply` {"to": "Mara Ellison, Alder Quay Studio Ltd.", "channel": "secure_chat", "text": "The incoming-payment record shows no incoming payment found. This does not establish that the sender did not pay. No payment was made."}.
-66. `reply_customer` found {}.
-67. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-68. The case closed in `REPLIED`: **reply**.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-048-at-04:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-048-at-04:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-048-at-04:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Mara Ellison, Alder Quay Studio Ltd.): I'm the authorised accountant for our business. Our buyer says they sent payment for the workshop invoice, but I can't reconcile it in our incoming activity. Please check whether an identifiable credit has reached our account. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+55. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+56. `request_type`: not known → question (by `triage`).
+57. `subject`: not known → incoming_payment (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
+60. `next_system`: not known → incoming (by `asked-incoming`).
+61. The agent asked for `ask_system` {"system": "incoming"}.
+62. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=incoming); next_system = tariff is false (next_system=incoming); next_system absent is false (next_system=incoming).
+63. The agent asked for `reply` {}.
+64. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=False).
+65. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
+66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+67. Called `reply_customer` (attempt 1, key banking-048-at-04:do-reply:17).
+68. Action in the world: `reply` {"to": "Mara Ellison, Alder Quay Studio Ltd.", "channel": "secure_chat", "text": "The incoming-payment record shows no incoming payment found. This does not establish that the sender did not pay. No payment was made."}.
+69. `reply_customer` found {}.
+70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+71. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 10453 tokens in, 631 out, 6.436 s, cost $0.0234; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10444 tokens in, 581 out, 5.545 s, cost $0.0229; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to the customer. The incoming-payments check had already been run, and it found no identifiable credit for the workshop invoice on the account. The reply is limited to what that record shows. It doesn't say the payment was never sent, only that nothing identifiable has arrived yet.
+> I've sent the reply. The incoming-payments check had already been run on this case, and it found no identifiable credit for the workshop invoice on the account. The reply reports only that result.
 > 
-> Two things to know:
-> - The requester, Mara Ellison, is not verified on this chat, and the case closed on that reply.
-> - When I tried to run the incoming check again, the desk refused. It had already been run and no other system was due.
+> Two points about what the reply can and can't say:
+> - The requester isn't verified, so the reply gives nothing beyond what the check found.
+> - The check finding nothing doesn't prove the payment wasn't sent. It may still be in transit.
+> 
+> I did not re-run the incoming check. The desk refused a second call because the check was already on file.

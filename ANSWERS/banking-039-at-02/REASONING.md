@@ -38,38 +38,43 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-tariff` fired: state = READING → true (state=READING).
 35. Called `check_tariff` (attempt 1, key banking-039-at-02:read-tariff:10).
 36. `check_tariff` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-039-at-02:read-registration:11).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-039-at-02:read-confirmation:12).
-42. Note from `read-confirmation`: event 2 (Nerys Wren): After you completed the bank identification checks, I explained that the new-device notification looked unusual and asked for a list of sign-in sessions for my profile. I did not provide or ask you to record any secrets. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-48. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → access (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-53. `next_system`: not known → access (by `route-access`).
-54. The agent asked for `ask_system` {"system": "access"}.
-55. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-039-at-02:do-ask:16).
-59. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-039-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-039-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-039-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Nerys Wren): After you completed the bank identification checks, I explained that the new-device notification looked unusual and asked for a list of sign-in sessions for my profile. I did not provide or ask you to record any secrets. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+51. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+52. `request_type`: not known → question (by `triage`).
+53. `subject`: not known → access (by `triage`).
+54. State `READING` → `TRIAGED` (by `triage`).
+55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+56. `next_system`: not known → access (by `route-access`).
+57. The agent asked for `ask_system` {"system": "access"}.
+58. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+59. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
+60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+61. Called `ask_system` (attempt 1, key banking-039-at-02:do-ask:17).
+62. Action in the world: `ask_system` {"system": "access", "about": "access"}.
+63. `ask_system` found {}.
+64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+65. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4734 tokens in, 351 out, 3.33 s, cost $0.0092; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6868 tokens in, 408 out, 4.38 s, cost $0.0140; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case doesn't yet hold the sign-in session data. The facts point to the access system as the next one to ask.
-> I asked the access system for the sign-in sessions on Nerys Wren's profile. The request was accepted and the case now shows as asked. The answer isn't in the case yet, so I haven't replied to the customer.
+> The customer is verified and wants a list of sign-in sessions. That information sits in the access system, which I haven't queried yet.
+> I asked the access system for the list of sign-in sessions on Nerys Wren's profile. The desk accepted the request and the case is now closed at that step.
+> 
+> The system's answer isn't in the case yet. No session details are listed in the case status either, so I have nothing to report to the customer about her sessions.

@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -85,7 +88,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they could share evidence of it. The desk classified this as a document question and sent a request to the documents system about the £74.00 payment. The bank history shows the payment as sent (reference HV-040). The case closed with that request made and no reply yet, so no document has gone to the customer and a person or later step must act once the documents system answers.",
+  "summary": "The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they could share evidence of it. The desk classed it as a question about a document and asked the documents system about it. The bank history shows the payment as sent, with reference HV-040, dated 14 July 2025. The case is closed as asked, and nothing further has been done until the documents system answers.",
   "journal": [
     {
       "seq": 1,
@@ -457,7 +460,7 @@
       "seq": 34,
       "at": 0.0,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -475,23 +478,23 @@
       "seq": 35,
       "at": 0.0,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-040-at-01:read-registration:11",
+      "key": "banking-040-at-01:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 36,
       "at": 0.0,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 37,
       "at": 0.0,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -509,21 +512,55 @@
       "seq": 38,
       "at": 0.0,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-040-at-01:read-confirmation:12",
+      "key": "banking-040-at-01:read-registration:12",
       "args": {}
     },
     {
       "seq": 39,
       "at": 0.0,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 40,
+      "at": 0.0,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 41,
+      "at": 0.0,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-040-at-01:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 42,
+      "at": 0.001,
       "kind": "note",
       "text": "event 1 (Harrow & Vale Bank plc): I show an outgoing payment of £74.00 dated 14 July 2025 in your transaction history. Its reference is HV-040 and its bank status is SENT. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 40,
-      "at": 0.0,
+      "seq": 43,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
       "values": {
@@ -532,8 +569,8 @@
       }
     },
     {
-      "seq": 41,
-      "at": 0.0,
+      "seq": 44,
+      "at": 0.001,
       "kind": "set",
       "field": "confirmation",
       "old": null,
@@ -541,8 +578,8 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 42,
-      "at": 0.0,
+      "seq": 45,
+      "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
       "old": null,
@@ -550,7 +587,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 43,
+      "seq": 46,
       "at": 0.001,
       "kind": "trigger",
       "name": "triage",
@@ -568,8 +605,8 @@
       "note": ""
     },
     {
-      "seq": 44,
-      "at": 0.237,
+      "seq": 47,
+      "at": 0.274,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -580,8 +617,8 @@
       "attempt": 1
     },
     {
-      "seq": 45,
-      "at": 0.237,
+      "seq": 48,
+      "at": 0.274,
       "kind": "choice",
       "field": "subject",
       "raw": "document",
@@ -592,8 +629,8 @@
       "attempt": 1
     },
     {
-      "seq": 46,
-      "at": 0.237,
+      "seq": 49,
+      "at": 0.274,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -601,8 +638,8 @@
       "by": "triage"
     },
     {
-      "seq": 47,
-      "at": 0.237,
+      "seq": 50,
+      "at": 0.274,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -610,16 +647,16 @@
       "by": "triage"
     },
     {
-      "seq": 48,
-      "at": 0.237,
+      "seq": 51,
+      "at": 0.274,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 49,
-      "at": 0.237,
+      "seq": 52,
+      "at": 0.274,
       "kind": "trigger",
       "name": "route-documents",
       "on": null,
@@ -650,8 +687,8 @@
       "note": ""
     },
     {
-      "seq": 50,
-      "at": 0.238,
+      "seq": 53,
+      "at": 0.274,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -659,8 +696,8 @@
       "by": "route-documents"
     },
     {
-      "seq": 51,
-      "at": 1.591,
+      "seq": 54,
+      "at": 1.941,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -668,12 +705,12 @@
       }
     },
     {
-      "seq": 52,
-      "at": 1.591,
+      "seq": 55,
+      "at": 1.941,
       "kind": "trigger",
       "name": "documents-ask",
       "on": "ask_system",
-      "when": "state = TRIAGED and args.system = documents and (next_system = documents or next_system absent) and documents_asked absent and request_type not in [register, change, authority]",
+      "when": "state = TRIAGED and args.system = documents and (next_system = documents or next_system absent) and (documents_asked absent or document_ready = false) and request_type not in [register, change, authority]",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -711,6 +748,13 @@
           }
         },
         {
+          "test": "document_ready = false",
+          "result": null,
+          "values": {
+            "document_ready": null
+          }
+        },
+        {
           "test": "request_type not in [register, change, authority]",
           "result": true,
           "values": {
@@ -721,16 +765,16 @@
       "note": ""
     },
     {
-      "seq": 53,
-      "at": 1.591,
+      "seq": 56,
+      "at": 1.941,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "documents-ask"
     },
     {
-      "seq": 54,
-      "at": 1.591,
+      "seq": 57,
+      "at": 1.941,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -747,17 +791,17 @@
       "note": ""
     },
     {
-      "seq": 55,
-      "at": 1.591,
+      "seq": 58,
+      "at": 1.941,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-040-at-01:do-ask:16",
+      "key": "banking-040-at-01:do-ask:17",
       "args": {}
     },
     {
-      "seq": 56,
-      "at": 1.591,
+      "seq": 59,
+      "at": 1.941,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -766,26 +810,26 @@
         "amount": "74.00"
       },
       "by": "do-ask",
-      "key": "banking-040-at-01:do-ask:16"
+      "key": "banking-040-at-01:do-ask:17"
     },
     {
-      "seq": 57,
-      "at": 1.591,
+      "seq": 60,
+      "at": 1.941,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 58,
-      "at": 1.591,
+      "seq": 61,
+      "at": 1.941,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 59,
-      "at": 1.591,
+      "seq": 62,
+      "at": 1.941,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -883,7 +927,7 @@
           }
         }
       },
-      "seconds": 0.2368132999399677,
+      "seconds": 0.2728378999745473,
       "input_tokens": 928,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1032,16 +1076,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYdavMxPZ4YSgnjnWUn",
+        "id": "msg_011Cfta3aEE6m3j9G7RR2NN5",
         "container": null,
         "content": [
           {
-            "signature": "CAQS9AQKEAgSGAI4AUIIdGhpbmtpbmcSDMMg5gZD646h4xk8XhoM5g5VaYkIYbUx5v6gIjCIeBesXgaf7wRip0bk3tHgL3V8bN4+B0QfpnT9DCX7fHV6K+kwqs7aGaSbx05skX0qkQSMqARQvvEG0O58QZANCUmPE5tHwGo+xGyMKc9COlFeNMzvZKPTEMJIFngACM6wqTWntMqWPMmnjZWVgIMXEyzIGN/KDlbX8j59jQq0+oq9pGLauK9fmerSkKj7gON/Hh6eML4HVhHbcXV+9xF/3Y58dPFbW2UJQKcl8Q7Je5YckJgKSQSjMMwiluvJNgs4SgIp/nOh+9WVDgb9dfodSpgWKM4XQuXHiNhO9M7Ht0ii4afm2IiPtm/vRnKCO5LLUqpxp4aEL7o/wwUYZV+f8g8+pyow8vY//+TxUg3/qycnkhq6Y8u4k2BKKjE10rAIfCjfEtwDmvywAMZsnhFeX8/lEcTC7S8CnwABIEO9p2vq3a0AHvuOEVE4sFke+WdTRdH3SwXYzuDgXZ5j/ynJaUPlqSvfxD91D5O9ppXh/EwCjLBvaMI50exIMupE6L5/m/MlFBPhlOLEbVlvo7VvS3mFOavpBY3UiBHltQWOzD6b9FjaNr2khafbj0pLiFYxP1PFHApPn48qp4PBBTnOoxWS2fmCoOSldhWfrdvT8hlUueHJQoSFQHxj2XeXDJS3sXx7pQRgDLALt1Dcc2BFIIsDBPT/YU9oQJKNfRZd7HE0Wq1LLDDOTaCEWQ6WcnsOY5RKhb4P0M3OA9gSe4OVYoUTsO97iiux1WZk4sBqL6K/gnUNF34RYF1lMSkbOAjfVC4hGAE=",
+            "signature": "CAQSzQUKEAgSGAI4AUIIdGhpbmtpbmcSDGb90mbNjAIU20iWwhoMw2WieGySY/u269iqIjA9VD3za87E/JHHy2K9Vw/ijJpu65Ql5SFlW6vacBVvDb2W9zMvHqyXT4MyKr/bTIIq6gSr+O5XhTmxDL7tSwue+arYwVxm0FPD0xjXmHde1ob1OphxTgSbIxXwzZuJkLT5mr/7v6tlqbopKGkaysZztyHvcDlk+CyyEIxb/MHyEk8rbkHe/asrXp+kL3tRi5ksodroQNqWYVWXDvBtXsQRjxjwmxSkb8tTAI3FJRzrMAFNZ0CMwi4+RSzZCcyz2vamFyqJQcolf8CxgBuKhkGGPZ30+djFfvh4p0NUKMc6Jd2KDBE7AJ4cyDd5WnI5ZgELyF5GQNcYgCxh+AAoSAwDMc6rxcdct1jZF+DFAJIUWqavI3IvRshJ6vufqpg3Owe60/yfDKx+DETjeMbXwd3nD+GcUquFIA0o8iTtV2dmHBHn8zy9DMr4AWpq0K0Pvt6CXS7Z4M72nTAQJ42USyTlnO1YzJ/E3pdeYaVuy8OfN5bb/15GCpuIyudPoCXjCpkUfWzk+8V+dkiyUEQCWdXsXeJ/lCFXAb/D44p5NPSLNk7QrESBjxnr8W9+IXDRKcZSkBnqoJQRTjxOVgkjyEEDngU4QbHYlNZLD1s61uhtB6+2n0TQv8BnUv0BcNOrrLnIV+IbdsLUX0Fu/xJBMRQ+Q9dyq7Ixnj14IXa4ZJaizunvE1AHG2eiTJ4pf4MeOvzoCLulUTsrN6vpa+vnGFF+DKznvge4eqvRLLwNhgu9fzdtU2uv0iXmkdJeqvmv5VZxIyU938aNlv9RDpqA4E82fN+iuqpGHUBLxteCILWpmSGH+SUfHINkQXdagdmPDBZPgsQn06UxLs5UssLW0mqa8T0+oGhiN/HHo8GZpNnq6KAnSnf38bN15vQdlkkYAQ==",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_018pdGVeMhVDmMcaLbWHrA3y",
+            "id": "toolu_0162cdWzPSpb3qV3gHPDfCYB",
             "caller": {
               "type": "direct"
             },
@@ -1069,18 +1113,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1791,
-          "output_tokens": 78,
+          "output_tokens": 108,
           "output_tokens_details": {
-            "thinking_tokens": 28
+            "thinking_tokens": 58
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.353287999983877,
+      "seconds": 1.6671853000298142,
       "input_tokens": 1791,
-      "output_tokens": 78,
-      "cost_usd": 0.004362,
+      "output_tokens": 108,
+      "cost_usd": 0.004662,
       "error": null,
       "replayed": false,
       "digest": "633af479169cd484f3732acee832ae7f99902283baf1b082cc58cc3fb8c911d7"
@@ -1227,12 +1271,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS9AQKEAgSGAI4AUIIdGhpbmtpbmcSDMMg5gZD646h4xk8XhoM5g5VaYkIYbUx5v6gIjCIeBesXgaf7wRip0bk3tHgL3V8bN4+B0QfpnT9DCX7fHV6K+kwqs7aGaSbx05skX0qkQSMqARQvvEG0O58QZANCUmPE5tHwGo+xGyMKc9COlFeNMzvZKPTEMJIFngACM6wqTWntMqWPMmnjZWVgIMXEyzIGN/KDlbX8j59jQq0+oq9pGLauK9fmerSkKj7gON/Hh6eML4HVhHbcXV+9xF/3Y58dPFbW2UJQKcl8Q7Je5YckJgKSQSjMMwiluvJNgs4SgIp/nOh+9WVDgb9dfodSpgWKM4XQuXHiNhO9M7Ht0ii4afm2IiPtm/vRnKCO5LLUqpxp4aEL7o/wwUYZV+f8g8+pyow8vY//+TxUg3/qycnkhq6Y8u4k2BKKjE10rAIfCjfEtwDmvywAMZsnhFeX8/lEcTC7S8CnwABIEO9p2vq3a0AHvuOEVE4sFke+WdTRdH3SwXYzuDgXZ5j/ynJaUPlqSvfxD91D5O9ppXh/EwCjLBvaMI50exIMupE6L5/m/MlFBPhlOLEbVlvo7VvS3mFOavpBY3UiBHltQWOzD6b9FjaNr2khafbj0pLiFYxP1PFHApPn48qp4PBBTnOoxWS2fmCoOSldhWfrdvT8hlUueHJQoSFQHxj2XeXDJS3sXx7pQRgDLALt1Dcc2BFIIsDBPT/YU9oQJKNfRZd7HE0Wq1LLDDOTaCEWQ6WcnsOY5RKhb4P0M3OA9gSe4OVYoUTsO97iiux1WZk4sBqL6K/gnUNF34RYF1lMSkbOAjfVC4hGAE=",
+                "signature": "CAQSzQUKEAgSGAI4AUIIdGhpbmtpbmcSDGb90mbNjAIU20iWwhoMw2WieGySY/u269iqIjA9VD3za87E/JHHy2K9Vw/ijJpu65Ql5SFlW6vacBVvDb2W9zMvHqyXT4MyKr/bTIIq6gSr+O5XhTmxDL7tSwue+arYwVxm0FPD0xjXmHde1ob1OphxTgSbIxXwzZuJkLT5mr/7v6tlqbopKGkaysZztyHvcDlk+CyyEIxb/MHyEk8rbkHe/asrXp+kL3tRi5ksodroQNqWYVWXDvBtXsQRjxjwmxSkb8tTAI3FJRzrMAFNZ0CMwi4+RSzZCcyz2vamFyqJQcolf8CxgBuKhkGGPZ30+djFfvh4p0NUKMc6Jd2KDBE7AJ4cyDd5WnI5ZgELyF5GQNcYgCxh+AAoSAwDMc6rxcdct1jZF+DFAJIUWqavI3IvRshJ6vufqpg3Owe60/yfDKx+DETjeMbXwd3nD+GcUquFIA0o8iTtV2dmHBHn8zy9DMr4AWpq0K0Pvt6CXS7Z4M72nTAQJ42USyTlnO1YzJ/E3pdeYaVuy8OfN5bb/15GCpuIyudPoCXjCpkUfWzk+8V+dkiyUEQCWdXsXeJ/lCFXAb/D44p5NPSLNk7QrESBjxnr8W9+IXDRKcZSkBnqoJQRTjxOVgkjyEEDngU4QbHYlNZLD1s61uhtB6+2n0TQv8BnUv0BcNOrrLnIV+IbdsLUX0Fu/xJBMRQ+Q9dyq7Ixnj14IXa4ZJaizunvE1AHG2eiTJ4pf4MeOvzoCLulUTsrN6vpa+vnGFF+DKznvge4eqvRLLwNhgu9fzdtU2uv0iXmkdJeqvmv5VZxIyU938aNlv9RDpqA4E82fN+iuqpGHUBLxteCILWpmSGH+SUfHINkQXdagdmPDBZPgsQn06UxLs5UssLW0mqa8T0+oGhiN/HHo8GZpNnq6KAnSnf38bN15vQdlkkYAQ==",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_018pdGVeMhVDmMcaLbWHrA3y",
+                "id": "toolu_0162cdWzPSpb3qV3gHPDfCYB",
                 "caller": {
                   "type": "direct"
                 },
@@ -1250,7 +1294,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_018pdGVeMhVDmMcaLbWHrA3y",
+                "tool_use_id": "toolu_0162cdWzPSpb3qV3gHPDfCYB",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1258,12 +1302,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYdgbvfpnbpwsfQHgXi",
+        "id": "msg_011Cfta3hLcGuSdmx4Gt6bha",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I've asked the documents system for a record of the £74.00 payment (reference HV-040, status SENT). Nothing has come back yet, so no document or reply is ready for the customer. The next step is to read the system's answer when it arrives and reply from it.",
+            "text": "The documents system has been asked about the payment record, and the case now shows as asked. I'm stopping here because the next step depends on its answer.",
             "type": "text"
           }
         ],
@@ -1282,8 +1326,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1904,
-          "output_tokens": 81,
+          "input_tokens": 1934,
+          "output_tokens": 44,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1291,13 +1335,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.645666899974458,
-      "input_tokens": 1904,
-      "output_tokens": 81,
-      "cost_usd": 0.004618,
+      "seconds": 1.1528154000407085,
+      "input_tokens": 1934,
+      "output_tokens": 44,
+      "cost_usd": 0.004308,
       "error": null,
       "replayed": false,
-      "digest": "bd8a3bf29bd1619538bd1ea42bead67b5b53da048d6a45286afd0999ccbede58"
+      "digest": "db1933417754ca2574e506f078dd15d724d11449fe614c0576b6ac3ca54f41d3"
     },
     {
       "kind": "generate",
@@ -1310,17 +1354,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"document\",\n    \"amount\": \"74.00\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"documents\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"documents\",\n        \"about\": \"document\",\n        \"amount\": \"74.00\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-040-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-040-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-040-at-01:read-subject:2).\n7. Note from `read-subject`: initial request (system): I need a copy of the bank record for my £74.00 payment to a repair contractor, so I can share evidence of the payment with them. I can see the transaction in my secure portal, but need a document showing its current stage. [facts: amount='74.00']\n8. `find_subject` found {\"amount\": \"74.00\"}.\n9. `amount`: not known → 74.00 (by `read-subject`).\n10. Rule `read-payment` fired: state = READING → true (state=READING).\n11. Called `check_payment` (attempt 1, key banking-040-at-01:read-payment:3).\n12. `check_payment` found {}.\n13. Rule `read-incoming` fired: state = READING → true (state=READING).\n14. Called `check_incoming` (attempt 1, key banking-040-at-01:read-incoming:4).\n15. `check_incoming` found {}.\n16. Rule `read-recurring` fired: state = READING → true (state=READING).\n17. Called `check_recurring` (attempt 1, key banking-040-at-01:read-recurring:5).\n18. `check_recurring` found {}.\n19. Rule `read-card` fired: state = READING → true (state=READING).\n20. Called `check_card` (attempt 1, key banking-040-at-01:read-card:6).\n21. `check_card` found {}.\n22. Rule `read-access` fired: state = READING → true (state=READING).\n23. Called `check_access` (attempt 1, key banking-040-at-01:read-access:7).\n24. `check_access` found {}.\n25. Rule `read-business` fired: state = READING → true (state=READING).\n26. Called `check_business` (attempt 1, key banking-040-at-01:read-business:8).\n27. `check_business` found {}.\n28. Rule `read-documents` fired: state = READING → true (state=READING).\n29. Called `check_documents` (attempt 1, key banking-040-at-01:read-documents:9).\n30. `check_documents` found {}.\n31. Rule `read-tariff` fired: state = READING → true (state=READING).\n32. Called `check_tariff` (attempt 1, key banking-040-at-01:read-tariff:10).\n33. `check_tariff` found {}.\n34. Rule `read-registration` fired: state = READING → true (state=READING).\n35. Called `check_registration` (attempt 1, key banking-040-at-01:read-registration:11).\n36. `check_registration` found {}.\n37. Rule `read-confirmation` fired: state = READING → true (state=READING).\n38. Called `check_confirmation` (attempt 1, key banking-040-at-01:read-confirmation:12).\n39. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): I show an outgoing payment of £74.00 dated 14 July 2025 in your transaction history. Its reference is HV-040 and its bank status is SENT. [facts: confirmation='none', instructed_outside_portal=False]\n40. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n41. `confirmation`: not known → none (by `read-confirmation`).\n42. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n43. Rule `triage` fired: state = READING → true (state=READING).\n44. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n45. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.\n46. `request_type`: not known → question (by `triage`).\n47. `subject`: not known → document (by `triage`).\n48. State `READING` → `TRIAGED` (by `triage`).\n49. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).\n50. `next_system`: not known → documents (by `route-documents`).\n51. The agent asked for `ask_system` {\"system\": \"documents\"}.\n52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n53. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).\n54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n55. Called `ask_system` (attempt 1, key banking-040-at-01:do-ask:16).\n56. Action in the world: `ask_system` {\"system\": \"documents\", \"about\": \"document\", \"amount\": \"74.00\"}.\n57. `ask_system` found {}.\n58. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n59. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n3 calls, 4623 tokens in, 358 out, 3.236 s, cost $0.0090; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've asked the documents system for a record of the £74.00 payment (reference HV-040, status SENT). Nothing has come back yet, so no document or reply is ready for the customer. The next step is to read the system's answer when it arrives and reply from it.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"document\",\n    \"amount\": \"74.00\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"documents\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"documents\",\n        \"about\": \"document\",\n        \"amount\": \"74.00\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-040-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-040-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-040-at-01:read-subject:2).\n7. Note from `read-subject`: initial request (system): I need a copy of the bank record for my £74.00 payment to a repair contractor, so I can share evidence of the payment with them. I can see the transaction in my secure portal, but need a document showing its current stage. [facts: amount='74.00']\n8. `find_subject` found {\"amount\": \"74.00\"}.\n9. `amount`: not known → 74.00 (by `read-subject`).\n10. Rule `read-payment` fired: state = READING → true (state=READING).\n11. Called `check_payment` (attempt 1, key banking-040-at-01:read-payment:3).\n12. `check_payment` found {}.\n13. Rule `read-incoming` fired: state = READING → true (state=READING).\n14. Called `check_incoming` (attempt 1, key banking-040-at-01:read-incoming:4).\n15. `check_incoming` found {}.\n16. Rule `read-recurring` fired: state = READING → true (state=READING).\n17. Called `check_recurring` (attempt 1, key banking-040-at-01:read-recurring:5).\n18. `check_recurring` found {}.\n19. Rule `read-card` fired: state = READING → true (state=READING).\n20. Called `check_card` (attempt 1, key banking-040-at-01:read-card:6).\n21. `check_card` found {}.\n22. Rule `read-access` fired: state = READING → true (state=READING).\n23. Called `check_access` (attempt 1, key banking-040-at-01:read-access:7).\n24. `check_access` found {}.\n25. Rule `read-business` fired: state = READING → true (state=READING).\n26. Called `check_business` (attempt 1, key banking-040-at-01:read-business:8).\n27. `check_business` found {}.\n28. Rule `read-documents` fired: state = READING → true (state=READING).\n29. Called `check_documents` (attempt 1, key banking-040-at-01:read-documents:9).\n30. `check_documents` found {}.\n31. Rule `read-tariff` fired: state = READING → true (state=READING).\n32. Called `check_tariff` (attempt 1, key banking-040-at-01:read-tariff:10).\n33. `check_tariff` found {}.\n34. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n35. Called `check_bank_actions` (attempt 1, key banking-040-at-01:read-bank-actions:11).\n36. `check_bank_actions` found {}.\n37. Rule `read-registration` fired: state = READING → true (state=READING).\n38. Called `check_registration` (attempt 1, key banking-040-at-01:read-registration:12).\n39. `check_registration` found {}.\n40. Rule `read-confirmation` fired: state = READING → true (state=READING).\n41. Called `check_confirmation` (attempt 1, key banking-040-at-01:read-confirmation:13).\n42. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): I show an outgoing payment of £74.00 dated 14 July 2025 in your transaction history. Its reference is HV-040 and its bank status is SENT. [facts: confirmation='none', instructed_outside_portal=False]\n43. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n44. `confirmation`: not known → none (by `read-confirmation`).\n45. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n46. Rule `triage` fired: state = READING → true (state=READING).\n47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n48. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.\n49. `request_type`: not known → question (by `triage`).\n50. `subject`: not known → document (by `triage`).\n51. State `READING` → `TRIAGED` (by `triage`).\n52. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).\n53. `next_system`: not known → documents (by `route-documents`).\n54. The agent asked for `ask_system` {\"system\": \"documents\"}.\n55. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).\n56. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).\n57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n58. Called `ask_system` (attempt 1, key banking-040-at-01:do-ask:17).\n59. Action in the world: `ask_system` {\"system\": \"documents\", \"about\": \"document\", \"amount\": \"74.00\"}.\n60. `ask_system` found {}.\n61. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n62. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n3 calls, 4653 tokens in, 351 out, 3.093 s, cost $0.0090; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The documents system has been asked about the payment record, and the case now shows as asked. I'm stopping here because the next step depends on its answer.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYdogp3nXe2SQPUPy7L",
+        "id": "msg_011Cfta3nLjhsYwc9K89igim",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they could share evidence of it. The desk classified this as a document question and sent a request to the documents system about the £74.00 payment. The bank history shows the payment as sent (reference HV-040). The case closed with that request made and no reply yet, so no document has gone to the customer and a person or later step must act once the documents system answers.",
+            "text": "The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they could share evidence of it. The desk classed it as a question about a document and asked the documents system about it. The bank history shows the payment as sent, with reference HV-040, dated 14 July 2025. The case is closed as asked, and nothing further has been done until the documents system answers.",
             "type": "text"
           }
         ],
@@ -1339,8 +1383,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2433,
-          "output_tokens": 134,
+          "input_tokens": 2501,
+          "output_tokens": 121,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1348,13 +1392,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.2607150999829173,
-      "input_tokens": 2433,
-      "output_tokens": 134,
-      "cost_usd": 0.006206,
+      "seconds": 1.8400933999801055,
+      "input_tokens": 2501,
+      "output_tokens": 121,
+      "cost_usd": 0.006212,
       "error": null,
       "replayed": false,
-      "digest": "b919872dd16763b62641367fdfb8769a025f76255ec2d30252bc260b39295476"
+      "digest": "c66e8e0e0e053e986fa45e0a98c3b93c3066819a9641a732ad2db6439cc11bdd"
     }
   ]
 }

@@ -40,33 +40,36 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-029-at-03:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-029-at-03:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-029-at-03:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Mara Ellison): I’m following up because I need to know whether this tablet is linked before I try to use it for banking. Could you check its current status? [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-50. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → access (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-55. `next_system`: not known → access (by `asked-access`).
-56. Rule `access-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = access → true (next_system=access); access_asked → true (access_asked=True); access_status absent → true (access_status=not known). The system was asked; its answer is not in yet.
-57. State `TRIAGED` → `WAITING` (by `access-waits`).
-58. The case closed in `WAITING`: **wait**.
-59. The agent asked for `ask_system` {"system": "access"}.
-60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access).
-61. The agent asked for `redirect_secure` {}.
-62. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question).
-63. The agent asked for `escalate` {"note": "Unverified customer (Mara Ellison, secure chat) asks whether a new tablet's mobile banking registration completed and whether it can be used for banking. The access system has already been asked (access_asked=True), but no device status is in the case. Further ask_system and redirect_secure calls were refused because the case is in WAITING, not TRIAGED. I did not state any device status, because none is recorded. A person should verify the customer and check the device registration."}.
-64. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-029-at-03:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-029-at-03:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-029-at-03:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mara Ellison): I’m following up because I need to know whether this tablet is linked before I try to use it for banking. Could you check its current status? [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → access (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+58. `next_system`: not known → access (by `asked-access`).
+59. Rule `access-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = access → true (next_system=access); access_asked → true (access_asked=True); access_status absent → true (access_status=not known). The system was asked; its answer is not in yet.
+60. State `TRIAGED` → `WAITING` (by `access-waits`).
+61. The case closed in `WAITING`: **wait**.
+62. The agent asked for `ask_system` {"system": "access"}.
+63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access).
+64. The agent asked for `redirect_secure` {}.
+65. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question).
+66. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks whether a new tablet's mobile banking registration completed and whether it can be used for banking. The access system was already queried (access_asked=True) but no device-status result is in the case. Further ask_system and redirect_secure calls were refused because the case is in WAITING state. Please check device registration status after verifying identity, and reply to the customer."}.
+67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12319 tokens in, 826 out, 7.507 s, cost $0.0291; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10659 tokens in, 732 out, 6.565 s, cost $0.0248; models: claude-sonnet-5-5, jev-1.13.0.

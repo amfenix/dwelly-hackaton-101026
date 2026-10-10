@@ -35,39 +35,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-tariff` fired: state = READING → true (state=READING).
 32. Called `check_tariff` (attempt 1, key banking-034-at-01:read-tariff:10).
 33. `check_tariff` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-034-at-01:read-registration:11).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-034-at-01:read-confirmation:12).
-39. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): A £3.20 service fee is shown beside your foreign-currency cash withdrawal. The transaction and fee are listed in your secure portal. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (jev jev-latest) on `request_type`: question, confidence 0.71 → question.
-45. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
-46. `request_type`: not known → question (by `triage`).
-47. `subject`: not known → fee (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
-50. `next_system`: not known → tariff (by `route-tariff`).
-51. The agent asked for `ask_system` {"system": "tariff"}.
-52. Rule `tariff-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = tariff → true (args.system=tariff); next_system = tariff → true (next_system=tariff); next_system absent → false (next_system=tariff); tariff_asked absent → true (tariff_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-53. State `TRIAGED` → `ASK_PENDING` (by `tariff-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-034-at-01:do-ask:16).
-56. Action in the world: `ask_system` {"system": "tariff", "about": "fee", "amount": "3.20"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
+34. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+35. Called `check_bank_actions` (attempt 1, key banking-034-at-01:read-bank-actions:11).
+36. `check_bank_actions` found {}.
+37. Rule `read-registration` fired: state = READING → true (state=READING).
+38. Called `check_registration` (attempt 1, key banking-034-at-01:read-registration:12).
+39. `check_registration` found {}.
+40. Rule `read-confirmation` fired: state = READING → true (state=READING).
+41. Called `check_confirmation` (attempt 1, key banking-034-at-01:read-confirmation:13).
+42. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): A £3.20 service fee is shown beside your foreign-currency cash withdrawal. The transaction and fee are listed in your secure portal. [facts: confirmation='none', instructed_outside_portal=False]
+43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+44. `confirmation`: not known → none (by `read-confirmation`).
+45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+46. Rule `triage` fired: state = READING → true (state=READING).
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.67 → question.
+48. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
+49. `request_type`: not known → question (by `triage`).
+50. `subject`: not known → fee (by `triage`).
+51. State `READING` → `TRIAGED` (by `triage`).
+52. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
+53. `next_system`: not known → tariff (by `route-tariff`).
+54. The agent asked for `ask_system` {"system": "tariff"}.
+55. Rule `tariff-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = tariff → true (args.system=tariff); next_system = tariff → true (next_system=tariff); next_system absent → false (next_system=tariff); tariff_asked absent → true (tariff_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+56. State `TRIAGED` → `ASK_PENDING` (by `tariff-ask`).
+57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+58. Called `ask_system` (attempt 1, key banking-034-at-01:do-ask:17).
+59. Action in the world: `ask_system` {"system": "tariff", "about": "fee", "amount": "3.20"}.
+60. `ask_system` found {}.
+61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+62. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6627 tokens in, 415 out, 4.218 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6627 tokens in, 421 out, 3.989 s, cost $0.0136; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I queried the tariff system about the £3.20 fee on your foreign-currency cash withdrawal. The system accepted the request, and the case is now closed at this step.
+> I queried the tariff system about the £3.20 fee on your foreign-currency cash withdrawal. The query was accepted, but no tariff answer has come back yet. The case record shows no tariff details, so I can't yet say what the fee is for or how its amount was worked out.
 > 
-> The case record doesn't contain the tariff answer yet. So I can't tell you what the charge is for or how its amount was worked out. Nothing has been changed on your account.
+> The case is closed on this step.

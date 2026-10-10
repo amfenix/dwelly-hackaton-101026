@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address on her profile. Her email alone can't make that change, so the desk sent the change to her for confirmation and closed the case at "confirmation sent". Nothing is left for the desk; the change takes effect only once Mara confirms it herself in the secure portal.
+Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address on her profile. Because the record shows no confirmation from her yet, the desk did not apply the change and instead sent it to her for confirmation, which the rules require her to give in the secure portal rather than by email or chat. What is left is her confirmation of the change; nothing else is recorded as outstanding.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer writing through the secure portal, asked for a CSV export of her transactions from 6 to 9 May 2025 and said she wasn't sure how to tell whether it had been created. The desk classed it as a question about a document and sent it to the documents system with an ask, then closed the case in that state. The documents system's answer isn't in the record and no reply was sent to her, so a person still needs to tell her whether the export exists.
+Mara Ellison, a verified customer writing through the secure portal, asked for a CSV export of her transactions from 6 to 9 May 2025 and said she wasn't sure how to tell whether it had been created. The desk classified this as a question about a document and asked the documents system about it, then closed the case. The record shows no answer from that system and no reply to Mara, so whether the export exists and when she will see it is still unconfirmed for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,6 +44,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
+  - document_ready = false → not known (document_ready=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)

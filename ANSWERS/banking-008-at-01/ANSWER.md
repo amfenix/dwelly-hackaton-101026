@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mallow Pottery Works wrote asking for the purpose of a transfer, a payment for a kiln repair, and the desk treated it as a question about a transfer. It sent a query about the transfer to the payment system and closed the case as final with that outcome. The record shows no payment details and no reply to Mallow Pottery Works, so the purpose of the transfer remains unanswered and is left for a person.
+The desk read a message from Mallow Pottery Works asking the customer to clarify the purpose of a transfer for a kiln repair, and classified it as a question about a transfer. It then sent a request to the payment system about that transfer and closed the case there. The system accepted the request, but no answer is in the record, and no confirmation of the payment was found, so whatever the payment system returns is left for a person to look at. The desk took no action on the clarification request itself.
 
 _Written by a model from the record below; the sections below are the record._
 

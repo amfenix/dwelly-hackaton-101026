@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, a verified customer writing through the secure portal, said she saved a transfer instruction for an invoice and had not seen a confirmation that it was sent. The desk classified this as a question about a transfer and asked the payment system about it, and the case closed in that asked state. The payment system's answer is not in the record, so whether the transfer was submitted is still unknown and is left for a person to follow up.
+Elise Rowan, a verified customer using the secure portal, asked whether her saved transfer instruction for an invoice had been sent, since she had seen no confirmation. The desk classified this as a question about a transfer and asked the payment system about it. That query returned nothing, so the record does not show whether the transfer was submitted or what stage it is at, and that still needs to be established by a person or a later reply from the payment system.
 
 _Written by a model from the record below; the sections below are the record._
 

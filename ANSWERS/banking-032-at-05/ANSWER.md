@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk replied in that chat that the document record shows the document is not ready, that this does not establish it is available, and that no email was sent. Her identity was never verified, and the archive group's note said the statement is available to order, which conflicts with the "not ready" flag. The record names no further step for a person.
+Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the documents system, which showed the statement ready for secure-portal access, and replied to her on secure chat saying the document is available, that this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied; the record notes she was not verified, and it shows nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ Case reference: id banking-032-at-05, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
 
-  > The document record shows that the document is not ready. This does not establish that the document is available. No email was sent.
+  > The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent.
 
 
 ## Decision and why
@@ -60,7 +60,7 @@ How the case moved:
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=False)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
@@ -72,7 +72,7 @@ Facts established:
 - verified: **False**
 - subject: **statement**
 - documents_asked: **True**
-- document_ready: **False**
+- document_ready: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **question**
@@ -81,8 +81,8 @@ Facts established:
 Where they came from:
 
 - event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: requester='Mara Ellison', role='customer', channel='secure_chat', verified=False]
-- event 2 (H&V archive group): I’ve checked the account-holder mandate in this secure session. Please confirm whether the January 2024 statement is available and can be ordered; I haven’t promised availability or a fee. [facts: documents_asked=True]
-- event 3 (H&V archive group): The archive check confirms that the January 2024 statement is available to order. Any applicable charge is subject to the current tariff. [facts: document_ready=False]
+- event 4 (H&V statement service): I’m ordering the permitted January 2024 statement period for case HV-032, following the archive availability check and the account-holder’s request. [facts: documents_asked=True]
+- event 5 (H&V statement service): Statement HV-032 | January 2024 | status: ready for secure-portal access. [facts: document_ready=True]
 - event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -92,10 +92,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `ask_system`: payment-ask: args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); tariff-ask: args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents)
 
 ## Final result
 

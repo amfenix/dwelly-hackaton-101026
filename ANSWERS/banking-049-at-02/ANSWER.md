@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, who is not verified and says she is the authorised manager for the shop, asked the desk to escalate a file request because the acquiring report for 1–7 July 2025 was not showing as available. The desk classified this as a question about a document and asked the documents system about it, and that system returned no new information. The desk did not escalate anything, and it is still unknown whether the report is available, with Mara's identity unverified and no confirmation on file.
+Mara Venn, writing over secure chat and not verified, said she is the authorised manager for North Quay Printworks. She asked the desk to escalate a request for the acquiring report covering 1–7 July 2025, which wasn't showing as available. The desk treated it as a question about a document and asked the documents system about it, and the case closed at that step. The system's answer isn't in the record, so whether the report is available is still unknown, nothing was escalated or changed, and her authority was not verified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,6 +48,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
+  - document_ready = false → not known (document_ready=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)

@@ -1116,7 +1116,7 @@ def test_permitted_card_restriction_category_maps_to_restricted() -> None:
     [
         ("030", 4, "check_card", {"card_asked": True, "card_status": "IN_MANUFACTURE"}),
         ("032", 3, "check_documents", {"documents_asked": True, "document_ready": False}),
-        ("032", 4, "check_documents", {"documents_asked": True, "document_ready": False}),
+        ("032", 4, "check_documents", {"documents_asked": True}),  # the order placed after the archive check is pending
         ("028", 5, "check_confirmation", {"confirmation": "given", "instructed_outside_portal": True}),
         ("036", 4, "check_confirmation", {"confirmation": "given", "instructed_outside_portal": True}),
         ("013", 5, "check_confirmation", {"confirmation": "given", "instructed_outside_portal": False}),

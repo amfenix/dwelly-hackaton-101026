@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat whether H&V had sent her £420 payment to Alder & Reed Workshop, and the desk checked the transfer journal, which shows it as SENT. It replied to her on secure chat saying the transfer is recorded as sent, that this does not confirm the recipient bank has received or credited it, and that no new transfer was made. The case is closed with nothing left for a person, though her identity was not verified.
+Mara Ellison, writing over secure chat, asked whether H&V had sent her £420 payment to Alder & Reed Workshop. The desk checked the transfer journal, which shows the transfer as SENT, and replied saying so, adding that this does not confirm the recipient bank has received or credited it and that no new transfer was made. Her identity was not verified, and the case closed with that reply, with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

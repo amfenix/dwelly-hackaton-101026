@@ -40,38 +40,41 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-012-at-02:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-012-at-02:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-012-at-02:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Mira Ellery): I want to increase this standing order to £68.00 a month. The portal still shows £42.00, and I haven’t confirmed a change yet. [facts: confirmation='none', instructed_outside_portal=True]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → True (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
-50. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-51. `request_type`: not known → change (by `triage`).
-52. `subject`: not known → standing_order (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-55. `next_system`: not known → recurring (by `route-recurring`).
-56. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-57. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-58. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-59. Called `send_for_confirmation` (attempt 1, key banking-012-at-02:do-confirm:16).
-60. Action in the world: `send_for_confirmation` {"change": "standing_order, amount=68.00", "to": "Mira Ellery"}.
-61. `send_for_confirmation` found {}.
-62. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-63. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-012-at-02:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-012-at-02:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-012-at-02:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mira Ellery): I want to increase this standing order to £68.00 a month. The portal still shows £42.00, and I haven’t confirmed a change yet. [facts: confirmation='none', instructed_outside_portal=True]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → True (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+53. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+54. `request_type`: not known → change (by `triage`).
+55. `subject`: not known → standing_order (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+58. `next_system`: not known → recurring (by `route-recurring`).
+59. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
+60. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
+61. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
+62. Called `send_for_confirmation` (attempt 1, key banking-012-at-02:do-confirm:17).
+63. Action in the world: `send_for_confirmation` {"change": "standing_order, amount=68.00", "to": "Mira Ellery"}.
+64. `send_for_confirmation` found {}.
+65. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
+66. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
 
 ## Model calls
 
-3 calls, 4977 tokens in, 533 out, 4.083 s, cost $0.0115; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4952 tokens in, 541 out, 4.964 s, cost $0.0115; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed, and I'm taking no further action. Its state is CONFIRMATION_SENT and the outcome is "send_for_confirmation".
+> The standing order change hasn't been made. The case is closed on a confirmation request, so there's nothing more for me to do on it.
 > 
-> Mira hasn't been verified and hasn't confirmed the change. So the standing order to Westmere Garden Cooperative stays at £42.00 until she confirms the increase to £68.00 herself.
+> Mira isn't verified, and she hasn't confirmed the increase from £42.00 to £68.00. She asked for it in secure chat rather than the portal. The desk has therefore sent the change to her for confirmation. The £42.00 standing order to Westmere Garden Cooperative stays as it is until she confirms.

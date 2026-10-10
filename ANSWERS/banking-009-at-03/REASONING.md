@@ -42,37 +42,36 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. Rule `read-tariff` fired: state = READING → true (state=READING).
 39. Called `check_tariff` (attempt 1, key banking-009-at-03:read-tariff:10).
 40. `check_tariff` found {}.
-41. Rule `read-registration` fired: state = READING → true (state=READING).
-42. Called `check_registration` (attempt 1, key banking-009-at-03:read-registration:11).
-43. `check_registration` found {}.
-44. Rule `read-confirmation` fired: state = READING → true (state=READING).
-45. Called `check_confirmation` (attempt 1, key banking-009-at-03:read-confirmation:12).
-46. Note from `read-confirmation`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: confirmation='none', instructed_outside_portal=False]
-47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-48. `confirmation`: not known → none (by `read-confirmation`).
-49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
-52. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.93 → transfer.
-53. `request_type`: not known → question (by `triage`).
-54. `subject`: not known → transfer (by `triage`).
-55. State `READING` → `TRIAGED` (by `triage`).
-56. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-57. `next_system`: not known → payment (by `asked-payment`).
-58. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
-59. State `TRIAGED` → `WAITING` (by `payment-waits`).
-60. The case closed in `WAITING`: **wait**.
-61. The agent asked for `ask_system` {"system": "payment"}.
-62. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-009-at-03:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-009-at-03:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-009-at-03:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+55. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.98 → transfer.
+56. `request_type`: not known → question (by `triage`).
+57. `subject`: not known → transfer (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+60. `next_system`: not known → payment (by `asked-payment`).
+61. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
+62. State `TRIAGED` → `WAITING` (by `payment-waits`).
+63. The case closed in `WAITING`: **wait**.
+64. The agent asked for `ask_system` {"system": "payment"}.
+65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+66. The agent asked for `reply` {}.
+67. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).
+68. The agent asked for `escalate` {"note": "Verified customer Mara Ellwood asks which amount H&V actually sent. She recalls entering £684.20 in the draft, but the portal's final payment line shows £648.20 to her property manager. The desk could not run the payment check. The case is in WAITING, and both ask_system(payment) and reply were refused. No payment_status is on record. Please check the executed payment record, confirm the sent amount, and tell her whether it matches the £648.20 shown. Do not rely on her memory of the draft."}.
+69. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8754 tokens in, 648 out, 5.642 s, cost $0.0202; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I haven't confirmed the amount H&V sent, and the case is now waiting. My request to the payment system was refused because the case is in a WAITING state, not TRIAGED, so the payment record hasn't been read.
-> 
-> The only figure on file is £648.20, from the portal's final payment line. No payment record confirms it yet, and the case shows no confirmation. I have no record of the £684.20 draft either, so I can't say which figure is right or why they differ.
-> 
-> I've made no change and sent no reply. The case stays open, so it goes to a person to check the completed payment instruction.
+5 calls, 12760 tokens in, 724 out, 6.461 s, cost $0.0289; models: claude-sonnet-5-5, jev-1.13.0.

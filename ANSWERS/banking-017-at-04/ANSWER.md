@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether H&V executed her scheduled rent standing order and what status the bank recorded. The desk checked the standing-order journal, found the run recorded as not executed, and replied on secure chat that the record shows not_executed, that this doesn't establish whether a later run will execute, and that no instruction or change was made. The case is closed as replied and nothing is left for a person, though she was not verified, and the reply gave no reason even though the journal noted insufficient cleared funds at the scheduled processing time.
+Mara Ellery asked over secure chat whether H&V executed her scheduled rent standing order and what status the bank had recorded. The desk replied on the same channel that the standing-order record shows not_executed, that this does not establish whether a later run will execute, and that no instruction or change was made. The requester was not verified, and nothing further is left open in the record. The journal note also gave a reason (insufficient cleared funds at the scheduled processing time), but the reply did not include it.
 
 _Written by a model from the record below; the sections below are the record._
 

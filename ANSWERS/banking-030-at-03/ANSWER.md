@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellery, a verified customer on secure chat, asked whether her replacement card is being made and whether it has been sent. The desk classified this as a question about her card and put the query to the card system, then closed the case at that step. The card system's answer isn't in the record, so there is still nothing on the card's status, and no reply has gone to Maren.
+Maren Ellery, a verified customer in secure chat, asked whether her replacement card is being made and whether it has been sent. The desk classified this as a question about the card and put it to the card system, which accepted it and returned nothing, and the case closed as asked. Whether the card is being made or has been sent is still unknown, and no reply has gone to Maren and nothing on her account was changed.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -52,7 +52,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=question)
+  - request_type not in [register, change, authority, instruction] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

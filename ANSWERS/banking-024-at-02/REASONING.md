@@ -38,41 +38,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-tariff` fired: state = READING → true (state=READING).
 35. Called `check_tariff` (attempt 1, key banking-024-at-02:read-tariff:10).
 36. `check_tariff` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-024-at-02:read-registration:11).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-024-at-02:read-confirmation:12).
-42. Note from `read-confirmation`: event 2 (Rowan Ellery): I’m the cardholder and my card was declined while I was paying for groceries. Please tell me the category of the restriction and whether it has been lifted. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-48. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → card (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-53. `next_system`: not known → card (by `route-card`).
-54. The agent asked for `ask_system` {"system": "card"}.
-55. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-024-at-02:do-ask:16).
-59. Action in the world: `ask_system` {"system": "card", "about": "card"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-024-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-024-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-024-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Rowan Ellery): I’m the cardholder and my card was declined while I was paying for groceries. Please tell me the category of the restriction and whether it has been lifted. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+51. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+52. `request_type`: not known → question (by `triage`).
+53. `subject`: not known → card (by `triage`).
+54. State `READING` → `TRIAGED` (by `triage`).
+55. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+56. `next_system`: not known → card (by `route-card`).
+57. The agent asked for `ask_system` {"system": "card"}.
+58. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
+59. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+61. Called `ask_system` (attempt 1, key banking-024-at-02:do-ask:17).
+62. Action in the world: `ask_system` {"system": "card", "about": "card"}.
+63. `ask_system` found {}.
+64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+65. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6841 tokens in, 501 out, 5.381 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6849 tokens in, 483 out, 4.949 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the card system about Rowan's declined card. The request was accepted and the case is now closed at that step.
+> I've asked the card system for the restriction category and whether it has been lifted. That is the next step for this case. The system's answer isn't in the case yet, so I can't tell Rowan anything about the restriction.
 > 
-> The card system hasn't given back any details yet. The case doesn't show the restriction category or whether it has been lifted, so there is nothing to tell Rowan about either point.
-> 
-> Rowan's identity is also still marked as not verified. I haven't claimed anything about the card's status beyond what the records show.
+> Rowan is not verified on this chat. That matters when the reply is written, because card details shouldn't go to an unverified requester.

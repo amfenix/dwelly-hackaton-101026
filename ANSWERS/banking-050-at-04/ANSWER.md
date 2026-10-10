@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing as company signatory over secure chat, asked the desk to check the stage of a payment that Alder Quay Supplies says it has not received. The desk looked up the payment record, which shows the transfer as "sent", and replied on secure chat that this does not confirm receipt or credit by the recipient bank and that no new transfer was made. Her identity was not verified, and the case is closed with nothing left for a person in the record.
+Mara Ellison, writing over secure chat as the company signatory, asked the desk to check the stage of a transfer that the supplier Alder Quay Supplies says it has not received. The desk looked up the payment record, which shows the transfer as sent, and replied to her that this does not confirm the recipient bank has received or credited it, and that no new transfer was made. Her identity was not verified, and the case closed as replied with nothing further recorded for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 

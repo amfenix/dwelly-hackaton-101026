@@ -33,35 +33,38 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 29. Rule `read-tariff` fired: state = READING → true (state=READING).
 30. Called `check_tariff` (attempt 1, key banking-046-at-01:read-tariff:10).
 31. `check_tariff` found {}.
-32. Rule `read-registration` fired: state = READING → true (state=READING).
-33. Called `check_registration` (attempt 1, key banking-046-at-01:read-registration:11).
-34. `check_registration` found {}.
-35. Rule `read-confirmation` fired: state = READING → true (state=READING).
-36. Called `check_confirmation` (attempt 1, key banking-046-at-01:read-confirmation:12).
-37. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Active role: Payroll Approver. Assigned user: Owen Bell. Business: Larkmere Studio Ltd. [facts: confirmation='none', instructed_outside_portal=False]
-38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-39. `confirmation`: not known → none (by `read-confirmation`).
-40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-43. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
-44. `request_type`: not known → instruction (by `triage`).
-45. `subject`: not known → role (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
-48. `next_system`: not known → business (by `route-business`).
-49. The agent asked for `submit_request` {}.
-50. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=business); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=business); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is false (next_system=business); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=business); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is false (next_system=business); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=business); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
-51. The agent asked for `ask_system` {"system": "business"}.
-52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
-53. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-046-at-01:do-ask:16).
-56. Action in the world: `ask_system` {"system": "business", "about": "role"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
+32. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+33. Called `check_bank_actions` (attempt 1, key banking-046-at-01:read-bank-actions:11).
+34. `check_bank_actions` found {}.
+35. Rule `read-registration` fired: state = READING → true (state=READING).
+36. Called `check_registration` (attempt 1, key banking-046-at-01:read-registration:12).
+37. `check_registration` found {}.
+38. Rule `read-confirmation` fired: state = READING → true (state=READING).
+39. Called `check_confirmation` (attempt 1, key banking-046-at-01:read-confirmation:13).
+40. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Active role: Payroll Approver. Assigned user: Owen Bell. Business: Larkmere Studio Ltd. [facts: confirmation='none', instructed_outside_portal=False]
+41. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+42. `confirmation`: not known → none (by `read-confirmation`).
+43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+44. Rule `triage` fired: state = READING → true (state=READING).
+45. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+46. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
+47. `request_type`: not known → instruction (by `triage`).
+48. `subject`: not known → role (by `triage`).
+49. State `READING` → `TRIAGED` (by `triage`).
+50. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
+51. `next_system`: not known → business (by `route-business`).
+52. The agent asked for `submit_request` {}.
+53. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=business); verified is not known (verified=not known); incoming-instruction: next_system = incoming is false (next_system=business); verified is not known (verified=not known); recurring-instruction: next_system = recurring is false (next_system=business); verified is not known (verified=not known); card-instruction: next_system = card is false (next_system=business); verified is not known (verified=not known); access-instruction: next_system = access is false (next_system=business); verified is not known (verified=not known); business-instruction: verified is not known (verified=not known); documents-instruction: next_system = documents is false (next_system=business); verified is not known (verified=not known).
+54. The agent asked for `ask_system` {"system": "business"}.
+55. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+56. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
+57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+58. Called `ask_system` (attempt 1, key banking-046-at-01:do-ask:17).
+59. Action in the world: `ask_system` {"system": "business", "about": "role"}.
+60. `ask_system` found {}.
+61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+62. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 9898 tokens in, 523 out, 5.277 s, cost $0.0212; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 9626 tokens in, 557 out, 5.378 s, cost $0.0210; models: claude-sonnet-5-5, jev-1.13.0.

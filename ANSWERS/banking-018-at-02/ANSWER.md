@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, asked the desk to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate, though she doesn't know which line it is. The desk classed this as a standing order question and sent an ask to the recurring payments system about the £34.80 standing order; that ask returned no result, and the case closed at that step. Nothing was removed or changed, so a person still needs to establish whether the two payments are duplicates and which one, if any, should go.
+Mara Ellison, verified on a call, asked the desk to check whether two future £34.80 payments to Northmere Heating are duplicates and to remove the duplicate; she said she doesn't know which line it is. The desk treated this as a standing order query and sent a question to the recurring payments system about the £34.80 standing order, then closed the case at that point. Nothing has been removed or cancelled, and the system's answer is not in the record, so whether there is a duplicate is still open for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

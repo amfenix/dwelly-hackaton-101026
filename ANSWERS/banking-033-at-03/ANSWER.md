@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked, over secure chat, for a CSV export of her transactions from 6 to 9 May 2025 to be made available in her secure portal, and said she wasn't sure how to tell when it was created. The desk classed this as a document question, found that the documents system had already been asked to create the export, and put the case in a final waiting state, taking no actions of its own. Her requester record shows as not verified, and the documents system has not yet answered, so nothing confirms the file exists and nobody has told her it is ready.
+Mara Ellison asked, over secure chat, for a CSV export of her transactions from 6 to 9 May 2025 and for word when the file is available in her secure portal. The desk found that the documents system had already been asked to create the export but had not yet confirmed it, so it took no action and closed the case as waiting. What is left is the documents system's confirmation that the export exists; her identity is also recorded as unverified, so the desk did not say the file is ready or when it will appear.
 
 _Written by a model from the record below; the sections below are the record._
 

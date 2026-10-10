@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -84,7 +87,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The request was a question about a transfer, apparently the payment for the Alder Quay Supplies materials invoice. The desk classified it as a question about a transfer and routed it to the payment system, then sent that system a query about the transfer and closed the case as asked. The payment system's answer has not come back into the case, and the record shows only that the portal recorded the payment authorisation and that there is no confirmation of the payment. So whether the payment has been sent, is pending or has been held is still unknown and is left for a person to find out.",
+  "summary": "The desk read the message as a question about a transfer and sent it on to the payment system by asking it about the transfer. That ask went through and the case closed there. The only fact found was a portal event recording the payment authorisation for the Alder Quay Supplies materials invoice, so the record doesn't show whether the payment was sent, is pending, or was held or rejected. Nothing else was done, and no further step for a person is recorded.",
   "journal": [
     {
       "seq": 1,
@@ -438,7 +441,7 @@
       "seq": 32,
       "at": 0.0,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -456,23 +459,23 @@
       "seq": 33,
       "at": 0.0,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-050-at-01:read-registration:11",
+      "key": "banking-050-at-01:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 34,
       "at": 0.0,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 35,
       "at": 0.0,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -490,21 +493,55 @@
       "seq": 36,
       "at": 0.0,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-050-at-01:read-confirmation:12",
+      "key": "banking-050-at-01:read-registration:12",
       "args": {}
     },
     {
       "seq": 37,
+      "at": 0.0,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 38,
+      "at": 0.0,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 39,
+      "at": 0.0,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-050-at-01:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 40,
       "at": 0.0,
       "kind": "note",
       "text": "event 1 (H&V business portal): Payment authorisation recorded for the materials invoice from Alder Quay Supplies. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 38,
-      "at": 0.0,
+      "seq": 41,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
       "values": {
@@ -513,8 +550,8 @@
       }
     },
     {
-      "seq": 39,
-      "at": 0.0,
+      "seq": 42,
+      "at": 0.001,
       "kind": "set",
       "field": "confirmation",
       "old": null,
@@ -522,8 +559,8 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 40,
-      "at": 0.0,
+      "seq": 43,
+      "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
       "old": null,
@@ -531,8 +568,8 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 41,
-      "at": 0.0,
+      "seq": 44,
+      "at": 0.001,
       "kind": "trigger",
       "name": "triage",
       "on": null,
@@ -549,8 +586,8 @@
       "note": ""
     },
     {
-      "seq": 42,
-      "at": 0.303,
+      "seq": 45,
+      "at": 0.234,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -561,8 +598,8 @@
       "attempt": 1
     },
     {
-      "seq": 43,
-      "at": 0.303,
+      "seq": 46,
+      "at": 0.234,
       "kind": "choice",
       "field": "subject",
       "raw": "transfer",
@@ -573,8 +610,8 @@
       "attempt": 1
     },
     {
-      "seq": 44,
-      "at": 0.303,
+      "seq": 47,
+      "at": 0.234,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -582,8 +619,8 @@
       "by": "triage"
     },
     {
-      "seq": 45,
-      "at": 0.303,
+      "seq": 48,
+      "at": 0.234,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -591,16 +628,16 @@
       "by": "triage"
     },
     {
-      "seq": 46,
-      "at": 0.303,
+      "seq": 49,
+      "at": 0.234,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 47,
-      "at": 0.303,
+      "seq": 50,
+      "at": 0.234,
       "kind": "trigger",
       "name": "route-payment",
       "on": null,
@@ -631,8 +668,8 @@
       "note": ""
     },
     {
-      "seq": 48,
-      "at": 0.303,
+      "seq": 51,
+      "at": 0.234,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -640,8 +677,8 @@
       "by": "route-payment"
     },
     {
-      "seq": 49,
-      "at": 2.751,
+      "seq": 52,
+      "at": 2.176,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -649,8 +686,8 @@
       }
     },
     {
-      "seq": 50,
-      "at": 2.751,
+      "seq": 53,
+      "at": 2.176,
       "kind": "trigger",
       "name": "payment-ask",
       "on": "ask_system",
@@ -702,16 +739,16 @@
       "note": ""
     },
     {
-      "seq": 51,
-      "at": 2.751,
+      "seq": 54,
+      "at": 2.176,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "payment-ask"
     },
     {
-      "seq": 52,
-      "at": 2.751,
+      "seq": 55,
+      "at": 2.176,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -728,17 +765,17 @@
       "note": ""
     },
     {
-      "seq": 53,
-      "at": 2.751,
+      "seq": 56,
+      "at": 2.176,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-050-at-01:do-ask:16",
+      "key": "banking-050-at-01:do-ask:17",
       "args": {}
     },
     {
-      "seq": 54,
-      "at": 2.751,
+      "seq": 57,
+      "at": 2.176,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -746,26 +783,26 @@
         "about": "transfer"
       },
       "by": "do-ask",
-      "key": "banking-050-at-01:do-ask:16"
+      "key": "banking-050-at-01:do-ask:17"
     },
     {
-      "seq": 55,
-      "at": 2.751,
+      "seq": 58,
+      "at": 2.176,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 56,
-      "at": 2.751,
+      "seq": 59,
+      "at": 2.176,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 57,
-      "at": 2.751,
+      "seq": 60,
+      "at": 2.176,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -863,7 +900,7 @@
           }
         }
       },
-      "seconds": 0.3019969000015408,
+      "seconds": 0.23324770003091544,
       "input_tokens": 920,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1012,11 +1049,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYgNyrLdDHawarMNTjk",
+        "id": "msg_011Cfta6PY7t4JJR2DHRYzuH",
         "container": null,
         "content": [
           {
-            "id": "toolu_01R7yy9N1tac3croKoEgX57X",
+            "id": "toolu_0138sAWjqxav2uZ3J9LXBcBD",
             "caller": {
               "type": "direct"
             },
@@ -1050,7 +1087,7 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.1189326000167057,
+      "seconds": 0.8723629000596702,
       "input_tokens": 1761,
       "output_tokens": 26,
       "cost_usd": 0.003782,
@@ -1200,7 +1237,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01R7yy9N1tac3croKoEgX57X",
+                "id": "toolu_0138sAWjqxav2uZ3J9LXBcBD",
                 "caller": {
                   "type": "direct"
                 },
@@ -1216,7 +1253,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01R7yy9N1tac3croKoEgX57X",
+                "tool_use_id": "toolu_0138sAWjqxav2uZ3J9LXBcBD",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"transfer\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1224,16 +1261,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYgThcVMyUAd191Axnv",
+        "id": "msg_011Cfta6TC9Z5XLKrtwtUQbN",
         "container": null,
         "content": [
           {
-            "citations": null,
-            "text": "The case says the next system is payment, and the payment stage isn't known yet.",
-            "type": "text"
-          },
-          {
-            "id": "toolu_01VDksvJE6fwnZxbuLMtGyr6",
+            "id": "toolu_01SkFtknNzKkPcDH19EM8Jpi",
             "caller": {
               "type": "direct"
             },
@@ -1261,7 +1293,7 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1877,
-          "output_tokens": 73,
+          "output_tokens": 49,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1269,13 +1301,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.3286313000135124,
+      "seconds": 1.0691857999190688,
       "input_tokens": 1877,
-      "output_tokens": 73,
-      "cost_usd": 0.004484,
+      "output_tokens": 49,
+      "cost_usd": 0.004244,
       "error": null,
       "replayed": false,
-      "digest": "ff86ae34cbfa32cef9c84836ee8a2b6572ed04f756ca70ee59ea4284e1f88566"
+      "digest": "5245373164fc7cb19a1bfa61f3d48bf40ede044ccc3c2180b716c9735f70d7fe"
     },
     {
       "kind": "agent",
@@ -1419,7 +1451,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01R7yy9N1tac3croKoEgX57X",
+                "id": "toolu_0138sAWjqxav2uZ3J9LXBcBD",
                 "caller": {
                   "type": "direct"
                 },
@@ -1435,7 +1467,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01R7yy9N1tac3croKoEgX57X",
+                "tool_use_id": "toolu_0138sAWjqxav2uZ3J9LXBcBD",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"transfer\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1444,12 +1476,7 @@
             "role": "assistant",
             "content": [
               {
-                "citations": null,
-                "text": "The case says the next system is payment, and the payment stage isn't known yet.",
-                "type": "text"
-              },
-              {
-                "id": "toolu_01VDksvJE6fwnZxbuLMtGyr6",
+                "id": "toolu_01SkFtknNzKkPcDH19EM8Jpi",
                 "caller": {
                   "type": "direct"
                 },
@@ -1467,7 +1494,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01VDksvJE6fwnZxbuLMtGyr6",
+                "tool_use_id": "toolu_01SkFtknNzKkPcDH19EM8Jpi",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1475,11 +1502,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYgZNRrSrcSAJym7cFn",
+        "id": "msg_011Cfta6XoTmuRpPbgfXKiG9",
         "container": null,
         "content": [
           {
-            "id": "toolu_01LNHh5Q2HGSakb1nQmJSKrV",
+            "id": "toolu_01Xj7wCLPja13bYEiynUobi9",
             "caller": {
               "type": "direct"
             },
@@ -1504,7 +1531,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1985,
+          "input_tokens": 1961,
           "output_tokens": 26,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1513,13 +1540,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.020061600022018,
-      "input_tokens": 1985,
+      "seconds": 1.0283886999823153,
+      "input_tokens": 1961,
       "output_tokens": 26,
-      "cost_usd": 0.00423,
+      "cost_usd": 0.004182,
       "error": null,
       "replayed": false,
-      "digest": "3e992a5131a6460628355bc84fa9eeb75c0fbf03b4b3e6399909b6ef7a64c3b7"
+      "digest": "0ad3df771830859a4e4d2bab33ce64822be624528d7d3be70c1312661b9e6d98"
     },
     {
       "kind": "agent",
@@ -1663,7 +1690,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01R7yy9N1tac3croKoEgX57X",
+                "id": "toolu_0138sAWjqxav2uZ3J9LXBcBD",
                 "caller": {
                   "type": "direct"
                 },
@@ -1679,7 +1706,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01R7yy9N1tac3croKoEgX57X",
+                "tool_use_id": "toolu_0138sAWjqxav2uZ3J9LXBcBD",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"transfer\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1688,12 +1715,7 @@
             "role": "assistant",
             "content": [
               {
-                "citations": null,
-                "text": "The case says the next system is payment, and the payment stage isn't known yet.",
-                "type": "text"
-              },
-              {
-                "id": "toolu_01VDksvJE6fwnZxbuLMtGyr6",
+                "id": "toolu_01SkFtknNzKkPcDH19EM8Jpi",
                 "caller": {
                   "type": "direct"
                 },
@@ -1711,7 +1733,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01VDksvJE6fwnZxbuLMtGyr6",
+                "tool_use_id": "toolu_01SkFtknNzKkPcDH19EM8Jpi",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1720,7 +1742,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01LNHh5Q2HGSakb1nQmJSKrV",
+                "id": "toolu_01Xj7wCLPja13bYEiynUobi9",
                 "caller": {
                   "type": "direct"
                 },
@@ -1736,7 +1758,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01LNHh5Q2HGSakb1nQmJSKrV",
+                "tool_use_id": "toolu_01Xj7wCLPja13bYEiynUobi9",
                 "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"subject\": \"transfer\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1744,12 +1766,17 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYgdkc2a5CNhM3AnbDS",
+        "id": "msg_011Cfta6cCszkptYGEm5fa26",
         "container": null,
         "content": [
           {
+            "signature": "CAQSiQUKEAgSGAI4AUIIdGhpbmtpbmcSDMWwqp/ffFyI/4uekBoMThBO4Ksrf4hkvCkkIjCoasoeA8i+XL3cXRxOveuj9YwRHLGAzh0KGXDAfyGuVKooFTdSGi0mAz9IaXDJc1EqpgQ2Y5LCyKmc5L3ocB4R0UgQ1AQmHWk3/jJTBpchg38LdsM3kWwtPbxa9qRhGAuUzO2BLBc03qxfvusiPfH7PwAJY01njhOPr1GaL97l3dAO82Ctyg3mCbYoSI9ZgYfRVFTxXj3eCIRUYuz5rmmMxILz1EdOuzZW71/t8BafvQrsFyH8cwrg+F9Uip4/gCqHcTVwyqz/GSvwZ8PNwLEfSeSK1mnd7uLmGMhy3tTdgCatY5JUWICQjCePVgzbRlPG5BwTovd0K15H3/uEgHrCoxl2rECidgvO5bDKXv+vt83oZZRQ1MqyB6rQfLgY5CCNpvhJH1FE5z/RCGmlqiyQGrHnrCB+bj1erjqss/xLzs9iGVih3Xi938qYBa8EgQhXVNFVBS33dFdk8mYH0Fj0gA5QAuzwHiMfvJRgZOEVqquqUkSvMcaiK5vVMt+hZ7+g5en6AEcvf4J5ZOwTJyyLIukQzOwpJ095TcTW08m8bxiigNUDYje1XjG6vuNYGjfzXL7V7xyeAMGQmD+zvMtSfRyV9F9cDDdHIK/1WdNKIxfMCLbbGOdAXwuS3/JNyysz49P+fjh8RScgAcFtwYgu9TUkveNoS0tb2cJRL6fHb6PQz+C6wOVrUaDZz5erNQxNb8mYe/tg6AuwxyrNFyfaIsZXfH91YapeCnJDFhVQH+4k8TWK1YLLEpzia1YgAfNcYBUZQuCdnRgisp6J1yQAMJmW2lTf+o4ZGAE=",
+            "thinking": "",
+            "type": "thinking"
+          },
+          {
             "citations": null,
-            "text": "I asked the payment system about the Alder Quay Supplies transfer, and the case is now closed. The system's answer hasn't come back into the case yet. So I can't tell you what stage the payment has reached.\n\nThe case holds only two relevant facts. The portal recorded the payment authorisation. There is no confirmation of the payment on record. Neither fact shows whether the payment has been sent, is pending, or has been held.",
+            "text": "I checked the payment system for the Alder Quay Supplies payment, and the case is now closed. The check didn't add any facts about the payment's stage.\n\nThe only record in the case is the portal event showing that the authorisation was recorded. Nothing shows whether the payment has been sent, is still pending, or has been held or rejected. I can't tell you its stage, and I haven't assumed one.\n\nI took no other action. If the supplier still says the money hasn't arrived, someone will need to look at the payment record directly.",
             "type": "text"
           }
         ],
@@ -1768,22 +1795,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2103,
-          "output_tokens": 134,
+          "input_tokens": 2079,
+          "output_tokens": 188,
           "output_tokens_details": {
-            "thinking_tokens": 0
+            "thinking_tokens": 26
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.7918012000154704,
-      "input_tokens": 2103,
-      "output_tokens": 134,
-      "cost_usd": 0.005546,
+      "seconds": 2.388129800092429,
+      "input_tokens": 2079,
+      "output_tokens": 188,
+      "cost_usd": 0.006038,
       "error": null,
       "replayed": false,
-      "digest": "cde46cf7a64dd046ddd37a2edf6537fda999c44502010f4ab5ade7eeaa907a70"
+      "digest": "cbd74112c3e87e8d748587dfc00032a01b0a80b43949773563fccd916dba6a92"
     },
     {
       "kind": "generate",
@@ -1796,17 +1823,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"transfer\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"transfer\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-050-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-050-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-050-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-050-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-050-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-050-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-050-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-050-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-050-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-050-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-050-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-registration` fired: state = READING → true (state=READING).\n33. Called `check_registration` (attempt 1, key banking-050-at-01:read-registration:11).\n34. `check_registration` found {}.\n35. Rule `read-confirmation` fired: state = READING → true (state=READING).\n36. Called `check_confirmation` (attempt 1, key banking-050-at-01:read-confirmation:12).\n37. Note from `read-confirmation`: event 1 (H&V business portal): Payment authorisation recorded for the materials invoice from Alder Quay Supplies. [facts: confirmation='none', instructed_outside_portal=False]\n38. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n39. `confirmation`: not known → none (by `read-confirmation`).\n40. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n41. Rule `triage` fired: state = READING → true (state=READING).\n42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n43. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.\n44. `request_type`: not known → question (by `triage`).\n45. `subject`: not known → transfer (by `triage`).\n46. State `READING` → `TRIAGED` (by `triage`).\n47. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).\n48. `next_system`: not known → payment (by `route-payment`).\n49. The agent asked for `ask_system` {\"system\": \"payment\"}.\n50. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n51. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n53. Called `ask_system` (attempt 1, key banking-050-at-01:do-ask:16).\n54. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"transfer\"}.\n55. `ask_system` found {}.\n56. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n57. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n5 calls, 8646 tokens in, 458 out, 5.561 s, cost $0.0180; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The case says the next system is payment, and the payment stage isn't known yet.\n> I asked the payment system about the Alder Quay Supplies transfer, and the case is now closed. The system's answer hasn't come back into the case yet. So I can't tell you what stage the payment has reached.\n> \n> The case holds only two relevant facts. The portal recorded the payment authorisation. There is no confirmation of the payment on record. Neither fact shows whether the payment has been sent, is pending, or has been held.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"transfer\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"transfer\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-050-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-050-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-050-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-050-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-050-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-050-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-050-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-050-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-050-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-050-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-050-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-050-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-050-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-050-at-01:read-confirmation:13).\n40. Note from `read-confirmation`: event 1 (H&V business portal): Payment authorisation recorded for the materials invoice from Alder Quay Supplies. [facts: confirmation='none', instructed_outside_portal=False]\n41. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n42. `confirmation`: not known → none (by `read-confirmation`).\n43. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n44. Rule `triage` fired: state = READING → true (state=READING).\n45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n46. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.\n47. `request_type`: not known → question (by `triage`).\n48. `subject`: not known → transfer (by `triage`).\n49. State `READING` → `TRIAGED` (by `triage`).\n50. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).\n51. `next_system`: not known → payment (by `route-payment`).\n52. The agent asked for `ask_system` {\"system\": \"payment\"}.\n53. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n54. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n56. Called `ask_system` (attempt 1, key banking-050-at-01:do-ask:17).\n57. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"transfer\"}.\n58. `ask_system` found {}.\n59. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n60. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n5 calls, 8598 tokens in, 488 out, 5.591 s, cost $0.0182; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I checked the payment system for the Alder Quay Supplies payment, and the case is now closed. The check didn't add any facts about the payment's stage.\n> \n> The only record in the case is the portal event showing that the authorisation was recorded. Nothing shows whether the payment has been sent, is still pending, or has been held or rejected. I can't tell you its stage, and I haven't assumed one.\n> \n> I took no other action. If the supplier still says the money hasn't arrived, someone will need to look at the payment record directly.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYgmSxv1VnbVhC6EU45",
+        "id": "msg_011Cfta6nVzYeCk18jbwCxde",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The request was a question about a transfer, apparently the payment for the Alder Quay Supplies materials invoice. The desk classified it as a question about a transfer and routed it to the payment system, then sent that system a query about the transfer and closed the case as asked. The payment system's answer has not come back into the case, and the record shows only that the portal recorded the payment authorisation and that there is no confirmation of the payment. So whether the payment has been sent, is pending or has been held is still unknown and is left for a person to find out.",
+            "text": "The desk read the message as a question about a transfer and sent it on to the payment system by asking it about the transfer. That ask went through and the case closed there. The only fact found was a portal event recording the payment authorisation for the Alder Quay Supplies materials invoice, so the record doesn't show whether the payment was sent, is pending, or was held or rejected. Nothing else was done, and no further step for a person is recorded.",
             "type": "text"
           }
         ],
@@ -1825,8 +1852,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2345,
-          "output_tokens": 164,
+          "input_tokens": 2439,
+          "output_tokens": 134,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1834,13 +1861,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.2245026000309736,
-      "input_tokens": 2345,
-      "output_tokens": 164,
-      "cost_usd": 0.00633,
+      "seconds": 2.064865499967709,
+      "input_tokens": 2439,
+      "output_tokens": 134,
+      "cost_usd": 0.006218,
       "error": null,
       "replayed": false,
-      "digest": "5dc4acc0bb186404873dc3ae8beae6538cf8bd886b8b9451b218c14b062274ee"
+      "digest": "cd89ad3d38d1d06a116f1af57a5e7ce407f7d42c1d9162ff57a37b48bf2cafb5"
     }
   ]
 }

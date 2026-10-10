@@ -1,10 +1,10 @@
 # Case banking-027-at-03: Access Restored
 
-**Decision: redirect_secure**  (final state `REDIRECTED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Mara Ellison, verified on a call, said she can't sign in to her profile and asked for help restoring access. The desk classified it as an access request and redirected her to the secure process in her portal, telling her it checks her identity there and that the bank never asks for passwords, PINs or verification codes; nothing on her profile was changed. The case is closed, and what remains is for her to complete the recovery checks in the secure portal herself.
+Mara Ellison, verified on a call, said she still can't sign in to her profile and asked for help restoring access. The desk classified it as an access request and found that an H&V service agent had already pointed her to the recovery option in the secure portal, so it set the case to wait until she uses it. The agent then tried to send her to the secure process again, but the desk refused because the case was no longer in the triaged state, and no actions were taken. Nothing further is recorded for a person to do beyond waiting for her to complete the portal checks.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,10 +38,7 @@ Case reference: id banking-027-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `redirect_secure` (to: Mara Ellison, channel: verified_call), by rule `do-redirect`
-
-  > Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.
-
+- none
 
 ## Decision and why
 
@@ -49,11 +46,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REDIRECT_PENDING`: the agent asked for `redirect_secure`, rule `redirect-to-the-secure-process` accepted it.
+- `TRIAGED` → `WAITING`: rule `already-redirected` — The customer was pointed to the secure process; nothing to do until they use it.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = access → true (request_type=access)
-- `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
-  - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
+  - bank_redirected → true (bank_redirected=True)
 
 Facts established:
 
@@ -62,6 +58,7 @@ Facts established:
 - channel: **verified_call**
 - verified: **True**
 - subject: **access**
+- bank_redirected: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **access**
@@ -70,6 +67,7 @@ Facts established:
 Where they came from:
 
 - event 2 (Mara Ellison): I’ve completed H&V’s identification checks for this call. I still can’t sign in to my profile, and I need help restoring access; I’m not sharing any password or verification code. [facts: requester='Mara Ellison', role='customer', channel='verified_call', verified=True]
+- event 3 (H&V service agent): the bank already acted: I’m directing you to the recovery option in H&V’s secure portal. Complete the checks there; I won’t ask you to tell me your password or a verification code.
 - event 3 (H&V service agent): I’m directing you to the recovery option in H&V’s secure portal. Complete the checks there; I won’t ask you to tell me your password or a verification code. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -80,6 +78,10 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING)
+
 ## Final result
 
-redirect_secure (REDIRECTED)
+wait (WAITING)

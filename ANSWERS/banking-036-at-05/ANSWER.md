@@ -1,10 +1,10 @@
 # Case banking-036-at-05: New correspondence address
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Mara Ellison, a verified customer writing through the secure portal, asked to change the correspondence address on her profile and confirmed she wanted the new address used. The desk accepted this as a change request and registered it with the access team about her profile, and the case closed in the REQUESTED state. The record does not show the change being applied to her profile, so that remains with the access team.
+Mara Ellison, a verified customer writing through the secure portal, asked for her correspondence address to be updated after a move and confirmed the change. The desk classified it as a profile change and decided to wait, because the system applies a change the customer has confirmed in the secure portal; the case closed in that waiting state. The agent's later attempts to submit the request, ask the access system and redirect to the secure process were all refused, and the record shows no actions taken and nothing assigned to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -46,7 +46,7 @@ Case reference: id banking-036-at-05, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: access, about: profile), by rule `do-request`
+- none
 
 ## Decision and why
 
@@ -54,16 +54,11 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `access-instruction` accepted it.
+- `TRIAGED` → `WAITING`: rule `change-applied-by-the-system` — The customer confirmed the change in the secure portal; the system applies it.
   - state = TRIAGED → true (state=TRIAGED)
-  - next_system = access → true (next_system=access)
-  - access_asked absent → true (access_asked=not known)
-  - verified → true (verified=True)
-  - request_type = instruction → false (request_type=change)
   - request_type = change → true (request_type=change)
   - confirmation = given → true (confirmation=given)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+  - registration_asked absent → true (registration_asked=not known)
 
 Facts established:
 
@@ -91,6 +86,12 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change)
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change)
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=change)
+
 ## Final result
 
-submit_request (REQUESTED)
+wait (WAITING)

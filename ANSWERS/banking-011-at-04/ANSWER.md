@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, who was not verified, asked over secure chat when her monthly household standing order is next due. The desk checked the standing-order record, found it active with a next run of 3 September 2025, and replied on secure chat with that date. The reply also said this does not guarantee the future payment will execute and that no instruction or change was made. The case is closed, and nothing is left for a person.
+Mara Ellison, who was not verified, asked over secure chat when her active monthly standing order is next due. The desk checked the standing-order record, which shows it as active with the next run on 2025-09-03, and replied on secure chat with that date. The reply also said this does not guarantee the future payment will execute, and that no change or instruction was made. The case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

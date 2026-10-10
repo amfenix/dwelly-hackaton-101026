@@ -40,41 +40,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-003-at-03:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-003-at-03:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-003-at-03:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Elise Rowan): I’m escalating this because the instruction still has no sent confirmation. Please check its current stage and tell me whether I need to authorise it. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-50. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → transfer (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-55. `next_system`: not known → payment (by `asked-payment`).
-56. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
-57. State `TRIAGED` → `WAITING` (by `payment-waits`).
-58. The case closed in `WAITING`: **wait**.
-59. The agent asked for `ask_system` {"system": "payment"}.
-60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-003-at-03:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-003-at-03:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-003-at-03:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Elise Rowan): I’m escalating this because the instruction still has no sent confirmation. Please check its current stage and tell me whether I need to authorise it. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → transfer (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+58. `next_system`: not known → payment (by `asked-payment`).
+59. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
+60. State `TRIAGED` → `WAITING` (by `payment-waits`).
+61. The case closed in `WAITING`: **wait**.
+62. The agent asked for `ask_system` {"system": "payment"}.
+63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+64. The agent asked for `escalate` {"note": "Elise Rowan (unverified, secure chat) asks whether a saved invoice transfer instruction in the portal was submitted, what stage it is at, and whether she must authorise it. No sent confirmation exists. The payment system lookup is flagged as already asked, but no result is in the case. A new payment query was refused because the case is in WAITING state. Please check the instruction's stage and authorisation requirement, and verify the customer before sharing details."}.
+65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8721 tokens in, 643 out, 5.991 s, cost $0.0201; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12652 tokens in, 926 out, 8.264 s, cost $0.0307; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't check the transfer's stage, and the case is now waiting. The payment system refused my request because the case is in a WAITING state. The case record is final with the outcome "wait", so no further step is open to me.
+> I couldn't check the transfer, and the case is now waiting with nothing more I can do from here.
 > 
-> Here is what the record shows:
-> - The payment system has already been asked once, but no answer is in the case.
-> - Elise Rowan is not verified.
-> - There is no sent confirmation for the transfer.
-> - It was not instructed outside the portal.
+> - **Payment lookup refused:** The desk won't run it while the case is in the WAITING state. The case record also says a payment lookup was already made, but it holds no result.
+> - **Escalation refused:** The desk blocked that for the same reason.
+> - **Customer not verified:** Elise Rowan is not verified, so no payment details could be shared with her yet in any case.
 > 
-> I can't tell her whether the transfer was submitted, what stage it is at, or whether she needs to authorise it. I haven't escalated, and I'm leaving the case open for a person to pick up.
+> I have no information on whether the instruction was submitted, what stage it is at, or whether she needs to authorise it. The case stays open and goes to a person.

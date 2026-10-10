@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, writing over secure chat and not verified, asked whether Northmere Studio Ltd's payroll payment package was still waiting for her co-signer after she gave her first consent. The desk classed it as a question about a payment package and sent an inquiry to the payment system, which returned nothing, so the case closed with that step done. No answer on the package's status has reached the case, and Mara has not been told anything about it; that, and her unverified status, are left for a person.
+Mara Ellery, writing over secure chat (not verified), asked whether Northmere Studio Ltd's payroll payment package was still waiting for her co-signer or had moved on, after giving her first consent. The desk classified it as a question about a payment package and asked the payment system about it, and the case closed at that step. No payment status came back, and the desk refused the reply it tried to send, so Mara has not been told anything about the package's status or whether the second signatory still needs to act; that is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -78,6 +78,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

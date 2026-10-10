@@ -43,33 +43,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. Rule `read-tariff` fired: state = READING → true (state=READING).
 40. Called `check_tariff` (attempt 1, key banking-041-at-03:read-tariff:10).
 41. `check_tariff` found {}.
-42. Rule `read-registration` fired: state = READING → true (state=READING).
-43. Called `check_registration` (attempt 1, key banking-041-at-03:read-registration:11).
-44. `check_registration` found {}.
-45. Rule `read-confirmation` fired: state = READING → true (state=READING).
-46. Called `check_confirmation` (attempt 1, key banking-041-at-03:read-confirmation:12).
-47. Note from `read-confirmation`: event 2 (Mara Ellison): I am the company's authorised file uploader, and I can see that I submitted batch-041.csv, but I cannot tell whether H&V received it. Please check receipt only; I am not asking you to approve or release any payment. [facts: confirmation='none', instructed_outside_portal=False]
-48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-49. `confirmation`: not known → none (by `read-confirmation`).
-50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-53. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → batch (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
-58. `next_system`: not known → business (by `asked-business`).
-59. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
-60. State `TRIAGED` → `WAITING` (by `business-waits`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `reply` {}.
-63. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); document_ready present is false (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=business); tariff_status present is false (tariff_status=not known).
-64. The agent asked for `ask_system` {"system": "business"}.
-65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
-66. The agent asked for `escalate` {"note": "Mara Ellison (unverified, secure chat, claims uploader role for Northmere Studio Ltd.) asks only for receipt status of batch-041.csv, ref HV-041 (June 2025 payroll). The business system has been queried (business_asked=True), but no receipt confirmation or business_status is in the case (confirmation=none). Case is WAITING, and further ask/reply calls were refused. Please check the file import records for HV-041 and answer her. No approval or release of payment has been requested."}.
-67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+42. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+43. Called `check_bank_actions` (attempt 1, key banking-041-at-03:read-bank-actions:11).
+44. `check_bank_actions` found {}.
+45. Rule `read-registration` fired: state = READING → true (state=READING).
+46. Called `check_registration` (attempt 1, key banking-041-at-03:read-registration:12).
+47. `check_registration` found {}.
+48. Rule `read-confirmation` fired: state = READING → true (state=READING).
+49. Called `check_confirmation` (attempt 1, key banking-041-at-03:read-confirmation:13).
+50. Note from `read-confirmation`: event 2 (Mara Ellison): I am the company's authorised file uploader, and I can see that I submitted batch-041.csv, but I cannot tell whether H&V received it. Please check receipt only; I am not asking you to approve or release any payment. [facts: confirmation='none', instructed_outside_portal=False]
+51. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+52. `confirmation`: not known → none (by `read-confirmation`).
+53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+54. Rule `triage` fired: state = READING → true (state=READING).
+55. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+56. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
+57. `request_type`: not known → question (by `triage`).
+58. `subject`: not known → batch (by `triage`).
+59. State `READING` → `TRIAGED` (by `triage`).
+60. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
+61. `next_system`: not known → business (by `asked-business`).
+62. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
+63. State `TRIAGED` → `WAITING` (by `business-waits`).
+64. The case closed in `WAITING`: **wait**.
+65. The agent asked for `ask_system` {"system": "business"}.
+66. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
+67. The agent asked for `escalate` {"note": "Mara Ellison (uploader, not verified on secure chat) asks only whether batch-041.csv (ref HV-041, Northmere Studio Ltd, June 2025 payroll) was received. She asks for no approval or release. The business system has already been asked, but the case holds no receipt record (confirmation: none). The case is in WAITING and a repeat ask was refused. Please check the import record for HV-041, verify the requester, and tell her the receipt status. Do not state it as received until a record shows that."}.
+68. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11539 tokens in, 762 out, 7.482 s, cost $0.0269; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12810 tokens in, 957 out, 8.354 s, cost $0.0313; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I haven't been able to confirm whether batch-041.csv (ref HV-041) was received, and the case is now waiting for a person to pick it up.
+> 
+> - **Business system:** the case shows it was already asked, but it holds no receipt record for the file (confirmation: none). A second ask was refused because the case is in WAITING.
+> - **Escalation:** my attempt to pass it to a person was also refused for the same reason. The case stays open in WAITING, which hands it to a person.
+> - **What a person needs to do:** check the import record for HV-041, verify the requester (Mara Ellison is not yet verified on secure chat), and tell her the receipt status. The bank should not say the file was received until a record shows it.
+> 
+> Mara has asked only for the receipt status, not for any payment to be approved or released.

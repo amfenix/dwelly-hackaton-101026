@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -84,7 +87,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The request was classified as a profile registration request (the request-type classifier was only 49% confident) and routed to the access team. The desk refused its attempted lookup in the access system, then submitted the request, and a register_request for the profile was sent to the access team and the case closed as requested. The record shows no checks returning any findings and no change made to the profile itself, so whatever the access team does next, including any further questions for the requester, is left to them.",
+  "summary": "The request was classified as a registration request about the customer's profile, and the desk submitted it by registering a request with the access team. The desk's attempt to ask the access system directly was refused, and it then submitted the request instead; the case closed as requested. The record shows no confirmation that the change has been made, so whether and when it shows on the profile is still open, and the checks run on the case returned nothing.",
   "journal": [
     {
       "seq": 1,
@@ -225,7 +228,7 @@
     },
     {
       "seq": 13,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_incoming",
       "values": {}
@@ -438,7 +441,7 @@
       "seq": 32,
       "at": 0.002,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -456,23 +459,23 @@
       "seq": 33,
       "at": 0.002,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-037-at-01:read-registration:11",
+      "key": "banking-037-at-01:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 34,
       "at": 0.002,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 35,
       "at": 0.002,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -490,20 +493,54 @@
       "seq": 36,
       "at": 0.002,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-037-at-01:read-confirmation:12",
+      "key": "banking-037-at-01:read-registration:12",
       "args": {}
     },
     {
       "seq": 37,
       "at": 0.002,
       "kind": "returned",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "values": {}
     },
     {
       "seq": 38,
+      "at": 0.002,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 39,
+      "at": 0.002,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-037-at-01:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 40,
+      "at": 0.002,
+      "kind": "returned",
+      "function": "check_confirmation",
+      "values": {}
+    },
+    {
+      "seq": 41,
       "at": 0.002,
       "kind": "trigger",
       "name": "triage",
@@ -521,20 +558,20 @@
       "note": ""
     },
     {
-      "seq": 39,
-      "at": 0.243,
+      "seq": 42,
+      "at": 0.231,
       "kind": "choice",
       "field": "request_type",
       "raw": "register",
-      "confidence": 0.49,
+      "confidence": 0.44,
       "value": "register",
       "backend": "jev",
       "model": "jev-latest",
       "attempt": 1
     },
     {
-      "seq": 40,
-      "at": 0.243,
+      "seq": 43,
+      "at": 0.231,
       "kind": "choice",
       "field": "subject",
       "raw": "profile",
@@ -545,8 +582,8 @@
       "attempt": 1
     },
     {
-      "seq": 41,
-      "at": 0.243,
+      "seq": 44,
+      "at": 0.231,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -554,8 +591,8 @@
       "by": "triage"
     },
     {
-      "seq": 42,
-      "at": 0.243,
+      "seq": 45,
+      "at": 0.231,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -563,16 +600,16 @@
       "by": "triage"
     },
     {
-      "seq": 43,
-      "at": 0.243,
+      "seq": 46,
+      "at": 0.231,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 44,
-      "at": 0.243,
+      "seq": 47,
+      "at": 0.232,
       "kind": "trigger",
       "name": "route-access",
       "on": null,
@@ -603,8 +640,8 @@
       "note": ""
     },
     {
-      "seq": 45,
-      "at": 0.243,
+      "seq": 48,
+      "at": 0.232,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -612,8 +649,8 @@
       "by": "route-access"
     },
     {
-      "seq": 46,
-      "at": 2.746,
+      "seq": 49,
+      "at": 2.629,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -621,23 +658,23 @@
       }
     },
     {
-      "seq": 47,
-      "at": 2.746,
+      "seq": 50,
+      "at": 2.629,
       "kind": "refused",
       "signal": "ask_system",
-      "reason": "payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)",
+      "reason": "payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)",
       "state": "TRIAGED"
     },
     {
-      "seq": 48,
-      "at": 3.855,
+      "seq": 51,
+      "at": 3.631,
       "kind": "signal",
       "signal": "submit_request",
       "args": {}
     },
     {
-      "seq": 49,
-      "at": 3.855,
+      "seq": 52,
+      "at": 3.631,
       "kind": "trigger",
       "name": "register",
       "on": "submit_request",
@@ -668,16 +705,16 @@
       "note": ""
     },
     {
-      "seq": 50,
-      "at": 3.855,
+      "seq": 53,
+      "at": 3.631,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "REQUEST_PENDING",
       "by": "register"
     },
     {
-      "seq": 51,
-      "at": 3.855,
+      "seq": 54,
+      "at": 3.631,
       "kind": "trigger",
       "name": "do-request",
       "on": null,
@@ -694,17 +731,17 @@
       "note": ""
     },
     {
-      "seq": 52,
-      "at": 3.855,
+      "seq": 55,
+      "at": 3.631,
       "kind": "call",
       "function": "register_request",
       "attempt": 1,
-      "key": "banking-037-at-01:do-request:16",
+      "key": "banking-037-at-01:do-request:17",
       "args": {}
     },
     {
-      "seq": 53,
-      "at": 3.855,
+      "seq": 56,
+      "at": 3.631,
       "kind": "action",
       "type": "register_request",
       "args": {
@@ -712,26 +749,26 @@
         "about": "profile"
       },
       "by": "do-request",
-      "key": "banking-037-at-01:do-request:16"
+      "key": "banking-037-at-01:do-request:17"
     },
     {
-      "seq": 54,
-      "at": 3.855,
+      "seq": 57,
+      "at": 3.631,
       "kind": "returned",
       "function": "register_request",
       "values": {}
     },
     {
-      "seq": 55,
-      "at": 3.855,
+      "seq": 58,
+      "at": 3.631,
       "kind": "state",
       "frm": "REQUEST_PENDING",
       "to": "REQUESTED",
       "by": "do-request"
     },
     {
-      "seq": 56,
-      "at": 3.855,
+      "seq": 59,
+      "at": 3.631,
       "kind": "final",
       "state": "REQUESTED",
       "outcome": "submit_request"
@@ -793,11 +830,11 @@
           "request_type": {
             "type": "choice",
             "choice": "register",
-            "confidence": 0.49,
+            "confidence": 0.44,
             "probabilities": {
               "question": 0.0,
-              "register": 0.56,
-              "change": 0.44,
+              "register": 0.52,
+              "change": 0.48,
               "instruction": 0.0,
               "access": 0.0,
               "authority": 0.0,
@@ -829,7 +866,7 @@
           }
         }
       },
-      "seconds": 0.2410916000371799,
+      "seconds": 0.22941130003891885,
       "input_tokens": 907,
       "output_tokens": 199,
       "cost_usd": null,
@@ -978,16 +1015,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYccfWP5FQsHvHL5Zjv",
+        "id": "msg_011Cfta2eFHsgskjVFXW4i4G",
         "container": null,
         "content": [
           {
-            "signature": "CAQS/gUKEAgSGAI4AUIIdGhpbmtpbmcSDDNJS/RIyFJlhDbmIhoMGFJJcsDB39O/hXBSIjDkFNr5C+NH3Q9jDJK/mQ6V/JkFGKLG/sKq/aAZkQjCDu1usUJ2j0HNqwSvnAc+dvUqmwWoTK0f2LFmxuP+CpeVAeoFe0aUZxr91l4U0gMQl6KQw2tl4kVBQ+NQge4iRYc0MFgQ5AQCul61UUQszjkEyGgBXqz/Ay42QojOyWXk+eftsbYhnowxgANgzsfO9byy4LvFDevwozR262X8IYhx6iAMBVgfLo89Ztfmxklo68P8fcl+ZTMZ8kdxGKahuFaEw5iWmDovU7iNLp332hYc2SZFLxooiNv5NPxJrX3Q52qhhwYTPv7eTtr7ySR6Dnq9MkYMSM5AI3VbiNTjxsQvOtyN+NJzeuTn2+0QASsgNiA9lOOLcuIGCTJvJhodrqUMs3G+7E90YwZOTV63ZBdhhWs/YfVuRMOrxfCyH8gePcoLmSYOKsudOI1PgFrD/2bAbay+kZ9XZBv2z68eUwZc2CCGUMrsjqjOrxb1gAzCMCT7wesCzcEOcEK5mqXD67qQw4nVc9ocNp8i0g66//0BYOAA1d1sjnunXdlC/3+eB0A/aY2bGSuTP1ITdgVfyA+7b0bQD+PVWaE9m5vbOmR1V7AaJBSlXdpFsbAR0/eoWkwPGhYv7TT1+GqU99LJClc/TZwXUAUtz+a7hL6f6Od8vGz+1Zm3C1iNYLcHl8Dq8Wx5Pg0yl3TqBYY7VvitX5Z5RDl8RLBOe6B4gO+9M8xPYg0fPdIKDu+pmfoRjnCr5pYxTYDupnGtXmkru679A3WRBPPcWNR0j8Sc81HpL5KvONeq0/mt+n5JgtEEC9yx6izZk9e+eZGu6ivBsPQwH+sSF+AU84s48pELc7i2X2FxfmG0Bp1/jGfWZpHOXkbMamlQxNZkuwL7xDQOOm231gKIqhbtMp9Ia6IaMepV8AuxmO7TL+5I+kvvDLDT9Zh0G/8J2ebO8dDJTzcHJCbYGAE=",
+            "signature": "CAQSjAYKEAgSGAI4AUIIdGhpbmtpbmcSDNYV5nBIXYOE2utYDxoMYRaK1lMQAARRcJX8IjCagPLY1pmqWGR3wU3KsTLrDTPcqS4y0yvcKwcyKghGdR2+VP0sPjerlbyvipk3vGoqqQWCmy0934iybLvbZ3BCW0yU0dT1RRBeHIn5ijeW5Tg4hn+WnU4IPpKhL2MhZspoPA4omU5tf8nn53cfZhuTJXI9O/V2tJoM1HS1SP94uNSMs4fwvdLNAXS/I4mAikLvWbhzjpT2f26mlFY3iR+W7SCoAKxKP69LHqB9b8enShbCErXmufWakLpod/0GI1Wk2TV2eO4ox9ZHxLjMIPj7wuNy6EMVSWI43WAr3sM1Vtb/kZIHXRNTuPqYKNm4yjmTXiG1GVuMyZGygvxJ3Kd5rlc0jt6T5bASqmVxxP4tHxamNZEODuqedRf25qKRSTgDBr5CjUuAasKYcqUwHaO4dUHlSYZHuHQtrsMJo33qm5xziBiYAW6VmoeaJHCNaXMGj7g3UJ8EP3mv56GSnvnrFWsHqp/56nLiHVI7bNyrpQo5+OZuHMHbuYZa4D27IiHGK5dFkz3wCuveQgrBDKb7aUvXQcxC399DQs0X6YInhzIZhQCoFE5S5MJhQarpG6UAehT4WbIyemju6KPEYX21MPO32EH+Cpu6DNTpFoidnVutarcX53mFt/uXwsRkH+c4501194yACWQXuaWtBlU4f0eb0PBjs6J3s8huDMSWlXZ8AmwkM5q1sisxlXeEPlnFfzVwbgC3jhPVVInJZ/xUhxIv3ljcI+gO+PwlumMGU92IenxTWcTbR+MaekK/BPZ2e3tsXcSgT83yBhJ3wgVc4/MS+sBYKl99nvFzBrwBFty0qNHVwcdawR4TvUAISWPxph0M7MChXlMlwyfXoTZY4xguc1FHrVkM0UMiC27ykWYrjCPpCTjG20hIFTVPhphXsxejR3pbwK+aLSr/FYgEWlTJERrKjiGnp1gGB+5KkAc8MC54noS6cWjCeNEOO2hZnFlPkJXVlKoEwCUYAQ==",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01NUyvfMue23vgSju6C9nhEk",
+            "id": "toolu_01D6nHcHzfD8gLdUtiSEvVhF",
             "caller": {
               "type": "direct"
             },
@@ -1013,18 +1050,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1671,
-          "output_tokens": 94,
+          "output_tokens": 97,
           "output_tokens_details": {
-            "thinking_tokens": 67
+            "thinking_tokens": 70
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.7033513999776915,
+      "seconds": 1.5636785000097007,
       "input_tokens": 1671,
-      "output_tokens": 94,
-      "cost_usd": 0.004282,
+      "output_tokens": 97,
+      "cost_usd": 0.004312,
       "error": null,
       "replayed": false,
       "digest": "b817a099228195098af93e40285f94f51e97e467490a8e39e5691fee794b03ed"
@@ -1171,12 +1208,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS/gUKEAgSGAI4AUIIdGhpbmtpbmcSDDNJS/RIyFJlhDbmIhoMGFJJcsDB39O/hXBSIjDkFNr5C+NH3Q9jDJK/mQ6V/JkFGKLG/sKq/aAZkQjCDu1usUJ2j0HNqwSvnAc+dvUqmwWoTK0f2LFmxuP+CpeVAeoFe0aUZxr91l4U0gMQl6KQw2tl4kVBQ+NQge4iRYc0MFgQ5AQCul61UUQszjkEyGgBXqz/Ay42QojOyWXk+eftsbYhnowxgANgzsfO9byy4LvFDevwozR262X8IYhx6iAMBVgfLo89Ztfmxklo68P8fcl+ZTMZ8kdxGKahuFaEw5iWmDovU7iNLp332hYc2SZFLxooiNv5NPxJrX3Q52qhhwYTPv7eTtr7ySR6Dnq9MkYMSM5AI3VbiNTjxsQvOtyN+NJzeuTn2+0QASsgNiA9lOOLcuIGCTJvJhodrqUMs3G+7E90YwZOTV63ZBdhhWs/YfVuRMOrxfCyH8gePcoLmSYOKsudOI1PgFrD/2bAbay+kZ9XZBv2z68eUwZc2CCGUMrsjqjOrxb1gAzCMCT7wesCzcEOcEK5mqXD67qQw4nVc9ocNp8i0g66//0BYOAA1d1sjnunXdlC/3+eB0A/aY2bGSuTP1ITdgVfyA+7b0bQD+PVWaE9m5vbOmR1V7AaJBSlXdpFsbAR0/eoWkwPGhYv7TT1+GqU99LJClc/TZwXUAUtz+a7hL6f6Od8vGz+1Zm3C1iNYLcHl8Dq8Wx5Pg0yl3TqBYY7VvitX5Z5RDl8RLBOe6B4gO+9M8xPYg0fPdIKDu+pmfoRjnCr5pYxTYDupnGtXmkru679A3WRBPPcWNR0j8Sc81HpL5KvONeq0/mt+n5JgtEEC9yx6izZk9e+eZGu6ivBsPQwH+sSF+AU84s48pELc7i2X2FxfmG0Bp1/jGfWZpHOXkbMamlQxNZkuwL7xDQOOm231gKIqhbtMp9Ia6IaMepV8AuxmO7TL+5I+kvvDLDT9Zh0G/8J2ebO8dDJTzcHJCbYGAE=",
+                "signature": "CAQSjAYKEAgSGAI4AUIIdGhpbmtpbmcSDNYV5nBIXYOE2utYDxoMYRaK1lMQAARRcJX8IjCagPLY1pmqWGR3wU3KsTLrDTPcqS4y0yvcKwcyKghGdR2+VP0sPjerlbyvipk3vGoqqQWCmy0934iybLvbZ3BCW0yU0dT1RRBeHIn5ijeW5Tg4hn+WnU4IPpKhL2MhZspoPA4omU5tf8nn53cfZhuTJXI9O/V2tJoM1HS1SP94uNSMs4fwvdLNAXS/I4mAikLvWbhzjpT2f26mlFY3iR+W7SCoAKxKP69LHqB9b8enShbCErXmufWakLpod/0GI1Wk2TV2eO4ox9ZHxLjMIPj7wuNy6EMVSWI43WAr3sM1Vtb/kZIHXRNTuPqYKNm4yjmTXiG1GVuMyZGygvxJ3Kd5rlc0jt6T5bASqmVxxP4tHxamNZEODuqedRf25qKRSTgDBr5CjUuAasKYcqUwHaO4dUHlSYZHuHQtrsMJo33qm5xziBiYAW6VmoeaJHCNaXMGj7g3UJ8EP3mv56GSnvnrFWsHqp/56nLiHVI7bNyrpQo5+OZuHMHbuYZa4D27IiHGK5dFkz3wCuveQgrBDKb7aUvXQcxC399DQs0X6YInhzIZhQCoFE5S5MJhQarpG6UAehT4WbIyemju6KPEYX21MPO32EH+Cpu6DNTpFoidnVutarcX53mFt/uXwsRkH+c4501194yACWQXuaWtBlU4f0eb0PBjs6J3s8huDMSWlXZ8AmwkM5q1sisxlXeEPlnFfzVwbgC3jhPVVInJZ/xUhxIv3ljcI+gO+PwlumMGU92IenxTWcTbR+MaekK/BPZ2e3tsXcSgT83yBhJ3wgVc4/MS+sBYKl99nvFzBrwBFty0qNHVwcdawR4TvUAISWPxph0M7MChXlMlwyfXoTZY4xguc1FHrVkM0UMiC27ykWYrjCPpCTjG20hIFTVPhphXsxejR3pbwK+aLSr/FYgEWlTJERrKjiGnp1gGB+5KkAc8MC54noS6cWjCeNEOO2hZnFlPkJXVlKoEwCUYAQ==",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01NUyvfMue23vgSju6C9nhEk",
+                "id": "toolu_01D6nHcHzfD8gLdUtiSEvVhF",
                 "caller": {
                   "type": "direct"
                 },
@@ -1192,7 +1229,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01NUyvfMue23vgSju6C9nhEk",
+                "tool_use_id": "toolu_01D6nHcHzfD8gLdUtiSEvVhF",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"profile\", \"request_type\": \"register\", \"next_system\": \"access\"}, \"refused\": []}"
               }
             ]
@@ -1200,11 +1237,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYcjrN3sDDfVDqd9SYa",
+        "id": "msg_011Cfta2ktACV8QeipsUUk1A",
         "container": null,
         "content": [
           {
-            "id": "toolu_01JKrNX53W4ZksUGnrp6vHyg",
+            "id": "toolu_01CmSiCUNeDre86gnhypZ4kv",
             "caller": {
               "type": "direct"
             },
@@ -1231,7 +1268,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1831,
+          "input_tokens": 1834,
           "output_tokens": 48,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1240,13 +1277,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.7987169999396428,
-      "input_tokens": 1831,
+      "seconds": 0.8334716999670491,
+      "input_tokens": 1834,
       "output_tokens": 48,
-      "cost_usd": 0.004142,
+      "cost_usd": 0.004148,
       "error": null,
       "replayed": false,
-      "digest": "1a1d04ccdf60eea3784e706f8acaa7bb73754ca54b8541241efc97fd61a75a68"
+      "digest": "6bc4a194e4a2d6a05db73ab0ba9ac92d804a9473b7bc1d2f4dd64c9c9fa8b764"
     },
     {
       "kind": "agent",
@@ -1390,12 +1427,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS/gUKEAgSGAI4AUIIdGhpbmtpbmcSDDNJS/RIyFJlhDbmIhoMGFJJcsDB39O/hXBSIjDkFNr5C+NH3Q9jDJK/mQ6V/JkFGKLG/sKq/aAZkQjCDu1usUJ2j0HNqwSvnAc+dvUqmwWoTK0f2LFmxuP+CpeVAeoFe0aUZxr91l4U0gMQl6KQw2tl4kVBQ+NQge4iRYc0MFgQ5AQCul61UUQszjkEyGgBXqz/Ay42QojOyWXk+eftsbYhnowxgANgzsfO9byy4LvFDevwozR262X8IYhx6iAMBVgfLo89Ztfmxklo68P8fcl+ZTMZ8kdxGKahuFaEw5iWmDovU7iNLp332hYc2SZFLxooiNv5NPxJrX3Q52qhhwYTPv7eTtr7ySR6Dnq9MkYMSM5AI3VbiNTjxsQvOtyN+NJzeuTn2+0QASsgNiA9lOOLcuIGCTJvJhodrqUMs3G+7E90YwZOTV63ZBdhhWs/YfVuRMOrxfCyH8gePcoLmSYOKsudOI1PgFrD/2bAbay+kZ9XZBv2z68eUwZc2CCGUMrsjqjOrxb1gAzCMCT7wesCzcEOcEK5mqXD67qQw4nVc9ocNp8i0g66//0BYOAA1d1sjnunXdlC/3+eB0A/aY2bGSuTP1ITdgVfyA+7b0bQD+PVWaE9m5vbOmR1V7AaJBSlXdpFsbAR0/eoWkwPGhYv7TT1+GqU99LJClc/TZwXUAUtz+a7hL6f6Od8vGz+1Zm3C1iNYLcHl8Dq8Wx5Pg0yl3TqBYY7VvitX5Z5RDl8RLBOe6B4gO+9M8xPYg0fPdIKDu+pmfoRjnCr5pYxTYDupnGtXmkru679A3WRBPPcWNR0j8Sc81HpL5KvONeq0/mt+n5JgtEEC9yx6izZk9e+eZGu6ivBsPQwH+sSF+AU84s48pELc7i2X2FxfmG0Bp1/jGfWZpHOXkbMamlQxNZkuwL7xDQOOm231gKIqhbtMp9Ia6IaMepV8AuxmO7TL+5I+kvvDLDT9Zh0G/8J2ebO8dDJTzcHJCbYGAE=",
+                "signature": "CAQSjAYKEAgSGAI4AUIIdGhpbmtpbmcSDNYV5nBIXYOE2utYDxoMYRaK1lMQAARRcJX8IjCagPLY1pmqWGR3wU3KsTLrDTPcqS4y0yvcKwcyKghGdR2+VP0sPjerlbyvipk3vGoqqQWCmy0934iybLvbZ3BCW0yU0dT1RRBeHIn5ijeW5Tg4hn+WnU4IPpKhL2MhZspoPA4omU5tf8nn53cfZhuTJXI9O/V2tJoM1HS1SP94uNSMs4fwvdLNAXS/I4mAikLvWbhzjpT2f26mlFY3iR+W7SCoAKxKP69LHqB9b8enShbCErXmufWakLpod/0GI1Wk2TV2eO4ox9ZHxLjMIPj7wuNy6EMVSWI43WAr3sM1Vtb/kZIHXRNTuPqYKNm4yjmTXiG1GVuMyZGygvxJ3Kd5rlc0jt6T5bASqmVxxP4tHxamNZEODuqedRf25qKRSTgDBr5CjUuAasKYcqUwHaO4dUHlSYZHuHQtrsMJo33qm5xziBiYAW6VmoeaJHCNaXMGj7g3UJ8EP3mv56GSnvnrFWsHqp/56nLiHVI7bNyrpQo5+OZuHMHbuYZa4D27IiHGK5dFkz3wCuveQgrBDKb7aUvXQcxC399DQs0X6YInhzIZhQCoFE5S5MJhQarpG6UAehT4WbIyemju6KPEYX21MPO32EH+Cpu6DNTpFoidnVutarcX53mFt/uXwsRkH+c4501194yACWQXuaWtBlU4f0eb0PBjs6J3s8huDMSWlXZ8AmwkM5q1sisxlXeEPlnFfzVwbgC3jhPVVInJZ/xUhxIv3ljcI+gO+PwlumMGU92IenxTWcTbR+MaekK/BPZ2e3tsXcSgT83yBhJ3wgVc4/MS+sBYKl99nvFzBrwBFty0qNHVwcdawR4TvUAISWPxph0M7MChXlMlwyfXoTZY4xguc1FHrVkM0UMiC27ykWYrjCPpCTjG20hIFTVPhphXsxejR3pbwK+aLSr/FYgEWlTJERrKjiGnp1gGB+5KkAc8MC54noS6cWjCeNEOO2hZnFlPkJXVlKoEwCUYAQ==",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01NUyvfMue23vgSju6C9nhEk",
+                "id": "toolu_01D6nHcHzfD8gLdUtiSEvVhF",
                 "caller": {
                   "type": "direct"
                 },
@@ -1411,7 +1448,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01NUyvfMue23vgSju6C9nhEk",
+                "tool_use_id": "toolu_01D6nHcHzfD8gLdUtiSEvVhF",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"profile\", \"request_type\": \"register\", \"next_system\": \"access\"}, \"refused\": []}"
               }
             ]
@@ -1420,7 +1457,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01JKrNX53W4ZksUGnrp6vHyg",
+                "id": "toolu_01CmSiCUNeDre86gnhypZ4kv",
                 "caller": {
                   "type": "direct"
                 },
@@ -1438,24 +1475,24 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01JKrNX53W4ZksUGnrp6vHyg",
-                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)\"}"
+                "tool_use_id": "toolu_01CmSiCUNeDre86gnhypZ4kv",
+                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)\"}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYcoHjKBWvqmj9oCDZu",
+        "id": "msg_011Cfta2pTTqkDVCDFUaAr1F",
         "container": null,
         "content": [
           {
-            "signature": "CAQS8gUKEAgSGAI4AUIIdGhpbmtpbmcSDKGr+OavjYuftg9NhxoMwHBy4xU9F2XsIkvlIjCncyJzvKX+hGbScKowuyBOV2w7Gj3WT3SfqHEc46blnu5JenpyhKQR7q0qeAr+A6kqjwVkG8XHSaHe5us1CxS4zcaI+8Z/o2UyFS/GBRpPYDyq7gQblq6QCbuzQFiMkrMiFt/E8LAxlQQL/jhYF3ZtnQKnsVO5Bi945Vaxwj/bPZ4RGnIcbu62T5OPalUPNwq5UTSp9M7MHMvJzkPB91nV6UidP+eFpV51/nSfGWwlCRtMieumyFpIBDWkbAzvaH3onZO3HIqmWRXO4LrinKeYjzkS9a8SphFosA27JZbe41S97lY6FxXDap6u1QpXV3dO8xWHR3LlHZoAYRElKGpxN/oXP51+KO60z2lA82a7HGJyn+ucsSdWbBm/UaGz6m6vQI85kiAMznl+pWb5dE2l+HxSadMgNWws7IMZFmvh4i9YOx/ACEr2jI6JteTHGlWNE/EG7xbQ7WN/xQBEh58rpc3REB571nhz42ZOhnNSTGHpZLXxeZ4t0FLl+x5HlJ5qsrPRjP+S4MKSIj8N9icpbmxu7tKM8G487vWiG87bZQ2jNymatAlRN6NPjUugAIZvnvoWJZ2gfnb3dw4Vk2mMO/fKvnW9teHZhfcWzVasuxYGCWblL1P8Q1n8K9cfzw3xRwtLm29zVxgpmBKGSs7Ym70V0iAUW0fFKuOfVgU/LHXdAGnMKwBc5oTEvg1eMFUC15aHrPRUL7ltxg731uItMQ0dDlzlawenYfRb2ytj4R7LLt8YD1mUIsCuw5pODh0eV4tV6/lpc8qyV5qx4bQpjWkmmNPqt3dBY4BNlECEctUkQFPyU88JsVfNA2LhliQEDtt+nWBqKLnoRzCZ0NDlSovTLVaRrxviH5/13wm0/fl1smn+hFvOvitWdZ6CDl1d0Fjl8Vd1mctZ631TeCZ5fSkSaOiic15WVJYQsbiqeVMWGAE=",
+            "signature": "CAQS0QUKEAgSGAI4AUIIdGhpbmtpbmcSDDtF5rTTPC4P/ImbkBoMI67QcaPxIQ/vf4eHIjD5O5ulV/a4gF+O9sl3qKx8ZL/jHrlCy7EJFP5d3ycq40hgIWCzT3uZ+AIDK6RbYKEq7gRfzW05v4lROzJ+X/Iy/6MMMi520HWLw+AnZMOnWJOBAMRUiTz3CAyGMP3gkeSYuFd+YE1UxzIaoXTAGDahsDNBoE4jrHX07ClPe5sLK/7DhxMBakxS7wQS0EWoMCY2u2l2T/3U0vG9sKQ6w6mhNCgAmWmIYLwB1yasurogks55OSyv6tBtCoLIdsqXfW9G1082sUU3hlkmseudPp8HP++ej8qay4sNCTqHsccRTMJx2+QIMhyiQKkevM4Ts/fMXDJ9ovUDp46JMailT8ez6vjIf0W0bGT3uHFN02Z6zVtIJegirEFNbhpwVCcynK+o3TDDYDYldAouZHU9cAFcAnkxxmMtp8j3lFT6fBlX4rOgX00NDJF89sC6hLy36QrmXxXcf2/AZkZI3etyL4JsVEZyo9e13rvUS/s9CgEpyED2sR4EKKx/cu/h8dp/Q1Won9v4c2mQLhSI/2G0ng+6UDDGNJ6dfxKR/RvchjljGsT3tVOxzrB8ruLjZtouhMBGroM2uOs9bGX4mGFNg4QsiMJhqiSrCJ/3SB/SIq0yrribq5RGa1UIeGbehd6U5S2vbaa+9ZOELsqH/OfCIQpqnUwkW3h8BW4+NktmatY2cSghexUZhu5rr7SlDrVoeRpTSSRIk3pfk4KJy2PZQpjPHIgBbY36blctIVgXAlvKG35mOG3xn+YsiB4fAMKCufPt8fC+QlptssjG2+pfJJfgCEdI5r6aseKHt/ZmEDGTYrhRt/t+X+Vl/lGF9mBw8rojltGntUurx/9d++2QYr2qdXmyoBCDfHZWnbrzmOj/arl9cidbW9t6Oy60AsXkDAXYGAE=",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01GJM2cnAGLE6wM45BNJGNdK",
+            "id": "toolu_01Xq8ttva8nhYKiXVG56YLa3",
             "caller": {
               "type": "direct"
             },
@@ -1480,22 +1517,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2460,
-          "output_tokens": 66,
+          "input_tokens": 2485,
+          "output_tokens": 57,
           "output_tokens_details": {
-            "thinking_tokens": 38
+            "thinking_tokens": 29
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.1085073999129236,
-      "input_tokens": 2460,
-      "output_tokens": 66,
-      "cost_usd": 0.00558,
+      "seconds": 1.001232200069353,
+      "input_tokens": 2485,
+      "output_tokens": 57,
+      "cost_usd": 0.00554,
       "error": null,
       "replayed": false,
-      "digest": "784f81995d5c5d97428bf4750849627dd9fe70b51a01cdb7f14aacace77d7a82"
+      "digest": "043cbee014574a98634eff61c632bc0908b8b29b7ca74c1afe26811a67fdbf4c"
     },
     {
       "kind": "agent",
@@ -1639,12 +1676,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS/gUKEAgSGAI4AUIIdGhpbmtpbmcSDDNJS/RIyFJlhDbmIhoMGFJJcsDB39O/hXBSIjDkFNr5C+NH3Q9jDJK/mQ6V/JkFGKLG/sKq/aAZkQjCDu1usUJ2j0HNqwSvnAc+dvUqmwWoTK0f2LFmxuP+CpeVAeoFe0aUZxr91l4U0gMQl6KQw2tl4kVBQ+NQge4iRYc0MFgQ5AQCul61UUQszjkEyGgBXqz/Ay42QojOyWXk+eftsbYhnowxgANgzsfO9byy4LvFDevwozR262X8IYhx6iAMBVgfLo89Ztfmxklo68P8fcl+ZTMZ8kdxGKahuFaEw5iWmDovU7iNLp332hYc2SZFLxooiNv5NPxJrX3Q52qhhwYTPv7eTtr7ySR6Dnq9MkYMSM5AI3VbiNTjxsQvOtyN+NJzeuTn2+0QASsgNiA9lOOLcuIGCTJvJhodrqUMs3G+7E90YwZOTV63ZBdhhWs/YfVuRMOrxfCyH8gePcoLmSYOKsudOI1PgFrD/2bAbay+kZ9XZBv2z68eUwZc2CCGUMrsjqjOrxb1gAzCMCT7wesCzcEOcEK5mqXD67qQw4nVc9ocNp8i0g66//0BYOAA1d1sjnunXdlC/3+eB0A/aY2bGSuTP1ITdgVfyA+7b0bQD+PVWaE9m5vbOmR1V7AaJBSlXdpFsbAR0/eoWkwPGhYv7TT1+GqU99LJClc/TZwXUAUtz+a7hL6f6Od8vGz+1Zm3C1iNYLcHl8Dq8Wx5Pg0yl3TqBYY7VvitX5Z5RDl8RLBOe6B4gO+9M8xPYg0fPdIKDu+pmfoRjnCr5pYxTYDupnGtXmkru679A3WRBPPcWNR0j8Sc81HpL5KvONeq0/mt+n5JgtEEC9yx6izZk9e+eZGu6ivBsPQwH+sSF+AU84s48pELc7i2X2FxfmG0Bp1/jGfWZpHOXkbMamlQxNZkuwL7xDQOOm231gKIqhbtMp9Ia6IaMepV8AuxmO7TL+5I+kvvDLDT9Zh0G/8J2ebO8dDJTzcHJCbYGAE=",
+                "signature": "CAQSjAYKEAgSGAI4AUIIdGhpbmtpbmcSDNYV5nBIXYOE2utYDxoMYRaK1lMQAARRcJX8IjCagPLY1pmqWGR3wU3KsTLrDTPcqS4y0yvcKwcyKghGdR2+VP0sPjerlbyvipk3vGoqqQWCmy0934iybLvbZ3BCW0yU0dT1RRBeHIn5ijeW5Tg4hn+WnU4IPpKhL2MhZspoPA4omU5tf8nn53cfZhuTJXI9O/V2tJoM1HS1SP94uNSMs4fwvdLNAXS/I4mAikLvWbhzjpT2f26mlFY3iR+W7SCoAKxKP69LHqB9b8enShbCErXmufWakLpod/0GI1Wk2TV2eO4ox9ZHxLjMIPj7wuNy6EMVSWI43WAr3sM1Vtb/kZIHXRNTuPqYKNm4yjmTXiG1GVuMyZGygvxJ3Kd5rlc0jt6T5bASqmVxxP4tHxamNZEODuqedRf25qKRSTgDBr5CjUuAasKYcqUwHaO4dUHlSYZHuHQtrsMJo33qm5xziBiYAW6VmoeaJHCNaXMGj7g3UJ8EP3mv56GSnvnrFWsHqp/56nLiHVI7bNyrpQo5+OZuHMHbuYZa4D27IiHGK5dFkz3wCuveQgrBDKb7aUvXQcxC399DQs0X6YInhzIZhQCoFE5S5MJhQarpG6UAehT4WbIyemju6KPEYX21MPO32EH+Cpu6DNTpFoidnVutarcX53mFt/uXwsRkH+c4501194yACWQXuaWtBlU4f0eb0PBjs6J3s8huDMSWlXZ8AmwkM5q1sisxlXeEPlnFfzVwbgC3jhPVVInJZ/xUhxIv3ljcI+gO+PwlumMGU92IenxTWcTbR+MaekK/BPZ2e3tsXcSgT83yBhJ3wgVc4/MS+sBYKl99nvFzBrwBFty0qNHVwcdawR4TvUAISWPxph0M7MChXlMlwyfXoTZY4xguc1FHrVkM0UMiC27ykWYrjCPpCTjG20hIFTVPhphXsxejR3pbwK+aLSr/FYgEWlTJERrKjiGnp1gGB+5KkAc8MC54noS6cWjCeNEOO2hZnFlPkJXVlKoEwCUYAQ==",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01NUyvfMue23vgSju6C9nhEk",
+                "id": "toolu_01D6nHcHzfD8gLdUtiSEvVhF",
                 "caller": {
                   "type": "direct"
                 },
@@ -1660,7 +1697,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01NUyvfMue23vgSju6C9nhEk",
+                "tool_use_id": "toolu_01D6nHcHzfD8gLdUtiSEvVhF",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"profile\", \"request_type\": \"register\", \"next_system\": \"access\"}, \"refused\": []}"
               }
             ]
@@ -1669,7 +1706,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01JKrNX53W4ZksUGnrp6vHyg",
+                "id": "toolu_01CmSiCUNeDre86gnhypZ4kv",
                 "caller": {
                   "type": "direct"
                 },
@@ -1687,8 +1724,8 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01JKrNX53W4ZksUGnrp6vHyg",
-                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)\"}"
+                "tool_use_id": "toolu_01CmSiCUNeDre86gnhypZ4kv",
+                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)\"}"
               }
             ]
           },
@@ -1696,12 +1733,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS8gUKEAgSGAI4AUIIdGhpbmtpbmcSDKGr+OavjYuftg9NhxoMwHBy4xU9F2XsIkvlIjCncyJzvKX+hGbScKowuyBOV2w7Gj3WT3SfqHEc46blnu5JenpyhKQR7q0qeAr+A6kqjwVkG8XHSaHe5us1CxS4zcaI+8Z/o2UyFS/GBRpPYDyq7gQblq6QCbuzQFiMkrMiFt/E8LAxlQQL/jhYF3ZtnQKnsVO5Bi945Vaxwj/bPZ4RGnIcbu62T5OPalUPNwq5UTSp9M7MHMvJzkPB91nV6UidP+eFpV51/nSfGWwlCRtMieumyFpIBDWkbAzvaH3onZO3HIqmWRXO4LrinKeYjzkS9a8SphFosA27JZbe41S97lY6FxXDap6u1QpXV3dO8xWHR3LlHZoAYRElKGpxN/oXP51+KO60z2lA82a7HGJyn+ucsSdWbBm/UaGz6m6vQI85kiAMznl+pWb5dE2l+HxSadMgNWws7IMZFmvh4i9YOx/ACEr2jI6JteTHGlWNE/EG7xbQ7WN/xQBEh58rpc3REB571nhz42ZOhnNSTGHpZLXxeZ4t0FLl+x5HlJ5qsrPRjP+S4MKSIj8N9icpbmxu7tKM8G487vWiG87bZQ2jNymatAlRN6NPjUugAIZvnvoWJZ2gfnb3dw4Vk2mMO/fKvnW9teHZhfcWzVasuxYGCWblL1P8Q1n8K9cfzw3xRwtLm29zVxgpmBKGSs7Ym70V0iAUW0fFKuOfVgU/LHXdAGnMKwBc5oTEvg1eMFUC15aHrPRUL7ltxg731uItMQ0dDlzlawenYfRb2ytj4R7LLt8YD1mUIsCuw5pODh0eV4tV6/lpc8qyV5qx4bQpjWkmmNPqt3dBY4BNlECEctUkQFPyU88JsVfNA2LhliQEDtt+nWBqKLnoRzCZ0NDlSovTLVaRrxviH5/13wm0/fl1smn+hFvOvitWdZ6CDl1d0Fjl8Vd1mctZ631TeCZ5fSkSaOiic15WVJYQsbiqeVMWGAE=",
+                "signature": "CAQS0QUKEAgSGAI4AUIIdGhpbmtpbmcSDDtF5rTTPC4P/ImbkBoMI67QcaPxIQ/vf4eHIjD5O5ulV/a4gF+O9sl3qKx8ZL/jHrlCy7EJFP5d3ycq40hgIWCzT3uZ+AIDK6RbYKEq7gRfzW05v4lROzJ+X/Iy/6MMMi520HWLw+AnZMOnWJOBAMRUiTz3CAyGMP3gkeSYuFd+YE1UxzIaoXTAGDahsDNBoE4jrHX07ClPe5sLK/7DhxMBakxS7wQS0EWoMCY2u2l2T/3U0vG9sKQ6w6mhNCgAmWmIYLwB1yasurogks55OSyv6tBtCoLIdsqXfW9G1082sUU3hlkmseudPp8HP++ej8qay4sNCTqHsccRTMJx2+QIMhyiQKkevM4Ts/fMXDJ9ovUDp46JMailT8ez6vjIf0W0bGT3uHFN02Z6zVtIJegirEFNbhpwVCcynK+o3TDDYDYldAouZHU9cAFcAnkxxmMtp8j3lFT6fBlX4rOgX00NDJF89sC6hLy36QrmXxXcf2/AZkZI3etyL4JsVEZyo9e13rvUS/s9CgEpyED2sR4EKKx/cu/h8dp/Q1Won9v4c2mQLhSI/2G0ng+6UDDGNJ6dfxKR/RvchjljGsT3tVOxzrB8ruLjZtouhMBGroM2uOs9bGX4mGFNg4QsiMJhqiSrCJ/3SB/SIq0yrribq5RGa1UIeGbehd6U5S2vbaa+9ZOELsqH/OfCIQpqnUwkW3h8BW4+NktmatY2cSghexUZhu5rr7SlDrVoeRpTSSRIk3pfk4KJy2PZQpjPHIgBbY36blctIVgXAlvKG35mOG3xn+YsiB4fAMKCufPt8fC+QlptssjG2+pfJJfgCEdI5r6aseKHt/ZmEDGTYrhRt/t+X+Vl/lGF9mBw8rojltGntUurx/9d++2QYr2qdXmyoBCDfHZWnbrzmOj/arl9cidbW9t6Oy60AsXkDAXYGAE=",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01GJM2cnAGLE6wM45BNJGNdK",
+                "id": "toolu_01Xq8ttva8nhYKiXVG56YLa3",
                 "caller": {
                   "type": "direct"
                 },
@@ -1717,7 +1754,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01GJM2cnAGLE6wM45BNJGNdK",
+                "tool_use_id": "toolu_01Xq8ttva8nhYKiXVG56YLa3",
                 "content": "{\"accepted\": true, \"state\": \"REQUESTED\", \"case_closed\": \"submit_request\"}"
               }
             ]
@@ -1725,12 +1762,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYctcTakHMZVHfbom9Z",
+        "id": "msg_011Cfta2tiwDkqGSnBhiy8FU",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I've submitted your name correction, from \"Elowen Mar\" to \"Elowen Marr\", to the team that handles profile changes. The case is now marked as requested.\n\nI first tried to look the profile up in the access system, but the desk refused that lookup. It doesn't allow lookups for requests to register a change. I haven't checked your current profile record or made the change myself, and I can't say yet whether the team will ask you for anything further.",
+            "text": "I've submitted your name correction, from \"Elowen Mar\" to \"Elowen Marr\", to the team that handles profile changes. The desk accepted it and the case is closed on our side.\n\nThe change has not been made yet. I have no confirmation of when it will show on your profile, and I haven't checked your records or your ID.",
             "type": "text"
           }
         ],
@@ -1749,8 +1786,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2563,
-          "output_tokens": 136,
+          "input_tokens": 2579,
+          "output_tokens": 101,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1758,13 +1795,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.9378953999839723,
-      "input_tokens": 2563,
-      "output_tokens": 136,
-      "cost_usd": 0.006486,
+      "seconds": 1.4358360000187531,
+      "input_tokens": 2579,
+      "output_tokens": 101,
+      "cost_usd": 0.006168,
       "error": null,
       "replayed": false,
-      "digest": "020f59ed5a03f5dd01a95852daa20a9bea2c94f73c79b515d045a6b83d1e8df7"
+      "digest": "67aebc33fdb6e974a61a5a4fb0a9f019d0194123a90334a6ae93462c30ca72db"
     },
     {
       "kind": "generate",
@@ -1777,17 +1814,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"submit_request\",\n  \"state\": \"REQUESTED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"profile\",\n    \"request_type\": \"register\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"register_request\",\n      \"args\": {\n        \"team\": \"access\",\n        \"about\": \"profile\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-037-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-037-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-037-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-037-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-037-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-037-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-037-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-037-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-037-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-037-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-037-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-registration` fired: state = READING → true (state=READING).\n33. Called `check_registration` (attempt 1, key banking-037-at-01:read-registration:11).\n34. `check_registration` found {}.\n35. Rule `read-confirmation` fired: state = READING → true (state=READING).\n36. Called `check_confirmation` (attempt 1, key banking-037-at-01:read-confirmation:12).\n37. `check_confirmation` found {}.\n38. Rule `triage` fired: state = READING → true (state=READING).\n39. Classifier (jev jev-latest) on `request_type`: register, confidence 0.49 → register.\n40. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.\n41. `request_type`: not known → register (by `triage`).\n42. `subject`: not known → profile (by `triage`).\n43. State `READING` → `TRIAGED` (by `triage`).\n44. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).\n45. `next_system`: not known → access (by `route-access`).\n46. The agent asked for `ask_system` {\"system\": \"access\"}.\n47. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register).\n48. The agent asked for `submit_request` {}.\n49. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).\n50. State `TRIAGED` → `REQUEST_PENDING` (by `register`).\n51. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).\n52. Called `register_request` (attempt 1, key banking-037-at-01:do-request:16).\n53. Action in the world: `register_request` {\"team\": \"access\", \"about\": \"profile\"}.\n54. `register_request` found {}.\n55. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).\n56. The case closed in `REQUESTED`: **submit_request**.\n\n## Model calls\n\n5 calls, 9432 tokens in, 543 out, 5.79 s, cost $0.0205; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've submitted your name correction, from \"Elowen Mar\" to \"Elowen Marr\", to the team that handles profile changes. The case is now marked as requested.\n> \n> I first tried to look the profile up in the access system, but the desk refused that lookup. It doesn't allow lookups for requests to register a change. I haven't checked your current profile record or made the change myself, and I can't say yet whether the team will ask you for anything further.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"submit_request\",\n  \"state\": \"REQUESTED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"profile\",\n    \"request_type\": \"register\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"register_request\",\n      \"args\": {\n        \"team\": \"access\",\n        \"about\": \"profile\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-037-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-037-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-037-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-037-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-037-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-037-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-037-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-037-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-037-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-037-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-037-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-037-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-037-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-037-at-01:read-confirmation:13).\n40. `check_confirmation` found {}.\n41. Rule `triage` fired: state = READING → true (state=READING).\n42. Classifier (jev jev-latest) on `request_type`: register, confidence 0.44 → register.\n43. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.\n44. `request_type`: not known → register (by `triage`).\n45. `subject`: not known → profile (by `triage`).\n46. State `READING` → `TRIAGED` (by `triage`).\n47. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).\n48. `next_system`: not known → access (by `route-access`).\n49. The agent asked for `ask_system` {\"system\": \"access\"}.\n50. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register).\n51. The agent asked for `submit_request` {}.\n52. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).\n53. State `TRIAGED` → `REQUEST_PENDING` (by `register`).\n54. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).\n55. Called `register_request` (attempt 1, key banking-037-at-01:do-request:17).\n56. Action in the world: `register_request` {\"team\": \"access\", \"about\": \"profile\"}.\n57. `register_request` found {}.\n58. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).\n59. The case closed in `REQUESTED`: **submit_request**.\n\n## Model calls\n\n5 calls, 9476 tokens in, 502 out, 5.064 s, cost $0.0202; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've submitted your name correction, from \"Elowen Mar\" to \"Elowen Marr\", to the team that handles profile changes. The desk accepted it and the case is closed on our side.\n> \n> The change has not been made yet. I have no confirmation of when it will show on your profile, and I haven't checked your records or your ID.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYd2RVxAe3PPFDU4khU",
+        "id": "msg_011Cfta2zxVJRMCGu2X3RB6j",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The request was classified as a profile registration request (the request-type classifier was only 49% confident) and routed to the access team. The desk refused its attempted lookup in the access system, then submitted the request, and a register_request for the profile was sent to the access team and the case closed as requested. The record shows no checks returning any findings and no change made to the profile itself, so whatever the access team does next, including any further questions for the requester, is left to them.",
+            "text": "The request was classified as a registration request about the customer's profile, and the desk submitted it by registering a request with the access team. The desk's attempt to ask the access system directly was refused, and it then submitted the request instead; the case closed as requested. The record shows no confirmation that the change has been made, so whether and when it shows on the profile is still open, and the checks run on the case returned nothing.",
             "type": "text"
           }
         ],
@@ -1806,8 +1843,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2652,
-          "output_tokens": 135,
+          "input_tokens": 2726,
+          "output_tokens": 122,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1815,13 +1852,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.242246700101532,
-      "input_tokens": 2652,
-      "output_tokens": 135,
-      "cost_usd": 0.006654,
+      "seconds": 2.1714118999661878,
+      "input_tokens": 2726,
+      "output_tokens": 122,
+      "cost_usd": 0.006672,
       "error": null,
       "replayed": false,
-      "digest": "e961eb80ba7abcba985b3a5270648c5a551d493ad2a9457da00c9e7d6a1929b5"
+      "digest": "bc33ce96c9f95b51b94cd3b3a3abdc94b1dd5ae861eb85a3dce7f07d54739cb8"
     }
   ]
 }

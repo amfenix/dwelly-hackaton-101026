@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr wrote on secure chat to say she still couldn't find her June statement in the portal and wanted it made available there, not sent by email. The desk checked the documents record, found statement-031.pdf ready, and replied on secure chat that the document is available, while noting this doesn't confirm it was downloaded and that no email was sent. The case is closed as replied; the record shows Elowen is not verified and nothing else is left open for a person.
+Elowen Marr, a customer on secure chat whose identity is not verified, said she still couldn't find her June statement in the portal and wanted it made available there, not sent by email. The desk checked the documents record, which shows the statement is available as statement-031.pdf, and replied in secure chat saying so. The reply also said this doesn't confirm it was downloaded, and that no email was sent. The case is closed as replied, and nothing in the record is left for a person, though her verification status was not checked or changed.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,7 +56,7 @@ How the case moved:
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 

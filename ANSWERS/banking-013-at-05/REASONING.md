@@ -42,39 +42,46 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. Rule `read-tariff` fired: state = READING → true (state=READING).
 39. Called `check_tariff` (attempt 1, key banking-013-at-05:read-tariff:10).
 40. `check_tariff` found {}.
-41. Rule `read-registration` fired: state = READING → true (state=READING).
-42. Called `check_registration` (attempt 1, key banking-013-at-05:read-registration:11).
-43. `check_registration` found {}.
-44. Rule `read-confirmation` fired: state = READING → true (state=READING).
-45. Called `check_confirmation` (attempt 1, key banking-013-at-05:read-confirmation:12).
-46. Note from `read-confirmation`: event 3 (Elodie Mercer): I confirm that I want to cancel the future run of my recurring studio-rent payment instruction. [facts: confirmation='given', instructed_outside_portal=False]
-47. `check_confirmation` found {"confirmation": "given", "instructed_outside_portal": false}.
-48. `confirmation`: not known → given (by `read-confirmation`).
-49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-52. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-53. `request_type`: not known → instruction (by `triage`).
-54. `subject`: not known → standing_order (by `triage`).
-55. State `READING` → `TRIAGED` (by `triage`).
-56. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
-57. `next_system`: not known → recurring (by `asked-recurring`).
-58. The agent asked for `reply` {}.
-59. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=CANCELLED).
-60. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
-61. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-62. Called `reply_customer` (attempt 1, key banking-013-at-05:do-reply:16).
-63. Action in the world: `reply` {"to": "Elodie Mercer", "channel": "secure_portal", "text": "The standing-order record shows cancelled. This does not establish a refund or a future payment outcome. No additional instruction or change was made."}.
-64. `reply_customer` found {}.
-65. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-66. The case closed in `REPLIED`: **reply**.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-013-at-05:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-013-at-05:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-013-at-05:read-confirmation:13).
+49. Note from `read-confirmation`: event 3 (Elodie Mercer): I confirm that I want to cancel the future run of my recurring studio-rent payment instruction. [facts: confirmation='given', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "given", "instructed_outside_portal": false}.
+51. `confirmation`: not known → given (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+55. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+56. `request_type`: not known → instruction (by `triage`).
+57. `subject`: not known → standing_order (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
+60. `next_system`: not known → recurring (by `asked-recurring`).
+61. The agent asked for `submit_request` {}.
+62. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); incoming-instruction: next_system = incoming is false (next_system=recurring); recurring-instruction: recurring_asked absent is false (recurring_asked=True); card-instruction: next_system = card is false (next_system=recurring); access-instruction: next_system = access is false (next_system=recurring); business-instruction: next_system = business is false (next_system=recurring); documents-instruction: next_system = documents is false (next_system=recurring).
+63. The agent asked for `reply` {}.
+64. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=CANCELLED).
+65. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
+66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+67. Called `reply_customer` (attempt 1, key banking-013-at-05:do-reply:17).
+68. Action in the world: `reply` {"to": "Elodie Mercer", "channel": "secure_portal", "text": "The standing-order record shows cancelled. This does not establish a refund or a future payment outcome. No additional instruction or change was made."}.
+69. `reply_customer` found {}.
+70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+71. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 7951 tokens in, 861 out, 7.271 s, cost $0.0194; models: claude-sonnet-5-5, jev-1.13.0.
+6 calls, 11225 tokens in, 1000 out, 9.101 s, cost $0.0273; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply. The recurring system's record shows the studio-rent instruction as CANCELLED, so the reply confirms that. Elodie Mercer is verified and confirmed the cancellation through the secure portal. The case is now closed.
+> I replied to the customer. The recurring system's record for her studio-rent standing order already shows the status as CANCELLED, so the reply reports that.
 > 
-> I didn't submit a separate cancellation request. The record already showed the instruction as cancelled, and I didn't want to send a duplicate. Earlier in the case, the portal had listed the instruction as active. Nothing in the case shows when it changed, so the reply goes no further than what the record shows.
+> I first tried to submit the cancellation as an instruction. The desk refused it because the recurring system had already been asked and had already answered. Its rule only accepts the submission when that check hasn't been made yet.
+> 
+> One thing doesn't line up. The first portal message said the instruction was active, and the case shows no cancellation action taken by me. I can't say from the case what changed the status, so the reply rests only on the CANCELLED record.

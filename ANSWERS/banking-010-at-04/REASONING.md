@@ -46,39 +46,41 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 42. Rule `read-tariff` fired: state = READING → true (state=READING).
 43. Called `check_tariff` (attempt 1, key banking-010-at-04:read-tariff:10).
 44. `check_tariff` found {}.
-45. Rule `read-registration` fired: state = READING → true (state=READING).
-46. Called `check_registration` (attempt 1, key banking-010-at-04:read-registration:11).
-47. `check_registration` found {}.
-48. Rule `read-confirmation` fired: state = READING → true (state=READING).
-49. Called `check_confirmation` (attempt 1, key banking-010-at-04:read-confirmation:12).
-50. Note from `read-confirmation`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: confirmation='none', instructed_outside_portal=False]
-51. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-52. `confirmation`: not known → none (by `read-confirmation`).
-53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-56. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-57. `request_type`: not known → question (by `triage`).
-58. `subject`: not known → incoming_payment (by `triage`).
-59. State `READING` → `TRIAGED` (by `triage`).
-60. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
-61. `next_system`: not known → incoming (by `asked-incoming`).
-62. The agent asked for `reply` {}.
-63. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=True).
-64. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
-65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-66. Called `reply_customer` (attempt 1, key banking-010-at-04:do-reply:16).
-67. Action in the world: `reply` {"to": "Elowen Marr", "channel": "secure_chat", "text": "The incoming-payment record shows an incoming payment of 42.80. This does not establish the sender's payment status. No payment was changed."}.
-68. `reply_customer` found {}.
-69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-70. The case closed in `REPLIED`: **reply**.
+45. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+46. Called `check_bank_actions` (attempt 1, key banking-010-at-04:read-bank-actions:11).
+47. `check_bank_actions` found {}.
+48. Rule `read-registration` fired: state = READING → true (state=READING).
+49. Called `check_registration` (attempt 1, key banking-010-at-04:read-registration:12).
+50. `check_registration` found {}.
+51. Rule `read-confirmation` fired: state = READING → true (state=READING).
+52. Called `check_confirmation` (attempt 1, key banking-010-at-04:read-confirmation:13).
+53. Note from `read-confirmation`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: confirmation='none', instructed_outside_portal=False]
+54. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+55. `confirmation`: not known → none (by `read-confirmation`).
+56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+57. Rule `triage` fired: state = READING → true (state=READING).
+58. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+59. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+60. `request_type`: not known → question (by `triage`).
+61. `subject`: not known → incoming_payment (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
+64. `next_system`: not known → incoming (by `asked-incoming`).
+65. The agent asked for `reply` {}.
+66. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=True).
+67. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
+68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+69. Called `reply_customer` (attempt 1, key banking-010-at-04:do-reply:17).
+70. Action in the world: `reply` {"to": "Elowen Marr", "channel": "secure_chat", "text": "The incoming-payment record shows an incoming payment of 42.80. This does not establish the sender's payment status. No payment was changed."}.
+71. `reply_customer` found {}.
+72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7404 tokens in, 404 out, 4.167 s, cost $0.0150; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7612 tokens in, 516 out, 4.511 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to the customer. The incoming-payments check had already found an incoming entry for £42.80, so the reply reports that result, and the case is closed.
-> 
-> The case record doesn't show that this entry is the refund for that specific Northmere transfer. It also shows the customer as not verified.
+> The incoming system has already answered, so the next step is to reply.
+> I sent the reply, and the case is now closed as replied. The incoming check found an entry for £42.80, the same amount as your transfer to Northmere Home Supplies. The records don't confirm that this entry is the refund of that specific transfer, so the reply shouldn't present it as a confirmed match. I haven't seen the wording the desk wrote.

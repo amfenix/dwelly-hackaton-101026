@@ -42,41 +42,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. Rule `read-tariff` fired: state = READING → true (state=READING).
 39. Called `check_tariff` (attempt 1, key banking-050-at-04:read-tariff:10).
 40. `check_tariff` found {}.
-41. Rule `read-registration` fired: state = READING → true (state=READING).
-42. Called `check_registration` (attempt 1, key banking-050-at-04:read-registration:11).
-43. `check_registration` found {}.
-44. Rule `read-confirmation` fired: state = READING → true (state=READING).
-45. Called `check_confirmation` (attempt 1, key banking-050-at-04:read-confirmation:12).
-46. Note from `read-confirmation`: event 2 (Mara Ellison): I’m the company signatory for this payment. Alder Quay Supplies says it has not received the funds; please check the stage shown in H&V’s records. [facts: confirmation='none', instructed_outside_portal=False]
-47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-48. `confirmation`: not known → none (by `read-confirmation`).
-49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-52. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-53. `request_type`: not known → question (by `triage`).
-54. `subject`: not known → transfer (by `triage`).
-55. State `READING` → `TRIAGED` (by `triage`).
-56. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-57. `next_system`: not known → payment (by `asked-payment`).
-58. The agent asked for `reply` {}.
-59. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
-60. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-61. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-62. Called `reply_customer` (attempt 1, key banking-050-at-04:do-reply:16).
-63. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The payment record shows your transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
-64. `reply_customer` found {}.
-65. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-66. The case closed in `REPLIED`: **reply**.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-050-at-04:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-050-at-04:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-050-at-04:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Mara Ellison): I’m the company signatory for this payment. Alder Quay Supplies says it has not received the funds; please check the stage shown in H&V’s records. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+55. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+56. `request_type`: not known → question (by `triage`).
+57. `subject`: not known → transfer (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+60. `next_system`: not known → payment (by `asked-payment`).
+61. The agent asked for `reply` {}.
+62. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+63. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+65. Called `reply_customer` (attempt 1, key banking-050-at-04:do-reply:17).
+66. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The payment record shows your transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
+67. `reply_customer` found {}.
+68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+69. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7376 tokens in, 632 out, 5.908 s, cost $0.0172; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7437 tokens in, 728 out, 6.547 s, cost $0.0183; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Mara. The case records show the transfer to Alder Quay Supplies at the status SENT, with no confirmation recorded against it. The desk writes the wording, so I haven't seen the exact text.
+> I've sent the reply to Mara. H&V's records show the payment to Alder Quay Supplies at stage SENT. There is no confirmation on record that the supplier has received it, so the reply goes no further than that.
 > 
-> The requester is not verified, but the desk accepted the reply.
-> 
-> The case is now closed.
+> The requester isn't verified yet, so the desk's checks haven't confirmed Mara is a signatory. The desk accepted the reply, and the case is now closed as replied.

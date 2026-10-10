@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, verified on a call, asked to cancel the next run of her studio-rent standing order, to escalate it, and to be told how to confirm it securely. The desk registered a request with the recurring team about the standing order, and the case closed as requested. No confirmation had been given, and the record does not show that the cancellation has taken effect or that she was told how to confirm it securely, so those remain open.
+Elodie Mercer, verified on a call, asked to cancel the next run of her studio-rent standing order, to escalate it, and to be told how to confirm it securely. The desk registered a request with the recurring payments team about the standing order, and the case closed as requested. Whether the cancellation actually happens is left to that team: the record shows no confirmation (confirmation was "none"), and it contains no instructions on how she can confirm it securely.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,8 +48,6 @@ How the case moved:
   - recurring_asked absent → true (recurring_asked=not known)
   - verified → true (verified=True)
   - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
 - `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
   - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 

@@ -1,10 +1,10 @@
 # Case banking-019-at-05: Standing order date change
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Maeve Ellery, a verified customer on the secure portal, asked to move the next run of her standing order to Willow Yard Studios from 18 September to 22 September 2025, and she confirmed the change. The desk refused the agent's attempt to query the recurring system about it, since asking isn't allowed for a change request, and instead registered the change as a request to the recurring team, so the case closed as REQUESTED. The record does not show whether the run can still be changed, so the recurring team has yet to act on it. The record also flags that she gave the instruction outside the portal.
+Maeve Ellery, verified in the secure portal, asked to move the next run of her monthly standing order to Willow Yard Studios from 18 September to 22 September 2025, and she confirmed the change. The desk decided to wait: its rule says the system applies a customer-confirmed change, so no action was taken by the desk, and the case closed in a waiting state. The agent's later attempt to submit the request was refused because the case was no longer in a state that allows it, so nothing was submitted and the order still shows 18 September. The record does not say who picks the case up next or when the system will apply the change.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -46,7 +46,7 @@ Case reference: id banking-019-at-05, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: recurring, about: standing_order), by rule `do-request`
+- none
 
 ## Decision and why
 
@@ -54,16 +54,11 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `recurring-instruction` accepted it.
+- `TRIAGED` → `WAITING`: rule `change-applied-by-the-system` — The customer confirmed the change in the secure portal; the system applies it.
   - state = TRIAGED → true (state=TRIAGED)
-  - next_system = recurring → true (next_system=recurring)
-  - recurring_asked absent → true (recurring_asked=not known)
-  - verified → true (verified=True)
-  - request_type = instruction → false (request_type=change)
   - request_type = change → true (request_type=change)
   - confirmation = given → true (confirmation=given)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+  - registration_asked absent → true (registration_asked=not known)
 
 Facts established:
 
@@ -97,8 +92,8 @@ No.
 
 Requests the policy refused:
 
-- `ask_system`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change)
+- `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); request_type = instruction is false (request_type=change)
 
 ## Final result
 
-submit_request (REQUESTED)
+wait (WAITING)

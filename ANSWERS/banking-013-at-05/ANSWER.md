@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, verified on the secure portal, confirmed she wanted to cancel the future run of her recurring studio-rent payment instruction. The desk checked the standing-order record, which shows instruction HV-013 as cancelled, and replied on the portal saying so, adding that this does not establish a refund or a future payment outcome and that no further change was made. The case is closed with the reply sent, and nothing is left for a person in the record.
+Elodie Mercer, a verified customer on the secure portal, confirmed she wanted to cancel the future run of her recurring studio-rent payment instruction. The desk's check of the recurring system showed instruction HV-013 as cancelled, with no payment in progress when the cancellation was recorded. The desk's attempt to submit the cancellation as a request was refused, and it instead replied on
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -92,6 +92,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `submit_request`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); incoming-instruction: next_system = incoming is false (next_system=recurring); recurring-instruction: recurring_asked absent is false (recurring_asked=True); card-instruction: next_system = card is false (next_system=recurring); access-instruction: next_system = access is false (next_system=recurring); business-instruction: next_system = business is false (next_system=recurring); documents-instruction: next_system = documents is false (next_system=recurring)
 
 ## Final result
 

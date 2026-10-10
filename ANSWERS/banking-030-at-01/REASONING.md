@@ -33,39 +33,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 29. Rule `read-tariff` fired: state = READING → true (state=READING).
 30. Called `check_tariff` (attempt 1, key banking-030-at-01:read-tariff:10).
 31. `check_tariff` found {}.
-32. Rule `read-registration` fired: state = READING → true (state=READING).
-33. Called `check_registration` (attempt 1, key banking-030-at-01:read-registration:11).
-34. `check_registration` found {}.
-35. Rule `read-confirmation` fired: state = READING → true (state=READING).
-36. Called `check_confirmation` (attempt 1, key banking-030-at-01:read-confirmation:12).
-37. Note from `read-confirmation`: event 1 (H&V secure portal): Replacement request accepted. Reference: HV-030. [facts: confirmation='none', instructed_outside_portal=False]
-38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-39. `confirmation`: not known → none (by `read-confirmation`).
-40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-43. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-44. `request_type`: not known → question (by `triage`).
-45. `subject`: not known → card (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-48. `next_system`: not known → card (by `route-card`).
-49. The agent asked for `ask_system` {"system": "card"}.
-50. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-51. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-53. Called `ask_system` (attempt 1, key banking-030-at-01:do-ask:16).
-54. Action in the world: `ask_system` {"system": "card", "about": "card"}.
-55. `ask_system` found {}.
-56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-57. The case closed in `ASKED`: **ask_system**.
-58. The agent asked for `reply` {}.
-59. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready present is false (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known).
+32. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+33. Called `check_bank_actions` (attempt 1, key banking-030-at-01:read-bank-actions:11).
+34. `check_bank_actions` found {}.
+35. Rule `read-registration` fired: state = READING → true (state=READING).
+36. Called `check_registration` (attempt 1, key banking-030-at-01:read-registration:12).
+37. `check_registration` found {}.
+38. Rule `read-confirmation` fired: state = READING → true (state=READING).
+39. Called `check_confirmation` (attempt 1, key banking-030-at-01:read-confirmation:13).
+40. Note from `read-confirmation`: event 1 (H&V secure portal): Replacement request accepted. Reference: HV-030. [facts: confirmation='none', instructed_outside_portal=False]
+41. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+42. `confirmation`: not known → none (by `read-confirmation`).
+43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+44. Rule `triage` fired: state = READING → true (state=READING).
+45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+46. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+47. `request_type`: not known → question (by `triage`).
+48. `subject`: not known → card (by `triage`).
+49. State `READING` → `TRIAGED` (by `triage`).
+50. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+51. `next_system`: not known → card (by `route-card`).
+52. The agent asked for `ask_system` {"system": "card"}.
+53. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
+54. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+56. Called `ask_system` (attempt 1, key banking-030-at-01:do-ask:17).
+57. Action in the world: `ask_system` {"system": "card", "about": "card"}.
+58. `ask_system` found {}.
+59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+60. The case closed in `ASKED`: **ask_system**.
+61. The agent asked for `reply` {}.
+62. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-5 calls, 8946 tokens in, 351 out, 3.967 s, cost $0.0176; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8928 tokens in, 342 out, 3.605 s, cost $0.0175; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The answer on card production and dispatch sits in the card system, so I'll ask it.
+> The answer sits in the card system, so I'll query it.

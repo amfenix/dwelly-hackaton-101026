@@ -40,39 +40,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-009-at-02:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-009-at-02:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-009-at-02:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
-50. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.97 → transfer.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → transfer (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-55. `next_system`: not known → payment (by `route-payment`).
-56. The agent asked for `ask_system` {"system": "payment"}.
-57. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-58. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-60. Called `ask_system` (attempt 1, key banking-009-at-02:do-ask:16).
-61. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "648.20"}.
-62. `ask_system` found {}.
-63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-64. The case closed in `ASKED`: **ask_system**.
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-009-at-02:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-009-at-02:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-009-at-02:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+53. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.93 → transfer.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → transfer (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+58. `next_system`: not known → payment (by `route-payment`).
+59. The agent asked for `ask_system` {"system": "payment"}.
+60. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+61. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+63. Called `ask_system` (attempt 1, key banking-009-at-02:do-ask:17).
+64. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "648.20"}.
+65. `ask_system` found {}.
+66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+67. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6937 tokens in, 454 out, 4.042 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6937 tokens in, 466 out, 4.304 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the payment system for the transfer to your property manager. The case now stands at the "asked" stage, and no further action is needed from me.
+> I've asked the payment system to check the transfer, and the case is now closed on that step. The payment system's answer hasn't come back into the case yet, so I can't confirm the amount H&V sent.
 > 
-> The only amount on record so far is £648.20, which is what the final payment line shows. The payment system's answer has not yet been added to the case, so I can't yet confirm that £648.20 is what H&V actually sent. There is also no record of £684.20 on the case, so I can't say where that figure came from.
+> The only figure on record so far is the £648.20 on the final payment line in the secure portal. That doesn't confirm what was actually sent, and the case shows no confirmation of the payment. Nothing in the case supports £684.20 either, since that comes from your memory of the draft.

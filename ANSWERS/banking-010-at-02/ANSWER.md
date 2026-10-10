@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, writing over secure chat (not verified as the account holder), asked the desk to check whether the incoming £42.80 entry from Northmere Home Supplies was for the specific transfer she meant, since the payer had said it might be returned. The desk classified this as a question about an incoming payment and sent a query to the incoming-payments system about that amount. The system's answer is not yet in the record, so whether the entry matches her transfer is still unconfirmed, and the reply to her remains to be written once that answer is available.
+Elowen Marr, who was not verified, asked through secure chat whether the incoming £42.80 entry from Northmere Home Supplies matches the specific transfer that might be returned. The desk classified it as a question about an incoming payment and put that query to the incoming-payments system, which came back with nothing recorded. The case closed at that step, so whether the entry matches her transfer is still unanswered and would need a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nerys Wren, a customer verified on a call, said a new-device notification looked unusual and asked for a list of the sign-in sessions on her profile. The desk classified this as an access question and sent a request to the access system, which accepted it, and the case closed in the asked state. The access system's answer is not in the record, so the customer has not yet been given the session list and that reply is still to be made.
+Nerys Wren, verified on a call, asked for a list of the sign-in sessions on her profile after seeing an unusual new-device notification. The desk classified this as an access question and sent a query to the access system, then closed the case at that step. The access system's answer is not in the record, so no session details have been given to her and that follow-up is still outstanding.
 
 _Written by a model from the record below; the sections below are the record._
 

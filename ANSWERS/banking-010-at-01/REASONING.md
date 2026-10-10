@@ -36,37 +36,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 32. Rule `read-tariff` fired: state = READING → true (state=READING).
 33. Called `check_tariff` (attempt 1, key banking-010-at-01:read-tariff:10).
 34. `check_tariff` found {}.
-35. Rule `read-registration` fired: state = READING → true (state=READING).
-36. Called `check_registration` (attempt 1, key banking-010-at-01:read-registration:11).
-37. `check_registration` found {}.
-38. Rule `read-confirmation` fired: state = READING → true (state=READING).
-39. Called `check_confirmation` (attempt 1, key banking-010-at-01:read-confirmation:12).
-40. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Outgoing transfer — Northmere Home Supplies — £42.80 — shown in account history. [facts: confirmation='none', instructed_outside_portal=False]
-41. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-42. `confirmation`: not known → none (by `read-confirmation`).
-43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-44. Rule `triage` fired: state = READING → true (state=READING).
-45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-46. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-47. `request_type`: not known → question (by `triage`).
-48. `subject`: not known → incoming_payment (by `triage`).
-49. State `READING` → `TRIAGED` (by `triage`).
-50. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-51. `next_system`: not known → incoming (by `route-incoming`).
-52. The agent asked for `ask_system` {"system": "incoming"}.
-53. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-54. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-56. Called `ask_system` (attempt 1, key banking-010-at-01:do-ask:16).
-57. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
-58. `ask_system` found {}.
-59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-60. The case closed in `ASKED`: **ask_system**.
+35. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+36. Called `check_bank_actions` (attempt 1, key banking-010-at-01:read-bank-actions:11).
+37. `check_bank_actions` found {}.
+38. Rule `read-registration` fired: state = READING → true (state=READING).
+39. Called `check_registration` (attempt 1, key banking-010-at-01:read-registration:12).
+40. `check_registration` found {}.
+41. Rule `read-confirmation` fired: state = READING → true (state=READING).
+42. Called `check_confirmation` (attempt 1, key banking-010-at-01:read-confirmation:13).
+43. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Outgoing transfer — Northmere Home Supplies — £42.80 — shown in account history. [facts: confirmation='none', instructed_outside_portal=False]
+44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+45. `confirmation`: not known → none (by `read-confirmation`).
+46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+47. Rule `triage` fired: state = READING → true (state=READING).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+50. `request_type`: not known → question (by `triage`).
+51. `subject`: not known → incoming_payment (by `triage`).
+52. State `READING` → `TRIAGED` (by `triage`).
+53. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+54. `next_system`: not known → incoming (by `route-incoming`).
+55. The agent asked for `ask_system` {"system": "incoming"}.
+56. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+57. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+58. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+59. Called `ask_system` (attempt 1, key banking-010-at-01:do-ask:17).
+60. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
+61. `ask_system` found {}.
+62. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+63. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6684 tokens in, 385 out, 3.65 s, cost $0.0134; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6684 tokens in, 401 out, 3.608 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've queried the incoming-payments system about the £42.80 refund from Northmere Home Supplies. The case is now in the state "ASKED" and has closed at that step. The answer hasn't come back into the case yet, so I can't say whether the refund has arrived. The only entry on record so far is your outgoing transfer of £42.80.
+> I checked the incoming system for the £42.80 refund from Northmere Home Supplies. The query went through, but the case has no result from it yet. I can't confirm whether the refund has reached your account.
+> 
+> The only entry on record is your outgoing transfer of £42.80. No incoming credit from Northmere is recorded, and the case has no confirmation from the supplier that it has sent a refund.

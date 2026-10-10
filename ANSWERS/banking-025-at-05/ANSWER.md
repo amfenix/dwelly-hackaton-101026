@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk checked the card authorisation journal, which showed the attempt was declined because her available balance was insufficient, and told her so on the call, adding that this doesn't establish a different cause or authorise a retry. No card change was made, and the case is closed with nothing left for a person; the recorded reason text was cut off after "£18.", so nothing beyond the insufficient balance could be confirmed.
+Mara Ellison, verified on a call, asked why her £18.40 card payment at North Quay Books was declined. The desk checked the card authorisation journal, found the matching attempt declined for insufficient available balance, and replied to her on the call with that recorded reason. The reply said it does not establish a different cause or authorise a retry, no card change was made, and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -87,6 +87,7 @@ Where they came from:
 - event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: amount='18.40']
 - event 4 (H&V card authorisation journal): I’m searching the journal for Mara Ellison’s North Quay Books authorisation attempt for £18.40, using the merchant and amount she identified. I’ll check the recorded response for that attempt. [facts: card_asked=True]
 - event 5 (H&V card authorisation journal): Matching authorisation found: declined because available balance was insufficient to cover the £18.40 authorisation at the time of the attempt. [facts: card_status='DECLINED', card_reason='available balance was insufficient to cover the £18.']
+- event 2 (H&V agent): the bank already acted: I’ve completed the required identification checks. Please tell me which declined attempt you want me to investigate; I won’t ask you to share any secret codes.
 - event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated

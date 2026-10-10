@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified on a call, instructed the desk to revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The desk classified this as a role instruction, routed it to the business team, and registered a request there, so the case closed as REQUESTED. The revocation has only been requested, not confirmed as done, and the record shows nothing further for a person to do beyond the business team handling it.
+Mara Ellery, verified on a call, asked the desk to revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The desk classed this as a role instruction and registered a request to the business team, and the case closed as requested. The record doesn't show the role actually being removed, so that is still with the business team, and the earlier-operations review was not part of this request.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,8 +48,6 @@ How the case moved:
   - business_asked absent → true (business_asked=not known)
   - verified → true (verified=True)
   - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
 - `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
   - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 

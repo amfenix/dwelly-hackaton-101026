@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked whether Harrow & Vale had sent the £420 one-off transfer to Alder & Reed Workshop, which shows as a debit in their account activity. The desk classed it as a question about a transfer and asked the payment system about it; the request went through and the case closed on that step. No answer from the payment system is on record yet, so the customer still can't be told whether the payment was sent, and a person needs to follow up once a reply arrives.
+The customer asked whether H&V sent a £420 one-off payment to Alder & Reed Workshop, which shows as a debit on their account. The desk treated it as a question about a transfer and asked the payment system about it, with the case now closed as asked. The payment system's answer has not come back, so it is still not known whether the payment was sent. The records show only the debit in account activity and no confirmation of the transfer, and someone still needs to pass the payment system's answer on to the customer once it arrives.
 
 _Written by a model from the record below; the sections below are the record._
 

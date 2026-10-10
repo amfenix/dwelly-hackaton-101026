@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked to change her correspondence address on her profile. The desk did not make the change, because a change has to be confirmed by the customer in the secure portal and her request had been made outside it, so it sent her a confirmation request for the profile change. What is left is for Mara to confirm the change in the secure portal, as no confirmation had been received when the case closed.
+Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address on her profile. The desk did not apply the change: it had no confirmation from her, so it sent the profile change to her for confirmation and closed the case in that state. The address is not updated yet, and what is left is for Mara to confirm the change in the secure portal.
 
 _Written by a model from the record below; the sections below are the record._
 

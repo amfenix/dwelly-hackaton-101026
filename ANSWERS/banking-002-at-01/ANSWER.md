@@ -4,7 +4,7 @@
 
 ## Summary
 
-The sender said they had sent a contribution for the kiln by bank transfer, and the desk classed this as a question about an incoming payment. It asked the incoming-payments system about that payment and closed the case as asked. The check returned no result, so the record does not show whether the transfer has arrived, and nothing is confirmed either way.
+The sender wrote that they had sent a contribution for the kiln by bank transfer, and the desk classified this as a question about an incoming payment. It asked the incoming-payments system about that payment and the request went through, but no answer is recorded and no confirmation of the payment is on file. The case is closed at that step, so whether the money has arrived is still unknown and needs a person to follow up on the system's reply.
 
 _Written by a model from the record below; the sections below are the record._
 

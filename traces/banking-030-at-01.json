@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -84,7 +87,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The message was classified as a question about a card, and the desk passed it to the card system by asking it about the card. That ask went through and the case closed as asked. The agent then tried to send a reply, but the desk refused it because no answer from the card system had come back yet, so nothing has been sent to the requester and the record shows no further step.",
+  "summary": "The request was classified as a question about a card, and the desk routed it to the card system and sent the query there. The case closed in the asked state. The agent's later attempt to send a reply was refused, so no answer has gone back to the requester yet, and the card system's response is still awaited.",
   "journal": [
     {
       "seq": 1,
@@ -438,7 +441,7 @@
       "seq": 32,
       "at": 0.0,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -456,23 +459,23 @@
       "seq": 33,
       "at": 0.0,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-030-at-01:read-registration:11",
+      "key": "banking-030-at-01:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 34,
       "at": 0.0,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 35,
       "at": 0.0,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -490,20 +493,54 @@
       "seq": 36,
       "at": 0.0,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-030-at-01:read-confirmation:12",
+      "key": "banking-030-at-01:read-registration:12",
       "args": {}
     },
     {
       "seq": 37,
+      "at": 0.0,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 38,
+      "at": 0.0,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 39,
+      "at": 0.0,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-030-at-01:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 40,
       "at": 0.0,
       "kind": "note",
       "text": "event 1 (H&V secure portal): Replacement request accepted. Reference: HV-030. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 38,
+      "seq": 41,
       "at": 0.0,
       "kind": "returned",
       "function": "check_confirmation",
@@ -513,7 +550,7 @@
       }
     },
     {
-      "seq": 39,
+      "seq": 42,
       "at": 0.0,
       "kind": "set",
       "field": "confirmation",
@@ -522,7 +559,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 40,
+      "seq": 43,
       "at": 0.0,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -531,7 +568,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 41,
+      "seq": 44,
       "at": 0.0,
       "kind": "trigger",
       "name": "triage",
@@ -549,8 +586,8 @@
       "note": ""
     },
     {
-      "seq": 42,
-      "at": 0.253,
+      "seq": 45,
+      "at": 0.24,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -561,8 +598,8 @@
       "attempt": 1
     },
     {
-      "seq": 43,
-      "at": 0.253,
+      "seq": 46,
+      "at": 0.24,
       "kind": "choice",
       "field": "subject",
       "raw": "card",
@@ -573,8 +610,8 @@
       "attempt": 1
     },
     {
-      "seq": 44,
-      "at": 0.253,
+      "seq": 47,
+      "at": 0.24,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -582,8 +619,8 @@
       "by": "triage"
     },
     {
-      "seq": 45,
-      "at": 0.253,
+      "seq": 48,
+      "at": 0.24,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -591,16 +628,16 @@
       "by": "triage"
     },
     {
-      "seq": 46,
-      "at": 0.253,
+      "seq": 49,
+      "at": 0.24,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 47,
-      "at": 0.253,
+      "seq": 50,
+      "at": 0.24,
       "kind": "trigger",
       "name": "route-card",
       "on": null,
@@ -631,8 +668,8 @@
       "note": ""
     },
     {
-      "seq": 48,
-      "at": 0.253,
+      "seq": 51,
+      "at": 0.24,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -640,8 +677,8 @@
       "by": "route-card"
     },
     {
-      "seq": 49,
-      "at": 2.496,
+      "seq": 52,
+      "at": 2.228,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -649,12 +686,12 @@
       }
     },
     {
-      "seq": 50,
-      "at": 2.496,
+      "seq": 53,
+      "at": 2.228,
       "kind": "trigger",
       "name": "card-ask",
       "on": "ask_system",
-      "when": "state = TRIAGED and args.system = card and (next_system = card or next_system absent) and card_asked absent and request_type not in [register, change, authority]",
+      "when": "state = TRIAGED and args.system = card and (next_system = card or next_system absent) and card_asked absent and request_type not in [register, change, authority, instruction]",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -692,7 +729,7 @@
           }
         },
         {
-          "test": "request_type not in [register, change, authority]",
+          "test": "request_type not in [register, change, authority, instruction]",
           "result": true,
           "values": {
             "request_type": "question"
@@ -702,16 +739,16 @@
       "note": ""
     },
     {
-      "seq": 51,
-      "at": 2.496,
+      "seq": 54,
+      "at": 2.228,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "card-ask"
     },
     {
-      "seq": 52,
-      "at": 2.496,
+      "seq": 55,
+      "at": 2.229,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -728,17 +765,17 @@
       "note": ""
     },
     {
-      "seq": 53,
-      "at": 2.496,
+      "seq": 56,
+      "at": 2.229,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-030-at-01:do-ask:16",
+      "key": "banking-030-at-01:do-ask:17",
       "args": {}
     },
     {
-      "seq": 54,
-      "at": 2.496,
+      "seq": 57,
+      "at": 2.229,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -746,43 +783,43 @@
         "about": "card"
       },
       "by": "do-ask",
-      "key": "banking-030-at-01:do-ask:16"
+      "key": "banking-030-at-01:do-ask:17"
     },
     {
-      "seq": 55,
-      "at": 2.496,
+      "seq": 58,
+      "at": 2.229,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 56,
-      "at": 2.496,
+      "seq": 59,
+      "at": 2.229,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 57,
-      "at": 2.496,
+      "seq": 60,
+      "at": 2.229,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
     },
     {
-      "seq": 58,
-      "at": 3.249,
+      "seq": 61,
+      "at": 2.96,
       "kind": "signal",
       "signal": "reply",
       "args": {}
     },
     {
-      "seq": 59,
-      "at": 3.249,
+      "seq": 62,
+      "at": 2.96,
       "kind": "refused",
       "signal": "reply",
-      "reason": "registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready present is false (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known)",
+      "reason": "registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known)",
       "state": "ASKED"
     }
   ],
@@ -878,7 +915,7 @@
           }
         }
       },
-      "seconds": 0.25203449989203364,
+      "seconds": 0.23928910004906356,
       "input_tokens": 911,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1027,11 +1064,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYaePdqBs3NyRrkn5AJ",
+        "id": "msg_011CftZzYdeEngHXRdYjhmMo",
         "container": null,
         "content": [
           {
-            "id": "toolu_01JqPojT6yDWULGmvTi8hAXN",
+            "id": "toolu_01HiCM8PAv3T9nizgYtqxDjT",
             "caller": {
               "type": "direct"
             },
@@ -1065,7 +1102,7 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.1362027999712154,
+      "seconds": 1.0896790000842884,
       "input_tokens": 1732,
       "output_tokens": 26,
       "cost_usd": 0.003724,
@@ -1215,7 +1252,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01JqPojT6yDWULGmvTi8hAXN",
+                "id": "toolu_01HiCM8PAv3T9nizgYtqxDjT",
                 "caller": {
                   "type": "direct"
                 },
@@ -1231,7 +1268,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01JqPojT6yDWULGmvTi8hAXN",
+                "tool_use_id": "toolu_01HiCM8PAv3T9nizgYtqxDjT",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"card\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"card\"}, \"refused\": []}"
               }
             ]
@@ -1239,16 +1276,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYajEbFyxXyRSDGnfig",
+        "id": "msg_011CftZzdEyD4FFj9UQVTTzU",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The answer on card production and dispatch sits in the card system, so I'll ask it.",
+            "text": "The answer sits in the card system, so I'll query it.",
             "type": "text"
           },
           {
-            "id": "toolu_017dD2stXstAcrPs7wmrTT9y",
+            "id": "toolu_01Wf2bKRjszhP69nwi1dSEq9",
             "caller": {
               "type": "direct"
             },
@@ -1276,7 +1313,7 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1845,
-          "output_tokens": 75,
+          "output_tokens": 66,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1284,13 +1321,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.1062339999480173,
+      "seconds": 0.8982521999860182,
       "input_tokens": 1845,
-      "output_tokens": 75,
-      "cost_usd": 0.00444,
+      "output_tokens": 66,
+      "cost_usd": 0.00435,
       "error": null,
       "replayed": false,
-      "digest": "37466055f19a664b8dde7d2abd2402940a6b06a13c636506928a4a08e180c58a"
+      "digest": "2c4b046f623868a07868c286bdd27e7b3788aa5f7e314a1a31b2d53339946b90"
     },
     {
       "kind": "agent",
@@ -1434,7 +1471,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01JqPojT6yDWULGmvTi8hAXN",
+                "id": "toolu_01HiCM8PAv3T9nizgYtqxDjT",
                 "caller": {
                   "type": "direct"
                 },
@@ -1450,7 +1487,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01JqPojT6yDWULGmvTi8hAXN",
+                "tool_use_id": "toolu_01HiCM8PAv3T9nizgYtqxDjT",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"card\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"card\"}, \"refused\": []}"
               }
             ]
@@ -1460,11 +1497,11 @@
             "content": [
               {
                 "citations": null,
-                "text": "The answer on card production and dispatch sits in the card system, so I'll ask it.",
+                "text": "The answer sits in the card system, so I'll query it.",
                 "type": "text"
               },
               {
-                "id": "toolu_017dD2stXstAcrPs7wmrTT9y",
+                "id": "toolu_01Wf2bKRjszhP69nwi1dSEq9",
                 "caller": {
                   "type": "direct"
                 },
@@ -1482,7 +1519,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_017dD2stXstAcrPs7wmrTT9y",
+                "tool_use_id": "toolu_01Wf2bKRjszhP69nwi1dSEq9",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1490,11 +1527,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYaox7ZSF8E59MtaDji",
+        "id": "msg_011CftZzh59rCMyrkGMZwcYZ",
         "container": null,
         "content": [
           {
-            "id": "toolu_01XWGrxQQnbT4Tw7q6rzJ1SH",
+            "id": "toolu_01PJqPp9ibDW6SE7C9w7Dvis",
             "caller": {
               "type": "direct"
             },
@@ -1519,7 +1556,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1955,
+          "input_tokens": 1946,
           "output_tokens": 25,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1528,13 +1565,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.7531401000451297,
-      "input_tokens": 1955,
+      "seconds": 0.7313395999372005,
+      "input_tokens": 1946,
       "output_tokens": 25,
-      "cost_usd": 0.00416,
+      "cost_usd": 0.004142,
       "error": null,
       "replayed": false,
-      "digest": "fa93481689aba4f40f7bed434b369867975fee0a9e77725d7a3eaf826147e84d"
+      "digest": "048c07d10a2ff7856289265ce43be18d1db509971c4b8714a912d67a06ce8afc"
     },
     {
       "kind": "agent",
@@ -1678,7 +1715,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01JqPojT6yDWULGmvTi8hAXN",
+                "id": "toolu_01HiCM8PAv3T9nizgYtqxDjT",
                 "caller": {
                   "type": "direct"
                 },
@@ -1694,7 +1731,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01JqPojT6yDWULGmvTi8hAXN",
+                "tool_use_id": "toolu_01HiCM8PAv3T9nizgYtqxDjT",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"card\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"card\"}, \"refused\": []}"
               }
             ]
@@ -1704,11 +1741,11 @@
             "content": [
               {
                 "citations": null,
-                "text": "The answer on card production and dispatch sits in the card system, so I'll ask it.",
+                "text": "The answer sits in the card system, so I'll query it.",
                 "type": "text"
               },
               {
-                "id": "toolu_017dD2stXstAcrPs7wmrTT9y",
+                "id": "toolu_01Wf2bKRjszhP69nwi1dSEq9",
                 "caller": {
                   "type": "direct"
                 },
@@ -1726,7 +1763,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_017dD2stXstAcrPs7wmrTT9y",
+                "tool_use_id": "toolu_01Wf2bKRjszhP69nwi1dSEq9",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1735,7 +1772,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01XWGrxQQnbT4Tw7q6rzJ1SH",
+                "id": "toolu_01PJqPp9ibDW6SE7C9w7Dvis",
                 "caller": {
                   "type": "direct"
                 },
@@ -1751,19 +1788,19 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01XWGrxQQnbT4Tw7q6rzJ1SH",
-                "content": "{\"accepted\": false, \"state\": \"ASKED\", \"refused_because\": \"registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready present is false (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known)\", \"case_closed\": \"ask_system\"}"
+                "tool_use_id": "toolu_01PJqPp9ibDW6SE7C9w7Dvis",
+                "content": "{\"accepted\": false, \"state\": \"ASKED\", \"refused_because\": \"registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known)\", \"case_closed\": \"ask_system\"}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYasAM2xLh8ZcEbVZTf",
+        "id": "msg_011CftZzk9wBoDhVRG8HruQY",
         "container": null,
         "content": [
           {
-            "id": "toolu_019AYMKK8efLbGerP53ATHTw",
+            "id": "toolu_01VDD6hDjuus8gNqMbXgv69N",
             "caller": {
               "type": "direct"
             },
@@ -1788,7 +1825,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2503,
+          "input_tokens": 2494,
           "output_tokens": 26,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1797,13 +1834,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.7192485000705346,
-      "input_tokens": 2503,
+      "seconds": 0.6469296999275684,
+      "input_tokens": 2494,
       "output_tokens": 26,
-      "cost_usd": 0.005266,
+      "cost_usd": 0.005248,
       "error": null,
       "replayed": false,
-      "digest": "50f31bba5e7f206f7a4d1e2661121e7f21517901c480148d73b91b64e1c05cd8"
+      "digest": "e25e199c2cf4f30c897bbe2269e17b2e9b0a341c8fb935a44a791b9fba3604d0"
     },
     {
       "kind": "generate",
@@ -1816,17 +1853,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"card\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"card\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"card\",\n        \"about\": \"card\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-030-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-030-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-030-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-030-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-030-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-030-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-030-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-030-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-030-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-030-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-030-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-registration` fired: state = READING → true (state=READING).\n33. Called `check_registration` (attempt 1, key banking-030-at-01:read-registration:11).\n34. `check_registration` found {}.\n35. Rule `read-confirmation` fired: state = READING → true (state=READING).\n36. Called `check_confirmation` (attempt 1, key banking-030-at-01:read-confirmation:12).\n37. Note from `read-confirmation`: event 1 (H&V secure portal): Replacement request accepted. Reference: HV-030. [facts: confirmation='none', instructed_outside_portal=False]\n38. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n39. `confirmation`: not known → none (by `read-confirmation`).\n40. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n41. Rule `triage` fired: state = READING → true (state=READING).\n42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n43. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.\n44. `request_type`: not known → question (by `triage`).\n45. `subject`: not known → card (by `triage`).\n46. State `READING` → `TRIAGED` (by `triage`).\n47. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).\n48. `next_system`: not known → card (by `route-card`).\n49. The agent asked for `ask_system` {\"system\": \"card\"}.\n50. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n51. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).\n52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n53. Called `ask_system` (attempt 1, key banking-030-at-01:do-ask:16).\n54. Action in the world: `ask_system` {\"system\": \"card\", \"about\": \"card\"}.\n55. `ask_system` found {}.\n56. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n57. The case closed in `ASKED`: **ask_system**.\n58. The agent asked for `reply` {}.\n59. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready present is false (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known).\n\n## Model calls\n\n5 calls, 8946 tokens in, 351 out, 3.967 s, cost $0.0176; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The answer on card production and dispatch sits in the card system, so I'll ask it.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"card\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"card\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"card\",\n        \"about\": \"card\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-030-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-030-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-030-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-030-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-030-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-030-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-030-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-030-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-030-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-030-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-030-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-030-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-030-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-030-at-01:read-confirmation:13).\n40. Note from `read-confirmation`: event 1 (H&V secure portal): Replacement request accepted. Reference: HV-030. [facts: confirmation='none', instructed_outside_portal=False]\n41. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n42. `confirmation`: not known → none (by `read-confirmation`).\n43. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n44. Rule `triage` fired: state = READING → true (state=READING).\n45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n46. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.\n47. `request_type`: not known → question (by `triage`).\n48. `subject`: not known → card (by `triage`).\n49. State `READING` → `TRIAGED` (by `triage`).\n50. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).\n51. `next_system`: not known → card (by `route-card`).\n52. The agent asked for `ask_system` {\"system\": \"card\"}.\n53. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).\n54. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).\n55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n56. Called `ask_system` (attempt 1, key banking-030-at-01:do-ask:17).\n57. Action in the world: `ask_system` {\"system\": \"card\", \"about\": \"card\"}.\n58. `ask_system` found {}.\n59. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n60. The case closed in `ASKED`: **ask_system**.\n61. The agent asked for `reply` {}.\n62. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known).\n\n## Model calls\n\n5 calls, 8928 tokens in, 342 out, 3.605 s, cost $0.0175; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The answer sits in the card system, so I'll query it.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYavGd87746VSmyxWXm",
+        "id": "msg_011CftZzo3aNzpdkbCBoWgUA",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The message was classified as a question about a card, and the desk passed it to the card system by asking it about the card. That ask went through and the case closed as asked. The agent then tried to send a reply, but the desk refused it because no answer from the card system had come back yet, so nothing has been sent to the requester and the record shows no further step.",
+            "text": "The request was classified as a question about a card, and the desk routed it to the card system and sent the query there. The case closed in the asked state. The agent's later attempt to send a reply was refused, so no answer has gone back to the requester yet, and the card system's response is still awaited.",
             "type": "text"
           }
         ],
@@ -1845,8 +1882,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2679,
-          "output_tokens": 101,
+          "input_tokens": 2761,
+          "output_tokens": 86,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1854,13 +1891,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.82508850004524,
-      "input_tokens": 2679,
-      "output_tokens": 101,
-      "cost_usd": 0.006368,
+      "seconds": 1.6790961000369862,
+      "input_tokens": 2761,
+      "output_tokens": 86,
+      "cost_usd": 0.006382,
       "error": null,
       "replayed": false,
-      "digest": "ab8658558b4897a462e92d04617cbdab472099e511d5de0aa45a7cf540ceec2c"
+      "digest": "84a473fb15adf9a6b8250816aa18628ffa67e7b6e82067e7202b2b8c31830b6e"
     }
   ]
 }

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they could share evidence of it. The desk classified this as a document question and sent a request to the documents system about the £74.00 payment. The bank history shows the payment as sent (reference HV-040). The case closed with that request made and no reply yet, so no document has gone to the customer and a person or later step must act once the documents system answers.
+The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they could share evidence of it. The desk classed it as a question about a document and asked the documents system about it. The bank history shows the payment as sent, with reference HV-040, dated 14 July 2025. The case is closed as asked, and nothing further has been done until the documents system answers.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,6 +44,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
+  - document_ready = false → not known (document_ready=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)

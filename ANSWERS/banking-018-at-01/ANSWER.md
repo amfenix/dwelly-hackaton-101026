@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was to check whether two future payments of £34.80 to Northmere Heating are duplicates and to remove the duplicate if so. The desk classed it as a standing order instruction and put a question to the recurring payments system about the £34.80 standing order. It has not removed or changed anything, because the relationship between the two payment lines has not been established. The case is closed as asked and is waiting on the recurring system's answer, and the record names no further step for a person.
+The request was to check whether two future payments of £34.80 to Northmere Heating are duplicates and remove the duplicate. The desk classified it as a standing order matter and asked the recurring payments system about it, and that question is the only action taken. Nothing has been cancelled or removed, the case has no answer back from that system yet, and whether the two payments are duplicates is still unestablished and left open.
 
 _Written by a model from the record below; the sections below are the record._
 

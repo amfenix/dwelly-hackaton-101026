@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -104,7 +107,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Mara Ellison, verified on a call, asked the bank to cancel her Northmere Fitness Direct Debit mandate, and said she understood this doesn't end her agreement with the recipient. The desk classified it as a Direct Debit instruction and registered a request with the recurring team, which is where the case closed. The record shows only that the request was registered, not that the mandate is cancelled, and a note from the service agent says a collection already being processed can't be ruled out and needs separate reconciliation. The agent's message to her says the cancellation was \"accepted\" and that only one active mandate showed in the portal, but the record doesn't support either claim.",
+  "summary": "Mara Ellison, a verified customer on a verified call, asked the desk to cancel her Northmere Fitness Direct Debit mandate, understanding that this is an instruction to her bank and not a cancellation of her agreement with the recipient. The desk routed it to the recurring team and registered the request there, and the case closed as requested, with the cancellation itself not yet confirmed. A note on the record says a collection already being processed can't be ruled out and would need separate reconciliation, which is left for a person.",
   "journal": [
     {
       "seq": 1,
@@ -386,14 +389,14 @@
     },
     {
       "seq": 27,
-      "at": 0.002,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_card",
       "values": {}
     },
     {
       "seq": 28,
-      "at": 0.002,
+      "at": 0.001,
       "kind": "trigger",
       "name": "read-access",
       "on": null,
@@ -411,7 +414,7 @@
     },
     {
       "seq": 29,
-      "at": 0.002,
+      "at": 0.001,
       "kind": "call",
       "function": "check_access",
       "attempt": 1,
@@ -513,7 +516,7 @@
     },
     {
       "seq": 38,
-      "at": 0.003,
+      "at": 0.002,
       "kind": "call",
       "function": "check_tariff",
       "attempt": 1,
@@ -531,7 +534,7 @@
       "seq": 40,
       "at": 0.003,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -549,23 +552,23 @@
       "seq": 41,
       "at": 0.003,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-015-at-03:read-registration:11",
+      "key": "banking-015-at-03:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 42,
       "at": 0.003,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 43,
       "at": 0.003,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -583,20 +586,54 @@
       "seq": 44,
       "at": 0.003,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-015-at-03:read-confirmation:12",
+      "key": "banking-015-at-03:read-registration:12",
       "args": {}
     },
     {
       "seq": 45,
+      "at": 0.003,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 46,
+      "at": 0.003,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 47,
+      "at": 0.003,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-015-at-03:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 48,
       "at": 0.003,
       "kind": "note",
       "text": "event 2 (Mara Ellison): I’ve completed your identification checks. Please cancel my Northmere Fitness Direct Debit mandate; I understand this is an instruction to my bank, not a cancellation of my agreement with the recipient. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.003,
       "kind": "returned",
       "function": "check_confirmation",
@@ -606,7 +643,7 @@
       }
     },
     {
-      "seq": 47,
+      "seq": 50,
       "at": 0.003,
       "kind": "set",
       "field": "confirmation",
@@ -615,7 +652,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 48,
+      "seq": 51,
       "at": 0.003,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -624,7 +661,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 49,
+      "seq": 52,
       "at": 0.003,
       "kind": "trigger",
       "name": "triage",
@@ -642,8 +679,8 @@
       "note": ""
     },
     {
-      "seq": 50,
-      "at": 0.245,
+      "seq": 53,
+      "at": 0.234,
       "kind": "choice",
       "field": "request_type",
       "raw": "instruction",
@@ -654,8 +691,8 @@
       "attempt": 1
     },
     {
-      "seq": 51,
-      "at": 0.245,
+      "seq": 54,
+      "at": 0.234,
       "kind": "choice",
       "field": "subject",
       "raw": "direct_debit",
@@ -666,8 +703,8 @@
       "attempt": 1
     },
     {
-      "seq": 52,
-      "at": 0.245,
+      "seq": 55,
+      "at": 0.234,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -675,8 +712,8 @@
       "by": "triage"
     },
     {
-      "seq": 53,
-      "at": 0.246,
+      "seq": 56,
+      "at": 0.234,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -684,16 +721,16 @@
       "by": "triage"
     },
     {
-      "seq": 54,
-      "at": 0.246,
+      "seq": 57,
+      "at": 0.234,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 55,
-      "at": 0.246,
+      "seq": 58,
+      "at": 0.234,
       "kind": "trigger",
       "name": "route-recurring",
       "on": null,
@@ -724,8 +761,8 @@
       "note": ""
     },
     {
-      "seq": 56,
-      "at": 0.246,
+      "seq": 59,
+      "at": 0.234,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -733,19 +770,19 @@
       "by": "route-recurring"
     },
     {
-      "seq": 57,
-      "at": 2.587,
+      "seq": 60,
+      "at": 1.976,
       "kind": "signal",
       "signal": "submit_request",
       "args": {}
     },
     {
-      "seq": 58,
-      "at": 2.587,
+      "seq": 61,
+      "at": 1.976,
       "kind": "trigger",
       "name": "recurring-instruction",
       "on": "submit_request",
-      "when": "state = TRIAGED and next_system = recurring and recurring_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))",
+      "when": "state = TRIAGED and next_system = recurring and recurring_asked absent and verified and request_type = instruction",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -781,35 +818,21 @@
           "values": {
             "request_type": "instruction"
           }
-        },
-        {
-          "test": "request_type = change",
-          "result": false,
-          "values": {
-            "request_type": "instruction"
-          }
-        },
-        {
-          "test": "confirmation = given",
-          "result": false,
-          "values": {
-            "confirmation": "none"
-          }
         }
       ],
       "note": ""
     },
     {
-      "seq": 59,
-      "at": 2.587,
+      "seq": 62,
+      "at": 1.976,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "REQUEST_PENDING",
       "by": "recurring-instruction"
     },
     {
-      "seq": 60,
-      "at": 2.587,
+      "seq": 63,
+      "at": 1.976,
       "kind": "trigger",
       "name": "do-request",
       "on": null,
@@ -826,17 +849,17 @@
       "note": ""
     },
     {
-      "seq": 61,
-      "at": 2.588,
+      "seq": 64,
+      "at": 1.976,
       "kind": "call",
       "function": "register_request",
       "attempt": 1,
-      "key": "banking-015-at-03:do-request:16",
+      "key": "banking-015-at-03:do-request:17",
       "args": {}
     },
     {
-      "seq": 62,
-      "at": 2.588,
+      "seq": 65,
+      "at": 1.976,
       "kind": "action",
       "type": "register_request",
       "args": {
@@ -844,26 +867,26 @@
         "about": "direct_debit"
       },
       "by": "do-request",
-      "key": "banking-015-at-03:do-request:16"
+      "key": "banking-015-at-03:do-request:17"
     },
     {
-      "seq": 63,
-      "at": 2.588,
+      "seq": 66,
+      "at": 1.976,
       "kind": "returned",
       "function": "register_request",
       "values": {}
     },
     {
-      "seq": 64,
-      "at": 2.588,
+      "seq": 67,
+      "at": 1.976,
       "kind": "state",
       "frm": "REQUEST_PENDING",
       "to": "REQUESTED",
       "by": "do-request"
     },
     {
-      "seq": 65,
-      "at": 2.588,
+      "seq": 68,
+      "at": 1.976,
       "kind": "final",
       "state": "REQUESTED",
       "outcome": "submit_request"
@@ -961,7 +984,7 @@
           }
         }
       },
-      "seconds": 0.2422048000153154,
+      "seconds": 0.23035720002371818,
       "input_tokens": 904,
       "output_tokens": 201,
       "cost_usd": null,
@@ -1110,16 +1133,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYWHKWDvVsNPu9JtihM",
+        "id": "msg_011CftZvGcP58zK5tuNuEmwv",
         "container": null,
         "content": [
           {
-            "signature": "CAQSvAgKEAgSGAI4AUIIdGhpbmtpbmcSDBomToYwfdkuWyaFkRoM1lk9N7uqXL8EZOtgIjBRfknxo8V3YLo+zyDW/Q93Oj1x2l5NrMglojOqid2monkI4MllrpUQi4lLYZn0quAq2Qef744+gsaf0iYC3wNPizhGBLbYqmVLAcUCXzMxF1mWav3p+d+3DBcb2ahxLym/PFjxJgqMwcykYrtapJhj23mzYYevypkHUpPNsTH43UzpRVkCrXAG3LTOjLLugaTrveRTLpxmJ5FEp2qPx9IamolKmjB2v75wAZ75FXYwGlh1jUL1yfnORdmHj8rDopqeeS9VywxJ+YgWPwc9APX3vz63zn0S6D53FnX+6scz5r/MYjqTSW93/XnTZr+r/xPOEVWWWZN3ESWp5gQAC5jdIfS+INnmhbPAcW6I06nt12y5Msjh+06jxdCHeh5MaNtF50pCRgrgZ4vXTlA0nGXf/lQj5tD5mgeyM9CpfYLt5BPT4f+WEToO8qI+1d6gWJlsoyIOyQG9/fGSLOrooc8vmrbT0RlHvgsfgLBRb5X5Q5gzX0UDP3zXISyqsj9vvZoQD9lbVROLXP/KT7LsVmMKS6WZJ5kqIcssN+rZrzC25DHciDOyap+DC7xt+80hksauKGO9rISyOFtdyBjqpwobbfDZAJkYDkT7ybd5dvsClw1IBOaNSOUmB7YxKMtmwIJnjFU0V3ZiRDM8hl8Q+u1rYQ8xgr0cGSFl6dj/aoxgRn4huev5yidPWxDLUhDY5lpD1WztaCFd0b+eXLnHmaadFjGr2fWbejbLrt9M3Yun7hvvICqA/LNl5uLp3F8UBK6AxIEfBfP0EAUwByP35gcnmYi1YXJCZLikfA9cnL4twtsvbkaqnIhhzVTdpFQa2cFiRr4y/oxccCkLHwhYBtbPx+gVjx/Cl5FLcSm2rTNjzmx/H97FeJzaFJ9xgRWZyULsek0flMAVFUM8VzKD3fFAK7OUoR7eEmXocx0MpzHSnslllN9frPA78jQYRX1KYgjFU+uKO4y2tSQqgt9XOB9fgIkSncqGDUufoH1ytHj6q5JoketnVtE+/XpLyT11ZSfromnhRRSeepI8lYh2YKKuY74uyXFHGDkx8BEfv7qCLZUlb0KUFEb/WEZfqgzO9gZdptmJpxbyNAQnn4L9SB21WsMQWJC1xg+C9fuK4+NZcVJdZOymkqBLROQg8Gn3nX4xPxHGL1GOfrbkF5FykFld47qLxoc72SnL0StHe/sozjOdt1QmSkSFMcm3Ghs22VGjeHcigVcZTFZbOu8zLnVK8eGF+nyN0zmMkHIOQCE3uez477vqsNHg1JqMLBEJ7qOGJu1PaVc/OpuYGI0+H7VwysQsJbuDwtIMVgwowV8Ul8ZN/LhBiDExz0LnlXW7ZkL6oLvPcaLijWqmkVF8EF0xOx2fYu1rUehq+QWvGAE=",
+            "signature": "CAQSggcKEAgSGAI4AUIIdGhpbmtpbmcSDBimkITi5sryeS3U/RoMIfqHsJEUTv2COWErIjCiZfScIG8ekf8NWlGsM8+8/c7cstugxSRl3LHpRPm7yRoQKBMt5XXevV3CUnftoYkqnwaU1JPR41wnRYgs/MEFb9b1NAPle3ywS1hfljcsUjylyummfGTHOQXsRV3nCi32F9qhbbkORd1dHSek/bCihGhdpPPVY6/f2EsH1Ymgwz+5Jln+qB6x8VEsa2sj/+ptQW56QUgT6e8isTpXzcwkrfNJZRkJPXjycH2vRAHqOCjZY7kn8SdiBs1b+iaFW9RCoCgfner0NoSKhMRpiBimdbLpg0RQu60x/H81Q3ElSZcWBrvd1PT7DgytXFntdyvbp704lOjoC3CyAfUgeH6L6oKO/uGjdxcR51EeXTfG6ItUVFhvjd+6H8RkuDa1zSdx8hMjn5yexPcv8QlXuXgbhbkyHVnnWD1YIot1oYGUeQW+irimbVp/Eu9z9GIzYn41Vb5b1L8mYu2Fa3LOpwHPebxFMFRsl1fVftFL2aB3mAt+X+ew4tpLlBTqzOD02INK4JRTrvLlgTZjb69oZqWn8MgS3kNGVwtozBOH2pv1UGcsyaIStWEYRSG0fHpzL9Qncwz3ynzdg8Nj/9341dnuByAI+hMXMbryN/bSFLhGaZOXPL5jL3pnXr6zIRAawOOUrttqekJQ0zUYIboSTrCXTrA5TeiSNwsW6fyYcvMBL963p3TPr9l5hPR0ZiPY+d2I9NXMo8ukFQ2NOnKVPuc0QqOU3GGYMbmhG/i6ryfWy5Vq37hnJqea+/hKc7XQpRkopjXDCtQ84cXLFJ3MHbj+eQmXMnsADUHxfz1zFV5TIkQ6G/1dIBUFgtuqSSXxKwv6zmXefHpQjkQm6F6v0CSP98wMrdtQ2/pg2hwdb3F9BWrcHI0ahtyFXER1I1rUYumsgbyfpuD5QdcuETJ/ZbCeQXb9ZapgLMd0Jxo6MLfRTww7hvOs4P8I6evWkhqq5O0T5Mkx+h8DEbfI7q+FA8/DANvlkfD8+1tfDbpVVRcumxmKJ4U3hIszAAawJCpoc17CoifAhO22KMw17yVJX1sCsH8V2oyY5Q/8HeSLVDVLgtkiwZuAFF1NP8n0CDVJsQ7yZo7Vm6AdMi4PzRSFE9sXpC/TtLsob2Ms/GXFD1JgRHR7GAE=",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01NAFAowuejySCuSSuBVvQnv",
+            "id": "toolu_01MwRdShYdFg75fYbhz4yz2q",
             "caller": {
               "type": "direct"
             },
@@ -1145,18 +1168,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1874,
-          "output_tokens": 212,
+          "output_tokens": 148,
           "output_tokens_details": {
-            "thinking_tokens": 184
+            "thinking_tokens": 120
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 2.341434200061485,
+      "seconds": 1.742244299966842,
       "input_tokens": 1874,
-      "output_tokens": 212,
-      "cost_usd": 0.005868,
+      "output_tokens": 148,
+      "cost_usd": 0.005228,
       "error": null,
       "replayed": false,
       "digest": "20338231c4f690c8d1e1673902458f1dee3c8e52da33964edc4431d8e6311ec3"
@@ -1303,12 +1326,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSvAgKEAgSGAI4AUIIdGhpbmtpbmcSDBomToYwfdkuWyaFkRoM1lk9N7uqXL8EZOtgIjBRfknxo8V3YLo+zyDW/Q93Oj1x2l5NrMglojOqid2monkI4MllrpUQi4lLYZn0quAq2Qef744+gsaf0iYC3wNPizhGBLbYqmVLAcUCXzMxF1mWav3p+d+3DBcb2ahxLym/PFjxJgqMwcykYrtapJhj23mzYYevypkHUpPNsTH43UzpRVkCrXAG3LTOjLLugaTrveRTLpxmJ5FEp2qPx9IamolKmjB2v75wAZ75FXYwGlh1jUL1yfnORdmHj8rDopqeeS9VywxJ+YgWPwc9APX3vz63zn0S6D53FnX+6scz5r/MYjqTSW93/XnTZr+r/xPOEVWWWZN3ESWp5gQAC5jdIfS+INnmhbPAcW6I06nt12y5Msjh+06jxdCHeh5MaNtF50pCRgrgZ4vXTlA0nGXf/lQj5tD5mgeyM9CpfYLt5BPT4f+WEToO8qI+1d6gWJlsoyIOyQG9/fGSLOrooc8vmrbT0RlHvgsfgLBRb5X5Q5gzX0UDP3zXISyqsj9vvZoQD9lbVROLXP/KT7LsVmMKS6WZJ5kqIcssN+rZrzC25DHciDOyap+DC7xt+80hksauKGO9rISyOFtdyBjqpwobbfDZAJkYDkT7ybd5dvsClw1IBOaNSOUmB7YxKMtmwIJnjFU0V3ZiRDM8hl8Q+u1rYQ8xgr0cGSFl6dj/aoxgRn4huev5yidPWxDLUhDY5lpD1WztaCFd0b+eXLnHmaadFjGr2fWbejbLrt9M3Yun7hvvICqA/LNl5uLp3F8UBK6AxIEfBfP0EAUwByP35gcnmYi1YXJCZLikfA9cnL4twtsvbkaqnIhhzVTdpFQa2cFiRr4y/oxccCkLHwhYBtbPx+gVjx/Cl5FLcSm2rTNjzmx/H97FeJzaFJ9xgRWZyULsek0flMAVFUM8VzKD3fFAK7OUoR7eEmXocx0MpzHSnslllN9frPA78jQYRX1KYgjFU+uKO4y2tSQqgt9XOB9fgIkSncqGDUufoH1ytHj6q5JoketnVtE+/XpLyT11ZSfromnhRRSeepI8lYh2YKKuY74uyXFHGDkx8BEfv7qCLZUlb0KUFEb/WEZfqgzO9gZdptmJpxbyNAQnn4L9SB21WsMQWJC1xg+C9fuK4+NZcVJdZOymkqBLROQg8Gn3nX4xPxHGL1GOfrbkF5FykFld47qLxoc72SnL0StHe/sozjOdt1QmSkSFMcm3Ghs22VGjeHcigVcZTFZbOu8zLnVK8eGF+nyN0zmMkHIOQCE3uez477vqsNHg1JqMLBEJ7qOGJu1PaVc/OpuYGI0+H7VwysQsJbuDwtIMVgwowV8Ul8ZN/LhBiDExz0LnlXW7ZkL6oLvPcaLijWqmkVF8EF0xOx2fYu1rUehq+QWvGAE=",
+                "signature": "CAQSggcKEAgSGAI4AUIIdGhpbmtpbmcSDBimkITi5sryeS3U/RoMIfqHsJEUTv2COWErIjCiZfScIG8ekf8NWlGsM8+8/c7cstugxSRl3LHpRPm7yRoQKBMt5XXevV3CUnftoYkqnwaU1JPR41wnRYgs/MEFb9b1NAPle3ywS1hfljcsUjylyummfGTHOQXsRV3nCi32F9qhbbkORd1dHSek/bCihGhdpPPVY6/f2EsH1Ymgwz+5Jln+qB6x8VEsa2sj/+ptQW56QUgT6e8isTpXzcwkrfNJZRkJPXjycH2vRAHqOCjZY7kn8SdiBs1b+iaFW9RCoCgfner0NoSKhMRpiBimdbLpg0RQu60x/H81Q3ElSZcWBrvd1PT7DgytXFntdyvbp704lOjoC3CyAfUgeH6L6oKO/uGjdxcR51EeXTfG6ItUVFhvjd+6H8RkuDa1zSdx8hMjn5yexPcv8QlXuXgbhbkyHVnnWD1YIot1oYGUeQW+irimbVp/Eu9z9GIzYn41Vb5b1L8mYu2Fa3LOpwHPebxFMFRsl1fVftFL2aB3mAt+X+ew4tpLlBTqzOD02INK4JRTrvLlgTZjb69oZqWn8MgS3kNGVwtozBOH2pv1UGcsyaIStWEYRSG0fHpzL9Qncwz3ynzdg8Nj/9341dnuByAI+hMXMbryN/bSFLhGaZOXPL5jL3pnXr6zIRAawOOUrttqekJQ0zUYIboSTrCXTrA5TeiSNwsW6fyYcvMBL963p3TPr9l5hPR0ZiPY+d2I9NXMo8ukFQ2NOnKVPuc0QqOU3GGYMbmhG/i6ryfWy5Vq37hnJqea+/hKc7XQpRkopjXDCtQ84cXLFJ3MHbj+eQmXMnsADUHxfz1zFV5TIkQ6G/1dIBUFgtuqSSXxKwv6zmXefHpQjkQm6F6v0CSP98wMrdtQ2/pg2hwdb3F9BWrcHI0ahtyFXER1I1rUYumsgbyfpuD5QdcuETJ/ZbCeQXb9ZapgLMd0Jxo6MLfRTww7hvOs4P8I6evWkhqq5O0T5Mkx+h8DEbfI7q+FA8/DANvlkfD8+1tfDbpVVRcumxmKJ4U3hIszAAawJCpoc17CoifAhO22KMw17yVJX1sCsH8V2oyY5Q/8HeSLVDVLgtkiwZuAFF1NP8n0CDVJsQ7yZo7Vm6AdMi4PzRSFE9sXpC/TtLsob2Ms/GXFD1JgRHR7GAE=",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01NAFAowuejySCuSSuBVvQnv",
+                "id": "toolu_01MwRdShYdFg75fYbhz4yz2q",
                 "caller": {
                   "type": "direct"
                 },
@@ -1324,7 +1347,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01NAFAowuejySCuSSuBVvQnv",
+                "tool_use_id": "toolu_01MwRdShYdFg75fYbhz4yz2q",
                 "content": "{\"accepted\": true, \"state\": \"REQUESTED\", \"case_closed\": \"submit_request\"}"
               }
             ]
@@ -1332,12 +1355,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYWTEJyATGkJ4qd9TBs",
+        "id": "msg_011CftZvQ3r6NLudJBR7BpXz",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I've submitted the cancellation of your Northmere Fitness Direct Debit mandate, and the request was accepted. Your identity was verified on the call. The portal showed one active mandate to Northmere Fitness, so there was no doubt about which one you meant.\n\nThis only stops the bank from paying future collections under that mandate. It doesn't end your agreement with Northmere Fitness, as you said you understood. If you owe them anything, or want to end your membership, you'll need to deal with them directly.",
+            "text": "I've submitted your instruction to cancel the Northmere Fitness Direct Debit mandate to the team that handles mandates. The request was accepted, but the cancellation itself isn't confirmed yet.\n\nThis cancels the mandate at H&V, so Northmere Fitness shouldn't be able to collect through it in future. Your agreement with Northmere Fitness is not cancelled, and you would need to end that with them directly.",
             "type": "text"
           }
         ],
@@ -1356,8 +1379,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2123,
-          "output_tokens": 160,
+          "input_tokens": 2059,
+          "output_tokens": 139,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1365,13 +1388,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.8074604000430554,
-      "input_tokens": 2123,
-      "output_tokens": 160,
-      "cost_usd": 0.005846,
+      "seconds": 1.7920076999580488,
+      "input_tokens": 2059,
+      "output_tokens": 139,
+      "cost_usd": 0.005508,
       "error": null,
       "replayed": false,
-      "digest": "014bcd72adb9b0e714b5ff13f5ad6113c0795a32c58e47a30949417d9d6b5088"
+      "digest": "7f98b3a81bac9e00736af6bf6e832fb1a4c67be86d226adb0e62500ae3d55450"
     },
     {
       "kind": "generate",
@@ -1384,17 +1407,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"submit_request\",\n  \"state\": \"REQUESTED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"direct_debit\",\n    \"counterparty\": \"Northmere Fitness\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"instruction\",\n    \"next_system\": \"recurring\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"register_request\",\n      \"args\": {\n        \"team\": \"recurring\",\n        \"about\": \"direct_debit\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-015-at-03: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-015-at-03:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellison): I’ve completed your identification checks. Please cancel my Northmere Fitness Direct Debit mandate; I understand this is an instruction to my bank, not a cancellation of my agreement with the recipient. [facts: requester='Mara Ellison', role='customer', channel='verified_call']\n5. Note from `read-requester`: event 3 (H&V service agent): I completed the required identification checks and reviewed the collection-stage information. I cannot rule out a collection already being processed, so that needs separate reconciliation. [facts: verified=True]\n6. `identify_requester` found {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n7. `requester`: not known → Mara Ellison (by `read-requester`).\n8. `role`: not known → customer (by `read-requester`).\n9. `channel`: not known → verified_call (by `read-requester`).\n10. `verified`: not known → True (by `read-requester`).\n11. Rule `read-subject` fired: state = READING → true (state=READING).\n12. Called `find_subject` (attempt 1, key banking-015-at-03:read-subject:2).\n13. Note from `read-subject`: event 2 (Mara Ellison): I’ve completed your identification checks. Please cancel my Northmere Fitness Direct Debit mandate; I understand this is an instruction to my bank, not a cancellation of my agreement with the recipient. [facts: counterparty='Northmere Fitness']\n14. `find_subject` found {\"counterparty\": \"Northmere Fitness\"}.\n15. `counterparty`: not known → Northmere Fitness (by `read-subject`).\n16. Rule `read-payment` fired: state = READING → true (state=READING).\n17. Called `check_payment` (attempt 1, key banking-015-at-03:read-payment:3).\n18. `check_payment` found {}.\n19. Rule `read-incoming` fired: state = READING → true (state=READING).\n20. Called `check_incoming` (attempt 1, key banking-015-at-03:read-incoming:4).\n21. `check_incoming` found {}.\n22. Rule `read-recurring` fired: state = READING → true (state=READING).\n23. Called `check_recurring` (attempt 1, key banking-015-at-03:read-recurring:5).\n24. `check_recurring` found {}.\n25. Rule `read-card` fired: state = READING → true (state=READING).\n26. Called `check_card` (attempt 1, key banking-015-at-03:read-card:6).\n27. `check_card` found {}.\n28. Rule `read-access` fired: state = READING → true (state=READING).\n29. Called `check_access` (attempt 1, key banking-015-at-03:read-access:7).\n30. `check_access` found {}.\n31. Rule `read-business` fired: state = READING → true (state=READING).\n32. Called `check_business` (attempt 1, key banking-015-at-03:read-business:8).\n33. `check_business` found {}.\n34. Rule `read-documents` fired: state = READING → true (state=READING).\n35. Called `check_documents` (attempt 1, key banking-015-at-03:read-documents:9).\n36. `check_documents` found {}.\n37. Rule `read-tariff` fired: state = READING → true (state=READING).\n38. Called `check_tariff` (attempt 1, key banking-015-at-03:read-tariff:10).\n39. `check_tariff` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-015-at-03:read-registration:11).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-015-at-03:read-confirmation:12).\n45. Note from `read-confirmation`: event 2 (Mara Ellison): I’ve completed your identification checks. Please cancel my Northmere Fitness Direct Debit mandate; I understand this is an instruction to my bank, not a cancellation of my agreement with the recipient. [facts: confirmation='none', instructed_outside_portal=False]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.\n51. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.\n52. `request_type`: not known → instruction (by `triage`).\n53. `subject`: not known → direct_debit (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).\n56. `next_system`: not known → recurring (by `route-recurring`).\n57. The agent asked for `submit_request` {}.\n58. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction); request_type = change → false (request_type=instruction); confirmation = given → false (confirmation=none).\n59. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).\n60. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).\n61. Called `register_request` (attempt 1, key banking-015-at-03:do-request:16).\n62. Action in the world: `register_request` {\"team\": \"recurring\", \"about\": \"direct_debit\"}.\n63. `register_request` found {}.\n64. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).\n65. The case closed in `REQUESTED`: **submit_request**.\n\n## Model calls\n\n3 calls, 4901 tokens in, 573 out, 4.391 s, cost $0.0117; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've submitted the cancellation of your Northmere Fitness Direct Debit mandate, and the request was accepted. Your identity was verified on the call. The portal showed one active mandate to Northmere Fitness, so there was no doubt about which one you meant.\n> \n> This only stops the bank from paying future collections under that mandate. It doesn't end your agreement with Northmere Fitness, as you said you understood. If you owe them anything, or want to end your membership, you'll need to deal with them directly.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"submit_request\",\n  \"state\": \"REQUESTED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"direct_debit\",\n    \"counterparty\": \"Northmere Fitness\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"instruction\",\n    \"next_system\": \"recurring\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"register_request\",\n      \"args\": {\n        \"team\": \"recurring\",\n        \"about\": \"direct_debit\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-015-at-03: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-015-at-03:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellison): I’ve completed your identification checks. Please cancel my Northmere Fitness Direct Debit mandate; I understand this is an instruction to my bank, not a cancellation of my agreement with the recipient. [facts: requester='Mara Ellison', role='customer', channel='verified_call']\n5. Note from `read-requester`: event 3 (H&V service agent): I completed the required identification checks and reviewed the collection-stage information. I cannot rule out a collection already being processed, so that needs separate reconciliation. [facts: verified=True]\n6. `identify_requester` found {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n7. `requester`: not known → Mara Ellison (by `read-requester`).\n8. `role`: not known → customer (by `read-requester`).\n9. `channel`: not known → verified_call (by `read-requester`).\n10. `verified`: not known → True (by `read-requester`).\n11. Rule `read-subject` fired: state = READING → true (state=READING).\n12. Called `find_subject` (attempt 1, key banking-015-at-03:read-subject:2).\n13. Note from `read-subject`: event 2 (Mara Ellison): I’ve completed your identification checks. Please cancel my Northmere Fitness Direct Debit mandate; I understand this is an instruction to my bank, not a cancellation of my agreement with the recipient. [facts: counterparty='Northmere Fitness']\n14. `find_subject` found {\"counterparty\": \"Northmere Fitness\"}.\n15. `counterparty`: not known → Northmere Fitness (by `read-subject`).\n16. Rule `read-payment` fired: state = READING → true (state=READING).\n17. Called `check_payment` (attempt 1, key banking-015-at-03:read-payment:3).\n18. `check_payment` found {}.\n19. Rule `read-incoming` fired: state = READING → true (state=READING).\n20. Called `check_incoming` (attempt 1, key banking-015-at-03:read-incoming:4).\n21. `check_incoming` found {}.\n22. Rule `read-recurring` fired: state = READING → true (state=READING).\n23. Called `check_recurring` (attempt 1, key banking-015-at-03:read-recurring:5).\n24. `check_recurring` found {}.\n25. Rule `read-card` fired: state = READING → true (state=READING).\n26. Called `check_card` (attempt 1, key banking-015-at-03:read-card:6).\n27. `check_card` found {}.\n28. Rule `read-access` fired: state = READING → true (state=READING).\n29. Called `check_access` (attempt 1, key banking-015-at-03:read-access:7).\n30. `check_access` found {}.\n31. Rule `read-business` fired: state = READING → true (state=READING).\n32. Called `check_business` (attempt 1, key banking-015-at-03:read-business:8).\n33. `check_business` found {}.\n34. Rule `read-documents` fired: state = READING → true (state=READING).\n35. Called `check_documents` (attempt 1, key banking-015-at-03:read-documents:9).\n36. `check_documents` found {}.\n37. Rule `read-tariff` fired: state = READING → true (state=READING).\n38. Called `check_tariff` (attempt 1, key banking-015-at-03:read-tariff:10).\n39. `check_tariff` found {}.\n40. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n41. Called `check_bank_actions` (attempt 1, key banking-015-at-03:read-bank-actions:11).\n42. `check_bank_actions` found {}.\n43. Rule `read-registration` fired: state = READING → true (state=READING).\n44. Called `check_registration` (attempt 1, key banking-015-at-03:read-registration:12).\n45. `check_registration` found {}.\n46. Rule `read-confirmation` fired: state = READING → true (state=READING).\n47. Called `check_confirmation` (attempt 1, key banking-015-at-03:read-confirmation:13).\n48. Note from `read-confirmation`: event 2 (Mara Ellison): I’ve completed your identification checks. Please cancel my Northmere Fitness Direct Debit mandate; I understand this is an instruction to my bank, not a cancellation of my agreement with the recipient. [facts: confirmation='none', instructed_outside_portal=False]\n49. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n50. `confirmation`: not known → none (by `read-confirmation`).\n51. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n52. Rule `triage` fired: state = READING → true (state=READING).\n53. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.\n54. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.\n55. `request_type`: not known → instruction (by `triage`).\n56. `subject`: not known → direct_debit (by `triage`).\n57. State `READING` → `TRIAGED` (by `triage`).\n58. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).\n59. `next_system`: not known → recurring (by `route-recurring`).\n60. The agent asked for `submit_request` {}.\n61. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).\n62. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).\n63. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).\n64. Called `register_request` (attempt 1, key banking-015-at-03:do-request:17).\n65. Action in the world: `register_request` {\"team\": \"recurring\", \"about\": \"direct_debit\"}.\n66. `register_request` found {}.\n67. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).\n68. The case closed in `REQUESTED`: **submit_request**.\n\n## Model calls\n\n3 calls, 4837 tokens in, 488 out, 3.765 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've submitted your instruction to cancel the Northmere Fitness Direct Debit mandate to the team that handles mandates. The request was accepted, but the cancellation itself isn't confirmed yet.\n> \n> This cancels the mandate at H&V, so Northmere Fitness shouldn't be able to collect through it in future. Your agreement with Northmere Fitness is not cancelled, and you would need to end that with them directly.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYWb1P8mJvJDSiGDvpP",
+        "id": "msg_011CftZvXkTdcUPbDmXgu5WK",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Mara Ellison, verified on a call, asked the bank to cancel her Northmere Fitness Direct Debit mandate, and said she understood this doesn't end her agreement with the recipient. The desk classified it as a Direct Debit instruction and registered a request with the recurring team, which is where the case closed. The record shows only that the request was registered, not that the mandate is cancelled, and a note from the service agent says a collection already being processed can't be ruled out and needs separate reconciliation. The agent's message to her says the cancellation was \"accepted\" and that only one active mandate showed in the portal, but the record doesn't support either claim.",
+            "text": "Mara Ellison, a verified customer on a verified call, asked the desk to cancel her Northmere Fitness Direct Debit mandate, understanding that this is an instruction to her bank and not a cancellation of her agreement with the recipient. The desk routed it to the recurring team and registered the request there, and the case closed as requested, with the cancellation itself not yet confirmed. A note on the record says a collection already being processed can't be ruled out and would need separate reconciliation, which is left for a person.",
             "type": "text"
           }
         ],
@@ -1413,8 +1436,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2978,
-          "output_tokens": 206,
+          "input_tokens": 3012,
+          "output_tokens": 163,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1422,13 +1445,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.2889347999589518,
-      "input_tokens": 2978,
-      "output_tokens": 206,
-      "cost_usd": 0.008016,
+      "seconds": 1.8228780999779701,
+      "input_tokens": 3012,
+      "output_tokens": 163,
+      "cost_usd": 0.007654,
       "error": null,
       "replayed": false,
-      "digest": "c8bc71347e0275c9b8a4dedf2b03b94d389de3a074d2faf8653233b24d7ac67c"
+      "digest": "0bd8b669774aa171ad2d563c8ca65ef23b0f6d1082e9944c8f830463d6b57c43"
     }
   ]
 }

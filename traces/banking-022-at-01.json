@@ -1,7 +1,7 @@
 {
   "id": "banking-022-at-01",
-  "outcome": "ask_system",
-  "state": "ASKED",
+  "outcome": "submit_request",
+  "state": "REQUESTED",
   "final": true,
   "fields": {
     "requester": "Mara Ellison",
@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -48,9 +51,9 @@
   },
   "actions": [
     {
-      "type": "ask_system",
+      "type": "register_request",
       "args": {
-        "system": "card",
+        "team": "card",
         "about": "card"
       }
     }
@@ -84,7 +87,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk classified this as a card instruction and sent a query to the card system, then closed the case as \"ask_system\". No block was submitted, and the card check returned no card details, so the case does not show which card is meant; that question, and the block itself, remain for a person to handle.",
+  "summary": "Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk registered a request to the card team about the card, and the case is closed as requested. The desk's lookup of the card records was refused, so it never saw them, and the record does not confirm that the card is actually blocked or which card it is; nothing further is recorded as left for a person.",
   "journal": [
     {
       "seq": 1,
@@ -495,14 +498,48 @@
     },
     {
       "seq": 38,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "returned",
       "function": "check_tariff",
       "values": {}
     },
     {
       "seq": 39,
-      "at": 0.001,
+      "at": 0.0,
+      "kind": "trigger",
+      "name": "read-bank-actions",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 40,
+      "at": 0.0,
+      "kind": "call",
+      "function": "check_bank_actions",
+      "attempt": 1,
+      "key": "banking-022-at-01:read-bank-actions:11",
+      "args": {}
+    },
+    {
+      "seq": 41,
+      "at": 0.0,
+      "kind": "returned",
+      "function": "check_bank_actions",
+      "values": {}
+    },
+    {
+      "seq": 42,
+      "at": 0.0,
       "kind": "trigger",
       "name": "read-registration",
       "on": null,
@@ -519,24 +556,24 @@
       "note": ""
     },
     {
-      "seq": 40,
-      "at": 0.001,
+      "seq": 43,
+      "at": 0.0,
       "kind": "call",
       "function": "check_registration",
       "attempt": 1,
-      "key": "banking-022-at-01:read-registration:11",
+      "key": "banking-022-at-01:read-registration:12",
       "args": {}
     },
     {
-      "seq": 41,
-      "at": 0.001,
+      "seq": 44,
+      "at": 0.0,
       "kind": "returned",
       "function": "check_registration",
       "values": {}
     },
     {
-      "seq": 42,
-      "at": 0.001,
+      "seq": 45,
+      "at": 0.0,
       "kind": "trigger",
       "name": "read-confirmation",
       "on": null,
@@ -553,23 +590,23 @@
       "note": ""
     },
     {
-      "seq": 43,
-      "at": 0.001,
+      "seq": 46,
+      "at": 0.0,
       "kind": "call",
       "function": "check_confirmation",
       "attempt": 1,
-      "key": "banking-022-at-01:read-confirmation:12",
+      "key": "banking-022-at-01:read-confirmation:13",
       "args": {}
     },
     {
-      "seq": 44,
-      "at": 0.001,
+      "seq": 47,
+      "at": 0.0,
       "kind": "note",
       "text": "event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 45,
+      "seq": 48,
       "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
@@ -579,7 +616,7 @@
       }
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.001,
       "kind": "set",
       "field": "confirmation",
@@ -588,7 +625,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 47,
+      "seq": 50,
       "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -597,7 +634,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 48,
+      "seq": 51,
       "at": 0.001,
       "kind": "trigger",
       "name": "triage",
@@ -615,8 +652,8 @@
       "note": ""
     },
     {
-      "seq": 49,
-      "at": 0.246,
+      "seq": 52,
+      "at": 0.362,
       "kind": "choice",
       "field": "request_type",
       "raw": "instruction",
@@ -627,8 +664,8 @@
       "attempt": 1
     },
     {
-      "seq": 50,
-      "at": 0.246,
+      "seq": 53,
+      "at": 0.362,
       "kind": "choice",
       "field": "subject",
       "raw": "card",
@@ -639,8 +676,8 @@
       "attempt": 1
     },
     {
-      "seq": 51,
-      "at": 0.246,
+      "seq": 54,
+      "at": 0.362,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -648,8 +685,8 @@
       "by": "triage"
     },
     {
-      "seq": 52,
-      "at": 0.246,
+      "seq": 55,
+      "at": 0.362,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -657,16 +694,16 @@
       "by": "triage"
     },
     {
-      "seq": 53,
-      "at": 0.246,
+      "seq": 56,
+      "at": 0.362,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 54,
-      "at": 0.246,
+      "seq": 57,
+      "at": 0.362,
       "kind": "trigger",
       "name": "route-card",
       "on": null,
@@ -697,8 +734,8 @@
       "note": ""
     },
     {
-      "seq": 55,
-      "at": 0.246,
+      "seq": 58,
+      "at": 0.362,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -706,8 +743,8 @@
       "by": "route-card"
     },
     {
-      "seq": 56,
-      "at": 2.529,
+      "seq": 59,
+      "at": 2.528,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -715,12 +752,27 @@
       }
     },
     {
-      "seq": 57,
-      "at": 2.529,
+      "seq": 60,
+      "at": 2.528,
+      "kind": "refused",
+      "signal": "ask_system",
+      "reason": "payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card)",
+      "state": "TRIAGED"
+    },
+    {
+      "seq": 61,
+      "at": 3.37,
+      "kind": "signal",
+      "signal": "submit_request",
+      "args": {}
+    },
+    {
+      "seq": 62,
+      "at": 3.37,
       "kind": "trigger",
-      "name": "card-ask",
-      "on": "ask_system",
-      "when": "state = TRIAGED and args.system = card and (next_system = card or next_system absent) and card_asked absent and request_type not in [register, change, authority]",
+      "name": "card-instruction",
+      "on": "submit_request",
+      "when": "state = TRIAGED and next_system = card and card_asked absent and verified and request_type = instruction",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -730,22 +782,8 @@
           }
         },
         {
-          "test": "args.system = card",
-          "result": true,
-          "values": {
-            "args.system": "card"
-          }
-        },
-        {
           "test": "next_system = card",
           "result": true,
-          "values": {
-            "next_system": "card"
-          }
-        },
-        {
-          "test": "next_system absent",
-          "result": false,
           "values": {
             "next_system": "card"
           }
@@ -758,7 +796,14 @@
           }
         },
         {
-          "test": "request_type not in [register, change, authority]",
+          "test": "verified",
+          "result": true,
+          "values": {
+            "verified": true
+          }
+        },
+        {
+          "test": "request_type = instruction",
           "result": true,
           "values": {
             "request_type": "instruction"
@@ -768,73 +813,73 @@
       "note": ""
     },
     {
-      "seq": 58,
-      "at": 2.529,
+      "seq": 63,
+      "at": 3.37,
       "kind": "state",
       "frm": "TRIAGED",
-      "to": "ASK_PENDING",
-      "by": "card-ask"
+      "to": "REQUEST_PENDING",
+      "by": "card-instruction"
     },
     {
-      "seq": 59,
-      "at": 2.529,
+      "seq": 64,
+      "at": 3.37,
       "kind": "trigger",
-      "name": "do-ask",
+      "name": "do-request",
       "on": null,
-      "when": "state = ASK_PENDING",
+      "when": "state = REQUEST_PENDING",
       "why": [
         {
-          "test": "state = ASK_PENDING",
+          "test": "state = REQUEST_PENDING",
           "result": true,
           "values": {
-            "state": "ASK_PENDING"
+            "state": "REQUEST_PENDING"
           }
         }
       ],
       "note": ""
     },
     {
-      "seq": 60,
-      "at": 2.529,
+      "seq": 65,
+      "at": 3.37,
       "kind": "call",
-      "function": "ask_system",
+      "function": "register_request",
       "attempt": 1,
-      "key": "banking-022-at-01:do-ask:16",
+      "key": "banking-022-at-01:do-request:17",
       "args": {}
     },
     {
-      "seq": 61,
-      "at": 2.529,
+      "seq": 66,
+      "at": 3.37,
       "kind": "action",
-      "type": "ask_system",
+      "type": "register_request",
       "args": {
-        "system": "card",
+        "team": "card",
         "about": "card"
       },
-      "by": "do-ask",
-      "key": "banking-022-at-01:do-ask:16"
+      "by": "do-request",
+      "key": "banking-022-at-01:do-request:17"
     },
     {
-      "seq": 62,
-      "at": 2.529,
+      "seq": 67,
+      "at": 3.37,
       "kind": "returned",
-      "function": "ask_system",
+      "function": "register_request",
       "values": {}
     },
     {
-      "seq": 63,
-      "at": 2.529,
+      "seq": 68,
+      "at": 3.37,
       "kind": "state",
-      "frm": "ASK_PENDING",
-      "to": "ASKED",
-      "by": "do-ask"
+      "frm": "REQUEST_PENDING",
+      "to": "REQUESTED",
+      "by": "do-request"
     },
     {
-      "seq": 64,
-      "at": 2.529,
+      "seq": 69,
+      "at": 3.37,
       "kind": "final",
-      "state": "ASKED",
-      "outcome": "ask_system"
+      "state": "REQUESTED",
+      "outcome": "submit_request"
     }
   ],
   "calls": [
@@ -929,7 +974,7 @@
           }
         }
       },
-      "seconds": 0.2450173000106588,
+      "seconds": 0.3609742000699043,
       "input_tokens": 899,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1078,16 +1123,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYYFwy81r36q1rRfXDA",
+        "id": "msg_011CftZxHE9Rciivf7PYRgKb",
         "container": null,
         "content": [
           {
-            "signature": "CAQShwkKEAgSGAI4AUIIdGhpbmtpbmcSDAKe8HO57xM56cm7PBoMAUW/LwVE17v95Q9LIjAboKioDe6sbTeT6Osz63tzje44O34Mbgzeunw1OvtycZakJoaK9vnN/OqOs09ipacqpAgvcysCaX+faErtuPhAO8Mo6NTmTA+n2qTBEe1vGHfMMOEqHFK2aYrFNs0d4E303GNZloOAzYUx9ipC83uXzcngdpGFQzhaJcVDw2+29cvAJukB4Od7SE/reU7QrPMmD0RruVxikKxiKDz/0N6Sl1mr7iGgDbhqY4f85JbUqxBw5hF5Bf8v6NtrRM7dB2BR3akgSXf2OLpbQnNboxymqFI+eCEKdicsaQkD3GxEC183wC24CCxOCU+9lBG7yenE5JyAJzJeB1yVaSBWGm9iYe7L41vjqnYjSlEvvS/2kHwcDb+6PX/bEP5LM9FJvLZE6eI7qtBIobzMWqGWFV3+owqRX2FaEnNoo1uQBFHphS9JaajKeR/eMrlJXkrMjr3gAklCbO+Mhtj6dTdJTY5xrq/Sbf5LtvMf6SldushAYuKr2OjRHp4BHyK9TBInBDQLRXKN8UTKvBVrWDFc7zl93GdxNyJmyqVeRk8M1qM4SYYMpCEn3I5C5qksMftwI0YunQmR7wSFcD4Cf4AygBg7UvZEEN1DA+VTK2AlhA382Mi3IC6b7DP886mS2vli+8p2hM9HW93tgR3UOcLha8aIpATtLjUvznU07KPIhOQNKfno+hVkUqyXcce9UQmBZNkDSju1Om0xZV6AjJ+ZDvYWu/fses8HxTTsomoWLQR0i8x7LhMVQ/U7MR4AAghnvgO5i0PFzruUTWv8no71AMiKWQXDeYJtB+uXnc4dU+Wl2nquwC//Q17eVc+3YbVAD3Nhi0Nt2lCwUwjW9j1ngPYquRjncQGg6FjPteU2yjntPr8wzy5+tlffVl8wdoUplvTuJz5oaI1TqvmUH4bL3rL6W+se7F/fKfrXDnKpnvDduHGLGnzWwuI917GlU08/wgzJkSQXQBsMI8+5/tjCTaP2iznbjBwAJzoU479AZRFtLj82CR1bmi9zkXsmGYNVHKuMrxjWCO0PNWhfxeI0FJ4ekxd8aexo1TUu08IN2gRs805rWS5mdHhlmAQMd0JqkXZUHfDozKs4GRajQo6s4SQaOSGimHOTwjFgk5O8nekYkIzSY2dmtpuvqo9bZGwwrWUUdoKDoCu0jIIyU2UEL+IB6lpTCK1lDAagQ/8hWGMYJQuxHfgWi48RGa7LBg5Zex/K0xfZQcgb5drZgsFuYmH7rQRmMGHRPG+4muDfzFNFsZXMx/cupFvZrWErq6O3QZXEjvOoncuIh9BdtjUcCskRUBDFuFhdwzlQ1N/DrXHn9HJJQ+CiSCkjHYTeHyI5/cVu0CUdI10504h/ofHrEpHXlc6iO3Kzw/YoWaSw3ZIMMob97dfxXA6EnQ9m/yq2TxhfVCbniDQDBOVArrsmjal81EZYKDJH5+4wqocI9EoMO5ti4ATZawIlhQ+7W5aN8asdNnUN0qvgGAE=",
+            "signature": "CAQSuwcKEAgSGAI4AUIIdGhpbmtpbmcSDCWxkauE14spoFw+GBoMIZAH6JsTATvWCJg6IjD9uyiQCY/vlDYoQCEB431queQnoEd7Ni3hHCIZdQDJ/7/G3FhuOS2uwrqDiWEkKsAq2AZ/AozgM7SJ3qPPspd4fJ8R3hkYqIXv2E1X5z4tDANnyhDERJuzlaZ7uEdmHAkiFxL8jdeI+L8YI0yjzpkm2hykLc25yHwnlzBWeCOxOaEQGeLSObb6yf1N2DRQxRKyrBnuPsFff6Sp/Svtvk5zpkF14ImbVrnjkoLGcFHCdKba1cD6rWnErk+GgOT99D0RO0cwQK/ir1HVWZTBBAMg3FZfa55HRT1PC5Sx/cNqhXt2EsjJKoriSpyP6z0fYNru7sVlpyfZEZstzgDgvrKB36C8Caq5qVq87DQelHpKBZZgFvYxpuTOM+foonE6rXDZtVXl04YkxpsXuPRxnEp+/cDMA9QDZuFTyBPtQ1oq3sZd9quOyS5tdUzDQyqJzRRc+a9GOgr/dh36bVb7CRoVR7vBG6xH5+xNfEM6KnZcqX7PEvtL5DXL1+sxP4D7d0Cm4/u834IHSb0zhTHOru/d6PeGiICz8hcV6c6cdvgNHIIqGP8eyXDsFX/WTjms69/EpRPAnAIDe//3idJEi/NdrbB297Qg/nOqy6FD/xK29qZ0GQ2J9NSUmKhXNwSx8wd1gpHKmBo21yXT3AWSQZ4bY6xZBGhd9m3A9gokKM3BSrjGIT7qlGqs7CRUJl2kaomKjYU1ILDmCMAafQ/Y/95TAS+Uf1TMcsIkdVOVtjw5tpTfhOyf8XXlrXWg77reBB9xRjcbPSZZCVnV/Q3guR6IAU3pPZIUUbrZ4Vw78PldEQQIYp+pzqYhzJYq7aZHNVB94Gc12XLlQannkhHKtK6P0jUE6ju+ekazEGyOgF/8QwLuJtmXTUhbRkVov5nYQrwe9fzzkFQj88Y+ctCvojy84tMzZrgjqc24sWV+p8+4Tkd4/s5Xh4UaDXVnEzquto9pg5OsSGLgpeXR4P7exxNSmpRLmC2P75ESGd9Q8oOBfr5IXWqznR/MR50YSxIrELiIBFADDkwIoS9/xsTjjcKOT51lrdYri3Sz87HkkXRuxURkz4Rc3HefC6lwZ2v/sww+LOPp6TdcSDgSw+E7PDuyRS/EKl4kkx+Ew2CkOZTuO1Amp1KNbdGkfKexapSnhH1IiaxO32DQiyGxf0cB0DfhbuvZECROAT61snj9hH6SS9/Z6YDFhU9uBWhvGAE=",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01Detqbh8qEjJuUo4Ccajk6R",
+            "id": "toolu_017MnDExPv3mitatE9QenDEW",
             "caller": {
               "type": "direct"
             },
@@ -1115,18 +1160,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1822,
-          "output_tokens": 238,
+          "output_tokens": 179,
           "output_tokens_details": {
-            "thinking_tokens": 189
+            "thinking_tokens": 130
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 2.283047099946998,
+      "seconds": 2.166280400007963,
       "input_tokens": 1822,
-      "output_tokens": 238,
-      "cost_usd": 0.006024,
+      "output_tokens": 179,
+      "cost_usd": 0.005434,
       "error": null,
       "replayed": false,
       "digest": "4f586c3c4d52e0ce98cf091bf31b90caa43577ead806e7576f9f4fa2c7320c65"
@@ -1273,12 +1318,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQShwkKEAgSGAI4AUIIdGhpbmtpbmcSDAKe8HO57xM56cm7PBoMAUW/LwVE17v95Q9LIjAboKioDe6sbTeT6Osz63tzje44O34Mbgzeunw1OvtycZakJoaK9vnN/OqOs09ipacqpAgvcysCaX+faErtuPhAO8Mo6NTmTA+n2qTBEe1vGHfMMOEqHFK2aYrFNs0d4E303GNZloOAzYUx9ipC83uXzcngdpGFQzhaJcVDw2+29cvAJukB4Od7SE/reU7QrPMmD0RruVxikKxiKDz/0N6Sl1mr7iGgDbhqY4f85JbUqxBw5hF5Bf8v6NtrRM7dB2BR3akgSXf2OLpbQnNboxymqFI+eCEKdicsaQkD3GxEC183wC24CCxOCU+9lBG7yenE5JyAJzJeB1yVaSBWGm9iYe7L41vjqnYjSlEvvS/2kHwcDb+6PX/bEP5LM9FJvLZE6eI7qtBIobzMWqGWFV3+owqRX2FaEnNoo1uQBFHphS9JaajKeR/eMrlJXkrMjr3gAklCbO+Mhtj6dTdJTY5xrq/Sbf5LtvMf6SldushAYuKr2OjRHp4BHyK9TBInBDQLRXKN8UTKvBVrWDFc7zl93GdxNyJmyqVeRk8M1qM4SYYMpCEn3I5C5qksMftwI0YunQmR7wSFcD4Cf4AygBg7UvZEEN1DA+VTK2AlhA382Mi3IC6b7DP886mS2vli+8p2hM9HW93tgR3UOcLha8aIpATtLjUvznU07KPIhOQNKfno+hVkUqyXcce9UQmBZNkDSju1Om0xZV6AjJ+ZDvYWu/fses8HxTTsomoWLQR0i8x7LhMVQ/U7MR4AAghnvgO5i0PFzruUTWv8no71AMiKWQXDeYJtB+uXnc4dU+Wl2nquwC//Q17eVc+3YbVAD3Nhi0Nt2lCwUwjW9j1ngPYquRjncQGg6FjPteU2yjntPr8wzy5+tlffVl8wdoUplvTuJz5oaI1TqvmUH4bL3rL6W+se7F/fKfrXDnKpnvDduHGLGnzWwuI917GlU08/wgzJkSQXQBsMI8+5/tjCTaP2iznbjBwAJzoU479AZRFtLj82CR1bmi9zkXsmGYNVHKuMrxjWCO0PNWhfxeI0FJ4ekxd8aexo1TUu08IN2gRs805rWS5mdHhlmAQMd0JqkXZUHfDozKs4GRajQo6s4SQaOSGimHOTwjFgk5O8nekYkIzSY2dmtpuvqo9bZGwwrWUUdoKDoCu0jIIyU2UEL+IB6lpTCK1lDAagQ/8hWGMYJQuxHfgWi48RGa7LBg5Zex/K0xfZQcgb5drZgsFuYmH7rQRmMGHRPG+4muDfzFNFsZXMx/cupFvZrWErq6O3QZXEjvOoncuIh9BdtjUcCskRUBDFuFhdwzlQ1N/DrXHn9HJJQ+CiSCkjHYTeHyI5/cVu0CUdI10504h/ofHrEpHXlc6iO3Kzw/YoWaSw3ZIMMob97dfxXA6EnQ9m/yq2TxhfVCbniDQDBOVArrsmjal81EZYKDJH5+4wqocI9EoMO5ti4ATZawIlhQ+7W5aN8asdNnUN0qvgGAE=",
+                "signature": "CAQSuwcKEAgSGAI4AUIIdGhpbmtpbmcSDCWxkauE14spoFw+GBoMIZAH6JsTATvWCJg6IjD9uyiQCY/vlDYoQCEB431queQnoEd7Ni3hHCIZdQDJ/7/G3FhuOS2uwrqDiWEkKsAq2AZ/AozgM7SJ3qPPspd4fJ8R3hkYqIXv2E1X5z4tDANnyhDERJuzlaZ7uEdmHAkiFxL8jdeI+L8YI0yjzpkm2hykLc25yHwnlzBWeCOxOaEQGeLSObb6yf1N2DRQxRKyrBnuPsFff6Sp/Svtvk5zpkF14ImbVrnjkoLGcFHCdKba1cD6rWnErk+GgOT99D0RO0cwQK/ir1HVWZTBBAMg3FZfa55HRT1PC5Sx/cNqhXt2EsjJKoriSpyP6z0fYNru7sVlpyfZEZstzgDgvrKB36C8Caq5qVq87DQelHpKBZZgFvYxpuTOM+foonE6rXDZtVXl04YkxpsXuPRxnEp+/cDMA9QDZuFTyBPtQ1oq3sZd9quOyS5tdUzDQyqJzRRc+a9GOgr/dh36bVb7CRoVR7vBG6xH5+xNfEM6KnZcqX7PEvtL5DXL1+sxP4D7d0Cm4/u834IHSb0zhTHOru/d6PeGiICz8hcV6c6cdvgNHIIqGP8eyXDsFX/WTjms69/EpRPAnAIDe//3idJEi/NdrbB297Qg/nOqy6FD/xK29qZ0GQ2J9NSUmKhXNwSx8wd1gpHKmBo21yXT3AWSQZ4bY6xZBGhd9m3A9gokKM3BSrjGIT7qlGqs7CRUJl2kaomKjYU1ILDmCMAafQ/Y/95TAS+Uf1TMcsIkdVOVtjw5tpTfhOyf8XXlrXWg77reBB9xRjcbPSZZCVnV/Q3guR6IAU3pPZIUUbrZ4Vw78PldEQQIYp+pzqYhzJYq7aZHNVB94Gc12XLlQannkhHKtK6P0jUE6ju+ekazEGyOgF/8QwLuJtmXTUhbRkVov5nYQrwe9fzzkFQj88Y+ctCvojy84tMzZrgjqc24sWV+p8+4Tkd4/s5Xh4UaDXVnEzquto9pg5OsSGLgpeXR4P7exxNSmpRLmC2P75ESGd9Q8oOBfr5IXWqznR/MR50YSxIrELiIBFADDkwIoS9/xsTjjcKOT51lrdYri3Sz87HkkXRuxURkz4Rc3HefC6lwZ2v/sww+LOPp6TdcSDgSw+E7PDuyRS/EKl4kkx+Ew2CkOZTuO1Amp1KNbdGkfKexapSnhH1IiaxO32DQiyGxf0cB0DfhbuvZECROAT61snj9hH6SS9/Z6YDFhU9uBWhvGAE=",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01Detqbh8qEjJuUo4Ccajk6R",
+                "id": "toolu_017MnDExPv3mitatE9QenDEW",
                 "caller": {
                   "type": "direct"
                 },
@@ -1296,24 +1341,29 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01Detqbh8qEjJuUo4Ccajk6R",
-                "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
+                "tool_use_id": "toolu_017MnDExPv3mitatE9QenDEW",
+                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card)\"}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYYRgMonLJHoEumaj6J",
+        "id": "msg_011CftZxSVVoXMk1wCjkmrnN",
         "container": null,
         "content": [
           {
-            "id": "toolu_01LRjKWyXHn6oxTsuYrkURaY",
+            "signature": "CAQSqAUKEAgSGAI4AUIIdGhpbmtpbmcSDH/s612LA0bnDo4izRoMONFZYesRp2YvYTFKIjD/0dfWYF1Q4LXOpn56oPLS/ZxpSArsGy0+KoTkVkh5LQDeOO5nSTAcuBNVujItpF4qxQQSV2hTZMRcwyxaaJD2ZZ73gtwR5JAEQF1lEOq6A1KQ34Qsy6PQ6rv35Nm5u9Tg9hZbJpjcshfqMZL+Eh/pDBvJNX1Khr4i5SPjJfYbbuQTD02h9OWuk/jTiW44UkJUPqaetibr5bBVEBOP5IWCsAv9Q3idr3NIasT8YBHvAdhHDD/NherND3KrASbJHPYhvaR35c1yJtfakztwegkTFji7LTlG4MByStGIA8Mk/FbTziKiSLNxDdO4D6aOGqFbFNeCJtZccvabGegIimEDrRE4LsfvbcD5TAqiVrEOaSvQa+4r3VXuu3djAFQgjfucajTw80BLqCZsr4fRpaibUErAvVEfGtfRtqD+r/32gZaQq2miryqCrEBkyihjFLVgx0YCf/sFqstRXUro4G0kI2pUWcdZA2t5XySVRh2tt9QM/ppGx1kabLuvOEg1+kG93XtvPmS7Qq0+9zUk0Um8I8oZgMP7K8Kv6N0YDkCVTV4lIJTnrbABfmF9kZccjP3WFOyYhXgsysxLWp8OzrliHIf5Nq0NvrnAvmcT6f0Qd67Gs2HE7nkySzL2sGatUsb2QCGz4gvwcIMCats76cWeFf1dJsnX+BGom7R3xZldO9spm8osoTQEb5MM5VFijB/D8DiJ8Zhy0oAQLwQtR8gFMfuuNzjRogxKFoadqbHuknh08QS4UtKf8eN+5AbKOnRFaHlXDOVjsgLqadjEP3kyCcqYYU2gIsgGjG/hHomkoMWU7rcWp2u2pI0d+A1LIvEA8GOjrUmVJRgB",
+            "thinking": "",
+            "type": "thinking"
+          },
+          {
+            "id": "toolu_01CugF92k27jWo8onRqyCUmj",
             "caller": {
               "type": "direct"
             },
             "input": {},
-            "name": "case_status",
+            "name": "submit_request",
             "type": "tool_use",
             "toolset_name": null
           }
@@ -1333,22 +1383,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2095,
-          "output_tokens": 26,
+          "input_tokens": 2452,
+          "output_tokens": 50,
           "output_tokens_details": {
-            "thinking_tokens": 0
+            "thinking_tokens": 22
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 0.7684985999949276,
-      "input_tokens": 2095,
-      "output_tokens": 26,
-      "cost_usd": 0.00445,
+      "seconds": 0.8410693999612704,
+      "input_tokens": 2452,
+      "output_tokens": 50,
+      "cost_usd": 0.005404,
       "error": null,
       "replayed": false,
-      "digest": "5c4fbb907dff7960ed5cd01c09c8414489c7c6d54d2f30b5856f872e7840d6c7"
+      "digest": "972728797cd4f19c68c3c513cff149ba4482b367ba9536112d74c161beed4312"
     },
     {
       "kind": "agent",
@@ -1492,12 +1542,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQShwkKEAgSGAI4AUIIdGhpbmtpbmcSDAKe8HO57xM56cm7PBoMAUW/LwVE17v95Q9LIjAboKioDe6sbTeT6Osz63tzje44O34Mbgzeunw1OvtycZakJoaK9vnN/OqOs09ipacqpAgvcysCaX+faErtuPhAO8Mo6NTmTA+n2qTBEe1vGHfMMOEqHFK2aYrFNs0d4E303GNZloOAzYUx9ipC83uXzcngdpGFQzhaJcVDw2+29cvAJukB4Od7SE/reU7QrPMmD0RruVxikKxiKDz/0N6Sl1mr7iGgDbhqY4f85JbUqxBw5hF5Bf8v6NtrRM7dB2BR3akgSXf2OLpbQnNboxymqFI+eCEKdicsaQkD3GxEC183wC24CCxOCU+9lBG7yenE5JyAJzJeB1yVaSBWGm9iYe7L41vjqnYjSlEvvS/2kHwcDb+6PX/bEP5LM9FJvLZE6eI7qtBIobzMWqGWFV3+owqRX2FaEnNoo1uQBFHphS9JaajKeR/eMrlJXkrMjr3gAklCbO+Mhtj6dTdJTY5xrq/Sbf5LtvMf6SldushAYuKr2OjRHp4BHyK9TBInBDQLRXKN8UTKvBVrWDFc7zl93GdxNyJmyqVeRk8M1qM4SYYMpCEn3I5C5qksMftwI0YunQmR7wSFcD4Cf4AygBg7UvZEEN1DA+VTK2AlhA382Mi3IC6b7DP886mS2vli+8p2hM9HW93tgR3UOcLha8aIpATtLjUvznU07KPIhOQNKfno+hVkUqyXcce9UQmBZNkDSju1Om0xZV6AjJ+ZDvYWu/fses8HxTTsomoWLQR0i8x7LhMVQ/U7MR4AAghnvgO5i0PFzruUTWv8no71AMiKWQXDeYJtB+uXnc4dU+Wl2nquwC//Q17eVc+3YbVAD3Nhi0Nt2lCwUwjW9j1ngPYquRjncQGg6FjPteU2yjntPr8wzy5+tlffVl8wdoUplvTuJz5oaI1TqvmUH4bL3rL6W+se7F/fKfrXDnKpnvDduHGLGnzWwuI917GlU08/wgzJkSQXQBsMI8+5/tjCTaP2iznbjBwAJzoU479AZRFtLj82CR1bmi9zkXsmGYNVHKuMrxjWCO0PNWhfxeI0FJ4ekxd8aexo1TUu08IN2gRs805rWS5mdHhlmAQMd0JqkXZUHfDozKs4GRajQo6s4SQaOSGimHOTwjFgk5O8nekYkIzSY2dmtpuvqo9bZGwwrWUUdoKDoCu0jIIyU2UEL+IB6lpTCK1lDAagQ/8hWGMYJQuxHfgWi48RGa7LBg5Zex/K0xfZQcgb5drZgsFuYmH7rQRmMGHRPG+4muDfzFNFsZXMx/cupFvZrWErq6O3QZXEjvOoncuIh9BdtjUcCskRUBDFuFhdwzlQ1N/DrXHn9HJJQ+CiSCkjHYTeHyI5/cVu0CUdI10504h/ofHrEpHXlc6iO3Kzw/YoWaSw3ZIMMob97dfxXA6EnQ9m/yq2TxhfVCbniDQDBOVArrsmjal81EZYKDJH5+4wqocI9EoMO5ti4ATZawIlhQ+7W5aN8asdNnUN0qvgGAE=",
+                "signature": "CAQSuwcKEAgSGAI4AUIIdGhpbmtpbmcSDCWxkauE14spoFw+GBoMIZAH6JsTATvWCJg6IjD9uyiQCY/vlDYoQCEB431queQnoEd7Ni3hHCIZdQDJ/7/G3FhuOS2uwrqDiWEkKsAq2AZ/AozgM7SJ3qPPspd4fJ8R3hkYqIXv2E1X5z4tDANnyhDERJuzlaZ7uEdmHAkiFxL8jdeI+L8YI0yjzpkm2hykLc25yHwnlzBWeCOxOaEQGeLSObb6yf1N2DRQxRKyrBnuPsFff6Sp/Svtvk5zpkF14ImbVrnjkoLGcFHCdKba1cD6rWnErk+GgOT99D0RO0cwQK/ir1HVWZTBBAMg3FZfa55HRT1PC5Sx/cNqhXt2EsjJKoriSpyP6z0fYNru7sVlpyfZEZstzgDgvrKB36C8Caq5qVq87DQelHpKBZZgFvYxpuTOM+foonE6rXDZtVXl04YkxpsXuPRxnEp+/cDMA9QDZuFTyBPtQ1oq3sZd9quOyS5tdUzDQyqJzRRc+a9GOgr/dh36bVb7CRoVR7vBG6xH5+xNfEM6KnZcqX7PEvtL5DXL1+sxP4D7d0Cm4/u834IHSb0zhTHOru/d6PeGiICz8hcV6c6cdvgNHIIqGP8eyXDsFX/WTjms69/EpRPAnAIDe//3idJEi/NdrbB297Qg/nOqy6FD/xK29qZ0GQ2J9NSUmKhXNwSx8wd1gpHKmBo21yXT3AWSQZ4bY6xZBGhd9m3A9gokKM3BSrjGIT7qlGqs7CRUJl2kaomKjYU1ILDmCMAafQ/Y/95TAS+Uf1TMcsIkdVOVtjw5tpTfhOyf8XXlrXWg77reBB9xRjcbPSZZCVnV/Q3guR6IAU3pPZIUUbrZ4Vw78PldEQQIYp+pzqYhzJYq7aZHNVB94Gc12XLlQannkhHKtK6P0jUE6ju+ekazEGyOgF/8QwLuJtmXTUhbRkVov5nYQrwe9fzzkFQj88Y+ctCvojy84tMzZrgjqc24sWV+p8+4Tkd4/s5Xh4UaDXVnEzquto9pg5OsSGLgpeXR4P7exxNSmpRLmC2P75ESGd9Q8oOBfr5IXWqznR/MR50YSxIrELiIBFADDkwIoS9/xsTjjcKOT51lrdYri3Sz87HkkXRuxURkz4Rc3HefC6lwZ2v/sww+LOPp6TdcSDgSw+E7PDuyRS/EKl4kkx+Ew2CkOZTuO1Amp1KNbdGkfKexapSnhH1IiaxO32DQiyGxf0cB0DfhbuvZECROAT61snj9hH6SS9/Z6YDFhU9uBWhvGAE=",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01Detqbh8qEjJuUo4Ccajk6R",
+                "id": "toolu_017MnDExPv3mitatE9QenDEW",
                 "caller": {
                   "type": "direct"
                 },
@@ -1515,8 +1565,8 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01Detqbh8qEjJuUo4Ccajk6R",
-                "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
+                "tool_use_id": "toolu_017MnDExPv3mitatE9QenDEW",
+                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card)\"}"
               }
             ]
           },
@@ -1524,12 +1574,17 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01LRjKWyXHn6oxTsuYrkURaY",
+                "signature": "CAQSqAUKEAgSGAI4AUIIdGhpbmtpbmcSDH/s612LA0bnDo4izRoMONFZYesRp2YvYTFKIjD/0dfWYF1Q4LXOpn56oPLS/ZxpSArsGy0+KoTkVkh5LQDeOO5nSTAcuBNVujItpF4qxQQSV2hTZMRcwyxaaJD2ZZ73gtwR5JAEQF1lEOq6A1KQ34Qsy6PQ6rv35Nm5u9Tg9hZbJpjcshfqMZL+Eh/pDBvJNX1Khr4i5SPjJfYbbuQTD02h9OWuk/jTiW44UkJUPqaetibr5bBVEBOP5IWCsAv9Q3idr3NIasT8YBHvAdhHDD/NherND3KrASbJHPYhvaR35c1yJtfakztwegkTFji7LTlG4MByStGIA8Mk/FbTziKiSLNxDdO4D6aOGqFbFNeCJtZccvabGegIimEDrRE4LsfvbcD5TAqiVrEOaSvQa+4r3VXuu3djAFQgjfucajTw80BLqCZsr4fRpaibUErAvVEfGtfRtqD+r/32gZaQq2miryqCrEBkyihjFLVgx0YCf/sFqstRXUro4G0kI2pUWcdZA2t5XySVRh2tt9QM/ppGx1kabLuvOEg1+kG93XtvPmS7Qq0+9zUk0Um8I8oZgMP7K8Kv6N0YDkCVTV4lIJTnrbABfmF9kZccjP3WFOyYhXgsysxLWp8OzrliHIf5Nq0NvrnAvmcT6f0Qd67Gs2HE7nkySzL2sGatUsb2QCGz4gvwcIMCats76cWeFf1dJsnX+BGom7R3xZldO9spm8osoTQEb5MM5VFijB/D8DiJ8Zhy0oAQLwQtR8gFMfuuNzjRogxKFoadqbHuknh08QS4UtKf8eN+5AbKOnRFaHlXDOVjsgLqadjEP3kyCcqYYU2gIsgGjG/hHomkoMWU7rcWp2u2pI0d+A1LIvEA8GOjrUmVJRgB",
+                "thinking": "",
+                "type": "thinking"
+              },
+              {
+                "id": "toolu_01CugF92k27jWo8onRqyCUmj",
                 "caller": {
                   "type": "direct"
                 },
                 "input": {},
-                "name": "case_status",
+                "name": "submit_request",
                 "type": "tool_use",
                 "toolset_name": null
               }
@@ -1540,20 +1595,20 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01LRjKWyXHn6oxTsuYrkURaY",
-                "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true, \"subject\": \"card\", \"counterparty\": \"Alder Quay Market\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"instruction\", \"next_system\": \"card\"}, \"refused\": []}"
+                "tool_use_id": "toolu_01CugF92k27jWo8onRqyCUmj",
+                "content": "{\"accepted\": true, \"state\": \"REQUESTED\", \"case_closed\": \"submit_request\"}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYYUxoWNhxfQt6jQKeW",
+        "id": "msg_011CftZxVzbH9eMtUosJ6QY9",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I checked the card system for this case. The case is now closed with the outcome \"ask_system\".\n\nThe block has not been submitted. The card check did not add any card details to the case, so I still can't confirm which card is on the record. Mara Ellison is verified and gave a clear instruction on a verified call, but nothing in the case says which card is meant. I haven't asked her which card she means either.",
+            "text": "I've submitted the request to block your missing debit card. It was accepted and the case is now closed on our side.\n\nYou were verified on the call and your instruction was clear, so no further checks were needed. I tried to look up your card records first, but the desk refused that lookup for a verified instruction like this one. I haven't seen the card records, so I can't confirm which card was blocked or whether you hold more than one H&V debit card.",
             "type": "text"
           }
         ],
@@ -1572,8 +1627,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2264,
-          "output_tokens": 119,
+          "input_tokens": 2539,
+          "output_tokens": 131,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1581,13 +1636,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.7208242999622598,
-      "input_tokens": 2264,
-      "output_tokens": 119,
-      "cost_usd": 0.005718,
+      "seconds": 1.7904397000093013,
+      "input_tokens": 2539,
+      "output_tokens": 131,
+      "cost_usd": 0.006388,
       "error": null,
       "replayed": false,
-      "digest": "09427645f16cee2bd92a10c8fcea8d126b167b64b8263619419b8475b49038fd"
+      "digest": "138e2eaf9b4a837f9a14248f1e0f84dce96c907554a71f78c518603c77580950"
     },
     {
       "kind": "generate",
@@ -1600,17 +1655,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"card\",\n    \"counterparty\": \"Alder Quay Market\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"instruction\",\n    \"next_system\": \"card\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"card\",\n        \"about\": \"card\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-022-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-022-at-01:read-requester:1).\n4. Note from `read-requester`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: requester='Mara Ellison', role='customer', channel='verified_call', verified=True]\n5. `identify_requester` found {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n6. `requester`: not known → Mara Ellison (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → verified_call (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-022-at-01:read-subject:2).\n12. Note from `read-subject`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: counterparty='Alder Quay Market']\n13. `find_subject` found {\"counterparty\": \"Alder Quay Market\"}.\n14. `counterparty`: not known → Alder Quay Market (by `read-subject`).\n15. Rule `read-payment` fired: state = READING → true (state=READING).\n16. Called `check_payment` (attempt 1, key banking-022-at-01:read-payment:3).\n17. `check_payment` found {}.\n18. Rule `read-incoming` fired: state = READING → true (state=READING).\n19. Called `check_incoming` (attempt 1, key banking-022-at-01:read-incoming:4).\n20. `check_incoming` found {}.\n21. Rule `read-recurring` fired: state = READING → true (state=READING).\n22. Called `check_recurring` (attempt 1, key banking-022-at-01:read-recurring:5).\n23. `check_recurring` found {}.\n24. Rule `read-card` fired: state = READING → true (state=READING).\n25. Called `check_card` (attempt 1, key banking-022-at-01:read-card:6).\n26. `check_card` found {}.\n27. Rule `read-access` fired: state = READING → true (state=READING).\n28. Called `check_access` (attempt 1, key banking-022-at-01:read-access:7).\n29. `check_access` found {}.\n30. Rule `read-business` fired: state = READING → true (state=READING).\n31. Called `check_business` (attempt 1, key banking-022-at-01:read-business:8).\n32. `check_business` found {}.\n33. Rule `read-documents` fired: state = READING → true (state=READING).\n34. Called `check_documents` (attempt 1, key banking-022-at-01:read-documents:9).\n35. `check_documents` found {}.\n36. Rule `read-tariff` fired: state = READING → true (state=READING).\n37. Called `check_tariff` (attempt 1, key banking-022-at-01:read-tariff:10).\n38. `check_tariff` found {}.\n39. Rule `read-registration` fired: state = READING → true (state=READING).\n40. Called `check_registration` (attempt 1, key banking-022-at-01:read-registration:11).\n41. `check_registration` found {}.\n42. Rule `read-confirmation` fired: state = READING → true (state=READING).\n43. Called `check_confirmation` (attempt 1, key banking-022-at-01:read-confirmation:12).\n44. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]\n45. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n46. `confirmation`: not known → none (by `read-confirmation`).\n47. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n48. Rule `triage` fired: state = READING → true (state=READING).\n49. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.\n50. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.\n51. `request_type`: not known → instruction (by `triage`).\n52. `subject`: not known → card (by `triage`).\n53. State `READING` → `TRIAGED` (by `triage`).\n54. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).\n55. `next_system`: not known → card (by `route-card`).\n56. The agent asked for `ask_system` {\"system\": \"card\"}.\n57. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).\n58. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).\n59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n60. Called `ask_system` (attempt 1, key banking-022-at-01:do-ask:16).\n61. Action in the world: `ask_system` {\"system\": \"card\", \"about\": \"card\"}.\n62. `ask_system` found {}.\n63. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n64. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7080 tokens in, 582 out, 5.017 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I checked the card system for this case. The case is now closed with the outcome \"ask_system\".\n> \n> The block has not been submitted. The card check did not add any card details to the case, so I still can't confirm which card is on the record. Mara Ellison is verified and gave a clear instruction on a verified call, but nothing in the case says which card is meant. I haven't asked her which card she means either.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"submit_request\",\n  \"state\": \"REQUESTED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"card\",\n    \"counterparty\": \"Alder Quay Market\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"instruction\",\n    \"next_system\": \"card\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"register_request\",\n      \"args\": {\n        \"team\": \"card\",\n        \"about\": \"card\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-022-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-022-at-01:read-requester:1).\n4. Note from `read-requester`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: requester='Mara Ellison', role='customer', channel='verified_call', verified=True]\n5. `identify_requester` found {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n6. `requester`: not known → Mara Ellison (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → verified_call (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-022-at-01:read-subject:2).\n12. Note from `read-subject`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: counterparty='Alder Quay Market']\n13. `find_subject` found {\"counterparty\": \"Alder Quay Market\"}.\n14. `counterparty`: not known → Alder Quay Market (by `read-subject`).\n15. Rule `read-payment` fired: state = READING → true (state=READING).\n16. Called `check_payment` (attempt 1, key banking-022-at-01:read-payment:3).\n17. `check_payment` found {}.\n18. Rule `read-incoming` fired: state = READING → true (state=READING).\n19. Called `check_incoming` (attempt 1, key banking-022-at-01:read-incoming:4).\n20. `check_incoming` found {}.\n21. Rule `read-recurring` fired: state = READING → true (state=READING).\n22. Called `check_recurring` (attempt 1, key banking-022-at-01:read-recurring:5).\n23. `check_recurring` found {}.\n24. Rule `read-card` fired: state = READING → true (state=READING).\n25. Called `check_card` (attempt 1, key banking-022-at-01:read-card:6).\n26. `check_card` found {}.\n27. Rule `read-access` fired: state = READING → true (state=READING).\n28. Called `check_access` (attempt 1, key banking-022-at-01:read-access:7).\n29. `check_access` found {}.\n30. Rule `read-business` fired: state = READING → true (state=READING).\n31. Called `check_business` (attempt 1, key banking-022-at-01:read-business:8).\n32. `check_business` found {}.\n33. Rule `read-documents` fired: state = READING → true (state=READING).\n34. Called `check_documents` (attempt 1, key banking-022-at-01:read-documents:9).\n35. `check_documents` found {}.\n36. Rule `read-tariff` fired: state = READING → true (state=READING).\n37. Called `check_tariff` (attempt 1, key banking-022-at-01:read-tariff:10).\n38. `check_tariff` found {}.\n39. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n40. Called `check_bank_actions` (attempt 1, key banking-022-at-01:read-bank-actions:11).\n41. `check_bank_actions` found {}.\n42. Rule `read-registration` fired: state = READING → true (state=READING).\n43. Called `check_registration` (attempt 1, key banking-022-at-01:read-registration:12).\n44. `check_registration` found {}.\n45. Rule `read-confirmation` fired: state = READING → true (state=READING).\n46. Called `check_confirmation` (attempt 1, key banking-022-at-01:read-confirmation:13).\n47. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]\n48. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n49. `confirmation`: not known → none (by `read-confirmation`).\n50. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n51. Rule `triage` fired: state = READING → true (state=READING).\n52. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.\n53. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.\n54. `request_type`: not known → instruction (by `triage`).\n55. `subject`: not known → card (by `triage`).\n56. State `READING` → `TRIAGED` (by `triage`).\n57. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).\n58. `next_system`: not known → card (by `route-card`).\n59. The agent asked for `ask_system` {\"system\": \"card\"}.\n60. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).\n61. The agent asked for `submit_request` {}.\n62. Rule `card-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked absent → true (card_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).\n63. State `TRIAGED` → `REQUEST_PENDING` (by `card-instruction`).\n64. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).\n65. Called `register_request` (attempt 1, key banking-022-at-01:do-request:17).\n66. Action in the world: `register_request` {\"team\": \"card\", \"about\": \"card\"}.\n67. `register_request` found {}.\n68. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).\n69. The case closed in `REQUESTED`: **submit_request**.\n\n## Model calls\n\n4 calls, 7712 tokens in, 559 out, 5.159 s, cost $0.0172; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've submitted the request to block your missing debit card. It was accepted and the case is now closed on our side.\n> \n> You were verified on the call and your instruction was clear, so no further checks were needed. I tried to look up your card records first, but the desk refused that lookup for a verified instruction like this one. I haven't seen the card records, so I can't confirm which card was blocked or whether you hold more than one H&V debit card.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYYcrZ8vjv6wG3npKUG",
+        "id": "msg_011CftZxdjBMPxjGptFX1TFj",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk classified this as a card instruction and sent a query to the card system, then closed the case as \"ask_system\". No block was submitted, and the card check returned no card details, so the case does not show which card is meant; that question, and the block itself, remain for a person to handle.",
+            "text": "Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk registered a request to the card team about the card, and the case is closed as requested. The desk's lookup of the card records was refused, so it never saw them, and the record does not confirm that the card is actually blocked or which card it is; nothing further is recorded as left for a person.",
             "type": "text"
           }
         ],
@@ -1629,8 +1684,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2771,
-          "output_tokens": 132,
+          "input_tokens": 3313,
+          "output_tokens": 135,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1638,13 +1693,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.126310500083491,
-      "input_tokens": 2771,
-      "output_tokens": 132,
-      "cost_usd": 0.006862,
+      "seconds": 1.8483584999339655,
+      "input_tokens": 3313,
+      "output_tokens": 135,
+      "cost_usd": 0.007976,
       "error": null,
       "replayed": false,
-      "digest": "888274af65ee17b50787fecfbb29f0579088f54b86b774d0334649a5a732afff"
+      "digest": "f5f57bdb5c27dd8091ffaa01a95c11d35050874712877f819bad0de01f84f2e0"
     }
   ]
 }

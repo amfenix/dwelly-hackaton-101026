@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified on a call, said she didn't recognise a £38.40 Fern & Finch Books card purchase from 14 July 2025. She asked the desk to raise it with the card team and to tell her how to protect her card. The desk registered the request with the card team, and the case closed as requested. The card-protection advice she asked for was not given, so that is still left for a person, and the desk's card check returned nothing, so the transaction was not confirmed against card records.
+Mara Ellery, verified on a call, said she doesn't recognise a £38.40 Fern & Finch Books card purchase from 14 July 2025. She asked the desk to raise it with the card team and to tell her how to protect her card. The desk registered the dispute with the card team and closed the case as requested; its attempt to query the card system first was refused because this is a register-type request. No advice on protecting her card was given, so that part of her question is still open for a person to answer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -76,6 +76,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register)
 
 ## Final result
 

@@ -40,39 +40,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-034-at-02:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-034-at-02:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-034-at-02:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.70 → question.
-50. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → fee (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
-55. `next_system`: not known → tariff (by `route-tariff`).
-56. The agent asked for `ask_system` {"system": "tariff"}.
-57. Rule `tariff-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = tariff → true (args.system=tariff); next_system = tariff → true (next_system=tariff); next_system absent → false (next_system=tariff); tariff_asked absent → true (tariff_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-58. State `TRIAGED` → `ASK_PENDING` (by `tariff-ask`).
-59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-60. Called `ask_system` (attempt 1, key banking-034-at-02:do-ask:16).
-61. Action in the world: `ask_system` {"system": "tariff", "about": "fee", "amount": "3.20"}.
-62. `ask_system` found {}.
-63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-64. The case closed in `ASKED`: **ask_system**.
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-034-at-02:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-034-at-02:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-034-at-02:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.70 → question.
+53. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → fee (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
+58. `next_system`: not known → tariff (by `route-tariff`).
+59. The agent asked for `ask_system` {"system": "tariff"}.
+60. Rule `tariff-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = tariff → true (args.system=tariff); next_system = tariff → true (next_system=tariff); next_system absent → false (next_system=tariff); tariff_asked absent → true (tariff_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+61. State `TRIAGED` → `ASK_PENDING` (by `tariff-ask`).
+62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+63. Called `ask_system` (attempt 1, key banking-034-at-02:do-ask:17).
+64. Action in the world: `ask_system` {"system": "tariff", "about": "fee", "amount": "3.20"}.
+65. `ask_system` found {}.
+66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+67. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7106 tokens in, 457 out, 4.356 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7096 tokens in, 515 out, 4.552 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the tariff system about the £3.20 fee on the foreign-currency cash withdrawal, and the desk accepted the request. The case is now closed at this step.
+> I asked the tariff system about the £3.20 fee on Mara Ellery's foreign-currency cash withdrawal. The request was accepted and the case is now marked final under "ask_system".
 > 
-> The tariff system's answer hasn't come back into the case yet. So I can't yet tell Mara which tariff entry applied or how it produces £3.20. The next step is to reply to her once that answer is in the case.
+> The tariff system's answer isn't in the case yet, so I can't say which tariff entry applied or how the £3.20 was worked out. I haven't replied to the customer. She is not verified, and the case holds no tariff answer to base a reply on. I also haven't escalated, because the tariff lookup hasn't been refused or contradicted. If the case stays open, it goes to a person.

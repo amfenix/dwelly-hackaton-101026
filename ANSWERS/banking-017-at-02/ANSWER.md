@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked the desk to check the scheduled standing-order run for her missing rent payment and say whether H&V executed it and what status the bank recorded. The desk classified this as a question about a standing order and sent an inquiry to the recurring payments system, then closed the case at that step. The system's answer is not in the record, so whether the payment was executed and its recorded status remain unanswered, and Mara's identity is still marked unverified.
+Mara Ellery, a customer on secure chat whose identity was not verified, asked the desk to check whether her rent standing order was executed and what status the bank has recorded. The desk classified this as a question about a standing order and sent a query to the recurring-payments system, which returned nothing in the record. No answer about the payment's status has been given yet, so what remains is for someone to read the recurring system's response and report it to her.
 
 _Written by a model from the record below; the sections below are the record._
 

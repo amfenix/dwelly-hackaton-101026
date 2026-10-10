@@ -36,40 +36,45 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 32. Rule `read-tariff` fired: state = READING → true (state=READING).
 33. Called `check_tariff` (attempt 1, key banking-001-at-01:read-tariff:10).
 34. `check_tariff` found {}.
-35. Rule `read-registration` fired: state = READING → true (state=READING).
-36. Called `check_registration` (attempt 1, key banking-001-at-01:read-registration:11).
-37. `check_registration` found {}.
-38. Rule `read-confirmation` fired: state = READING → true (state=READING).
-39. Called `check_confirmation` (attempt 1, key banking-001-at-01:read-confirmation:12).
-40. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): One-off transfer to Alder & Reed Workshop: debit shown in your account activity. [facts: confirmation='none', instructed_outside_portal=False]
-41. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-42. `confirmation`: not known → none (by `read-confirmation`).
-43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-44. Rule `triage` fired: state = READING → true (state=READING).
-45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-46. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-47. `request_type`: not known → question (by `triage`).
-48. `subject`: not known → transfer (by `triage`).
-49. State `READING` → `TRIAGED` (by `triage`).
-50. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-51. `next_system`: not known → payment (by `route-payment`).
-52. The agent asked for `ask_system` {"system": "payment"}.
-53. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-54. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-56. Called `ask_system` (attempt 1, key banking-001-at-01:do-ask:16).
-57. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
-58. `ask_system` found {}.
-59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-60. The case closed in `ASKED`: **ask_system**.
+35. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+36. Called `check_bank_actions` (attempt 1, key banking-001-at-01:read-bank-actions:11).
+37. `check_bank_actions` found {}.
+38. Rule `read-registration` fired: state = READING → true (state=READING).
+39. Called `check_registration` (attempt 1, key banking-001-at-01:read-registration:12).
+40. `check_registration` found {}.
+41. Rule `read-confirmation` fired: state = READING → true (state=READING).
+42. Called `check_confirmation` (attempt 1, key banking-001-at-01:read-confirmation:13).
+43. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): One-off transfer to Alder & Reed Workshop: debit shown in your account activity. [facts: confirmation='none', instructed_outside_portal=False]
+44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+45. `confirmation`: not known → none (by `read-confirmation`).
+46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+47. Rule `triage` fired: state = READING → true (state=READING).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+50. `request_type`: not known → question (by `triage`).
+51. `subject`: not known → transfer (by `triage`).
+52. State `READING` → `TRIAGED` (by `triage`).
+53. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+54. `next_system`: not known → payment (by `route-payment`).
+55. The agent asked for `ask_system` {"system": "payment"}.
+56. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+57. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+58. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+59. Called `ask_system` (attempt 1, key banking-001-at-01:do-ask:17).
+60. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
+61. `ask_system` found {}.
+62. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+63. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6577 tokens in, 422 out, 10.711 s, cost $0.0136; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6601 tokens in, 452 out, 6.943 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case points to the payment system as the next place to check, so I'll ask it.
-> I asked the payment system whether Harrow & Vale sent the £420 transfer to Alder & Reed Workshop. The request was accepted and the case is closed on that step.
+> The facts point to the payment system as the next place to look, so I'll ask it whether H&V sent the transfer.
+> I asked the payment system whether H&V sent the £420 transfer to Alder & Reed Workshop. The case is now marked as asked, but no answer has come back yet. So I can't yet tell you whether the payment was sent.
 > 
-> The case holds no answer from the payment system yet. The only evidence so far is the debit in the customer's account activity. We still can't tell the customer whether the payment was sent, and there is no confirmation on record for it.
+> What the records show so far is the £420 debit in your account activity. There is no confirmation of the transfer on file.
+> 
+> I'm stopping here. The next step is to wait for the payment system's answer and then reply to you with it.

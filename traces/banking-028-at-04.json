@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -114,7 +117,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "Elowen Mercer, a verified caller, asked to change the phone number on her profile because she no longer has her old phone, and she asked what the approved way to confirm a replacement is. The desk found no confirmation on file, since her request came by email rather than the secure portal, so it sent her a confirmation request for the profile change and closed the case in the confirmation-sent state. The profile has not been changed; what remains is for Elowen Mercer to confirm the change herself in the secure portal.",
+  "summary": "Elowen Mercer, verified on a call, asked to change the phone number on her profile because she no longer has her old phone, and asked for the approved way to confirm a replacement. Since a change has to be confirmed by the customer in the secure portal and not by email or chat, the desk sent her a confirmation request for the profile change and made no change itself. What is left is for Elowen to confirm the change in the portal, and her profile stays as it is until she does.",
   "journal": [
     {
       "seq": 1,
@@ -242,7 +245,7 @@
     },
     {
       "seq": 13,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "trigger",
       "name": "read-payment",
       "on": null,
@@ -260,7 +263,7 @@
     },
     {
       "seq": 14,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "call",
       "function": "check_payment",
       "attempt": 1,
@@ -405,14 +408,14 @@
     },
     {
       "seq": 27,
-      "at": 0.002,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_access",
       "values": {}
     },
     {
       "seq": 28,
-      "at": 0.002,
+      "at": 0.001,
       "kind": "trigger",
       "name": "read-business",
       "on": null,
@@ -430,7 +433,7 @@
     },
     {
       "seq": 29,
-      "at": 0.002,
+      "at": 0.001,
       "kind": "call",
       "function": "check_business",
       "attempt": 1,
@@ -516,7 +519,7 @@
       "seq": 37,
       "at": 0.002,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -534,23 +537,23 @@
       "seq": 38,
       "at": 0.002,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-028-at-04:read-registration:11",
+      "key": "banking-028-at-04:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 39,
       "at": 0.002,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 40,
       "at": 0.002,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -568,20 +571,54 @@
       "seq": 41,
       "at": 0.002,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-028-at-04:read-confirmation:12",
+      "key": "banking-028-at-04:read-registration:12",
       "args": {}
     },
     {
       "seq": 42,
+      "at": 0.002,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 43,
+      "at": 0.002,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 44,
+      "at": 0.002,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-028-at-04:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 45,
       "at": 0.002,
       "kind": "note",
       "text": "event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: confirmation='none', instructed_outside_portal=True]",
       "by": "read-confirmation"
     },
     {
-      "seq": 43,
+      "seq": 46,
       "at": 0.002,
       "kind": "returned",
       "function": "check_confirmation",
@@ -591,7 +628,7 @@
       }
     },
     {
-      "seq": 44,
+      "seq": 47,
       "at": 0.002,
       "kind": "set",
       "field": "confirmation",
@@ -600,7 +637,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 45,
+      "seq": 48,
       "at": 0.002,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -609,7 +646,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.002,
       "kind": "trigger",
       "name": "triage",
@@ -627,8 +664,8 @@
       "note": ""
     },
     {
-      "seq": 47,
-      "at": 0.274,
+      "seq": 50,
+      "at": 0.297,
       "kind": "choice",
       "field": "request_type",
       "raw": "change",
@@ -639,8 +676,8 @@
       "attempt": 1
     },
     {
-      "seq": 48,
-      "at": 0.274,
+      "seq": 51,
+      "at": 0.297,
       "kind": "choice",
       "field": "subject",
       "raw": "profile",
@@ -651,8 +688,8 @@
       "attempt": 1
     },
     {
-      "seq": 49,
-      "at": 0.274,
+      "seq": 52,
+      "at": 0.297,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -660,8 +697,8 @@
       "by": "triage"
     },
     {
-      "seq": 50,
-      "at": 0.274,
+      "seq": 53,
+      "at": 0.297,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -669,16 +706,16 @@
       "by": "triage"
     },
     {
-      "seq": 51,
-      "at": 0.274,
+      "seq": 54,
+      "at": 0.297,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 52,
-      "at": 0.274,
+      "seq": 55,
+      "at": 0.297,
       "kind": "trigger",
       "name": "route-access",
       "on": null,
@@ -709,8 +746,8 @@
       "note": ""
     },
     {
-      "seq": 53,
-      "at": 0.274,
+      "seq": 56,
+      "at": 0.297,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -718,8 +755,8 @@
       "by": "route-access"
     },
     {
-      "seq": 54,
-      "at": 0.274,
+      "seq": 57,
+      "at": 0.297,
       "kind": "trigger",
       "name": "change-needs-confirmation",
       "on": null,
@@ -757,16 +794,16 @@
       "note": "A change is confirmed by the customer in the secure portal, not in chat or by email."
     },
     {
-      "seq": 55,
-      "at": 0.274,
+      "seq": 58,
+      "at": 0.297,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "CONFIRM_PENDING",
       "by": "change-needs-confirmation"
     },
     {
-      "seq": 56,
-      "at": 0.274,
+      "seq": 59,
+      "at": 0.297,
       "kind": "trigger",
       "name": "do-confirm",
       "on": null,
@@ -783,17 +820,17 @@
       "note": ""
     },
     {
-      "seq": 57,
-      "at": 0.274,
+      "seq": 60,
+      "at": 0.297,
       "kind": "call",
       "function": "send_for_confirmation",
       "attempt": 1,
-      "key": "banking-028-at-04:do-confirm:16",
+      "key": "banking-028-at-04:do-confirm:17",
       "args": {}
     },
     {
-      "seq": 58,
-      "at": 0.274,
+      "seq": 61,
+      "at": 0.297,
       "kind": "action",
       "type": "send_for_confirmation",
       "args": {
@@ -801,26 +838,26 @@
         "to": "Elowen Mercer"
       },
       "by": "do-confirm",
-      "key": "banking-028-at-04:do-confirm:16"
+      "key": "banking-028-at-04:do-confirm:17"
     },
     {
-      "seq": 59,
-      "at": 0.274,
+      "seq": 62,
+      "at": 0.297,
       "kind": "returned",
       "function": "send_for_confirmation",
       "values": {}
     },
     {
-      "seq": 60,
-      "at": 0.274,
+      "seq": 63,
+      "at": 0.297,
       "kind": "state",
       "frm": "CONFIRM_PENDING",
       "to": "CONFIRMATION_SENT",
       "by": "do-confirm"
     },
     {
-      "seq": 61,
-      "at": 0.274,
+      "seq": 64,
+      "at": 0.297,
       "kind": "final",
       "state": "CONFIRMATION_SENT",
       "outcome": "send_for_confirmation"
@@ -918,7 +955,7 @@
           }
         }
       },
-      "seconds": 0.2715444000205025,
+      "seconds": 0.2943739000475034,
       "input_tokens": 912,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1067,16 +1104,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYa7cUPnTzJncjG9srd",
+        "id": "msg_011CftZz9y9AAT5LD8KQFmSk",
         "container": null,
         "content": [
           {
-            "signature": "CAQSkgYKEAgSGAI4AUIIdGhpbmtpbmcSDGolQ7EUbqTHHeiAwhoMIW0s0hv5bKDqHWf5IjD+ORA4ZvrsguXY32ODb2nZsXoKVMVY5G0wpDhGJpW+7ZfL5CNSijrraYbo4+vwZKAqrwXx9oTQob8Rk/v+0SuBZzYPUh9aY14TZlNPOWTKKc1shTTMNVI41vMlTs44o9uHlqQdPt9Qc29fPMZdd9cmDY1EP05vWKeOo9I35GJirKQjqtR1DmFN0Yf2mW25vGzzYclvnTI60FA0czSrHNutI9X2fN4mNgrWIBKTfHjNnqH3804I7V2wcNBYfzbB2ZhdRTLQaOISEzTY3g8DZUoCquztuRR+0sWvpPUjFXO2TMkoaAeZCg7vxreDUGYe4GR15ZH5G8g7M6QuXE1hWWuDApX8BaTAW3UNiXAwO2W1suBmSaBNn9li7N5hUDabL9CNj2Hogaj2/eyrnEEZObRuytxIw4E3mkaf8kEYE/jgmly7MyHGVzf9GZM8ksRREQn7lSASlufo2IPwjb7eJXkDaJyDbrW9aezH9Cpd670su5pbcN8GSHAHwLgplzstANMS0zJCxyaYE5vXDtdfaisrvWHg/1hPwMmkL1pUPhEIzEPdkwik1bp/QkcetRJn0R4e72ZhP8uU4aXZdNGyqNsW0tFeNEx4Jp5SoXUKRfAqRMYJnI+suKP1aQvbIpBfzZqoZkxfcVX0S5ohmU7I6EdZsKtgz2W/Lkqh6K6JHz+JYDxl1n4F6mKnDbfp/Zg1BdH+8oXDMsevVaKqg01mAqTZFoqsiJW4Iu49TpoPhYonKop6ZIxPCHt676hCmKhdrFmoECKtaV/M23Fl1XvGNnqfDyoPTYphfKpNS0BtmQxQ3c6ZMKDwWUmScc3AB4gERjItHRksZ7bt6YuDItrUyNCxAlMtxjxJqjhsn7cVn0qtnDPoDNas4qO/JZYb1NdDpm2v0rlJ3IPAfr3ljxu2ylGkPRti18Uy4rjn+3fKrWNWN1yRiUBxar3swhO0wk4g+/oFwdSELGh8HsjMeH/VE+rAZ1YYAQ==",
+            "signature": "CAQSvAYKEAgSGAI4AUIIdGhpbmtpbmcSDLpf81YWm5BMePg16hoMnI6vf72+RphZiM1RIjBsNKM3LblsUXK5tqViTdlaPSXhq2hGxMH7npXGKqEV8DAjAbsUdjOKh/mHdRl6cu4q2QVjm03Q4mEXTtm3KpBCeCi72CqYlxrmdMoIUMFrrllIX9OXRXspftt1vYJHDcJllCkta6n0aGwUfdyBcnQJudgntFCFwfE/2b8K74EETa9ToKgDhM4on2aVrNcMrKjLvR9w+FazUoc5UWVmyl+AUV9N1QDqOfc7p1yk+ELZGuxTlOvuHKhu49/1UNPmnVdRlYhc8EOejKwcLrwQhpmUHCEx7xrksJ3r0gaGXaoAUy062dhLfsr0F2k1ss+IZ4g/SwBxzxbgNtwgTAaCT6WDQ8EVDKPjVdnYYsd4+iOwQemyq40ARnbSXHWNGSK6FBvohvY0erMKZvTZE/tOEG8gRJ+6nHSraXTZ2N20WX3UG7/LlY18hcJZx8/NBoCKpJT3438fEQZpP2AwgyTR5wIx9WFBkFQAdVKaZfbHsj7wPBKKrgUSXPkhC4Qn3zpt2Rtv0ULOFFog9PA/dplOPu3Az8q+qZzyYiHNP41Y2m+ErpCl0VJb72sCNVPi/2GC5GL5WBvWaM82PKvwqPJxDnuSMRTw6R0D76K11HEeRMzeyJGjV3Tv2+abDmkfDKoXsaIsvPZL+zUzv/Fqx/HNCQE+6DfMx+hNpP5hQUqHd48VPOsLgrA8V2uB06AwWYPTGQ7tinIrdsI2yMNv+/fl6e6kAzhmb8bjEtXW1oEjtSNakmfYVtQijsnzSI91pcBpQOch7QD2YTvL4A8Dfhzhm6pooOlZbNx83/9QsTwvus07uFyxh2m7BxZXYEwZMzs+tkKZmegYVAisIqlQpuy2W9c0dLrOtABOfIeU4E2o0bg4Llz0HVg38UdlchrpqwuwlbMAKjZ3jEI9M82hLgpOV7dOighYB1WqJWGXjbR1YOtpbZ7wRl6rT2ZI2j6ygm9cN0+ZLkXCvg8YOVtU2gwv+Defn2P1n+pUc0LtZzZgp6tbuZek2gUHBQ6fLqRjWvRmK2JBQNYD3ZK4rO1RWpsYAQ==",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01242AuPFQih6C6AJ3RmmaiE",
+            "id": "toolu_01MRrSxfmmXQkojFfPmhxfru",
             "caller": {
               "type": "direct"
             },
@@ -1102,18 +1139,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1934,
-          "output_tokens": 107,
+          "output_tokens": 123,
           "output_tokens_details": {
-            "thinking_tokens": 80
+            "thinking_tokens": 96
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 2.0430750000523403,
+      "seconds": 1.7967362999916077,
       "input_tokens": 1934,
-      "output_tokens": 107,
-      "cost_usd": 0.004938,
+      "output_tokens": 123,
+      "cost_usd": 0.005098,
       "error": null,
       "replayed": false,
       "digest": "900c640f27f6085fd8cf4d998059c3707c22f8f6ebc35c7b5aa341754fd4d1c5"
@@ -1260,12 +1297,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSkgYKEAgSGAI4AUIIdGhpbmtpbmcSDGolQ7EUbqTHHeiAwhoMIW0s0hv5bKDqHWf5IjD+ORA4ZvrsguXY32ODb2nZsXoKVMVY5G0wpDhGJpW+7ZfL5CNSijrraYbo4+vwZKAqrwXx9oTQob8Rk/v+0SuBZzYPUh9aY14TZlNPOWTKKc1shTTMNVI41vMlTs44o9uHlqQdPt9Qc29fPMZdd9cmDY1EP05vWKeOo9I35GJirKQjqtR1DmFN0Yf2mW25vGzzYclvnTI60FA0czSrHNutI9X2fN4mNgrWIBKTfHjNnqH3804I7V2wcNBYfzbB2ZhdRTLQaOISEzTY3g8DZUoCquztuRR+0sWvpPUjFXO2TMkoaAeZCg7vxreDUGYe4GR15ZH5G8g7M6QuXE1hWWuDApX8BaTAW3UNiXAwO2W1suBmSaBNn9li7N5hUDabL9CNj2Hogaj2/eyrnEEZObRuytxIw4E3mkaf8kEYE/jgmly7MyHGVzf9GZM8ksRREQn7lSASlufo2IPwjb7eJXkDaJyDbrW9aezH9Cpd670su5pbcN8GSHAHwLgplzstANMS0zJCxyaYE5vXDtdfaisrvWHg/1hPwMmkL1pUPhEIzEPdkwik1bp/QkcetRJn0R4e72ZhP8uU4aXZdNGyqNsW0tFeNEx4Jp5SoXUKRfAqRMYJnI+suKP1aQvbIpBfzZqoZkxfcVX0S5ohmU7I6EdZsKtgz2W/Lkqh6K6JHz+JYDxl1n4F6mKnDbfp/Zg1BdH+8oXDMsevVaKqg01mAqTZFoqsiJW4Iu49TpoPhYonKop6ZIxPCHt676hCmKhdrFmoECKtaV/M23Fl1XvGNnqfDyoPTYphfKpNS0BtmQxQ3c6ZMKDwWUmScc3AB4gERjItHRksZ7bt6YuDItrUyNCxAlMtxjxJqjhsn7cVn0qtnDPoDNas4qO/JZYb1NdDpm2v0rlJ3IPAfr3ljxu2ylGkPRti18Uy4rjn+3fKrWNWN1yRiUBxar3swhO0wk4g+/oFwdSELGh8HsjMeH/VE+rAZ1YYAQ==",
+                "signature": "CAQSvAYKEAgSGAI4AUIIdGhpbmtpbmcSDLpf81YWm5BMePg16hoMnI6vf72+RphZiM1RIjBsNKM3LblsUXK5tqViTdlaPSXhq2hGxMH7npXGKqEV8DAjAbsUdjOKh/mHdRl6cu4q2QVjm03Q4mEXTtm3KpBCeCi72CqYlxrmdMoIUMFrrllIX9OXRXspftt1vYJHDcJllCkta6n0aGwUfdyBcnQJudgntFCFwfE/2b8K74EETa9ToKgDhM4on2aVrNcMrKjLvR9w+FazUoc5UWVmyl+AUV9N1QDqOfc7p1yk+ELZGuxTlOvuHKhu49/1UNPmnVdRlYhc8EOejKwcLrwQhpmUHCEx7xrksJ3r0gaGXaoAUy062dhLfsr0F2k1ss+IZ4g/SwBxzxbgNtwgTAaCT6WDQ8EVDKPjVdnYYsd4+iOwQemyq40ARnbSXHWNGSK6FBvohvY0erMKZvTZE/tOEG8gRJ+6nHSraXTZ2N20WX3UG7/LlY18hcJZx8/NBoCKpJT3438fEQZpP2AwgyTR5wIx9WFBkFQAdVKaZfbHsj7wPBKKrgUSXPkhC4Qn3zpt2Rtv0ULOFFog9PA/dplOPu3Az8q+qZzyYiHNP41Y2m+ErpCl0VJb72sCNVPi/2GC5GL5WBvWaM82PKvwqPJxDnuSMRTw6R0D76K11HEeRMzeyJGjV3Tv2+abDmkfDKoXsaIsvPZL+zUzv/Fqx/HNCQE+6DfMx+hNpP5hQUqHd48VPOsLgrA8V2uB06AwWYPTGQ7tinIrdsI2yMNv+/fl6e6kAzhmb8bjEtXW1oEjtSNakmfYVtQijsnzSI91pcBpQOch7QD2YTvL4A8Dfhzhm6pooOlZbNx83/9QsTwvus07uFyxh2m7BxZXYEwZMzs+tkKZmegYVAisIqlQpuy2W9c0dLrOtABOfIeU4E2o0bg4Llz0HVg38UdlchrpqwuwlbMAKjZ3jEI9M82hLgpOV7dOighYB1WqJWGXjbR1YOtpbZ7wRl6rT2ZI2j6ygm9cN0+ZLkXCvg8YOVtU2gwv+Defn2P1n+pUc0LtZzZgp6tbuZek2gUHBQ6fLqRjWvRmK2JBQNYD3ZK4rO1RWpsYAQ==",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01242AuPFQih6C6AJ3RmmaiE",
+                "id": "toolu_01MRrSxfmmXQkojFfPmhxfru",
                 "caller": {
                   "type": "direct"
                 },
@@ -1281,7 +1318,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01242AuPFQih6C6AJ3RmmaiE",
+                "tool_use_id": "toolu_01MRrSxfmmXQkojFfPmhxfru",
                 "content": "{\"state\": \"CONFIRMATION_SENT\", \"final\": true, \"outcome\": \"send_for_confirmation\", \"facts\": {\"requester\": \"Elowen Mercer\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true, \"subject\": \"profile\", \"confirmation\": \"none\", \"instructed_outside_portal\": true, \"request_type\": \"change\", \"next_system\": \"access\"}, \"refused\": []}"
               }
             ]
@@ -1289,12 +1326,17 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYaGHrL9VyBWvNCev7q",
+        "id": "msg_011CftZzHbWssSyzzdGUvUwN",
         "container": null,
         "content": [
           {
+            "signature": "CAQSrgUKEAgSGAI4AUIIdGhpbmtpbmcSDPREAC2cOI7BJKWB/BoMrDAdyq5MMz2ElLxnIjBuLZzn9nJbBkCWwGmbN62mm9LdApuvdEBbT3ueW6Id4bQpyZtyA1P2oXl6kA2jwA0qywQu/Xbloe5Mq8Os75/oBFRfKAGAQ8UDX0vc3IuEhss2INMnHhCF6GcuqI4uUZwKQhTw23jRYpV5vixwCNUtwYIrO0jzSCYLTmo9OwcwXecDm3yZCpbeIfn+Jejx+WLx0ZsjVw5gYOaRw8xJB11u0lHlngvvmkjIV83Pgpvr0PYZilc2WZJKFo0Zsi5w2qRVLvEOWyCnxxNeLyhuOVNcOy7WgxdjXdO0Mo3tRNmKzPC69O7f0YYEn/vj2GgYFqaa51lH/Cafi7Au7aXW14EbZ72mwZvYiUnFUoV0iqjgHZVtTJYqKb6UgUPwHxO7XGyM6JT28EwLY3XelTIEIwggJ2XX9imcB4hIRAnYB1nLRlHx3Wti368yCC5LiIzCPDizCVM99t6DTcDj10ioQXr6TYD1a+xS4mNRo9ojdrLDOIo6pdLasLU2uPOhK2K6KwmZ9myA1JQy2T15kX0HZfJoJY1xi2I7hzzBcQtppKDMj70v2YR3O+38PbxVbqHmlZhH49JndlRN2aUs1nQtqH5ZHFxx2570Vf8KPxgAoHPZFn0GQx9jcOq82RILDRliaOGCCdpbsJwpeOpmt2i0BfRoTYEeAmz2lpBkk9N/LVYV2agqA+N1BEnMTUM25UwZZz0crzkqcu/q0wicOKP7jCdsbRNcoYfvKj0I8q6ZltTGWH1lAG1uu8yrxoPa8cy14HqeU6ovJISIy5uVR6Dv1cX73Tt9vpMCbtz5QqZowO6nBx8fqKTzW196g08n/gfpK3W6pXGLqUrWH3/z41pk6RgB",
+            "thinking": "",
+            "type": "thinking"
+          },
+          {
             "citations": null,
-            "text": "The case is already in its final state. The bank sent a confirmation request to the customer through the secure portal, and nothing changes on the profile until Elowen Mercer confirms the new number there. I'm not taking any further action.",
+            "text": "The case is already closed, and I took no further action. The secure portal has sent the customer a request to confirm the replacement phone number. No change will be made to Elowen Mercer's profile until she confirms it there. Her identity was verified on the call, and her instruction in this case did not come through the portal, so her confirmation in the portal is the step that is still missing.",
             "type": "text"
           }
         ],
@@ -1313,22 +1355,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2180,
-          "output_tokens": 70,
+          "input_tokens": 2196,
+          "output_tokens": 139,
           "output_tokens_details": {
-            "thinking_tokens": 0
+            "thinking_tokens": 27
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.5592114999890327,
-      "input_tokens": 2180,
-      "output_tokens": 70,
-      "cost_usd": 0.00506,
+      "seconds": 1.9524884999264032,
+      "input_tokens": 2196,
+      "output_tokens": 139,
+      "cost_usd": 0.005782,
       "error": null,
       "replayed": false,
-      "digest": "a492763b4ac5dc04db843f08a3eb1fb2f49c9e9adf8291402e7cc89abfa310cb"
+      "digest": "441fe768391bea5a25630b2960a1df1b781ae34f9f6f90ff5bd053c66d1abed8"
     },
     {
       "kind": "generate",
@@ -1341,17 +1383,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"send_for_confirmation\",\n  \"state\": \"CONFIRMATION_SENT\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Elowen Mercer\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"profile\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": true,\n    \"request_type\": \"change\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"send_for_confirmation\",\n      \"args\": {\n        \"change\": \"profile\",\n        \"to\": \"Elowen Mercer\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-028-at-04: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-028-at-04:read-requester:1).\n4. Note from `read-requester`: event 2 (Elowen Mercer): After you completed H&V’s identification checks, I explained that the old phone is unavailable and asked for this to be escalated. I can confirm the replacement number through a secure bank process. [facts: requester='Elowen Mercer', role='customer', channel='verified_call', verified=True]\n5. `identify_requester` found {\"requester\": \"Elowen Mercer\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n6. `requester`: not known → Elowen Mercer (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → verified_call (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-028-at-04:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-028-at-04:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-028-at-04:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-028-at-04:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-028-at-04:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-028-at-04:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-028-at-04:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-028-at-04:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-028-at-04:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-registration` fired: state = READING → true (state=READING).\n38. Called `check_registration` (attempt 1, key banking-028-at-04:read-registration:11).\n39. `check_registration` found {}.\n40. Rule `read-confirmation` fired: state = READING → true (state=READING).\n41. Called `check_confirmation` (attempt 1, key banking-028-at-04:read-confirmation:12).\n42. Note from `read-confirmation`: event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: confirmation='none', instructed_outside_portal=True]\n43. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": true}.\n44. `confirmation`: not known → none (by `read-confirmation`).\n45. `instructed_outside_portal`: not known → True (by `read-confirmation`).\n46. Rule `triage` fired: state = READING → true (state=READING).\n47. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.\n48. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.\n49. `request_type`: not known → change (by `triage`).\n50. `subject`: not known → profile (by `triage`).\n51. State `READING` → `TRIAGED` (by `triage`).\n52. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).\n53. `next_system`: not known → access (by `route-access`).\n54. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.\n55. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).\n56. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).\n57. Called `send_for_confirmation` (attempt 1, key banking-028-at-04:do-confirm:16).\n58. Action in the world: `send_for_confirmation` {\"change\": \"profile\", \"to\": \"Elowen Mercer\"}.\n59. `send_for_confirmation` found {}.\n60. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).\n61. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.\n\n## Model calls\n\n3 calls, 5026 tokens in, 376 out, 3.874 s, cost $0.0100; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The case is already in its final state. The bank sent a confirmation request to the customer through the secure portal, and nothing changes on the profile until Elowen Mercer confirms the new number there. I'm not taking any further action.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"send_for_confirmation\",\n  \"state\": \"CONFIRMATION_SENT\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Elowen Mercer\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"profile\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": true,\n    \"request_type\": \"change\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"send_for_confirmation\",\n      \"args\": {\n        \"change\": \"profile\",\n        \"to\": \"Elowen Mercer\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-028-at-04: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-028-at-04:read-requester:1).\n4. Note from `read-requester`: event 2 (Elowen Mercer): After you completed H&V’s identification checks, I explained that the old phone is unavailable and asked for this to be escalated. I can confirm the replacement number through a secure bank process. [facts: requester='Elowen Mercer', role='customer', channel='verified_call', verified=True]\n5. `identify_requester` found {\"requester\": \"Elowen Mercer\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n6. `requester`: not known → Elowen Mercer (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → verified_call (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-028-at-04:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-028-at-04:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-028-at-04:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-028-at-04:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-028-at-04:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-028-at-04:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-028-at-04:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-028-at-04:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-028-at-04:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n38. Called `check_bank_actions` (attempt 1, key banking-028-at-04:read-bank-actions:11).\n39. `check_bank_actions` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-028-at-04:read-registration:12).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-028-at-04:read-confirmation:13).\n45. Note from `read-confirmation`: event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: confirmation='none', instructed_outside_portal=True]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": true}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → True (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.\n51. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.\n52. `request_type`: not known → change (by `triage`).\n53. `subject`: not known → profile (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).\n56. `next_system`: not known → access (by `route-access`).\n57. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.\n58. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).\n59. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).\n60. Called `send_for_confirmation` (attempt 1, key banking-028-at-04:do-confirm:17).\n61. Action in the world: `send_for_confirmation` {\"change\": \"profile\", \"to\": \"Elowen Mercer\"}.\n62. `send_for_confirmation` found {}.\n63. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).\n64. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.\n\n## Model calls\n\n3 calls, 5042 tokens in, 461 out, 4.044 s, cost $0.0109; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The case is already closed, and I took no further action. The secure portal has sent the customer a request to confirm the replacement phone number. No change will be made to Elowen Mercer's profile until she confirms it there. Her identity was verified on the call, and her instruction in this case did not come through the portal, so her confirmation in the portal is the step that is still missing.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYaP1fddXLwH76wBBjN",
+        "id": "msg_011CftZzS1nmKHNrzdDXwt1i",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Elowen Mercer, a verified caller, asked to change the phone number on her profile because she no longer has her old phone, and she asked what the approved way to confirm a replacement is. The desk found no confirmation on file, since her request came by email rather than the secure portal, so it sent her a confirmation request for the profile change and closed the case in the confirmation-sent state. The profile has not been changed; what remains is for Elowen Mercer to confirm the change herself in the secure portal.",
+            "text": "Elowen Mercer, verified on a call, asked to change the phone number on her profile because she no longer has her old phone, and asked for the approved way to confirm a replacement. Since a change has to be confirmed by the customer in the secure portal and not by email or chat, the desk sent her a confirmation request for the profile change and made no change itself. What is left is for Elowen to confirm the change in the portal, and her profile stays as it is until she does.",
             "type": "text"
           }
         ],
@@ -1370,8 +1412,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2595,
-          "output_tokens": 155,
+          "input_tokens": 2724,
+          "output_tokens": 143,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1379,13 +1421,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.2269049999304116,
-      "input_tokens": 2595,
-      "output_tokens": 155,
-      "cost_usd": 0.00674,
+      "seconds": 2.0589594000484794,
+      "input_tokens": 2724,
+      "output_tokens": 143,
+      "cost_usd": 0.006878,
       "error": null,
       "replayed": false,
-      "digest": "1378db963d08cb7d0706537d71d692f22ee2b30c203985d72df95bcb25a840ff"
+      "digest": "9ab4ba0b2ca6239ac6999d8b54d244d7fa34331bfcdc668c19529e488a5b0043"
     }
   ]
 }

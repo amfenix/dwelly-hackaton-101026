@@ -122,6 +122,9 @@ the reply tool is safe to use.
 | 1. labels fixed | 113 (76%) |
 | 2. routing bug, 4c, 4e, 5 (`clarify`, `redirect_secure`, `forward_to_authority`) | 119 (80%) |
 | the agent's prompt halved (446 → 200 words; tools 465 → 329), one contradiction removed | 118 (79%) |
+| six request types; Jev as the classifier (triage eval 99%) | 120 (81%) |
+| reader fixes and `check_tariff` (track functions) | 123 (83%) |
+| labels: a system's answer that reaches the customer after a request is `wait`; "I'll check" is a check; the policy: a confirmed change is applied by the system, a step the bank took is not taken again (`check_bank_actions`), a registration wait only for registrations, a document not ready is ordered, a card instruction needs no check, the latest request to a system stands | 137 (92%) |
 
 A difference of one or two points between runs is the agent's own variation. Still open: 3 (the
 functions' owner), 4d (waits for `check_tariff`), 5 (triage wording), and two new findings: 045@4

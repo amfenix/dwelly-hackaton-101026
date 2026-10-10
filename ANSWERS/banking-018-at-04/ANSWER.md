@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified by call, asked the desk to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate. The desk looked up the payments and found two separate instruction records, one standing order and one direct debit mandate. It replied by call that there are two separate instructions, that this does not establish execution or the recipient's outcome, and that no new transfer was made. Neither instruction was cancelled, and the record shows nothing further for a person to do, though the question of which payment, if either, is a duplicate was not settled.
+Mara Ellison, verified by call, asked the desk to escalate and remove a duplicate of two future £34.80 payments to Northmere Heating. The desk replied by verified call that the record shows two separate payment instructions, that it does not establish execution or the recipient's outcome, and that no new transfer was made. It did not cancel or remove either instruction, and the record shows nothing further queued, so which line she wants removed, if either, is left for a person to settle with her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -92,6 +92,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: args.system = payment is false (args.system=recurring); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment)
 
 ## Final result
 

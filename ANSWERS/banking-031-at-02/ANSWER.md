@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, a customer writing over secure chat, said she still can't find her June statement in the portal and wanted it made available there, not sent by email. The desk classed this as a question about a statement and asked the documents system about it, and the case closed at that step. The documents system's answer is not in the record, so it is still unconfirmed whether the statement exists or why it isn't showing. Elowen is unverified, nothing was released or changed, and no reply has gone to her, so a person still has to follow up.
+Elowen Marr, writing over secure chat, said she still can't find her June statement in the portal and asked for it to be made available there rather than sent by email. The desk classified this as a question about a statement and asked the documents system about it, and the case closed at that step. The documents system returned nothing, so it is not known whether the statement exists or can be shown in the portal, and Elowen Marr is still recorded as not verified; any follow-up on getting the statement into the portal is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,6 +48,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
+  - document_ready = false → not known (document_ready=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)

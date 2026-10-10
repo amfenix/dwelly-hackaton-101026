@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an unverified customer on secure chat, asked whether her CSV export of transactions from 6 to 9 May 2025 had been created and asked to be told when it is in her secure portal. The desk classified this as a question about a document and sent an inquiry to the documents system about it. That system's answer is not in the case yet, so Mara has not been told whether the file is available, and a reply to her is still needed once the documents system responds.
+Mara Ellison asked, through secure chat, to be told when her CSV export of transactions from 6 to 9 May 2025 is available in her secure portal, since she wasn't sure how to tell whether it had been created. The desk classified this as a question about a document and sent an inquiry to the documents system, which returned nothing, so the case closed with no answer on whether the file exists. Her identity is still unverified, and nothing in the record shows who will tell her when the file is ready.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,6 +48,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
+  - document_ready = false → not known (document_ready=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)

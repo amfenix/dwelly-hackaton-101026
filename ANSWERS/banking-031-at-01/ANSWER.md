@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, a verified customer writing through the secure portal, said she couldn't find her June 2025 statement there and asked for help accessing it. The desk classed it as a question about a statement and asked the documents system about it, then closed the case at that step. The record shows no answer from the documents system yet, so whether the statement exists, why it isn't in the portal, and the reply to Elowen are still left for a person.
+Elowen Marr, a verified customer writing through the secure portal, said she couldn't find her June 2025 statement there and asked for help accessing it. The desk classified this as a question about a statement and asked the documents system about it, and the case closed in the asked state. The record doesn't show an answer from the documents system or whether the statement exists, so nothing has yet been delivered to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,6 +44,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
+  - document_ready = false → not known (document_ready=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)

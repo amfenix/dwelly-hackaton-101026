@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, writing over secure chat, asked about the stage of her transfer and whether she needed to authorise it. The desk checked the payment record, which shows the transfer as awaiting authorisation, and replied in the same chat saying exactly that, that the reply does not authorise the payment, and that no new transfer was made. Her identity was not verified, and nothing else is recorded as left for a person.
+Elise Rowan, who was not verified, asked over secure chat about a transfer that had no sent confirmation, and whether she needed to authorise it. The desk checked the payment record, saw it as awaiting authorisation, and replied in secure chat with that status, saying the reply does not authorise the payment and that no new transfer was made. The case is closed, and nothing is recorded as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

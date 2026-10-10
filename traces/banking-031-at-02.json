@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -94,7 +97,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Elowen Marr, a customer writing over secure chat, said she still can't find her June statement in the portal and wanted it made available there, not sent by email. The desk classed this as a question about a statement and asked the documents system about it, and the case closed at that step. The documents system's answer is not in the record, so it is still unconfirmed whether the statement exists or why it isn't showing. Elowen is unverified, nothing was released or changed, and no reply has gone to her, so a person still has to follow up.",
+  "summary": "Elowen Marr, writing over secure chat, said she still can't find her June statement in the portal and asked for it to be made available there rather than sent by email. The desk classified this as a question about a statement and asked the documents system about it, and the case closed at that step. The documents system returned nothing, so it is not known whether the statement exists or can be shown in the portal, and Elowen Marr is still recorded as not verified; any follow-up on getting the statement into the portal is left for a person.",
   "journal": [
     {
       "seq": 1,
@@ -385,14 +388,14 @@
     },
     {
       "seq": 27,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_access",
       "values": {}
     },
     {
       "seq": 28,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "trigger",
       "name": "read-business",
       "on": null,
@@ -496,7 +499,7 @@
       "seq": 37,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -514,23 +517,23 @@
       "seq": 38,
       "at": 0.001,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-031-at-02:read-registration:11",
+      "key": "banking-031-at-02:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 39,
       "at": 0.001,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 40,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -548,20 +551,54 @@
       "seq": 41,
       "at": 0.001,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-031-at-02:read-confirmation:12",
+      "key": "banking-031-at-02:read-registration:12",
       "args": {}
     },
     {
       "seq": 42,
+      "at": 0.001,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 43,
+      "at": 0.001,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 44,
+      "at": 0.001,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-031-at-02:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 45,
       "at": 0.001,
       "kind": "note",
       "text": "event 2 (Elowen Marr): I’m escalating this because I still can’t find my June statement in the portal. I need the statement itself made available there; I’m not asking for it by email. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 43,
+      "seq": 46,
       "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
@@ -571,7 +608,7 @@
       }
     },
     {
-      "seq": 44,
+      "seq": 47,
       "at": 0.001,
       "kind": "set",
       "field": "confirmation",
@@ -580,7 +617,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 45,
+      "seq": 48,
       "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -589,7 +626,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.001,
       "kind": "trigger",
       "name": "triage",
@@ -607,20 +644,20 @@
       "note": ""
     },
     {
-      "seq": 47,
-      "at": 0.273,
+      "seq": 50,
+      "at": 0.245,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
-      "confidence": 0.53,
+      "confidence": 0.57,
       "value": "question",
       "backend": "jev",
       "model": "jev-latest",
       "attempt": 1
     },
     {
-      "seq": 48,
-      "at": 0.273,
+      "seq": 51,
+      "at": 0.245,
       "kind": "choice",
       "field": "subject",
       "raw": "statement",
@@ -631,8 +668,8 @@
       "attempt": 1
     },
     {
-      "seq": 49,
-      "at": 0.273,
+      "seq": 52,
+      "at": 0.245,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -640,8 +677,8 @@
       "by": "triage"
     },
     {
-      "seq": 50,
-      "at": 0.273,
+      "seq": 53,
+      "at": 0.245,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -649,16 +686,16 @@
       "by": "triage"
     },
     {
-      "seq": 51,
-      "at": 0.273,
+      "seq": 54,
+      "at": 0.245,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 52,
-      "at": 0.273,
+      "seq": 55,
+      "at": 0.245,
       "kind": "trigger",
       "name": "route-documents",
       "on": null,
@@ -689,8 +726,8 @@
       "note": ""
     },
     {
-      "seq": 53,
-      "at": 0.273,
+      "seq": 56,
+      "at": 0.245,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -698,8 +735,8 @@
       "by": "route-documents"
     },
     {
-      "seq": 54,
-      "at": 2.124,
+      "seq": 57,
+      "at": 2.336,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -707,12 +744,12 @@
       }
     },
     {
-      "seq": 55,
-      "at": 2.125,
+      "seq": 58,
+      "at": 2.336,
       "kind": "trigger",
       "name": "documents-ask",
       "on": "ask_system",
-      "when": "state = TRIAGED and args.system = documents and (next_system = documents or next_system absent) and documents_asked absent and request_type not in [register, change, authority]",
+      "when": "state = TRIAGED and args.system = documents and (next_system = documents or next_system absent) and (documents_asked absent or document_ready = false) and request_type not in [register, change, authority]",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -750,6 +787,13 @@
           }
         },
         {
+          "test": "document_ready = false",
+          "result": null,
+          "values": {
+            "document_ready": null
+          }
+        },
+        {
           "test": "request_type not in [register, change, authority]",
           "result": true,
           "values": {
@@ -760,16 +804,16 @@
       "note": ""
     },
     {
-      "seq": 56,
-      "at": 2.125,
+      "seq": 59,
+      "at": 2.336,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "documents-ask"
     },
     {
-      "seq": 57,
-      "at": 2.125,
+      "seq": 60,
+      "at": 2.337,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -786,17 +830,17 @@
       "note": ""
     },
     {
-      "seq": 58,
-      "at": 2.125,
+      "seq": 61,
+      "at": 2.337,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-031-at-02:do-ask:16",
+      "key": "banking-031-at-02:do-ask:17",
       "args": {}
     },
     {
-      "seq": 59,
-      "at": 2.125,
+      "seq": 62,
+      "at": 2.337,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -804,26 +848,26 @@
         "about": "statement"
       },
       "by": "do-ask",
-      "key": "banking-031-at-02:do-ask:16"
+      "key": "banking-031-at-02:do-ask:17"
     },
     {
-      "seq": 60,
-      "at": 2.125,
+      "seq": 63,
+      "at": 2.337,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 61,
-      "at": 2.125,
+      "seq": 64,
+      "at": 2.337,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 62,
-      "at": 2.125,
+      "seq": 65,
+      "at": 2.337,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -885,13 +929,13 @@
           "request_type": {
             "type": "choice",
             "choice": "question",
-            "confidence": 0.53,
+            "confidence": 0.57,
             "probabilities": {
-              "question": 0.6,
+              "question": 0.63,
               "register": 0.0,
               "change": 0.01,
-              "instruction": 0.18,
-              "access": 0.21,
+              "instruction": 0.19,
+              "access": 0.17,
               "authority": 0.0,
               "unknown": 0.0
             }
@@ -921,7 +965,7 @@
           }
         }
       },
-      "seconds": 0.2721036000875756,
+      "seconds": 0.24424570007249713,
       "input_tokens": 912,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1070,16 +1114,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYawnuFDwNwwLz3Fiit",
+        "id": "msg_011Cfta11Dp5uqZLNCfheVmv",
         "container": null,
         "content": [
           {
-            "signature": "CAQS9wYKEAgSGAI4AUIIdGhpbmtpbmcSDMO8BQOcNZh3dofyDBoM67tEuldSEU8Y2suBIjDrux/UIS7om/CPqWht5rvvT9wAp3ZNm5iRcggrlMyrXkCmghzY5JwGYUql/NwJEuoqlAa8W8hsLM1icNkSpFg0CtBZ4pN5PvfESm8tP+oKKXyE8DsYk+xwhs4AE6Fo671cLXwwKXxEj/fMf+hePrIXsI77+RLvrWcDmFPcWhBKUJmrKyiNtOW+qYSgr1Fzni/oE1+UvLkGfBMxL+w+hBRieZjXvboik+xO5Q7ONz8rL05HXRa7Ra01+/1n824ylqYgK66euqfdEh8Rs68wRTu3GdKa3eME7iLOgdoXCB+RUVGRk1EYEie2G8hW5lZ36IhKa92FzogTCFucjs2BggiJs22i+KwbV7XK1uB53uTECgUykH2NDjlZxReKrfy+B6GfLJUK+/u3EI9E64wBnHzEjLZnumcF2huolg+j4wbwv4MrX/MirxNvzNCaRmgPT2FHzRjOC6s5HfTuxwDgoPAc0A6dm/2+AqJJ+ALsYNclFgHE3nH4zu6ULn0CgSh6z79J5He8cd6LltPc3Kx9uNkB0pUNugCu5hrfJLqaTc7PlD0c7bLzotnkRmDtSWphAnf2Rk/pYLC0/ncQgzCnTF2+/+4QnFXn7fzO5JxOZXQQJg30CTtj5BeT1z9EoN6cCByO6C7Qff5zq78z1jc4MlSnS4obWpK9UuYf5JyUA3+IOs622vJH2PSH/Uo1rWt5ViglZ7zANZy44GbS/ey2c6X76Gerg2yKo7GVmPhCxc+mssa8C+baR7YwLnzwyHlNPjoThPziVyre16fP1SQUWnmzHPnSvS59ZNU/VRCzXxpmN/l4KC1Tc49KqHbdpzsaOs86WD3HtWuITdTSXR8Ej51bFN84O9xG42Tyy7I2gLdJNU0onMAEeXkI5i1MJJ+ejVyKmaL6EAJ0X4inE4j6xLsNnD5qZx5FZeMWRfhtsu/3yUiTDswsxqhaoehIz+tEc81/2M6crP8fCdQkcjLo1Ux+PY5nvaSCm2HO8ntKcM17/h05QNvQD9jdZWo6UvsmfNgCuFpdb5pLRNdg3N5K6ao6aK1pPCK9E+QeVOpHQ7GMyqCTMdweWWOSaYaA4CbMk/zAREHJnldLTnQanJhuqYq5qYl66BLs9hgB",
+            "signature": "CAQSoQcKEAgSGAI4AUIIdGhpbmtpbmcSDB67C3XXvL3SV0fjExoMgoHPbhGdOM8yyRBcIjDdtTDQMoxrPwjUTOArK1cS3vv8JBulyame9aeinhyz/6PjaZbEBmmuFilGvv2D4p8qvgaylK16FeCmqKsnnVooqI9eIzrlMOZN1e4BXPjrbfe9K3Sxev2Wqi58nWI/jhEfxrpwMA3nzjhvWUnsbCxK2/meqp/Eq9AR4naoY+1/TzxVcvRPip2JznrhBtHM1tnt1jmNL3p9RO3Vr/U02UE7NFJONLBo/V0b/tGO9JF39INgSnvmRGF9SosR6ywk2oKlx9RWZqRCPDIL8NTHgFsRBoQPs4gw5uPxRrSbpJkB91i5SwRVye+QNRKYaWr61NWpMc1kuDTJD/r8mnamAB+PqHUcaV8mJ8eotlK/Vr6f/fY20f6v/cPnQxYaYh7Wn3deKlQpxvG/TP2tVkXlmFyD6StKch4deDJEeEYWsNKzFo5yPXxP3Z5ZMzdLCzsuuLyIaPZ1OJRf5MK5fXclJYv94FFeh5k94sZKYWHPAq/kW8U3qg3XveIEzPsAjG8dxvpp6ZNYAtuNknZzwAoYaV0mTKSVUwRC1fP7d7605k1ltanRL6Wzh5mzUjSB1Ax4+d1pqGfpmQkVgxsDrXbK1aRREtRacwMZSkQXIpxVZ5wk6yPVKBkau5Yai60lpHjYNlWAPxoIgNpqJjyQzPJY/3hirmbn7gYvwFi+IEpek90xNWyH4DVFBPDGZ97sdXJZdeEUcFmLhb9drXcuAaReUfPVSGihQ4fg545t8H56g3Qg5ZlDgckGg2oPaAHZLsXFwkfNRauOORmLq8ZvXb2Z+xj1NtklES0qn3s9CtyT8pQJaBIhnTw98jXwFD8jetQwD+8wVmZzLBWsPlFHtP2mGnq9+xYfJ5mQ2JuI5sp2b3RWZlE6mz3BrYKq3kaQMWT0dOSzvvNSEbIvwDfpIUercKmKRYoORYABIOw6thvdUlEW+vpcbLtod+yKi7Y90L0qzfk1x5Bv1/ewbR4BBQcnXmZfbDq5a55oqIjT8y32+bsftigO0m8xciL5CNxavkefMGjaN0stazDSTR88npOGixt+oVv4C1ZyhJfmZWj2Dg0ENSBlVwDzFW0sRz0HvM+QuWfIc8yC5A0vpUHVvJ21Zb8hdXB7Vh/CH1uKC2P/tDOERr65ww8/JQDJ0HH3v8VfC/c/nA1MteHtqMyEl7b2RHXfdxgB",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01D5iWbxiegN6Goazhp3ptvZ",
+            "id": "toolu_0117VZCQKsuidhitJAkNQgvC",
             "caller": {
               "type": "direct"
             },
@@ -1107,18 +1151,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1853,
-          "output_tokens": 153,
+          "output_tokens": 156,
           "output_tokens_details": {
-            "thinking_tokens": 103
+            "thinking_tokens": 106
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.8507255000295117,
+      "seconds": 2.090886199963279,
       "input_tokens": 1853,
-      "output_tokens": 153,
-      "cost_usd": 0.005236,
+      "output_tokens": 156,
+      "cost_usd": 0.005266,
       "error": null,
       "replayed": false,
       "digest": "eee0d3f98b8cd519d8a68883026bd0cb73622174fe453759b585640fe5e7cb16"
@@ -1265,12 +1309,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS9wYKEAgSGAI4AUIIdGhpbmtpbmcSDMO8BQOcNZh3dofyDBoM67tEuldSEU8Y2suBIjDrux/UIS7om/CPqWht5rvvT9wAp3ZNm5iRcggrlMyrXkCmghzY5JwGYUql/NwJEuoqlAa8W8hsLM1icNkSpFg0CtBZ4pN5PvfESm8tP+oKKXyE8DsYk+xwhs4AE6Fo671cLXwwKXxEj/fMf+hePrIXsI77+RLvrWcDmFPcWhBKUJmrKyiNtOW+qYSgr1Fzni/oE1+UvLkGfBMxL+w+hBRieZjXvboik+xO5Q7ONz8rL05HXRa7Ra01+/1n824ylqYgK66euqfdEh8Rs68wRTu3GdKa3eME7iLOgdoXCB+RUVGRk1EYEie2G8hW5lZ36IhKa92FzogTCFucjs2BggiJs22i+KwbV7XK1uB53uTECgUykH2NDjlZxReKrfy+B6GfLJUK+/u3EI9E64wBnHzEjLZnumcF2huolg+j4wbwv4MrX/MirxNvzNCaRmgPT2FHzRjOC6s5HfTuxwDgoPAc0A6dm/2+AqJJ+ALsYNclFgHE3nH4zu6ULn0CgSh6z79J5He8cd6LltPc3Kx9uNkB0pUNugCu5hrfJLqaTc7PlD0c7bLzotnkRmDtSWphAnf2Rk/pYLC0/ncQgzCnTF2+/+4QnFXn7fzO5JxOZXQQJg30CTtj5BeT1z9EoN6cCByO6C7Qff5zq78z1jc4MlSnS4obWpK9UuYf5JyUA3+IOs622vJH2PSH/Uo1rWt5ViglZ7zANZy44GbS/ey2c6X76Gerg2yKo7GVmPhCxc+mssa8C+baR7YwLnzwyHlNPjoThPziVyre16fP1SQUWnmzHPnSvS59ZNU/VRCzXxpmN/l4KC1Tc49KqHbdpzsaOs86WD3HtWuITdTSXR8Ej51bFN84O9xG42Tyy7I2gLdJNU0onMAEeXkI5i1MJJ+ejVyKmaL6EAJ0X4inE4j6xLsNnD5qZx5FZeMWRfhtsu/3yUiTDswsxqhaoehIz+tEc81/2M6crP8fCdQkcjLo1Ux+PY5nvaSCm2HO8ntKcM17/h05QNvQD9jdZWo6UvsmfNgCuFpdb5pLRNdg3N5K6ao6aK1pPCK9E+QeVOpHQ7GMyqCTMdweWWOSaYaA4CbMk/zAREHJnldLTnQanJhuqYq5qYl66BLs9hgB",
+                "signature": "CAQSoQcKEAgSGAI4AUIIdGhpbmtpbmcSDB67C3XXvL3SV0fjExoMgoHPbhGdOM8yyRBcIjDdtTDQMoxrPwjUTOArK1cS3vv8JBulyame9aeinhyz/6PjaZbEBmmuFilGvv2D4p8qvgaylK16FeCmqKsnnVooqI9eIzrlMOZN1e4BXPjrbfe9K3Sxev2Wqi58nWI/jhEfxrpwMA3nzjhvWUnsbCxK2/meqp/Eq9AR4naoY+1/TzxVcvRPip2JznrhBtHM1tnt1jmNL3p9RO3Vr/U02UE7NFJONLBo/V0b/tGO9JF39INgSnvmRGF9SosR6ywk2oKlx9RWZqRCPDIL8NTHgFsRBoQPs4gw5uPxRrSbpJkB91i5SwRVye+QNRKYaWr61NWpMc1kuDTJD/r8mnamAB+PqHUcaV8mJ8eotlK/Vr6f/fY20f6v/cPnQxYaYh7Wn3deKlQpxvG/TP2tVkXlmFyD6StKch4deDJEeEYWsNKzFo5yPXxP3Z5ZMzdLCzsuuLyIaPZ1OJRf5MK5fXclJYv94FFeh5k94sZKYWHPAq/kW8U3qg3XveIEzPsAjG8dxvpp6ZNYAtuNknZzwAoYaV0mTKSVUwRC1fP7d7605k1ltanRL6Wzh5mzUjSB1Ax4+d1pqGfpmQkVgxsDrXbK1aRREtRacwMZSkQXIpxVZ5wk6yPVKBkau5Yai60lpHjYNlWAPxoIgNpqJjyQzPJY/3hirmbn7gYvwFi+IEpek90xNWyH4DVFBPDGZ97sdXJZdeEUcFmLhb9drXcuAaReUfPVSGihQ4fg545t8H56g3Qg5ZlDgckGg2oPaAHZLsXFwkfNRauOORmLq8ZvXb2Z+xj1NtklES0qn3s9CtyT8pQJaBIhnTw98jXwFD8jetQwD+8wVmZzLBWsPlFHtP2mGnq9+xYfJ5mQ2JuI5sp2b3RWZlE6mz3BrYKq3kaQMWT0dOSzvvNSEbIvwDfpIUercKmKRYoORYABIOw6thvdUlEW+vpcbLtod+yKi7Y90L0qzfk1x5Bv1/ewbR4BBQcnXmZfbDq5a55oqIjT8y32+bsftigO0m8xciL5CNxavkefMGjaN0stazDSTR88npOGixt+oVv4C1ZyhJfmZWj2Dg0ENSBlVwDzFW0sRz0HvM+QuWfIc8yC5A0vpUHVvJ21Zb8hdXB7Vh/CH1uKC2P/tDOERr65ww8/JQDJ0HH3v8VfC/c/nA1MteHtqMyEl7b2RHXfdxgB",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01D5iWbxiegN6Goazhp3ptvZ",
+                "id": "toolu_0117VZCQKsuidhitJAkNQgvC",
                 "caller": {
                   "type": "direct"
                 },
@@ -1288,7 +1332,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01D5iWbxiegN6Goazhp3ptvZ",
+                "tool_use_id": "toolu_0117VZCQKsuidhitJAkNQgvC",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1296,11 +1340,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYb5jsomqGfCRjkbsiq",
+        "id": "msg_011Cfta1A57KcPn7wbsZfmix",
         "container": null,
         "content": [
           {
-            "id": "toolu_01RVhnf9eDFKEbfcixAhdxr1",
+            "id": "toolu_01Pbb3GnRTCZkVHt985cmEbs",
             "caller": {
               "type": "direct"
             },
@@ -1325,7 +1369,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2041,
+          "input_tokens": 2044,
           "output_tokens": 26,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1334,13 +1378,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.7521207000827417,
-      "input_tokens": 2041,
+      "seconds": 0.8142151000211015,
+      "input_tokens": 2044,
       "output_tokens": 26,
-      "cost_usd": 0.004342,
+      "cost_usd": 0.004348,
       "error": null,
       "replayed": false,
-      "digest": "459f46c771fa80ed49c39700a4ed128da79617b3f83a15b9a3896bece5f7e08b"
+      "digest": "66dd8443ef89cf9ee80d60603e82084134baeff882af840bfe001bde0c33a6d9"
     },
     {
       "kind": "agent",
@@ -1484,12 +1528,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS9wYKEAgSGAI4AUIIdGhpbmtpbmcSDMO8BQOcNZh3dofyDBoM67tEuldSEU8Y2suBIjDrux/UIS7om/CPqWht5rvvT9wAp3ZNm5iRcggrlMyrXkCmghzY5JwGYUql/NwJEuoqlAa8W8hsLM1icNkSpFg0CtBZ4pN5PvfESm8tP+oKKXyE8DsYk+xwhs4AE6Fo671cLXwwKXxEj/fMf+hePrIXsI77+RLvrWcDmFPcWhBKUJmrKyiNtOW+qYSgr1Fzni/oE1+UvLkGfBMxL+w+hBRieZjXvboik+xO5Q7ONz8rL05HXRa7Ra01+/1n824ylqYgK66euqfdEh8Rs68wRTu3GdKa3eME7iLOgdoXCB+RUVGRk1EYEie2G8hW5lZ36IhKa92FzogTCFucjs2BggiJs22i+KwbV7XK1uB53uTECgUykH2NDjlZxReKrfy+B6GfLJUK+/u3EI9E64wBnHzEjLZnumcF2huolg+j4wbwv4MrX/MirxNvzNCaRmgPT2FHzRjOC6s5HfTuxwDgoPAc0A6dm/2+AqJJ+ALsYNclFgHE3nH4zu6ULn0CgSh6z79J5He8cd6LltPc3Kx9uNkB0pUNugCu5hrfJLqaTc7PlD0c7bLzotnkRmDtSWphAnf2Rk/pYLC0/ncQgzCnTF2+/+4QnFXn7fzO5JxOZXQQJg30CTtj5BeT1z9EoN6cCByO6C7Qff5zq78z1jc4MlSnS4obWpK9UuYf5JyUA3+IOs622vJH2PSH/Uo1rWt5ViglZ7zANZy44GbS/ey2c6X76Gerg2yKo7GVmPhCxc+mssa8C+baR7YwLnzwyHlNPjoThPziVyre16fP1SQUWnmzHPnSvS59ZNU/VRCzXxpmN/l4KC1Tc49KqHbdpzsaOs86WD3HtWuITdTSXR8Ej51bFN84O9xG42Tyy7I2gLdJNU0onMAEeXkI5i1MJJ+ejVyKmaL6EAJ0X4inE4j6xLsNnD5qZx5FZeMWRfhtsu/3yUiTDswsxqhaoehIz+tEc81/2M6crP8fCdQkcjLo1Ux+PY5nvaSCm2HO8ntKcM17/h05QNvQD9jdZWo6UvsmfNgCuFpdb5pLRNdg3N5K6ao6aK1pPCK9E+QeVOpHQ7GMyqCTMdweWWOSaYaA4CbMk/zAREHJnldLTnQanJhuqYq5qYl66BLs9hgB",
+                "signature": "CAQSoQcKEAgSGAI4AUIIdGhpbmtpbmcSDB67C3XXvL3SV0fjExoMgoHPbhGdOM8yyRBcIjDdtTDQMoxrPwjUTOArK1cS3vv8JBulyame9aeinhyz/6PjaZbEBmmuFilGvv2D4p8qvgaylK16FeCmqKsnnVooqI9eIzrlMOZN1e4BXPjrbfe9K3Sxev2Wqi58nWI/jhEfxrpwMA3nzjhvWUnsbCxK2/meqp/Eq9AR4naoY+1/TzxVcvRPip2JznrhBtHM1tnt1jmNL3p9RO3Vr/U02UE7NFJONLBo/V0b/tGO9JF39INgSnvmRGF9SosR6ywk2oKlx9RWZqRCPDIL8NTHgFsRBoQPs4gw5uPxRrSbpJkB91i5SwRVye+QNRKYaWr61NWpMc1kuDTJD/r8mnamAB+PqHUcaV8mJ8eotlK/Vr6f/fY20f6v/cPnQxYaYh7Wn3deKlQpxvG/TP2tVkXlmFyD6StKch4deDJEeEYWsNKzFo5yPXxP3Z5ZMzdLCzsuuLyIaPZ1OJRf5MK5fXclJYv94FFeh5k94sZKYWHPAq/kW8U3qg3XveIEzPsAjG8dxvpp6ZNYAtuNknZzwAoYaV0mTKSVUwRC1fP7d7605k1ltanRL6Wzh5mzUjSB1Ax4+d1pqGfpmQkVgxsDrXbK1aRREtRacwMZSkQXIpxVZ5wk6yPVKBkau5Yai60lpHjYNlWAPxoIgNpqJjyQzPJY/3hirmbn7gYvwFi+IEpek90xNWyH4DVFBPDGZ97sdXJZdeEUcFmLhb9drXcuAaReUfPVSGihQ4fg545t8H56g3Qg5ZlDgckGg2oPaAHZLsXFwkfNRauOORmLq8ZvXb2Z+xj1NtklES0qn3s9CtyT8pQJaBIhnTw98jXwFD8jetQwD+8wVmZzLBWsPlFHtP2mGnq9+xYfJ5mQ2JuI5sp2b3RWZlE6mz3BrYKq3kaQMWT0dOSzvvNSEbIvwDfpIUercKmKRYoORYABIOw6thvdUlEW+vpcbLtod+yKi7Y90L0qzfk1x5Bv1/ewbR4BBQcnXmZfbDq5a55oqIjT8y32+bsftigO0m8xciL5CNxavkefMGjaN0stazDSTR88npOGixt+oVv4C1ZyhJfmZWj2Dg0ENSBlVwDzFW0sRz0HvM+QuWfIc8yC5A0vpUHVvJ21Zb8hdXB7Vh/CH1uKC2P/tDOERr65ww8/JQDJ0HH3v8VfC/c/nA1MteHtqMyEl7b2RHXfdxgB",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01D5iWbxiegN6Goazhp3ptvZ",
+                "id": "toolu_0117VZCQKsuidhitJAkNQgvC",
                 "caller": {
                   "type": "direct"
                 },
@@ -1507,7 +1551,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01D5iWbxiegN6Goazhp3ptvZ",
+                "tool_use_id": "toolu_0117VZCQKsuidhitJAkNQgvC",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1516,7 +1560,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01RVhnf9eDFKEbfcixAhdxr1",
+                "id": "toolu_01Pbb3GnRTCZkVHt985cmEbs",
                 "caller": {
                   "type": "direct"
                 },
@@ -1532,7 +1576,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01RVhnf9eDFKEbfcixAhdxr1",
+                "tool_use_id": "toolu_01Pbb3GnRTCZkVHt985cmEbs",
                 "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"requester\": \"Elowen Marr\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false, \"subject\": \"statement\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"documents\"}, \"refused\": []}"
               }
             ]
@@ -1540,12 +1584,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYb8udmHSUTvpYhEbMG",
+        "id": "msg_011Cfta1DXE1nP9NDuvaKTBz",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I asked the documents system about the June 2025 statement. The case is now closed at that step, and the system's answer isn't in the case yet. I haven't confirmed whether the statement exists or why it isn't showing in the portal.\n\nThe requester, Elowen Marr, is still unverified, so nothing has been changed or released. No reply has gone to the customer.",
+            "text": "I asked the documents system about the June 2025 statement. That was the one step for this case, and the case is now closed at that step.\n\nThe documents system has not returned any facts about the statement yet. I don't know whether the June statement exists or whether it can be shown in the portal. The case status still lists Elowen Marr as not verified.\n\nNothing has been sent by email. The customer asked for the statement to be available in the portal, not emailed.",
             "type": "text"
           }
         ],
@@ -1564,8 +1608,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2195,
-          "output_tokens": 113,
+          "input_tokens": 2198,
+          "output_tokens": 135,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1573,13 +1617,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.6476551000960171,
-      "input_tokens": 2195,
-      "output_tokens": 113,
-      "cost_usd": 0.00552,
+      "seconds": 1.6600781000452116,
+      "input_tokens": 2198,
+      "output_tokens": 135,
+      "cost_usd": 0.005746,
       "error": null,
       "replayed": false,
-      "digest": "a76c44aa6d5c2f08604730293d8a552efa79f3b1ea5c50f72e4f2689b815f117"
+      "digest": "5d3dcdd77f75b6de74f0407a5444657e6b842f79fb4e8ef9e1c516857fb05cb8"
     },
     {
       "kind": "generate",
@@ -1592,17 +1636,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Elowen Marr\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"statement\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"documents\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"documents\",\n        \"about\": \"statement\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-031-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-031-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Elowen Marr): I’m escalating this because I still can’t find my June statement in the portal. I need the statement itself made available there; I’m not asking for it by email. [facts: requester='Elowen Marr', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Elowen Marr\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Elowen Marr (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-031-at-02:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-031-at-02:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-031-at-02:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-031-at-02:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-031-at-02:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-031-at-02:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-031-at-02:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-031-at-02:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-031-at-02:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-registration` fired: state = READING → true (state=READING).\n38. Called `check_registration` (attempt 1, key banking-031-at-02:read-registration:11).\n39. `check_registration` found {}.\n40. Rule `read-confirmation` fired: state = READING → true (state=READING).\n41. Called `check_confirmation` (attempt 1, key banking-031-at-02:read-confirmation:12).\n42. Note from `read-confirmation`: event 2 (Elowen Marr): I’m escalating this because I still can’t find my June statement in the portal. I need the statement itself made available there; I’m not asking for it by email. [facts: confirmation='none', instructed_outside_portal=False]\n43. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n44. `confirmation`: not known → none (by `read-confirmation`).\n45. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n46. Rule `triage` fired: state = READING → true (state=READING).\n47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.53 → question.\n48. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.\n49. `request_type`: not known → question (by `triage`).\n50. `subject`: not known → statement (by `triage`).\n51. State `READING` → `TRIAGED` (by `triage`).\n52. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=statement).\n53. `next_system`: not known → documents (by `route-documents`).\n54. The agent asked for `ask_system` {\"system\": \"documents\"}.\n55. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n56. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).\n57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n58. Called `ask_system` (attempt 1, key banking-031-at-02:do-ask:16).\n59. Action in the world: `ask_system` {\"system\": \"documents\", \"about\": \"statement\"}.\n60. `ask_system` found {}.\n61. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n62. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7001 tokens in, 491 out, 4.523 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the documents system about the June 2025 statement. The case is now closed at that step, and the system's answer isn't in the case yet. I haven't confirmed whether the statement exists or why it isn't showing in the portal.\n> \n> The requester, Elowen Marr, is still unverified, so nothing has been changed or released. No reply has gone to the customer.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Elowen Marr\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"statement\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"documents\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"documents\",\n        \"about\": \"statement\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-031-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-031-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Elowen Marr): I’m escalating this because I still can’t find my June statement in the portal. I need the statement itself made available there; I’m not asking for it by email. [facts: requester='Elowen Marr', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Elowen Marr\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Elowen Marr (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-031-at-02:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-031-at-02:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-031-at-02:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-031-at-02:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-031-at-02:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-031-at-02:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-031-at-02:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-031-at-02:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-031-at-02:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n38. Called `check_bank_actions` (attempt 1, key banking-031-at-02:read-bank-actions:11).\n39. `check_bank_actions` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-031-at-02:read-registration:12).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-031-at-02:read-confirmation:13).\n45. Note from `read-confirmation`: event 2 (Elowen Marr): I’m escalating this because I still can’t find my June statement in the portal. I need the statement itself made available there; I’m not asking for it by email. [facts: confirmation='none', instructed_outside_portal=False]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.57 → question.\n51. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.\n52. `request_type`: not known → question (by `triage`).\n53. `subject`: not known → statement (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=statement).\n56. `next_system`: not known → documents (by `route-documents`).\n57. The agent asked for `ask_system` {\"system\": \"documents\"}.\n58. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).\n59. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).\n60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n61. Called `ask_system` (attempt 1, key banking-031-at-02:do-ask:17).\n62. Action in the world: `ask_system` {\"system\": \"documents\", \"about\": \"statement\"}.\n63. `ask_system` found {}.\n64. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n65. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7007 tokens in, 516 out, 4.809 s, cost $0.0154; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the documents system about the June 2025 statement. That was the one step for this case, and the case is now closed at that step.\n> \n> The documents system has not returned any facts about the statement yet. I don't know whether the June statement exists or whether it can be shown in the portal. The case status still lists Elowen Marr as not verified.\n> \n> Nothing has been sent by email. The customer asked for the statement to be available in the portal, not emailed.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYbG2WCKneZnwtypTpR",
+        "id": "msg_011Cfta1LnXuGmA4jySisagS",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Elowen Marr, a customer writing over secure chat, said she still can't find her June statement in the portal and wanted it made available there, not sent by email. The desk classed this as a question about a statement and asked the documents system about it, and the case closed at that step. The documents system's answer is not in the record, so it is still unconfirmed whether the statement exists or why it isn't showing. Elowen is unverified, nothing was released or changed, and no reply has gone to her, so a person still has to follow up.",
+            "text": "Elowen Marr, writing over secure chat, said she still can't find her June statement in the portal and asked for it to be made available there rather than sent by email. The desk classified this as a question about a statement and asked the documents system about it, and the case closed at that step. The documents system returned nothing, so it is not known whether the statement exists or can be shown in the portal, and Elowen Marr is still recorded as not verified; any follow-up on getting the statement into the portal is left for a person.",
             "type": "text"
           }
         ],
@@ -1621,8 +1665,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2582,
-          "output_tokens": 159,
+          "input_tokens": 2713,
+          "output_tokens": 153,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1630,13 +1674,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.9686120999976993,
-      "input_tokens": 2582,
-      "output_tokens": 159,
-      "cost_usd": 0.006754,
+      "seconds": 2.0451668999157846,
+      "input_tokens": 2713,
+      "output_tokens": 153,
+      "cost_usd": 0.006956,
       "error": null,
       "replayed": false,
-      "digest": "b577b0611dde49688dddbb80d1667ae670b0044cf6aeb93698421d71cea9c545"
+      "digest": "51b213ff0a8735ea7a05257c63e45471ab0fcf1c0bde342f190ed4d90fe80e3c"
     }
   ]
 }

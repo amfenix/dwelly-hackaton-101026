@@ -38,39 +38,41 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-tariff` fired: state = READING → true (state=READING).
 35. Called `check_tariff` (attempt 1, key banking-017-at-02:read-tariff:10).
 36. `check_tariff` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-017-at-02:read-registration:11).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-017-at-02:read-confirmation:12).
-42. Note from `read-confirmation`: event 2 (Mara Ellery): I’ve been told my rent payment hasn’t arrived. Please check the scheduled standing-order run and tell me whether H&V executed it and what status the bank has recorded. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-48. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → standing_order (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-53. `next_system`: not known → recurring (by `route-recurring`).
-54. The agent asked for `ask_system` {"system": "recurring"}.
-55. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-017-at-02:do-ask:16).
-59. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-017-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-017-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-017-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Mara Ellery): I’ve been told my rent payment hasn’t arrived. Please check the scheduled standing-order run and tell me whether H&V executed it and what status the bank has recorded. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+52. `request_type`: not known → question (by `triage`).
+53. `subject`: not known → standing_order (by `triage`).
+54. State `READING` → `TRIAGED` (by `triage`).
+55. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+56. `next_system`: not known → recurring (by `route-recurring`).
+57. The agent asked for `ask_system` {"system": "recurring"}.
+58. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+59. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+61. Called `ask_system` (attempt 1, key banking-017-at-02:do-ask:17).
+62. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+63. `ask_system` found {}.
+64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+65. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6996 tokens in, 492 out, 5.65 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7043 tokens in, 440 out, 5.333 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the recurring payments system about your standing order. The case is now closed at this step.
-> 
-> The system's answer isn't in the case record yet. That means I can't yet tell you whether your rent payment was sent or what status the bank recorded for it. I also can't give a reason if it wasn't sent. Your identity is also still marked as unverified on this chat.
+> The answer isn't in the case yet, and the facts point to the recurring system.
+> I've checked the recurring-payments system for the status of your rent standing order. The case is now in the "asked" state. The next step is to report what the record shows once the system's answer is read.

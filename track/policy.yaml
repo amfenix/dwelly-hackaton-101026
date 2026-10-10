@@ -48,6 +48,10 @@ fields:
   document_name:      text
   tariff_asked:       bool
   tariff_status:      enum [MATCHES, MISMATCH, OTHER]
+  # --- what the bank already did in the conversation (check_bank_actions)
+  bank_redirected:    bool
+  bank_forwarded:     bool
+  bank_clarified:     bool
   registration_asked: bool
   registered:         bool
   registration_ref:   text
@@ -112,6 +116,7 @@ triggers:
   - { name: read-business,     when: "state = READING", call: check_business }
   - { name: read-documents,    when: "state = READING", call: check_documents }
   - { name: read-tariff,       when: "state = READING", call: check_tariff }
+  - { name: read-bank-actions, when: "state = READING", call: check_bank_actions }
   - { name: read-registration, when: "state = READING", call: check_registration }
   - { name: read-confirmation, when: "state = READING", call: check_confirmation }
 
@@ -186,11 +191,32 @@ triggers:
     note: The change was sent to the portal; the customer has not confirmed it yet.
     to: WAITING
 
+  - name: change-applied-by-the-system   # 012, 019, 028: the system applies what the customer confirmed
+    when: "state = TRIAGED and request_type = change and confirmation = given and registration_asked absent"
+    note: The customer confirmed the change in the secure portal; the system applies it.
+    to: WAITING
+
+  # 026, 027, 045: a step the bank has taken is not taken again; the case waits for its answer
+  - name: already-redirected
+    when: "state = TRIAGED and request_type = access and bank_redirected"
+    note: The customer was pointed to the secure process; nothing to do until they use it.
+    to: WAITING
+
+  - name: already-forwarded
+    when: "state = TRIAGED and request_type = authority and bank_forwarded"
+    note: The request is with the person whose approval it needs.
+    to: WAITING
+
+  - name: already-clarified
+    when: "state = TRIAGED and bank_clarified"
+    note: The customer was asked which payment, card or instruction they mean.
+    to: WAITING
+
   # ------------------------------------------------------------------ a review or a return: register it
   # What the bank already did outranks triage: once a team was asked to register or review (037: a
   # name correction triaged as a change), the case follows these rules.
   - name: registration-waits
-    when: "state = TRIAGED and registration_asked and registered absent"
+    when: "state = TRIAGED and request_type in [register, change] and registration_asked and registered absent"
     note: The team was asked; its answer is not in yet.
     to: WAITING
 
@@ -218,7 +244,7 @@ triggers:
 
   - name: payment-instruction
     on: submit_request
-    when: "state = TRIAGED and next_system = payment and payment_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    when: "state = TRIAGED and next_system = payment and payment_asked absent and verified and request_type = instruction"
     to: REQUEST_PENDING
 
   - name: payment-reply
@@ -240,7 +266,7 @@ triggers:
 
   - name: incoming-instruction
     on: submit_request
-    when: "state = TRIAGED and next_system = incoming and incoming_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    when: "state = TRIAGED and next_system = incoming and incoming_asked absent and verified and request_type = instruction"
     to: REQUEST_PENDING
 
   - name: incoming-reply
@@ -262,7 +288,7 @@ triggers:
 
   - name: recurring-instruction
     on: submit_request
-    when: "state = TRIAGED and next_system = recurring and recurring_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    when: "state = TRIAGED and next_system = recurring and recurring_asked absent and verified and request_type = instruction"
     to: REQUEST_PENDING
 
   - name: recurring-reply
@@ -276,15 +302,15 @@ triggers:
     note: The system was asked; its answer is not in yet.
     to: WAITING
 
-  - name: card-ask
+  - name: card-ask           # 022: a card instruction (block it) needs no check first: the card is known
     on: ask_system
-    when: "state = TRIAGED and args.system = card and (next_system = card or next_system absent) and card_asked absent and request_type not in [register, change, authority]"
+    when: "state = TRIAGED and args.system = card and (next_system = card or next_system absent) and card_asked absent and request_type not in [register, change, authority, instruction]"
     set: { next_system: card }
     to: ASK_PENDING
 
   - name: card-instruction
     on: submit_request
-    when: "state = TRIAGED and next_system = card and card_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    when: "state = TRIAGED and next_system = card and card_asked absent and verified and request_type = instruction"
     to: REQUEST_PENDING
 
   - name: card-reply
@@ -306,7 +332,7 @@ triggers:
 
   - name: access-instruction
     on: submit_request
-    when: "state = TRIAGED and next_system = access and access_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    when: "state = TRIAGED and next_system = access and access_asked absent and verified and request_type = instruction"
     to: REQUEST_PENDING
 
   - name: access-reply
@@ -328,7 +354,7 @@ triggers:
 
   - name: business-instruction
     on: submit_request
-    when: "state = TRIAGED and next_system = business and business_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    when: "state = TRIAGED and next_system = business and business_asked absent and verified and request_type = instruction"
     to: REQUEST_PENDING
 
   - name: business-reply
@@ -344,18 +370,18 @@ triggers:
 
   - name: documents-ask
     on: ask_system
-    when: "state = TRIAGED and args.system = documents and (next_system = documents or next_system absent) and documents_asked absent and request_type not in [register, change, authority]"
+    when: "state = TRIAGED and args.system = documents and (next_system = documents or next_system absent) and (documents_asked absent or document_ready = false) and request_type not in [register, change, authority]"
     set: { next_system: documents }
     to: ASK_PENDING
 
   - name: documents-instruction
     on: submit_request
-    when: "state = TRIAGED and next_system = documents and documents_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    when: "state = TRIAGED and next_system = documents and documents_asked absent and verified and request_type = instruction"
     to: REQUEST_PENDING
 
   - name: documents-reply
     on: reply
-    when: "state = TRIAGED and next_system = documents and document_ready present"
+    when: "state = TRIAGED and next_system = documents and document_ready"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ tariff

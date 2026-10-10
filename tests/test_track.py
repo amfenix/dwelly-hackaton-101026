@@ -129,6 +129,28 @@ def test_a_fee_is_checked_against_the_tariff() -> None:
     assert case.fields["tariff_status"] == "MATCHES" and case.send("reply").accepted and case.state == "REPLIED"
 
 
+def test_a_step_the_bank_took_is_not_taken_again() -> None:
+    locked = ("Verified call", CUSTOMER, "H&V service agent", "I can't sign in to my profile.")
+    pointed = ("Secure chat", "H&V service agent", CUSTOMER, "I'm directing you to the recovery option in the portal.")
+    case = started(locked, pointed, request_type="access", subject="access")
+    assert case.fields["bank_redirected"] is True and case.state == "WAITING"
+    again = ("Secure chat", CUSTOMER, "H&V service agent", "It still does not work.")
+    assert started(locked, pointed, again, request_type="access", subject="access").state == "TRIAGED"
+
+
+def test_an_instruction_does_not_wait_on_a_case_opened_with_the_team() -> None:
+    block = ("Verified call", CUSTOMER, "H&V service agent", "After the identity checks: block my lost card now.")
+    opened = (
+        "Internal note",
+        "H&V service agent",
+        "H&V card team",
+        "I have opened case HV-022 and registered the request.",
+    )
+    case = started(block, opened, request_type="instruction", subject="card")
+    assert case.fields.get("registration_asked") is True and case.state == "TRIAGED"
+    assert case.send("submit_request").accepted
+
+
 def test_a_review_is_registered_not_asked() -> None:
     case = started(ASK, request_type="register")
     assert not case.send("ask_system", {"system": "payment"}).accepted

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing over secure chat and not yet verified, said their card was declined at a grocery payment and asked what category of restriction applies and whether it has been lifted. The desk classed this as a card question and sent an ask to the card system, which accepted it with no details returned. The case closed at that step, so the restriction category and whether it was lifted remain unanswered, and Rowan's identity is still unverified for a person to deal with.
+Rowan Ellery, writing over secure chat as a customer, said their card was declined at a grocery payment and asked what category of restriction applies and whether it has been lifted. The desk treated it as a card question and sent a query to the card system, which returned nothing yet, so Rowan has not been given any answer about the restriction. Rowan is not verified on this chat, so a person still needs to handle the reply once the card system answers, keeping that in mind.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=question)
+  - request_type not in [register, change, authority, instruction] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

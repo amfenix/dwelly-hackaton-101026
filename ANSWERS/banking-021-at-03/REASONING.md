@@ -40,39 +40,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-021-at-03:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-021-at-03:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-021-at-03:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Mara Ellison): I’m following up because the portal only says my replacement card request was accepted. Please check whether dispatch has been registered; I don’t have confirmation that the card has arrived. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-50. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → card (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-55. `next_system`: not known → card (by `asked-card`).
-56. Rule `card-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked → true (card_asked=True); card_status absent → true (card_status=not known). The system was asked; its answer is not in yet.
-57. State `TRIAGED` → `WAITING` (by `card-waits`).
-58. The case closed in `WAITING`: **wait**.
-59. The agent asked for `ask_system` {"system": "card"}.
-60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-021-at-03:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-021-at-03:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-021-at-03:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mara Ellison): I’m following up because the portal only says my replacement card request was accepted. Please check whether dispatch has been registered; I don’t have confirmation that the card has arrived. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → card (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+58. `next_system`: not known → card (by `asked-card`).
+59. Rule `card-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked → true (card_asked=True); card_status absent → true (card_status=not known). The system was asked; its answer is not in yet.
+60. State `TRIAGED` → `WAITING` (by `card-waits`).
+61. The case closed in `WAITING`: **wait**.
+62. The agent asked for `ask_system` {"system": "card"}.
+63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
+64. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks whether her replacement card has been dispatched. The portal only confirmed the request was accepted. The card system was already queried (card_asked=True), but no dispatch record is in the case. A new card query was refused because the case is in WAITING state. Please check the dispatch status of the replacement card after verifying the customer's identity, and reply to her. Dispatch must not be claimed until a record shows it."}.
+65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8821 tokens in, 736 out, 6.691 s, cost $0.0212; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12571 tokens in, 946 out, 8.418 s, cost $0.0308; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't confirm whether your replacement card has been dispatched, and I haven't been able to take this further.
+> I couldn't tell the customer whether the replacement card has been dispatched, and the case is left in WAITING for a person to pick up.
 > 
-> The card system has already been checked on this case, and it returned no dispatch or delivery confirmation. My second request to the card system was refused because the case is now in a waiting state. The case is closed as "wait", and no further action is open to me.
+> - **Card system query:** refused. The case is in WAITING, not TRIAGED, and the desk's rules only allow a system query from TRIAGED. The card system had already been asked once (`card_asked=True`), but no dispatch record came back into the case.
+> - **Escalation:** also refused, for the same reason.
+> - **What's known:** the portal only confirmed that the request was accepted. Mara Ellison is not verified, and nothing in the case shows a dispatch.
 > 
-> The only confirmation on record is the portal's message that your request was accepted. That message says the request was received, not that the card has been dispatched or delivered. I won't say the card has been sent, because nothing on the case shows that.
-> 
-> Your identity is also not verified in this chat. Until it is, the bank can't share card details here.
+> The case is marked final with outcome "wait", so nothing more can be done from here. Nobody should tell her the card has been dispatched until a record shows it.

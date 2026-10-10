@@ -1,10 +1,10 @@
 # Case banking-032-at-03: Archived Statement Request
 
-**Decision: reply**  (final state `REPLIED`)
+**Decision: ask_system**  (final state `ASKED`)
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk replied in that chat that the document record shows the document is not ready, that this does not establish it is available, and that no email was sent. Her identity was not verified, and the archive note in the record says the statement is available to order, a point the reply does not mention; the record lists nothing further for a person to do.
+Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk asked the documents system about the statement, and that request went through, so the case is closed as asked. Her identity is still unverified, and the record shows the document is not yet ready. The archive notes say the statement is available to order, with any charge subject to the current tariff, and the desk has not yet given her an answer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,10 +38,7 @@ Case reference: id banking-032-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
-
-  > The document record shows that the document is not ready. This does not establish that the document is available. No email was sent.
-
+- `ask_system` (system: documents, about: statement), by rule `do-ask`
 
 ## Decision and why
 
@@ -49,12 +46,16 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `documents-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - args.system = documents → true (args.system=documents)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=False)
-- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
-  - state = REPLY_PENDING → true (state=REPLY_PENDING)
+  - next_system absent → false (next_system=documents)
+  - documents_asked absent → false (documents_asked=True)
+  - document_ready = false → true (document_ready=False)
+  - request_type not in [register, change, authority] → true (request_type=question)
+- `ASK_PENDING` → `ASKED`: rule `do-ask`.
+  - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
@@ -85,10 +86,6 @@ No.
 
 - nothing
 
-Requests the policy refused:
-
-- `ask_system`: payment-ask: args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); tariff-ask: args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents)
-
 ## Final result
 
-reply (REPLIED)
+ask_system (ASKED)

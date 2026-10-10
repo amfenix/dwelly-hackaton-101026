@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -94,7 +97,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Elise Rowan, an unverified customer on secure chat, asked about the stage of a transfer instruction and whether she needs to authorise it. The desk classified it as a question about a transfer and sent it to the payment system, and the case closed there with no stage or authorisation result returned. It found no sent confirmation and no sign the instruction was given outside the portal. Her identity is unverified, so the stage and the authorisation question remain unanswered and are left for a person to follow up.",
+  "summary": "Elise Rowan, writing over secure chat, asked about a transfer that still had no sent confirmation, wanting to know its current stage and whether she needed to authorise it. The desk treated this as a question about a transfer and asked the payment system about it, which closed the case. No answer has come back yet, so the transfer's stage and whether she must authorise it are still unconfirmed, and her identity is not verified in this chat.",
   "journal": [
     {
       "seq": 1,
@@ -496,7 +499,7 @@
       "seq": 37,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -514,23 +517,23 @@
       "seq": 38,
       "at": 0.001,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-003-at-02:read-registration:11",
+      "key": "banking-003-at-02:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 39,
       "at": 0.001,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 40,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -548,20 +551,54 @@
       "seq": 41,
       "at": 0.001,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-003-at-02:read-confirmation:12",
+      "key": "banking-003-at-02:read-registration:12",
       "args": {}
     },
     {
       "seq": 42,
+      "at": 0.001,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 43,
+      "at": 0.001,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 44,
+      "at": 0.001,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-003-at-02:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 45,
       "at": 0.001,
       "kind": "note",
       "text": "event 2 (Elise Rowan): I’m escalating this because the instruction still has no sent confirmation. Please check its current stage and tell me whether I need to authorise it. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 43,
+      "seq": 46,
       "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
@@ -571,7 +608,7 @@
       }
     },
     {
-      "seq": 44,
+      "seq": 47,
       "at": 0.001,
       "kind": "set",
       "field": "confirmation",
@@ -580,7 +617,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 45,
+      "seq": 48,
       "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -589,7 +626,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.001,
       "kind": "trigger",
       "name": "triage",
@@ -607,8 +644,8 @@
       "note": ""
     },
     {
-      "seq": 47,
-      "at": 0.261,
+      "seq": 50,
+      "at": 0.238,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -619,8 +656,8 @@
       "attempt": 1
     },
     {
-      "seq": 48,
-      "at": 0.261,
+      "seq": 51,
+      "at": 0.238,
       "kind": "choice",
       "field": "subject",
       "raw": "transfer",
@@ -631,8 +668,8 @@
       "attempt": 1
     },
     {
-      "seq": 49,
-      "at": 0.261,
+      "seq": 52,
+      "at": 0.238,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -640,8 +677,8 @@
       "by": "triage"
     },
     {
-      "seq": 50,
-      "at": 0.261,
+      "seq": 53,
+      "at": 0.238,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -649,16 +686,16 @@
       "by": "triage"
     },
     {
-      "seq": 51,
-      "at": 0.261,
+      "seq": 54,
+      "at": 0.238,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 52,
-      "at": 0.261,
+      "seq": 55,
+      "at": 0.238,
       "kind": "trigger",
       "name": "route-payment",
       "on": null,
@@ -689,8 +726,8 @@
       "note": ""
     },
     {
-      "seq": 53,
-      "at": 0.261,
+      "seq": 56,
+      "at": 0.238,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -698,8 +735,8 @@
       "by": "route-payment"
     },
     {
-      "seq": 54,
-      "at": 2.544,
+      "seq": 57,
+      "at": 2.148,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -707,8 +744,8 @@
       }
     },
     {
-      "seq": 55,
-      "at": 2.544,
+      "seq": 58,
+      "at": 2.148,
       "kind": "trigger",
       "name": "payment-ask",
       "on": "ask_system",
@@ -760,16 +797,16 @@
       "note": ""
     },
     {
-      "seq": 56,
-      "at": 2.544,
+      "seq": 59,
+      "at": 2.148,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "payment-ask"
     },
     {
-      "seq": 57,
-      "at": 2.544,
+      "seq": 60,
+      "at": 2.148,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -786,17 +823,17 @@
       "note": ""
     },
     {
-      "seq": 58,
-      "at": 2.544,
+      "seq": 61,
+      "at": 2.148,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-003-at-02:do-ask:16",
+      "key": "banking-003-at-02:do-ask:17",
       "args": {}
     },
     {
-      "seq": 59,
-      "at": 2.544,
+      "seq": 62,
+      "at": 2.148,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -804,26 +841,26 @@
         "about": "transfer"
       },
       "by": "do-ask",
-      "key": "banking-003-at-02:do-ask:16"
+      "key": "banking-003-at-02:do-ask:17"
     },
     {
-      "seq": 60,
-      "at": 2.544,
+      "seq": 63,
+      "at": 2.148,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 61,
-      "at": 2.544,
+      "seq": 64,
+      "at": 2.148,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 62,
-      "at": 2.544,
+      "seq": 65,
+      "at": 2.148,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -921,7 +958,7 @@
           }
         }
       },
-      "seconds": 0.25980080000590533,
+      "seconds": 0.23689509998075664,
       "input_tokens": 914,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1070,16 +1107,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYSnd23rP5JGZWxGXi6",
+        "id": "msg_011CftZrxvvY9AVB9J85N6aQ",
         "container": null,
         "content": [
           {
-            "signature": "CAQSxQcKEAgSGAI4AUIIdGhpbmtpbmcSDLta6RWSFqmsSmETDxoMCXHOe94t8YsjCgfoIjCcKmLgt7v2M598wzZPv5++0qPnBDfZ8FrvHPf1nNLUU5ZMsoCq8fc8lKHqwQW03dAq4gb9RVC1JUuVH19lDP753L5x5HYGRyADV+y3g+bCz0VZLalr29MDK93POyBt1UgGUsnwR8PkqGT492XFQc10ebnceHHludYSHXF9hmshBgFhRDLBgyvIivcabMy8daczOVB3ABtdO/ATwDl1AprWUcyfBELe7xv57DkUOwW90ne7bcdlFlYYIMr5lIEsi8a6IAP9VikFhAUVBGH8wRu7cEVdUDz6pdfY8IzZX0ab7JOXAVRUT7V4Bt1HB8qUKxD4M4FuUhXTHjLV4rTTnu78TQ2wIE8CblRCSX8Gs1d7yV0zz9cu3Cybp0k5IiNLFn2Vreb+K0D+0i2dBkA6Pgi2Noe28sc3XpzCY2wa/PdXslKHPjNQwehKDKw6G+rXp65Zo0oh23tB1svW1mEu4np8lOvMBCtF+RK2CGWHiApHSSS54yxLt6+oDZu6/PZcEI9eqXgUubwFBV3v9vAZSBsuUI7uLrnkGZZD9ldKmljAls6Ai1hm4nfz6p9eTPNq/g9HIFsjotawBWIRDyMKArB7ESvo+sT1uTz4xaKnJhLBtzWpwLvJsFtriXRvCpoWLBcLSxjzzO11gOgBI/xoHu7E0QDNox9g4Yq+wLM4XnpSUCJ24D7+po4JNwxonw01Fsd3pVcDhSZQPOHr0I1rJzCzB4dg+d71zYIuBPEu5jdyIVd+gfZzz5eqoDNujdlb/ZYiSO4t3tzEQsUASfJMX2ni4A5zRbjsko996zPMM/ZgLdoXzRn3Fu9CBvKyF0bil+SiRjzh3T1iGe7u6oX2/3KBVVz03Fpem7M1Bfo48GZ6/K6C2CrQWHikifkJJo7OPxFlFpCbO7qAXw2x0caAz0683A2oH5XpZnW2KvF6xlkycQ+mpTJO6Lv8rDRNeITRaz2hVdfOiN2UdBvvQFDOEwvne2GK9eybvr4oN9baX6wV36WnqR5+SjAipZXLEXn7vZHHUNQ7ch9mGQ1vfyVOwEEN5F3wCfKe1AreaUrFIvQRoQbAcVOYPkAvqgYNl08R+IW0P3DCZZZ71PeQoDQR5XHzMh8kXlXrYk05IA1VbigzB0RpHQD7wfRV12bGdjeuDqPGzcYRUx3NqFhIWPy2HRe0ksGm3ulJcbSZyte1nmOFzZTR2PoSI4lf8J1R7KlnJeaENi7ikhgB",
+            "signature": "CAQS2AYKEAgSGAI4AUIIdGhpbmtpbmcSDFzwWLZMOsq7fDcqghoMEn7kRiKmGLtux/o9IjCZfxYw6ne/lcPuK7leNnTkPKYNel+CINfcdwSvjBsUzbVQpQG1FdG/sOChGYy2Q48q9QXcYIVd9sIoZ/vPJOQqUNEPieCGDxpY8fhXdxQ+WAJ5Pwzf7pGAS32bQ8X/XSF2lTRL7cB7WKN51FVrBSM66ggRtf4W1VUaWoN3fODLPhXQ106vKCWDnzIABVgPeyEnc0aDNsIfZ7GxuiT9zvn0C/O7EQ13an9fDSuCQW9vel0Ts8B2VhxT7y5r403Yl4fvcKBagevfBrhMsfmhXgP3Mtc5TDKXIpYTjf915TQU1td+QWPNHz0zmQOglV+Q4B/Hi86fYMSBCNQ3GaTArxr/38ayRfmwWXF8UgGBG0eZ+JbJ52k6R38aDMuEUgHD2AO3DgcUMryJiLIKetfqG0n+w9wm6fYkzTypIuCEFaVPIg0LefZuZfwdfXN+lV4YrbU0MZYR3s0jQpngCYraEtsMuEADi9ysq5RpljTY+NDrw6AzKQnYTn3F/CoVoVs3ERIC2R6OYA/hz2WYbMAUmJGUGwjWGh92I+DlkPQMOMdoKQLUvZybIFzRAgEWTVsY/MBzQA4jdnOJkhubjFnONapPUyqHLfWj5zS2a8PgTirG6rFyYQ5hPJ0PVQcvTlOYrKXlgLrVUr9Qp5IDrNNIUB6TxVIyV+Zhp/ZS5P0L/s2WHvLUs1JtUbhBQ1akUfCYm3XDOJNaHRO3Pz8GAOzGmI4Gy2Vxt5lyXpSp1tjwh4yfzhzM9RZMzTQBrZmAzTRS7wa0LuVHgWlAST3K975fzigk62ID6CFiM1BaTtLZnDUHp8KdaGuU3TshABD0JoY8WRLnhLTftFWUgAh5n2KKKFm/zWS+dMOFcJTo07ZVYnx9kH6Q6VbnIuVutoDwP5wIbH15yiEG5ssImAQoDiI6qYsvsj25nF48yDCaXhh/ud3B7bGzYIW1ezDR6vkasj/bs30SgbWM9n+8XmYFm18euzs9HOwhL5QAmBLW3TZWNn9RblLl4fPZHzGSkuCy9sergGFr446LvntLobG7K+IvlfnB6UkIbHpwOI7iS/S14pHFyTOy0WIy9xiUGAE=",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01BdQBMwD2uArsTZxxSjVxyM",
+            "id": "toolu_012Fsv9caHcYmJid7fAZGsTU",
             "caller": {
               "type": "direct"
             },
@@ -1107,18 +1144,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1861,
-          "output_tokens": 179,
+          "output_tokens": 150,
           "output_tokens_details": {
-            "thinking_tokens": 129
+            "thinking_tokens": 100
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 2.282995200017467,
+      "seconds": 1.9091946000698954,
       "input_tokens": 1861,
-      "output_tokens": 179,
-      "cost_usd": 0.005512,
+      "output_tokens": 150,
+      "cost_usd": 0.005222,
       "error": null,
       "replayed": false,
       "digest": "a03d67e83f5ad13cb1bc8b292bab52c3ebd4be84291cf112ac55c96b0d852001"
@@ -1265,12 +1302,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSxQcKEAgSGAI4AUIIdGhpbmtpbmcSDLta6RWSFqmsSmETDxoMCXHOe94t8YsjCgfoIjCcKmLgt7v2M598wzZPv5++0qPnBDfZ8FrvHPf1nNLUU5ZMsoCq8fc8lKHqwQW03dAq4gb9RVC1JUuVH19lDP753L5x5HYGRyADV+y3g+bCz0VZLalr29MDK93POyBt1UgGUsnwR8PkqGT492XFQc10ebnceHHludYSHXF9hmshBgFhRDLBgyvIivcabMy8daczOVB3ABtdO/ATwDl1AprWUcyfBELe7xv57DkUOwW90ne7bcdlFlYYIMr5lIEsi8a6IAP9VikFhAUVBGH8wRu7cEVdUDz6pdfY8IzZX0ab7JOXAVRUT7V4Bt1HB8qUKxD4M4FuUhXTHjLV4rTTnu78TQ2wIE8CblRCSX8Gs1d7yV0zz9cu3Cybp0k5IiNLFn2Vreb+K0D+0i2dBkA6Pgi2Noe28sc3XpzCY2wa/PdXslKHPjNQwehKDKw6G+rXp65Zo0oh23tB1svW1mEu4np8lOvMBCtF+RK2CGWHiApHSSS54yxLt6+oDZu6/PZcEI9eqXgUubwFBV3v9vAZSBsuUI7uLrnkGZZD9ldKmljAls6Ai1hm4nfz6p9eTPNq/g9HIFsjotawBWIRDyMKArB7ESvo+sT1uTz4xaKnJhLBtzWpwLvJsFtriXRvCpoWLBcLSxjzzO11gOgBI/xoHu7E0QDNox9g4Yq+wLM4XnpSUCJ24D7+po4JNwxonw01Fsd3pVcDhSZQPOHr0I1rJzCzB4dg+d71zYIuBPEu5jdyIVd+gfZzz5eqoDNujdlb/ZYiSO4t3tzEQsUASfJMX2ni4A5zRbjsko996zPMM/ZgLdoXzRn3Fu9CBvKyF0bil+SiRjzh3T1iGe7u6oX2/3KBVVz03Fpem7M1Bfo48GZ6/K6C2CrQWHikifkJJo7OPxFlFpCbO7qAXw2x0caAz0683A2oH5XpZnW2KvF6xlkycQ+mpTJO6Lv8rDRNeITRaz2hVdfOiN2UdBvvQFDOEwvne2GK9eybvr4oN9baX6wV36WnqR5+SjAipZXLEXn7vZHHUNQ7ch9mGQ1vfyVOwEEN5F3wCfKe1AreaUrFIvQRoQbAcVOYPkAvqgYNl08R+IW0P3DCZZZ71PeQoDQR5XHzMh8kXlXrYk05IA1VbigzB0RpHQD7wfRV12bGdjeuDqPGzcYRUx3NqFhIWPy2HRe0ksGm3ulJcbSZyte1nmOFzZTR2PoSI4lf8J1R7KlnJeaENi7ikhgB",
+                "signature": "CAQS2AYKEAgSGAI4AUIIdGhpbmtpbmcSDFzwWLZMOsq7fDcqghoMEn7kRiKmGLtux/o9IjCZfxYw6ne/lcPuK7leNnTkPKYNel+CINfcdwSvjBsUzbVQpQG1FdG/sOChGYy2Q48q9QXcYIVd9sIoZ/vPJOQqUNEPieCGDxpY8fhXdxQ+WAJ5Pwzf7pGAS32bQ8X/XSF2lTRL7cB7WKN51FVrBSM66ggRtf4W1VUaWoN3fODLPhXQ106vKCWDnzIABVgPeyEnc0aDNsIfZ7GxuiT9zvn0C/O7EQ13an9fDSuCQW9vel0Ts8B2VhxT7y5r403Yl4fvcKBagevfBrhMsfmhXgP3Mtc5TDKXIpYTjf915TQU1td+QWPNHz0zmQOglV+Q4B/Hi86fYMSBCNQ3GaTArxr/38ayRfmwWXF8UgGBG0eZ+JbJ52k6R38aDMuEUgHD2AO3DgcUMryJiLIKetfqG0n+w9wm6fYkzTypIuCEFaVPIg0LefZuZfwdfXN+lV4YrbU0MZYR3s0jQpngCYraEtsMuEADi9ysq5RpljTY+NDrw6AzKQnYTn3F/CoVoVs3ERIC2R6OYA/hz2WYbMAUmJGUGwjWGh92I+DlkPQMOMdoKQLUvZybIFzRAgEWTVsY/MBzQA4jdnOJkhubjFnONapPUyqHLfWj5zS2a8PgTirG6rFyYQ5hPJ0PVQcvTlOYrKXlgLrVUr9Qp5IDrNNIUB6TxVIyV+Zhp/ZS5P0L/s2WHvLUs1JtUbhBQ1akUfCYm3XDOJNaHRO3Pz8GAOzGmI4Gy2Vxt5lyXpSp1tjwh4yfzhzM9RZMzTQBrZmAzTRS7wa0LuVHgWlAST3K975fzigk62ID6CFiM1BaTtLZnDUHp8KdaGuU3TshABD0JoY8WRLnhLTftFWUgAh5n2KKKFm/zWS+dMOFcJTo07ZVYnx9kH6Q6VbnIuVutoDwP5wIbH15yiEG5ssImAQoDiI6qYsvsj25nF48yDCaXhh/ud3B7bGzYIW1ezDR6vkasj/bs30SgbWM9n+8XmYFm18euzs9HOwhL5QAmBLW3TZWNn9RblLl4fPZHzGSkuCy9sergGFr446LvntLobG7K+IvlfnB6UkIbHpwOI7iS/S14pHFyTOy0WIy9xiUGAE=",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01BdQBMwD2uArsTZxxSjVxyM",
+                "id": "toolu_012Fsv9caHcYmJid7fAZGsTU",
                 "caller": {
                   "type": "direct"
                 },
@@ -1288,7 +1325,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01BdQBMwD2uArsTZxxSjVxyM",
+                "tool_use_id": "toolu_012Fsv9caHcYmJid7fAZGsTU",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1296,11 +1333,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYSxJvy3Su8e7vGujNc",
+        "id": "msg_011CftZs73ZsDtzWtQCjPTMZ",
         "container": null,
         "content": [
           {
-            "id": "toolu_01LPQRVQhmLzozjaVVqSErTQ",
+            "id": "toolu_01BY8jXmGEpETJRD5mmY5y8L",
             "caller": {
               "type": "direct"
             },
@@ -1325,7 +1362,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2075,
+          "input_tokens": 2046,
           "output_tokens": 26,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1334,13 +1371,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.1106795999221504,
-      "input_tokens": 2075,
+      "seconds": 0.7079024999402463,
+      "input_tokens": 2046,
       "output_tokens": 26,
-      "cost_usd": 0.00441,
+      "cost_usd": 0.004352,
       "error": null,
       "replayed": false,
-      "digest": "465ad15f2d9433176b576da79e9d14ed236ef3eb1df35d86b0dd1159a3a0ac9a"
+      "digest": "d18edd19e2357167447562efde913c8336a6c6e6902e89573b3a300ac4d127fa"
     },
     {
       "kind": "agent",
@@ -1484,12 +1521,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSxQcKEAgSGAI4AUIIdGhpbmtpbmcSDLta6RWSFqmsSmETDxoMCXHOe94t8YsjCgfoIjCcKmLgt7v2M598wzZPv5++0qPnBDfZ8FrvHPf1nNLUU5ZMsoCq8fc8lKHqwQW03dAq4gb9RVC1JUuVH19lDP753L5x5HYGRyADV+y3g+bCz0VZLalr29MDK93POyBt1UgGUsnwR8PkqGT492XFQc10ebnceHHludYSHXF9hmshBgFhRDLBgyvIivcabMy8daczOVB3ABtdO/ATwDl1AprWUcyfBELe7xv57DkUOwW90ne7bcdlFlYYIMr5lIEsi8a6IAP9VikFhAUVBGH8wRu7cEVdUDz6pdfY8IzZX0ab7JOXAVRUT7V4Bt1HB8qUKxD4M4FuUhXTHjLV4rTTnu78TQ2wIE8CblRCSX8Gs1d7yV0zz9cu3Cybp0k5IiNLFn2Vreb+K0D+0i2dBkA6Pgi2Noe28sc3XpzCY2wa/PdXslKHPjNQwehKDKw6G+rXp65Zo0oh23tB1svW1mEu4np8lOvMBCtF+RK2CGWHiApHSSS54yxLt6+oDZu6/PZcEI9eqXgUubwFBV3v9vAZSBsuUI7uLrnkGZZD9ldKmljAls6Ai1hm4nfz6p9eTPNq/g9HIFsjotawBWIRDyMKArB7ESvo+sT1uTz4xaKnJhLBtzWpwLvJsFtriXRvCpoWLBcLSxjzzO11gOgBI/xoHu7E0QDNox9g4Yq+wLM4XnpSUCJ24D7+po4JNwxonw01Fsd3pVcDhSZQPOHr0I1rJzCzB4dg+d71zYIuBPEu5jdyIVd+gfZzz5eqoDNujdlb/ZYiSO4t3tzEQsUASfJMX2ni4A5zRbjsko996zPMM/ZgLdoXzRn3Fu9CBvKyF0bil+SiRjzh3T1iGe7u6oX2/3KBVVz03Fpem7M1Bfo48GZ6/K6C2CrQWHikifkJJo7OPxFlFpCbO7qAXw2x0caAz0683A2oH5XpZnW2KvF6xlkycQ+mpTJO6Lv8rDRNeITRaz2hVdfOiN2UdBvvQFDOEwvne2GK9eybvr4oN9baX6wV36WnqR5+SjAipZXLEXn7vZHHUNQ7ch9mGQ1vfyVOwEEN5F3wCfKe1AreaUrFIvQRoQbAcVOYPkAvqgYNl08R+IW0P3DCZZZ71PeQoDQR5XHzMh8kXlXrYk05IA1VbigzB0RpHQD7wfRV12bGdjeuDqPGzcYRUx3NqFhIWPy2HRe0ksGm3ulJcbSZyte1nmOFzZTR2PoSI4lf8J1R7KlnJeaENi7ikhgB",
+                "signature": "CAQS2AYKEAgSGAI4AUIIdGhpbmtpbmcSDFzwWLZMOsq7fDcqghoMEn7kRiKmGLtux/o9IjCZfxYw6ne/lcPuK7leNnTkPKYNel+CINfcdwSvjBsUzbVQpQG1FdG/sOChGYy2Q48q9QXcYIVd9sIoZ/vPJOQqUNEPieCGDxpY8fhXdxQ+WAJ5Pwzf7pGAS32bQ8X/XSF2lTRL7cB7WKN51FVrBSM66ggRtf4W1VUaWoN3fODLPhXQ106vKCWDnzIABVgPeyEnc0aDNsIfZ7GxuiT9zvn0C/O7EQ13an9fDSuCQW9vel0Ts8B2VhxT7y5r403Yl4fvcKBagevfBrhMsfmhXgP3Mtc5TDKXIpYTjf915TQU1td+QWPNHz0zmQOglV+Q4B/Hi86fYMSBCNQ3GaTArxr/38ayRfmwWXF8UgGBG0eZ+JbJ52k6R38aDMuEUgHD2AO3DgcUMryJiLIKetfqG0n+w9wm6fYkzTypIuCEFaVPIg0LefZuZfwdfXN+lV4YrbU0MZYR3s0jQpngCYraEtsMuEADi9ysq5RpljTY+NDrw6AzKQnYTn3F/CoVoVs3ERIC2R6OYA/hz2WYbMAUmJGUGwjWGh92I+DlkPQMOMdoKQLUvZybIFzRAgEWTVsY/MBzQA4jdnOJkhubjFnONapPUyqHLfWj5zS2a8PgTirG6rFyYQ5hPJ0PVQcvTlOYrKXlgLrVUr9Qp5IDrNNIUB6TxVIyV+Zhp/ZS5P0L/s2WHvLUs1JtUbhBQ1akUfCYm3XDOJNaHRO3Pz8GAOzGmI4Gy2Vxt5lyXpSp1tjwh4yfzhzM9RZMzTQBrZmAzTRS7wa0LuVHgWlAST3K975fzigk62ID6CFiM1BaTtLZnDUHp8KdaGuU3TshABD0JoY8WRLnhLTftFWUgAh5n2KKKFm/zWS+dMOFcJTo07ZVYnx9kH6Q6VbnIuVutoDwP5wIbH15yiEG5ssImAQoDiI6qYsvsj25nF48yDCaXhh/ud3B7bGzYIW1ezDR6vkasj/bs30SgbWM9n+8XmYFm18euzs9HOwhL5QAmBLW3TZWNn9RblLl4fPZHzGSkuCy9sergGFr446LvntLobG7K+IvlfnB6UkIbHpwOI7iS/S14pHFyTOy0WIy9xiUGAE=",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01BdQBMwD2uArsTZxxSjVxyM",
+                "id": "toolu_012Fsv9caHcYmJid7fAZGsTU",
                 "caller": {
                   "type": "direct"
                 },
@@ -1507,7 +1544,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01BdQBMwD2uArsTZxxSjVxyM",
+                "tool_use_id": "toolu_012Fsv9caHcYmJid7fAZGsTU",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1516,7 +1553,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01LPQRVQhmLzozjaVVqSErTQ",
+                "id": "toolu_01BY8jXmGEpETJRD5mmY5y8L",
                 "caller": {
                   "type": "direct"
                 },
@@ -1532,7 +1569,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01LPQRVQhmLzozjaVVqSErTQ",
+                "tool_use_id": "toolu_01BY8jXmGEpETJRD5mmY5y8L",
                 "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"requester\": \"Elise Rowan\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false, \"subject\": \"transfer\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1540,12 +1577,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYT35fm4VLz9ADZLmTi",
+        "id": "msg_011CftZsA5eFFRyHH8oMYKDT",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I checked the payment system for your saved transfer instruction. The case is now closed on my side, and I have no stage or authorisation result to give you yet.\n\nThe desk shows no sent confirmation for the instruction. It also shows that you did not give the instruction outside the portal. Your identity is not verified in this chat. Because of that, I can't confirm the stage or tell you whether you need to authorise it.",
+            "text": "I asked the payment system about the transfer. The case is now closed with that step as its outcome.\n\nThe check hasn't produced an answer yet. Nothing has been confirmed about whether the instruction was submitted, what stage it is at, or whether you need to authorise it. The records still show no sent confirmation for it. Your identity is also not verified in this chat.",
             "type": "text"
           }
         ],
@@ -1564,8 +1601,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2230,
-          "output_tokens": 127,
+          "input_tokens": 2201,
+          "output_tokens": 113,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1573,13 +1610,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.818550799973309,
-      "input_tokens": 2230,
-      "output_tokens": 127,
-      "cost_usd": 0.00573,
+      "seconds": 1.6442693000426516,
+      "input_tokens": 2201,
+      "output_tokens": 113,
+      "cost_usd": 0.005532,
       "error": null,
       "replayed": false,
-      "digest": "aa0d94cc382f25cb3c8d980e97f36435d1ad6e979bc93a48f9653db80e82b5a4"
+      "digest": "da072783232b3b38f81377f008330127f7f8cc325e9b5ee916ba38cdbc3c231f"
     },
     {
       "kind": "generate",
@@ -1592,17 +1629,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Elise Rowan\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"transfer\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"transfer\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-003-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-003-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Elise Rowan): I’m escalating this because the instruction still has no sent confirmation. Please check its current stage and tell me whether I need to authorise it. [facts: requester='Elise Rowan', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Elise Rowan\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Elise Rowan (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-003-at-02:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-003-at-02:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-003-at-02:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-003-at-02:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-003-at-02:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-003-at-02:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-003-at-02:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-003-at-02:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-003-at-02:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-registration` fired: state = READING → true (state=READING).\n38. Called `check_registration` (attempt 1, key banking-003-at-02:read-registration:11).\n39. `check_registration` found {}.\n40. Rule `read-confirmation` fired: state = READING → true (state=READING).\n41. Called `check_confirmation` (attempt 1, key banking-003-at-02:read-confirmation:12).\n42. Note from `read-confirmation`: event 2 (Elise Rowan): I’m escalating this because the instruction still has no sent confirmation. Please check its current stage and tell me whether I need to authorise it. [facts: confirmation='none', instructed_outside_portal=False]\n43. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n44. `confirmation`: not known → none (by `read-confirmation`).\n45. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n46. Rule `triage` fired: state = READING → true (state=READING).\n47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n48. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.\n49. `request_type`: not known → question (by `triage`).\n50. `subject`: not known → transfer (by `triage`).\n51. State `READING` → `TRIAGED` (by `triage`).\n52. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).\n53. `next_system`: not known → payment (by `route-payment`).\n54. The agent asked for `ask_system` {\"system\": \"payment\"}.\n55. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n56. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n58. Called `ask_system` (attempt 1, key banking-003-at-02:do-ask:16).\n59. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"transfer\"}.\n60. `ask_system` found {}.\n61. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n62. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7080 tokens in, 531 out, 5.472 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I checked the payment system for your saved transfer instruction. The case is now closed on my side, and I have no stage or authorisation result to give you yet.\n> \n> The desk shows no sent confirmation for the instruction. It also shows that you did not give the instruction outside the portal. Your identity is not verified in this chat. Because of that, I can't confirm the stage or tell you whether you need to authorise it.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Elise Rowan\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"transfer\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"transfer\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-003-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-003-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Elise Rowan): I’m escalating this because the instruction still has no sent confirmation. Please check its current stage and tell me whether I need to authorise it. [facts: requester='Elise Rowan', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Elise Rowan\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Elise Rowan (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-003-at-02:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-003-at-02:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-003-at-02:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-003-at-02:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-003-at-02:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-003-at-02:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-003-at-02:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-003-at-02:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-003-at-02:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n38. Called `check_bank_actions` (attempt 1, key banking-003-at-02:read-bank-actions:11).\n39. `check_bank_actions` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-003-at-02:read-registration:12).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-003-at-02:read-confirmation:13).\n45. Note from `read-confirmation`: event 2 (Elise Rowan): I’m escalating this because the instruction still has no sent confirmation. Please check its current stage and tell me whether I need to authorise it. [facts: confirmation='none', instructed_outside_portal=False]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n51. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.\n52. `request_type`: not known → question (by `triage`).\n53. `subject`: not known → transfer (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).\n56. `next_system`: not known → payment (by `route-payment`).\n57. The agent asked for `ask_system` {\"system\": \"payment\"}.\n58. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n59. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n61. Called `ask_system` (attempt 1, key banking-003-at-02:do-ask:17).\n62. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"transfer\"}.\n63. `ask_system` found {}.\n64. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n65. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7022 tokens in, 488 out, 4.498 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the payment system about the transfer. The case is now closed with that step as its outcome.\n> \n> The check hasn't produced an answer yet. Nothing has been confirmed about whether the instruction was submitted, what stage it is at, or whether you need to authorise it. The records still show no sent confirmation for it. Your identity is also not verified in this chat.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYTAtxkGz99GTGNgCsc",
+        "id": "msg_011CftZsHAY3DSTEvT2NjQqS",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Elise Rowan, an unverified customer on secure chat, asked about the stage of a transfer instruction and whether she needs to authorise it. The desk classified it as a question about a transfer and sent it to the payment system, and the case closed there with no stage or authorisation result returned. It found no sent confirmation and no sign the instruction was given outside the portal. Her identity is unverified, so the stage and the authorisation question remain unanswered and are left for a person to follow up.",
+            "text": "Elise Rowan, writing over secure chat, asked about a transfer that still had no sent confirmation, wanting to know its current stage and whether she needed to authorise it. The desk treated this as a question about a transfer and asked the payment system about it, which closed the case. No answer has come back yet, so the transfer's stage and whether she must authorise it are still unconfirmed, and her identity is not verified in this chat.",
             "type": "text"
           }
         ],
@@ -1621,8 +1658,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2606,
-          "output_tokens": 153,
+          "input_tokens": 2679,
+          "output_tokens": 135,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1630,13 +1667,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.022334099980071,
-      "input_tokens": 2606,
-      "output_tokens": 153,
-      "cost_usd": 0.006742,
+      "seconds": 1.9111215000739321,
+      "input_tokens": 2679,
+      "output_tokens": 135,
+      "cost_usd": 0.006708,
       "error": null,
       "replayed": false,
-      "digest": "885bfe2ac6e40ff51662d7ff7b849230fa0479619b5f38ad6244cf4710705475"
+      "digest": "0bd487d2e930d10a491999e62f4480eedf56a77b70804eb8927e8c1ae8c837a1"
     }
   ]
 }

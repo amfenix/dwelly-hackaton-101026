@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -84,7 +87,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The message was a question about a standing order. The desk classified it that way and sent a query to the recurring payments system about that standing order, then closed the case at that step. No answer from that system is in the record yet, so nothing has been confirmed to the requester, and any follow-up once a reply arrives is left for a person.",
+  "summary": "The request was a question about a standing order. The desk classified it as such and sent a query to the recurring payments system about that standing order, then closed the case as final in the asked state. The record holds no answer from that system, so the question stays unanswered and nothing was changed. A person would need to pick up the system's reply and get it back to the requester.",
   "journal": [
     {
       "seq": 1,
@@ -225,7 +228,7 @@
     },
     {
       "seq": 13,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "returned",
       "function": "check_incoming",
       "values": {}
@@ -438,7 +441,7 @@
       "seq": 32,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -456,23 +459,23 @@
       "seq": 33,
       "at": 0.002,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-011-at-01:read-registration:11",
+      "key": "banking-011-at-01:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 34,
       "at": 0.002,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 35,
       "at": 0.002,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -490,20 +493,54 @@
       "seq": 36,
       "at": 0.002,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-011-at-01:read-confirmation:12",
+      "key": "banking-011-at-01:read-registration:12",
       "args": {}
     },
     {
       "seq": 37,
       "at": 0.002,
       "kind": "returned",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "values": {}
     },
     {
       "seq": 38,
+      "at": 0.002,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 39,
+      "at": 0.002,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-011-at-01:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 40,
+      "at": 0.002,
+      "kind": "returned",
+      "function": "check_confirmation",
+      "values": {}
+    },
+    {
+      "seq": 41,
       "at": 0.002,
       "kind": "trigger",
       "name": "triage",
@@ -521,8 +558,8 @@
       "note": ""
     },
     {
-      "seq": 39,
-      "at": 0.281,
+      "seq": 42,
+      "at": 0.26,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -533,8 +570,8 @@
       "attempt": 1
     },
     {
-      "seq": 40,
-      "at": 0.281,
+      "seq": 43,
+      "at": 0.26,
       "kind": "choice",
       "field": "subject",
       "raw": "standing_order",
@@ -545,8 +582,8 @@
       "attempt": 1
     },
     {
-      "seq": 41,
-      "at": 0.281,
+      "seq": 44,
+      "at": 0.26,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -554,8 +591,8 @@
       "by": "triage"
     },
     {
-      "seq": 42,
-      "at": 0.281,
+      "seq": 45,
+      "at": 0.26,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -563,16 +600,16 @@
       "by": "triage"
     },
     {
-      "seq": 43,
-      "at": 0.281,
+      "seq": 46,
+      "at": 0.26,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 44,
-      "at": 0.281,
+      "seq": 47,
+      "at": 0.26,
       "kind": "trigger",
       "name": "route-recurring",
       "on": null,
@@ -603,8 +640,8 @@
       "note": ""
     },
     {
-      "seq": 45,
-      "at": 0.281,
+      "seq": 48,
+      "at": 0.26,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -612,8 +649,8 @@
       "by": "route-recurring"
     },
     {
-      "seq": 46,
-      "at": 1.527,
+      "seq": 49,
+      "at": 1.475,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -621,8 +658,8 @@
       }
     },
     {
-      "seq": 47,
-      "at": 1.527,
+      "seq": 50,
+      "at": 1.475,
       "kind": "trigger",
       "name": "recurring-ask",
       "on": "ask_system",
@@ -674,16 +711,16 @@
       "note": ""
     },
     {
-      "seq": 48,
-      "at": 1.527,
+      "seq": 51,
+      "at": 1.475,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "recurring-ask"
     },
     {
-      "seq": 49,
-      "at": 1.527,
+      "seq": 52,
+      "at": 1.475,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -700,17 +737,17 @@
       "note": ""
     },
     {
-      "seq": 50,
-      "at": 1.527,
+      "seq": 53,
+      "at": 1.475,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-011-at-01:do-ask:16",
+      "key": "banking-011-at-01:do-ask:17",
       "args": {}
     },
     {
-      "seq": 51,
-      "at": 1.527,
+      "seq": 54,
+      "at": 1.476,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -718,26 +755,26 @@
         "about": "standing_order"
       },
       "by": "do-ask",
-      "key": "banking-011-at-01:do-ask:16"
+      "key": "banking-011-at-01:do-ask:17"
     },
     {
-      "seq": 52,
-      "at": 1.527,
+      "seq": 55,
+      "at": 1.476,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 53,
-      "at": 1.527,
+      "seq": 56,
+      "at": 1.476,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 54,
-      "at": 1.527,
+      "seq": 57,
+      "at": 1.476,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -835,7 +872,7 @@
           }
         }
       },
-      "seconds": 0.27882780006621033,
+      "seconds": 0.2577844999032095,
       "input_tokens": 908,
       "output_tokens": 200,
       "cost_usd": null,
@@ -984,11 +1021,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYUtzZ1JS7PqNBjuXzZ",
+        "id": "msg_011CftZtvhXsqgk3YA3KHqdM",
         "container": null,
         "content": [
           {
-            "id": "toolu_01QaP4L6s15Ch95jR2rRgiDU",
+            "id": "toolu_01QJPJaTyEBT8Yr3X4yXVdCK",
             "caller": {
               "type": "direct"
             },
@@ -1024,7 +1061,7 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.2455460999626666,
+      "seconds": 1.2154098000610247,
       "input_tokens": 1668,
       "output_tokens": 50,
       "cost_usd": 0.003836,
@@ -1174,7 +1211,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01QaP4L6s15Ch95jR2rRgiDU",
+                "id": "toolu_01QJPJaTyEBT8Yr3X4yXVdCK",
                 "caller": {
                   "type": "direct"
                 },
@@ -1192,7 +1229,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01QaP4L6s15Ch95jR2rRgiDU",
+                "tool_use_id": "toolu_01QJPJaTyEBT8Yr3X4yXVdCK",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1200,11 +1237,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYUzH43RHamDtnYEM6v",
+        "id": "msg_011CftZu1prgVByjZ9RRDd4z",
         "container": null,
         "content": [
           {
-            "id": "toolu_019EDKaBD4iT3rjnvq388XFt",
+            "id": "toolu_01D1zfCedM1ptfsUWQGoUiZV",
             "caller": {
               "type": "direct"
             },
@@ -1238,13 +1275,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.8002521999878809,
+      "seconds": 0.6927115999860689,
       "input_tokens": 1753,
       "output_tokens": 26,
       "cost_usd": 0.003766,
       "error": null,
       "replayed": false,
-      "digest": "40a1ef7d8e88dd16c20dce037ff53f43fab3ef405155653fd0ab9a509ac4e9f1"
+      "digest": "2178c25998984bf47c946ef90eafa41e14cc77424e030e565048687056ed571b"
     },
     {
       "kind": "agent",
@@ -1388,7 +1425,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01QaP4L6s15Ch95jR2rRgiDU",
+                "id": "toolu_01QJPJaTyEBT8Yr3X4yXVdCK",
                 "caller": {
                   "type": "direct"
                 },
@@ -1406,7 +1443,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01QaP4L6s15Ch95jR2rRgiDU",
+                "tool_use_id": "toolu_01QJPJaTyEBT8Yr3X4yXVdCK",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1415,7 +1452,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_019EDKaBD4iT3rjnvq388XFt",
+                "id": "toolu_01D1zfCedM1ptfsUWQGoUiZV",
                 "caller": {
                   "type": "direct"
                 },
@@ -1431,7 +1468,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_019EDKaBD4iT3rjnvq388XFt",
+                "tool_use_id": "toolu_01D1zfCedM1ptfsUWQGoUiZV",
                 "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"subject\": \"standing_order\", \"request_type\": \"question\", \"next_system\": \"recurring\"}, \"refused\": []}"
               }
             ]
@@ -1439,12 +1476,17 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYV3fSbyCp92fPRVF5K",
+        "id": "msg_011CftZu4kTuyM8Es5SnLFsw",
         "container": null,
         "content": [
           {
+            "signature": "CAQSrQYKEAgSGAI4AUIIdGhpbmtpbmcSDLoJUz7cMoE6G5AGIxoM6SJ+3x+hhc+8fYyAIjABtom3Mc7sdUZrV3R0RgENQCAK7V7Yni3YCoDYHL0yspMqw8lEdKWyEZRrIhm/bRkqygVjfT9LRWbuelHjfptmFOMfma9n+otHGNY40y8yYPtXwJF4YTUJauW9N0AZCfZrFwgkbpvznnPy9yIYS+m4PiI3JSptx4TOoX1pqukeBo3QbriiVonM97FUpx7s7qB49OyvsVZNb3OqRruc9gciTgdAh1I0xJJYOlsHoFlqlgvNATG63GQO7SKAlVZEvH7darkFFL1If/qs+jWpGSdPNOIxBO4gShjRTP+J+Y8WE0a791qIx5EcjzWugEt7qlELufG9I/fSjj3zNxTz+s2iWIXnouYiVt31ORt+OrXGVARpHzU7oMizepMXQGOV8UqTj/EqJJEIXjmB64d9rq/c0WSVtLcySuBjrtRZ3CcaMTn6jlDAv67JSVi9AK7jMKyw4v/ELGEpRJ7VAnGpfqePtFJImlVi6JSYryQu4KLXh2AFa4w+cypOYb9Um/8F0tgU3J7TNfEiy5sjg55krH2XgIN52c21h7ScXAFX5JC1NtJbcwK2GHUBJnAU86ImHrdbV73Y0LoL8KU/d9MF9P9Fj5FoB+1Vt8GNyCanMrEnjNBaliTFoOIKO8am2G8GjVFYmjK995yp7/z5Pvd86Q1I8N999R7NdYul5uTNJ1HW7KfZ6KHz3bCFmcK8jvkvWQCNsH0cLwVQgtniVFZDZusDosWIWQpq4ofAOYlRcjn70Ds5siOlWUBJZl59RGFr2zv+qOXXVLqza4oCXC7KKn+eaQsbSCYWdS6m96Nl4GJvB2H3Zb6DTq3vvS5QMCxxMqfh/mqBIJXRkLSV53ggd4fJwNf0rdCeMe7qL2g+qO0KSvAqDUbutJ1Je422S8w/STQS+B0oP5ftFbdZqGx6jznkrkLZ0MUy7PMFIWBs6XQsynzBDknbT4HSW+W87N6NjpMDX/Pi3oi6NSFQLTYyOpSi3IvBOg9QTEuQZpbJYEyjwwzJrDhYg5T5oP9T4j0YAQ==",
+            "thinking": "",
+            "type": "thinking"
+          },
+          {
             "citations": null,
-            "text": "I've asked the recurring payments system about your standing order. The case is now closed at that step. No answer from the system has been added to the case yet, so I can't give you the next due date.",
+            "text": "I asked the recurring payments system for the next run date of your standing order. The case now shows as final. However, the system's answer isn't in the case facts yet, so I can't tell you the date. I haven't sent a reply or made any changes.",
             "type": "text"
           }
         ],
@@ -1464,21 +1506,21 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1851,
-          "output_tokens": 55,
+          "output_tokens": 159,
           "output_tokens_details": {
-            "thinking_tokens": 0
+            "thinking_tokens": 85
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.1278149000136182,
+      "seconds": 1.7595307999290526,
       "input_tokens": 1851,
-      "output_tokens": 55,
-      "cost_usd": 0.004252,
+      "output_tokens": 159,
+      "cost_usd": 0.005292,
       "error": null,
       "replayed": false,
-      "digest": "d70ac5f62929c2c73eca9c450a099cc8afe044f77262830d51ffda3fb23d45a1"
+      "digest": "6dc7e035965bf2154a0a562663c21067c5d6248cec361ede3f897c95d5efc8a2"
     },
     {
       "kind": "generate",
@@ -1491,17 +1533,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"standing_order\",\n    \"request_type\": \"question\",\n    \"next_system\": \"recurring\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"recurring\",\n        \"about\": \"standing_order\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-011-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-011-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-011-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-011-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-011-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-011-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-011-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-011-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-011-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-011-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-011-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-registration` fired: state = READING → true (state=READING).\n33. Called `check_registration` (attempt 1, key banking-011-at-01:read-registration:11).\n34. `check_registration` found {}.\n35. Rule `read-confirmation` fired: state = READING → true (state=READING).\n36. Called `check_confirmation` (attempt 1, key banking-011-at-01:read-confirmation:12).\n37. `check_confirmation` found {}.\n38. Rule `triage` fired: state = READING → true (state=READING).\n39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n40. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.\n41. `request_type`: not known → question (by `triage`).\n42. `subject`: not known → standing_order (by `triage`).\n43. State `READING` → `TRIAGED` (by `triage`).\n44. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).\n45. `next_system`: not known → recurring (by `route-recurring`).\n46. The agent asked for `ask_system` {\"system\": \"recurring\"}.\n47. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n48. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).\n49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n50. Called `ask_system` (attempt 1, key banking-011-at-01:do-ask:16).\n51. Action in the world: `ask_system` {\"system\": \"recurring\", \"about\": \"standing_order\"}.\n52. `ask_system` found {}.\n53. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n54. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 6180 tokens in, 331 out, 3.452 s, cost $0.0119; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've asked the recurring payments system about your standing order. The case is now closed at that step. No answer from the system has been added to the case yet, so I can't give you the next due date.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"standing_order\",\n    \"request_type\": \"question\",\n    \"next_system\": \"recurring\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"recurring\",\n        \"about\": \"standing_order\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-011-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-011-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-011-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-011-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-011-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-011-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-011-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-011-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-011-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-011-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-011-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-011-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-011-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-011-at-01:read-confirmation:13).\n40. `check_confirmation` found {}.\n41. Rule `triage` fired: state = READING → true (state=READING).\n42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n43. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.\n44. `request_type`: not known → question (by `triage`).\n45. `subject`: not known → standing_order (by `triage`).\n46. State `READING` → `TRIAGED` (by `triage`).\n47. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).\n48. `next_system`: not known → recurring (by `route-recurring`).\n49. The agent asked for `ask_system` {\"system\": \"recurring\"}.\n50. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n51. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).\n52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n53. Called `ask_system` (attempt 1, key banking-011-at-01:do-ask:17).\n54. Action in the world: `ask_system` {\"system\": \"recurring\", \"about\": \"standing_order\"}.\n55. `ask_system` found {}.\n56. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n57. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 6180 tokens in, 435 out, 3.925 s, cost $0.0129; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the recurring payments system for the next run date of your standing order. The case now shows as final. However, the system's answer isn't in the case facts yet, so I can't tell you the date. I haven't sent a reply or made any changes.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYV8b79vfF4VnV6i8bv",
+        "id": "msg_011CftZuCMs5kcqcWKSSFVyp",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The message was a question about a standing order. The desk classified it that way and sent a query to the recurring payments system about that standing order, then closed the case at that step. No answer from that system is in the record yet, so nothing has been confirmed to the requester, and any follow-up once a reply arrives is left for a person.",
+            "text": "The request was a question about a standing order. The desk classified it as such and sent a query to the recurring payments system about that standing order, then closed the case as final in the asked state. The record holds no answer from that system, so the question stays unanswered and nothing was changed. A person would need to pick up the system's reply and get it back to the requester.",
             "type": "text"
           }
         ],
@@ -1520,8 +1562,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2078,
-          "output_tokens": 96,
+          "input_tokens": 2184,
+          "output_tokens": 103,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1529,13 +1571,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.6312089000130072,
-      "input_tokens": 2078,
-      "output_tokens": 96,
-      "cost_usd": 0.005116,
+      "seconds": 1.852332100039348,
+      "input_tokens": 2184,
+      "output_tokens": 103,
+      "cost_usd": 0.005398,
       "error": null,
       "replayed": false,
-      "digest": "3ccfe8e0dde3f2bbb478f153a31283cf87080eb31339a6096d45f54e60df7773"
+      "digest": "b48e776b150ed4179c86aaa071a4c8220618638032464664e5034a50e75a6bbd"
     }
   ]
 }

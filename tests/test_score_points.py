@@ -51,6 +51,19 @@ def test_the_label_reads_the_next_event(event: dict[str, Any], want: str) -> Non
     assert sp.label(event) == want
 
 
+def test_what_came_before_decides_who_speaks_to_the_customer() -> None:
+    asked = ev("H&V agent", "H&V import service", "Please retrieve the report.")
+    answered = ev("H&V acquiring service", "H&V agent", "Report ready.")
+    record = {**ev("Harrow & Vale Bank plc", "Nadia", "Batch HV-042 | Validation status: FAILED"), "kind": "system"}
+    assert sp.label(record, asked) == "wait"  # the system's answer, delivered straight to the customer
+    assert sp.label(record, answered) == "reply"
+    portal = ev("H&V business portal", "Mara", "Report status: Available.")
+    assert sp.label(portal, answered) == "reply" and sp.label(portal, asked) == "wait"
+    note = ev("H&V agent", "H&V case record HV-043", "The queue shows no second consent.")
+    assert sp.label(record, note) == "reply"  # a note to a case record is not a request
+    assert sp.label(ev("H&V agent", "Maren", "I'll check the existing record."), None) == "ask_system"
+
+
 def run_files(tmp_path: Path) -> list[str]:
     cases = [
         {"id": "a", "actor_next": "bank"},

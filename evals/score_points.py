@@ -23,7 +23,7 @@ NOTE = "note"
 
 _SYSTEM_NAME = re.compile(r"journal|\blog\b|register|system|service|process|record|team|group|\bapp\b", re.IGNORECASE)
 _STAFF = re.compile(r"\b(?:agent|support|adviser)\b", re.IGNORECASE)
-_AUTOMATIC = re.compile(r"system|\bapp\b|process|journal|\blog\b", re.IGNORECASE)
+_AUTOMATIC = re.compile(r"system|\bapp\b|process|journal|\blog\b|portal", re.IGNORECASE)
 """What messages a customer by itself; a team or a service writing to the customer is the bank replying."""
 _BANK_SIDE = re.compile(r"h&v|harrow|\bbank\b", re.IGNORECASE)
 _SUBMITS = re.compile(
@@ -39,10 +39,17 @@ _ASKS_TO_CONFIRM = re.compile(
 
 
 _AUTHORITY = re.compile(r"administrator|signatory", re.IGNORECASE)
-_REDIRECTS = re.compile(r"\bdirect(?:ing)? you to\b|\buse the (?:secure )?(?:recovery|pin) ", re.IGNORECASE)
+_REDIRECTS = re.compile(
+    r"\bdirect(?:ing)? you to\b|\buse the (?:secure )?(?:recovery|pin) "
+    r"|\bopened\b.{0,60}\b(?:procedure|process)\b.{0,40}\bfor you\b",
+    re.IGNORECASE,
+)
 _CLARIFIES = re.compile(
     r"\bplease tell (?:me|us) which\b|\bwhich (?:payment|card|attempt|instruction) you\b", re.IGNORECASE
 )
+
+
+_WILL_CHECK = re.compile(r"\bI(?:'|’)ll check\b|\bI will check\b|\bwe(?:'|’)ll check\b", re.IGNORECASE)
 
 
 def is_system(name: str) -> bool:
@@ -54,12 +61,14 @@ def is_bank_side(name: str) -> bool:
     return bool(_BANK_SIDE.search(name) or _STAFF.search(name) or is_system(name))
 
 
-def label(event: dict[str, Any]) -> str:
-    """What the bank did, read from the event that came next."""
+def label(event: dict[str, Any], last: dict[str, Any] | None = None) -> str:
+    """What the bank did, read from the event that came next (`last`: the last event the desk saw)."""
     text, sender, recipient = event["text"], event["from"], event["to"]
     if not is_bank_side(recipient):  # said to the customer
-        if _AUTOMATIC.search(sender) and not _STAFF.search(sender):
+        if _AUTOMATIC.search(sender) and not _STAFF.search(sender) and not (last and _answers_the_bank(last)):
             return "wait"  # a system acting on its own; the bank had nothing to do
+        if event.get("kind") == "system" and last is not None and _asks_a_system(last):
+            return "wait"  # the system's answer to the bank's request, delivered straight to the customer
         if _AUTHORITY.search(recipient):
             return "forward_to_authority"  # sent to the person whose approval it needs
         if _ASKS_TO_CONFIRM.search(text) and not re.match(r"\W*\w*\s*confirmed", text, re.IGNORECASE):
@@ -68,6 +77,8 @@ def label(event: dict[str, Any]) -> str:
             return "redirect_secure"
         if _CLARIFIES.search(text):
             return "clarify"
+        if _WILL_CHECK.search(text):
+            return "ask_system"  # "I'll check the record": the substance of the step is the check
         return "reply"
     if is_system(sender):
         return "wait"  # a system's answer to the bank
@@ -76,6 +87,16 @@ def label(event: dict[str, Any]) -> str:
     if _SUBMITS.search(text):
         return "submit_request"
     return "ask_system"
+
+
+def _asks_a_system(event: dict[str, Any]) -> bool:
+    """The bank's request to a system (a note to a case record is not one)."""
+    return is_system(event["to"]) and not is_system(event["from"]) and "case record" not in event["to"].lower()
+
+
+def _answers_the_bank(event: dict[str, Any]) -> bool:
+    """A system's answer to the bank: what follows it is the bank replying, however it is sent."""
+    return is_system(event["from"]) and is_bank_side(event["to"]) and not is_system(event["to"])
 
 
 def score(
@@ -87,7 +108,8 @@ def score(
         result = results.get(case["id"])
         if result is None or case.get("actor_next") != "bank":
             continue
-        want = label(expected[case["id"]]["next_event"])
+        events = case.get("events") or []
+        want = label(expected[case["id"]]["next_event"], events[-1] if events else None)
         if want != NOTE:
             rows.append((case["id"], want, str(result["outcome"])))
     return rows

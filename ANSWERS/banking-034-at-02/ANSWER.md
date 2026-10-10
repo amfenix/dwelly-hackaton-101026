@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, who was not verified, asked over secure chat why a £3.20 fee appeared against a withdrawal and asked for the tariff entry that applied to be checked. The desk classed it as a fee question and sent a query about the £3.20 fee to the tariff system, then closed the case at that step. The tariff system's answer is not in the record, so the question of which entry applied and how it accounts for the amount is still open for a person to follow up and reply to her.
+Mara Ellery, who is not verified, wrote through secure chat asking the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal and how it accounts for the amount. The desk classed it as a fee question and sent a query to the tariff system about the £3.20 fee, which went through without error. The tariff system's answer isn't in the record, so what the fee was and why remains unexplained, and no reply to the customer or escalation is recorded.
 
 _Written by a model from the record below; the sections below are the record._
 

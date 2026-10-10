@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was an instruction about a standing order, and the desk sent a query to the recurring-payments system about it. The record shows the studio-rent instruction as active with its next run not yet started, and no confirmation of any change. Nothing was cancelled or changed, and the case closed at the point of asking, so any cancellation would still have to be submitted separately and the next run may go ahead as scheduled.
+The request was an instruction about a standing order, and the desk routed it to the recurring-payments system and asked that system about it. The question went out and the case closed at that step with no new facts returned. Nothing was cancelled or changed. The records show only that the studio-rent instruction is active and its next run has not started, and the record lists no further step for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

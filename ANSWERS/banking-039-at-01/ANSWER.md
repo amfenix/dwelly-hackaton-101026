@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a question about access, and the only trace in the record is a sign-in notification for a new device on 11 July 2025. The desk classified it as an access question and put it to the access system, and that request went through. The case closed at that step with no answer back from the access system, so nothing has gone to the customer and what happens next is not in the record.
+The customer's message was classified as a question about access, and the desk passed it to the access system, which accepted it. The case is closed in the "asked" state, and the access system has returned nothing yet. Nothing has been reported back to the customer, so a person will need to pick up the access system's answer when it arrives.
 
 _Written by a model from the record below; the sections below are the record._
 

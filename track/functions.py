@@ -976,7 +976,8 @@ def _system_facts(ctx: Context, check: str) -> tuple[_Record, str] | None:
     records = _records(ctx, check)
     if not records:
         return None
-    record = records[0]
+    # the latest request is the one that stands: an order placed after "available to order" (032)
+    record = max(records, key=lambda r: _seq_key(r.request.seq))
     return record, _answer_text(record)
 
 
@@ -1856,6 +1857,41 @@ def forward_to_authority(ctx: Context) -> dict[str, Any]:
     ctx.act("forward_to_authority", to="the verified company administrator", about=about,
             requester=_field(ctx, "requester"))  # fmt: skip
     return {}
+
+
+_REDIRECTED = re.compile(
+    r"\bdirect(?:ing|ed)? you to\b|\bopened\b.{0,60}\b(?:procedure|process)\b.{0,40}\bfor you\b"
+    r"|\buse the (?:secure )?(?:recovery|pin)\b",
+    re.IGNORECASE,
+)
+_CLARIFIED = re.compile(r"\bplease tell (?:me|us) which\b", re.IGNORECASE)
+_AUTHORITY_HOLDER = re.compile(r"administrator|signatory", re.IGNORECASE)
+
+
+@function
+def check_bank_actions(ctx: Context) -> dict[str, Any]:
+    """What the bank already did in the conversation that the customer has not answered since.
+
+    A step the bank has taken (pointed to the secure process, sent a request for approval, asked
+    which payment) is not taken again: the case waits for the customer or the approver.
+    """
+    out: dict[str, Any] = {}
+    for event in _events(ctx):
+        if _kind(event) != "conversation":
+            continue
+        if not _bank_sender(event, ctx.case):
+            out = {}  # the customer spoke since: what the bank did before has its answer
+            continue
+        if _AUTHORITY_HOLDER.search(str(event.event.get("to", ""))):
+            out["bank_forwarded"] = True
+        elif _REDIRECTED.search(event.text):
+            out["bank_redirected"] = True
+        elif _CLARIFIED.search(event.text):
+            out["bank_clarified"] = True
+        else:
+            continue
+        ctx.note(f"event {event.seq} ({event.event.get('from', '')}): the bank already acted: {event.text}")
+    return out
 
 
 # ------------------------------ compatibility with the original payments example

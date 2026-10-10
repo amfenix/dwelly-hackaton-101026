@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing by external email, asked the desk to update the correspondence address on her profile after a move within the UK. She was not verified and had sent the request outside the portal, so the desk did not change anything and instead sent her a confirmation request for the profile change. Her profile stays as it is until she confirms through the secure portal, and nothing failed or was refused.
+Mara Ellison, an unverified customer writing by external message, asked for the address used for her correspondence to be updated after a move within the UK. The desk did not change her profile, because a change has to be confirmed by the customer in the secure portal rather than by email, and it sent her a confirmation request instead. The change is still not made, and what remains is for Mara to confirm it in the secure portal.
 
 _Written by a model from the record below; the sections below are the record._
 

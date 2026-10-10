@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -95,7 +98,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Mara Ellwood, a verified caller, asked about a transfer, and the amount on the final line of the instruction is £648.20. She had mentioned remembering the draft as £684.20, but only £648.20 appears in the case. The desk classified it as a question, routed it to the payment system and sent that system a query about the £648.20 transfer. The payment system's reply is empty, so nothing yet confirms the amount, and a person still needs to review it.",
+  "summary": "Mara Ellwood, a verified caller, raised a question about a transfer, and the desk found the final instruction showing £648.20, not the £684.20 she remembered from the draft. The desk asked the payment system about the transfer for £648.20 and closed the case on that step. The payment system's answer has not come back into the case, and no confirmation of the payment is on record, so the amount actually sent is still unconfirmed.",
   "journal": [
     {
       "seq": 1,
@@ -309,7 +312,7 @@
     },
     {
       "seq": 21,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "trigger",
       "name": "read-recurring",
       "on": null,
@@ -327,7 +330,7 @@
     },
     {
       "seq": 22,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "call",
       "function": "check_recurring",
       "attempt": 1,
@@ -336,7 +339,7 @@
     },
     {
       "seq": 23,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "returned",
       "function": "check_recurring",
       "values": {}
@@ -515,7 +518,7 @@
       "seq": 39,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -533,23 +536,23 @@
       "seq": 40,
       "at": 0.001,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-009-at-02:read-registration:11",
+      "key": "banking-009-at-02:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 41,
       "at": 0.001,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 42,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -567,20 +570,54 @@
       "seq": 43,
       "at": 0.001,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-009-at-02:read-confirmation:12",
+      "key": "banking-009-at-02:read-registration:12",
       "args": {}
     },
     {
       "seq": 44,
+      "at": 0.001,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 45,
+      "at": 0.001,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 46,
+      "at": 0.001,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-009-at-02:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 47,
       "at": 0.001,
       "kind": "note",
       "text": "event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 45,
+      "seq": 48,
       "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
@@ -590,7 +627,7 @@
       }
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.001,
       "kind": "set",
       "field": "confirmation",
@@ -599,7 +636,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 47,
+      "seq": 50,
       "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -608,7 +645,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 48,
+      "seq": 51,
       "at": 0.001,
       "kind": "trigger",
       "name": "triage",
@@ -626,32 +663,32 @@
       "note": ""
     },
     {
-      "seq": 49,
-      "at": 0.241,
+      "seq": 52,
+      "at": 0.314,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
-      "confidence": 0.98,
+      "confidence": 0.99,
       "value": "question",
       "backend": "jev",
       "model": "jev-latest",
       "attempt": 1
     },
     {
-      "seq": 50,
-      "at": 0.241,
+      "seq": 53,
+      "at": 0.314,
       "kind": "choice",
       "field": "subject",
       "raw": "transfer",
-      "confidence": 0.97,
+      "confidence": 0.93,
       "value": "transfer",
       "backend": "jev",
       "model": "jev-latest",
       "attempt": 1
     },
     {
-      "seq": 51,
-      "at": 0.241,
+      "seq": 54,
+      "at": 0.314,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -659,8 +696,8 @@
       "by": "triage"
     },
     {
-      "seq": 52,
-      "at": 0.241,
+      "seq": 55,
+      "at": 0.314,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -668,16 +705,16 @@
       "by": "triage"
     },
     {
-      "seq": 53,
-      "at": 0.241,
+      "seq": 56,
+      "at": 0.314,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 54,
-      "at": 0.241,
+      "seq": 57,
+      "at": 0.314,
       "kind": "trigger",
       "name": "route-payment",
       "on": null,
@@ -708,8 +745,8 @@
       "note": ""
     },
     {
-      "seq": 55,
-      "at": 0.241,
+      "seq": 58,
+      "at": 0.314,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -717,8 +754,8 @@
       "by": "route-payment"
     },
     {
-      "seq": 56,
-      "at": 1.638,
+      "seq": 59,
+      "at": 1.713,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -726,8 +763,8 @@
       }
     },
     {
-      "seq": 57,
-      "at": 1.638,
+      "seq": 60,
+      "at": 1.713,
       "kind": "trigger",
       "name": "payment-ask",
       "on": "ask_system",
@@ -779,16 +816,16 @@
       "note": ""
     },
     {
-      "seq": 58,
-      "at": 1.638,
+      "seq": 61,
+      "at": 1.713,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "payment-ask"
     },
     {
-      "seq": 59,
-      "at": 1.638,
+      "seq": 62,
+      "at": 1.713,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -805,17 +842,17 @@
       "note": ""
     },
     {
-      "seq": 60,
-      "at": 1.638,
+      "seq": 63,
+      "at": 1.713,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-009-at-02:do-ask:16",
+      "key": "banking-009-at-02:do-ask:17",
       "args": {}
     },
     {
-      "seq": 61,
-      "at": 1.638,
+      "seq": 64,
+      "at": 1.713,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -824,26 +861,26 @@
         "amount": "648.20"
       },
       "by": "do-ask",
-      "key": "banking-009-at-02:do-ask:16"
+      "key": "banking-009-at-02:do-ask:17"
     },
     {
-      "seq": 62,
-      "at": 1.638,
+      "seq": 65,
+      "at": 1.713,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 63,
-      "at": 1.638,
+      "seq": 66,
+      "at": 1.713,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 64,
-      "at": 1.638,
+      "seq": 67,
+      "at": 1.713,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -905,10 +942,10 @@
           "request_type": {
             "type": "choice",
             "choice": "question",
-            "confidence": 0.98,
+            "confidence": 0.99,
             "probabilities": {
-              "question": 0.98,
-              "register": 0.02,
+              "question": 0.99,
+              "register": 0.01,
               "change": 0.0,
               "instruction": 0.0,
               "access": 0.0,
@@ -919,10 +956,10 @@
           "subject": {
             "type": "choice",
             "choice": "transfer",
-            "confidence": 0.97,
+            "confidence": 0.93,
             "probabilities": {
-              "transfer": 0.97,
-              "incoming_payment": 0.03,
+              "transfer": 0.93,
+              "incoming_payment": 0.07,
               "standing_order": 0.0,
               "direct_debit": 0.0,
               "card": 0.0,
@@ -941,7 +978,7 @@
           }
         }
       },
-      "seconds": 0.23954770003911108,
+      "seconds": 0.31286639999598265,
       "input_tokens": 916,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1090,16 +1127,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYUKXQtcbyaGQEmPyG4",
+        "id": "msg_011CftZtRV8CnrH1FBPo7WAB",
         "container": null,
         "content": [
           {
-            "signature": "CAQSoQUKEAgSGAI4AUIIdGhpbmtpbmcSDBQtRFWuqgIhFPARlBoMPtM0I2AnesrsFVO5IjCg3htCUB//+5stfnT4XA9lDg1ZF/JIg1TjlOv/wX8AY8r1Zok5SQSqyuQ3CBB4wWIqvgSHD6XaPfyr3YSruIv1RYqfQFHPrS/NK2gPxZ5/Krm5KGm2hkGsP0ra8fY9SLpqc5t8MuI7AcG0MBTZPaf6dR96kWw+8oQmXB0sTUnN0zD0ic+M3DmR8O3tcYF4LcA69FpTbVOYj6BHKM8G6mDwT04jxmpqE//vxrXNu7VvNITmkPI1isD3nf/NMjna6Bcc+fnDpCTEGENkYe/5aMxM6hFG1fOFu9e5tUusQGbLVP1CckcRZVkap6qE/qd01qy+2aHJLFuDJkxdWWHVxEIHDhOs7f6BA4sUOhVYLJMqbDoZUo/mJE/K1mwOdH/kBR3BoNHWIiiClUg6glPWnkUhc5UK1NCBlBpZJNRTDa6Af5aSGtA6gy+HcvY3Y/GittN6GKCcJWRjpUXqjpqTcnfhGwjfHGQmgDaQItjHZjgKuh8q/7JBEBZ5bEFukQ8RkuCn/l7JslS/THf5LTfq9E3ZEgRNFxiyOIvqbVhFKCDk1x6aPY0Dw4Cg1yj1HPLKMfRi56INb+O8/uAdo8p8QdkYezP55rVyU7vJ4JKZ3bLdYLWIVfrFb0K23tW7MPAJXy4QtqaKrtEct+S5l4OW6bVuQDCj1sT+kvRnLlTMq9BpS6UBKSRThe8jF3Ce3VsQPofGIgCLm1TQd8yBGHEYt79RT3BcB3EZ/SzEWEN1OsPJFmT42IeChIJXnlUiv2U/oeNyVT11dVOPlyqZhKqJd2BVanoML6oI1xGZSGjb/iMus5ZJjZCqNLhH3HyLe+G+WIxEGAE=",
+            "signature": "CAQSoQUKEAgSGAI4AUIIdGhpbmtpbmcSDJWsB0vap5pCOFANHhoMn+fJYihIBictqs/vIjB2FT7HzNKNbMI+CnbIbxJKDMdgGcE0XtSyD5jqXbtxJSs8AoJKrfKA2ki/atOk0LUqvgREy9wzPH7qu/DMBZeXW38lSBDc55Hznb8GalmIvu6f8nBLaGgsmm0PA+YFv1rkdcRUCzPaV0b2o8RgnN2DUI9G8fqyxBJzc7BVjAgs/kGtR9k+70hmNAoveeg4GgcUUYQzVFn9j32znPijOaWTuOZoNh61ZixPCxq9ktJJmagqPGQWxRfmkeCvqkFZf2HTcUp3Gkw50oorM5jatZOWvlEw2NFv9KSrx8HsjzlzmOmXEuC7XD/GASNVE700mzY77Te8NiiN7bPnLpP6ht7fnqx7Gel9ZZCDAU3HcLtmYqvyiI1brHBXU7rzWpGqa/zaq/feUkzdGSSKWro3iHGcjrZ1M6cyxyLRdU19bfPR8ayI6L4OnNSlujELlUgARhrthFoj9IMtPC0YO93mg+ypZX59uQX5YIKw7vmU31FHQrmtmbz6a3fxwdTkevd3bZTcjUWDmoFt4yGnmj2CQlx8lanAjPhklmLx5o7V5CAmUrGUea4hWvqOJ+VL50fv98X9e+CdNwhEpF4sOL+7nu7vh5Rx0XGCPIS+v8cVuvQ3QEhktIteMjiaFn+VRHNcYxFbjUC0w+WHDrdQM254WDa/Js1RbUzZOjVYyi5mMWBekg51pc+hSbjXLZUGgJ4Rmksrft8qQKuqVvnhJSBZuxaeLJ6Mw47zTnyghzQ3Tz1g8zKADSV9syoSbzm8AmAX9xCtp7WXsTTREVBRjm6wbDtMHSMudwoCMtF5eH3mbsebkKiJDhwhtlzjEVADPudJ+AgAGAE=",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_012hmyLoMgx7W54sHNPhioj9",
+            "id": "toolu_01XJ1SAQn7qRPVH3uTByRUvc",
             "caller": {
               "type": "direct"
             },
@@ -1135,7 +1172,7 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.396631499985233,
+      "seconds": 1.3983530000550672,
       "input_tokens": 1869,
       "output_tokens": 90,
       "cost_usd": 0.004638,
@@ -1285,12 +1322,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSoQUKEAgSGAI4AUIIdGhpbmtpbmcSDBQtRFWuqgIhFPARlBoMPtM0I2AnesrsFVO5IjCg3htCUB//+5stfnT4XA9lDg1ZF/JIg1TjlOv/wX8AY8r1Zok5SQSqyuQ3CBB4wWIqvgSHD6XaPfyr3YSruIv1RYqfQFHPrS/NK2gPxZ5/Krm5KGm2hkGsP0ra8fY9SLpqc5t8MuI7AcG0MBTZPaf6dR96kWw+8oQmXB0sTUnN0zD0ic+M3DmR8O3tcYF4LcA69FpTbVOYj6BHKM8G6mDwT04jxmpqE//vxrXNu7VvNITmkPI1isD3nf/NMjna6Bcc+fnDpCTEGENkYe/5aMxM6hFG1fOFu9e5tUusQGbLVP1CckcRZVkap6qE/qd01qy+2aHJLFuDJkxdWWHVxEIHDhOs7f6BA4sUOhVYLJMqbDoZUo/mJE/K1mwOdH/kBR3BoNHWIiiClUg6glPWnkUhc5UK1NCBlBpZJNRTDa6Af5aSGtA6gy+HcvY3Y/GittN6GKCcJWRjpUXqjpqTcnfhGwjfHGQmgDaQItjHZjgKuh8q/7JBEBZ5bEFukQ8RkuCn/l7JslS/THf5LTfq9E3ZEgRNFxiyOIvqbVhFKCDk1x6aPY0Dw4Cg1yj1HPLKMfRi56INb+O8/uAdo8p8QdkYezP55rVyU7vJ4JKZ3bLdYLWIVfrFb0K23tW7MPAJXy4QtqaKrtEct+S5l4OW6bVuQDCj1sT+kvRnLlTMq9BpS6UBKSRThe8jF3Ce3VsQPofGIgCLm1TQd8yBGHEYt79RT3BcB3EZ/SzEWEN1OsPJFmT42IeChIJXnlUiv2U/oeNyVT11dVOPlyqZhKqJd2BVanoML6oI1xGZSGjb/iMus5ZJjZCqNLhH3HyLe+G+WIxEGAE=",
+                "signature": "CAQSoQUKEAgSGAI4AUIIdGhpbmtpbmcSDJWsB0vap5pCOFANHhoMn+fJYihIBictqs/vIjB2FT7HzNKNbMI+CnbIbxJKDMdgGcE0XtSyD5jqXbtxJSs8AoJKrfKA2ki/atOk0LUqvgREy9wzPH7qu/DMBZeXW38lSBDc55Hznb8GalmIvu6f8nBLaGgsmm0PA+YFv1rkdcRUCzPaV0b2o8RgnN2DUI9G8fqyxBJzc7BVjAgs/kGtR9k+70hmNAoveeg4GgcUUYQzVFn9j32znPijOaWTuOZoNh61ZixPCxq9ktJJmagqPGQWxRfmkeCvqkFZf2HTcUp3Gkw50oorM5jatZOWvlEw2NFv9KSrx8HsjzlzmOmXEuC7XD/GASNVE700mzY77Te8NiiN7bPnLpP6ht7fnqx7Gel9ZZCDAU3HcLtmYqvyiI1brHBXU7rzWpGqa/zaq/feUkzdGSSKWro3iHGcjrZ1M6cyxyLRdU19bfPR8ayI6L4OnNSlujELlUgARhrthFoj9IMtPC0YO93mg+ypZX59uQX5YIKw7vmU31FHQrmtmbz6a3fxwdTkevd3bZTcjUWDmoFt4yGnmj2CQlx8lanAjPhklmLx5o7V5CAmUrGUea4hWvqOJ+VL50fv98X9e+CdNwhEpF4sOL+7nu7vh5Rx0XGCPIS+v8cVuvQ3QEhktIteMjiaFn+VRHNcYxFbjUC0w+WHDrdQM254WDa/Js1RbUzZOjVYyi5mMWBekg51pc+hSbjXLZUGgJ4Rmksrft8qQKuqVvnhJSBZuxaeLJ6Mw47zTnyghzQ3Tz1g8zKADSV9syoSbzm8AmAX9xCtp7WXsTTREVBRjm6wbDtMHSMudwoCMtF5eH3mbsebkKiJDhwhtlzjEVADPudJ+AgAGAE=",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_012hmyLoMgx7W54sHNPhioj9",
+                "id": "toolu_01XJ1SAQn7qRPVH3uTByRUvc",
                 "caller": {
                   "type": "direct"
                 },
@@ -1308,7 +1345,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_012hmyLoMgx7W54sHNPhioj9",
+                "tool_use_id": "toolu_01XJ1SAQn7qRPVH3uTByRUvc",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1316,11 +1353,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYURULFnsTVFeXH8PEZ",
+        "id": "msg_011CftZtXV2L2GN2fcWTpfJb",
         "container": null,
         "content": [
           {
-            "id": "toolu_014boWUzheWq5kpJpBp3nGzf",
+            "id": "toolu_01AQ9hbriNNxNvNCHcs7uaeN",
             "caller": {
               "type": "direct"
             },
@@ -1354,13 +1391,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.7471065999707207,
+      "seconds": 0.7063866999233142,
       "input_tokens": 1994,
       "output_tokens": 26,
       "cost_usd": 0.004248,
       "error": null,
       "replayed": false,
-      "digest": "5781351180c92792e4c293fcd8e637b198b063328d56f37fe822db499e3d7a4c"
+      "digest": "6419621cda557d52c48e25f8b49eef0125f53d19a5437653697bee0d724040a1"
     },
     {
       "kind": "agent",
@@ -1504,12 +1541,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSoQUKEAgSGAI4AUIIdGhpbmtpbmcSDBQtRFWuqgIhFPARlBoMPtM0I2AnesrsFVO5IjCg3htCUB//+5stfnT4XA9lDg1ZF/JIg1TjlOv/wX8AY8r1Zok5SQSqyuQ3CBB4wWIqvgSHD6XaPfyr3YSruIv1RYqfQFHPrS/NK2gPxZ5/Krm5KGm2hkGsP0ra8fY9SLpqc5t8MuI7AcG0MBTZPaf6dR96kWw+8oQmXB0sTUnN0zD0ic+M3DmR8O3tcYF4LcA69FpTbVOYj6BHKM8G6mDwT04jxmpqE//vxrXNu7VvNITmkPI1isD3nf/NMjna6Bcc+fnDpCTEGENkYe/5aMxM6hFG1fOFu9e5tUusQGbLVP1CckcRZVkap6qE/qd01qy+2aHJLFuDJkxdWWHVxEIHDhOs7f6BA4sUOhVYLJMqbDoZUo/mJE/K1mwOdH/kBR3BoNHWIiiClUg6glPWnkUhc5UK1NCBlBpZJNRTDa6Af5aSGtA6gy+HcvY3Y/GittN6GKCcJWRjpUXqjpqTcnfhGwjfHGQmgDaQItjHZjgKuh8q/7JBEBZ5bEFukQ8RkuCn/l7JslS/THf5LTfq9E3ZEgRNFxiyOIvqbVhFKCDk1x6aPY0Dw4Cg1yj1HPLKMfRi56INb+O8/uAdo8p8QdkYezP55rVyU7vJ4JKZ3bLdYLWIVfrFb0K23tW7MPAJXy4QtqaKrtEct+S5l4OW6bVuQDCj1sT+kvRnLlTMq9BpS6UBKSRThe8jF3Ce3VsQPofGIgCLm1TQd8yBGHEYt79RT3BcB3EZ/SzEWEN1OsPJFmT42IeChIJXnlUiv2U/oeNyVT11dVOPlyqZhKqJd2BVanoML6oI1xGZSGjb/iMus5ZJjZCqNLhH3HyLe+G+WIxEGAE=",
+                "signature": "CAQSoQUKEAgSGAI4AUIIdGhpbmtpbmcSDJWsB0vap5pCOFANHhoMn+fJYihIBictqs/vIjB2FT7HzNKNbMI+CnbIbxJKDMdgGcE0XtSyD5jqXbtxJSs8AoJKrfKA2ki/atOk0LUqvgREy9wzPH7qu/DMBZeXW38lSBDc55Hznb8GalmIvu6f8nBLaGgsmm0PA+YFv1rkdcRUCzPaV0b2o8RgnN2DUI9G8fqyxBJzc7BVjAgs/kGtR9k+70hmNAoveeg4GgcUUYQzVFn9j32znPijOaWTuOZoNh61ZixPCxq9ktJJmagqPGQWxRfmkeCvqkFZf2HTcUp3Gkw50oorM5jatZOWvlEw2NFv9KSrx8HsjzlzmOmXEuC7XD/GASNVE700mzY77Te8NiiN7bPnLpP6ht7fnqx7Gel9ZZCDAU3HcLtmYqvyiI1brHBXU7rzWpGqa/zaq/feUkzdGSSKWro3iHGcjrZ1M6cyxyLRdU19bfPR8ayI6L4OnNSlujELlUgARhrthFoj9IMtPC0YO93mg+ypZX59uQX5YIKw7vmU31FHQrmtmbz6a3fxwdTkevd3bZTcjUWDmoFt4yGnmj2CQlx8lanAjPhklmLx5o7V5CAmUrGUea4hWvqOJ+VL50fv98X9e+CdNwhEpF4sOL+7nu7vh5Rx0XGCPIS+v8cVuvQ3QEhktIteMjiaFn+VRHNcYxFbjUC0w+WHDrdQM254WDa/Js1RbUzZOjVYyi5mMWBekg51pc+hSbjXLZUGgJ4Rmksrft8qQKuqVvnhJSBZuxaeLJ6Mw47zTnyghzQ3Tz1g8zKADSV9syoSbzm8AmAX9xCtp7WXsTTREVBRjm6wbDtMHSMudwoCMtF5eH3mbsebkKiJDhwhtlzjEVADPudJ+AgAGAE=",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_012hmyLoMgx7W54sHNPhioj9",
+                "id": "toolu_01XJ1SAQn7qRPVH3uTByRUvc",
                 "caller": {
                   "type": "direct"
                 },
@@ -1527,7 +1564,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_012hmyLoMgx7W54sHNPhioj9",
+                "tool_use_id": "toolu_01XJ1SAQn7qRPVH3uTByRUvc",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1536,7 +1573,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_014boWUzheWq5kpJpBp3nGzf",
+                "id": "toolu_01AQ9hbriNNxNvNCHcs7uaeN",
                 "caller": {
                   "type": "direct"
                 },
@@ -1552,7 +1589,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_014boWUzheWq5kpJpBp3nGzf",
+                "tool_use_id": "toolu_01AQ9hbriNNxNvNCHcs7uaeN",
                 "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"requester\": \"Mara Ellwood\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true, \"subject\": \"transfer\", \"amount\": \"648.20\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1560,12 +1597,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYUUfaCjbSqidvUF8s5",
+        "id": "msg_011CftZtaVMdFc8PtxrrJd44",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I checked the payment system for the transfer to your property manager. The case now stands at the \"asked\" stage, and no further action is needed from me.\n\nThe only amount on record so far is £648.20, which is what the final payment line shows. The payment system's answer has not yet been added to the case, so I can't yet confirm that £648.20 is what H&V actually sent. There is also no record of £684.20 on the case, so I can't say where that figure came from.",
+            "text": "I've asked the payment system to check the transfer, and the case is now closed on that step. The payment system's answer hasn't come back into the case yet, so I can't confirm the amount H&V sent.\n\nThe only figure on record so far is the £648.20 on the final payment line in the secure portal. That doesn't confirm what was actually sent, and the case shows no confirmation of the payment. Nothing in the case supports £684.20 either, since that comes from your memory of the draft.",
             "type": "text"
           }
         ],
@@ -1585,7 +1622,7 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 2158,
-          "output_tokens": 139,
+          "output_tokens": 151,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1593,13 +1630,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.6586425000568852,
+      "seconds": 1.8860587999224663,
       "input_tokens": 2158,
-      "output_tokens": 139,
-      "cost_usd": 0.005706,
+      "output_tokens": 151,
+      "cost_usd": 0.005826,
       "error": null,
       "replayed": false,
-      "digest": "d19175b408629a62916c9f7cd7315517be1aefdfa506b8d902ecfab811175f3c"
+      "digest": "1e48bae4bb6142a5a76c0fcb438c974161aeca32f68977942a9b95683dddc19f"
     },
     {
       "kind": "generate",
@@ -1612,17 +1649,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellwood\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"transfer\",\n    \"amount\": \"648.20\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"transfer\",\n        \"amount\": \"648.20\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-009-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-009-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: requester='Mara Ellwood', role='customer', channel='verified_call', verified=True]\n5. `identify_requester` found {\"requester\": \"Mara Ellwood\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n6. `requester`: not known → Mara Ellwood (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → verified_call (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-009-at-02:read-subject:2).\n12. Note from `read-subject`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: amount='648.20']\n13. `find_subject` found {\"amount\": \"648.20\"}.\n14. `amount`: not known → 648.20 (by `read-subject`).\n15. Rule `read-payment` fired: state = READING → true (state=READING).\n16. Called `check_payment` (attempt 1, key banking-009-at-02:read-payment:3).\n17. `check_payment` found {}.\n18. Rule `read-incoming` fired: state = READING → true (state=READING).\n19. Called `check_incoming` (attempt 1, key banking-009-at-02:read-incoming:4).\n20. `check_incoming` found {}.\n21. Rule `read-recurring` fired: state = READING → true (state=READING).\n22. Called `check_recurring` (attempt 1, key banking-009-at-02:read-recurring:5).\n23. `check_recurring` found {}.\n24. Rule `read-card` fired: state = READING → true (state=READING).\n25. Called `check_card` (attempt 1, key banking-009-at-02:read-card:6).\n26. `check_card` found {}.\n27. Rule `read-access` fired: state = READING → true (state=READING).\n28. Called `check_access` (attempt 1, key banking-009-at-02:read-access:7).\n29. `check_access` found {}.\n30. Rule `read-business` fired: state = READING → true (state=READING).\n31. Called `check_business` (attempt 1, key banking-009-at-02:read-business:8).\n32. `check_business` found {}.\n33. Rule `read-documents` fired: state = READING → true (state=READING).\n34. Called `check_documents` (attempt 1, key banking-009-at-02:read-documents:9).\n35. `check_documents` found {}.\n36. Rule `read-tariff` fired: state = READING → true (state=READING).\n37. Called `check_tariff` (attempt 1, key banking-009-at-02:read-tariff:10).\n38. `check_tariff` found {}.\n39. Rule `read-registration` fired: state = READING → true (state=READING).\n40. Called `check_registration` (attempt 1, key banking-009-at-02:read-registration:11).\n41. `check_registration` found {}.\n42. Rule `read-confirmation` fired: state = READING → true (state=READING).\n43. Called `check_confirmation` (attempt 1, key banking-009-at-02:read-confirmation:12).\n44. Note from `read-confirmation`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: confirmation='none', instructed_outside_portal=False]\n45. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n46. `confirmation`: not known → none (by `read-confirmation`).\n47. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n48. Rule `triage` fired: state = READING → true (state=READING).\n49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.\n50. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.97 → transfer.\n51. `request_type`: not known → question (by `triage`).\n52. `subject`: not known → transfer (by `triage`).\n53. State `READING` → `TRIAGED` (by `triage`).\n54. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).\n55. `next_system`: not known → payment (by `route-payment`).\n56. The agent asked for `ask_system` {\"system\": \"payment\"}.\n57. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n58. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n60. Called `ask_system` (attempt 1, key banking-009-at-02:do-ask:16).\n61. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"transfer\", \"amount\": \"648.20\"}.\n62. `ask_system` found {}.\n63. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n64. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 6937 tokens in, 454 out, 4.042 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I checked the payment system for the transfer to your property manager. The case now stands at the \"asked\" stage, and no further action is needed from me.\n> \n> The only amount on record so far is £648.20, which is what the final payment line shows. The payment system's answer has not yet been added to the case, so I can't yet confirm that £648.20 is what H&V actually sent. There is also no record of £684.20 on the case, so I can't say where that figure came from.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellwood\",\n    \"role\": \"customer\",\n    \"channel\": \"verified_call\",\n    \"verified\": true,\n    \"subject\": \"transfer\",\n    \"amount\": \"648.20\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"transfer\",\n        \"amount\": \"648.20\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-009-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-009-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: requester='Mara Ellwood', role='customer', channel='verified_call', verified=True]\n5. `identify_requester` found {\"requester\": \"Mara Ellwood\", \"role\": \"customer\", \"channel\": \"verified_call\", \"verified\": true}.\n6. `requester`: not known → Mara Ellwood (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → verified_call (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-009-at-02:read-subject:2).\n12. Note from `read-subject`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: amount='648.20']\n13. `find_subject` found {\"amount\": \"648.20\"}.\n14. `amount`: not known → 648.20 (by `read-subject`).\n15. Rule `read-payment` fired: state = READING → true (state=READING).\n16. Called `check_payment` (attempt 1, key banking-009-at-02:read-payment:3).\n17. `check_payment` found {}.\n18. Rule `read-incoming` fired: state = READING → true (state=READING).\n19. Called `check_incoming` (attempt 1, key banking-009-at-02:read-incoming:4).\n20. `check_incoming` found {}.\n21. Rule `read-recurring` fired: state = READING → true (state=READING).\n22. Called `check_recurring` (attempt 1, key banking-009-at-02:read-recurring:5).\n23. `check_recurring` found {}.\n24. Rule `read-card` fired: state = READING → true (state=READING).\n25. Called `check_card` (attempt 1, key banking-009-at-02:read-card:6).\n26. `check_card` found {}.\n27. Rule `read-access` fired: state = READING → true (state=READING).\n28. Called `check_access` (attempt 1, key banking-009-at-02:read-access:7).\n29. `check_access` found {}.\n30. Rule `read-business` fired: state = READING → true (state=READING).\n31. Called `check_business` (attempt 1, key banking-009-at-02:read-business:8).\n32. `check_business` found {}.\n33. Rule `read-documents` fired: state = READING → true (state=READING).\n34. Called `check_documents` (attempt 1, key banking-009-at-02:read-documents:9).\n35. `check_documents` found {}.\n36. Rule `read-tariff` fired: state = READING → true (state=READING).\n37. Called `check_tariff` (attempt 1, key banking-009-at-02:read-tariff:10).\n38. `check_tariff` found {}.\n39. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n40. Called `check_bank_actions` (attempt 1, key banking-009-at-02:read-bank-actions:11).\n41. `check_bank_actions` found {}.\n42. Rule `read-registration` fired: state = READING → true (state=READING).\n43. Called `check_registration` (attempt 1, key banking-009-at-02:read-registration:12).\n44. `check_registration` found {}.\n45. Rule `read-confirmation` fired: state = READING → true (state=READING).\n46. Called `check_confirmation` (attempt 1, key banking-009-at-02:read-confirmation:13).\n47. Note from `read-confirmation`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: confirmation='none', instructed_outside_portal=False]\n48. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n49. `confirmation`: not known → none (by `read-confirmation`).\n50. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n51. Rule `triage` fired: state = READING → true (state=READING).\n52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.\n53. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.93 → transfer.\n54. `request_type`: not known → question (by `triage`).\n55. `subject`: not known → transfer (by `triage`).\n56. State `READING` → `TRIAGED` (by `triage`).\n57. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).\n58. `next_system`: not known → payment (by `route-payment`).\n59. The agent asked for `ask_system` {\"system\": \"payment\"}.\n60. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n61. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n63. Called `ask_system` (attempt 1, key banking-009-at-02:do-ask:17).\n64. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"transfer\", \"amount\": \"648.20\"}.\n65. `ask_system` found {}.\n66. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n67. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 6937 tokens in, 466 out, 4.304 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've asked the payment system to check the transfer, and the case is now closed on that step. The payment system's answer hasn't come back into the case yet, so I can't confirm the amount H&V sent.\n> \n> The only figure on record so far is the £648.20 on the final payment line in the secure portal. That doesn't confirm what was actually sent, and the case shows no confirmation of the payment. Nothing in the case supports £684.20 either, since that comes from your memory of the draft.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYUbqBAmUkjrrSe41s3",
+        "id": "msg_011CftZtiZmqCuFxDegz4vgc",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Mara Ellwood, a verified caller, asked about a transfer, and the amount on the final line of the instruction is £648.20. She had mentioned remembering the draft as £684.20, but only £648.20 appears in the case. The desk classified it as a question, routed it to the payment system and sent that system a query about the £648.20 transfer. The payment system's reply is empty, so nothing yet confirms the amount, and a person still needs to review it.",
+            "text": "Mara Ellwood, a verified caller, raised a question about a transfer, and the desk found the final instruction showing £648.20, not the £684.20 she remembered from the draft. The desk asked the payment system about the transfer for £648.20 and closed the case on that step. The payment system's answer has not come back into the case, and no confirmation of the payment is on record, so the amount actually sent is still unconfirmed.",
             "type": "text"
           }
         ],
@@ -1641,8 +1678,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2850,
-          "output_tokens": 145,
+          "input_tokens": 2949,
+          "output_tokens": 135,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1650,13 +1687,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.1349846000084653,
-      "input_tokens": 2850,
-      "output_tokens": 145,
-      "cost_usd": 0.00715,
+      "seconds": 1.748748500016518,
+      "input_tokens": 2949,
+      "output_tokens": 135,
+      "cost_usd": 0.007248,
       "error": null,
       "replayed": false,
-      "digest": "ea694663e8c72c4d35f37e1b039fe7c57296832e1156652beeceb63cdfe558d8"
+      "digest": "43e5bf2af936d82429f3dc87eeefff5879b9181f3e1561ae56cd9a10c206b9e3"
     }
   ]
 }

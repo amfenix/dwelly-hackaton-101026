@@ -41,39 +41,45 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 37. Rule `read-tariff` fired: state = READING → true (state=READING).
 38. Called `check_tariff` (attempt 1, key banking-023-at-02:read-tariff:10).
 39. `check_tariff` found {}.
-40. Rule `read-registration` fired: state = READING → true (state=READING).
-41. Called `check_registration` (attempt 1, key banking-023-at-02:read-registration:11).
-42. `check_registration` found {}.
-43. Rule `read-confirmation` fired: state = READING → true (state=READING).
-44. Called `check_confirmation` (attempt 1, key banking-023-at-02:read-confirmation:12).
-45. Note from `read-confirmation`: event 2 (Mara Ellery): After completing your identification checks, I’m calling to report that I don’t recognise the Fern & Finch Books purchase. Please raise it with the card team and tell me how to protect my card safely. [facts: confirmation='none', instructed_outside_portal=False]
-46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-47. `confirmation`: not known → none (by `read-confirmation`).
-48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: register, confidence 0.98 → register.
-51. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
-52. `request_type`: not known → register (by `triage`).
-53. `subject`: not known → card_payment (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
-56. `next_system`: not known → card (by `route-card`).
-57. The agent asked for `submit_request` {}.
-58. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-59. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-60. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-61. Called `register_request` (attempt 1, key banking-023-at-02:do-request:16).
-62. Action in the world: `register_request` {"team": "card", "about": "card_payment"}.
-63. `register_request` found {}.
-64. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-65. The case closed in `REQUESTED`: **submit_request**.
+40. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+41. Called `check_bank_actions` (attempt 1, key banking-023-at-02:read-bank-actions:11).
+42. `check_bank_actions` found {}.
+43. Rule `read-registration` fired: state = READING → true (state=READING).
+44. Called `check_registration` (attempt 1, key banking-023-at-02:read-registration:12).
+45. `check_registration` found {}.
+46. Rule `read-confirmation` fired: state = READING → true (state=READING).
+47. Called `check_confirmation` (attempt 1, key banking-023-at-02:read-confirmation:13).
+48. Note from `read-confirmation`: event 2 (Mara Ellery): After completing your identification checks, I’m calling to report that I don’t recognise the Fern & Finch Books purchase. Please raise it with the card team and tell me how to protect my card safely. [facts: confirmation='none', instructed_outside_portal=False]
+49. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+50. `confirmation`: not known → none (by `read-confirmation`).
+51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+52. Rule `triage` fired: state = READING → true (state=READING).
+53. Classifier (jev jev-latest) on `request_type`: register, confidence 0.98 → register.
+54. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+55. `request_type`: not known → register (by `triage`).
+56. `subject`: not known → card_payment (by `triage`).
+57. State `READING` → `TRIAGED` (by `triage`).
+58. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
+59. `next_system`: not known → card (by `route-card`).
+60. The agent asked for `ask_system` {"system": "card"}.
+61. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register).
+62. The agent asked for `submit_request` {}.
+63. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+64. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+65. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+66. Called `register_request` (attempt 1, key banking-023-at-02:do-request:17).
+67. Action in the world: `register_request` {"team": "card", "about": "card_payment"}.
+68. `register_request` found {}.
+69. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+70. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 5147 tokens in, 691 out, 5.759 s, cost $0.0133; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8670 tokens in, 736 out, 6.43 s, cost $0.0208; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the dispute for the £38.40 Fern & Finch Books purchase on 14 July 2025 to the card team to review. The desk accepted it, and the case is now in the REQUESTED state.
+> Asking the card system isn't allowed for a register-type request, so I'll pass the dispute to the team that handles it.
+> I've passed Mara Ellery's dispute about the £38.40 Fern & Finch Books purchase on 14 July 2025 to the team that handles card disputes. The desk accepted it and closed the case at that point.
 > 
-> I haven't yet given Mara any advice on protecting her card, which she also asked for. I also didn't check the card records to confirm the transaction before submitting. Mara was verified on the call and gave the merchant, amount and date, so I treated the transaction as identified.
+> I first tried to ask the card system about the purchase, but the desk refused that because this is a register-type request. I haven't checked which card was used, and I haven't given the customer any advice yet on protecting her card.

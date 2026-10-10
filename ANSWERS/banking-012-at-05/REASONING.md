@@ -42,40 +42,37 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. Rule `read-tariff` fired: state = READING → true (state=READING).
 39. Called `check_tariff` (attempt 1, key banking-012-at-05:read-tariff:10).
 40. `check_tariff` found {}.
-41. Rule `read-registration` fired: state = READING → true (state=READING).
-42. Called `check_registration` (attempt 1, key banking-012-at-05:read-registration:11).
-43. `check_registration` found {}.
-44. Rule `read-confirmation` fired: state = READING → true (state=READING).
-45. Called `check_confirmation` (attempt 1, key banking-012-at-05:read-confirmation:12).
-46. Note from `read-confirmation`: event 5 (Mira Ellery): I confirm the change to £68.00 per month for my standing order to Westmere Garden Cooperative. [facts: confirmation='given']
-47. Note from `read-confirmation`: event 2 (Mira Ellery): I want to increase this standing order to £68.00 a month. The portal still shows £42.00, and I haven’t confirmed a change yet. [facts: instructed_outside_portal=True]
-48. `check_confirmation` found {"confirmation": "given", "instructed_outside_portal": true}.
-49. `confirmation`: not known → given (by `read-confirmation`).
-50. `instructed_outside_portal`: not known → True (by `read-confirmation`).
-51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
-53. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-54. `request_type`: not known → change (by `triage`).
-55. `subject`: not known → standing_order (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-58. `next_system`: not known → recurring (by `route-recurring`).
-59. The agent asked for `submit_request` {}.
-60. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → false (request_type=change); request_type = change → true (request_type=change); confirmation = given → true (confirmation=given).
-61. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
-62. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-63. Called `register_request` (attempt 1, key banking-012-at-05:do-request:16).
-64. Action in the world: `register_request` {"team": "recurring", "about": "standing_order"}.
-65. `register_request` found {}.
-66. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-67. The case closed in `REQUESTED`: **submit_request**.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-012-at-05:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-012-at-05:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-012-at-05:read-confirmation:13).
+49. Note from `read-confirmation`: event 5 (Mira Ellery): I confirm the change to £68.00 per month for my standing order to Westmere Garden Cooperative. [facts: confirmation='given']
+50. Note from `read-confirmation`: event 2 (Mira Ellery): I want to increase this standing order to £68.00 a month. The portal still shows £42.00, and I haven’t confirmed a change yet. [facts: instructed_outside_portal=True]
+51. `check_confirmation` found {"confirmation": "given", "instructed_outside_portal": true}.
+52. `confirmation`: not known → given (by `read-confirmation`).
+53. `instructed_outside_portal`: not known → True (by `read-confirmation`).
+54. Rule `triage` fired: state = READING → true (state=READING).
+55. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
+56. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+57. `request_type`: not known → change (by `triage`).
+58. `subject`: not known → standing_order (by `triage`).
+59. State `READING` → `TRIAGED` (by `triage`).
+60. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+61. `next_system`: not known → recurring (by `route-recurring`).
+62. Rule `change-applied-by-the-system` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = given → true (confirmation=given); registration_asked absent → true (registration_asked=not known). The customer confirmed the change in the secure portal; the system applies it.
+63. State `TRIAGED` → `WAITING` (by `change-applied-by-the-system`).
+64. The case closed in `WAITING`: **wait**.
+65. The agent asked for `submit_request` {}.
+66. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); request_type = instruction is false (request_type=change).
+67. The agent asked for `ask_system` {"system": "recurring"}.
+68. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
+69. The agent asked for `escalate` {"note": "Verified customer Mira Ellery confirmed in the secure portal a change of her standing order to Westmere Garden Cooperative from £42.00 to £68.00 per month. The case is in state WAITING (not TRIAGED), so submit_request and ask_system (recurring) were both refused. The change has not been applied. Please review and apply the confirmed change, or advise."}.
+70. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 7960 tokens in, 561 out, 5.021 s, cost $0.0164; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I submitted Mira's change to the standing order system. The desk accepted it, and the case is now in the REQUESTED state.
-> 
-> She is verified and confirmed the change in the secure portal. The request raises her monthly standing order to Westmere Garden Cooperative from £42.00 to £68.00. I haven't seen the standing order update itself yet, so the portal may still show £42.00 until the change is carried out.
+6 calls, 12074 tokens in, 829 out, 7.397 s, cost $0.0273; models: claude-sonnet-5-5, jev-1.13.0.

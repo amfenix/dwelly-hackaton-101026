@@ -40,40 +40,43 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-046-at-03:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-046-at-03:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-046-at-03:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Mara Ellery): My identity and administrator mandate have been checked. I confirm that Owen Bell is a former employee and instruct H&V to revoke his Payroll Approver role; please keep the review of any earlier operations separate. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-50. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
-51. `request_type`: not known → instruction (by `triage`).
-52. `subject`: not known → role (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
-55. `next_system`: not known → business (by `asked-business`).
-56. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
-57. State `TRIAGED` → `WAITING` (by `business-waits`).
-58. The case closed in `WAITING`: **wait**.
-59. The agent asked for `submit_request` {}.
-60. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
-61. The agent asked for `escalate` {"note": "Verified administrator Mara Ellery (Larkmere Studio Ltd) instructed by verified call to revoke former employee Owen Bell's Payroll Approver role; earlier operations to be reviewed separately. The desk refused submit_request because the case is in state WAITING, request_type is 'instruction' rather than 'change', and confirmation is 'none'. The business system has already been asked. Please process the role revocation manually, or confirm it with the administrator."}.
-62. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-046-at-03:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-046-at-03:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-046-at-03:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mara Ellery): My identity and administrator mandate have been checked. I confirm that Owen Bell is a former employee and instruct H&V to revoke his Payroll Approver role; please keep the review of any earlier operations separate. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+53. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
+54. `request_type`: not known → instruction (by `triage`).
+55. `subject`: not known → role (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
+58. `next_system`: not known → business (by `asked-business`).
+59. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
+60. State `TRIAGED` → `WAITING` (by `business-waits`).
+61. The case closed in `WAITING`: **wait**.
+62. The agent asked for `submit_request` {}.
+63. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business).
+64. The agent asked for `escalate` {"note": "Verified administrator Mara Ellery (verified call) instructs revocation of former employee Owen Bell's Payroll Approver role for Larkmere Studio Ltd, and asks that review of earlier operations be kept separate. The instruction is clear, but submit_request was refused: case state is WAITING, not TRIAGED, and the business system is already marked as asked. Please action the role revocation or confirm how to proceed."}.
+65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11190 tokens in, 1063 out, 10.984 s, cost $0.0292; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10635 tokens in, 962 out, 9.165 s, cost $0.0271; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't revoke Owen Bell's Payroll Approver role, and the case is still open. It is in state WAITING and the desk refused both steps I tried.
+> I couldn't revoke Owen Bell's Payroll Approver role, and the case is still open.
 > 
-> - **Revoke request:** the desk refused it. The case is in state WAITING, the request type is "instruction" rather than "change", and the confirmation field reads "none". The business system had already been asked, and it has given no answer I can report.
-> - **Escalation:** the desk refused this too, because it only accepts an escalation once the case is in state TRIAGED.
+> - **Instruction refused:** The desk refused my `submit_request` because the case is in the WAITING state and not TRIAGED. It also records the business system as already asked, which blocks a business instruction from going through.
+> - **Escalation refused:** My escalation to a person was refused for the same reason, so no one has picked this up yet.
 > 
-> The administrator's verified call is in the case. The role stays active until a person picks this up or the case moves out of WAITING.
+> Mara Ellery's verified call is clear: she confirmed her identity and administrator mandate and asked for the role to be revoked. Reviewing earlier operations stays separate, as she asked. Nothing more can be done from here until the case moves out of WAITING, and Bell's role is still active.

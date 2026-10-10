@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked through secure chat for a document showing the stage of her £74.00 payment (reference HV-040) to give to her repair contractor. The desk classified this as a document question and sent a query to the documents system about HV-040, and the case closed at that step. The documents system has not yet returned an answer, so whether a document can be produced is still open, and Mara Ellison is recorded as not verified.
+Mara Ellison, writing over secure chat without being verified, asked for a document showing the stage of her £74.00 payment (reference HV-040) so she could give it to her repair contractor. The desk classed it as a question about a document and asked the documents system about HV-040 for £74.00, and the case closed in that asked state. The record does not show any reply from the documents system, so nothing has been sent to Mara yet.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,6 +48,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
+  - document_ready = false → not known (document_ready=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)

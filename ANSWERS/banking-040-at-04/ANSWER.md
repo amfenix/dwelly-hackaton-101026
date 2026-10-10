@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked, over secure chat, for a document showing the stage of her £74.00 payment HV-040 to give to her repair contractor. The desk found the record had been generated and replied in secure chat that the document is available, while saying this does not confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied; the record shows she was not verified on this channel and that there is no confirmation of receipt from the contractor, and it lists nothing further for a person to do.
+Mara Ellison asked over secure chat for a document showing the stage of her £74.00 payment (HV-040) to give to her repair contractor. The desk had the document service generate the record, which shows a bank status of SENT, and replied on secure chat that the document is available, while stating that this does not confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied, and the record lists nothing left for a person, though she was not verified on this chat.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,7 +56,7 @@ How the case moved:
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 

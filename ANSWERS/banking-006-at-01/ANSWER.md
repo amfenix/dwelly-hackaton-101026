@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked a question about a transfer; their payment activity showed two similar outgoing entries to North Quay Utilities for £84.20, one Completed and one Pending. The desk classified it as a transfer question, routed it to the payment system, and sent that system a query about the transfer, then closed the case as asked. The payment system's answer is not in the record, so whether the two entries are one instruction or two is still open, and no change was made to the account.
+The question was about a transfer: the payment activity shows two similar £84.20 outgoing entries to North Quay Utilities, one marked Completed and the other Pending. The desk classed it as a question and sent a query to the payment system about the transfer, and the case closed with that query as the only action. No answer from the payment system is in the record, and no other step was taken, so what happens to the pending entry is still open.
 
 _Written by a model from the record below; the sections below are the record._
 

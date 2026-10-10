@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked what a £3.20 fee beside a foreign-currency cash withdrawal was for and how it was calculated, and asked for it to be checked against the applicable tariff. The desk classified this as a fee question and sent a query about the £3.20 fee to the tariff system, which accepted it, and the case closed at that step. The record does not contain any answer from the tariff system, so what the fee is for and how it was worked out is still unexplained and remains for a person to follow up.
+The customer asked what a £3.20 fee beside a foreign-currency cash withdrawal was for and how its amount was set, and asked for it to be checked against the tariff that applied. The desk classified this as a question about a fee and put it to the tariff system, and the query went through. No tariff answer is in the record, so the reason for the fee and how the amount was worked out remain unexplained, and the case closed at that step with nothing further recorded for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 

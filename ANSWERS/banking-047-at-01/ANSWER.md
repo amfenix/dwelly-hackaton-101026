@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder, a verified customer using the business portal, asked what the current outgoing-payment limit is for her company profile before she arranges a supplier payout she hasn't submitted. The desk classified this as a question about the limit and sent that question to the business system, and the case closed in the asked state. The business system's answer hasn't come back, so Maeve still needs to be told the limit once it does; nothing was submitted or changed.
+Maeve Calder, a verified customer using the business portal, asked what the current outgoing-payment limit is for her company profile before she arranges a planned supplier payout that she has not yet submitted. The desk classified this as a question about the limit and sent it to the business system, and the case closed at that step. The business system's answer is not in the record, so no limit figure has been given to Maeve, and a reply to her is still outstanding.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -38,37 +38,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-tariff` fired: state = READING → true (state=READING).
 35. Called `check_tariff` (attempt 1, key banking-006-at-02:read-tariff:10).
 36. `check_tariff` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-006-at-02:read-registration:11).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-006-at-02:read-confirmation:12).
-42. Note from `read-confirmation`: event 2 (Mira Ellison): I own this account and only meant to make one transfer. Please check whether these are separate instructions, and whether the pending one has been stopped or returned. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.74 → question.
-48. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → transfer (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-53. `next_system`: not known → payment (by `route-payment`).
-54. The agent asked for `ask_system` {"system": "payment"}.
-55. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-006-at-02:do-ask:16).
-59. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-006-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-006-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-006-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Mira Ellison): I own this account and only meant to make one transfer. Please check whether these are separate instructions, and whether the pending one has been stopped or returned. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.74 → question.
+51. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+52. `request_type`: not known → question (by `triage`).
+53. `subject`: not known → transfer (by `triage`).
+54. State `READING` → `TRIAGED` (by `triage`).
+55. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+56. `next_system`: not known → payment (by `route-payment`).
+57. The agent asked for `ask_system` {"system": "payment"}.
+58. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+59. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+61. Called `ask_system` (attempt 1, key banking-006-at-02:do-ask:17).
+62. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
+63. `ask_system` found {}.
+64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+65. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4873 tokens in, 389 out, 4.016 s, cost $0.0098; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7051 tokens in, 510 out, 5.314 s, cost $0.0154; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The payment system has been queried. I'm stopping here, as this step covers one action only.
+> I've asked the payment system to check whether the two £84.20 entries to North Quay Utilities are one instruction shown twice or two separate instructions. The case is now in the ASKED state, and no answer from the payment system is in the case yet. I can't yet say whether the pending entry has been stopped or returned.
+> 
+> Mira's identity is still marked as not verified. I've only asked for a read of the records. Any request to stop or return the pending transfer would need her identity verified first.

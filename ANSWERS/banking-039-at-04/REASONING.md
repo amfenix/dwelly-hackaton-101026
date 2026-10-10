@@ -40,39 +40,43 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-039-at-04:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-039-at-04:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-039-at-04:read-confirmation:12).
-44. Note from `read-confirmation`: event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-50. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → access (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-55. `next_system`: not known → access (by `asked-access`).
-56. Rule `access-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = access → true (next_system=access); access_asked → true (access_asked=True); access_status absent → true (access_status=not known). The system was asked; its answer is not in yet.
-57. State `TRIAGED` → `WAITING` (by `access-waits`).
-58. The case closed in `WAITING`: **wait**.
-59. The agent asked for `ask_system` {"system": "access"}.
-60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access).
-61. The agent asked for `escalate` {"note": "Verified customer Nerys Wren (secure portal) reports an unusual new-device sign-in notification (11 July 2025, 08:42 UTC) and asks for the permitted list of sign-in sessions on her profile, delivered via the secure portal. Access system was already queried (access_asked=True) but no session data is in the case, and a further ask was refused because the case is WAITING. Please review and deliver the permitted session extract through the portal. No secrets were shared."}.
-62. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-039-at-04:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-039-at-04:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-039-at-04:read-confirmation:13).
+47. Note from `read-confirmation`: event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+53. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → access (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+58. `next_system`: not known → access (by `asked-access`).
+59. Rule `access-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = access → true (next_system=access); access_asked → true (access_asked=True); access_status absent → true (access_status=not known). The system was asked; its answer is not in yet.
+60. State `TRIAGED` → `WAITING` (by `access-waits`).
+61. The case closed in `WAITING`: **wait**.
+62. The agent asked for `ask_system` {"system": "access"}.
+63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access).
+64. The agent asked for `escalate` {"note": "Verified customer Nerys Wren (secure portal) reports an unusual new-device sign-in notification (11 July 2025, 08:42 UTC) and asks for the permitted list of sign-in sessions for her profile, delivered via the secure portal. The access system was already marked as asked, but the case holds no answer from it. The case is in WAITING and further ask_system calls are refused. Please retrieve the permitted session extract and deliver it through the portal. Do not handle any passwords or PINs."}.
+65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12384 tokens in, 898 out, 9.821 s, cost $0.0299; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12378 tokens in, 827 out, 9.283 s, cost $0.0292; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't move this case forward, and it is still waiting.
+> I couldn't move this case forward, so it's still open and waiting for a person to pick it up.
 > 
-> - **What I tried:** I asked the access system for the session list, then tried to escalate to a person. The desk refused both because the case is in the WAITING state. Both actions need it to be TRIAGED.
-> - **What the record holds:** Nerys Wren is verified and wrote in through the secure portal. The access system was already queried, but the case holds no sign-in session data. I have nothing to report back to her, and I won't make up a session list.
-> - **Next step:** Nothing more can be done from here. Under the desk's rules, a case left open is handed to a person. They will need to review it and deliver the permitted session extract through the portal.
+> - **Access system:** my request to it was refused because the case is in WAITING and not TRIAGED. The case records the access system as already asked, but it holds no answer from it, so I have no session list to give Nerys Wren.
+> - **Escalation:** I tried to hand the case to a person, with a note about the 11 July 2025 08:42 UTC new-device notification and her request for the session extract through the secure portal. That was refused for the same reason.
+> 
+> No reply or other action was taken on the case.

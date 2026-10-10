@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing as the company's authorised file uploader over secure chat (not verified), asked only whether H&V had received batch-041.csv (reference HV-041, £420.00 for Staff A), and said she was not asking for any payment to be approved or released. The desk classed it as a question about a batch and put a receipt query to the payment system, which accepted it. No answer has come back yet, so the receipt status is still unknown and no reply on it has been sent to her.
+Mara Ellison, writing as the company's file uploader, asked the desk to check whether H&V received batch-041.csv (reference HV-041, £420.00 for Staff A); she said she was asking about receipt only, not for any payment to be approved or released. The desk treated it as a question about a batch and put a receipt query to the payment system, then closed the case at that step. The payment system's answer isn't in the record, so whether the file arrived is still unconfirmed, and her identity is still marked unverified on the secure chat.
 
 _Written by a model from the record below; the sections below are the record._
 

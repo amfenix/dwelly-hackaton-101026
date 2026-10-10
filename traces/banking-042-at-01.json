@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -84,7 +87,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The request was a question about a batch. The desk classified it that way and sent a query about the batch to the payment system, and the case closed in the asked state. The payment system's answer is not in the record yet, so what is left for a person is to pick up that answer. The record does not show the row-level error report or any other result being made available to the requester.",
+  "summary": "The request was classified as a question about a batch, and the desk routed it to the payment system and sent that system a query about the batch. The case closed as final with that query as its outcome. The record shows no answer from the payment system and no other facts found, so the desk has no row-level error report or reason the batch failed validation, and a person will need to follow up on the payment system's reply.",
   "journal": [
     {
       "seq": 1,
@@ -438,7 +441,7 @@
       "seq": 32,
       "at": 0.002,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -456,23 +459,23 @@
       "seq": 33,
       "at": 0.002,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-042-at-01:read-registration:11",
+      "key": "banking-042-at-01:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 34,
       "at": 0.002,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 35,
       "at": 0.002,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -490,20 +493,54 @@
       "seq": 36,
       "at": 0.002,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-042-at-01:read-confirmation:12",
+      "key": "banking-042-at-01:read-registration:12",
       "args": {}
     },
     {
       "seq": 37,
       "at": 0.002,
       "kind": "returned",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "values": {}
     },
     {
       "seq": 38,
+      "at": 0.002,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 39,
+      "at": 0.002,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-042-at-01:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 40,
+      "at": 0.002,
+      "kind": "returned",
+      "function": "check_confirmation",
+      "values": {}
+    },
+    {
+      "seq": 41,
       "at": 0.002,
       "kind": "trigger",
       "name": "triage",
@@ -521,8 +558,8 @@
       "note": ""
     },
     {
-      "seq": 39,
-      "at": 0.244,
+      "seq": 42,
+      "at": 0.267,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -533,20 +570,20 @@
       "attempt": 1
     },
     {
-      "seq": 40,
-      "at": 0.244,
+      "seq": 43,
+      "at": 0.267,
       "kind": "choice",
       "field": "subject",
       "raw": "batch",
-      "confidence": 0.97,
+      "confidence": 0.95,
       "value": "batch",
       "backend": "jev",
       "model": "jev-latest",
       "attempt": 1
     },
     {
-      "seq": 41,
-      "at": 0.244,
+      "seq": 44,
+      "at": 0.267,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -554,8 +591,8 @@
       "by": "triage"
     },
     {
-      "seq": 42,
-      "at": 0.244,
+      "seq": 45,
+      "at": 0.267,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -563,16 +600,16 @@
       "by": "triage"
     },
     {
-      "seq": 43,
-      "at": 0.244,
+      "seq": 46,
+      "at": 0.267,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 44,
-      "at": 0.244,
+      "seq": 47,
+      "at": 0.267,
       "kind": "trigger",
       "name": "route-payment",
       "on": null,
@@ -603,8 +640,8 @@
       "note": ""
     },
     {
-      "seq": 45,
-      "at": 0.244,
+      "seq": 48,
+      "at": 0.267,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -612,8 +649,8 @@
       "by": "route-payment"
     },
     {
-      "seq": 46,
-      "at": 2.727,
+      "seq": 49,
+      "at": 2.693,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -621,8 +658,8 @@
       }
     },
     {
-      "seq": 47,
-      "at": 2.727,
+      "seq": 50,
+      "at": 2.693,
       "kind": "trigger",
       "name": "payment-ask",
       "on": "ask_system",
@@ -674,16 +711,16 @@
       "note": ""
     },
     {
-      "seq": 48,
-      "at": 2.727,
+      "seq": 51,
+      "at": 2.693,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "payment-ask"
     },
     {
-      "seq": 49,
-      "at": 2.727,
+      "seq": 52,
+      "at": 2.693,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -700,17 +737,17 @@
       "note": ""
     },
     {
-      "seq": 50,
-      "at": 2.727,
+      "seq": 53,
+      "at": 2.693,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-042-at-01:do-ask:16",
+      "key": "banking-042-at-01:do-ask:17",
       "args": {}
     },
     {
-      "seq": 51,
-      "at": 2.727,
+      "seq": 54,
+      "at": 2.693,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -718,26 +755,26 @@
         "about": "batch"
       },
       "by": "do-ask",
-      "key": "banking-042-at-01:do-ask:16"
+      "key": "banking-042-at-01:do-ask:17"
     },
     {
-      "seq": 52,
-      "at": 2.727,
+      "seq": 55,
+      "at": 2.693,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 53,
-      "at": 2.727,
+      "seq": 56,
+      "at": 2.693,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 54,
-      "at": 2.727,
+      "seq": 57,
+      "at": 2.693,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -813,7 +850,7 @@
           "subject": {
             "type": "choice",
             "choice": "batch",
-            "confidence": 0.97,
+            "confidence": 0.95,
             "probabilities": {
               "transfer": 0.0,
               "incoming_payment": 0.0,
@@ -821,12 +858,12 @@
               "direct_debit": 0.0,
               "card": 0.0,
               "card_payment": 0.0,
-              "batch": 0.97,
+              "batch": 0.95,
               "payment_package": 0.0,
               "profile": 0.0,
               "access": 0.0,
               "statement": 0.0,
-              "document": 0.03,
+              "document": 0.05,
               "fee": 0.0,
               "limit": 0.0,
               "role": 0.0,
@@ -835,7 +872,7 @@
           }
         }
       },
-      "seconds": 0.24194630002602935,
+      "seconds": 0.2655085000442341,
       "input_tokens": 911,
       "output_tokens": 199,
       "cost_usd": null,
@@ -984,11 +1021,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYe4ypSrktztCn54eYr",
+        "id": "msg_011Cfta43RLjiK4gHh1SSFPy",
         "container": null,
         "content": [
           {
-            "id": "toolu_01AmyznjrbE2rqdqkZSKQBVT",
+            "id": "toolu_01LtrsGAG73oXtcposzN5cD1",
             "caller": {
               "type": "direct"
             },
@@ -1022,7 +1059,7 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.2780323000624776,
+      "seconds": 1.221408599987626,
       "input_tokens": 1681,
       "output_tokens": 26,
       "cost_usd": 0.003622,
@@ -1172,7 +1209,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01AmyznjrbE2rqdqkZSKQBVT",
+                "id": "toolu_01LtrsGAG73oXtcposzN5cD1",
                 "caller": {
                   "type": "direct"
                 },
@@ -1188,7 +1225,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01AmyznjrbE2rqdqkZSKQBVT",
+                "tool_use_id": "toolu_01LtrsGAG73oXtcposzN5cD1",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"batch\", \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1196,11 +1233,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYeAPkoQMURtBuM1mAu",
+        "id": "msg_011Cfta48ZfSiFUGHqHFh6Gm",
         "container": null,
         "content": [
           {
-            "id": "toolu_01BEjqoudzqC6fxLq4iuCbSo",
+            "id": "toolu_01QtFpSXbmpKRgMXfuZkvu5M",
             "caller": {
               "type": "direct"
             },
@@ -1236,13 +1273,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.2045712999533862,
+      "seconds": 1.2038094999734312,
       "input_tokens": 1774,
       "output_tokens": 49,
       "cost_usd": 0.004038,
       "error": null,
       "replayed": false,
-      "digest": "71125bacd8fcbc2cab04a214325e7215643ddcfc9ea4aef4e1081f321768d3c4"
+      "digest": "13fd2f6a9c48246b3bf3b7f65663bc6030aa9ff1d8f353859b568e81f9752408"
     },
     {
       "kind": "agent",
@@ -1386,7 +1423,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01AmyznjrbE2rqdqkZSKQBVT",
+                "id": "toolu_01LtrsGAG73oXtcposzN5cD1",
                 "caller": {
                   "type": "direct"
                 },
@@ -1402,7 +1439,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01AmyznjrbE2rqdqkZSKQBVT",
+                "tool_use_id": "toolu_01LtrsGAG73oXtcposzN5cD1",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"batch\", \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1411,7 +1448,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01BEjqoudzqC6fxLq4iuCbSo",
+                "id": "toolu_01QtFpSXbmpKRgMXfuZkvu5M",
                 "caller": {
                   "type": "direct"
                 },
@@ -1429,7 +1466,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01BEjqoudzqC6fxLq4iuCbSo",
+                "tool_use_id": "toolu_01QtFpSXbmpKRgMXfuZkvu5M",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1437,11 +1474,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYeFWb4mgNCAiPzJvdC",
+        "id": "msg_011Cfta4DudGfjNRUaGPvJyV",
         "container": null,
         "content": [
           {
-            "id": "toolu_01VsqCrLhNJuzQ7kmRMx1Rx3",
+            "id": "toolu_01GRDTrXPv1YJKzL8jwYJNpk",
             "caller": {
               "type": "direct"
             },
@@ -1475,13 +1512,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.9603397999890149,
+      "seconds": 0.9615470999851823,
       "input_tokens": 1858,
       "output_tokens": 26,
       "cost_usd": 0.003976,
       "error": null,
       "replayed": false,
-      "digest": "6930545e7ea9d2f511928ea309112bbd320c02ac074b0ca717ff8f884064bcd4"
+      "digest": "ad9ec070d38c5854fdde3db6c6d7752cf17b6997356fda40fe0868bd40623c9d"
     },
     {
       "kind": "agent",
@@ -1625,7 +1662,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01AmyznjrbE2rqdqkZSKQBVT",
+                "id": "toolu_01LtrsGAG73oXtcposzN5cD1",
                 "caller": {
                   "type": "direct"
                 },
@@ -1641,7 +1678,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01AmyznjrbE2rqdqkZSKQBVT",
+                "tool_use_id": "toolu_01LtrsGAG73oXtcposzN5cD1",
                 "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"batch\", \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1650,7 +1687,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01BEjqoudzqC6fxLq4iuCbSo",
+                "id": "toolu_01QtFpSXbmpKRgMXfuZkvu5M",
                 "caller": {
                   "type": "direct"
                 },
@@ -1668,7 +1705,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01BEjqoudzqC6fxLq4iuCbSo",
+                "tool_use_id": "toolu_01QtFpSXbmpKRgMXfuZkvu5M",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1677,7 +1714,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01VsqCrLhNJuzQ7kmRMx1Rx3",
+                "id": "toolu_01GRDTrXPv1YJKzL8jwYJNpk",
                 "caller": {
                   "type": "direct"
                 },
@@ -1693,7 +1730,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01VsqCrLhNJuzQ7kmRMx1Rx3",
+                "tool_use_id": "toolu_01GRDTrXPv1YJKzL8jwYJNpk",
                 "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"subject\": \"batch\", \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1701,12 +1738,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYeKcPtovs8xKyTnPk7",
+        "id": "msg_011Cfta4HpGoowZyWvZvVcbT",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I asked the payment system about the Fenwick Workshop batch. The case is now closed on that step, and the system's answer hasn't been added to the case yet. So I can't yet tell you what the row-level error report shows, and I haven't made the report available to you.",
+            "text": "I asked the payment system about the Fenwick Workshop batch. Its answer hasn't come back into the case yet. The case now shows as final with the outcome \"ask_system\", and no new facts were added. I don't have the row-level error report or the reason the batch failed validation, so I can't tell you what needs correcting.",
             "type": "text"
           }
         ],
@@ -1726,7 +1763,7 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1953,
-          "output_tokens": 82,
+          "output_tokens": 101,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1734,13 +1771,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.5729917000280693,
+      "seconds": 1.7394229000201449,
       "input_tokens": 1953,
-      "output_tokens": 82,
-      "cost_usd": 0.004726,
+      "output_tokens": 101,
+      "cost_usd": 0.004916,
       "error": null,
       "replayed": false,
-      "digest": "1178477cd47f174013ce4944469b1f9088f2eeab823211be589cadf315c93806"
+      "digest": "adb9728a873b482bf8b8273c6e4a23c1ca946182d189fbaa6ca0822483d16796"
     },
     {
       "kind": "generate",
@@ -1753,17 +1790,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"batch\",\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"batch\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-042-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-042-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-042-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-042-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-042-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-042-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-042-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-042-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-042-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-042-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-042-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-registration` fired: state = READING → true (state=READING).\n33. Called `check_registration` (attempt 1, key banking-042-at-01:read-registration:11).\n34. `check_registration` found {}.\n35. Rule `read-confirmation` fired: state = READING → true (state=READING).\n36. Called `check_confirmation` (attempt 1, key banking-042-at-01:read-confirmation:12).\n37. `check_confirmation` found {}.\n38. Rule `triage` fired: state = READING → true (state=READING).\n39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n40. Classifier (jev jev-latest) on `subject`: batch, confidence 0.97 → batch.\n41. `request_type`: not known → question (by `triage`).\n42. `subject`: not known → batch (by `triage`).\n43. State `READING` → `TRIAGED` (by `triage`).\n44. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).\n45. `next_system`: not known → payment (by `route-payment`).\n46. The agent asked for `ask_system` {\"system\": \"payment\"}.\n47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n48. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n50. Called `ask_system` (attempt 1, key banking-042-at-01:do-ask:16).\n51. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"batch\"}.\n52. `ask_system` found {}.\n53. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n54. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n5 calls, 8177 tokens in, 382 out, 5.258 s, cost $0.0164; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the payment system about the Fenwick Workshop batch. The case is now closed on that step, and the system's answer hasn't been added to the case yet. So I can't yet tell you what the row-level error report shows, and I haven't made the report available to you.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"batch\",\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"batch\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-042-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-042-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-042-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-042-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-042-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-042-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-042-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-042-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-042-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-042-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-042-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-042-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-042-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-042-at-01:read-confirmation:13).\n40. `check_confirmation` found {}.\n41. Rule `triage` fired: state = READING → true (state=READING).\n42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n43. Classifier (jev jev-latest) on `subject`: batch, confidence 0.95 → batch.\n44. `request_type`: not known → question (by `triage`).\n45. `subject`: not known → batch (by `triage`).\n46. State `READING` → `TRIAGED` (by `triage`).\n47. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).\n48. `next_system`: not known → payment (by `route-payment`).\n49. The agent asked for `ask_system` {\"system\": \"payment\"}.\n50. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n51. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n53. Called `ask_system` (attempt 1, key banking-042-at-01:do-ask:17).\n54. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"batch\"}.\n55. `ask_system` found {}.\n56. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n57. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n5 calls, 8177 tokens in, 401 out, 5.392 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the payment system about the Fenwick Workshop batch. Its answer hasn't come back into the case yet. The case now shows as final with the outcome \"ask_system\", and no new facts were added. I don't have the row-level error report or the reason the batch failed validation, so I can't tell you what needs correcting.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYeSQB2mr1dCMyrAqQ9",
+        "id": "msg_011Cfta4RNwaYLh9Bq2pZBrG",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The request was a question about a batch. The desk classified it that way and sent a query about the batch to the payment system, and the case closed in the asked state. The payment system's answer is not in the record yet, so what is left for a person is to pick up that answer. The record does not show the row-level error report or any other result being made available to the requester.",
+            "text": "The request was classified as a question about a batch, and the desk routed it to the payment system and sent that system a query about the batch. The case closed as final with that query as its outcome. The record shows no answer from the payment system and no other facts found, so the desk has no row-level error report or reason the batch failed validation, and a person will need to follow up on the payment system's reply.",
             "type": "text"
           }
         ],
@@ -1782,8 +1819,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2076,
-          "output_tokens": 100,
+          "input_tokens": 2182,
+          "output_tokens": 113,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1791,13 +1828,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.8261405999073759,
-      "input_tokens": 2076,
-      "output_tokens": 100,
-      "cost_usd": 0.005152,
+      "seconds": 2.0762698999606073,
+      "input_tokens": 2182,
+      "output_tokens": 113,
+      "cost_usd": 0.005494,
       "error": null,
       "replayed": false,
-      "digest": "4b8ab29b8c9a1564b1d4b6c8fc41acd0cf0458f689c5d40c7673a9b019a4ce1c"
+      "digest": "5823444fa0d3bf540059d46df63e924edb30440229846ea9af06bd25887c83b6"
     }
   ]
 }

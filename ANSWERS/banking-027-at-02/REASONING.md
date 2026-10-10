@@ -38,37 +38,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-tariff` fired: state = READING → true (state=READING).
 35. Called `check_tariff` (attempt 1, key banking-027-at-02:read-tariff:10).
 36. `check_tariff` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-027-at-02:read-registration:11).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-027-at-02:read-confirmation:12).
-42. Note from `read-confirmation`: event 2 (Mara Ellison): I’ve completed H&V’s identification checks for this call. I still can’t sign in to my profile, and I need help restoring access; I’m not sharing any password or verification code. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-48. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-49. `request_type`: not known → access (by `triage`).
-50. `subject`: not known → access (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-53. `next_system`: not known → access (by `route-access`).
-54. The agent asked for `redirect_secure` {}.
-55. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
-56. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
-57. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
-58. Called `redirect_secure` (attempt 1, key banking-027-at-02:do-redirect:16).
-59. Action in the world: `redirect_secure` {"to": "Mara Ellison", "channel": "verified_call", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
-60. `redirect_secure` found {}.
-61. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
-62. The case closed in `REDIRECTED`: **redirect_secure**.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-027-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-027-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-027-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Mara Ellison): I’ve completed H&V’s identification checks for this call. I still can’t sign in to my profile, and I need help restoring access; I’m not sharing any password or verification code. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+51. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+52. `request_type`: not known → access (by `triage`).
+53. `subject`: not known → access (by `triage`).
+54. State `READING` → `TRIAGED` (by `triage`).
+55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+56. `next_system`: not known → access (by `route-access`).
+57. The agent asked for `ask_system` {"system": "access"}.
+58. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=access).
+59. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
+60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+61. Called `ask_system` (attempt 1, key banking-027-at-02:do-ask:17).
+62. Action in the world: `ask_system` {"system": "access", "about": "access"}.
+63. `ask_system` found {}.
+64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+65. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4834 tokens in, 505 out, 3.918 s, cost $0.0109; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4904 tokens in, 580 out, 4.426 s, cost $0.0118; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed Ms. Ellison to H&V's secure recovery process for restoring her sign-in, and the case is now closed as redirected. She's verified on the call and hasn't shared any password or code. I didn't check the access system for why the sign-in was declined, so the cause of the failed attempts isn't established.
+> I asked the access system about Mara Ellison's sign-in problem, and the desk accepted the request. Its answer isn't in the case yet, so I haven't replied to her. When the answer arrives, the next step is to reply to her or point her to the bank's secure recovery process. Nothing has been changed on her profile.

@@ -38,39 +38,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-tariff` fired: state = READING → true (state=READING).
 35. Called `check_tariff` (attempt 1, key banking-027-at-04:read-tariff:10).
 36. `check_tariff` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-027-at-04:read-registration:11).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-027-at-04:read-confirmation:12).
-42. Note from `read-confirmation`: event 4 (H&V recovery system): Recovery checks completed securely. Return to sign-in. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-48. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-49. `request_type`: not known → access (by `triage`).
-50. `subject`: not known → access (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-53. `next_system`: not known → access (by `route-access`).
-54. The agent asked for `ask_system` {"system": "access"}.
-55. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=access).
-56. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-027-at-04:do-ask:16).
-59. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-027-at-04:read-bank-actions:11).
+39. Note from `read-bank-actions`: event 3 (H&V service agent): the bank already acted: I’m directing you to the recovery option in H&V’s secure portal. Complete the checks there; I won’t ask you to tell me your password or a verification code.
+40. `check_bank_actions` found {"bank_redirected": true}.
+41. `bank_redirected`: not known → True (by `read-bank-actions`).
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-027-at-04:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-027-at-04:read-confirmation:13).
+47. Note from `read-confirmation`: event 4 (H&V recovery system): Recovery checks completed securely. Return to sign-in. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+53. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+54. `request_type`: not known → access (by `triage`).
+55. `subject`: not known → access (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+58. `next_system`: not known → access (by `route-access`).
+59. Rule `already-redirected` fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); bank_redirected → true (bank_redirected=True). The customer was pointed to the secure process; nothing to do until they use it.
+60. State `TRIAGED` → `WAITING` (by `already-redirected`).
+61. The case closed in `WAITING`: **wait**.
+62. The agent asked for `ask_system` {"system": "access"}.
+63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access).
 
 ## Model calls
 
-4 calls, 7245 tokens in, 509 out, 4.9 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9078 tokens in, 633 out, 5.646 s, cost $0.0207; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the access system about Mara Ellison's sign-in problem, and the desk accepted the request. The case is now closed with the outcome "ask_system".
+> I took no further action on this case. It is in a final WAITING state, which means the next move is Mara's.
 > 
-> The access system has not given an answer yet. The case record has no new facts after the request, so I have nothing further to report to the customer. I did not send her to the secure recovery process again, because her recovery checks are already complete and she was told to return to sign-in.
+> The recovery checks in the secure portal are complete. She now needs to return to the sign-in page and sign in again. I did not ask her for a password or verification code, and I did not restore access on her behalf.
+> 
+> I tried to query the access system for more detail, but the desk refused because the case is not in a state that allows it. If she still can't sign in after this attempt, she should contact the bank again and the case can be reopened.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer's message was classified as a question about a transfer, and the desk sent that question to the payment system. The case is closed as "asked", but the record holds no answer from the payment system. The only related note is that H&V recorded the international payment instruction as sent, with no confirmation of receipt. What stage the transfer has reached, and whether the beneficiary has received it, is still unknown.
+The customer asked a question about an international transfer, and the desk sent a query about it to the payment system. That query came back with no new facts and the case closed at that step. The only status on record is that H&V has recorded the payment instruction as sent, and nothing confirms the beneficiary has received the money. The record names no further step for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

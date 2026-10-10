@@ -38,47 +38,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-tariff` fired: state = READING → true (state=READING).
 35. Called `check_tariff` (attempt 1, key banking-037-at-04:read-tariff:10).
 36. `check_tariff` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-037-at-04:read-registration:11).
-39. Note from `read-registration`: event 3 (H&V data team): I have opened the protected name review and referred HV-037 for checking under procedure. The customer has requested a spelling correction; please determine what supporting information is required. No profile change has been made. [facts: registration_asked=True]
-40. Note from `read-registration`: event 4 (H&V data team): I have logged HV-037 as received for review. The basis for the correction has not yet been validated, and the profile name remains unchanged. [facts: registered=True, registration_ref='HV-037']
-41. `check_registration` found {"registration_asked": true, "registered": true, "registration_ref": "HV-037"}.
-42. `registration_asked`: not known → True (by `read-registration`).
-43. `registered`: not known → True (by `read-registration`).
-44. `registration_ref`: not known → HV-037 (by `read-registration`).
-45. Rule `read-confirmation` fired: state = READING → true (state=READING).
-46. Called `check_confirmation` (attempt 1, key banking-037-at-04:read-confirmation:12).
-47. Note from `read-confirmation`: event 2 (Elowen Marr): After completing H&V’s identification checks, I explained that my profile shows “Elowen Mar” but my correct name is “Elowen Marr”. Please escalate a correction request; I understand the data team may ask for supporting information. [facts: confirmation='none', instructed_outside_portal=False]
-48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-49. `confirmation`: not known → none (by `read-confirmation`).
-50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: change, confidence 0.44 → change.
-53. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-54. `request_type`: not known → change (by `triage`).
-55. `subject`: not known → profile (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
-58. `next_system`: not known → access (by `route-access`).
-59. The agent asked for `submit_request` {}.
-60. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); access-instruction: request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); business-instruction: next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none).
-61. The agent asked for `reply` {}.
-62. Rule `registration-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered present → true (registered=True).
-63. State `TRIAGED` → `REPLY_PENDING` (by `registration-reply`).
-64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-65. Called `reply_customer` (attempt 1, key banking-037-at-04:do-reply:16).
-66. `reply_customer` found {}.
-67. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-68. The case closed in `REPLIED`: **reply**.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-037-at-04:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-037-at-04:read-registration:12).
+42. Note from `read-registration`: event 3 (H&V data team): I have opened the protected name review and referred HV-037 for checking under procedure. The customer has requested a spelling correction; please determine what supporting information is required. No profile change has been made. [facts: registration_asked=True]
+43. Note from `read-registration`: event 4 (H&V data team): I have logged HV-037 as received for review. The basis for the correction has not yet been validated, and the profile name remains unchanged. [facts: registered=True, registration_ref='HV-037']
+44. `check_registration` found {"registration_asked": true, "registered": true, "registration_ref": "HV-037"}.
+45. `registration_asked`: not known → True (by `read-registration`).
+46. `registered`: not known → True (by `read-registration`).
+47. `registration_ref`: not known → HV-037 (by `read-registration`).
+48. Rule `read-confirmation` fired: state = READING → true (state=READING).
+49. Called `check_confirmation` (attempt 1, key banking-037-at-04:read-confirmation:13).
+50. Note from `read-confirmation`: event 2 (Elowen Marr): After completing H&V’s identification checks, I explained that my profile shows “Elowen Mar” but my correct name is “Elowen Marr”. Please escalate a correction request; I understand the data team may ask for supporting information. [facts: confirmation='none', instructed_outside_portal=False]
+51. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+52. `confirmation`: not known → none (by `read-confirmation`).
+53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+54. Rule `triage` fired: state = READING → true (state=READING).
+55. Classifier (jev jev-latest) on `request_type`: change, confidence 0.43 → change.
+56. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+57. `request_type`: not known → change (by `triage`).
+58. `subject`: not known → profile (by `triage`).
+59. State `READING` → `TRIAGED` (by `triage`).
+60. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
+61. `next_system`: not known → access (by `route-access`).
+62. The agent asked for `submit_request` {}.
+63. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change).
+64. The agent asked for `ask_system` {"system": "access"}.
+65. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
+66. The agent asked for `reply` {}.
+67. Rule `registration-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered present → true (registered=True).
+68. State `TRIAGED` → `REPLY_PENDING` (by `registration-reply`).
+69. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+70. Called `reply_customer` (attempt 1, key banking-037-at-04:do-reply:17).
+71. `reply_customer` found {}.
+72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 10502 tokens in, 790 out, 8.294 s, cost $0.0251; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I replied to the customer, and the case is now closed. The reply goes with the correction request already registered under reference HV-037, so nothing new was submitted.
-> 
-> My first attempt, `submit_request`, was refused. The case is a profile change, not an instruction, so the policy has no route for it. The request had also already been registered, so there was nothing left to submit.
-> 
-> I haven't seen the text of the reply. I didn't check whether the name on the profile has been changed. The case records no confirmation.
+5 calls, 10941 tokens in, 791 out, 8.743 s, cost $0.0260; models: claude-sonnet-5-5, jev-1.13.0.

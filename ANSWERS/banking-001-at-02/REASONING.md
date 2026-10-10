@@ -42,39 +42,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. Rule `read-tariff` fired: state = READING → true (state=READING).
 39. Called `check_tariff` (attempt 1, key banking-001-at-02:read-tariff:10).
 40. `check_tariff` found {}.
-41. Rule `read-registration` fired: state = READING → true (state=READING).
-42. Called `check_registration` (attempt 1, key banking-001-at-02:read-registration:11).
-43. `check_registration` found {}.
-44. Rule `read-confirmation` fired: state = READING → true (state=READING).
-45. Called `check_confirmation` (attempt 1, key banking-001-at-02:read-confirmation:12).
-46. Note from `read-confirmation`: event 2 (Mara Ellison): I arranged this £420 payment for a bookcase and can see the debit. Has H&V sent it? Please check the transfer status. [facts: confirmation='none', instructed_outside_portal=False]
-47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-48. `confirmation`: not known → none (by `read-confirmation`).
-49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-52. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-53. `request_type`: not known → question (by `triage`).
-54. `subject`: not known → transfer (by `triage`).
-55. State `READING` → `TRIAGED` (by `triage`).
-56. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-57. `next_system`: not known → payment (by `route-payment`).
-58. The agent asked for `ask_system` {"system": "payment"}.
-59. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-60. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-62. Called `ask_system` (attempt 1, key banking-001-at-02:do-ask:16).
-63. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
-64. `ask_system` found {}.
-65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-66. The case closed in `ASKED`: **ask_system**.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-001-at-02:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-001-at-02:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-001-at-02:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Mara Ellison): I arranged this £420 payment for a bookcase and can see the debit. Has H&V sent it? Please check the transfer status. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+55. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+56. `request_type`: not known → question (by `triage`).
+57. `subject`: not known → transfer (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+60. `next_system`: not known → payment (by `route-payment`).
+61. The agent asked for `ask_system` {"system": "payment"}.
+62. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-001-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7003 tokens in, 492 out, 11.318 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6975 tokens in, 444 out, 6.901 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the payment system about the £420 transfer to Alder & Reed Workshop. The case is now marked as asked, and the payment system's answer hasn't come back into it yet. So I can't say whether H&V sent the payment.
+> I've asked the payment system about your £420 transfer to Alder & Reed Workshop. The case is now closed on that step, and the payment system's answer hasn't come back into the case yet.
 > 
-> The case record doesn't show a confirmation for this transfer. Mara Ellison's identity is also still unverified on this chat. Once the payment system's answer is in the case, the next step is to reply to her with exactly what it shows.
+> So I can't yet tell you whether H&V sent the payment. The only thing on record is the debit in your account activity. I haven't confirmed any send status beyond that.

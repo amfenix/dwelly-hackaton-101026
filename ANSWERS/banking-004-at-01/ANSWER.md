@@ -4,7 +4,7 @@
 
 ## Summary
 
-The requester said they made a transfer to Northmere Housing Co-operative on 14 July 2025, that the secure portal shows it as not completed, and asked for the reason. The desk classified this as a question about a transfer, routed it to the payment system and sent that system a query about the transfer. The payment system's answer is not in the record, so the reason the transfer wasn't completed is still unknown, and someone will need to reply to the requester once that answer is available.
+The requester asked why their 14 July 2025 transfer to Northmere Housing Co-operative showed as not completed in the secure portal. The desk classified it as a question about a transfer and sent it on by asking the payment system about that transfer, and the case closed at that step. The payment system's answer is not in the record, so no reason for the failed transfer has been found or given, and that remains open for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

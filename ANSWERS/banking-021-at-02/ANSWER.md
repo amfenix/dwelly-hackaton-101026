@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, who is not verified on secure chat, asked the desk to check whether dispatch of her replacement card has been registered, since the portal only says the request was accepted. The desk classified this as a card question and sent a query to the card system, then closed the case. The card system's reply is not in the record, so whether the card has been dispatched is still unknown, and a person will need to follow up with her, keeping in mind that she is unverified.
+Mara Ellison, an unverified customer on secure chat, asked the desk to check whether dispatch has been registered for her replacement card, since the portal only says the request was accepted. The desk classified this as a card question and sent a query to the card system, and the case closed in the asked state. The record shows no answer from the card system yet and no reply to Mara, so both are still outstanding.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=question)
+  - request_type not in [register, change, authority, instruction] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

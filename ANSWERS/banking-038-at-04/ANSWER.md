@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked, over secure chat, for an account confirmation document to be made available in her own secure portal only. The desk found that account-confirmation-038.pdf was ready and replied in secure chat that the document record shows it as available, without confirming it was downloaded or that funds were credited, and noting that no email was sent. Mara Ellison is recorded as not verified, and nothing further is left for a person in the record.
+Mara Ellison asked, over secure chat, for an account confirmation to be made available only in her own secure portal. The desk checked the document record, found account-confirmation-038.pdf available, and replied to her in secure chat saying so, and that this does not confirm it was downloaded or that funds were credited. The record shows her identity as not verified, and nothing is left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,7 +56,7 @@ How the case moved:
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 

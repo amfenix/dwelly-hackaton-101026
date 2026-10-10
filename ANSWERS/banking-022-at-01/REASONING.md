@@ -40,39 +40,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-022-at-01:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-022-at-01:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-022-at-01:read-confirmation:12).
-44. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-50. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-51. `request_type`: not known → instruction (by `triage`).
-52. `subject`: not known → card (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-55. `next_system`: not known → card (by `route-card`).
-56. The agent asked for `ask_system` {"system": "card"}.
-57. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
-58. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-60. Called `ask_system` (attempt 1, key banking-022-at-01:do-ask:16).
-61. Action in the world: `ask_system` {"system": "card", "about": "card"}.
-62. `ask_system` found {}.
-63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-64. The case closed in `ASKED`: **ask_system**.
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-022-at-01:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-022-at-01:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-022-at-01:read-confirmation:13).
+47. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+53. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+54. `request_type`: not known → instruction (by `triage`).
+55. `subject`: not known → card (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+58. `next_system`: not known → card (by `route-card`).
+59. The agent asked for `ask_system` {"system": "card"}.
+60. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
+61. The agent asked for `submit_request` {}.
+62. Rule `card-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked absent → true (card_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
+63. State `TRIAGED` → `REQUEST_PENDING` (by `card-instruction`).
+64. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+65. Called `register_request` (attempt 1, key banking-022-at-01:do-request:17).
+66. Action in the world: `register_request` {"team": "card", "about": "card"}.
+67. `register_request` found {}.
+68. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+69. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 7080 tokens in, 582 out, 5.017 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7712 tokens in, 559 out, 5.159 s, cost $0.0172; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the card system for this case. The case is now closed with the outcome "ask_system".
+> I've submitted the request to block your missing debit card. It was accepted and the case is now closed on our side.
 > 
-> The block has not been submitted. The card check did not add any card details to the case, so I still can't confirm which card is on the record. Mara Ellison is verified and gave a clear instruction on a verified call, but nothing in the case says which card is meant. I haven't asked her which card she means either.
+> You were verified on the call and your instruction was clear, so no further checks were needed. I tried to look up your card records first, but the desk refused that lookup for a verified instruction like this one. I haven't seen the card records, so I can't confirm which card was blocked or whether you hold more than one H&V debit card.

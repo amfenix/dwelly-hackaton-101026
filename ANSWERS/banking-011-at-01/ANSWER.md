@@ -4,7 +4,7 @@
 
 ## Summary
 
-The message was a question about a standing order. The desk classified it that way and sent a query to the recurring payments system about that standing order, then closed the case at that step. No answer from that system is in the record yet, so nothing has been confirmed to the requester, and any follow-up once a reply arrives is left for a person.
+The request was a question about a standing order. The desk classified it as such and sent a query to the recurring payments system about that standing order, then closed the case as final in the asked state. The record holds no answer from that system, so the question stays unanswered and nothing was changed. A person would need to pick up the system's reply and get it back to the requester.
 
 _Written by a model from the record below; the sections below are the record._
 

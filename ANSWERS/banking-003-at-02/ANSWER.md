@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, an unverified customer on secure chat, asked about the stage of a transfer instruction and whether she needs to authorise it. The desk classified it as a question about a transfer and sent it to the payment system, and the case closed there with no stage or authorisation result returned. It found no sent confirmation and no sign the instruction was given outside the portal. Her identity is unverified, so the stage and the authorisation question remain unanswered and are left for a person to follow up.
+Elise Rowan, writing over secure chat, asked about a transfer that still had no sent confirmation, wanting to know its current stage and whether she needed to authorise it. The desk treated this as a question about a transfer and asked the payment system about it, which closed the case. No answer has come back yet, so the transfer's stage and whether she must authorise it are still unconfirmed, and her identity is not verified in this chat.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -84,7 +87,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The customer's message was classified as a question about a transfer, and the desk sent that question to the payment system. The case is closed as \"asked\", but the record holds no answer from the payment system. The only related note is that H&V recorded the international payment instruction as sent, with no confirmation of receipt. What stage the transfer has reached, and whether the beneficiary has received it, is still unknown.",
+  "summary": "The customer asked a question about an international transfer, and the desk sent a query about it to the payment system. That query came back with no new facts and the case closed at that step. The only status on record is that H&V has recorded the payment instruction as sent, and nothing confirms the beneficiary has received the money. The record names no further step for a person.",
   "journal": [
     {
       "seq": 1,
@@ -438,7 +441,7 @@
       "seq": 32,
       "at": 0.0,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -456,23 +459,23 @@
       "seq": 33,
       "at": 0.0,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-007-at-01:read-registration:11",
+      "key": "banking-007-at-01:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 34,
       "at": 0.0,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 35,
       "at": 0.0,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -490,20 +493,54 @@
       "seq": 36,
       "at": 0.0,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-007-at-01:read-confirmation:12",
+      "key": "banking-007-at-01:read-registration:12",
       "args": {}
     },
     {
       "seq": 37,
+      "at": 0.0,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 38,
+      "at": 0.0,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 39,
+      "at": 0.0,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-007-at-01:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 40,
       "at": 0.0,
       "kind": "note",
       "text": "event 1 (H&V): H&V has recorded your international payment instruction as sent. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 38,
+      "seq": 41,
       "at": 0.0,
       "kind": "returned",
       "function": "check_confirmation",
@@ -513,7 +550,7 @@
       }
     },
     {
-      "seq": 39,
+      "seq": 42,
       "at": 0.0,
       "kind": "set",
       "field": "confirmation",
@@ -522,7 +559,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 40,
+      "seq": 43,
       "at": 0.0,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -531,7 +568,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 41,
+      "seq": 44,
       "at": 0.0,
       "kind": "trigger",
       "name": "triage",
@@ -549,8 +586,8 @@
       "note": ""
     },
     {
-      "seq": 42,
-      "at": 0.282,
+      "seq": 45,
+      "at": 0.278,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -561,8 +598,8 @@
       "attempt": 1
     },
     {
-      "seq": 43,
-      "at": 0.282,
+      "seq": 46,
+      "at": 0.278,
       "kind": "choice",
       "field": "subject",
       "raw": "transfer",
@@ -573,8 +610,8 @@
       "attempt": 1
     },
     {
-      "seq": 44,
-      "at": 0.282,
+      "seq": 47,
+      "at": 0.278,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -582,8 +619,8 @@
       "by": "triage"
     },
     {
-      "seq": 45,
-      "at": 0.282,
+      "seq": 48,
+      "at": 0.278,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -591,16 +628,16 @@
       "by": "triage"
     },
     {
-      "seq": 46,
-      "at": 0.282,
+      "seq": 49,
+      "at": 0.278,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 47,
-      "at": 0.282,
+      "seq": 50,
+      "at": 0.278,
       "kind": "trigger",
       "name": "route-payment",
       "on": null,
@@ -631,8 +668,8 @@
       "note": ""
     },
     {
-      "seq": 48,
-      "at": 0.282,
+      "seq": 51,
+      "at": 0.278,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -640,8 +677,8 @@
       "by": "route-payment"
     },
     {
-      "seq": 49,
-      "at": 2.224,
+      "seq": 52,
+      "at": 1.864,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -649,8 +686,8 @@
       }
     },
     {
-      "seq": 50,
-      "at": 2.224,
+      "seq": 53,
+      "at": 1.864,
       "kind": "trigger",
       "name": "payment-ask",
       "on": "ask_system",
@@ -702,16 +739,16 @@
       "note": ""
     },
     {
-      "seq": 51,
-      "at": 2.224,
+      "seq": 54,
+      "at": 1.864,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "payment-ask"
     },
     {
-      "seq": 52,
-      "at": 2.224,
+      "seq": 55,
+      "at": 1.864,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -728,17 +765,17 @@
       "note": ""
     },
     {
-      "seq": 53,
-      "at": 2.224,
+      "seq": 56,
+      "at": 1.864,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-007-at-01:do-ask:16",
+      "key": "banking-007-at-01:do-ask:17",
       "args": {}
     },
     {
-      "seq": 54,
-      "at": 2.224,
+      "seq": 57,
+      "at": 1.864,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -746,26 +783,26 @@
         "about": "transfer"
       },
       "by": "do-ask",
-      "key": "banking-007-at-01:do-ask:16"
+      "key": "banking-007-at-01:do-ask:17"
     },
     {
-      "seq": 55,
-      "at": 2.224,
+      "seq": 58,
+      "at": 1.864,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 56,
-      "at": 2.224,
+      "seq": 59,
+      "at": 1.864,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 57,
-      "at": 2.224,
+      "seq": 60,
+      "at": 1.864,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -863,7 +900,7 @@
           }
         }
       },
-      "seconds": 0.2809131999965757,
+      "seconds": 0.2774632000364363,
       "input_tokens": 915,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1012,16 +1049,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYTo7oywve5m4EYynxk",
+        "id": "msg_011CftZsqw1emi9Jgtt8fBXq",
         "container": null,
         "content": [
           {
-            "signature": "CAQSvQUKEAgSGAI4AUIIdGhpbmtpbmcSDBT2EJL/TeshW4iFQBoMA9tzjy6BS1973SGfIjAz0zN7c5oc5hYECTRW2evRXRierU6QdbuKwSWiCrXq9QvyjSmuBKqCJFWy0PR5flIq2gS6IxgFR1NdmvCnrit0B2vnPhD73pAOrUrt5sjKTNqIK+6QvtP6bDK2jgKIwjaoH8jt60tNmAZvrZ/enVlowow9krT1DHkX++Z80URUjpOesBzZMtz7dMX8iH9W+/lH/lbFM0YNlspqdk8/3lR34jaN5qDy75NnrX4I7EDcCTS2u+kGujPMWuFAF5zlmCaf/eVCaCuJdXeqLv176+vr0Y73bZ6uMeSK6El8LlKiAOGwaualFRIn1OqN8ISUYNlllk2ZDYPKHeI5kGYSDo7AjJKoRG6Ed1bvPkqVoSgIIHEeajitG8tSaD2Q84qKVUxBqbqVnhzEWa/YiYzY0OxqadMYPeHC7Rtd6myGpREWBjKvQS0tssB2dSpaVi3MI2309CZA5zv6SfS+tIZ7ZBlIUhf88Rxc4ROKkT6RN2mmLV7WUaJtisWiv5zypF8PEgnggFkLIJNGV+BMAj6ZqJfq3R7gODLe89z35EnFiQ1LB1rI1Tjyhc7kaTq69Ry/uzJMq0+fSK96hGBgchBZBGZHGJuYjmxFSYOcfJyDACjt+P7//i3lVRb+sD+iCb/l19M8Ufu349NNTcVEIimRFSxY7NyYTUm+P5SmHNZfs6KHwiNg2R15TpOf2voi1IXn9gUoDNhIIvoSWghyXRWUEqSffwgt2wDRMRJDkK4N4JwJq0f1TEmvW5hLJ72S+lBt0hxy8+kNFz/G1TVbOGpQ7qcEZKc5wDP8wo1I8RrYnfTtGXXayAX38mp4gGclfJH2Bv7JXpC93XS4/RGQYyjWE9Ddw1Dmclnjea5zIeubRxgB",
+            "signature": "CAQSuAUKEAgSGAI4AUIIdGhpbmtpbmcSDFgExjj1v3fiVLV8OhoMz/1QWEg2F/KJrudxIjBHR8YdiQGqKn39OZsH2MZzugDs/bk4lzPHcl8IqQbnQ72r6eqlU1TeErnENN6J0oIq1QQJRHRPjcN1tdm9Hd/pd+lbOqu2pbZB+dzVQEbOesAZld3+9yEkrwptPol4J1scDub+0y0GYEJpEyRnD6P1m2lU2Y8opjgPO3vE1779ShkkMHLWqg/gcJOsij9Cb0Ubm9n4p0VRk0S5GFO3HyP1s379BgE8EOru0A/R/7swOEXdOQ+8K2/4lsMSirOucgu3WQQY3J58t2b7zx7HWIJtRIB0WDAtGp9/IhjMhSt3mHnIjPFRJnnszPyKJQWyeo9EYnFHjYKD4nJp1mezYM1soMcftadtsCdIMq33nH6/k/GEFchS0osbsPm5WsQR6Wu8L0QsVLCfmfeCpGnmOHrOoOXIxc7B35w9gdUc6hsB2xyhB3nTJm+OVeNPRvIWZXEMsIFqhn1fww7cQRwd6Z/jz7XMkqa1JcibbwZtXJLsm71WA65Ra2TwXJxRONQSpEAjQSlOL3jQXoqO0Rq0Xy/ESWH/x9yvC6PS22HGkL8dgzNsDwqrCJ97HGvZ0LxLUJ/Qz6oPtgMJ9eLkMD7vqe+MdAlrpW3Ng/TEWxsfK2QlJ6ZxI15rgYOgxmUnrZ6Acxf761ItAd4XS1/rr+C2o5nP3wU97LayxXrpRqAcGNV5GNYL6CMuQFlQcI3mk4rBLuoUhrCvJW/7IxrmSj6G+S6FKx46llq2Q4MRbKljGGm6mErq5jEhL2Bjtd2leYlkmGtQywWZXNMMaMA1ZYk99dLQ9QVi7FwMUIjgYrH+qEB751nAF4/YjnMVFnKbE+tSx66jepuii8E4jX1qNRy7qcdiuZAE60DXBB8YAQ==",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_013KwTAgSDGCF31bznCdgUmw",
+            "id": "toolu_01KnaDsvUTz9NmrhoAZ2JMaK",
             "caller": {
               "type": "direct"
             },
@@ -1057,7 +1094,7 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.9421130999689922,
+      "seconds": 1.5853352999547496,
       "input_tokens": 1746,
       "output_tokens": 100,
       "cost_usd": 0.004492,
@@ -1207,12 +1244,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSvQUKEAgSGAI4AUIIdGhpbmtpbmcSDBT2EJL/TeshW4iFQBoMA9tzjy6BS1973SGfIjAz0zN7c5oc5hYECTRW2evRXRierU6QdbuKwSWiCrXq9QvyjSmuBKqCJFWy0PR5flIq2gS6IxgFR1NdmvCnrit0B2vnPhD73pAOrUrt5sjKTNqIK+6QvtP6bDK2jgKIwjaoH8jt60tNmAZvrZ/enVlowow9krT1DHkX++Z80URUjpOesBzZMtz7dMX8iH9W+/lH/lbFM0YNlspqdk8/3lR34jaN5qDy75NnrX4I7EDcCTS2u+kGujPMWuFAF5zlmCaf/eVCaCuJdXeqLv176+vr0Y73bZ6uMeSK6El8LlKiAOGwaualFRIn1OqN8ISUYNlllk2ZDYPKHeI5kGYSDo7AjJKoRG6Ed1bvPkqVoSgIIHEeajitG8tSaD2Q84qKVUxBqbqVnhzEWa/YiYzY0OxqadMYPeHC7Rtd6myGpREWBjKvQS0tssB2dSpaVi3MI2309CZA5zv6SfS+tIZ7ZBlIUhf88Rxc4ROKkT6RN2mmLV7WUaJtisWiv5zypF8PEgnggFkLIJNGV+BMAj6ZqJfq3R7gODLe89z35EnFiQ1LB1rI1Tjyhc7kaTq69Ry/uzJMq0+fSK96hGBgchBZBGZHGJuYjmxFSYOcfJyDACjt+P7//i3lVRb+sD+iCb/l19M8Ufu349NNTcVEIimRFSxY7NyYTUm+P5SmHNZfs6KHwiNg2R15TpOf2voi1IXn9gUoDNhIIvoSWghyXRWUEqSffwgt2wDRMRJDkK4N4JwJq0f1TEmvW5hLJ72S+lBt0hxy8+kNFz/G1TVbOGpQ7qcEZKc5wDP8wo1I8RrYnfTtGXXayAX38mp4gGclfJH2Bv7JXpC93XS4/RGQYyjWE9Ddw1Dmclnjea5zIeubRxgB",
+                "signature": "CAQSuAUKEAgSGAI4AUIIdGhpbmtpbmcSDFgExjj1v3fiVLV8OhoMz/1QWEg2F/KJrudxIjBHR8YdiQGqKn39OZsH2MZzugDs/bk4lzPHcl8IqQbnQ72r6eqlU1TeErnENN6J0oIq1QQJRHRPjcN1tdm9Hd/pd+lbOqu2pbZB+dzVQEbOesAZld3+9yEkrwptPol4J1scDub+0y0GYEJpEyRnD6P1m2lU2Y8opjgPO3vE1779ShkkMHLWqg/gcJOsij9Cb0Ubm9n4p0VRk0S5GFO3HyP1s379BgE8EOru0A/R/7swOEXdOQ+8K2/4lsMSirOucgu3WQQY3J58t2b7zx7HWIJtRIB0WDAtGp9/IhjMhSt3mHnIjPFRJnnszPyKJQWyeo9EYnFHjYKD4nJp1mezYM1soMcftadtsCdIMq33nH6/k/GEFchS0osbsPm5WsQR6Wu8L0QsVLCfmfeCpGnmOHrOoOXIxc7B35w9gdUc6hsB2xyhB3nTJm+OVeNPRvIWZXEMsIFqhn1fww7cQRwd6Z/jz7XMkqa1JcibbwZtXJLsm71WA65Ra2TwXJxRONQSpEAjQSlOL3jQXoqO0Rq0Xy/ESWH/x9yvC6PS22HGkL8dgzNsDwqrCJ97HGvZ0LxLUJ/Qz6oPtgMJ9eLkMD7vqe+MdAlrpW3Ng/TEWxsfK2QlJ6ZxI15rgYOgxmUnrZ6Acxf761ItAd4XS1/rr+C2o5nP3wU97LayxXrpRqAcGNV5GNYL6CMuQFlQcI3mk4rBLuoUhrCvJW/7IxrmSj6G+S6FKx46llq2Q4MRbKljGGm6mErq5jEhL2Bjtd2leYlkmGtQywWZXNMMaMA1ZYk99dLQ9QVi7FwMUIjgYrH+qEB751nAF4/YjnMVFnKbE+tSx66jepuii8E4jX1qNRy7qcdiuZAE60DXBB8YAQ==",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_013KwTAgSDGCF31bznCdgUmw",
+                "id": "toolu_01KnaDsvUTz9NmrhoAZ2JMaK",
                 "caller": {
                   "type": "direct"
                 },
@@ -1230,7 +1267,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_013KwTAgSDGCF31bznCdgUmw",
+                "tool_use_id": "toolu_01KnaDsvUTz9NmrhoAZ2JMaK",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1238,11 +1275,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYTwQsfeTAVwUTdhWjc",
+        "id": "msg_011CftZsxiJKseQtFuwGdEnc",
         "container": null,
         "content": [
           {
-            "id": "toolu_01BE6Z3Fu5YRfvD9xDsU9wPn",
+            "id": "toolu_01BiopafECvkiqzZXDL6YDGk",
             "caller": {
               "type": "direct"
             },
@@ -1276,13 +1313,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.9843077999539673,
+      "seconds": 0.8065583000425249,
       "input_tokens": 1881,
       "output_tokens": 26,
       "cost_usd": 0.004022,
       "error": null,
       "replayed": false,
-      "digest": "1bcfec7c0f0ca38d940d4ba9d165d9abb58f3cfa36c80175ff56f00534e1ef69"
+      "digest": "97fe3b17944002bbf54aa0d45b1f1222d9892b203b5c5355d1fd7a32cc18c79a"
     },
     {
       "kind": "agent",
@@ -1426,12 +1463,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSvQUKEAgSGAI4AUIIdGhpbmtpbmcSDBT2EJL/TeshW4iFQBoMA9tzjy6BS1973SGfIjAz0zN7c5oc5hYECTRW2evRXRierU6QdbuKwSWiCrXq9QvyjSmuBKqCJFWy0PR5flIq2gS6IxgFR1NdmvCnrit0B2vnPhD73pAOrUrt5sjKTNqIK+6QvtP6bDK2jgKIwjaoH8jt60tNmAZvrZ/enVlowow9krT1DHkX++Z80URUjpOesBzZMtz7dMX8iH9W+/lH/lbFM0YNlspqdk8/3lR34jaN5qDy75NnrX4I7EDcCTS2u+kGujPMWuFAF5zlmCaf/eVCaCuJdXeqLv176+vr0Y73bZ6uMeSK6El8LlKiAOGwaualFRIn1OqN8ISUYNlllk2ZDYPKHeI5kGYSDo7AjJKoRG6Ed1bvPkqVoSgIIHEeajitG8tSaD2Q84qKVUxBqbqVnhzEWa/YiYzY0OxqadMYPeHC7Rtd6myGpREWBjKvQS0tssB2dSpaVi3MI2309CZA5zv6SfS+tIZ7ZBlIUhf88Rxc4ROKkT6RN2mmLV7WUaJtisWiv5zypF8PEgnggFkLIJNGV+BMAj6ZqJfq3R7gODLe89z35EnFiQ1LB1rI1Tjyhc7kaTq69Ry/uzJMq0+fSK96hGBgchBZBGZHGJuYjmxFSYOcfJyDACjt+P7//i3lVRb+sD+iCb/l19M8Ufu349NNTcVEIimRFSxY7NyYTUm+P5SmHNZfs6KHwiNg2R15TpOf2voi1IXn9gUoDNhIIvoSWghyXRWUEqSffwgt2wDRMRJDkK4N4JwJq0f1TEmvW5hLJ72S+lBt0hxy8+kNFz/G1TVbOGpQ7qcEZKc5wDP8wo1I8RrYnfTtGXXayAX38mp4gGclfJH2Bv7JXpC93XS4/RGQYyjWE9Ddw1Dmclnjea5zIeubRxgB",
+                "signature": "CAQSuAUKEAgSGAI4AUIIdGhpbmtpbmcSDFgExjj1v3fiVLV8OhoMz/1QWEg2F/KJrudxIjBHR8YdiQGqKn39OZsH2MZzugDs/bk4lzPHcl8IqQbnQ72r6eqlU1TeErnENN6J0oIq1QQJRHRPjcN1tdm9Hd/pd+lbOqu2pbZB+dzVQEbOesAZld3+9yEkrwptPol4J1scDub+0y0GYEJpEyRnD6P1m2lU2Y8opjgPO3vE1779ShkkMHLWqg/gcJOsij9Cb0Ubm9n4p0VRk0S5GFO3HyP1s379BgE8EOru0A/R/7swOEXdOQ+8K2/4lsMSirOucgu3WQQY3J58t2b7zx7HWIJtRIB0WDAtGp9/IhjMhSt3mHnIjPFRJnnszPyKJQWyeo9EYnFHjYKD4nJp1mezYM1soMcftadtsCdIMq33nH6/k/GEFchS0osbsPm5WsQR6Wu8L0QsVLCfmfeCpGnmOHrOoOXIxc7B35w9gdUc6hsB2xyhB3nTJm+OVeNPRvIWZXEMsIFqhn1fww7cQRwd6Z/jz7XMkqa1JcibbwZtXJLsm71WA65Ra2TwXJxRONQSpEAjQSlOL3jQXoqO0Rq0Xy/ESWH/x9yvC6PS22HGkL8dgzNsDwqrCJ97HGvZ0LxLUJ/Qz6oPtgMJ9eLkMD7vqe+MdAlrpW3Ng/TEWxsfK2QlJ6ZxI15rgYOgxmUnrZ6Acxf761ItAd4XS1/rr+C2o5nP3wU97LayxXrpRqAcGNV5GNYL6CMuQFlQcI3mk4rBLuoUhrCvJW/7IxrmSj6G+S6FKx46llq2Q4MRbKljGGm6mErq5jEhL2Bjtd2leYlkmGtQywWZXNMMaMA1ZYk99dLQ9QVi7FwMUIjgYrH+qEB751nAF4/YjnMVFnKbE+tSx66jepuii8E4jX1qNRy7qcdiuZAE60DXBB8YAQ==",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_013KwTAgSDGCF31bznCdgUmw",
+                "id": "toolu_01KnaDsvUTz9NmrhoAZ2JMaK",
                 "caller": {
                   "type": "direct"
                 },
@@ -1449,7 +1486,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_013KwTAgSDGCF31bznCdgUmw",
+                "tool_use_id": "toolu_01KnaDsvUTz9NmrhoAZ2JMaK",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1458,7 +1495,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01BE6Z3Fu5YRfvD9xDsU9wPn",
+                "id": "toolu_01BiopafECvkiqzZXDL6YDGk",
                 "caller": {
                   "type": "direct"
                 },
@@ -1474,7 +1511,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01BE6Z3Fu5YRfvD9xDsU9wPn",
+                "tool_use_id": "toolu_01BiopafECvkiqzZXDL6YDGk",
                 "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"subject\": \"transfer\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"payment\"}, \"refused\": []}"
               }
             ]
@@ -1482,12 +1519,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYU1eNU24GzkRJLcjBY",
+        "id": "msg_011CftZt26wroFHGiebuoWjT",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I checked the payment system for the status of your international transfer. The case is now closed as \"asked\", but the payment system's answer hasn't been added to the case. The case record shows only that H&V recorded the instruction as sent, and it holds no confirmation that the beneficiary has received the money. I can't yet tell you which stage the transfer has reached or whether it has been received.",
+            "text": "I queried the payment system about your international transfer. The case is now closed at that step.\n\nThe query returned no new facts about the transfer's stage. The only status on record is that H&V has recorded your instruction as sent. The record shows no confirmation that the beneficiary has received the money, so I can't tell you it has arrived.",
             "type": "text"
           }
         ],
@@ -1507,7 +1544,7 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1999,
-          "output_tokens": 116,
+          "output_tokens": 100,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1515,13 +1552,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.0493485000915825,
+      "seconds": 1.589061800041236,
       "input_tokens": 1999,
-      "output_tokens": 116,
-      "cost_usd": 0.005158,
+      "output_tokens": 100,
+      "cost_usd": 0.004998,
       "error": null,
       "replayed": false,
-      "digest": "57121780dbbe7a9518ffcc23eccf938bda6e252da6165cd87d0872dc603e58c4"
+      "digest": "e1514df89d2f556eb3d0c575c3392518a06dd72adb11edcec068f91740137c8d"
     },
     {
       "kind": "generate",
@@ -1534,17 +1571,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"transfer\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"transfer\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-007-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-007-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-007-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-007-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-007-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-007-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-007-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-007-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-007-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-007-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-007-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-registration` fired: state = READING → true (state=READING).\n33. Called `check_registration` (attempt 1, key banking-007-at-01:read-registration:11).\n34. `check_registration` found {}.\n35. Rule `read-confirmation` fired: state = READING → true (state=READING).\n36. Called `check_confirmation` (attempt 1, key banking-007-at-01:read-confirmation:12).\n37. Note from `read-confirmation`: event 1 (H&V): H&V has recorded your international payment instruction as sent. [facts: confirmation='none', instructed_outside_portal=False]\n38. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n39. `confirmation`: not known → none (by `read-confirmation`).\n40. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n41. Rule `triage` fired: state = READING → true (state=READING).\n42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n43. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.\n44. `request_type`: not known → question (by `triage`).\n45. `subject`: not known → transfer (by `triage`).\n46. State `READING` → `TRIAGED` (by `triage`).\n47. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).\n48. `next_system`: not known → payment (by `route-payment`).\n49. The agent asked for `ask_system` {\"system\": \"payment\"}.\n50. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n51. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n53. Called `ask_system` (attempt 1, key banking-007-at-01:do-ask:16).\n54. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"transfer\"}.\n55. `ask_system` found {}.\n56. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n57. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 6541 tokens in, 441 out, 5.257 s, cost $0.0137; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I checked the payment system for the status of your international transfer. The case is now closed as \"asked\", but the payment system's answer hasn't been added to the case. The case record shows only that H&V recorded the instruction as sent, and it holds no confirmation that the beneficiary has received the money. I can't yet tell you which stage the transfer has reached or whether it has been received.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"transfer\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"transfer\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-007-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-007-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-007-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-007-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-007-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-007-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-007-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-007-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-007-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-007-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-007-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-007-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-007-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-007-at-01:read-confirmation:13).\n40. Note from `read-confirmation`: event 1 (H&V): H&V has recorded your international payment instruction as sent. [facts: confirmation='none', instructed_outside_portal=False]\n41. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n42. `confirmation`: not known → none (by `read-confirmation`).\n43. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n44. Rule `triage` fired: state = READING → true (state=READING).\n45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n46. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.\n47. `request_type`: not known → question (by `triage`).\n48. `subject`: not known → transfer (by `triage`).\n49. State `READING` → `TRIAGED` (by `triage`).\n50. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).\n51. `next_system`: not known → payment (by `route-payment`).\n52. The agent asked for `ask_system` {\"system\": \"payment\"}.\n53. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n54. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n56. Called `ask_system` (attempt 1, key banking-007-at-01:do-ask:17).\n57. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"transfer\"}.\n58. `ask_system` found {}.\n59. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n60. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 6541 tokens in, 425 out, 4.258 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I queried the payment system about your international transfer. The case is now closed at that step.\n> \n> The query returned no new facts about the transfer's stage. The only status on record is that H&V has recorded your instruction as sent. The record shows no confirmation that the beneficiary has received the money, so I can't tell you it has arrived.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYUAQUawyo7GuJA9H2q",
+        "id": "msg_011CftZt8xCabq3TcduXqQ8X",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The customer's message was classified as a question about a transfer, and the desk sent that question to the payment system. The case is closed as \"asked\", but the record holds no answer from the payment system. The only related note is that H&V recorded the international payment instruction as sent, with no confirmation of receipt. What stage the transfer has reached, and whether the beneficiary has received it, is still unknown.",
+            "text": "The customer asked a question about an international transfer, and the desk sent a query about it to the payment system. That query came back with no new facts and the case closed at that step. The only status on record is that H&V has recorded the payment instruction as sent, and nothing confirms the beneficiary has received the money. The record names no further step for a person.",
             "type": "text"
           }
         ],
@@ -1563,8 +1600,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2284,
-          "output_tokens": 121,
+          "input_tokens": 2359,
+          "output_tokens": 102,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1572,13 +1609,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.8932961000828072,
-      "input_tokens": 2284,
-      "output_tokens": 121,
-      "cost_usd": 0.005778,
+      "seconds": 1.8294396999990568,
+      "input_tokens": 2359,
+      "output_tokens": 102,
+      "cost_usd": 0.005738,
       "error": null,
       "replayed": false,
-      "digest": "0e84d52622fb32671450b717e4bf63d4f89c0d7beb3b0a6fd1181a9ca9aa3d21"
+      "digest": "9d25eb6963b9d2a01b6d06cc284ea2b7355cff8e3d989e18f3ce86a11094d28b"
     }
   ]
 }

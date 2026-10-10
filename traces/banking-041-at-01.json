@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -91,7 +94,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "Mara Ellison, a verified authorised file uploader using the business portal, asked whether batch-041.csv (reference HV-041, payroll listing Staff A at £420.00 and Staff B at £385.00) had been received. The desk classified it as a question about a batch and put it to the payment system, citing reference HV-041 and amount 420.00. That question was sent and the case closed as asked; no answer from the payment system is in the record, so the customer has not yet been told whether the file arrived.",
+  "summary": "Mara Ellison, a verified authorised file uploader on the business portal, asked whether the desk had received her batch file batch-041.csv (reference HV-041, listing Staff A at £420.00 and Staff B at £385.00). The desk classified it as a question about a batch and sent a query to the payment system about reference HV-041 and the £420.00 amount. That query returned nothing, so the case is closed in the asked state with no answer yet on whether the file was received, and nothing was approved or authorised.",
   "journal": [
     {
       "seq": 1,
@@ -315,7 +318,7 @@
     },
     {
       "seq": 22,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "trigger",
       "name": "read-recurring",
       "on": null,
@@ -333,7 +336,7 @@
     },
     {
       "seq": 23,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "call",
       "function": "check_recurring",
       "attempt": 1,
@@ -342,7 +345,7 @@
     },
     {
       "seq": 24,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_recurring",
       "values": {}
@@ -521,7 +524,7 @@
       "seq": 40,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -539,23 +542,23 @@
       "seq": 41,
       "at": 0.001,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-041-at-01:read-registration:11",
+      "key": "banking-041-at-01:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 42,
       "at": 0.001,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 43,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -573,20 +576,54 @@
       "seq": 44,
       "at": 0.001,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-041-at-01:read-confirmation:12",
+      "key": "banking-041-at-01:read-registration:12",
       "args": {}
     },
     {
       "seq": 45,
+      "at": 0.001,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 46,
+      "at": 0.001,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 47,
+      "at": 0.001,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-041-at-01:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 48,
       "at": 0.001,
       "kind": "note",
       "text": "event 1 (Mara Ellison, authorised file uploader): I uploaded batch-041.csv for Northmere Studio Ltd.'s June 2025 payroll under reference HV-041. It lists Staff A at £420.00 and Staff B at £385.00; please confirm whether the file was received. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
@@ -596,7 +633,7 @@
       }
     },
     {
-      "seq": 47,
+      "seq": 50,
       "at": 0.001,
       "kind": "set",
       "field": "confirmation",
@@ -605,7 +642,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 48,
+      "seq": 51,
       "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -614,7 +651,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 49,
+      "seq": 52,
       "at": 0.001,
       "kind": "trigger",
       "name": "triage",
@@ -632,8 +669,8 @@
       "note": ""
     },
     {
-      "seq": 50,
-      "at": 0.248,
+      "seq": 53,
+      "at": 0.273,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -644,8 +681,8 @@
       "attempt": 1
     },
     {
-      "seq": 51,
-      "at": 0.248,
+      "seq": 54,
+      "at": 0.273,
       "kind": "choice",
       "field": "subject",
       "raw": "batch",
@@ -656,8 +693,8 @@
       "attempt": 1
     },
     {
-      "seq": 52,
-      "at": 0.248,
+      "seq": 55,
+      "at": 0.273,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -665,8 +702,8 @@
       "by": "triage"
     },
     {
-      "seq": 53,
-      "at": 0.248,
+      "seq": 56,
+      "at": 0.273,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -674,16 +711,16 @@
       "by": "triage"
     },
     {
-      "seq": 54,
-      "at": 0.248,
+      "seq": 57,
+      "at": 0.273,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 55,
-      "at": 0.248,
+      "seq": 58,
+      "at": 0.273,
       "kind": "trigger",
       "name": "route-payment",
       "on": null,
@@ -714,8 +751,8 @@
       "note": ""
     },
     {
-      "seq": 56,
-      "at": 0.248,
+      "seq": 59,
+      "at": 0.273,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -723,8 +760,8 @@
       "by": "route-payment"
     },
     {
-      "seq": 57,
-      "at": 1.826,
+      "seq": 60,
+      "at": 1.911,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -732,8 +769,8 @@
       }
     },
     {
-      "seq": 58,
-      "at": 1.826,
+      "seq": 61,
+      "at": 1.911,
       "kind": "trigger",
       "name": "payment-ask",
       "on": "ask_system",
@@ -785,16 +822,16 @@
       "note": ""
     },
     {
-      "seq": 59,
-      "at": 1.826,
+      "seq": 62,
+      "at": 1.911,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "payment-ask"
     },
     {
-      "seq": 60,
-      "at": 1.826,
+      "seq": 63,
+      "at": 1.911,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -811,17 +848,17 @@
       "note": ""
     },
     {
-      "seq": 61,
-      "at": 1.826,
+      "seq": 64,
+      "at": 1.911,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-041-at-01:do-ask:16",
+      "key": "banking-041-at-01:do-ask:17",
       "args": {}
     },
     {
-      "seq": 62,
-      "at": 1.826,
+      "seq": 65,
+      "at": 1.911,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -831,26 +868,26 @@
         "amount": "420.00"
       },
       "by": "do-ask",
-      "key": "banking-041-at-01:do-ask:16"
+      "key": "banking-041-at-01:do-ask:17"
     },
     {
-      "seq": 63,
-      "at": 1.826,
+      "seq": 66,
+      "at": 1.911,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 64,
-      "at": 1.826,
+      "seq": 67,
+      "at": 1.911,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 65,
-      "at": 1.826,
+      "seq": 68,
+      "at": 1.911,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -948,7 +985,7 @@
           }
         }
       },
-      "seconds": 0.24700400000438094,
+      "seconds": 0.2722997999517247,
       "input_tokens": 926,
       "output_tokens": 199,
       "cost_usd": null,
@@ -1097,16 +1134,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYdihghZKoRSw9Qk3m8",
+        "id": "msg_011Cfta3n4sMbsBh51ZWP1sd",
         "container": null,
         "content": [
           {
-            "signature": "CAQSpwUKEAgSGAI4AUIIdGhpbmtpbmcSDPwaPx6ZYWTF9/RosxoMax0paDwe3tBeiHVGIjCeuOdYmRyySsWi03xQBL6waeyzjU8mfuZFVDCHWieqsdAqIDscrsAthPoUhh/YwrIqxAQH4Tjh/NAL0xMs7lHBKdcMz3a2dSPb/8feQDS9B9GD/x8mZHXsRtE9ceBTMK88miwZidK3RMirQDCVmMbK43mOku/eayPqKpH6uUS0UWXcrbk43/2An9N1scCVuFMac0IF0HLS+lE2hiJ/fLgqFnlXzfowYb+fvhfw2wQvBII2bodJiOo9eIFqeS/Raq8hKQTbCjc/OWbzG7nc9jHPqeAB4gwGYJQ6TgqYIqWs+V5d278mh20Npp+eDrKiG0DBT36VOVNRCCxYgWbeneLBMBN58yzOO+YleNFmE2hzII7sni5FzNBqxlLyUhYphfj84k7VC1PkfzzgWf3zMh9OVEp5aSMPy7iaIx0z5TNyAAFHRtmTmlXT9HePAAPfEhcKKnbYdMyfMUQ6Wa55bWbSuWuvE7CzBjjDGFzH52fVhVNRnSnWu/EW15YTq22FGPBLlAekcw3jMCI//UuBI3+Xj2/ifbnXA55Mz5fK6c5q0qRdF2q5yRYXCRiiCBr3+kPFzkET/mGZAOUntLCRxg0Cvxe1wfgAHxnMKoodr/m6OL4FJ9SX7DQsM4085lseZk15TqK9FZqiT4ffzOx0LjczJjX7116mU7JLMiExewjxSJapZwQMvVWdqZvr8dMU7s9UDu9rK1kOxtLfHjj4M3hHoAU8LzFMDtTP2+l216dMrMt2enD+QrSoT26wic5t4/5RQWz7UQVRSyQpbODWBpXwEqYVpVo5lfVgAV6Hl4Q9YgqRjieq0QsYMFM8JROBKQBONevjtSpmGAE=",
+            "signature": "CAQSzAUKEAgSGAI4AUIIdGhpbmtpbmcSDAq1X0t8NfETy3F8xRoMwSOI9Cq3cPH1OCeKIjBS798Rw42zNuzAucsfUP2hfZtHkw2IXtauBIDfStwd9ILcs8FmksCqcQ8K926z+6cq6QSjcqr/asQSt8dHb+BXQf4F6l6RSwQ711hmmOisRY44aPrlFMtAJeKZs9bM1wkHR9sKmQeI/3PlcCRj+Cihc+ztX8AHLoaRp0oddR/RkxV6UU6Zg3HU9cenNOXzgjv811YStlyTwld0FzxNCaezE4rPTE/YCuqWop2avJilEMk4rIE1K+YpUQ+Tm1prXymMeCo6KanHFgsKjEqzq55+OyWAUlKeZUw50V/apK+JHfvbBBJfXRR+IijKgUOk82Ipk4lvNwtZ6KJIVm6qhEirZTwvEQN2c9V1wMp0UGtqxvAr7lQQPA+S9la2QM9QY5g5K7aWDUDNMTLJfu6tEXkYV2YMHHrTjLt4REqBSS4W7UCoB01wC3Pr9ST6XRtdkS3mhezgW3CAQWrIejZylWFhByD9aSR7Y9IM+/0WTEGuvLXU8yy1CLk7FCcxX3i+uqj1+hov8lK+yrfOtYrMYYRIJbuFKW9qIwfbbgYMge723geZ2udRwP6VAE9RvSQMLRwKHCoHPbgahYvKlS8Sidcim2fVMFLp8AOLVFTipHjj3FR861PPWaaHKyTT7MYytWT32vYNfm7rL4rJyEkDQJoIFmmTT+Xa7YxfxA+JOVxrHJXwhXIlTX1p1BVhjXLmwyfAK0239Dzc5DUExo8cZ4V2D9sIotx8mq1ZzsUS8LU/Hac3umpWR5+hJXNK+UHktsoEhiveFAZLoOR6mccN1vMXSbcrddeGJzjiw8TBiPdMTcn1xqgnLdiuGKiHbfLgvibB39bUb6DLnnlp/ExjK1I75gHLVmCFnyEkx+oiEltjCmsIMO0bOOlqjnOf5xgB",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_017jkGAvsqvHn5kPpPcHQa1R",
+            "id": "toolu_01QzzxMcLVwSVAZAJJBLFd3E",
             "caller": {
               "type": "direct"
             },
@@ -1134,18 +1171,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1879,
-          "output_tokens": 96,
+          "output_tokens": 106,
           "output_tokens_details": {
-            "thinking_tokens": 46
+            "thinking_tokens": 56
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.5776696999091655,
+      "seconds": 1.6373260000254959,
       "input_tokens": 1879,
-      "output_tokens": 96,
-      "cost_usd": 0.004718,
+      "output_tokens": 106,
+      "cost_usd": 0.004818,
       "error": null,
       "replayed": false,
       "digest": "e6947a37a891c39192f199f4b63d7c5a461f9cae4cf210438e46dd1a001a4c12"
@@ -1292,12 +1329,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSpwUKEAgSGAI4AUIIdGhpbmtpbmcSDPwaPx6ZYWTF9/RosxoMax0paDwe3tBeiHVGIjCeuOdYmRyySsWi03xQBL6waeyzjU8mfuZFVDCHWieqsdAqIDscrsAthPoUhh/YwrIqxAQH4Tjh/NAL0xMs7lHBKdcMz3a2dSPb/8feQDS9B9GD/x8mZHXsRtE9ceBTMK88miwZidK3RMirQDCVmMbK43mOku/eayPqKpH6uUS0UWXcrbk43/2An9N1scCVuFMac0IF0HLS+lE2hiJ/fLgqFnlXzfowYb+fvhfw2wQvBII2bodJiOo9eIFqeS/Raq8hKQTbCjc/OWbzG7nc9jHPqeAB4gwGYJQ6TgqYIqWs+V5d278mh20Npp+eDrKiG0DBT36VOVNRCCxYgWbeneLBMBN58yzOO+YleNFmE2hzII7sni5FzNBqxlLyUhYphfj84k7VC1PkfzzgWf3zMh9OVEp5aSMPy7iaIx0z5TNyAAFHRtmTmlXT9HePAAPfEhcKKnbYdMyfMUQ6Wa55bWbSuWuvE7CzBjjDGFzH52fVhVNRnSnWu/EW15YTq22FGPBLlAekcw3jMCI//UuBI3+Xj2/ifbnXA55Mz5fK6c5q0qRdF2q5yRYXCRiiCBr3+kPFzkET/mGZAOUntLCRxg0Cvxe1wfgAHxnMKoodr/m6OL4FJ9SX7DQsM4085lseZk15TqK9FZqiT4ffzOx0LjczJjX7116mU7JLMiExewjxSJapZwQMvVWdqZvr8dMU7s9UDu9rK1kOxtLfHjj4M3hHoAU8LzFMDtTP2+l216dMrMt2enD+QrSoT26wic5t4/5RQWz7UQVRSyQpbODWBpXwEqYVpVo5lfVgAV6Hl4Q9YgqRjieq0QsYMFM8JROBKQBONevjtSpmGAE=",
+                "signature": "CAQSzAUKEAgSGAI4AUIIdGhpbmtpbmcSDAq1X0t8NfETy3F8xRoMwSOI9Cq3cPH1OCeKIjBS798Rw42zNuzAucsfUP2hfZtHkw2IXtauBIDfStwd9ILcs8FmksCqcQ8K926z+6cq6QSjcqr/asQSt8dHb+BXQf4F6l6RSwQ711hmmOisRY44aPrlFMtAJeKZs9bM1wkHR9sKmQeI/3PlcCRj+Cihc+ztX8AHLoaRp0oddR/RkxV6UU6Zg3HU9cenNOXzgjv811YStlyTwld0FzxNCaezE4rPTE/YCuqWop2avJilEMk4rIE1K+YpUQ+Tm1prXymMeCo6KanHFgsKjEqzq55+OyWAUlKeZUw50V/apK+JHfvbBBJfXRR+IijKgUOk82Ipk4lvNwtZ6KJIVm6qhEirZTwvEQN2c9V1wMp0UGtqxvAr7lQQPA+S9la2QM9QY5g5K7aWDUDNMTLJfu6tEXkYV2YMHHrTjLt4REqBSS4W7UCoB01wC3Pr9ST6XRtdkS3mhezgW3CAQWrIejZylWFhByD9aSR7Y9IM+/0WTEGuvLXU8yy1CLk7FCcxX3i+uqj1+hov8lK+yrfOtYrMYYRIJbuFKW9qIwfbbgYMge723geZ2udRwP6VAE9RvSQMLRwKHCoHPbgahYvKlS8Sidcim2fVMFLp8AOLVFTipHjj3FR861PPWaaHKyTT7MYytWT32vYNfm7rL4rJyEkDQJoIFmmTT+Xa7YxfxA+JOVxrHJXwhXIlTX1p1BVhjXLmwyfAK0239Dzc5DUExo8cZ4V2D9sIotx8mq1ZzsUS8LU/Hac3umpWR5+hJXNK+UHktsoEhiveFAZLoOR6mccN1vMXSbcrddeGJzjiw8TBiPdMTcn1xqgnLdiuGKiHbfLgvibB39bUb6DLnnlp/ExjK1I75gHLVmCFnyEkx+oiEltjCmsIMO0bOOlqjnOf5xgB",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_017jkGAvsqvHn5kPpPcHQa1R",
+                "id": "toolu_01QzzxMcLVwSVAZAJJBLFd3E",
                 "caller": {
                   "type": "direct"
                 },
@@ -1315,7 +1352,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_017jkGAvsqvHn5kPpPcHQa1R",
+                "tool_use_id": "toolu_01QzzxMcLVwSVAZAJJBLFd3E",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1323,12 +1360,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYdqRVwAEEBVC3T19Vi",
+        "id": "msg_011Cfta3u15sWWYVQNfc3vbc",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The payment system has been asked about the receipt status of batch-041.csv (reference HV-041). Its answer will go into the case, and the reply to the customer can be written from that.",
+            "text": "I've asked the payment system for the receipt status of batch-041.csv (reference HV-041). The case is now waiting on its answer, and I'm not authorising or approving anything for the company.",
             "type": "text"
           }
         ],
@@ -1347,8 +1384,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2010,
-          "output_tokens": 56,
+          "input_tokens": 2020,
+          "output_tokens": 61,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1356,13 +1393,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.0590647999197245,
-      "input_tokens": 2010,
-      "output_tokens": 56,
-      "cost_usd": 0.00458,
+      "seconds": 1.0721016000024974,
+      "input_tokens": 2020,
+      "output_tokens": 61,
+      "cost_usd": 0.00465,
       "error": null,
       "replayed": false,
-      "digest": "f1d29ad00610d8a2c2d4581f9207a1be92a5e7d7466f07fa6486b361e8f05917"
+      "digest": "25beb14d6a573d110d1d0dd6d9b3df47230c78077c9a9b99ec8ee49c471556a3"
     },
     {
       "kind": "generate",
@@ -1375,17 +1412,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison, authorised file uploader\",\n    \"role\": \"customer\",\n    \"channel\": \"business_portal\",\n    \"verified\": true,\n    \"subject\": \"batch\",\n    \"amount\": \"420.00\",\n    \"reference\": \"HV-041\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"batch\",\n        \"reference\": \"HV-041\",\n        \"amount\": \"420.00\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-041-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-041-at-01:read-requester:1).\n4. Note from `read-requester`: event 1 (Mara Ellison, authorised file uploader): I uploaded batch-041.csv for Northmere Studio Ltd.'s June 2025 payroll under reference HV-041. It lists Staff A at £420.00 and Staff B at £385.00; please confirm whether the file was received. [facts: requester='Mara Ellison, authorised file uploader', role='customer', channel='business_portal', verified=True]\n5. `identify_requester` found {\"requester\": \"Mara Ellison, authorised file uploader\", \"role\": \"customer\", \"channel\": \"business_portal\", \"verified\": true}.\n6. `requester`: not known → Mara Ellison, authorised file uploader (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → business_portal (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-041-at-01:read-subject:2).\n12. Note from `read-subject`: event 1 (Mara Ellison, authorised file uploader): I uploaded batch-041.csv for Northmere Studio Ltd.'s June 2025 payroll under reference HV-041. It lists Staff A at £420.00 and Staff B at £385.00; please confirm whether the file was received. [facts: amount='420.00', reference='HV-041']\n13. `find_subject` found {\"amount\": \"420.00\", \"reference\": \"HV-041\"}.\n14. `amount`: not known → 420.00 (by `read-subject`).\n15. `reference`: not known → HV-041 (by `read-subject`).\n16. Rule `read-payment` fired: state = READING → true (state=READING).\n17. Called `check_payment` (attempt 1, key banking-041-at-01:read-payment:3).\n18. `check_payment` found {}.\n19. Rule `read-incoming` fired: state = READING → true (state=READING).\n20. Called `check_incoming` (attempt 1, key banking-041-at-01:read-incoming:4).\n21. `check_incoming` found {}.\n22. Rule `read-recurring` fired: state = READING → true (state=READING).\n23. Called `check_recurring` (attempt 1, key banking-041-at-01:read-recurring:5).\n24. `check_recurring` found {}.\n25. Rule `read-card` fired: state = READING → true (state=READING).\n26. Called `check_card` (attempt 1, key banking-041-at-01:read-card:6).\n27. `check_card` found {}.\n28. Rule `read-access` fired: state = READING → true (state=READING).\n29. Called `check_access` (attempt 1, key banking-041-at-01:read-access:7).\n30. `check_access` found {}.\n31. Rule `read-business` fired: state = READING → true (state=READING).\n32. Called `check_business` (attempt 1, key banking-041-at-01:read-business:8).\n33. `check_business` found {}.\n34. Rule `read-documents` fired: state = READING → true (state=READING).\n35. Called `check_documents` (attempt 1, key banking-041-at-01:read-documents:9).\n36. `check_documents` found {}.\n37. Rule `read-tariff` fired: state = READING → true (state=READING).\n38. Called `check_tariff` (attempt 1, key banking-041-at-01:read-tariff:10).\n39. `check_tariff` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-041-at-01:read-registration:11).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-041-at-01:read-confirmation:12).\n45. Note from `read-confirmation`: event 1 (Mara Ellison, authorised file uploader): I uploaded batch-041.csv for Northmere Studio Ltd.'s June 2025 payroll under reference HV-041. It lists Staff A at £420.00 and Staff B at £385.00; please confirm whether the file was received. [facts: confirmation='none', instructed_outside_portal=False]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n51. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.\n52. `request_type`: not known → question (by `triage`).\n53. `subject`: not known → batch (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).\n56. `next_system`: not known → payment (by `route-payment`).\n57. The agent asked for `ask_system` {\"system\": \"payment\"}.\n58. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n59. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n61. Called `ask_system` (attempt 1, key banking-041-at-01:do-ask:16).\n62. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"batch\", \"reference\": \"HV-041\", \"amount\": \"420.00\"}.\n63. `ask_system` found {}.\n64. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n65. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n3 calls, 4815 tokens in, 351 out, 2.884 s, cost $0.0093; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The payment system has been asked about the receipt status of batch-041.csv (reference HV-041). Its answer will go into the case, and the reply to the customer can be written from that.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison, authorised file uploader\",\n    \"role\": \"customer\",\n    \"channel\": \"business_portal\",\n    \"verified\": true,\n    \"subject\": \"batch\",\n    \"amount\": \"420.00\",\n    \"reference\": \"HV-041\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"payment\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"payment\",\n        \"about\": \"batch\",\n        \"reference\": \"HV-041\",\n        \"amount\": \"420.00\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-041-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-041-at-01:read-requester:1).\n4. Note from `read-requester`: event 1 (Mara Ellison, authorised file uploader): I uploaded batch-041.csv for Northmere Studio Ltd.'s June 2025 payroll under reference HV-041. It lists Staff A at £420.00 and Staff B at £385.00; please confirm whether the file was received. [facts: requester='Mara Ellison, authorised file uploader', role='customer', channel='business_portal', verified=True]\n5. `identify_requester` found {\"requester\": \"Mara Ellison, authorised file uploader\", \"role\": \"customer\", \"channel\": \"business_portal\", \"verified\": true}.\n6. `requester`: not known → Mara Ellison, authorised file uploader (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → business_portal (by `read-requester`).\n9. `verified`: not known → True (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-041-at-01:read-subject:2).\n12. Note from `read-subject`: event 1 (Mara Ellison, authorised file uploader): I uploaded batch-041.csv for Northmere Studio Ltd.'s June 2025 payroll under reference HV-041. It lists Staff A at £420.00 and Staff B at £385.00; please confirm whether the file was received. [facts: amount='420.00', reference='HV-041']\n13. `find_subject` found {\"amount\": \"420.00\", \"reference\": \"HV-041\"}.\n14. `amount`: not known → 420.00 (by `read-subject`).\n15. `reference`: not known → HV-041 (by `read-subject`).\n16. Rule `read-payment` fired: state = READING → true (state=READING).\n17. Called `check_payment` (attempt 1, key banking-041-at-01:read-payment:3).\n18. `check_payment` found {}.\n19. Rule `read-incoming` fired: state = READING → true (state=READING).\n20. Called `check_incoming` (attempt 1, key banking-041-at-01:read-incoming:4).\n21. `check_incoming` found {}.\n22. Rule `read-recurring` fired: state = READING → true (state=READING).\n23. Called `check_recurring` (attempt 1, key banking-041-at-01:read-recurring:5).\n24. `check_recurring` found {}.\n25. Rule `read-card` fired: state = READING → true (state=READING).\n26. Called `check_card` (attempt 1, key banking-041-at-01:read-card:6).\n27. `check_card` found {}.\n28. Rule `read-access` fired: state = READING → true (state=READING).\n29. Called `check_access` (attempt 1, key banking-041-at-01:read-access:7).\n30. `check_access` found {}.\n31. Rule `read-business` fired: state = READING → true (state=READING).\n32. Called `check_business` (attempt 1, key banking-041-at-01:read-business:8).\n33. `check_business` found {}.\n34. Rule `read-documents` fired: state = READING → true (state=READING).\n35. Called `check_documents` (attempt 1, key banking-041-at-01:read-documents:9).\n36. `check_documents` found {}.\n37. Rule `read-tariff` fired: state = READING → true (state=READING).\n38. Called `check_tariff` (attempt 1, key banking-041-at-01:read-tariff:10).\n39. `check_tariff` found {}.\n40. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n41. Called `check_bank_actions` (attempt 1, key banking-041-at-01:read-bank-actions:11).\n42. `check_bank_actions` found {}.\n43. Rule `read-registration` fired: state = READING → true (state=READING).\n44. Called `check_registration` (attempt 1, key banking-041-at-01:read-registration:12).\n45. `check_registration` found {}.\n46. Rule `read-confirmation` fired: state = READING → true (state=READING).\n47. Called `check_confirmation` (attempt 1, key banking-041-at-01:read-confirmation:13).\n48. Note from `read-confirmation`: event 1 (Mara Ellison, authorised file uploader): I uploaded batch-041.csv for Northmere Studio Ltd.'s June 2025 payroll under reference HV-041. It lists Staff A at £420.00 and Staff B at £385.00; please confirm whether the file was received. [facts: confirmation='none', instructed_outside_portal=False]\n49. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n50. `confirmation`: not known → none (by `read-confirmation`).\n51. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n52. Rule `triage` fired: state = READING → true (state=READING).\n53. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n54. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.\n55. `request_type`: not known → question (by `triage`).\n56. `subject`: not known → batch (by `triage`).\n57. State `READING` → `TRIAGED` (by `triage`).\n58. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).\n59. `next_system`: not known → payment (by `route-payment`).\n60. The agent asked for `ask_system` {\"system\": \"payment\"}.\n61. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n62. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).\n63. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n64. Called `ask_system` (attempt 1, key banking-041-at-01:do-ask:17).\n65. Action in the world: `ask_system` {\"system\": \"payment\", \"about\": \"batch\", \"reference\": \"HV-041\", \"amount\": \"420.00\"}.\n66. `ask_system` found {}.\n67. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n68. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n3 calls, 4825 tokens in, 366 out, 2.982 s, cost $0.0095; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've asked the payment system for the receipt status of batch-041.csv (reference HV-041). The case is now waiting on its answer, and I'm not authorising or approving anything for the company.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYduwrJTgQ2jUCSJ9zW",
+        "id": "msg_011Cfta3yfcuGR8pZ5efNVFt",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Mara Ellison, a verified authorised file uploader using the business portal, asked whether batch-041.csv (reference HV-041, payroll listing Staff A at £420.00 and Staff B at £385.00) had been received. The desk classified it as a question about a batch and put it to the payment system, citing reference HV-041 and amount 420.00. That question was sent and the case closed as asked; no answer from the payment system is in the record, so the customer has not yet been told whether the file arrived.",
+            "text": "Mara Ellison, a verified authorised file uploader on the business portal, asked whether the desk had received her batch file batch-041.csv (reference HV-041, listing Staff A at £420.00 and Staff B at £385.00). The desk classified it as a question about a batch and sent a query to the payment system about reference HV-041 and the £420.00 amount. That query returned nothing, so the case is closed in the asked state with no answer yet on whether the file was received, and nothing was approved or authorised.",
             "type": "text"
           }
         ],
@@ -1404,8 +1441,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2903,
-          "output_tokens": 159,
+          "input_tokens": 2995,
+          "output_tokens": 163,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1413,13 +1450,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.9186330999946222,
-      "input_tokens": 2903,
-      "output_tokens": 159,
-      "cost_usd": 0.007396,
+      "seconds": 2.0089304000139236,
+      "input_tokens": 2995,
+      "output_tokens": 163,
+      "cost_usd": 0.00762,
       "error": null,
       "replayed": false,
-      "digest": "867f149aec1986cdc9646fc5b1758981b7eb4d2d0586b48485071758b4c8a20a"
+      "digest": "e2c5313c438b5a406ed0d3682a1d2b303f0fc38ab8c4d8a82bc7e7ebf5ef07e8"
     }
   ]
 }

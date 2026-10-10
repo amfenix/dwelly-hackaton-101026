@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -94,7 +97,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Mara Ellery, who was not verified, asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, and said she did not want it cancelled. The desk treated it as a question and put it to the recurring payments system, which holds Direct Debit mandates; the request went through, but the record shows no answer yet. Nothing was cancelled or changed, and the mandate's status still has to be passed back to her once that system replies.",
+  "summary": "Mara Ellery, who was not verified, asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, saying she saw one collection on her March statement and no later one, and asking that nothing be cancelled. The desk classified it as a question about a direct debit and asked the recurring payments system about that mandate; it cancelled and changed nothing. The system's answer has not yet come back, so someone still needs to read it and reply to Mara.",
   "journal": [
     {
       "seq": 1,
@@ -512,9 +515,9 @@
     },
     {
       "seq": 39,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -530,25 +533,25 @@
     },
     {
       "seq": 40,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-014-at-02:read-registration:11",
+      "key": "banking-014-at-02:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 41,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 42,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -566,20 +569,54 @@
       "seq": 43,
       "at": 0.001,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-014-at-02:read-confirmation:12",
+      "key": "banking-014-at-02:read-registration:12",
       "args": {}
     },
     {
       "seq": 44,
+      "at": 0.001,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 45,
+      "at": 0.001,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 46,
+      "at": 0.001,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-014-at-02:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 47,
       "at": 0.001,
       "kind": "note",
       "text": "event 2 (Mara Ellery): I saw that collection on my March statement and have not seen another one. Could you check whether the mandate is currently active? Please don't cancel it; I only need its status. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 45,
+      "seq": 48,
       "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
@@ -589,7 +626,7 @@
       }
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.001,
       "kind": "set",
       "field": "confirmation",
@@ -598,7 +635,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 47,
+      "seq": 50,
       "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -607,7 +644,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 48,
+      "seq": 51,
       "at": 0.001,
       "kind": "trigger",
       "name": "triage",
@@ -625,8 +662,8 @@
       "note": ""
     },
     {
-      "seq": 49,
-      "at": 0.238,
+      "seq": 52,
+      "at": 0.236,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -637,8 +674,8 @@
       "attempt": 1
     },
     {
-      "seq": 50,
-      "at": 0.238,
+      "seq": 53,
+      "at": 0.236,
       "kind": "choice",
       "field": "subject",
       "raw": "direct_debit",
@@ -649,8 +686,8 @@
       "attempt": 1
     },
     {
-      "seq": 51,
-      "at": 0.238,
+      "seq": 54,
+      "at": 0.236,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -658,8 +695,8 @@
       "by": "triage"
     },
     {
-      "seq": 52,
-      "at": 0.238,
+      "seq": 55,
+      "at": 0.236,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -667,16 +704,16 @@
       "by": "triage"
     },
     {
-      "seq": 53,
-      "at": 0.238,
+      "seq": 56,
+      "at": 0.236,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 54,
-      "at": 0.238,
+      "seq": 57,
+      "at": 0.236,
       "kind": "trigger",
       "name": "route-recurring",
       "on": null,
@@ -707,8 +744,8 @@
       "note": ""
     },
     {
-      "seq": 55,
-      "at": 0.238,
+      "seq": 58,
+      "at": 0.236,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -716,8 +753,8 @@
       "by": "route-recurring"
     },
     {
-      "seq": 56,
-      "at": 4.554,
+      "seq": 59,
+      "at": 1.989,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -725,8 +762,8 @@
       }
     },
     {
-      "seq": 57,
-      "at": 4.554,
+      "seq": 60,
+      "at": 1.989,
       "kind": "trigger",
       "name": "recurring-ask",
       "on": "ask_system",
@@ -778,16 +815,16 @@
       "note": ""
     },
     {
-      "seq": 58,
-      "at": 4.554,
+      "seq": 61,
+      "at": 1.989,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "recurring-ask"
     },
     {
-      "seq": 59,
-      "at": 4.554,
+      "seq": 62,
+      "at": 1.989,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -804,17 +841,17 @@
       "note": ""
     },
     {
-      "seq": 60,
-      "at": 4.554,
+      "seq": 63,
+      "at": 1.989,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-014-at-02:do-ask:16",
+      "key": "banking-014-at-02:do-ask:17",
       "args": {}
     },
     {
-      "seq": 61,
-      "at": 4.554,
+      "seq": 64,
+      "at": 1.989,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -822,26 +859,26 @@
         "about": "direct_debit"
       },
       "by": "do-ask",
-      "key": "banking-014-at-02:do-ask:16"
+      "key": "banking-014-at-02:do-ask:17"
     },
     {
-      "seq": 62,
-      "at": 4.555,
+      "seq": 65,
+      "at": 1.989,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 63,
-      "at": 4.555,
+      "seq": 66,
+      "at": 1.989,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 64,
-      "at": 4.555,
+      "seq": 67,
+      "at": 1.989,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -939,7 +976,7 @@
           }
         }
       },
-      "seconds": 0.23705899994820356,
+      "seconds": 0.23500769992824644,
       "input_tokens": 928,
       "output_tokens": 201,
       "cost_usd": null,
@@ -1088,16 +1125,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYVi9xyfagSTKK6Z7AZ",
+        "id": "msg_011CftZutTNN3smj69XQDkrr",
         "container": null,
         "content": [
           {
-            "signature": "CAQS3wYKEAgSGAI4AUIIdGhpbmtpbmcSDMrFumaIpsUD/rrnshoMnssKijebHQXttldKIjDcvS3e4i2Rr7J7FmVzuVUsMmWO6ZPnBU6OsumFlwwfTFU5IWghg2AD47xv/b0C9m0q/AXOxWhqzWEnfkXcZxM9rpWLPR8f80f1Te/Vr0M+HSvuZ8i1gBOD4V3fD9YfO/zlxKiwTrz3iV2uWYnLIqcAkLWnAXLjaUBtm+H/YDP67sYMfg84yqVlb5+I8WDyHa71X3Pw9pQR/wNLYGtNr64/PfenLOyM2/t4lwMpckUiBSj2AGBulCBxjewit60cSflAsGNsmph/D6HWeJqqL11eLPViuFjrFWPRitWp1en0903eJJSBqkx0G/UXPuk1R+6I3AGOfg4p7hLC81Dakhpv/kMdkEzvxWxgIlqn2brF9Fct2KgNbIW3P4sVP8FcbJ3I/tBrzCKPFYVNGQb4P1/5NEnAgj4zkkjtymQ9iwJSUuaBHw1hBC59ZdrC4eiYe/rr4iz1VTrE8c4cFZPAMyEdchtCvZMP3QxzygaIGr2VaKj1GTSEkVIjZCqcq2mdi6SkwRQg1Bt4erBvCROGhL0IHeYEgqQVvdPyyYvZ5Yjhh7YIerkypmJBsXdsB4mBN+KX+4yk/3FiOWt73rJLUQiqj7n7Mf+Z0io118/LxaSCVC09aSmmcnQIWZC7d5NuKOqzfX9mlSBd/69c7IzPbC0IpOXqT30sXTiiomRcHGdZr5tHcRvzwvk2+mMTZ2NnuesMkINDoO6QFg93RTQuN3Lgvy1e4zL0oGJ3MD/vVKmpCDhOoqTJ2/C4kbDT2NBvrl/O9AGDJ6rxnvrpw7skbYXmYSIC0YPkVwftAA+dXpezASOmiDEv5oyKM+NYv651jAjbKdRUOnwhIfcdc4myRlx2raqLR59zQWPeSY2bF3tapO8S63vm0XwA0xNtrXkAQDrP+jsIaxYwuahVq+fjERyUMJhHITXn0U3D7Os5Fv+I5lzMXmMFjeI/Hv3vdhdMrIS/wbCAyQ3pwF5q0HLC0S/6HP3+TXVWDbOZGHljnBMiXx3zvZBL2BlofaGaJz+K77AFVf0xU2cNlc4H0UTNWUF7WgBQljuzRHdljOYk1dL42aCGkm498oiIns9Tx8AVTBgB",
+            "signature": "CAQSxgYKEAgSGAI4AUIIdGhpbmtpbmcSDNKmGo95C+LnYvbAwBoMHhEHtLcvMPqKNXQJIjASNB2Pvnp5gIbc8Mg3G+76Y+ueFLkbnDyK348OEeY3upG+lA8Zw1dKl5TZhvzCOmwq4wV9xeAj94kfMl4BstNFzge/69Aygf+d/gsxkl6Qwqo7ANIY5mAfodguwPJfGXs9FTSzSNh4MMK3MzMr3GXXK5cCEqwU1SfY6ii7o4AXy4pLA/iGGhOlcSf1ifGr3bzhKmiRwk55Cd5CFuYMFjU6JkeNAulCPtNt+OKCGlRB8ZeRnM8UuzQlj2y2J94jirNJMSY1OmlgtSexeeVIyTSIfgU/6w6UThJEL5r8dygZLK+Z+lpkKODaDcd3kfkWgZhLthfQpMIWEmUqFarr8AqGhT41DOTp8XPEYDVN+OnbOm9nkODix1yYAYc5aoNbLap1nRqZdKCAUmG+fDY9GI85WnQj4e2QfZKzU30WEU/qdHn8A98M3sNJJwjO6itSh3+JN6kUj/8S48jxjqb8/FZRai4Q5GKKUyGYHwOfJoGXoGengv2/f4ci36pvll3CSUYVeGBuiehiXnTJJWvxg7cFWSfLw2J9CA9diYtGwJcLMh2l8y9Fx94cR4aXN21Yp3Z6xDPmjY2pz6SthhqFnLmuwDdIgmFderfUDV5j+UZ0d+8vhciJiid/LBNaiZLmn5STVumHxzTkTeRw82S8jhMRS9O7tIInKVyZeRrwNaN6crNrMT6U2eK4dDIYth7Ch4v2sxPqxiDNDFdHXHWiWl20qHyUY2+D5P8EPjZ03YH8P1XMtUCPIL4pQn9ygDH8vsCnUGIJ8EPune1LMx6YmA7ySRpLQDRC0dkFGlJ2TjP428kkUK2m4i9QIwBjATNQI9STUQi0UOuMFj6sljQ9fLpdFLN66vtM/eqaq/RxGTaEkShKvDN86m8aS3sldAdABGTIM/PS1uU4WBaQw1wACKVT4/vvOhl7OJPe0RoX+LzyQki1cRdoIbb3EqPQLvc3/QheqsQYIc3+kdJDIpT2EAGmkLsrs522KcLmWd+kll41gvnIT8Q3Su+jIKfyOZTJ1vE7JPgLPA7swDaiWX4PBNed4F+CKdQtGAE=",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01S4HMBWGg5dS3qsWBpXiu3K",
+            "id": "toolu_01HRuaX3Px6Qgp4JiTAr2swo",
             "caller": {
               "type": "direct"
             },
@@ -1125,18 +1162,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1916,
-          "output_tokens": 149,
+          "output_tokens": 147,
           "output_tokens_details": {
-            "thinking_tokens": 98
+            "thinking_tokens": 96
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 4.316041800077073,
+      "seconds": 1.7529590000631288,
       "input_tokens": 1916,
-      "output_tokens": 149,
-      "cost_usd": 0.005322,
+      "output_tokens": 147,
+      "cost_usd": 0.005302,
       "error": null,
       "replayed": false,
       "digest": "941ef754303a090fe086f5ea0216b04aa9049a8df54b6cba8327c8699952c03e"
@@ -1283,12 +1320,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS3wYKEAgSGAI4AUIIdGhpbmtpbmcSDMrFumaIpsUD/rrnshoMnssKijebHQXttldKIjDcvS3e4i2Rr7J7FmVzuVUsMmWO6ZPnBU6OsumFlwwfTFU5IWghg2AD47xv/b0C9m0q/AXOxWhqzWEnfkXcZxM9rpWLPR8f80f1Te/Vr0M+HSvuZ8i1gBOD4V3fD9YfO/zlxKiwTrz3iV2uWYnLIqcAkLWnAXLjaUBtm+H/YDP67sYMfg84yqVlb5+I8WDyHa71X3Pw9pQR/wNLYGtNr64/PfenLOyM2/t4lwMpckUiBSj2AGBulCBxjewit60cSflAsGNsmph/D6HWeJqqL11eLPViuFjrFWPRitWp1en0903eJJSBqkx0G/UXPuk1R+6I3AGOfg4p7hLC81Dakhpv/kMdkEzvxWxgIlqn2brF9Fct2KgNbIW3P4sVP8FcbJ3I/tBrzCKPFYVNGQb4P1/5NEnAgj4zkkjtymQ9iwJSUuaBHw1hBC59ZdrC4eiYe/rr4iz1VTrE8c4cFZPAMyEdchtCvZMP3QxzygaIGr2VaKj1GTSEkVIjZCqcq2mdi6SkwRQg1Bt4erBvCROGhL0IHeYEgqQVvdPyyYvZ5Yjhh7YIerkypmJBsXdsB4mBN+KX+4yk/3FiOWt73rJLUQiqj7n7Mf+Z0io118/LxaSCVC09aSmmcnQIWZC7d5NuKOqzfX9mlSBd/69c7IzPbC0IpOXqT30sXTiiomRcHGdZr5tHcRvzwvk2+mMTZ2NnuesMkINDoO6QFg93RTQuN3Lgvy1e4zL0oGJ3MD/vVKmpCDhOoqTJ2/C4kbDT2NBvrl/O9AGDJ6rxnvrpw7skbYXmYSIC0YPkVwftAA+dXpezASOmiDEv5oyKM+NYv651jAjbKdRUOnwhIfcdc4myRlx2raqLR59zQWPeSY2bF3tapO8S63vm0XwA0xNtrXkAQDrP+jsIaxYwuahVq+fjERyUMJhHITXn0U3D7Os5Fv+I5lzMXmMFjeI/Hv3vdhdMrIS/wbCAyQ3pwF5q0HLC0S/6HP3+TXVWDbOZGHljnBMiXx3zvZBL2BlofaGaJz+K77AFVf0xU2cNlc4H0UTNWUF7WgBQljuzRHdljOYk1dL42aCGkm498oiIns9Tx8AVTBgB",
+                "signature": "CAQSxgYKEAgSGAI4AUIIdGhpbmtpbmcSDNKmGo95C+LnYvbAwBoMHhEHtLcvMPqKNXQJIjASNB2Pvnp5gIbc8Mg3G+76Y+ueFLkbnDyK348OEeY3upG+lA8Zw1dKl5TZhvzCOmwq4wV9xeAj94kfMl4BstNFzge/69Aygf+d/gsxkl6Qwqo7ANIY5mAfodguwPJfGXs9FTSzSNh4MMK3MzMr3GXXK5cCEqwU1SfY6ii7o4AXy4pLA/iGGhOlcSf1ifGr3bzhKmiRwk55Cd5CFuYMFjU6JkeNAulCPtNt+OKCGlRB8ZeRnM8UuzQlj2y2J94jirNJMSY1OmlgtSexeeVIyTSIfgU/6w6UThJEL5r8dygZLK+Z+lpkKODaDcd3kfkWgZhLthfQpMIWEmUqFarr8AqGhT41DOTp8XPEYDVN+OnbOm9nkODix1yYAYc5aoNbLap1nRqZdKCAUmG+fDY9GI85WnQj4e2QfZKzU30WEU/qdHn8A98M3sNJJwjO6itSh3+JN6kUj/8S48jxjqb8/FZRai4Q5GKKUyGYHwOfJoGXoGengv2/f4ci36pvll3CSUYVeGBuiehiXnTJJWvxg7cFWSfLw2J9CA9diYtGwJcLMh2l8y9Fx94cR4aXN21Yp3Z6xDPmjY2pz6SthhqFnLmuwDdIgmFderfUDV5j+UZ0d+8vhciJiid/LBNaiZLmn5STVumHxzTkTeRw82S8jhMRS9O7tIInKVyZeRrwNaN6crNrMT6U2eK4dDIYth7Ch4v2sxPqxiDNDFdHXHWiWl20qHyUY2+D5P8EPjZ03YH8P1XMtUCPIL4pQn9ygDH8vsCnUGIJ8EPune1LMx6YmA7ySRpLQDRC0dkFGlJ2TjP428kkUK2m4i9QIwBjATNQI9STUQi0UOuMFj6sljQ9fLpdFLN66vtM/eqaq/RxGTaEkShKvDN86m8aS3sldAdABGTIM/PS1uU4WBaQw1wACKVT4/vvOhl7OJPe0RoX+LzyQki1cRdoIbb3EqPQLvc3/QheqsQYIc3+kdJDIpT2EAGmkLsrs522KcLmWd+kll41gvnIT8Q3Su+jIKfyOZTJ1vE7JPgLPA7swDaiWX4PBNed4F+CKdQtGAE=",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01S4HMBWGg5dS3qsWBpXiu3K",
+                "id": "toolu_01HRuaX3Px6Qgp4JiTAr2swo",
                 "caller": {
                   "type": "direct"
                 },
@@ -1306,7 +1343,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01S4HMBWGg5dS3qsWBpXiu3K",
+                "tool_use_id": "toolu_01HRuaX3Px6Qgp4JiTAr2swo",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1314,12 +1351,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYW2S3yEHGF95n99zrY",
+        "id": "msg_011CftZv2DSp53wyaCTuohnU",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The mandate status isn't in the case yet, so I asked the recurring payments system, which holds Direct Debit mandates. That request was accepted. The next step is a reply to the customer, based on what that system returns. I haven't cancelled or changed anything.",
+            "text": "The case is with the recurring payments system, which holds Direct Debit mandate records. I asked it whether the Northmere Water Services mandate is currently active. The case is marked as asked, so the next step is to read its answer and reply to the customer.\n\nI haven't cancelled or changed anything on the mandate, as Mara asked. I also haven't made any assessment of what she owes.",
             "type": "text"
           }
         ],
@@ -1338,8 +1375,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2100,
-          "output_tokens": 82,
+          "input_tokens": 2098,
+          "output_tokens": 121,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1347,13 +1384,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.3761156999971718,
-      "input_tokens": 2100,
-      "output_tokens": 82,
-      "cost_usd": 0.00502,
+      "seconds": 2.0267219999805093,
+      "input_tokens": 2098,
+      "output_tokens": 121,
+      "cost_usd": 0.005406,
       "error": null,
       "replayed": false,
-      "digest": "37649b0d4a2a5e5c2d7470bafc265c25f006e71d015e68bf13a3ccf675747d00"
+      "digest": "ef078c627ce9e39ef5d3aa7ca98fad8a3acb8c03f5dff1a4420086c493d43d5a"
     },
     {
       "kind": "generate",
@@ -1366,17 +1403,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellery\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"direct_debit\",\n    \"counterparty\": \"Northmere Water Services\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"recurring\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"recurring\",\n        \"about\": \"direct_debit\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-014-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-014-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellery): I saw that collection on my March statement and have not seen another one. Could you check whether the mandate is currently active? Please don't cancel it; I only need its status. [facts: requester='Mara Ellery', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Mara Ellery\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Mara Ellery (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-014-at-02:read-subject:2).\n12. Note from `read-subject`: initial request (system): I saw a Direct Debit collection to Northmere Water Services on my March statement, but I have not seen another one. Please tell me whether the mandate is currently active; I am not asking you to cancel it or assess what I owe the organisation. [facts: counterparty='Northmere Water Services']\n13. `find_subject` found {\"counterparty\": \"Northmere Water Services\"}.\n14. `counterparty`: not known → Northmere Water Services (by `read-subject`).\n15. Rule `read-payment` fired: state = READING → true (state=READING).\n16. Called `check_payment` (attempt 1, key banking-014-at-02:read-payment:3).\n17. `check_payment` found {}.\n18. Rule `read-incoming` fired: state = READING → true (state=READING).\n19. Called `check_incoming` (attempt 1, key banking-014-at-02:read-incoming:4).\n20. `check_incoming` found {}.\n21. Rule `read-recurring` fired: state = READING → true (state=READING).\n22. Called `check_recurring` (attempt 1, key banking-014-at-02:read-recurring:5).\n23. `check_recurring` found {}.\n24. Rule `read-card` fired: state = READING → true (state=READING).\n25. Called `check_card` (attempt 1, key banking-014-at-02:read-card:6).\n26. `check_card` found {}.\n27. Rule `read-access` fired: state = READING → true (state=READING).\n28. Called `check_access` (attempt 1, key banking-014-at-02:read-access:7).\n29. `check_access` found {}.\n30. Rule `read-business` fired: state = READING → true (state=READING).\n31. Called `check_business` (attempt 1, key banking-014-at-02:read-business:8).\n32. `check_business` found {}.\n33. Rule `read-documents` fired: state = READING → true (state=READING).\n34. Called `check_documents` (attempt 1, key banking-014-at-02:read-documents:9).\n35. `check_documents` found {}.\n36. Rule `read-tariff` fired: state = READING → true (state=READING).\n37. Called `check_tariff` (attempt 1, key banking-014-at-02:read-tariff:10).\n38. `check_tariff` found {}.\n39. Rule `read-registration` fired: state = READING → true (state=READING).\n40. Called `check_registration` (attempt 1, key banking-014-at-02:read-registration:11).\n41. `check_registration` found {}.\n42. Rule `read-confirmation` fired: state = READING → true (state=READING).\n43. Called `check_confirmation` (attempt 1, key banking-014-at-02:read-confirmation:12).\n44. Note from `read-confirmation`: event 2 (Mara Ellery): I saw that collection on my March statement and have not seen another one. Could you check whether the mandate is currently active? Please don't cancel it; I only need its status. [facts: confirmation='none', instructed_outside_portal=False]\n45. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n46. `confirmation`: not known → none (by `read-confirmation`).\n47. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n48. Rule `triage` fired: state = READING → true (state=READING).\n49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n50. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.\n51. `request_type`: not known → question (by `triage`).\n52. `subject`: not known → direct_debit (by `triage`).\n53. State `READING` → `TRIAGED` (by `triage`).\n54. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).\n55. `next_system`: not known → recurring (by `route-recurring`).\n56. The agent asked for `ask_system` {\"system\": \"recurring\"}.\n57. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n58. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).\n59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n60. Called `ask_system` (attempt 1, key banking-014-at-02:do-ask:16).\n61. Action in the world: `ask_system` {\"system\": \"recurring\", \"about\": \"direct_debit\"}.\n62. `ask_system` found {}.\n63. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n64. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n3 calls, 4944 tokens in, 432 out, 5.929 s, cost $0.0103; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The mandate status isn't in the case yet, so I asked the recurring payments system, which holds Direct Debit mandates. That request was accepted. The next step is a reply to the customer, based on what that system returns. I haven't cancelled or changed anything.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellery\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"direct_debit\",\n    \"counterparty\": \"Northmere Water Services\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"recurring\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"recurring\",\n        \"about\": \"direct_debit\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-014-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-014-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Mara Ellery): I saw that collection on my March statement and have not seen another one. Could you check whether the mandate is currently active? Please don't cancel it; I only need its status. [facts: requester='Mara Ellery', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Mara Ellery\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Mara Ellery (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-014-at-02:read-subject:2).\n12. Note from `read-subject`: initial request (system): I saw a Direct Debit collection to Northmere Water Services on my March statement, but I have not seen another one. Please tell me whether the mandate is currently active; I am not asking you to cancel it or assess what I owe the organisation. [facts: counterparty='Northmere Water Services']\n13. `find_subject` found {\"counterparty\": \"Northmere Water Services\"}.\n14. `counterparty`: not known → Northmere Water Services (by `read-subject`).\n15. Rule `read-payment` fired: state = READING → true (state=READING).\n16. Called `check_payment` (attempt 1, key banking-014-at-02:read-payment:3).\n17. `check_payment` found {}.\n18. Rule `read-incoming` fired: state = READING → true (state=READING).\n19. Called `check_incoming` (attempt 1, key banking-014-at-02:read-incoming:4).\n20. `check_incoming` found {}.\n21. Rule `read-recurring` fired: state = READING → true (state=READING).\n22. Called `check_recurring` (attempt 1, key banking-014-at-02:read-recurring:5).\n23. `check_recurring` found {}.\n24. Rule `read-card` fired: state = READING → true (state=READING).\n25. Called `check_card` (attempt 1, key banking-014-at-02:read-card:6).\n26. `check_card` found {}.\n27. Rule `read-access` fired: state = READING → true (state=READING).\n28. Called `check_access` (attempt 1, key banking-014-at-02:read-access:7).\n29. `check_access` found {}.\n30. Rule `read-business` fired: state = READING → true (state=READING).\n31. Called `check_business` (attempt 1, key banking-014-at-02:read-business:8).\n32. `check_business` found {}.\n33. Rule `read-documents` fired: state = READING → true (state=READING).\n34. Called `check_documents` (attempt 1, key banking-014-at-02:read-documents:9).\n35. `check_documents` found {}.\n36. Rule `read-tariff` fired: state = READING → true (state=READING).\n37. Called `check_tariff` (attempt 1, key banking-014-at-02:read-tariff:10).\n38. `check_tariff` found {}.\n39. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n40. Called `check_bank_actions` (attempt 1, key banking-014-at-02:read-bank-actions:11).\n41. `check_bank_actions` found {}.\n42. Rule `read-registration` fired: state = READING → true (state=READING).\n43. Called `check_registration` (attempt 1, key banking-014-at-02:read-registration:12).\n44. `check_registration` found {}.\n45. Rule `read-confirmation` fired: state = READING → true (state=READING).\n46. Called `check_confirmation` (attempt 1, key banking-014-at-02:read-confirmation:13).\n47. Note from `read-confirmation`: event 2 (Mara Ellery): I saw that collection on my March statement and have not seen another one. Could you check whether the mandate is currently active? Please don't cancel it; I only need its status. [facts: confirmation='none', instructed_outside_portal=False]\n48. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n49. `confirmation`: not known → none (by `read-confirmation`).\n50. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n51. Rule `triage` fired: state = READING → true (state=READING).\n52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n53. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.\n54. `request_type`: not known → question (by `triage`).\n55. `subject`: not known → direct_debit (by `triage`).\n56. State `READING` → `TRIAGED` (by `triage`).\n57. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).\n58. `next_system`: not known → recurring (by `route-recurring`).\n59. The agent asked for `ask_system` {\"system\": \"recurring\"}.\n60. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n61. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).\n62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n63. Called `ask_system` (attempt 1, key banking-014-at-02:do-ask:17).\n64. Action in the world: `ask_system` {\"system\": \"recurring\", \"about\": \"direct_debit\"}.\n65. `ask_system` found {}.\n66. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n67. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n3 calls, 4942 tokens in, 469 out, 4.015 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The case is with the recurring payments system, which holds Direct Debit mandate records. I asked it whether the Northmere Water Services mandate is currently active. The case is marked as asked, so the next step is to read its answer and reply to the customer.\n> \n> I haven't cancelled or changed anything on the mandate, as Mara asked. I also haven't made any assessment of what she owes.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYW8NFPgyHBJFBYBdpC",
+        "id": "msg_011CftZvAXG4KA3fUetJEMBo",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Mara Ellery, who was not verified, asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, and said she did not want it cancelled. The desk treated it as a question and put it to the recurring payments system, which holds Direct Debit mandates; the request went through, but the record shows no answer yet. Nothing was cancelled or changed, and the mandate's status still has to be passed back to her once that system replies.",
+            "text": "Mara Ellery, who was not verified, asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, saying she saw one collection on her March statement and no later one, and asking that nothing be cancelled. The desk classified it as a question about a direct debit and asked the recurring payments system about that mandate; it cancelled and changed nothing. The system's answer has not yet come back, so someone still needs to read it and reply to Mara.",
             "type": "text"
           }
         ],
@@ -1395,8 +1432,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2774,
-          "output_tokens": 145,
+          "input_tokens": 2904,
+          "output_tokens": 151,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1404,13 +1441,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.8322872000280768,
-      "input_tokens": 2774,
-      "output_tokens": 145,
-      "cost_usd": 0.006998,
+      "seconds": 1.896788700018078,
+      "input_tokens": 2904,
+      "output_tokens": 151,
+      "cost_usd": 0.007318,
       "error": null,
       "replayed": false,
-      "digest": "0d28140e45f3fe27c6bfe2757e9fbf489ba4f89652109d0e59afb5b38069012d"
+      "digest": "436ee4a40c072aa88543e2c3f47272baf77a28b5d57dadf48daa22965f48f28b"
     }
   ]
 }

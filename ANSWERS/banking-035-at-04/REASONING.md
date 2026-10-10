@@ -41,47 +41,48 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 37. Rule `read-tariff` fired: state = READING → true (state=READING).
 38. Called `check_tariff` (attempt 1, key banking-035-at-04:read-tariff:10).
 39. `check_tariff` found {}.
-40. Rule `read-registration` fired: state = READING → true (state=READING).
-41. Called `check_registration` (attempt 1, key banking-035-at-04:read-registration:11).
-42. Note from `read-registration`: event 3 (H&V request log): I have registered Mara Ellison’s request for review of the £4.50 paper statement fee dated 18 June 2025. Her reason is that she had chosen electronic statements; her inline request reads, “please check how the tariff was applied.” [facts: registration_asked=True]
-43. Note from `read-registration`: event 4 (H&V request log): Request HV-035 registered and routed to the Tariff Team. Registration does not indicate a decision on the fee. [facts: registered=True, registration_ref='HV-035']
-44. `check_registration` found {"registration_asked": true, "registered": true, "registration_ref": "HV-035"}.
-45. `registration_asked`: not known → True (by `read-registration`).
-46. `registered`: not known → True (by `read-registration`).
-47. `registration_ref`: not known → HV-035 (by `read-registration`).
-48. Rule `read-confirmation` fired: state = READING → true (state=READING).
-49. Called `check_confirmation` (attempt 1, key banking-035-at-04:read-confirmation:12).
-50. Note from `read-confirmation`: event 2 (Mara Ellison): After completing H&V’s identification checks, I asked you to review the £4.50 paper statement fee dated 18 June 2025. I had chosen electronic statements, so I dispute how the tariff was applied. [facts: confirmation='none', instructed_outside_portal=False]
-51. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-52. `confirmation`: not known → none (by `read-confirmation`).
-53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
-56. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
-57. `request_type`: not known → register (by `triage`).
-58. `subject`: not known → fee (by `triage`).
-59. State `READING` → `TRIAGED` (by `triage`).
-60. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
-61. `next_system`: not known → tariff (by `route-tariff`).
-62. The agent asked for `ask_system` {"system": "tariff"}.
-63. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=tariff); next_system = payment is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=tariff); next_system = incoming is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=tariff); next_system = recurring is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=tariff); next_system = card is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=tariff); next_system = access is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=tariff); next_system = business is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=tariff); next_system = documents is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register).
-64. The agent asked for `reply` {}.
-65. Rule `registration-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered present → true (registered=True).
-66. State `TRIAGED` → `REPLY_PENDING` (by `registration-reply`).
-67. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-68. Called `reply_customer` (attempt 1, key banking-035-at-04:do-reply:16).
-69. `reply_customer` found {}.
-70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-71. The case closed in `REPLIED`: **reply**.
+40. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+41. Called `check_bank_actions` (attempt 1, key banking-035-at-04:read-bank-actions:11).
+42. `check_bank_actions` found {}.
+43. Rule `read-registration` fired: state = READING → true (state=READING).
+44. Called `check_registration` (attempt 1, key banking-035-at-04:read-registration:12).
+45. Note from `read-registration`: event 3 (H&V request log): I have registered Mara Ellison’s request for review of the £4.50 paper statement fee dated 18 June 2025. Her reason is that she had chosen electronic statements; her inline request reads, “please check how the tariff was applied.” [facts: registration_asked=True]
+46. Note from `read-registration`: event 4 (H&V request log): Request HV-035 registered and routed to the Tariff Team. Registration does not indicate a decision on the fee. [facts: registered=True, registration_ref='HV-035']
+47. `check_registration` found {"registration_asked": true, "registered": true, "registration_ref": "HV-035"}.
+48. `registration_asked`: not known → True (by `read-registration`).
+49. `registered`: not known → True (by `read-registration`).
+50. `registration_ref`: not known → HV-035 (by `read-registration`).
+51. Rule `read-confirmation` fired: state = READING → true (state=READING).
+52. Called `check_confirmation` (attempt 1, key banking-035-at-04:read-confirmation:13).
+53. Note from `read-confirmation`: event 2 (Mara Ellison): After completing H&V’s identification checks, I asked you to review the £4.50 paper statement fee dated 18 June 2025. I had chosen electronic statements, so I dispute how the tariff was applied. [facts: confirmation='none', instructed_outside_portal=False]
+54. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+55. `confirmation`: not known → none (by `read-confirmation`).
+56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+57. Rule `triage` fired: state = READING → true (state=READING).
+58. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+59. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
+60. `request_type`: not known → register (by `triage`).
+61. `subject`: not known → fee (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
+64. `next_system`: not known → tariff (by `route-tariff`).
+65. The agent asked for `ask_system` {"system": "tariff"}.
+66. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=tariff); next_system = payment is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=tariff); next_system = incoming is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=tariff); next_system = recurring is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=tariff); next_system = card is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=tariff); next_system = access is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=tariff); next_system = business is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=tariff); next_system = documents is false (next_system=tariff); next_system absent is false (next_system=tariff); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register).
+67. The agent asked for `reply` {}.
+68. Rule `registration-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered present → true (registered=True).
+69. State `TRIAGED` → `REPLY_PENDING` (by `registration-reply`).
+70. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+71. Called `reply_customer` (attempt 1, key banking-035-at-04:do-reply:17).
+72. `reply_customer` found {}.
+73. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+74. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 11281 tokens in, 719 out, 7.078 s, cost $0.0259; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8755 tokens in, 730 out, 7.063 s, cost $0.0210; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The review request is registered under reference HV-035, and I've sent Mara the reply.
+> The case is closed with a reply to Mara. I did not check whether the fee was correctly applied.
 > 
-> The record doesn't yet show whether the £4.50 fee was applied correctly, so the reply doesn't say. The fee hasn't been changed or confirmed as wrong.
-> 
-> I tried to check the fee against the tariff system first, but the desk refused the lookup. That was because the case is a registration request, not a question for the tariff system. The case is now closed.
+> I first tried to ask the tariff system about the fee, but the desk refused. The case is a registration request, and that type of request can't go to the tariff system. Mara's dispute of the £4.50 paper statement fee dated 18 June 2025 was already registered under reference HV-035. The reply therefore confirms that registration only. It does not say whether the fee will be changed, because nothing in the records shows that yet.

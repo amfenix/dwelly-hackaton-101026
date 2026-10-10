@@ -38,36 +38,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-tariff` fired: state = READING → true (state=READING).
 35. Called `check_tariff` (attempt 1, key banking-037-at-02:read-tariff:10).
 36. `check_tariff` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-037-at-02:read-registration:11).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-037-at-02:read-confirmation:12).
-42. Note from `read-confirmation`: event 2 (Elowen Marr): After completing H&V’s identification checks, I explained that my profile shows “Elowen Mar” but my correct name is “Elowen Marr”. Please escalate a correction request; I understand the data team may ask for supporting information. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: change, confidence 0.43 → change.
-48. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-49. `request_type`: not known → change (by `triage`).
-50. `subject`: not known → profile (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
-53. `next_system`: not known → access (by `route-access`).
-54. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-55. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-56. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-57. Called `send_for_confirmation` (attempt 1, key banking-037-at-02:do-confirm:16).
-58. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Elowen Marr"}.
-59. `send_for_confirmation` found {}.
-60. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-61. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-037-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-037-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-037-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Elowen Marr): After completing H&V’s identification checks, I explained that my profile shows “Elowen Mar” but my correct name is “Elowen Marr”. Please escalate a correction request; I understand the data team may ask for supporting information. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: register, confidence 0.46 → register.
+51. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+52. `request_type`: not known → register (by `triage`).
+53. `subject`: not known → profile (by `triage`).
+54. State `READING` → `TRIAGED` (by `triage`).
+55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
+56. `next_system`: not known → access (by `route-access`).
+57. The agent asked for `submit_request` {}.
+58. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+59. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+60. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+61. Called `register_request` (attempt 1, key banking-037-at-02:do-request:17).
+62. Action in the world: `register_request` {"team": "access", "about": "profile"}.
+63. `register_request` found {}.
+64. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+65. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 4834 tokens in, 444 out, 4.039 s, cost $0.0103; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7106 tokens in, 584 out, 5.987 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed. A confirmation request has been sent to the customer, and no tool refused anything. The customer was verified on the call and asked for a profile name correction from "Elowen Mar" to "Elowen Marr". I'm not taking any further action.
+> I've submitted the name correction request. Elowen's profile shows "Elowen Mar" and the correct spelling is "Elowen Marr". She was verified on the call and asked for the correction to be escalated. The request is now with the team that handles it, and the case is closed on our side.
+> 
+> The data team may come back to her for supporting information, which she said she expects. I haven't confirmed that the profile has changed.

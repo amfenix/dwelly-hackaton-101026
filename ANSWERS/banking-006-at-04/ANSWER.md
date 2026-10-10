@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira Ellison, who is not yet verified, asked over secure chat whether her two transfers were separate instructions and whether the pending one had been stopped or returned. The desk checked the payment record, found two separate instructions, and replied that their statuses are recorded individually with no combined outcome, that execution and the recipient's outcome aren't established, and that no new transfer was made. The desk did not stop or return either instruction, and the reply doesn't say whether the pending one has been stopped or returned, so that question is still open for a person; a second payment-system query was also refused as already done.
+Mira Ellison, writing over secure chat and not verified, asked whether her two transfers were separate instructions and whether the pending one had been stopped or returned. The desk replied that the payment record shows 2 separate instructions with no single combined outcome, that this doesn't establish execution or the recipient's outcome, and that no new transfer was made. The desk did not stop or return either instruction, and the reply doesn't say whether the pending one was stopped; the case closed on that reply with nothing further assigned to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -89,10 +89,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `ask_system`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment)
 
 ## Final result
 

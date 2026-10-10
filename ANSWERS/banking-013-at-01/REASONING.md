@@ -33,42 +33,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 29. Rule `read-tariff` fired: state = READING → true (state=READING).
 30. Called `check_tariff` (attempt 1, key banking-013-at-01:read-tariff:10).
 31. `check_tariff` found {}.
-32. Rule `read-registration` fired: state = READING → true (state=READING).
-33. Called `check_registration` (attempt 1, key banking-013-at-01:read-registration:11).
-34. `check_registration` found {}.
-35. Rule `read-confirmation` fired: state = READING → true (state=READING).
-36. Called `check_confirmation` (attempt 1, key banking-013-at-01:read-confirmation:12).
-37. Note from `read-confirmation`: event 1 (H&V): Your recurring studio-rent payment instruction is active. The next scheduled run has not started. [facts: confirmation='none', instructed_outside_portal=False]
-38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-39. `confirmation`: not known → none (by `read-confirmation`).
-40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-43. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-44. `request_type`: not known → instruction (by `triage`).
-45. `subject`: not known → standing_order (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-48. `next_system`: not known → recurring (by `route-recurring`).
-49. The agent asked for `ask_system` {"system": "recurring"}.
-50. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
-51. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-53. Called `ask_system` (attempt 1, key banking-013-at-01:do-ask:16).
-54. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
-55. `ask_system` found {}.
-56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-57. The case closed in `ASKED`: **ask_system**.
+32. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+33. Called `check_bank_actions` (attempt 1, key banking-013-at-01:read-bank-actions:11).
+34. `check_bank_actions` found {}.
+35. Rule `read-registration` fired: state = READING → true (state=READING).
+36. Called `check_registration` (attempt 1, key banking-013-at-01:read-registration:12).
+37. `check_registration` found {}.
+38. Rule `read-confirmation` fired: state = READING → true (state=READING).
+39. Called `check_confirmation` (attempt 1, key banking-013-at-01:read-confirmation:13).
+40. Note from `read-confirmation`: event 1 (H&V): Your recurring studio-rent payment instruction is active. The next scheduled run has not started. [facts: confirmation='none', instructed_outside_portal=False]
+41. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+42. `confirmation`: not known → none (by `read-confirmation`).
+43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+44. Rule `triage` fired: state = READING → true (state=READING).
+45. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+46. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+47. `request_type`: not known → instruction (by `triage`).
+48. `subject`: not known → standing_order (by `triage`).
+49. State `READING` → `TRIAGED` (by `triage`).
+50. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+51. `next_system`: not known → recurring (by `route-recurring`).
+52. The agent asked for `ask_system` {"system": "recurring"}.
+53. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+54. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+56. Called `ask_system` (attempt 1, key banking-013-at-01:do-ask:17).
+57. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+58. `ask_system` found {}.
+59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+60. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 8924 tokens in, 593 out, 5.669 s, cost $0.0200; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6812 tokens in, 560 out, 4.435 s, cost $0.0154; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the recurring-payments system for your studio-rent instruction, and the case is now closed at that step. I have **not** cancelled anything yet, so please don't treat the instruction as cancelled.
+> I checked the recurring-payments system for your studio-rent standing order. The case is now closed at that step, and the check returned no new facts.
 > 
-> - **What the records show:** your recurring studio-rent instruction is active, and its next run hasn't started.
-> - **Still open:** the check returned no cancellation confirmation and no further details. The cancellation still has to be submitted as a separate step.
-> 
-> Until a cancellation is confirmed, the next run may still go ahead as scheduled.
+> I have not cancelled anything. The records show only that the instruction is active and that the next run has not started. Nothing confirms a cancellation, so I can't tell you the future instruction is cancelled.

@@ -42,39 +42,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. Rule `read-tariff` fired: state = READING → true (state=READING).
 39. Called `check_tariff` (attempt 1, key banking-026-at-04:read-tariff:10).
 40. `check_tariff` found {}.
-41. Rule `read-registration` fired: state = READING → true (state=READING).
-42. Called `check_registration` (attempt 1, key banking-026-at-04:read-registration:11).
-43. `check_registration` found {}.
-44. Rule `read-confirmation` fired: state = READING → true (state=READING).
-45. Called `check_confirmation` (attempt 1, key banking-026-at-04:read-confirmation:12).
-46. Note from `read-confirmation`: event 4 (H&V agent): I’ve opened the prescribed PIN procedure for you in the secure portal, following the completed check. Please continue through that procedure there; I cannot see your PIN. [facts: confirmation='none', instructed_outside_portal=False]
-47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-48. `confirmation`: not known → none (by `read-confirmation`).
-49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-52. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
-53. `request_type`: not known → access (by `triage`).
-54. `subject`: not known → card (by `triage`).
-55. State `READING` → `TRIAGED` (by `triage`).
-56. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-57. `next_system`: not known → access (by `asked-access`).
-58. The agent asked for `redirect_secure` {}.
-59. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
-60. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
-61. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
-62. Called `redirect_secure` (attempt 1, key banking-026-at-04:do-redirect:16).
-63. Action in the world: `redirect_secure` {"to": "Maren Ellwood", "channel": "secure_chat", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
-64. `redirect_secure` found {}.
-65. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
-66. The case closed in `REDIRECTED`: **redirect_secure**.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-026-at-04:read-bank-actions:11).
+43. Note from `read-bank-actions`: event 4 (H&V agent): the bank already acted: I’ve opened the prescribed PIN procedure for you in the secure portal, following the completed check. Please continue through that procedure there; I cannot see your PIN.
+44. `check_bank_actions` found {"bank_redirected": true}.
+45. `bank_redirected`: not known → True (by `read-bank-actions`).
+46. Rule `read-registration` fired: state = READING → true (state=READING).
+47. Called `check_registration` (attempt 1, key banking-026-at-04:read-registration:12).
+48. `check_registration` found {}.
+49. Rule `read-confirmation` fired: state = READING → true (state=READING).
+50. Called `check_confirmation` (attempt 1, key banking-026-at-04:read-confirmation:13).
+51. Note from `read-confirmation`: event 4 (H&V agent): I’ve opened the prescribed PIN procedure for you in the secure portal, following the completed check. Please continue through that procedure there; I cannot see your PIN. [facts: confirmation='none', instructed_outside_portal=False]
+52. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+53. `confirmation`: not known → none (by `read-confirmation`).
+54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+55. Rule `triage` fired: state = READING → true (state=READING).
+56. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+57. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
+58. `request_type`: not known → access (by `triage`).
+59. `subject`: not known → card (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+62. `next_system`: not known → access (by `asked-access`).
+63. Rule `already-redirected` fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); bank_redirected → true (bank_redirected=True). The customer was pointed to the secure process; nothing to do until they use it.
+64. State `TRIAGED` → `WAITING` (by `already-redirected`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `reply` {}.
+67. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=access); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-4 calls, 5651 tokens in, 869 out, 6.633 s, cost $0.0144; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 5858 tokens in, 583 out, 4.604 s, cost $0.0120; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I pointed Maren to the bank's secure PIN procedure, and the desk accepted it and closed the case as redirected. The procedure is already open for her in the secure portal. She continues there, and nobody on the desk sees or handles her PIN.
+> The case is now waiting on the customer, so I'm not taking any further action.
 > 
-> The access check came back with an unrecognised status (OTHER), and she is not yet verified. I chose the redirect over a plain reply because a forgotten PIN is a secure-process matter.
+> The bank has already opened the PIN procedure for Maren in the secure portal, and she needs to continue there. My attempt to send a reply was refused because the case is in a waiting state, not a triaged one. No one at the bank can see or handle her PIN.

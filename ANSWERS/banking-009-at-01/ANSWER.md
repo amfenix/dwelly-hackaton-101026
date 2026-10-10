@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked which amount Harrow & Vale actually sent, since they remembered entering £684.20 in the transfer draft but the final payment line shows £648.20. The desk classified this as a question about a transfer and asked the payment system about the transfer of £648.20; that request has been sent and the case is closed in the asked state. The record shows no answer from the payment system yet, and the agent's note says it will reply to the customer once it arrives, but that reply is not part of the record.
+The customer asked which amount Harrow & Vale actually sent, since they remembered entering £684.20 in the transfer draft but the final payment line shows £648.20. The desk classified this as a question about a transfer and put it to the payment system, citing the £648.20 figure; the case closed as asked. Nothing has been answered yet, so the payment system's reply and the response to the customer are still outstanding.
 
 _Written by a model from the record below; the sections below are the record._
 

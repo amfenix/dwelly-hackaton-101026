@@ -36,6 +36,9 @@
     "document_name": null,
     "tariff_asked": null,
     "tariff_status": null,
+    "bank_redirected": null,
+    "bank_forwarded": null,
+    "bank_clarified": null,
     "registration_asked": null,
     "registered": null,
     "registration_ref": null,
@@ -95,7 +98,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Elowen Marr, writing over secure chat (not verified as the account holder), asked the desk to check whether the incoming £42.80 entry from Northmere Home Supplies was for the specific transfer she meant, since the payer had said it might be returned. The desk classified this as a question about an incoming payment and sent a query to the incoming-payments system about that amount. The system's answer is not yet in the record, so whether the entry matches her transfer is still unconfirmed, and the reply to her remains to be written once that answer is available.",
+  "summary": "Elowen Marr, who was not verified, asked through secure chat whether the incoming £42.80 entry from Northmere Home Supplies matches the specific transfer that might be returned. The desk classified it as a question about an incoming payment and put that query to the incoming-payments system, which came back with nothing recorded. The case closed at that step, so whether the entry matches her transfer is still unanswered and would need a person to follow up.",
   "journal": [
     {
       "seq": 1,
@@ -387,7 +390,7 @@
     },
     {
       "seq": 28,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "trigger",
       "name": "read-access",
       "on": null,
@@ -405,7 +408,7 @@
     },
     {
       "seq": 29,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "call",
       "function": "check_access",
       "attempt": 1,
@@ -414,7 +417,7 @@
     },
     {
       "seq": 30,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "returned",
       "function": "check_access",
       "values": {}
@@ -525,7 +528,7 @@
       "seq": 40,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-registration",
+      "name": "read-bank-actions",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -543,23 +546,23 @@
       "seq": 41,
       "at": 0.001,
       "kind": "call",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "attempt": 1,
-      "key": "banking-010-at-02:read-registration:11",
+      "key": "banking-010-at-02:read-bank-actions:11",
       "args": {}
     },
     {
       "seq": 42,
       "at": 0.001,
       "kind": "returned",
-      "function": "check_registration",
+      "function": "check_bank_actions",
       "values": {}
     },
     {
       "seq": 43,
       "at": 0.001,
       "kind": "trigger",
-      "name": "read-confirmation",
+      "name": "read-registration",
       "on": null,
       "when": "state = READING",
       "why": [
@@ -577,20 +580,54 @@
       "seq": 44,
       "at": 0.001,
       "kind": "call",
-      "function": "check_confirmation",
+      "function": "check_registration",
       "attempt": 1,
-      "key": "banking-010-at-02:read-confirmation:12",
+      "key": "banking-010-at-02:read-registration:12",
       "args": {}
     },
     {
       "seq": 45,
+      "at": 0.001,
+      "kind": "returned",
+      "function": "check_registration",
+      "values": {}
+    },
+    {
+      "seq": 46,
+      "at": 0.001,
+      "kind": "trigger",
+      "name": "read-confirmation",
+      "on": null,
+      "when": "state = READING",
+      "why": [
+        {
+          "test": "state = READING",
+          "result": true,
+          "values": {
+            "state": "READING"
+          }
+        }
+      ],
+      "note": ""
+    },
+    {
+      "seq": 47,
+      "at": 0.001,
+      "kind": "call",
+      "function": "check_confirmation",
+      "attempt": 1,
+      "key": "banking-010-at-02:read-confirmation:13",
+      "args": {}
+    },
+    {
+      "seq": 48,
       "at": 0.001,
       "kind": "note",
       "text": "event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: confirmation='none', instructed_outside_portal=False]",
       "by": "read-confirmation"
     },
     {
-      "seq": 46,
+      "seq": 49,
       "at": 0.001,
       "kind": "returned",
       "function": "check_confirmation",
@@ -600,7 +637,7 @@
       }
     },
     {
-      "seq": 47,
+      "seq": 50,
       "at": 0.001,
       "kind": "set",
       "field": "confirmation",
@@ -609,7 +646,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 48,
+      "seq": 51,
       "at": 0.001,
       "kind": "set",
       "field": "instructed_outside_portal",
@@ -618,7 +655,7 @@
       "by": "read-confirmation"
     },
     {
-      "seq": 49,
+      "seq": 52,
       "at": 0.001,
       "kind": "trigger",
       "name": "triage",
@@ -636,8 +673,8 @@
       "note": ""
     },
     {
-      "seq": 50,
-      "at": 0.27,
+      "seq": 53,
+      "at": 0.283,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -648,8 +685,8 @@
       "attempt": 1
     },
     {
-      "seq": 51,
-      "at": 0.27,
+      "seq": 54,
+      "at": 0.283,
       "kind": "choice",
       "field": "subject",
       "raw": "incoming_payment",
@@ -660,8 +697,8 @@
       "attempt": 1
     },
     {
-      "seq": 52,
-      "at": 0.27,
+      "seq": 55,
+      "at": 0.283,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -669,8 +706,8 @@
       "by": "triage"
     },
     {
-      "seq": 53,
-      "at": 0.27,
+      "seq": 56,
+      "at": 0.283,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -678,16 +715,16 @@
       "by": "triage"
     },
     {
-      "seq": 54,
-      "at": 0.27,
+      "seq": 57,
+      "at": 0.283,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 55,
-      "at": 0.27,
+      "seq": 58,
+      "at": 0.283,
       "kind": "trigger",
       "name": "route-incoming",
       "on": null,
@@ -718,8 +755,8 @@
       "note": ""
     },
     {
-      "seq": 56,
-      "at": 0.27,
+      "seq": 59,
+      "at": 0.283,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -727,8 +764,8 @@
       "by": "route-incoming"
     },
     {
-      "seq": 57,
-      "at": 1.887,
+      "seq": 60,
+      "at": 1.73,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -736,8 +773,8 @@
       }
     },
     {
-      "seq": 58,
-      "at": 1.887,
+      "seq": 61,
+      "at": 1.73,
       "kind": "trigger",
       "name": "incoming-ask",
       "on": "ask_system",
@@ -789,16 +826,16 @@
       "note": ""
     },
     {
-      "seq": 59,
-      "at": 1.887,
+      "seq": 62,
+      "at": 1.73,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "incoming-ask"
     },
     {
-      "seq": 60,
-      "at": 1.887,
+      "seq": 63,
+      "at": 1.73,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -815,17 +852,17 @@
       "note": ""
     },
     {
-      "seq": 61,
-      "at": 1.887,
+      "seq": 64,
+      "at": 1.73,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
-      "key": "banking-010-at-02:do-ask:16",
+      "key": "banking-010-at-02:do-ask:17",
       "args": {}
     },
     {
-      "seq": 62,
-      "at": 1.887,
+      "seq": 65,
+      "at": 1.73,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -834,26 +871,26 @@
         "amount": "42.80"
       },
       "by": "do-ask",
-      "key": "banking-010-at-02:do-ask:16"
+      "key": "banking-010-at-02:do-ask:17"
     },
     {
-      "seq": 63,
-      "at": 1.887,
+      "seq": 66,
+      "at": 1.73,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 64,
-      "at": 1.887,
+      "seq": 67,
+      "at": 1.73,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 65,
-      "at": 1.887,
+      "seq": 68,
+      "at": 1.73,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -951,7 +988,7 @@
           }
         }
       },
-      "seconds": 0.26954609993845224,
+      "seconds": 0.2821746999397874,
       "input_tokens": 932,
       "output_tokens": 200,
       "cost_usd": null,
@@ -1100,16 +1137,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYUeA5eRbBEcppTqCqz",
+        "id": "msg_011CftZthazF3dZ8M6pcf6vU",
         "container": null,
         "content": [
           {
-            "signature": "CAQSpQUKEAgSGAI4AUIIdGhpbmtpbmcSDMUjQ1WP1B7CFDcl0RoMdihaGSxdZiG8dfLfIjCeIntdLI5no2nRhV+kCEPxpRbjZ8mJ17Qc6k8HRj8W3IQG/cVUSn3qwV21mkM4fPYqwgRubqsZfkGYIQ2ybZx8AOyLahOZ1uHwphr5xWGT0+TmdC9bXRl4Rn6A9lG7Wdo+1I2CGZbr4D1Wi5W1QJomLX5+pqQfbGWpvIPfClv9Jh0QWnqhd7HkYgSJPtYTVnQlDYqZzKUO48WI7eprwasWYcXbHQQT42zoIAWi7C78R9IHu9JKY7fn4uRJ1Uf2EOF74vGm61Zemonrkmj8MZZT2m424WqcQPdEAGdb9Jfe/68Vk2+tG97d0cFRQ4jwwfy34EgWYtkkpE6AO2yfPwwgJKrUD/OIawXcRZZ4hVyb6C054lqtfVrU1d+8B5LFvcsI9KA++6vb5DIr+P88m24YS/a0FtaweFTb06p5PzninVT39vjBH2fd5Np7q7xPWswcBphnkmZcm4iNRyA1O7CuPYogX9vk43tl2HvO8mKM8bMN/Pw5dN7gQmHJj+4/ZaaC6Gh+4DNZheTorop8FUCpdoxLEmk1V62hXthpJ4Yk0x7a426vQ3t1nFfZ8Kpi4NmhRroIGKBDhL9cdxH1kAGaINWnd8zJ94GV4RgtN4cMI3i3IylydsvSXaJhYHZe7u0NPLKcsDCsyePcCCtqqoTldz0Ve4H3tMKpVVCn+4DsVmwcE5h5zZaM9ckwOVGuoOP0kYT0PqoYPrlZAAD00Wok9wKE8q3J/FGr2nZB5w79HsCdPwQgp1cUVbOuctzFUO4TsIsjr1kCBpHAIavytMpnIrnTH/MUfPqVNe5EEwVDyIjguBTZBztp2O0s12LfllZPkssxjRgB",
-            "thinking": "",
-            "type": "thinking"
-          },
-          {
-            "id": "toolu_01JmVxFzgwnm3cewmW22bRo9",
+            "id": "toolu_01ENKthyGvqeUXCAZecHbCd2",
             "caller": {
               "type": "direct"
             },
@@ -1137,18 +1169,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1930,
-          "output_tokens": 93,
+          "output_tokens": 50,
           "output_tokens_details": {
-            "thinking_tokens": 42
+            "thinking_tokens": 0
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.6165823000483215,
+      "seconds": 1.4464099999750033,
       "input_tokens": 1930,
-      "output_tokens": 93,
-      "cost_usd": 0.00479,
+      "output_tokens": 50,
+      "cost_usd": 0.00436,
       "error": null,
       "replayed": false,
       "digest": "858696d67a35b09404d6b11cbe65693b611a43a151b629bbeb57d7b2e991a85a"
@@ -1295,12 +1327,7 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSpQUKEAgSGAI4AUIIdGhpbmtpbmcSDMUjQ1WP1B7CFDcl0RoMdihaGSxdZiG8dfLfIjCeIntdLI5no2nRhV+kCEPxpRbjZ8mJ17Qc6k8HRj8W3IQG/cVUSn3qwV21mkM4fPYqwgRubqsZfkGYIQ2ybZx8AOyLahOZ1uHwphr5xWGT0+TmdC9bXRl4Rn6A9lG7Wdo+1I2CGZbr4D1Wi5W1QJomLX5+pqQfbGWpvIPfClv9Jh0QWnqhd7HkYgSJPtYTVnQlDYqZzKUO48WI7eprwasWYcXbHQQT42zoIAWi7C78R9IHu9JKY7fn4uRJ1Uf2EOF74vGm61Zemonrkmj8MZZT2m424WqcQPdEAGdb9Jfe/68Vk2+tG97d0cFRQ4jwwfy34EgWYtkkpE6AO2yfPwwgJKrUD/OIawXcRZZ4hVyb6C054lqtfVrU1d+8B5LFvcsI9KA++6vb5DIr+P88m24YS/a0FtaweFTb06p5PzninVT39vjBH2fd5Np7q7xPWswcBphnkmZcm4iNRyA1O7CuPYogX9vk43tl2HvO8mKM8bMN/Pw5dN7gQmHJj+4/ZaaC6Gh+4DNZheTorop8FUCpdoxLEmk1V62hXthpJ4Yk0x7a426vQ3t1nFfZ8Kpi4NmhRroIGKBDhL9cdxH1kAGaINWnd8zJ94GV4RgtN4cMI3i3IylydsvSXaJhYHZe7u0NPLKcsDCsyePcCCtqqoTldz0Ve4H3tMKpVVCn+4DsVmwcE5h5zZaM9ckwOVGuoOP0kYT0PqoYPrlZAAD00Wok9wKE8q3J/FGr2nZB5w79HsCdPwQgp1cUVbOuctzFUO4TsIsjr1kCBpHAIavytMpnIrnTH/MUfPqVNe5EEwVDyIjguBTZBztp2O0s12LfllZPkssxjRgB",
-                "thinking": "",
-                "type": "thinking"
-              },
-              {
-                "id": "toolu_01JmVxFzgwnm3cewmW22bRo9",
+                "id": "toolu_01ENKthyGvqeUXCAZecHbCd2",
                 "caller": {
                   "type": "direct"
                 },
@@ -1318,7 +1345,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01JmVxFzgwnm3cewmW22bRo9",
+                "tool_use_id": "toolu_01ENKthyGvqeUXCAZecHbCd2",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1326,11 +1353,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYUkzbUvf6eRGa6eLPQ",
+        "id": "msg_011CftZtokpAg9sk168Ft5x5",
         "container": null,
         "content": [
           {
-            "id": "toolu_01X7sHHYLsuLuvU2wcVRVWAG",
+            "id": "toolu_01XS8haeyQ8NjJXdjDr7QLwP",
             "caller": {
               "type": "direct"
             },
@@ -1355,7 +1382,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2058,
+          "input_tokens": 2015,
           "output_tokens": 26,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1364,13 +1391,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 0.9947751000290737,
-      "input_tokens": 2058,
+      "seconds": 0.947812799946405,
+      "input_tokens": 2015,
       "output_tokens": 26,
-      "cost_usd": 0.004376,
+      "cost_usd": 0.00429,
       "error": null,
       "replayed": false,
-      "digest": "2cd071bc29b308c7a59c79e7298d7a621c9584c00333b72ea511aea58cdcf19a"
+      "digest": "4cc8f7c874b0afcdb5f410c76dd918b281c75096e9e684ae282356c85e4dab67"
     },
     {
       "kind": "agent",
@@ -1514,12 +1541,7 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSpQUKEAgSGAI4AUIIdGhpbmtpbmcSDMUjQ1WP1B7CFDcl0RoMdihaGSxdZiG8dfLfIjCeIntdLI5no2nRhV+kCEPxpRbjZ8mJ17Qc6k8HRj8W3IQG/cVUSn3qwV21mkM4fPYqwgRubqsZfkGYIQ2ybZx8AOyLahOZ1uHwphr5xWGT0+TmdC9bXRl4Rn6A9lG7Wdo+1I2CGZbr4D1Wi5W1QJomLX5+pqQfbGWpvIPfClv9Jh0QWnqhd7HkYgSJPtYTVnQlDYqZzKUO48WI7eprwasWYcXbHQQT42zoIAWi7C78R9IHu9JKY7fn4uRJ1Uf2EOF74vGm61Zemonrkmj8MZZT2m424WqcQPdEAGdb9Jfe/68Vk2+tG97d0cFRQ4jwwfy34EgWYtkkpE6AO2yfPwwgJKrUD/OIawXcRZZ4hVyb6C054lqtfVrU1d+8B5LFvcsI9KA++6vb5DIr+P88m24YS/a0FtaweFTb06p5PzninVT39vjBH2fd5Np7q7xPWswcBphnkmZcm4iNRyA1O7CuPYogX9vk43tl2HvO8mKM8bMN/Pw5dN7gQmHJj+4/ZaaC6Gh+4DNZheTorop8FUCpdoxLEmk1V62hXthpJ4Yk0x7a426vQ3t1nFfZ8Kpi4NmhRroIGKBDhL9cdxH1kAGaINWnd8zJ94GV4RgtN4cMI3i3IylydsvSXaJhYHZe7u0NPLKcsDCsyePcCCtqqoTldz0Ve4H3tMKpVVCn+4DsVmwcE5h5zZaM9ckwOVGuoOP0kYT0PqoYPrlZAAD00Wok9wKE8q3J/FGr2nZB5w79HsCdPwQgp1cUVbOuctzFUO4TsIsjr1kCBpHAIavytMpnIrnTH/MUfPqVNe5EEwVDyIjguBTZBztp2O0s12LfllZPkssxjRgB",
-                "thinking": "",
-                "type": "thinking"
-              },
-              {
-                "id": "toolu_01JmVxFzgwnm3cewmW22bRo9",
+                "id": "toolu_01ENKthyGvqeUXCAZecHbCd2",
                 "caller": {
                   "type": "direct"
                 },
@@ -1537,7 +1559,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01JmVxFzgwnm3cewmW22bRo9",
+                "tool_use_id": "toolu_01ENKthyGvqeUXCAZecHbCd2",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1546,7 +1568,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01X7sHHYLsuLuvU2wcVRVWAG",
+                "id": "toolu_01XS8haeyQ8NjJXdjDr7QLwP",
                 "caller": {
                   "type": "direct"
                 },
@@ -1562,7 +1584,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01X7sHHYLsuLuvU2wcVRVWAG",
+                "tool_use_id": "toolu_01XS8haeyQ8NjJXdjDr7QLwP",
                 "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"requester\": \"Elowen Marr\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false, \"subject\": \"incoming_payment\", \"amount\": \"42.80\", \"counterparty\": \"Northmere Home Supplies\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"incoming\"}, \"refused\": []}"
               }
             ]
@@ -1570,12 +1592,17 @@
         ]
       },
       "response": {
-        "id": "msg_011CftYUqF5VnQpyJ1MZpGC9",
+        "id": "msg_011CftZtsqdu39unbGF9kFgS",
         "container": null,
         "content": [
           {
+            "signature": "CAQSvgUKEAgSGAI4AUIIdGhpbmtpbmcSDBv0m+0UVP7vy1tbSRoMjWSUtU54JnONRJYQIjBhVLQzdyey9NzXHZJZldHkShuC1hu8oNYBspeyXuKv5p9GG2xhbtj+VKmcWEzpMR0q2wQ2+rQOAwbFemSr6T3Z6aoFOY0Nj5jLTzji1FNEiMUPDpuXn39QbDWSbPCLWcBOKa6OcovYUxFGUia0M7HVn0J2E3coDKdS3EtZffCtJJodoXniaeEJ8iprIjqRy2cPbWgAkG9AX/4nwuESbr8hJHeUcubcjogoUxIzVuCsqQSbyoLZf2xc0SnmDYtsqCsL5UghpBSO8TYrPNBuxTjChAritIYIYKYJhA/UKm7gyjxDhaCVMFhW8g5UnKNTZXxqfdSWhT/QpgJ/itKhttl6pU3lJSmATRMueORw/DoTVjVB1ImsEcb12TaupPkt717IIBRO8N6hODjSie+67S3L2mDxS/yL19Nz95R0Wgl5gyHSJG1NRC9VJU5z38PspXKBJHg8QB/bqje1277nYTgsqkO2BUgEqDcb4gO9ic9kIQrjKHQBFwzmkwifoKolGd9Dz18q0haCDg4LBWvHveufgouEsyMYNnQu/jEUo0bxlqRoKhswsA2mzGuJ33ePeUgczCZ48EgksF+rZc9LyJiC2TIMKvdGp0KLtmGdMqkx7N5cFz+MENFIqoFHJEhvG8tzyunuk14NEOusas73MBzNNNPMMzTMhkuguIpjAe1PYDCauZ2vPeCWVOLbzf0Kz8RmRj0p8owz1gBsa9KxroY0N09Ikuvs6YEwTiRvJ2Fe9cO9G5T4gN+x021lJaKg6qBXiMJU3PD1LaRfeamJa/8a9owS5Gw/uyT3dTFhZ8g+xmx55Hnm3L6uBf4WxiVL/6rg4SkZAk0NduRfSWpOdexohcviKzYz1CVVC3PgjssYAQ==",
+            "thinking": "",
+            "type": "thinking"
+          },
+          {
             "citations": null,
-            "text": "I've asked the incoming-payments system about the £42.80 from Northmere Home Supplies. Its answer isn't in the case yet. The case status shows no incoming entry and no confirmation, so I can't say whether the refund has arrived. The next step is to write the reply once that answer is available.",
+            "text": "I asked the incoming-payments system about the £42.80 from Northmere Home Supplies. The check has run, but the case doesn't yet show what it found. I can't tell you whether the refund has arrived or whether it matches your original transfer.\n\nThe case is now closed at this step, so nothing further is happening on it from my side.",
             "type": "text"
           }
         ],
@@ -1594,22 +1621,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2244,
-          "output_tokens": 95,
+          "input_tokens": 2201,
+          "output_tokens": 149,
           "output_tokens_details": {
-            "thinking_tokens": 0
+            "thinking_tokens": 46
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.772845600033179,
-      "input_tokens": 2244,
-      "output_tokens": 95,
-      "cost_usd": 0.005438,
+      "seconds": 2.3387488999869674,
+      "input_tokens": 2201,
+      "output_tokens": 149,
+      "cost_usd": 0.005892,
       "error": null,
       "replayed": false,
-      "digest": "ac94ec71f0f9b114db1260112dc63e36d5256409d369697f78f4020cd7ab3fa9"
+      "digest": "0da380716f9da9c794a5bf5b29e929d5db560f5d1a35223409870e4219847288"
     },
     {
       "kind": "generate",
@@ -1622,17 +1649,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Elowen Marr\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"incoming_payment\",\n    \"amount\": \"42.80\",\n    \"counterparty\": \"Northmere Home Supplies\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"incoming\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"incoming\",\n        \"about\": \"incoming_payment\",\n        \"amount\": \"42.80\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-010-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-010-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: requester='Elowen Marr', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Elowen Marr\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Elowen Marr (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-010-at-02:read-subject:2).\n12. Note from `read-subject`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: amount='42.80', counterparty='Northmere Home Supplies']\n13. `find_subject` found {\"amount\": \"42.80\", \"counterparty\": \"Northmere Home Supplies\"}.\n14. `amount`: not known → 42.80 (by `read-subject`).\n15. `counterparty`: not known → Northmere Home Supplies (by `read-subject`).\n16. Rule `read-payment` fired: state = READING → true (state=READING).\n17. Called `check_payment` (attempt 1, key banking-010-at-02:read-payment:3).\n18. `check_payment` found {}.\n19. Rule `read-incoming` fired: state = READING → true (state=READING).\n20. Called `check_incoming` (attempt 1, key banking-010-at-02:read-incoming:4).\n21. `check_incoming` found {}.\n22. Rule `read-recurring` fired: state = READING → true (state=READING).\n23. Called `check_recurring` (attempt 1, key banking-010-at-02:read-recurring:5).\n24. `check_recurring` found {}.\n25. Rule `read-card` fired: state = READING → true (state=READING).\n26. Called `check_card` (attempt 1, key banking-010-at-02:read-card:6).\n27. `check_card` found {}.\n28. Rule `read-access` fired: state = READING → true (state=READING).\n29. Called `check_access` (attempt 1, key banking-010-at-02:read-access:7).\n30. `check_access` found {}.\n31. Rule `read-business` fired: state = READING → true (state=READING).\n32. Called `check_business` (attempt 1, key banking-010-at-02:read-business:8).\n33. `check_business` found {}.\n34. Rule `read-documents` fired: state = READING → true (state=READING).\n35. Called `check_documents` (attempt 1, key banking-010-at-02:read-documents:9).\n36. `check_documents` found {}.\n37. Rule `read-tariff` fired: state = READING → true (state=READING).\n38. Called `check_tariff` (attempt 1, key banking-010-at-02:read-tariff:10).\n39. `check_tariff` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-010-at-02:read-registration:11).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-010-at-02:read-confirmation:12).\n45. Note from `read-confirmation`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: confirmation='none', instructed_outside_portal=False]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n51. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.\n52. `request_type`: not known → question (by `triage`).\n53. `subject`: not known → incoming_payment (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).\n56. `next_system`: not known → incoming (by `route-incoming`).\n57. The agent asked for `ask_system` {\"system\": \"incoming\"}.\n58. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n59. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).\n60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n61. Called `ask_system` (attempt 1, key banking-010-at-02:do-ask:16).\n62. Action in the world: `ask_system` {\"system\": \"incoming\", \"about\": \"incoming_payment\", \"amount\": \"42.80\"}.\n63. `ask_system` found {}.\n64. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n65. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7164 tokens in, 414 out, 4.654 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've asked the incoming-payments system about the £42.80 from Northmere Home Supplies. Its answer isn't in the case yet. The case status shows no incoming entry and no confirmation, so I can't say whether the refund has arrived. The next step is to write the reply once that answer is available.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Elowen Marr\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"incoming_payment\",\n    \"amount\": \"42.80\",\n    \"counterparty\": \"Northmere Home Supplies\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"incoming\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"incoming\",\n        \"about\": \"incoming_payment\",\n        \"amount\": \"42.80\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-010-at-02: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-010-at-02:read-requester:1).\n4. Note from `read-requester`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: requester='Elowen Marr', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Elowen Marr\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Elowen Marr (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-010-at-02:read-subject:2).\n12. Note from `read-subject`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: amount='42.80', counterparty='Northmere Home Supplies']\n13. `find_subject` found {\"amount\": \"42.80\", \"counterparty\": \"Northmere Home Supplies\"}.\n14. `amount`: not known → 42.80 (by `read-subject`).\n15. `counterparty`: not known → Northmere Home Supplies (by `read-subject`).\n16. Rule `read-payment` fired: state = READING → true (state=READING).\n17. Called `check_payment` (attempt 1, key banking-010-at-02:read-payment:3).\n18. `check_payment` found {}.\n19. Rule `read-incoming` fired: state = READING → true (state=READING).\n20. Called `check_incoming` (attempt 1, key banking-010-at-02:read-incoming:4).\n21. `check_incoming` found {}.\n22. Rule `read-recurring` fired: state = READING → true (state=READING).\n23. Called `check_recurring` (attempt 1, key banking-010-at-02:read-recurring:5).\n24. `check_recurring` found {}.\n25. Rule `read-card` fired: state = READING → true (state=READING).\n26. Called `check_card` (attempt 1, key banking-010-at-02:read-card:6).\n27. `check_card` found {}.\n28. Rule `read-access` fired: state = READING → true (state=READING).\n29. Called `check_access` (attempt 1, key banking-010-at-02:read-access:7).\n30. `check_access` found {}.\n31. Rule `read-business` fired: state = READING → true (state=READING).\n32. Called `check_business` (attempt 1, key banking-010-at-02:read-business:8).\n33. `check_business` found {}.\n34. Rule `read-documents` fired: state = READING → true (state=READING).\n35. Called `check_documents` (attempt 1, key banking-010-at-02:read-documents:9).\n36. `check_documents` found {}.\n37. Rule `read-tariff` fired: state = READING → true (state=READING).\n38. Called `check_tariff` (attempt 1, key banking-010-at-02:read-tariff:10).\n39. `check_tariff` found {}.\n40. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n41. Called `check_bank_actions` (attempt 1, key banking-010-at-02:read-bank-actions:11).\n42. `check_bank_actions` found {}.\n43. Rule `read-registration` fired: state = READING → true (state=READING).\n44. Called `check_registration` (attempt 1, key banking-010-at-02:read-registration:12).\n45. `check_registration` found {}.\n46. Rule `read-confirmation` fired: state = READING → true (state=READING).\n47. Called `check_confirmation` (attempt 1, key banking-010-at-02:read-confirmation:13).\n48. Note from `read-confirmation`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: confirmation='none', instructed_outside_portal=False]\n49. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n50. `confirmation`: not known → none (by `read-confirmation`).\n51. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n52. Rule `triage` fired: state = READING → true (state=READING).\n53. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.\n54. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.\n55. `request_type`: not known → question (by `triage`).\n56. `subject`: not known → incoming_payment (by `triage`).\n57. State `READING` → `TRIAGED` (by `triage`).\n58. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).\n59. `next_system`: not known → incoming (by `route-incoming`).\n60. The agent asked for `ask_system` {\"system\": \"incoming\"}.\n61. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n62. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).\n63. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n64. Called `ask_system` (attempt 1, key banking-010-at-02:do-ask:17).\n65. Action in the world: `ask_system` {\"system\": \"incoming\", \"about\": \"incoming_payment\", \"amount\": \"42.80\"}.\n66. `ask_system` found {}.\n67. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n68. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7078 tokens in, 425 out, 5.015 s, cost $0.0145; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the incoming-payments system about the £42.80 from Northmere Home Supplies. The check has run, but the case doesn't yet show what it found. I can't tell you whether the refund has arrived or whether it matches your original transfer.\n> \n> The case is now closed at this step, so nothing further is happening on it from my side.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftYUxtxcKe66CVsnBCwv",
+        "id": "msg_011CftZu3qQW5yR7ELqVLtvn",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Elowen Marr, writing over secure chat (not verified as the account holder), asked the desk to check whether the incoming £42.80 entry from Northmere Home Supplies was for the specific transfer she meant, since the payer had said it might be returned. The desk classified this as a question about an incoming payment and sent a query to the incoming-payments system about that amount. The system's answer is not yet in the record, so whether the entry matches her transfer is still unconfirmed, and the reply to her remains to be written once that answer is available.",
+            "text": "Elowen Marr, who was not verified, asked through secure chat whether the incoming £42.80 entry from Northmere Home Supplies matches the specific transfer that might be returned. The desk classified it as a question about an incoming payment and put that query to the incoming-payments system, which came back with nothing recorded. The case closed at that step, so whether the entry matches her transfer is still unanswered and would need a person to follow up.",
             "type": "text"
           }
         ],
@@ -1651,8 +1678,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2887,
-          "output_tokens": 169,
+          "input_tokens": 2986,
+          "output_tokens": 138,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1660,13 +1687,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.172243799897842,
-      "input_tokens": 2887,
-      "output_tokens": 169,
-      "cost_usd": 0.007464,
+      "seconds": 1.912220999947749,
+      "input_tokens": 2986,
+      "output_tokens": 138,
+      "cost_usd": 0.007352,
       "error": null,
       "replayed": false,
-      "digest": "d8cc263bd6450da342ce5fec42b2b258ed3436d46b1e39c3bf1b6ce76ec2da53"
+      "digest": "1d714281a03f23b9c42dba608298fdd81779d655a0dcde834506f29ac89cea2b"
     }
   ]
 }

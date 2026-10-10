@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer using the secure portal, asked for a bank document confirming her account relationship to be made available to her there, and said she was not asking for a transfer. The desk classified this as a question about a document and sent an inquiry to the documents system, and the case closed in the "asked" state. The record shows no answer back from the documents system (it returned nothing), so whether and how the document gets provided is not yet settled.
+Mara Ellison, a verified customer writing through the secure portal, asked for a bank document confirming her account relationship to be made available to her there, and said she was not asking for a transfer. The desk classified this as a question about a document and sent a query to the documents system, which was accepted and returned nothing further. The record shows no document yet provided to her, so what remains is a reply to her once the documents system responds.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,6 +44,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
+  - document_ready = false → not known (document_ready=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)

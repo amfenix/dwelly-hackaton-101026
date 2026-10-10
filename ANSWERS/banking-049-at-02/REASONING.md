@@ -40,39 +40,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-049-at-02:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-049-at-02:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-049-at-02:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Mara Venn): I’m the authorised manager for the shop. The report for the period I selected is not showing as available, so I’m asking you to escalate the file request. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-50. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → document (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
-55. `next_system`: not known → documents (by `route-documents`).
-56. The agent asked for `ask_system` {"system": "documents"}.
-57. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-58. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-60. Called `ask_system` (attempt 1, key banking-049-at-02:do-ask:16).
-61. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
-62. `ask_system` found {}.
-63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-64. The case closed in `ASKED`: **ask_system**.
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-049-at-02:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-049-at-02:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-049-at-02:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mara Venn): I’m the authorised manager for the shop. The report for the period I selected is not showing as available, so I’m asking you to escalate the file request. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → document (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+58. `next_system`: not known → documents (by `route-documents`).
+59. The agent asked for `ask_system` {"system": "documents"}.
+60. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
+61. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+63. Called `ask_system` (attempt 1, key banking-049-at-02:do-ask:17).
+64. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
+65. `ask_system` found {}.
+66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+67. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6946 tokens in, 461 out, 4.317 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6934 tokens in, 428 out, 4.089 s, cost $0.0144; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've checked the documents system for the acquiring report covering 1–7 July 2025. The check is recorded and the case is closed at this step.
+> I've asked the documents system about the acquiring report for 1–7 July 2025. The case is now closed at this step, and the system's answer isn't in the case yet. The facts still show nothing about whether the report is available.
 > 
-> The system returned no new facts about the report. I can't yet say whether it is available, and I haven't escalated anything. Mara Venn is still unverified. She hasn't said she was asked to act outside the portal, and no confirmation is on file.
+> Mara Venn is not verified. Nothing has been escalated or changed.

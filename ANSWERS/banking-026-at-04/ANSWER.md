@@ -1,10 +1,10 @@
 # Case banking-026-at-04: A Safe Route to a Forgotten PIN
 
-**Decision: redirect_secure**  (final state `REDIRECTED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Maren Ellwood asked, over secure chat, for the safe way to deal with a forgotten PIN on her debit card. The desk classified it as an access request and sent her a message pointing her to the secure process in her portal, which checks her identity there, and the message said nothing on her profile was changed. The case is closed as redirected, and the record shows nothing left for the desk, though she still has to continue through the PIN procedure in the portal herself.
+Maren Ellwood wrote in secure chat that she had forgotten her debit card PIN and asked for the safe way to deal with it. The desk classed it as an access request about a card and found that the bank had already opened the prescribed PIN procedure for her in the secure portal. It took no action and closed the case as waiting, since nothing more can happen until she uses that procedure. The desk's own attempt to send a reply was refused because the case was already in the waiting state, so no reply went out from the desk, and nothing is left for a person unless she does not complete the portal steps.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,10 +42,7 @@ Case reference: id banking-026-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `redirect_secure` (to: Maren Ellwood, channel: secure_chat), by rule `do-redirect`
-
-  > Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.
-
+- none
 
 ## Decision and why
 
@@ -53,11 +50,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REDIRECT_PENDING`: the agent asked for `redirect_secure`, rule `redirect-to-the-secure-process` accepted it.
+- `TRIAGED` → `WAITING`: rule `already-redirected` — The customer was pointed to the secure process; nothing to do until they use it.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = access → true (request_type=access)
-- `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
-  - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
+  - bank_redirected → true (bank_redirected=True)
 
 Facts established:
 
@@ -68,6 +64,7 @@ Facts established:
 - subject: **card**
 - access_asked: **True**
 - access_status: **OTHER**
+- bank_redirected: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **access**
@@ -78,6 +75,7 @@ Where they came from:
 - event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: requester='Maren Ellwood', role='customer', channel='secure_chat', verified=False]
 - event 2 (Access team): I’m escalating HV-026 for the prescribed PIN route. The required customer check is complete in the secure portal; I have not asked for or recorded a PIN. [facts: access_asked=True]
 - event 3 (Access team): The prescribed PIN procedure is available for this case. Please open it for the checked customer in the secure portal; the PIN must not be sent in correspondence. [facts: access_status='OTHER']
+- event 4 (H&V agent): the bank already acted: I’ve opened the prescribed PIN procedure for you in the secure portal, following the completed check. Please continue through that procedure there; I cannot see your PIN.
 - event 4 (H&V agent): I’ve opened the prescribed PIN procedure for you in the secure portal, following the completed check. Please continue through that procedure there; I cannot see your PIN. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -88,6 +86,10 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=access); tariff_status present is false (tariff_status=not known)
+
 ## Final result
 
-redirect_secure (REDIRECTED)
+wait (WAITING)

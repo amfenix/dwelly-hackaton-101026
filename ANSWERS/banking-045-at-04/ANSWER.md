@@ -1,10 +1,10 @@
 # Case banking-045-at-04: New employee access request
 
-**Decision: forward_to_authority**  (final state `FORWARDED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Nadia Bell, an unverified customer writing over secure chat, followed up on an access request that still needs the company administrator's approval. The desk first tried to look up the administrator in the business system, was refused because this is an authority request, and then forwarded the case to the verified company administrator about the role. The case is closed as forwarded; no access has been granted, and the decision now rests with the administrator.
+Nadia Bell, an unverified customer writing over secure chat, asked about the next step for her access request, which still needs the company administrator's approval. The desk found the bank had already sent the new-user access request to the administrator through the secure portal, so it took no action and closed the case as waiting. No access has been granted, and what is left is the administrator's approval decision.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,7 @@ Case reference: id banking-045-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `forward_to_authority` (to: the verified company administrator, about: role, requester: Nadia Bell), by rule `do-forward`
+- none
 
 ## Decision and why
 
@@ -50,12 +50,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `FORWARD_PENDING`: the agent asked for `forward_to_authority`, rule `forward-to-the-authority` accepted it.
+- `TRIAGED` → `WAITING`: rule `already-forwarded` — The request is with the person whose approval it needs.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = authority → true (request_type=authority)
-  - role != business_admin → true (role=customer)
-- `FORWARD_PENDING` → `FORWARDED`: rule `do-forward`.
-  - state = FORWARD_PENDING → true (state=FORWARD_PENDING)
+  - bank_forwarded → true (bank_forwarded=True)
 
 Facts established:
 
@@ -64,6 +62,7 @@ Facts established:
 - channel: **secure_chat**
 - verified: **False**
 - subject: **role**
+- bank_forwarded: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **authority**
@@ -72,6 +71,7 @@ Facts established:
 Where they came from:
 
 - event 2 (Nadia Bell): I’m following up to find out the next step for the access request. I still need the company administrator to approve it. [facts: requester='Nadia Bell', role='customer', channel='secure_chat', verified=False]
+- event 4 (H&V business support agent): the bank already acted: I’ve sent the new-user access request to you through the secure portal for approval. No access has been granted; the request is awaiting your decision.
 - event 4 (H&V business support agent): I’ve sent the new-user access request to you through the secure portal for approval. No access has been granted; the request is awaiting your decision. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -82,10 +82,6 @@ No.
 
 - nothing
 
-Requests the policy refused:
-
-- `ask_system`: payment-ask: args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); incoming-ask: args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); recurring-ask: args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); card-ask: args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); access-ask: args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); business-ask: next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); documents-ask: args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); tariff-ask: args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority)
-
 ## Final result
 
-forward_to_authority (FORWARDED)
+wait (WAITING)

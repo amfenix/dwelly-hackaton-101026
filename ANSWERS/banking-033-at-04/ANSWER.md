@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a customer on secure chat, asked to be told when her CSV export of transactions for 6–9 May 2025 is available in her secure portal. The desk checked the documents system, which showed the export was created and ready, and replied in secure chat that the document is available, while noting this does not confirm it was downloaded and that no email was sent. The case is closed as replied, nothing is left for a person, and her identity was recorded as not verified.
+Mara Ellison asked over secure chat to be told when her CSV export of transactions for 6–9 May 2025 is available in her secure portal. The desk checked the documents system, which showed the export as created, and replied in secure chat that the document is available, while noting this does not confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied, and nothing is left for a person, though the record shows the requester was not verified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,7 +56,7 @@ How the case moved:
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 

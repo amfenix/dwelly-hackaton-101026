@@ -1,10 +1,10 @@
 # Case banking-027-at-04: Access Restored
 
-**Decision: ask_system**  (final state `ASKED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Mara Ellison, a customer on a verified call, said she can't sign in to her profile and asked for help restoring access. The desk classified this as an access request and put a question about it to the access system, which returned nothing, and the case closed in the "asked" state. The record shows no answer from the access system and no further step, so whatever happens next on her sign-in is not recorded.
+Mara Ellison, verified on a call, said she still couldn't sign in and asked for help restoring access. The desk found the bank had already pointed her to the recovery option in its secure portal, so it took no action and closed the case as waiting for her to use that process. The agent then tried to query the access system, and the desk refused because the case was already in WAITING. The record does not show that she has completed the portal checks (confirmation is "none"), so what remains is for her to use the secure recovery process.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,7 @@ Case reference: id banking-027-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `ask_system` (system: access, about: access), by rule `do-ask`
+- none
 
 ## Decision and why
 
@@ -50,15 +50,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `access-ask` accepted it.
+- `TRIAGED` → `WAITING`: rule `already-redirected` — The customer was pointed to the secure process; nothing to do until they use it.
   - state = TRIAGED → true (state=TRIAGED)
-  - args.system = access → true (args.system=access)
-  - next_system = access → true (next_system=access)
-  - next_system absent → false (next_system=access)
-  - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=access)
-- `ASK_PENDING` → `ASKED`: rule `do-ask`.
-  - state = ASK_PENDING → true (state=ASK_PENDING)
+  - request_type = access → true (request_type=access)
+  - bank_redirected → true (bank_redirected=True)
 
 Facts established:
 
@@ -67,6 +62,7 @@ Facts established:
 - channel: **verified_call**
 - verified: **True**
 - subject: **access**
+- bank_redirected: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **access**
@@ -75,6 +71,7 @@ Facts established:
 Where they came from:
 
 - event 2 (Mara Ellison): I’ve completed H&V’s identification checks for this call. I still can’t sign in to my profile, and I need help restoring access; I’m not sharing any password or verification code. [facts: requester='Mara Ellison', role='customer', channel='verified_call', verified=True]
+- event 3 (H&V service agent): the bank already acted: I’m directing you to the recovery option in H&V’s secure portal. Complete the checks there; I won’t ask you to tell me your password or a verification code.
 - event 4 (H&V recovery system): Recovery checks completed securely. Return to sign-in. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -85,6 +82,10 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access)
+
 ## Final result
 
-ask_system (ASKED)
+wait (WAITING)

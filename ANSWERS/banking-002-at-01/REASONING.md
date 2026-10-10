@@ -33,37 +33,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 29. Rule `read-tariff` fired: state = READING → true (state=READING).
 30. Called `check_tariff` (attempt 1, key banking-002-at-01:read-tariff:10).
 31. `check_tariff` found {}.
-32. Rule `read-registration` fired: state = READING → true (state=READING).
-33. Called `check_registration` (attempt 1, key banking-002-at-01:read-registration:11).
-34. `check_registration` found {}.
-35. Rule `read-confirmation` fired: state = READING → true (state=READING).
-36. Called `check_confirmation` (attempt 1, key banking-002-at-01:read-confirmation:12).
-37. Note from `read-confirmation`: event 1 (Sender): I’ve sent the contribution for the kiln by bank transfer. [facts: confirmation='none', instructed_outside_portal=False]
-38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-39. `confirmation`: not known → none (by `read-confirmation`).
-40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-43. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-44. `request_type`: not known → question (by `triage`).
-45. `subject`: not known → incoming_payment (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-48. `next_system`: not known → incoming (by `route-incoming`).
-49. The agent asked for `ask_system` {"system": "incoming"}.
-50. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-51. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-53. Called `ask_system` (attempt 1, key banking-002-at-01:do-ask:16).
-54. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
-55. `ask_system` found {}.
-56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-57. The case closed in `ASKED`: **ask_system**.
+32. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+33. Called `check_bank_actions` (attempt 1, key banking-002-at-01:read-bank-actions:11).
+34. `check_bank_actions` found {}.
+35. Rule `read-registration` fired: state = READING → true (state=READING).
+36. Called `check_registration` (attempt 1, key banking-002-at-01:read-registration:12).
+37. `check_registration` found {}.
+38. Rule `read-confirmation` fired: state = READING → true (state=READING).
+39. Called `check_confirmation` (attempt 1, key banking-002-at-01:read-confirmation:13).
+40. Note from `read-confirmation`: event 1 (Sender): I’ve sent the contribution for the kiln by bank transfer. [facts: confirmation='none', instructed_outside_portal=False]
+41. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+42. `confirmation`: not known → none (by `read-confirmation`).
+43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+44. Rule `triage` fired: state = READING → true (state=READING).
+45. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+46. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+47. `request_type`: not known → question (by `triage`).
+48. `subject`: not known → incoming_payment (by `triage`).
+49. State `READING` → `TRIAGED` (by `triage`).
+50. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+51. `next_system`: not known → incoming (by `route-incoming`).
+52. The agent asked for `ask_system` {"system": "incoming"}.
+53. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+54. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+56. Called `ask_system` (attempt 1, key banking-002-at-01:do-ask:17).
+57. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
+58. `ask_system` found {}.
+59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+60. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6481 tokens in, 402 out, 11.058 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6481 tokens in, 469 out, 7.312 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the incoming-payments system whether the transfer has arrived. The case then closed, and it holds no result from that check. So I can't yet say whether the kiln contribution has arrived. Nothing in the records confirms it, and I haven't made any claim about it either way.
+> I asked the incoming-payments system whether the kiln contribution has arrived. It accepted the request, but its answer isn't in the case yet. The case facts still show no confirmation of the payment. So I can't tell you whether the money has arrived, and I haven't made any claim about it.
+> 
+> The case is now closed at this step. I'm stopping here, as I'm meant to after one tool call.

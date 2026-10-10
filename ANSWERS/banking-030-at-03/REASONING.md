@@ -39,37 +39,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-tariff` fired: state = READING → true (state=READING).
 36. Called `check_tariff` (attempt 1, key banking-030-at-03:read-tariff:10).
 37. `check_tariff` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-030-at-03:read-registration:11).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-030-at-03:read-confirmation:12).
-43. Note from `read-confirmation`: event 3 (H&V agent): I’ve completed H&V’s identity checks in this secure chat. I’ll check the existing replacement record and won’t make any changes to your account. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → card (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-54. `next_system`: not known → card (by `route-card`).
-55. The agent asked for `ask_system` {"system": "card"}.
-56. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-57. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-58. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-59. Called `ask_system` (attempt 1, key banking-030-at-03:do-ask:16).
-60. Action in the world: `ask_system` {"system": "card", "about": "card"}.
-61. `ask_system` found {}.
-62. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-63. The case closed in `ASKED`: **ask_system**.
+38. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+39. Called `check_bank_actions` (attempt 1, key banking-030-at-03:read-bank-actions:11).
+40. `check_bank_actions` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-030-at-03:read-registration:12).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-030-at-03:read-confirmation:13).
+46. Note from `read-confirmation`: event 3 (H&V agent): I’ve completed H&V’s identity checks in this secure chat. I’ll check the existing replacement record and won’t make any changes to your account. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → card (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+57. `next_system`: not known → card (by `route-card`).
+58. The agent asked for `ask_system` {"system": "card"}.
+59. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
+60. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+62. Called `ask_system` (attempt 1, key banking-030-at-03:do-ask:17).
+63. Action in the world: `ask_system` {"system": "card", "about": "card"}.
+64. `ask_system` found {}.
+65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+66. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6887 tokens in, 475 out, 4.753 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6887 tokens in, 413 out, 3.773 s, cost $0.0141; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the card system about Maren's replacement request (HV-030). The desk accepted the query and closed the case at that step. The case record doesn't include the card system's answer. It has nothing yet on whether the card is being made or has been sent. I haven't replied to Maren, because I'd have nothing from the record to tell her.
+> I checked the card system for Maren's replacement request, HV-030. The check was accepted and the case is now marked as asked. The case record doesn't yet show what the card system found, so I can't say whether the card is being made or has been sent. I haven't replied to Maren or changed anything on her account.

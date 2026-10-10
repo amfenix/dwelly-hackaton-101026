@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Marlow asked, in a secure chat, what purpose text her payment instruction to Mallow Pottery Works recorded. The desk found the transfer, but its payment status came back as "OTHER", and it sent a reply saying the record shows no recognized payment status and that no new transfer was made. The payment journal did show the purpose text "Deposit for kiln repair estimate", but the reply never gave it to her, so her question remains unanswered. The desk also still lists her as unverified, despite her saying she had completed identity checks, and that was left unresolved.
+Elena Marlow asked, in a secure chat, what purpose text her transfer to Mallow Pottery Works recorded. The desk looked up the payment, found a status it does not recognise, and sent a reply saying the record shows no recognised payment status or recipient outcome and that no new transfer was made. That reply did not give her the purpose text, even though the payment journal note shows the recorded purpose as "Deposit for kiln repair estimate". Her identity is still marked unverified despite her saying she completed the checks, and nothing further is assigned to a person.
 
 _Written by a model from the record below; the sections below are the record._
 

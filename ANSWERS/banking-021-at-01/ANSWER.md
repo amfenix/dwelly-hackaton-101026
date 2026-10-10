@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a question about a replacement card, and the desk decided to put it to the card system, which it did. The query went through, but the system returned nothing about dispatch or delivery. The bank's message only confirmed that the replacement request was received, so the record does not show whether the card has been sent. The case closed at that step, and nothing in the record assigns a further action to a person.
+The desk treated the message as a question about a replacement card and asked the card system about it. The query went through and the case closed at that step, but the card system's reply has not come back into the case. The only confirmation on record is the bank's message that the replacement card request was accepted, which shows it was received and not that the card has been dispatched or delivered. Whether the card has shipped is still unknown and is left for a person to find out.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=question)
+  - request_type not in [register, change, authority, instruction] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

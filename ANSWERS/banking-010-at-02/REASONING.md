@@ -41,37 +41,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 37. Rule `read-tariff` fired: state = READING → true (state=READING).
 38. Called `check_tariff` (attempt 1, key banking-010-at-02:read-tariff:10).
 39. `check_tariff` found {}.
-40. Rule `read-registration` fired: state = READING → true (state=READING).
-41. Called `check_registration` (attempt 1, key banking-010-at-02:read-registration:11).
-42. `check_registration` found {}.
-43. Rule `read-confirmation` fired: state = READING → true (state=READING).
-44. Called `check_confirmation` (attempt 1, key banking-010-at-02:read-confirmation:12).
-45. Note from `read-confirmation`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: confirmation='none', instructed_outside_portal=False]
-46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-47. `confirmation`: not known → none (by `read-confirmation`).
-48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-51. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → incoming_payment (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-56. `next_system`: not known → incoming (by `route-incoming`).
-57. The agent asked for `ask_system` {"system": "incoming"}.
-58. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-010-at-02:do-ask:16).
-62. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+40. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+41. Called `check_bank_actions` (attempt 1, key banking-010-at-02:read-bank-actions:11).
+42. `check_bank_actions` found {}.
+43. Rule `read-registration` fired: state = READING → true (state=READING).
+44. Called `check_registration` (attempt 1, key banking-010-at-02:read-registration:12).
+45. `check_registration` found {}.
+46. Rule `read-confirmation` fired: state = READING → true (state=READING).
+47. Called `check_confirmation` (attempt 1, key banking-010-at-02:read-confirmation:13).
+48. Note from `read-confirmation`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: confirmation='none', instructed_outside_portal=False]
+49. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+50. `confirmation`: not known → none (by `read-confirmation`).
+51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+52. Rule `triage` fired: state = READING → true (state=READING).
+53. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+54. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+55. `request_type`: not known → question (by `triage`).
+56. `subject`: not known → incoming_payment (by `triage`).
+57. State `READING` → `TRIAGED` (by `triage`).
+58. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+59. `next_system`: not known → incoming (by `route-incoming`).
+60. The agent asked for `ask_system` {"system": "incoming"}.
+61. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+62. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+63. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+64. Called `ask_system` (attempt 1, key banking-010-at-02:do-ask:17).
+65. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
+66. `ask_system` found {}.
+67. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+68. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7164 tokens in, 414 out, 4.654 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7078 tokens in, 425 out, 5.015 s, cost $0.0145; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the incoming-payments system about the £42.80 from Northmere Home Supplies. Its answer isn't in the case yet. The case status shows no incoming entry and no confirmation, so I can't say whether the refund has arrived. The next step is to write the reply once that answer is available.
+> I asked the incoming-payments system about the £42.80 from Northmere Home Supplies. The check has run, but the case doesn't yet show what it found. I can't tell you whether the refund has arrived or whether it matches your original transfer.
+> 
+> The case is now closed at this step, so nothing further is happening on it from my side.

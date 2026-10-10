@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer's request was about access to their profile, which the desk classified as an access request after the H&V app showed their sign-in had been declined. The desk didn't change anything on the profile. It sent the customer a message pointing them to the secure process in their secure portal, which checks their identity, and reminded them that the bank never asks for a password, PIN or verification code. The case is closed as redirected, and the customer has to complete the secure recovery themselves, since nothing further is recorded for the desk to do.
+The customer's request was about access, and the record shows a sign-in declined in the H&V app. The desk classified it as an access request and sent the customer to the secure process in their secure portal, where identity is checked, and the message said the bank never asks for a password, PIN or verification code. Nothing on the profile was changed, the case is closed as redirected, and nothing further is left for the desk; the customer has to complete the secure process themselves.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -40,33 +40,36 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-tariff` fired: state = READING → true (state=READING).
 37. Called `check_tariff` (attempt 1, key banking-038-at-03:read-tariff:10).
 38. `check_tariff` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-038-at-03:read-registration:11).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-038-at-03:read-confirmation:12).
-44. Note from `read-confirmation`: event 2 (Mara Ellison): I’m escalating my request for an account confirmation. I only need the document in my own secure portal, not sent to anyone else. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-50. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → document (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-55. `next_system`: not known → documents (by `asked-documents`).
-56. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
-57. State `TRIAGED` → `WAITING` (by `documents-waits`).
-58. The case closed in `WAITING`: **wait**.
-59. The agent asked for `ask_system` {"system": "documents"}.
-60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
-61. The agent asked for `redirect_secure` {}.
-62. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question).
-63. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks for an account-relationship confirmation document to be made available in her own secure portal; no transfer requested. The documents system was already asked (documents_asked=True) but no answer is in the case. Case state is WAITING and final. Further ask_system and redirect_secure calls were refused. Needs a person to verify identity and decide whether the document can be provided in the portal."}.
-64. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-038-at-03:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-038-at-03:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-038-at-03:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mara Ellison): I’m escalating my request for an account confirmation. I only need the document in my own secure portal, not sent to anyone else. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+53. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → document (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+58. `next_system`: not known → documents (by `asked-documents`).
+59. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
+60. State `TRIAGED` → `WAITING` (by `documents-waits`).
+61. The case closed in `WAITING`: **wait**.
+62. The agent asked for `ask_system` {"system": "documents"}.
+63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
+64. The agent asked for `redirect_secure` {}.
+65. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question).
+66. The agent asked for `submit_request` {}.
+67. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=question); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=documents); verified is false (verified=False); request_type = instruction is false (request_type=question); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=documents); verified is false (verified=False); request_type = instruction is false (request_type=question); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=documents); verified is false (verified=False); request_type = instruction is false (request_type=question); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=documents); verified is false (verified=False); request_type = instruction is false (request_type=question); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=documents); verified is false (verified=False); request_type = instruction is false (request_type=question); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=documents); verified is false (verified=False); request_type = instruction is false (request_type=question); documents-instruction: state = TRIAGED is false (state=WAITING); documents_asked absent is false (documents_asked=True); verified is false (verified=False); request_type = instruction is false (request_type=question).
 
 ## Model calls
 
-5 calls, 10567 tokens in, 739 out, 7.56 s, cost $0.0247; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10708 tokens in, 644 out, 6.521 s, cost $0.0240; models: claude-sonnet-5-5, jev-1.13.0.

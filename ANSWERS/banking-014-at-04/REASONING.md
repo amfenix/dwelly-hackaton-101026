@@ -44,41 +44,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 40. Rule `read-tariff` fired: state = READING → true (state=READING).
 41. Called `check_tariff` (attempt 1, key banking-014-at-04:read-tariff:10).
 42. `check_tariff` found {}.
-43. Rule `read-registration` fired: state = READING → true (state=READING).
-44. Called `check_registration` (attempt 1, key banking-014-at-04:read-registration:11).
-45. `check_registration` found {}.
-46. Rule `read-confirmation` fired: state = READING → true (state=READING).
-47. Called `check_confirmation` (attempt 1, key banking-014-at-04:read-confirmation:12).
-48. Note from `read-confirmation`: event 2 (Mara Ellery): I saw that collection on my March statement and have not seen another one. Could you check whether the mandate is currently active? Please don't cancel it; I only need its status. [facts: confirmation='none', instructed_outside_portal=False]
-49. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-50. `confirmation`: not known → none (by `read-confirmation`).
-51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-52. Rule `triage` fired: state = READING → true (state=READING).
-53. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-54. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
-55. `request_type`: not known → question (by `triage`).
-56. `subject`: not known → direct_debit (by `triage`).
-57. State `READING` → `TRIAGED` (by `triage`).
-58. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
-59. `next_system`: not known → recurring (by `asked-recurring`).
-60. The agent asked for `reply` {}.
-61. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
-62. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
-63. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-64. Called `reply_customer` (attempt 1, key banking-014-at-04:do-reply:16).
-65. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The standing-order record shows active. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
-66. `reply_customer` found {}.
-67. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-68. The case closed in `REPLIED`: **reply**.
+43. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+44. Called `check_bank_actions` (attempt 1, key banking-014-at-04:read-bank-actions:11).
+45. `check_bank_actions` found {}.
+46. Rule `read-registration` fired: state = READING → true (state=READING).
+47. Called `check_registration` (attempt 1, key banking-014-at-04:read-registration:12).
+48. `check_registration` found {}.
+49. Rule `read-confirmation` fired: state = READING → true (state=READING).
+50. Called `check_confirmation` (attempt 1, key banking-014-at-04:read-confirmation:13).
+51. Note from `read-confirmation`: event 2 (Mara Ellery): I saw that collection on my March statement and have not seen another one. Could you check whether the mandate is currently active? Please don't cancel it; I only need its status. [facts: confirmation='none', instructed_outside_portal=False]
+52. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+53. `confirmation`: not known → none (by `read-confirmation`).
+54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+55. Rule `triage` fired: state = READING → true (state=READING).
+56. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+57. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+58. `request_type`: not known → question (by `triage`).
+59. `subject`: not known → direct_debit (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
+62. `next_system`: not known → recurring (by `asked-recurring`).
+63. The agent asked for `reply` {}.
+64. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
+65. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
+66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+67. Called `reply_customer` (attempt 1, key banking-014-at-04:do-reply:17).
+68. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The standing-order record shows active. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
+69. `reply_customer` found {}.
+70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+71. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7665 tokens in, 613 out, 5.649 s, cost $0.0176; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5043 tokens in, 518 out, 4.092 s, cost $0.0114; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to the customer. The bank's records show the Direct Debit mandate to Northmere Water Services is active. I didn't cancel or change anything, and I didn't comment on what she owes the organisation, as she asked.
+> I sent the customer a reply with the result of the records check: the Direct Debit mandate to Northmere Water Services is currently active. The desk accepted the reply and the case is closed.
 > 
-> The case now shows as replied and closed.
-> 
-> The customer isn't marked as verified. I replied anyway because she only asked for the mandate's status and made no change request. The reply tool accepted it with no refusal.
+> The customer asked only for the mandate's status, so nothing was cancelled or changed. The facts also show the customer is not verified. I didn't treat that as a reason to hold the status back, because it is a read-only answer.
