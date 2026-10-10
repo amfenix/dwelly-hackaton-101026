@@ -1,0 +1,77 @@
+# Case banking-035-at-01: Request to Review a Fee
+
+**Decision: submit_request**  (final state `REQUESTED`)
+
+## Summary
+
+Mara asked the desk to review whether a £4.50 paper statement fee dated 18 June 2025 was correctly applied, saying she had chosen electronic statements. The desk's attempt to ask the documents system about her statement preference was refused because this is a register-type request, so it registered the request with the documents team about the fee instead, and the case closed as requested. Her statement preference was not checked, the fee has not been changed or reversed, and the review itself is left to that team.
+
+_Written by a model from the record below; the sections below are the record._
+
+## What the system received
+
+- Source role: Bank customer
+- Bank: Harrow & Vale Bank plc (fictional)
+- Created: 2025-09-25 09:00:00 UTC
+
+The request:
+
+> Mara wants H&V to review whether a £4.50 paper statement fee, dated 18 June 2025, was correctly applied. She says she had chosen electronic statements and disputes the fee.
+
+What happened up to now:
+
+1. 2025-09-25T09:00:00Z · Secure portal — Harrow & Vale Bank plc → Mara Ellison
+
+> A £4.50 paper statement fee dated 18 June 2025 has been applied to your account. This notification does not confirm whether the fee will be changed.
+
+Attachments: none.
+
+Case reference: id banking-035-at-01, track Banking & Financial Services, case 035, point 1, actor_next other.
+
+## Actions taken
+
+- `register_request` (team: documents, about: fee), by rule `do-request`
+
+## Decision and why
+
+How the case moved:
+
+- `READING` → `TRIAGED`: rule `triage`.
+  - state = READING → true (state=READING)
+- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `register` accepted it.
+  - state = TRIAGED → true (state=TRIAGED)
+  - request_type = register → true (request_type=register)
+  - registration_asked absent → true (registration_asked=not known)
+- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
+  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+
+Facts established:
+
+- subject: **fee**
+- amount: **4.50**
+- subject_date: **2025-06-18**
+- confirmation: **none**
+- instructed_outside_portal: **False**
+- request_type: **register**
+- next_system: **documents**
+
+Where they came from:
+
+- initial request (system): Mara wants H&V to review whether a £4.50 paper statement fee, dated 18 June 2025, was correctly applied. She says she had chosen electronic statements and disputes the fee. [facts: amount='4.50', subject_date='2025-06-18']
+- event 1 (Harrow & Vale Bank plc): A £4.50 paper statement fee dated 18 June 2025 has been applied to your account. This notification does not confirm whether the fee will be changed. [facts: confirmation='none', instructed_outside_portal=False]
+
+## Escalated
+
+No.
+
+## What failed
+
+- nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, instruction, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, instruction, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, instruction, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, instruction, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, instruction, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, instruction, authority] is false (request_type=register); documents-ask: next_system absent is false (next_system=documents); request_type not in [register, change, instruction, authority] is false (request_type=register)
+
+## Final result
+
+submit_request (REQUESTED)

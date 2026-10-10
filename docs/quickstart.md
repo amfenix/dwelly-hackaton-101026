@@ -49,11 +49,38 @@ uv run desk eval evals/triage.yaml --models claude-haiku-5-5,jev-latest --runs 3
                             # tune the classifier's questions
 ```
 
-## The submission run
+## The cases
+
+`track/cases.json` holds the public banking cases, one desk case per decision point, and
+`track/expected.json` what the bank did next; `track/synthetic/` holds our extreme cases
+([evals/synthetic/README.md](../evals/synthetic/README.md)). Both are made by `track/convert.py`
+([task](task/case-conversion.md)).
+
+## The run at the repository root
+
+`desk run` writes to the root by default: `ANSWERS/<id>/ANSWER.md` and `REASONING.md`, `traces/`
+and `results.jsonl`. These are committed: they are what the event reads. Each run replaces them:
 
 ```bash
+rm -rf ANSWERS traces results.jsonl                            # copy them elsewhere first to keep them
 uv run desk run --no-resume                                    # ANSWERS/, traces/, results.jsonl
 uv run desk run --replay && diff -r ANSWERS replay/ANSWERS     # the same answers, from the traces
+```
+
+- `--no-resume` works every case again; without it, a case that already has an answer is skipped
+  (so a run cut short can be resumed).
+- Clear the old folders first: a re-run replaces the answers of its own cases only.
+
+## The submission run
+
+The challenge cases are given whole, with no ending to hide: one desk case per case, answered
+under `ANSWERS/<n>/`.
+
+```bash
+rm -rf ANSWERS traces results.jsonl
+uv run python track/convert.py "<challenge track folder>" --whole --out track/cases.json
+uv run desk run --no-resume
+uv run desk run --replay && diff -r ANSWERS replay/ANSWERS
 ```
 
 `.env` is ignored by git: the repository is public, and keys live only there.

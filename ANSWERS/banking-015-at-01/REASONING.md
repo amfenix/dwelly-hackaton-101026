@@ -1,0 +1,64 @@
+# Case banking-015-at-01: how the decision was reached
+
+Every line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.
+
+1. Case opened in `READING` under policy banking-desk v1.
+2. Rule `read-requester` fired: state = READING → true (state=READING).
+3. Called `identify_requester` (attempt 1, key banking-015-at-01:read-requester:1).
+4. `identify_requester` found {}.
+5. Rule `read-subject` fired: state = READING → true (state=READING).
+6. Called `find_subject` (attempt 1, key banking-015-at-01:read-subject:2).
+7. Note from `read-subject`: initial request (system): I want H&V to cancel my active Direct Debit mandate to Northmere Fitness so it cannot be used for future collections. [facts: counterparty='Northmere Fitness']
+8. `find_subject` found {"counterparty": "Northmere Fitness"}.
+9. `counterparty`: not known → Northmere Fitness (by `read-subject`).
+10. Rule `read-payment` fired: state = READING → true (state=READING).
+11. Called `check_payment` (attempt 1, key banking-015-at-01:read-payment:3).
+12. `check_payment` found {}.
+13. Rule `read-incoming` fired: state = READING → true (state=READING).
+14. Called `check_incoming` (attempt 1, key banking-015-at-01:read-incoming:4).
+15. `check_incoming` found {}.
+16. Rule `read-recurring` fired: state = READING → true (state=READING).
+17. Called `check_recurring` (attempt 1, key banking-015-at-01:read-recurring:5).
+18. `check_recurring` found {}.
+19. Rule `read-card` fired: state = READING → true (state=READING).
+20. Called `check_card` (attempt 1, key banking-015-at-01:read-card:6).
+21. `check_card` found {}.
+22. Rule `read-access` fired: state = READING → true (state=READING).
+23. Called `check_access` (attempt 1, key banking-015-at-01:read-access:7).
+24. `check_access` found {}.
+25. Rule `read-business` fired: state = READING → true (state=READING).
+26. Called `check_business` (attempt 1, key banking-015-at-01:read-business:8).
+27. `check_business` found {}.
+28. Rule `read-documents` fired: state = READING → true (state=READING).
+29. Called `check_documents` (attempt 1, key banking-015-at-01:read-documents:9).
+30. `check_documents` found {}.
+31. Rule `read-registration` fired: state = READING → true (state=READING).
+32. Called `check_registration` (attempt 1, key banking-015-at-01:read-registration:10).
+33. `check_registration` found {}.
+34. Rule `read-confirmation` fired: state = READING → true (state=READING).
+35. Called `check_confirmation` (attempt 1, key banking-015-at-01:read-confirmation:11).
+36. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Direct Debit mandate: Northmere Fitness — Active. [facts: confirmation='none', instructed_outside_portal=False]
+37. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+38. `confirmation`: not known → none (by `read-confirmation`).
+39. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+40. Rule `triage` fired: state = READING → true (state=READING).
+41. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
+42. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
+43. `request_type`: not known → instruction (by `triage`).
+44. `subject`: not known → direct_debit (by `triage`).
+45. State `READING` → `TRIAGED` (by `triage`).
+46. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+47. `next_system`: not known → recurring (by `route-recurring`).
+48. The agent asked for `submit_request` {}.
+49. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: next_system = business is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
+50. The agent asked for `ask_system` {"system": "recurring"}.
+51. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction).
+52. The agent asked for `escalate` {"note": "Customer asked via secure portal to cancel the active Direct Debit mandate to Northmere Fitness so no future collections can be taken. Submitting was refused: the customer's verification is not established and no confirmation of the cancellation has been given (confirmation = none). Asking the recurring system was also refused. Nothing has been cancelled. A person needs to verify the customer and get their confirmation (for example in the secure portal) before the cancellation is passed to the Direct Debit team."}.
+53. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
+54. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
+55. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
+56. The case closed in `ESCALATED`: **escalate**.
+
+## Model calls
+
+5 calls, 11280 tokens in, 628 out, 7.309 s, cost $0.0262; models: claude-haiku-5-5, claude-sonnet-5-5.
