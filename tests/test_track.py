@@ -35,7 +35,7 @@ def event(seq: int, channel: str, sender: str, recipient: str, text: str) -> dic
 
 def started(
     *events: tuple[str, str, str, str],
-    request_type: str = "status",
+    request_type: str = "question",
     subject: str = "transfer",
     role: str = "Bank customer",
 ) -> Case:
@@ -134,7 +134,7 @@ def test_approval_for_someone_else_is_sent_to_that_person() -> None:
 
 def test_the_customer_is_asked_only_while_the_case_names_nothing() -> None:
     declined = ("External message", "Terminal", "Mara", "Payment not accepted. Please contact your bank.")
-    case = started(declined, request_type="reason", subject="card_payment")
+    case = started(declined, request_type="question", subject="card_payment")
     assert case.send("clarify", {"need": "which_card"}).accepted and case.state == "CLARIFIED"
     text = case.journal.of("action")[-1].data["args"]["text"]
     assert "which card" in text and "never ask for your password, PIN" in text

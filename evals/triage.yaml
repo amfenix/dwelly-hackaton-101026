@@ -1,18 +1,451 @@
-# The track's triage question, on messages whose answers we know.
-# desk eval evals/triage.yaml --models claude-haiku-5-5,claude-sonnet-5-5,jev-latest --runs 3
+# The policy's triage on the 50 public banking requests: title and request, as the policy reads them.
+# Labels from docs/cases-analysis.md; 018 is left out (a check, then maybe a change).
+# uv run desk eval evals/triage.yaml --models claude-haiku-5-5,jev-latest --runs 3
 eval: triage
 kind: classify
 policy: ../track/policy.yaml
 trigger: triage
-models: [claude-haiku-5-5]
+models:
+- claude-haiku-5-5
 runs: 3
 cases:
-  - name: pay a bill
-    text: "Please pay my Brightwell Energy bill, it's £120."
-    expect: { category: payment }
-  - name: balance question
-    text: "What is my balance after the last payment went out?"
-    expect: { category: question }
-  - name: disputed charge
-    text: "You charged me twice for the same bill and I want it fixed."
-    expect: { category: complaint }
+- name: 001 Was the one-off transfer sent?
+  text: 'Was the one-off transfer sent?
+
+
+    I can see a £420 debit for my one-off payment to Alder & Reed Workshop, but I need to know whether H&V sent
+    it.'
+  expect:
+    request_type: question
+    subject: transfer
+- name: 002 Expected Incoming Payment
+  text: 'Expected Incoming Payment
+
+
+    I’m expecting a contribution toward the cost of a shared pottery studio kiln. The sender told me by phone that
+    they had transferred it, but I can’t see it in my H&V account; please check whether it has arrived.'
+  expect:
+    request_type: question
+    subject: incoming_payment
+- name: 003 Transfer Awaiting Authorisation
+  text: 'Transfer Awaiting Authorisation
+
+
+    I saved a transfer instruction for an invoice in my secure portal, but there is no sent confirmation. Please
+    check whether it has been submitted and tell me what stage it is at.'
+  expect:
+    request_type: question
+    subject: transfer
+- name: 004 Why the transfer was declined
+  text: 'Why the transfer was declined
+
+
+    I am the account holder and made a transfer to Northmere Housing Co-operative on 14 July 2025. The secure portal
+    says it was not completed, but I cannot see why. Please explain the reason.'
+  expect:
+    request_type: question
+    subject: transfer
+- name: 005 Request about a transfer to the wrong recipient
+  text: 'Request about a transfer to the wrong recipient
+
+
+    I sent a £286.40 transfer for a shared pottery-studio bill to the wrong saved recipient. Please register a request
+    to seek its return.'
+  expect:
+    request_type: register
+    subject: transfer
+- name: 006 Two Similar Transfers
+  text: 'Two Similar Transfers
+
+
+    Mira, the account holder, wants H&V to establish whether two similar outgoing transfer entries are one instruction
+    shown twice or two separate instructions, and asks whether the second can be stopped or returned.'
+  expect:
+    request_type: question
+    subject: transfer
+- name: 007 International Transfer Status
+  text: 'International Transfer Status
+
+
+    I can see that H&V recorded my international transfer as sent, but I cannot tell what stage it has reached.
+    Please check its current status and tell me whether receipt by the beneficiary has been confirmed.'
+  expect:
+    request_type: question
+    subject: transfer
+- name: 008 The purpose recorded with the transfer
+  text: 'The purpose recorded with the transfer
+
+
+    I paid Mallow Pottery Works for a kiln repair and have forgotten the purpose text I entered. They have emailed
+    asking me to clarify it; please tell me what my transfer instruction recorded.'
+  expect:
+    request_type: question
+    subject: transfer
+- name: 009 Confirming the amount sent
+  text: 'Confirming the amount sent
+
+
+    I remember entering £684.20 in the transfer draft, but the final payment line shows £648.20. Please confirm
+    the amount H&V actually sent.'
+  expect:
+    request_type: question
+    subject: transfer
+- name: 010 Refund visible in the account
+  text: 'Refund visible in the account
+
+
+    I can see my outgoing transfer to Northmere Home Supplies in my secure portal. The supplier told me it might
+    return the £42.80, but I cannot tell whether that specific refund has reached my account. Please check the incoming
+    entries and confirm its status.'
+  expect:
+    request_type: question
+    subject: incoming_payment
+- name: 011 When will my standing order run?
+  text: 'When will my standing order run?
+
+
+    I need to know the date my active monthly standing order is next due to run. I have forgotten its schedule and
+    want to plan my household budget.'
+  expect:
+    request_type: question
+    subject: standing_order
+- name: 012 New standing-order amount
+  text: 'New standing-order amount
+
+
+    Mira wants to increase her monthly standing order to the fictional Westmere Garden Cooperative from £42.00 to
+    £68.00. She has not yet authorised the change.'
+  expect:
+    request_type: change
+    subject: standing_order
+- name: 013 Cancellation of a Future Payment Instruction
+  text: 'Cancellation of a Future Payment Instruction
+
+
+    I set up a recurring payment for my studio rent and want H&V to cancel the next scheduled run before it starts.
+    Please confirm that the future instruction is cancelled.'
+  expect:
+    request_type: instruction
+    subject: standing_order
+- name: 014 Direct Debit mandate status
+  text: 'Direct Debit mandate status
+
+
+    I saw a Direct Debit collection to Northmere Water Services on my March statement, but I have not seen another
+    one. Please tell me whether the mandate is currently active; I am not asking you to cancel it or assess what
+    I owe the organisation.'
+  expect:
+    request_type: question
+    subject: direct_debit
+- name: 015 Cancel future Direct Debit collections
+  text: 'Cancel future Direct Debit collections
+
+
+    I want H&V to cancel my active Direct Debit mandate to Northmere Fitness so it cannot be used for future collections.'
+  expect:
+    request_type: instruction
+    subject: direct_debit
+- name: 016 Disputed Direct Debit amount
+  text: 'Disputed Direct Debit amount
+
+
+    I want H&V to investigate the £18.40 Direct Debit charge to Northmere Water Services because I dispute the amount
+    debited.'
+  expect:
+    request_type: register
+    subject: direct_debit
+- name: 017 The Standing Order That Did Not Run
+  text: 'The Standing Order That Did Not Run
+
+
+    I need to know whether my monthly standing order for rent was sent and, if it was not, why. The recipient says
+    they have not received it.'
+  expect:
+    request_type: question
+    subject: standing_order
+- name: 019 Standing order date change
+  text: 'Standing order date change
+
+
+    I want to move the date of my active monthly standing order to Willow Yard Studios from 18 September 2025 to
+    22 September 2025. Please check whether the next run can still be changed and send the change to me for secure
+    confirmation.'
+  expect:
+    request_type: change
+    subject: standing_order
+- name: 020 What to Check Before Closing an Account
+  text: 'What to Check Before Closing an Account
+
+
+    I’m planning to close my H&V account after I move my regular payments. Please tell me what active instructions
+    are linked to it and what I should consider before closing it.'
+  expect:
+    request_type: question
+- name: 021 Has My Replacement Card Been Sent?
+  text: 'Has My Replacement Card Been Sent?
+
+
+    I need to know whether the replacement card ordered for my H&V account has actually been dispatched. The secure
+    portal confirmed that my request was accepted, but I cannot see confirmation of delivery or dispatch.'
+  expect:
+    request_type: question
+    subject: card
+- name: 022 Lost card blocked
+  text: 'Lost card blocked
+
+
+    I noticed my H&V debit card was missing after a visit to Alder Quay Market. Please block it immediately.'
+  expect:
+    request_type: instruction
+    subject: card
+- name: 023 Unrecognised card purchase
+  text: 'Unrecognised card purchase
+
+
+    I want H&V to investigate a posted card purchase at Fern & Finch Books for £38.40 on 14 July 2025, which I do
+    not recognise, and tell me how I can safely protect my card.'
+  expect:
+    request_type: register
+    subject: card_payment
+- name: 024 Reason for the Card Restriction
+  text: 'Reason for the Card Restriction
+
+
+    Rowan wants to know why their H&V card became temporarily unavailable after it was declined during a grocery
+    purchase, and whether the restriction has been lifted.'
+  expect:
+    request_type: question
+    subject: card
+- name: 025 Why a Card Attempt Was Declined
+  text: 'Why a Card Attempt Was Declined
+
+
+    Mara wants to know why her £18.40 card payment at North Quay Books was declined.'
+  expect:
+    request_type: question
+    subject: card_payment
+- name: 026 A Safe Route to a Forgotten PIN
+  text: 'A Safe Route to a Forgotten PIN
+
+
+    Maren forgot the PIN for her H&V debit card and wants to use the bank’s safe process to regain access without
+    sharing the PIN in a message.'
+  expect:
+    request_type: access
+    subject: card
+- name: 027 Access Restored
+  text: 'Access Restored
+
+
+    I can’t sign in to my H&V profile after several unsuccessful attempts. Please help me regain access safely so
+    I can review my household spending.'
+  expect:
+    request_type: access
+    subject: access
+- name: 028 New phone number in profile
+  text: 'New phone number in profile
+
+
+    I need to replace the phone number on my H&V profile. I no longer have access to the old phone, and I want to
+    use the bank’s approved confirmation process.'
+  expect:
+    request_type: change
+    subject: profile
+- name: 029 Is the new device linked?
+  text: 'Is the new device linked?
+
+
+    I started registering a new tablet for H&V mobile banking, but I am not sure the process finished. Please tell
+    me whether the device is linked and whether it can be used for banking operations.'
+  expect:
+    request_type: question
+    subject: access
+- name: 030 Replacement card request
+  text: 'Replacement card request
+
+
+    Maren’s debit card had become unreliable, so she submitted a replacement request. She contacted H&V to find
+    out whether the card was being made and whether it had been sent.'
+  expect:
+    request_type: question
+    subject: card
+- name: 031 June statement in the secure portal
+  text: 'June statement in the secure portal
+
+
+    I own my H&V account and need my June 2025 statement, but I cannot find it in the secure portal. Please make
+    the statement available there.'
+  expect:
+    request_type: question
+    subject: statement
+- name: 032 Archived Statement Request
+  text: 'Archived Statement Request
+
+
+    I need a copy of my January 2024 statement for my household records. Please let me know if it is available.'
+  expect:
+    request_type: question
+    subject: statement
+- name: 033 Transactions export
+  text: 'Transactions export
+
+
+    I need a CSV export of my transactions from 6 May through 9 May 2025 for my own budgeting. The export screen
+    is unclear, and I want to know when the file is available in my secure portal.'
+  expect:
+    request_type: question
+    subject: document
+- name: 034 Explaining a service fee
+  text: 'Explaining a service fee
+
+
+    I can see a £3.20 fee beside a foreign-currency cash withdrawal in my H&V secure portal, but I don''t understand
+    what the charge is for or how its amount was determined. Please check the fee against the tariff that applied
+    to that transaction.'
+  expect:
+    request_type: question
+    subject: fee
+- name: 035 Request to Review a Fee
+  text: 'Request to Review a Fee
+
+
+    Mara wants H&V to review whether a £4.50 paper statement fee, dated 18 June 2025, was correctly applied. She
+    says she had chosen electronic statements and disputes the fee.'
+  expect:
+    request_type: register
+    subject: fee
+- name: 036 New correspondence address
+  text: 'New correspondence address
+
+
+    I have moved within the UK and want H&V to update the address used for my correspondence.'
+  expect:
+    request_type: change
+    subject: profile
+- name: 037 Profile Name Typo
+  text: 'Profile Name Typo
+
+
+    Please correct the spelling of my name in my H&V profile. It shows “Elowen Mar”; my correct name is “Elowen
+    Marr”.'
+  expect:
+    request_type: register
+    subject: profile
+- name: 038 Account confirmation available in the secure portal
+  text: 'Account confirmation available in the secure portal
+
+
+    I need a bank document confirming my account relationship for my records. Please make it available to me in
+    the secure portal; I am not asking for a transfer.'
+  expect:
+    request_type: question
+    subject: document
+- name: 039 Permitted sign-in list for my profile
+  text: 'Permitted sign-in list for my profile
+
+
+    I noticed an unusual sign-in notification for my H&V profile and want a permitted list of the sign-in sessions
+    shown for it.'
+  expect:
+    request_type: question
+    subject: access
+- name: 040 Confirmation of a Specific Payment
+  text: 'Confirmation of a Specific Payment
+
+
+    I need a copy of the bank record for my £74.00 payment to a repair contractor, so I can share evidence of the
+    payment with them. I can see the transaction in my secure portal, but need a document showing its current stage.'
+  expect:
+    request_type: question
+    subject: document
+- name: 041 Payroll file receipt confirmation
+  text: 'Payroll file receipt confirmation
+
+
+    Please confirm whether my June 2025 payroll file, batch-041.csv, was received. I need to know the file''s receipt
+    status; I am not asking the bank to authorise payments on the company''s behalf.'
+  expect:
+    request_type: question
+    subject: batch
+- name: 042 Payment batch validation report
+  text: 'Payment batch validation report
+
+
+    I uploaded a supplier payment batch for Fenwick Workshop, but it did not pass validation. Please make the row-level
+    error report available to me so I can review what needs correcting.'
+  expect:
+    request_type: question
+    subject: batch
+- name: 043 Waiting for the Second Signatory
+  text: 'Waiting for the Second Signatory
+
+
+    I gave my first consent to Northmere Studio Ltd’s payroll payment package. I need to know whether it is waiting
+    for my co-signer or has moved on; I can’t see any separate payment submissions in the portal.'
+  expect:
+    request_type: question
+    subject: payment_package
+- name: 044 One Line in the Supplier Batch
+  text: 'One Line in the Supplier Batch
+
+
+    I can see that our supplier batch is marked processed, but I need to know whether the payment on row SUP-17
+    was paid or rejected.'
+  expect:
+    request_type: question
+    subject: batch
+- name: 045 New employee access request
+  text: 'New employee access request
+
+
+    Nadia asked H&V to arrange secure-portal access for a new colleague so they could help with the company’s payment
+    administration. Nadia does not have authority to assign user roles, and the company administrator’s approval
+    was still required.'
+  expect:
+    request_type: authority
+    subject: role
+- name: 046 Revoke a former employee’s role
+  text: 'Revoke a former employee’s role
+
+
+    I am the verified business administrator for Larkmere Studio Ltd. The secure portal still shows former employee
+    Owen Bell as an active Payroll Approver. Please revoke that role; we will review any operations previously authorised
+    under it separately.'
+  expect:
+    request_type: instruction
+    subject: role
+- name: 047 Company Payment Limit
+  text: 'Company Payment Limit
+
+
+    Maeve wants to know the current outgoing-payment limit on her company profile before arranging a substantial
+    supplier payment.'
+  expect:
+    request_type: question
+    subject: limit
+- name: 048 The buyer said payment was sent
+  text: 'The buyer said payment was sent
+
+
+    Please check whether the payment our buyer says they sent for our workshop invoice has reached our H&V business
+    account.'
+  expect:
+    request_type: question
+    subject: incoming_payment
+- name: 049 Acquiring Report Ready
+  text: 'Acquiring Report Ready
+
+
+    I need the acquiring report for 1–7 July 2025 to review the card sales and adjustments for my shop.'
+  expect:
+    request_type: question
+    subject: document
+- name: 050 Status of a Supplier Payment
+  text: 'Status of a Supplier Payment
+
+
+    I’m an authorised signatory for Northmere Studio Ltd. Our supplier says it has not received the payment we authorised
+    for a materials invoice. Please tell me what stage H&V’s records show for that payment.'
+  expect:
+    request_type: question
+    subject: transfer
