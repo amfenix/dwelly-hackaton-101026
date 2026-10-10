@@ -106,6 +106,10 @@ A fact not known yet is *unknown*; so is any test that reads it. `unknown and x`
 match and unknown, not false, when `other` is not known yet. **A rule fires only when its condition
 is true** — so to act on a missing fact, test it with `absent`.
 
+A bare word is a field when a field has that name, and a value otherwise. A value that is also a
+field's name is written quoted, `subject in [limit, 'role']`; written bare, the policy does not load
+and the error says so.
+
 ### Asking the classifier (`ask:`)
 
 One call answers every question of the rule, and the answers become fields:

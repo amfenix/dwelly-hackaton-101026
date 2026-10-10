@@ -18,6 +18,7 @@ NAMES = {
     "count": Kind("number"),
     "due": Kind("date"),
     "note": Kind("text"),
+    "channel": Kind("enum", ("chat", "note")),  # a value that is also a field's name
     "args.memo": Kind("text"),
 }
 
@@ -103,6 +104,7 @@ def test_none_condition_always_holds() -> None:
         ("topic in repair", "needs a list"),
         ("topic in []", "needs a list"),
         ("topic = broken", "'broken' is not one of"),
+        ("channel in [chat, note]", "'note' is both a field and a value here"),
         ("topic = nowhere.thing", "only args.<name> may use a dot"),
         ("note = elsewhere", "unknown name 'elsewhere'"),
         ("amount = [1]", "unsupported value"),
@@ -162,3 +164,8 @@ def test_to_decimal() -> None:
 def test_to_decimal_refuses_what_is_not_a_finite_number(value: Any) -> None:
     with pytest.raises(ValueError, match="not a finite number"):
         to_decimal(value)
+
+
+def test_a_value_named_like_a_field_is_written_quoted() -> None:
+    assert holds('channel in [chat, "note"]', channel="note") is True
+    assert holds("channel = chat", channel="chat") is True

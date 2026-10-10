@@ -42,12 +42,9 @@ the condition compares the subject with the requester's role (`customer`) and is
 `subject = role`. In 046@2 no system is chosen, and the verified administrator's instruction to
 revoke a role is refused.
 
-**Needs:**
-- policy: write the value quoted, `subject in [limit, "role"]`, or rename the subject value
-  (`user_role`);
-- engine (`src/desk/expr.py`, `policy.py`): a bare word in a list that is both a field name and a
-  value of the field being tested should be a load error ("`role` is a field; quote the value"),
-  so this cannot happen silently again.
+**Done:** the policy writes the value quoted, `subject in [limit, 'role']`; the engine refuses to
+load a bare word that is both a field and a value of what it is compared with, and says to quote it
+(`docs/policy.md`, Conditions). Live: 046@2 now submits the administrator's instruction.
 
 ## 3. Facts the functions do not read (track/functions.py)
 

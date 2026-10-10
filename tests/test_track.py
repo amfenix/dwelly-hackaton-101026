@@ -93,6 +93,13 @@ def test_with_no_subject_the_agent_names_the_system() -> None:
     assert case.fields["next_system"] == "access" and case.state == "ASKED"
 
 
+def test_a_role_goes_to_the_business_system() -> None:
+    revoke = ("Verified call", CUSTOMER, "H&V business banking agent", "Please revoke Owen Bell's approver role.")
+    case = started(revoke, request_type="instruction", subject="role")
+    assert case.fields["next_system"] == "business"  # `role` the value, not the requester's `role`
+    assert case.send("submit_request").accepted and case.state == "REQUESTED"
+
+
 def test_a_review_is_registered_not_asked() -> None:
     case = started(ASK, request_type="register")
     assert not case.send("ask_system", {"system": "payment"}).accepted

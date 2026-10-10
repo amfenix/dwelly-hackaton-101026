@@ -343,9 +343,12 @@ class _Compiler:
     def operand(self, tree: ast.expr, against: Kind | None) -> _Node:
         if isinstance(tree, (ast.Name, ast.Attribute)):
             ref = self.ref(tree)
-            if ref is not None:
-                return ref
             name = self.name_of(tree)
+            if ref is not None:
+                if against is not None and against.type == "enum" and name in against.values:
+                    # `subject in [limit, role]` would read the field `role`, not the value: say so
+                    raise self.fail(f'{name!r} is both a field and a value here; write the value quoted: "{name}"')
+                return ref
             if name in ("true", "false"):
                 return _Const(name == "true", name)
             if against is not None and against.type == "enum" and isinstance(tree, ast.Name):
