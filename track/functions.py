@@ -1,28 +1,1248 @@
-"""The track's functions: lookups and actions against the world (world.json).
+"""Facts and actions for the banking track.
 
-A function gets a `ctx` and returns the fields it found, as a dict. It never decides: the policy
-reads what it returns. It records anything it does in the world with `ctx.act(...)`.
-
-    ctx.case      the case as it came in            ctx.world   the records (world.json)
-    ctx.fields    the facts known so far (read only) ctx.args    the agent's arguments, for a signal's rule
-    ctx.key       the same on every retry: dedupe writes on it
-    ctx.act(type, **args)       record an action taken in the world
-    ctx.classify(text, {...})   ctx.generate(system, prompt)   when a check needs a model
+The event history is the source of truth for this track.  Lookup functions only read ``ctx.case``:
+the policy decides what to do with their facts, and an agent's words cannot turn into a bank record.
+The compatibility functions at the end remain available for the original payments example.
 """
 
 from __future__ import annotations
 
+import re
 import threading
-from typing import Any
+from collections.abc import Mapping, Sequence
+from datetime import date
+from decimal import Decimal, InvalidOperation
+from typing import Any, NamedTuple
 
-from desk import Context, function
+from desk import CaseError, Context, function
+
+# Keep all endpoint vocabulary here.  More specific checks precede broader ones in
+# ``_endpoint_check`` (an incoming-payment journal also contains the word payment).
+SYSTEMS: dict[str, tuple[str, ...]] = {
+    "incoming": (
+        "incoming-payment journal",
+        "incoming-payment system",
+        "incoming-entry journal",
+        "account transaction journal",
+    ),
+    "recurring": (
+        "standing-order journal",
+        "mandate journal",
+        "instruction register",
+        "direct debit service",
+    ),
+    "card": ("card authorisation journal", "card journal", "card team", "card system"),
+    "access": ("access log", "access team", "security team", "recovery system"),
+    "business": (
+        "signing log",
+        "import journal",
+        "import service",
+        "limit register",
+        "admin process",
+        "admin log",
+        "access-request journal",
+    ),
+    "documents": (
+        "statements service",
+        "archive group",
+        "statement service",
+        "document service",
+        "data service",
+        "acquiring service",
+    ),
+    "registration": ("request log", "case journal"),
+    "payment": (
+        "transfer journal",
+        "payment instruction journal",
+        "instruction log",
+        "instruction journal",
+        "transaction journal",
+        "payment team",
+        "payment journal",
+        "transfer system",
+        "payment system",
+    ),
+}
+
+# Names that are two labels for one record.  Other endpoints in the same check
+# remain distinct: a payment-team reply cannot answer a transfer-journal request.
+_SYSTEM_IDENTITIES: dict[str, tuple[tuple[str, ...], ...]] = {
+    "incoming": (("incoming-payment journal", "incoming-payment system"),),
+    "registration": (("request log", "case journal"),),
+}
+
+_MONEY = re.compile(r"(?<![A-Za-z0-9])(?:£|GBP\s*)\(?\s*(\d[\d,]*(?:\.\d{1,2})?)\s*\)?\s*(?:GBP|pounds?)?", re.I)
+_DATE_ISO = re.compile(r"\b(20\d{2})[-/](\d{1,2})[-/](\d{1,2})\b")
+_DATE_LONG = re.compile(
+    r"\b(\d{1,2})(?:st|nd|rd|th)?\s+"
+    r"(January|February|March|April|May|June|July|August|September|October|November|December)\s+(20\d{2})\b",
+    re.I,
+)
+_DATE_MONTH = re.compile(
+    r"\b(January|February|March|April|May|June|July|August|September|October|November|December)\s+(20\d{2})\b",
+    re.I,
+)
+_REFERENCE = re.compile(r"\b(?:HV-\d{3,}|SUP-\d+|[A-Z]{2,8}-\d{2,})\b")
+_FILE = re.compile(r"\b[\w.-]+\.(?:pdf|csv|txt)\b", re.I)
+
+
+class _Event(NamedTuple):
+    position: int
+    event: Mapping[str, Any]
+
+    @property
+    def seq(self) -> Any:
+        return self.event.get("seq", self.position)
+
+    @property
+    def text(self) -> str:
+        return str(self.event["text"])
+
+
+class _Record(NamedTuple):
+    check: str
+    request: _Event
+    answer: _Event | None
+    label: str
+
+
+def _events(ctx: Context) -> list[_Event]:
+    """Validate and return events in replay order."""
+
+    raw = ctx.case.get("events")
+    if not isinstance(raw, list):
+        raise CaseError("case.events must be a list")
+    result: list[_Event] = []
+    for index, value in enumerate(raw, 1):
+        if not isinstance(value, Mapping) or "text" not in value or not isinstance(value["text"], str):
+            raise CaseError(f"case.events[{index - 1}] must have text")
+        result.append(_Event(index, value))
+    return sorted(result, key=lambda item: (_seq_key(item.seq), item.position))
+
+
+def _seq_key(value: Any) -> tuple[int, Any]:
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return (0, value)
+    try:
+        return (0, int(str(value)))
+    except (TypeError, ValueError):
+        return (1, str(value))
+
+
+def _kind(event: _Event) -> str:
+    return str(event.event.get("kind", "")).lower()
+
+
+def _system_name(event: _Event, expected: str | None = None) -> str:
+    for key in ("from", "to"):
+        value = str(event.event.get(key, ""))
+        if value and (expected is None or _endpoint_check(value) == expected):
+            return value
+    for key in ("from", "to"):
+        value = str(event.event.get(key, ""))
+        if value:
+            return value
+    return "system"
+
+
+def _endpoint_check(value: Any) -> str | None:
+    low = re.sub(r"[-_]", " ", str(value).casefold())
+    for check, names in SYSTEMS.items():
+        if any(re.sub(r"[-_]", " ", name) in low for name in names):
+            return check
+    return None
+
+
+def _endpoint_identity(value: Any, check: str | None = None) -> str | None:
+    """Return the record identity, keeping unrelated endpoints separate."""
+
+    low = re.sub(r"[-_]", " ", str(value).casefold())
+    if check == "registration" and (_is_team_name(value) or _endpoint_check(value) == "registration"):
+        return "registration"
+    if check is None:
+        check = _endpoint_check(value)
+    if check is None:
+        return None
+    for aliases in _SYSTEM_IDENTITIES.get(check, ()):
+        if any(re.sub(r"[-_]", " ", alias) in low for alias in aliases):
+            return f"{check}:{aliases[0]}"
+    names = SYSTEMS.get(check, ())
+    for name in names:
+        if re.sub(r"[-_]", " ", name) in low:
+            return f"{check}:{name}"
+    return None
+
+
+def _is_team_name(value: Any) -> bool:
+    low = str(value).casefold()
+    return bool(re.search(r"\bteam\b", low) or re.search(r"\bsupport\b(?!\s+agent)", low))
+
+
+def _registration_request(event: _Event, endpoint: str) -> bool:
+    text = event.text.casefold()
+    is_team = any(word in str(event.event.get("to", "")).casefold() for word in ("team", "support"))
+    phrase = bool(
+        re.search(
+            r"\b(?:register\w*|open\w*|raise\w*|review\w*)\b.*\b(?:case|request|review)\b",
+            text,
+        )
+        or re.search(r"\bregister\w*\b", text)
+        or (is_team and re.search(r"\breview\w*\b", text))
+    )
+    return phrase and (is_team or endpoint in {"team", "service", "support"})
+
+
+def _event_check(event: _Event) -> str | None:
+    if _kind(event) != "system":
+        return None
+    recipient = str(event.event.get("to", ""))
+    sender = str(event.event.get("from", ""))
+    check = _endpoint_check(recipient)
+    if check is not None:
+        if _endpoint_check(sender) is not None or _is_team_name(sender):
+            return None
+        return "registration" if _registration_request(event, recipient) else check
+    if _registration_request(event, recipient):
+        return "registration"
+    return None
+
+
+def _answer_check(event: _Event) -> str | None:
+    if _kind(event) != "system":
+        return None
+    check = _endpoint_check(event.event.get("from", ""))
+    if check is not None:
+        return check
+    if _is_team_name(event.event.get("from")) and re.search(
+        r"\b(?:register(?:ed)?|registration|request|case|review|received|logged)\b", event.text, re.I
+    ):
+        return "registration"
+    return None
+
+
+def _quoted_answer_check(event: _Event) -> str | None:
+    """Find a system named in an internal note written to a case record."""
+
+    if _kind(event) != "system":
+        return None
+    recipient = str(event.event.get("to", "")).casefold()
+    if "case record" not in recipient and "case journal" not in recipient:
+        return None
+    return _endpoint_check(event.text)
+
+
+def _is_case_record(event: _Event) -> bool:
+    recipient = str(event.event.get("to", "")).casefold()
+    return "case record" in recipient or "case journal" in recipient
+
+
+def _records(ctx: Context, check: str) -> list[_Record]:
+    events = _events(ctx)
+    requests: list[tuple[str, str | None, _Event]] = []
+    records: list[_Record] = []
+    for current in events:
+        found = _event_check(current)
+        if found is not None:
+            requests.append((found, _endpoint_identity(current.event.get("to"), found), current))
+            continue
+        quoted_check = _quoted_answer_check(current)
+        answer_check = _answer_check(current) or quoted_check
+        if answer_check is None and _kind(current) == "system" and _is_case_record(current) and requests:
+            answer_check = requests[0][0]
+        if answer_check is None:
+            continue
+        if (
+            answer_check != "registration"
+            and re.search(r"\b(?:register(?:ed)?|registration|request)\b", current.text, re.I)
+            and any(requested == "registration" for requested, _, _ in requests)
+        ):
+            answer_check = "registration"
+        answer_source = current.text if quoted_check is not None else current.event.get("from")
+        answer_identity = _endpoint_identity(answer_source, answer_check)
+        for position, (requested, request_identity, request) in enumerate(requests):
+            if requested == answer_check and request_identity == answer_identity:
+                records.append(_Record(requested, request, current, _system_name(current, requested)))
+                requests.pop(position)
+                break
+    records.extend(_Record(found, request, None, _system_name(request, found)) for found, _, request in requests)
+    return [record for record in records if record.check == check]
+
+
+def _note(ctx: Context, event: _Event, text: str | None = None, label: str | None = None) -> None:
+    source = label or _system_name(event)
+    location = "initial request" if event.position == 0 else f"event {event.seq}"
+    ctx.note(f"{location} ({source}): {event.text if text is None else text}")
+
+
+def _record(ctx: Context, out: dict[str, Any], name: str, value: Any, event: _Event, label: str | None = None) -> None:
+    out[name] = value
+    _note(ctx, event, label=label)
+
+
+def _answer_text(record: _Record) -> str:
+    return record.answer.text if record.answer is not None else ""
+
+
+def _first_money(text: str, *, last: bool = False) -> str | None:
+    matches = list(_MONEY.finditer(text))
+    named = re.compile(r"\b(?:amount|total|limit|value)\s*(?:is|of|:)?\s*(\d[\d,]*(?:\.\d{1,2})?)\b", re.I)
+    matches.extend(named.finditer(text))
+    matches.sort(key=lambda match: match.start())
+    if not matches:
+        return None
+    match = matches[-1] if last else matches[0]
+    raw = match.group(1).replace(",", "")
+    try:
+        value = Decimal(raw)
+    except InvalidOperation:
+        return None
+    return f"{value:.2f}" if value.is_finite() else None
+
+
+def _money_matches(text: str) -> list[re.Match[str]]:
+    named = re.compile(r"\b(?:amount|total|limit|value)\s*(?:is|of|:)?\s*(\d[\d,]*(?:\.\d{1,2})?)\b", re.I)
+    matches = list(_MONEY.finditer(text)) + list(named.finditer(text))
+    unique: dict[tuple[int, int], re.Match[str]] = {}
+    for match in matches:
+        unique[(match.start(), match.end())] = match
+    return sorted(unique.values(), key=lambda match: match.start())
+
+
+def _money_match_value(match: re.Match[str]) -> str | None:
+    try:
+        value = Decimal(match.group(1).replace(",", ""))
+    except InvalidOperation:
+        return None
+    return f"{value:.2f}" if value.is_finite() else None
+
+
+def _subject_amount(text: str) -> str | None:
+    """Prefer the requested/recorded amount over an incidental old amount."""
+
+    matches = _money_matches(text)
+    if not matches:
+        return None
+    scored: list[tuple[int, int, str]] = []
+    previous_end = 0
+    for match in matches:
+        value = _money_match_value(match)
+        if value is None:
+            continue
+        # Context from a previous amount must not also describe the next one:
+        # "from £42 to £68" associates "from" with 42 and "to" with 68.
+        before = text[max(previous_end, match.start() - 90) : match.start()].casefold()
+        before = re.split(r"[.!?;\n]", before)[-1]
+        previous_end = match.end()
+        score = 0
+        if re.search(
+            r"\b(?:to|into|target|set|new|actual|final|sent|completed|credited|received|total|amount|value|limit|maximum|max)\b",
+            before,
+        ):
+            score += 3
+        if re.search(
+            r"\b(?:from|current|currently|old|previous|draft|remember|memory|existing)\b|portal\s+still\s+shows",
+            before,
+        ):
+            score -= 3
+        if re.search(r"\b(?:change|increase|decrease|updated|amend)\w*\b", before):
+            score += 1
+        scored.append((score, -match.start(), value))
+    return max(scored)[2] if scored else None
+
+
+def _date_value(text: str) -> str | None:
+    iso = _DATE_ISO.search(text)
+    if iso:
+        try:
+            return date(int(iso.group(1)), int(iso.group(2)), int(iso.group(3))).isoformat()
+        except ValueError:
+            return None
+    long_date = _DATE_LONG.search(text)
+    months = [
+        "january",
+        "february",
+        "march",
+        "april",
+        "may",
+        "june",
+        "july",
+        "august",
+        "september",
+        "october",
+        "november",
+        "december",
+    ]
+    if long_date:
+        try:
+            month = months.index(long_date.group(2).casefold()) + 1
+            return date(int(long_date.group(3)), month, int(long_date.group(1))).isoformat()
+        except ValueError:
+            return None
+    return None
+
+
+def _customer_events(events: list[_Event], case: Mapping[str, Any]) -> list[_Event]:
+    details = case.get("details")
+    bank = str(details.get("Bank", "")) if isinstance(details, Mapping) else ""
+    bank_words = ("agent", "service", "team", "system", "journal", "bank", "portal", "support", "h&v")
+    result: list[_Event] = []
+    for event in events:
+        if _kind(event) != "conversation":
+            continue
+        sender = str(event.event.get("from", ""))
+        receiver = str(event.event.get("to", ""))
+        sender_low, receiver_low = sender.casefold(), receiver.casefold()
+        sender_is_bank = bool(bank and bank.casefold() in sender_low) or any(word in sender_low for word in bank_words)
+        receiver_is_bank = bool(bank and bank.casefold() in receiver_low) or any(
+            word in receiver_low for word in bank_words
+        )
+        if not sender_is_bank and (receiver_is_bank or not receiver):
+            result.append(event)
+    return result
+
+
+def _bank_sender(event: _Event, case: Mapping[str, Any]) -> bool:
+    details = case.get("details")
+    bank = str(details.get("Bank", "")) if isinstance(details, Mapping) else ""
+    sender = str(event.event.get("from", "")).casefold()
+    return bool(bank and bank.casefold() in sender) or any(
+        word in sender for word in ("agent", "service", "team", "system", "journal", "bank", "portal", "support", "h&v")
+    )
+
+
+def _request_text(ctx: Context, events: list[_Event]) -> str:
+    request = ctx.case.get("request", "")
+    parts = [str(request)] if isinstance(request, str) else []
+    parts.extend(event.text for event in _customer_events(events, ctx.case))
+    return "\n".join(part for part in parts if part)
+
+
+def _initial_request(ctx: Context) -> _Event:
+    return _Event(0, {"text": str(ctx.case.get("request", ""))})
+
+
+def _money_in_text(text: str, value: str) -> bool:
+    return any(_money_match_value(match) == value for match in _money_matches(text))
+
+
+def _fact_source(
+    ctx: Context,
+    customer: list[_Event],
+    *,
+    value: str | None = None,
+    token: str | None = None,
+    date_value: str | None = None,
+    subject: str | None = None,
+) -> _Event:
+    for event in [*customer, _initial_request(ctx)]:
+        if (
+            (value is not None and _money_in_text(event.text, value))
+            or (token is not None and token.casefold() in event.text.casefold())
+            or (date_value is not None and _date_value(event.text) == date_value)
+            or (subject is not None and _subject(event.text) == subject)
+        ):
+            return event
+    return _initial_request(ctx)
+
+
+def _verification_complete(event: _Event) -> bool:
+    text = event.text.casefold().replace("\u2019", "'")
+    pattern = (
+        r"\b(?:identity|identification) checks?\s+(?:(?:are|were|have been|have)\s+)?completed?\b|"
+        r"\bcompleted?\s+(?:(?:[\w&'-]+)\s+){0,4}(?:identity|identification) checks?\b"
+    )
+    return any(not _negated_at(text, match.start()) for match in re.finditer(pattern, text))
+
+
+def _role(details: Mapping[str, Any], text: str) -> str:
+    low = text.casefold().replace("\u2019", "'")
+    if re.search(
+        r"\b(?:i(?:'m| am)|as a)\s+(?:the\s+)?(?:company(?:'s)?\s+)?(?:authori[sz]ed\s+)?(?:file\s+)?uploader\b",
+        low,
+    ):
+        return "uploader"
+    if re.search(
+        r"\b(?:i(?:'m| am)|as a)\s+(?:the\s+)?(?:company\s+)?(?:authori[sz]ed\s+)?(?:business )?signatory\b", low
+    ):
+        return "signatory"
+    if re.search(
+        r"\b(?:i(?:'m| am))\s+(?:the\s+)?(?:an?\s+)?(?:verified\s+)?"
+        r"(?:authori[sz]ed\s+)?(?:business )?(?:administrator|admin)\b",
+        low,
+    ):
+        return "business_admin"
+    if re.search(r"\b(?:i(?:'m| am))\s+(?:an?\s+)?employee\b", low):
+        return "employee"
+    if re.search(r"\b(?:i(?:'m| am)|as a)\s+(?:an?\s+)?(?:authori[sz]ed\s+)?viewer\b", low) or re.search(
+        r"\b(?:i(?:'m| am))\s+(?:authori[sz]ed\s+)?to\s+view\b", low
+    ):
+        return "viewer"
+    if re.search(r"\b(?:i(?:'m| am)|as a)\s+(?:an?\s+)?third party\b", low):
+        return "third_party"
+    source = str(details.get("Source role", "")).casefold()
+    if "administrator" in source or re.search(r"\badmin\b", source):
+        return "business_admin"
+    if "third" in source:
+        return "third_party"
+    if "employee" in source:
+        return "employee"
+    if "uploader" in source:
+        return "uploader"
+    if "signatory" in source:
+        return "signatory"
+    if "viewer" in source:
+        return "viewer"
+    return "customer"
+
+
+def _channel(value: Any) -> str | None:
+    return {
+        "secure portal": "secure_portal",
+        "secure chat": "secure_chat",
+        "verified call": "verified_call",
+        "business portal": "business_portal",
+        "external message": "external_message",
+    }.get(str(value).strip().casefold())
+
+
+@function
+def identify_requester(ctx: Context) -> dict[str, Any]:
+    events = _events(ctx)
+    customer = _customer_events(events, ctx.case)
+    if not customer:
+        return {}
+    latest = customer[-1]
+    details = ctx.case.get("details")
+    details_map = details if isinstance(details, Mapping) else {}
+    history_text = "\n".join(event.text for event in customer)
+    out: dict[str, Any] = {}
+    _record(ctx, out, "requester", str(latest.event.get("from", "")), latest)
+    _record(ctx, out, "role", _role(details_map, history_text), latest)
+    channel = _channel(latest.event.get("channel"))
+    if channel is not None:
+        _record(ctx, out, "channel", channel, latest)
+        verified = channel in {"verified_call", "secure_portal", "business_portal"}
+        verification_event = next(
+            (
+                event
+                for event in events
+                if _kind(event) in {"conversation", "system"}
+                and _bank_sender(event, ctx.case)
+                and _verification_complete(event)
+            ),
+            None,
+        )
+        if verification_event is not None:
+            verified = True
+        _record(ctx, out, "verified", verified, verification_event or latest)
+    return out
+
+
+def _subject(text: str) -> str | None:
+    low = text.casefold()
+
+    def has(*words: str) -> bool:
+        return any(re.search(rf"\b{re.escape(word)}\b", low) for word in words)
+
+    patterns: tuple[tuple[str, tuple[str, ...]], ...] = (
+        ("payment_package", ("payment package", "payroll package")),
+        ("role", ("role", "permission", "administrator", "admin")),
+        ("limit", ("limit", "maximum")),
+        ("fee", ("fee", "charge")),
+        ("access", ("password", "pin", "passcode", "login", "access", "recovery", "sign-in")),
+        ("profile", ("profile", "phone number", "address", "personal details", "name correction")),
+        ("incoming_payment", ("incoming payment", "incoming-payment", "payment has arrived", "payment arrived")),
+        ("standing_order", ("standing order", "standing-order")),
+        ("direct_debit", ("direct debit", "direct-debit", "mandate")),
+        ("card_payment", ("card payment", "card purchase", "card transaction", "merchant")),
+        ("batch", ("batch", "payroll file", "import file")),
+        ("statement", ("statement",)),
+        ("document", ("document", "report", "export", "file")),
+        ("card", ("card",)),
+        ("transfer", ("transfer", "payment", "funds")),
+    )
+    for subject, words in patterns:
+        if any(has(word) if " " not in word and "-" not in word else word in low for word in words):
+            return subject
+    return None
+
+
+def _counterparty(text: str) -> str | None:
+    patterns = (
+        r"\bto\s+([A-Z][^.!?\n,]+?)(?=\s+(?:on|dated|for|under|and|but|has|was|is|checked|please|need)\b|[,.!?]|$)",
+        r"\bmerchant\s*[:\-]?\s*([A-Z][^.!?\n,]+)",
+        r"\bpayer\s*[:\-]?\s*([A-Z][^.!?\n,]+)",
+        r"\bfrom\s+([A-Z][^.!?\n,]+?)(?=\s+(?:has|said|sent|made|by)\b|[,.!?]|$)",
+    )
+    for pattern in patterns:
+        found = re.search(pattern, text)
+        if found:
+            value = re.sub(r"\s+", " ", found.group(1)).strip(" \"'")
+            if value and value.casefold() not in {"my account", "the bank", "h&v"}:
+                return value
+    return None
+
+
+@function
+def find_subject(ctx: Context) -> dict[str, Any]:
+    events = _events(ctx)
+    text = _request_text(ctx, events)
+    if not text.strip():
+        return {}
+    customer = _customer_events(events, ctx.case)
+    out: dict[str, Any] = {}
+    subject = _subject(text)
+    if subject is not None:
+        _record(ctx, out, "subject", subject, _fact_source(ctx, customer, subject=subject))
+    amount = _subject_amount(text)
+    if amount is not None:
+        _record(ctx, out, "amount", amount, _fact_source(ctx, customer, value=amount))
+    counterparty = _counterparty(text)
+    if counterparty is not None:
+        _record(ctx, out, "counterparty", counterparty, _fact_source(ctx, customer, token=counterparty))
+    reference = _REFERENCE.search(text) or _FILE.search(text)
+    if reference is not None:
+        _record(
+            ctx,
+            out,
+            "reference",
+            reference.group(0),
+            _fact_source(ctx, customer, token=reference.group(0)),
+        )
+    subject_date = _date_value(text)
+    if subject_date is not None:
+        _record(ctx, out, "subject_date", subject_date, _fact_source(ctx, customer, date_value=subject_date))
+    return out
+
+
+def _negated_at(text: str, start: int) -> bool:
+    prefix = text[max(0, start - 80) : start]
+    return bool(
+        re.search(
+            r"\b(?:no|not|never|without|doesn't|didn't|hasn't|haven't|"
+            r"does\s+not|did\s+not|has\s+not|have\s+not|is\s+not|was\s+not|are\s+not|were\s+not)\b"
+            r"(?:\W+\w+){0,5}\s*$",
+            prefix,
+            re.I,
+        )
+    )
+
+
+def _status(text: str, values: Mapping[str, tuple[str, ...]]) -> str:
+    low = text.casefold()
+    for value, words in values.items():
+        for pattern in words:
+            for match in re.finditer(pattern, low):
+                if not _negated_at(low, match.start()):
+                    return value
+    return "OTHER"
+
+
+def _reason(text: str) -> str | None:
+    match = re.search(
+        r"\b(?:reason|permitted\s+(?:customer-facing\s+)?wording|permitted\s+category)\s*"
+        r"(?:is|:)?\s*[\"“]?([^.!?\n]+(?:[.!?])?)[\"”]?",
+        text,
+        re.I,
+    )
+    if match:
+        return match.group(1).strip(" \"'“”")
+    match = re.search(r"\bbecause\s+([^.!?\n]+(?:[.!?])?)", text, re.I)
+    return match.group(1).strip() if match else None
+
+
+def _system_facts(ctx: Context, check: str) -> tuple[_Record, str] | None:
+    records = _records(ctx, check)
+    if not records:
+        return None
+    record = records[0]
+    return record, _answer_text(record)
+
+
+def _asked(ctx: Context, check: str, name: str) -> tuple[dict[str, Any], _Record] | None:
+    found = _system_facts(ctx, check)
+    if found is None:
+        return None
+    record, _ = found
+    out = {name: True}
+    _note(ctx, record.request, label=record.label)
+    return out, record
+
+
+@function
+def check_payment(ctx: Context) -> dict[str, Any]:
+    found = _system_facts(ctx, "payment")
+    if found is None:
+        return {}
+    record, answer = found
+    out, _ = _asked(ctx, "payment", "payment_asked") or ({}, record)
+    if record.answer is None:
+        return out
+    status = _status(
+        answer,
+        {
+            "SENT": (
+                r"\bmarked?\s+as\s+sent\b",
+                r"\bstatus\s*(?:is|:)\s*[\"“]?sent\b",
+                r"(?<!not )(?<!never )\bsent\b",
+            ),
+            "PENDING": (r"\bpending\b",),
+            "AWAITING_AUTHORISATION": (r"awaiting.{0,30}authori[sz]", r"awaiting.{0,30}consent"),
+            "DECLINED": (r"\bdeclined\b",),
+            "REJECTED": (r"\brejected\b",),
+            "CANCELLED": (r"\bcancell?ed\b",),
+            "NOT_EXECUTED": (r"\bnot\s+(?:been\s+)?completed\b", r"\bnot\s+executed\b", r"did not execute"),
+            "COMPLETED": (r"(?<!not\s)\bcompleted\b", r"\bpayment\s+complete\b"),
+        },
+    )
+    _record(ctx, out, "payment_status", status, record.answer)
+    reason = _reason(answer)
+    if reason is not None:
+        _record(ctx, out, "payment_reason", reason, record.answer)
+    count = re.search(
+        r"\b(\d+|one|two|three|four|five)\s+(?:separate\s+)?(?:payment|payments|transfer|transfers|instructions?)\b",
+        answer,
+        re.I,
+    )
+    if count:
+        words = {"one": 1, "two": 2, "three": 3, "four": 4, "five": 5}
+        value = words.get(count.group(1).casefold(), int(count.group(1)) if count.group(1).isdigit() else 0)
+        _record(ctx, out, "payment_count", value, record.answer)
+    return out
+
+
+@function
+def check_incoming(ctx: Context) -> dict[str, Any]:
+    found = _system_facts(ctx, "incoming")
+    if found is None:
+        return {}
+    record, answer = found
+    out, _ = _asked(ctx, "incoming", "incoming_asked") or ({}, record)
+    if record.answer is None:
+        return out
+    low = answer.casefold()
+    if re.search(r"\b(?:no|not|without|never)\b.{0,40}\b(?:incoming payment|payment|credit)\b", low) or re.search(
+        r"\bnot found\b", low
+    ):
+        _record(ctx, out, "incoming_found", False, record.answer)
+    elif re.search(r"(?<!not )\b(?:found|received|located|recorded)\b", low):
+        _record(ctx, out, "incoming_found", True, record.answer)
+    amount = _first_money(answer)
+    if amount is not None and out.get("incoming_found") is True:
+        _record(ctx, out, "incoming_amount", amount, record.answer)
+    return out
+
+
+@function
+def check_recurring(ctx: Context) -> dict[str, Any]:
+    found = _system_facts(ctx, "recurring")
+    if found is None:
+        return {}
+    record, answer = found
+    out, _ = _asked(ctx, "recurring", "recurring_asked") or ({}, record)
+    if record.answer is None:
+        return out
+    _record(
+        ctx,
+        out,
+        "recurring_status",
+        _status(
+            answer,
+            {
+                "CANCELLED": (r"\bcancell?ed\b",),
+                "ACTIVE": (r"(?<!not )\bactive\b", r"\benabled\b"),
+                "NOT_EXECUTED": (r"not\s+(?:been\s+)?executed", r"did not run", r"not\s+(?:been\s+)?run"),
+                "AMENDED": (r"\bamended\b", r"\bupdated\b", r"\bchanged\b"),
+            },
+        ),
+        record.answer,
+    )
+    next_marker = re.search(
+        r"\b(?:next\s+(?:scheduled\s+)?(?:run|payment)|scheduled\s+run\s+date|run\s+date)\b", answer, re.I
+    )
+    value = _date_value(answer[next_marker.end() :]) if next_marker else None
+    if value is not None:
+        _record(ctx, out, "next_run", value, record.answer)
+    return out
+
+
+@function
+def check_card(ctx: Context) -> dict[str, Any]:
+    found = _system_facts(ctx, "card")
+    if found is None:
+        return {}
+    record, answer = found
+    out, _ = _asked(ctx, "card", "card_asked") or ({}, record)
+    if record.answer is None:
+        return out
+    _record(
+        ctx,
+        out,
+        "card_status",
+        _status(
+            answer,
+            {
+                "IN_MANUFACTURE": (r"in\s+manufactur", r"being\s+made"),
+                "DISPATCHED": (
+                    r"(?<!not )dispatch(?:ed|\s+status\s*:\s*registered)",
+                    r"(?<!not )sent\s+for\s+delivery",
+                ),
+                "BLOCKED": (r"\bblocked\b",),
+                "RESTRICTED": (r"\brestricted\b", r"\bpermitted category:\s*[^.!?\n]*\brestriction\b"),
+                "DECLINED": (r"\bdeclined\b",),
+                "REQUESTED": (r"request(?:ed)?\b", r"accepted\b", r"received\b"),
+            },
+        ),
+        record.answer,
+    )
+    reason = _reason(answer)
+    if reason is not None:
+        _record(ctx, out, "card_reason", reason, record.answer)
+    return out
+
+
+@function
+def check_access(ctx: Context) -> dict[str, Any]:
+    found = _system_facts(ctx, "access")
+    if found is None:
+        return {}
+    record, answer = found
+    out, _ = _asked(ctx, "access", "access_asked") or ({}, record)
+    if record.answer is None:
+        return out
+    _record(
+        ctx,
+        out,
+        "access_status",
+        _status(
+            answer,
+            {
+                "AWAITING_CONFIRMATION": (r"awaiting.{0,25}confirmation",),
+                "PROCEDURE_STARTED": (r"procedure\s+started", r"process\s+started"),
+                "EXTRACT_PROVIDED": (r"extract\s+(?:has\s+been\s+)?provided", r"provided\s+extract"),
+                "RESTORED": (r"\brestored\b", r"access\s+is\s+back"),
+                "LINKED": (r"\blinked\b",),
+            },
+        ),
+        record.answer,
+    )
+    return out
+
+
+@function
+def check_business(ctx: Context) -> dict[str, Any]:
+    found = _system_facts(ctx, "business")
+    if found is None:
+        return {}
+    record, answer = found
+    out, _ = _asked(ctx, "business", "business_asked") or ({}, record)
+    if record.answer is None:
+        return out
+    _record(
+        ctx,
+        out,
+        "business_status",
+        _status(
+            answer,
+            {
+                "VALIDATION_FAILED": (r"validation\s+(?:has\s+)?failed", r"failed\s+validation"),
+                "AWAITING_SECOND_SIGNATORY": (r"awaiting.{0,30}second\s+signatory", r"no\s+second\s+consent"),
+                "PENDING_APPROVAL": (r"pending\s+approval", r"awaiting\s+approval"),
+                "ROLE_REVOKED": (r"role\s+(?:was\s+)?revoked", r"revoked\s+role"),
+                "RECEIVED": (r"\breceived\b", r"receipt\s+confirmed", r"recording\s+receipt"),
+            },
+        ),
+        record.answer,
+    )
+    amount = _first_money(answer)
+    if amount is not None and re.search(r"\b(?:limit|maximum|max)\b", answer, re.I):
+        _record(ctx, out, "business_limit", amount, record.answer)
+    return out
+
+
+@function
+def check_documents(ctx: Context) -> dict[str, Any]:
+    found = _system_facts(ctx, "documents")
+    if found is None:
+        return {}
+    record, answer = found
+    out, _ = _asked(ctx, "documents", "documents_asked") or ({}, record)
+    if record.answer is None:
+        return out
+    low = answer.casefold()
+    if re.search(r"\b(?:not|no)\b.{0,30}\b(?:available|ready|found|placed)\b", low):
+        _record(ctx, out, "document_ready", False, record.answer)
+    elif re.search(r"\b(?:available|ready|placed|provided)\b", low):
+        _record(ctx, out, "document_ready", True, record.answer)
+    if out.get("document_ready") is True:
+        attachments = ctx.case.get("attachments")
+        available: list[str] = []
+        if isinstance(attachments, Sequence) and not isinstance(attachments, (str, bytes, bytearray)):
+            available = [
+                attachment["name"]
+                for attachment in attachments
+                if isinstance(attachment, Mapping) and isinstance(attachment.get("name"), str)
+            ]
+        file_match = _FILE.search(answer)
+        if file_match is not None:
+            matched = next((name for name in available if name.casefold() == file_match.group(0).casefold()), None)
+            if matched is not None:
+                _record(ctx, out, "document_name", matched, record.answer)
+        elif available:
+            _record(ctx, out, "document_name", available[0], record.answer)
+    return out
+
+
+@function
+def check_registration(ctx: Context) -> dict[str, Any]:
+    found = _system_facts(ctx, "registration")
+    if found is None:
+        return {}
+    record, answer = found
+    out, _ = _asked(ctx, "registration", "registration_asked") or ({}, record)
+    if record.answer is None:
+        return out
+    low = answer.casefold()
+    if re.search(r"\b(?:not|never)\s+registered\b", low) or re.search(r"\brejected\b", low):
+        registered = False
+    elif re.search(r"\bregistered\b", low) or re.search(
+        r"\b(?:received|logged|opened)\b.{0,30}\b(?:review|request)\b", low
+    ):
+        registered = True
+    else:
+        return out
+    _record(ctx, out, "registered", registered, record.answer)
+    reference = _REFERENCE.search(answer)
+    if reference is not None:
+        _record(ctx, out, "registration_ref", reference.group(0), record.answer)
+    return out
+
+
+@function
+def check_confirmation(ctx: Context) -> dict[str, Any]:
+    events = _events(ctx)
+    conversations = [event for event in events if _kind(event) == "conversation"]
+    if not conversations:
+        return {}
+    requested: _Event | None = None
+    outside: _Event | None = None
+    given: _Event | None = None
+
+    def is_given(text: str) -> bool:
+        low = text.casefold().replace("\u2019", "'")
+        if "?" in low:
+            return False
+        if re.search(
+            r"\b(?:do|does|did)\s+not\s+(?:approve|confirm)|\b(?:don't|doesn't|didn't)\s+"
+            r"(?:approve|confirm)|\b(?:not|never)(?:\s+yet)?\s+(?:approve\w*|confirm\w*)\b|"
+            r"\b(?:haven't|have\s+not|has\s+not)\s+(?:yet\s+)?(?:approve\w*|confirm\w*)\b",
+            low,
+        ):
+            return False
+        return bool(
+            re.search(r"(?:^|[.!]\s*)i\s+(?:(?:have|hereby|now)\s+)*(?:confirm(?:ed)?|approv(?:e|ed))\b", low)
+            or re.fullmatch(r"\s*(?:confirmed|approved)[.!]?\s*", low)
+        )
+
+    for event in conversations:
+        low = event.text.casefold()
+        channel = _channel(event.event.get("channel"))
+        if channel in {"secure_chat", "external_message"} and re.search(
+            r"\b(?:change|amend|update|increase|decrease|alter)\b", low
+        ):
+            outside = outside or event
+        if (
+            _bank_sender(event, ctx.case)
+            and channel == "secure_portal"
+            and (
+                re.search(r"\b(?:sent|send|presented|available).{0,50}\b(?:change|amendment)\b", low)
+                or re.search(r"\breview\w*.{0,30}\bconfirm\w*\b", low)
+            )
+        ):
+            requested = requested or event
+        if (
+            requested is not None
+            and _seq_key(event.seq) > _seq_key(requested.seq)
+            and not _bank_sender(event, ctx.case)
+            and channel == "secure_portal"
+            and is_given(low)
+        ):
+            given = event
+    out: dict[str, Any] = {}
+    evidence = given or requested or outside or conversations[-1]
+    confirmation = "given" if given is not None else "requested" if requested is not None else "none"
+    _record(ctx, out, "confirmation", confirmation, evidence)
+    _record(ctx, out, "instructed_outside_portal", outside is not None, outside or evidence)
+    return out
+
+
+def _field(ctx: Context, name: str) -> Any:
+    return ctx.fields.get(name)
+
+
+def _subject_description(ctx: Context) -> str:
+    subject = _field(ctx, "subject")
+    bits = [str(subject)] if subject is not None else []
+    for name, prefix in (
+        ("amount", "amount"),
+        ("counterparty", "counterparty"),
+        ("reference", "reference"),
+        ("subject_date", "date"),
+    ):
+        value = _field(ctx, name)
+        if value is not None:
+            bits.append(f"{prefix}={value}")
+    return ", ".join(bits)
+
+
+@function
+def ask_system(ctx: Context) -> dict[str, Any]:
+    system = _field(ctx, "next_system")
+    if system is None:
+        return {}
+    args: dict[str, Any] = {"system": system}
+    subject = _field(ctx, "subject")
+    if subject is not None:
+        args["about"] = subject
+    for name in ("reference", "amount"):
+        value = _field(ctx, name)
+        if value is not None:
+            args[name] = str(value)
+    ctx.act("ask_system", **args)
+    return {}
+
+
+@function
+def register_request(ctx: Context) -> dict[str, Any]:
+    team = _field(ctx, "next_system")
+    if team is None:
+        return {}
+    args: dict[str, Any] = {"team": team}
+    subject = _field(ctx, "subject")
+    if subject is not None:
+        args["about"] = subject
+    reference = _field(ctx, "reference")
+    if reference is not None:
+        args["reference"] = str(reference)
+    ctx.act("register_request", **args)
+    return {}
+
+
+@function
+def send_for_confirmation(ctx: Context) -> dict[str, Any]:
+    requester = _field(ctx, "requester")
+    if requester is None:
+        return {}
+    change = _subject_description(ctx)
+    if not change:
+        return {}
+    ctx.act("send_for_confirmation", change=change, to=requester)
+    return {}
+
+
+_LIMITATIONS = {
+    "payment": {
+        "SENT": "This does not confirm receipt or credit by the recipient bank.",
+        "PENDING": "This does not establish that the payment will complete.",
+        "AWAITING_AUTHORISATION": "This does not authorise the payment.",
+        "COMPLETED": "This does not confirm receipt or credit by the recipient bank.",
+        "DECLINED": "This does not establish a different cause or authorise a retry.",
+        "REJECTED": "This does not establish a different cause or authorise a retry.",
+        "CANCELLED": "This does not establish a refund or the recipient's outcome.",
+        "NOT_EXECUTED": "This does not establish whether a later attempt will run.",
+        "OTHER": "The answer does not establish a recognized payment status or the recipient's outcome.",
+    },
+    "incoming_found": {
+        "true": "This does not establish the sender's payment status.",
+        "false": "This does not establish that the sender did not pay.",
+    },
+    "recurring": {
+        "ACTIVE": "This does not guarantee that the future payment will execute.",
+        "CANCELLED": "This does not establish a refund or a future payment outcome.",
+        "NOT_EXECUTED": "This does not establish whether a later run will execute.",
+        "AMENDED": "This records the amendment but does not guarantee the next payment.",
+        "OTHER": "The answer does not establish a recognized standing-order status.",
+    },
+    "card": {
+        "REQUESTED": "This does not establish manufacture, dispatch, or receipt.",
+        "IN_MANUFACTURE": "This does not establish dispatch or receipt.",
+        "DISPATCHED": "This does not confirm that the customer has received the card.",
+        "BLOCKED": "This does not establish why the card is blocked or whether it can be used.",
+        "RESTRICTED": "This does not disclose the basis of the restriction.",
+        "DECLINED": "This does not establish a different cause or authorise a retry.",
+        "OTHER": "The answer does not establish a recognized card status.",
+    },
+    "access": {
+        "RESTORED": "This does not disclose or handle a password or PIN.",
+        "AWAITING_CONFIRMATION": "This does not disclose or handle a password or PIN.",
+        "LINKED": "This does not disclose or handle a password or PIN.",
+        "PROCEDURE_STARTED": "This does not disclose or handle a password or PIN.",
+        "EXTRACT_PROVIDED": "This does not disclose or handle a password or PIN.",
+        "OTHER": "This does not establish a password, PIN, or access change.",
+    },
+    "business": {
+        "RECEIVED": "This does not establish that every row was paid or processed.",
+        "VALIDATION_FAILED": "This does not establish that a corrected file was received or any payment was made.",
+        "AWAITING_SECOND_SIGNATORY": "This does not approve the request for the second signatory.",
+        "PENDING_APPROVAL": "This does not approve the request or authorise a signatory.",
+        "ROLE_REVOKED": "This does not establish any other role or permission change.",
+        "OTHER": "The answer does not establish a recognized business-record status.",
+    },
+    "document": {
+        "ready": "This does not confirm that the document was downloaded or that funds were credited.",
+        "not_ready": "This does not establish that the document is available.",
+    },
+}
+
+
+def _reply_text(ctx: Context) -> str | None:
+    subject = _field(ctx, "subject")
+    if subject is None:
+        return None
+    amount = _field(ctx, "amount")
+    counterparty = _field(ctx, "counterparty")
+    amount_text = f"£{amount}" if amount is not None else None
+    detail = (
+        f"{amount_text} transfer"
+        if amount_text is not None and subject in {"transfer", "payment", "card_payment"}
+        else str(subject).replace("_", " ")
+    )
+    if counterparty is not None:
+        detail += f" to {counterparty}"
+    status = _field(ctx, "payment_status")
+    if status is not None:
+        if str(status) == "OTHER":
+            shown = "an answer without a recognized payment status"
+        else:
+            shown = detail + f" as {str(status).lower()}"
+        reason = _field(ctx, "payment_reason")
+        if reason is not None:
+            shown += f" (recorded reason: {reason})"
+        count = _field(ctx, "payment_count")
+        if count is not None:
+            shown += f"; {count} separate payment instructions"
+        middle = _LIMITATIONS["payment"].get(
+            str(status), "The record answer does not establish a recognized payment status."
+        )
+        return f"The payment record shows your {shown}. {middle} No new transfer was made."
+    count = _field(ctx, "payment_count")
+    if count is not None:
+        return (
+            f"The payment record shows {count} separate payment instructions. "
+            "This does not establish their execution or the recipient's outcome. No new transfer was made."
+        )
+    if _field(ctx, "incoming_found") is not None:
+        if _field(ctx, "incoming_found"):
+            amount_text = f" of {_field(ctx, 'incoming_amount')}" if _field(ctx, "incoming_amount") is not None else ""
+            return (
+                f"The incoming-payment record shows an incoming payment{amount_text}. "
+                f"{_LIMITATIONS['incoming_found']['true']} No payment was changed."
+            )
+        return (
+            "The incoming-payment record shows no incoming payment found. "
+            f"{_LIMITATIONS['incoming_found']['false']} No payment was made."
+        )
+    recurring = _field(ctx, "recurring_status")
+    if recurring is not None:
+        next_run = _field(ctx, "next_run")
+        next_text = f"; next run {next_run}" if next_run is not None else ""
+        middle = _LIMITATIONS["recurring"].get(
+            str(recurring), "The record answer does not establish a recognized standing-order status."
+        )
+        action = "No additional instruction or change was made."
+        return f"The standing-order record shows {str(recurring).lower()}{next_text}. {middle} {action}"
+    next_run = _field(ctx, "next_run")
+    if next_run is not None:
+        return (
+            f"The standing-order record shows the next run as {next_run}. "
+            "This does not guarantee that the future payment will execute. No change was made."
+        )
+    card = _field(ctx, "card_status")
+    if card is not None:
+        reason = _field(ctx, "card_reason")
+        reason_text = f" (recorded reason: {reason})" if reason is not None else ""
+        middle = _LIMITATIONS["card"].get(str(card), "The record answer does not establish a recognized card status.")
+        return f"The card journal shows {str(card).lower()}{reason_text}. {middle} No additional card change was made."
+    business = _field(ctx, "business_status")
+    if business is not None:
+        limit = _field(ctx, "business_limit")
+        limit_text = f"; maximum £{limit}" if limit is not None else ""
+        middle = _LIMITATIONS["business"].get(
+            str(business), "The record answer does not establish a recognized business-record status."
+        )
+        if business == "RECEIVED" and subject not in {"batch", "payment_package"}:
+            middle = "This does not establish validation, authorisation, or payment execution."
+        return (
+            f"The business record shows {str(business).lower()}{limit_text}. "
+            f"{middle} No additional approval or role change was made."
+        )
+    limit = _field(ctx, "business_limit")
+    if limit is not None:
+        return (
+            f"The business record shows a maximum of £{limit}. "
+            "This does not establish authority to use the full limit or approve a payment. "
+            "No limit or payment was changed."
+        )
+    access = _field(ctx, "access_status")
+    if access is not None:
+        middle = _LIMITATIONS["access"].get(
+            str(access), "The record answer does not establish a recognized access status."
+        )
+        return (
+            f"The access record shows {str(access).lower()}. "
+            f"{middle} No secret was handled and no additional access change was made."
+        )
+    if _field(ctx, "registered") is not None:
+        registered = bool(_field(ctx, "registered"))
+        reference = _field(ctx, "registration_ref")
+        reference_text = f" under {reference}" if reference is not None else ""
+        middle = (
+            (
+                "This does not establish that the fee will be refunded."
+                if subject == "fee"
+                else "This does not establish that the money will be returned."
+            )
+            if registered
+            else "This does not establish that the request was accepted."
+        )
+        state = "registered" if registered else "not registered"
+        return (
+            f"The request record shows that your request is {state}{reference_text}. "
+            f"{middle} No return or refund was made."
+        )
+    registration_ref = _field(ctx, "registration_ref")
+    if registration_ref is not None:
+        return (
+            f"The request record contains reference {registration_ref}. "
+            "This does not establish that the request was accepted or any outcome. "
+            "No request outcome was promised."
+        )
+    if _field(ctx, "document_ready") is not None:
+        name = _field(ctx, "document_name")
+        file_text = f" ({name})" if name is not None else ""
+        ready = bool(_field(ctx, "document_ready"))
+        state = "available" if ready else "not ready"
+        middle = _LIMITATIONS["document"]["ready" if ready else "not_ready"]
+        if ready and subject in {"batch", "payment_package"}:
+            middle = "This does not establish that every row was paid or processed."
+        return f"The document record shows that the document{file_text} is {state}. {middle} No email was sent."
+    return None
+
+
+@function
+def reply_customer(ctx: Context) -> dict[str, Any]:
+    requester = _field(ctx, "requester")
+    channel = _field(ctx, "channel")
+    text = _reply_text(ctx)
+    if requester is None or channel is None or text is None:
+        return {}
+    ctx.act("reply", to=requester, channel=channel, text=text)
+    return {}
+
+
+# ------------------------------ compatibility with the original payments example
 
 _PAID: set[str] = set()
-"""Payments already made, by idempotency key: a retry after a lost answer does not pay twice.
-
-It stands in for the payment API's own idempotency: a real integration sends `ctx.key` as the
-request's idempotency key and lets that system dedupe, so it holds across restarts and workers.
-"""
 _PAYING = threading.Lock()
 
 
@@ -35,7 +1255,8 @@ def _customer_of(world: dict[str, Any], sender: Any) -> tuple[str, dict[str, Any
 
 @function
 def find_customer(ctx: Context) -> dict[str, Any]:
-    """Who sent it, their limit, and the request's amount and payee when the payee is theirs."""
+    """Compatibility lookup for the original payments demo."""
+
     found = _customer_of(ctx.world, ctx.case.get("from"))
     if found is None:
         ctx.note("the sender is not a customer on record")
@@ -43,11 +1264,11 @@ def find_customer(ctx: Context) -> dict[str, Any]:
     customer_id, customer = found
     facts: dict[str, Any] = {"customer": customer_id, "limit": customer["limit"]}
     request = ctx.case.get("request") or {}
-    if "amount" in request:
+    if isinstance(request, Mapping) and "amount" in request:
         facts["amount"] = request["amount"]
-    if request.get("payee") in customer["payees"]:
+    if isinstance(request, Mapping) and request.get("payee") in customer["payees"]:
         facts["payee"] = request["payee"]
-    elif "payee" in request:
+    elif isinstance(request, Mapping) and "payee" in request:
         ctx.note(f"payee {request['payee']} is not one of the customer's payees")
     return facts
 
@@ -64,16 +1285,27 @@ def make_payment(ctx: Context) -> dict[str, Any]:
 
 @function
 def brief(ctx: Any) -> str:
-    """What the agent reads first: the message, and the records that matter to it."""
+    """Give the agent the request, conversation, and established facts, never raw system notes."""
+
+    if "events" not in ctx.case:
+        facts = {k: str(v) for k, v in ctx.fields.items() if v is not None}
+        return "\n".join(
+            [
+                "A message to the payments inbox:",
+                "<case>",
+                str(ctx.case.get("text", "")),
+                "</case>",
+                f"From: {ctx.case.get('from')}",
+                f"What the desk has established: {facts or 'nothing yet'}",
+                f"Case state: {ctx.state}",
+            ]
+        )
+    events = _events(ctx)
+    lines = ["<case>", f"Request: {ctx.case.get('request', '')}"]
+    for event in events:
+        if _kind(event) == "conversation":
+            lines.append(f"event {event.seq} ({event.event.get('channel', '')}): {event.text}")
+    lines.append("</case>")
     facts = {k: str(v) for k, v in ctx.fields.items() if v is not None}
-    return "\n".join(
-        [
-            "A message to the payments inbox:",
-            "<case>",
-            str(ctx.case.get("text", "")),
-            "</case>",
-            f"From: {ctx.case.get('from')}",
-            f"What the desk has established: {facts or 'nothing yet'}",
-            f"Case state: {ctx.state}",
-        ]
-    )
+    lines.append(f"Facts established: {facts or 'nothing yet'}")
+    return "\n".join(lines)
