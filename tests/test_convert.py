@@ -250,6 +250,7 @@ def test_command_line(track: Path, tmp_path: Path, capsys: pytest.CaptureFixture
     assert (
         len(json.loads(out.read_text(encoding="utf-8"))) == 4 and len(json.loads(exp.read_text(encoding="utf-8"))) == 4
     )
+    assert b"\r\n" not in out.read_bytes() + exp.read_bytes()  # the same bytes on every platform
     printed = capsys.readouterr().out
     assert "4 desk cases from 1 case folders" in printed and printed.isascii()  # a cp1252 console prints it
     make_case(track, "002", events=[("Secure chat", "", "x", "y")])
