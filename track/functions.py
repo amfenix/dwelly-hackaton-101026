@@ -978,7 +978,32 @@ def _system_facts(ctx: Context, check: str) -> tuple[_Record, str] | None:
         return None
     # the latest request is the one that stands: an order placed after "available to order" (032)
     record = max(records, key=lambda r: _seq_key(r.request.seq))
+    if record.answer is not None and _UNAVAILABLE.search(record.answer.text):
+        # "service temporarily unavailable" is no answer: the request is still open
+        record = record._replace(answer=None)
+    if record.answer is not None and _answered_and_asked_again(ctx, record.answer):
+        return None  # the answer was told and the customer asked again: it has to be checked afresh
     return record, _answer_text(record)
+
+
+_UNAVAILABLE = re.compile(
+    r"\b(?:temporarily unavailable|service unavailable|no data returned|try again later"
+    r"|could not be reached|timed out)\b",
+    re.IGNORECASE,
+)
+
+
+def _answered_and_asked_again(ctx: Context, answer: _Event) -> bool:
+    """After the system's answer, the bank told the customer, and the customer has asked again since."""
+    told = False
+    for event in _events(ctx):
+        if _seq_key(event.seq) <= _seq_key(answer.seq) or _kind(event) != "conversation":
+            continue
+        if _bank_sender(event, ctx.case):
+            told = True
+        elif told:
+            return True
+    return False
 
 
 def _asked(ctx: Context, check: str, name: str) -> tuple[dict[str, Any], _Record] | None:

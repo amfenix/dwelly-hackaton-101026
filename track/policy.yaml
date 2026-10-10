@@ -61,7 +61,7 @@ fields:
   # --- the policy's own
   request_type: enum [question, register, change, instruction, access, authority]
   next_system:  { type: enum, values: [payment, incoming, recurring, card, access, business, documents, tariff], description: the system that holds the answer }
-  reason:       enum [UNVERIFIED, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED]
+  reason:       enum [UNVERIFIED, OUTSIDE_PARTY, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED]
   clarify_need: { type: enum, values: [which_transaction, which_card, which_instruction, more_details], description: what the customer is asked for }
 
 states: [READING, TRIAGED, ASK_PENDING, REPLY_PENDING, REQUEST_PENDING, CONFIRM_PENDING,
@@ -183,6 +183,31 @@ triggers:
 
   # 028, 036: a profile change goes into the bank's protected change process, which asks the
   # customer to confirm by itself; the desk does not send its own confirmation request
+  # a change asked for by someone else is not sent anywhere for confirmation (S28: a "CEO" email)
+  - name: change-from-someone-else
+    when: "state = TRIAGED and request_type = change and role = third_party"
+    note: A change asked for by someone other than the customer goes to a person.
+    set: { reason: OUTSIDE_PARTY }
+    to: ESCALATED
+
+  # the customer's own email is not an authorisation: they are pointed to the secure process (028, 036)
+  - name: change-by-email
+    when: "state = TRIAGED and request_type = change and channel = external_message and role != third_party"
+    note: An email does not change anything; the customer is pointed to the secure process.
+    to: REDIRECT_PENDING
+
+  # a profile change from an unverified customer goes through the bank's secure process, not chat
+  - name: profile-change-unverified
+    when: "state = TRIAGED and request_type = change and subject = profile and not verified and registration_asked absent"
+    note: Changing contact details needs the customer's identity checked in the secure process.
+    to: REDIRECT_PENDING
+
+  # a limit or a role is changed only after a review by the team that holds the authority
+  - name: limit-or-role-change-is-a-review
+    when: "state = TRIAGED and request_type = change and subject in [limit, 'role'] and registration_asked absent"
+    note: A limit or a role is not changed on request; it is put to the team that decides.
+    to: REQUEST_PENDING
+
   - name: profile-change-waits-for-the-process
     when: "state = TRIAGED and request_type = change and subject = profile and access_asked and confirmation in [none, requested]"
     note: The protected change process is running; it asks the customer to confirm.
@@ -369,9 +394,9 @@ triggers:
     when: "state = TRIAGED and next_system = business and business_asked absent and verified and request_type = instruction"
     to: REQUEST_PENDING
 
-  - name: business-reply
+  - name: business-reply   # not to someone whose own role the record shows revoked (a former employee)
     on: reply
-    when: "state = TRIAGED and next_system = business and business_status present"
+    when: "state = TRIAGED and next_system = business and business_status present and not (business_status = ROLE_REVOKED and subject != 'role')"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ documents

@@ -164,6 +164,50 @@ def test_a_profile_change_goes_through_the_protected_process() -> None:
     assert started(phone, opened, request_type="change", subject="profile").state == "WAITING"
 
 
+def test_a_change_from_outside_is_not_sent_anywhere_to_confirm() -> None:
+    email = ("External message", "Gareth, CEO", "Harrow & Vale Bank plc", "Change the supplier's bank details today.")
+    case = started(email, request_type="change", role="Third party")
+    assert case.state == "ESCALATED" and case.fields["reason"] == "OUTSIDE_PARTY" and acts(case) == []
+
+
+def test_an_unverified_profile_change_goes_to_the_secure_process() -> None:
+    chat = ("Secure chat", CUSTOMER, "H&V service agent", "I lost my phone; change my number and email here.")
+    case = started(chat, request_type="change", subject="profile")
+    assert case.state == "REDIRECTED" and acts(case) == ["redirect_secure"]
+
+
+def test_a_limit_change_is_a_review() -> None:
+    chat = ("Secure chat", CUSTOMER, "H&V service agent", "Please raise my overdraft to £2,000.")
+    case = started(chat, request_type="change", subject="limit")
+    assert case.state == "REQUESTED" and acts(case) == ["register_request"]
+
+
+def test_no_reply_from_a_record_that_shows_the_requesters_role_revoked() -> None:
+    ask = ("Secure chat", "Graham", "H&V service agent", "What is the status of our payroll batch?")
+    check = ("Internal note", "H&V service agent", "H&V admin log", "Checking Graham's current role first.")
+    answer = ("Internal note", "H&V admin log", "H&V service agent", "Payroll Approver role revoked. No current role.")
+    case = started(ask, check, answer, subject="batch")
+    assert case.fields.get("business_status") == "ROLE_REVOKED" and not case.send("reply").accepted
+
+
+def test_an_unavailable_system_is_no_answer() -> None:
+    down = (
+        "Internal note",
+        "H&V transfer journal",
+        "H&V service agent",
+        "Service temporarily unavailable - no data returned.",
+    )
+    case = started(ASK, TO_JOURNAL, down)
+    assert case.fields.get("payment_status") is None and case.state == "WAITING"
+
+
+def test_an_answer_told_and_asked_again_is_checked_afresh() -> None:
+    told = ("Secure chat", "H&V service agent", CUSTOMER, "Our journal shows it as sent.")
+    again = ("Secure chat", CUSTOMER, "H&V service agent", "Three days on, has it arrived yet?")
+    case = started(ASK, TO_JOURNAL, FROM_JOURNAL, told, again)
+    assert case.fields.get("payment_asked") is None and case.send("ask_system", {"system": "payment"}).accepted
+
+
 def test_a_review_is_registered_not_asked() -> None:
     case = started(ASK, request_type="register")
     assert not case.send("ask_system", {"system": "payment"}).accepted
