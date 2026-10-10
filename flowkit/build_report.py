@@ -40,6 +40,9 @@ OUTCOMES = {
     "reply": "Reply",
     "submit_request": "Submit a request",
     "send_for_confirmation": "Send for confirmation",
+    "clarify": "Ask the customer",
+    "redirect_secure": "Redirect to the secure process",
+    "forward_to_authority": "Forward to the authority",
     "escalate": "Hand to a person",
 }
 REASONS = {
@@ -132,7 +135,8 @@ def load_public(results: Path, answers: Path, cases: Path, expected: Path) -> li
             continue
         p = Point(case["id"], "public", case, r, *read_answer(answers / case["id"]), expected=exp.get(case["id"]))
         if p.expected and case.get("actor_next") == "bank":
-            want = label(p.expected["next_event"])
+            events = case.get("events") or []
+            want = label(p.expected["next_event"], events[-1] if events else None)
             if want != NOTE:
                 p.want = want
                 p.verdict = "match" if want == p.outcome else "differs"
