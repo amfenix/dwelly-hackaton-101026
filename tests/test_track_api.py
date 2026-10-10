@@ -1118,7 +1118,7 @@ def test_permitted_card_restriction_category_maps_to_restricted() -> None:
         ("032", 3, "check_documents", {"documents_asked": True, "document_ready": False}),
         ("032", 4, "check_documents", {"documents_asked": True}),  # the order placed after the archive check is pending
         ("028", 5, "check_confirmation", {"confirmation": "given", "instructed_outside_portal": True}),
-        ("036", 4, "check_confirmation", {"confirmation": "given", "instructed_outside_portal": True}),
+        ("036", 4, "check_confirmation", {"confirmation": "unprompted", "instructed_outside_portal": True}),
         ("013", 5, "check_confirmation", {"confirmation": "given", "instructed_outside_portal": False}),
         ("046", 4, "check_business", {"business_asked": True, "business_status": "ROLE_REVOKED"}),
         ("006", 4, "check_payment", {"payment_asked": True, "payment_status": "OTHER", "payment_count": 2}),
@@ -1184,7 +1184,7 @@ def test_confirmation_inside_an_unmatched_process_is_not_authorisation() -> None
         ),
     )
     facts, _ = invoke("check_confirmation", data)
-    assert facts["confirmation"] == "none"
+    assert facts["confirmation"] == "unprompted"  # confirmed by the customer, not adopted by the bank
 
 
 @pytest.mark.parametrize(
@@ -1209,7 +1209,7 @@ def test_confirmation_does_not_treat_a_planned_process_as_started(start_text: st
         ),
     )
     facts, _ = invoke("check_confirmation", data)
-    assert facts["confirmation"] == "none"
+    assert facts["confirmation"] == "unprompted"  # confirmed by the customer, not adopted by the bank
 
 
 def test_question_or_imperative_process_start_does_not_gate_confirmation() -> None:
@@ -1226,7 +1226,7 @@ def test_question_or_imperative_process_start_does_not_gate_confirmation() -> No
             ),
         )
         facts, _ = invoke("check_confirmation", data)
-        assert facts["confirmation"] == "none"
+        assert facts["confirmation"] == "unprompted"  # confirmed by the customer, not adopted by the bank
 
 
 def test_unrequested_portal_confirmation_needs_a_bank_record_of_adoption() -> None:
@@ -1248,7 +1248,7 @@ def test_unrequested_portal_confirmation_needs_a_bank_record_of_adoption() -> No
         ),
     )
     facts, _ = invoke("check_confirmation", data)
-    assert facts["confirmation"] == "none"
+    assert facts["confirmation"] == "unprompted"  # confirmed by the customer, not adopted by the bank
 
 
 @pytest.mark.parametrize(
@@ -1278,7 +1278,7 @@ def test_portal_confirmation_adoption_must_be_positive_and_for_the_same_change(p
         ),
     )
     facts, _ = invoke("check_confirmation", data)
-    assert facts["confirmation"] == "none"
+    assert facts["confirmation"] == "unprompted"  # confirmed by the customer, not adopted by the bank
 
 
 def test_future_portal_confirmation_is_not_adopted_as_given() -> None:
@@ -1300,7 +1300,7 @@ def test_future_portal_confirmation_is_not_adopted_as_given() -> None:
         ),
     )
     facts, _ = invoke("check_confirmation", data)
-    assert facts["confirmation"] == "none"
+    assert facts["confirmation"] == "none"  # a promise to confirm later is no confirmation
 
 
 def test_unbound_portal_confirmation_pronoun_is_not_adopted() -> None:
@@ -1315,7 +1315,7 @@ def test_unbound_portal_confirmation_pronoun_is_not_adopted() -> None:
         ),
     )
     facts, _ = invoke("check_confirmation", data)
-    assert facts["confirmation"] == "none"
+    assert facts["confirmation"] == "unprompted"  # confirmed by the customer, not adopted by the bank
 
 
 @pytest.mark.parametrize(
@@ -1334,7 +1334,7 @@ def test_portal_adoption_pronoun_needs_an_immediate_unambiguous_owner(processing
         event(2, "system", "H&V agent", "H&V protected instruction process", processing_text),
     )
     facts, _ = invoke("check_confirmation", data)
-    assert facts["confirmation"] == "none"
+    assert facts["confirmation"] == "unprompted"  # confirmed by the customer, not adopted by the bank
 
 
 @pytest.mark.parametrize(
@@ -1343,12 +1343,12 @@ def test_portal_adoption_pronoun_needs_an_immediate_unambiguous_owner(processing
         (
             "I confirm the change for reference HV-111.",
             "HV-111 still awaits authority checks. I am submitting Alice's secure-portal confirmation HV-222.",
-            "none",
+            "unprompted",
         ),
         (
             "I confirm the change for reference HV-111.",
             "I am submitting Alice's secure-portal confirmation HV-111.",
-            "none",
+            "unprompted",
         ),
         (
             "I confirm the change for reference HV-111.",
@@ -1358,7 +1358,7 @@ def test_portal_adoption_pronoun_needs_an_immediate_unambiguous_owner(processing
         (
             "I confirm the change for reference HV-111.",
             "I am submitting Mara Smith's secure-portal confirmation HV-111.",
-            "none",
+            "unprompted",
         ),
     ],
 )

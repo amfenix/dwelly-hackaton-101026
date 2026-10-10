@@ -49,7 +49,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
 47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-48. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.
+48. Classifier (jev jev-latest) on `subject`: document, confidence 0.91 → document.
 49. `request_type`: not known → question (by `triage`).
 50. `subject`: not known → document (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
@@ -67,10 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6686 tokens in, 439 out, 4.987 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4685 tokens in, 376 out, 3.184 s, cost $0.0091; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the documents system about the customer's request for a record of the £74.00 payment (reference HV-040, status SENT). The desk accepted the request and the case is now closed with the outcome "ask_system".
-> 
-> The documents system's reply isn't in the case yet. The case facts still show no confirmation, and nothing has been refused. The customer hasn't been told anything about the document.
+> The case is now with the documents system, which holds the record of the £74.00 payment (reference HV-040, status SENT). I've asked it for a document showing the payment's current stage. I'm stopping here until it answers.

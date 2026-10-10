@@ -72,10 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4824 tokens in, 444 out, 4.891 s, cost $0.0103; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7199 tokens in, 533 out, 4.604 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the instruction to cancel your active Northmere Fitness Direct Debit mandate. The request was accepted and the case is closed on our side.
+> I've submitted Mara Ellison's instruction to cancel her Northmere Fitness Direct Debit mandate, and the desk accepted it. The case is now in the REQUESTED state and closed.
 > 
-> This cancels the mandate at H&V, so Northmere Fitness can't use it for future collections. It doesn't end your agreement with Northmere Fitness, as you noted.
+> She was verified on the call, the portal shows the mandate as active, and her instruction was clear. She also confirmed she understands this cancels the mandate at the bank, not her agreement with Northmere Fitness. I didn't query the recurring-payments system first, because the case already identified the mandate.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, the company's authorised file uploader (not verified on secure chat), asked whether H&V had received batch-041.csv under reference HV-041, and said she was not asking for any approval or release of payment. The desk checked the business record, which showed the file as received, and replied on secure chat that receipt does not establish that every row was paid or processed, and that no extra approval or role change was made. The case is closed as replied, and the record lists nothing left for a person to do.
+Mara Ellison, writing as the authorised file uploader over secure chat, asked whether H&V had received batch-041.csv (reference HV-041), and said she was not asking for any payment to be approved or released. The desk checked the business import journal, which records the file as received, and replied on secure chat saying so, adding that receipt does not establish that every row was paid or processed and that no approval or role change was made. Her identity was not verified, but the reply gave only the receipt status. The case is closed and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-041-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
 
-  > The business record shows received. This does not establish that every row was paid or processed. No additional approval or role change was made.
+  > The business record shows the file as received. This does not establish that every row was paid or processed. No additional approval or role change was made.
 
 
 ## Decision and why
@@ -55,8 +55,10 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `business-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = business → true (next_system=business)
   - business_status present → true (business_status=RECEIVED)
+  - not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=RECEIVED, subject=batch)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 

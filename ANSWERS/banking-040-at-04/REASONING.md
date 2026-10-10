@@ -67,7 +67,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
 64. `next_system`: not known → documents (by `asked-documents`).
 65. The agent asked for `reply` {}.
-66. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+66. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
 67. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
 68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 69. Called `reply_customer` (attempt 1, key banking-040-at-04:do-reply:17).
@@ -78,10 +78,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7431 tokens in, 504 out, 5.502 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7467 tokens in, 512 out, 4.984 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply, and the case is now closed as replied. The documents system had already confirmed that the record for the £74.00 payment (reference HV-040) is ready. The desk wrote the reply from that answer.
+> The desk accepted the reply, and the case is now closed as replied. The documents check had already found the record for payment HV-040 (£74.00) ready. The desk writes the reply text, so I haven't seen its exact wording.
 > 
-> The customer is not verified. The request was a question about a document, so I didn't treat that as a reason to hold the reply. I didn't check what the reply contains.
+> The customer isn't verified, and no confirmation from the contractor is on record. The bank record shows only the bank's side of the payment, with status SENT.

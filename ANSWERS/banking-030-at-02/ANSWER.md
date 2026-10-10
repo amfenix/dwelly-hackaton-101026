@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellery asked over secure chat whether her replacement card is being made and whether it has been sent. The desk classified this as a card question and sent a query to the card system, and the case closed in the "asked" state. The card system returned no details, so whether the card is being made or has been sent is still unanswered, and Maren's identity is unverified on this chat, which may limit what the desk can tell her.
+Maren Ellery, an unverified customer on secure chat, asked whether her replacement card is being made and whether it has been sent. The desk classified this as a question about her card and sent a query to the card system, which returned nothing in the record. Nothing has been answered to her yet, so a person still needs to reply once the card system's information comes back.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -69,17 +69,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 65. The case closed in `WAITING`: **wait**.
 66. The agent asked for `ask_system` {"system": "payment"}.
 67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+68. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks whether H&V sent the £420 one-off transfer to Alder & Reed Workshop; the debit is visible. The payment system is flagged as already asked (payment_asked=True), but no transfer status is in the case, and a new payment query was refused because the case is in WAITING. Please check the transfer status and reply. Verify identity before sharing details."}.
+69. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8814 tokens in, 651 out, 8.537 s, cost $0.0203; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12576 tokens in, 859 out, 10.052 s, cost $0.0298; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't check the transfer status, and I haven't been able to tell Mara whether H&V sent the £420 payment to Alder & Reed Workshop.
+> I couldn't move this case forward, so it stays open for a person to pick up.
 > 
-> The desk refused my request to ask the payment system. The case is in a WAITING state, which the desk treats as final, and the request needs the case to be TRIAGED. The case also shows the payment system as already asked (`payment_asked=True`), but it holds no answer from it.
+> - **Payment check refused:** my request to the payment system was refused because the case is in a WAITING state, not TRIAGED.
+> - **No status in the case:** the facts show the payment system was already asked (`payment_asked=True`), but no transfer status is recorded. I can't say whether H&V sent the £420 to Alder & Reed Workshop.
+> - **Escalation refused:** my escalation was refused for the same reason.
+> - **Unverified customer:** Mara Ellison isn't verified, so identity should be checked before any transfer details are shared with her.
 > 
-> Mara is not verified. The only confirmation we hold is the debit shown in her account activity, and a debit alone doesn't show the payment was sent. I haven't told her it was.
-> 
-> I'm stopping here, so the case stays open and is handed to a person.
+> I haven't replied to the customer, and nothing was changed.

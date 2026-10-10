@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was to have the bank cancel an active Direct Debit mandate to Northmere Fitness so it could not be used for future collections. The desk classified it as an instruction about a direct debit and sent a query to the recurring-payments system about it. It did not submit the cancellation itself, because the attempt to submit was refused when the requester had not been verified (the requester lookup returned nothing), and the case closed in the asked state. The record shows no cancellation carried out and does not say what happens after the query.
+The customer asked Harrow & Vale to cancel their active Direct Debit mandate to Northmere Fitness so it can't be used for future collections. The desk classed it as a direct debit instruction and found no confirmation on record. It refused to submit the request, since the requester's verification was not established, and instead sent a query about the direct debit to the recurring payments system, which closed the case as asked. The mandate was not cancelled, and the record shows no reply from the recurring system and no next step.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -72,7 +72,7 @@ No.
 
 Requests the policy refused:
 
-- `submit_request`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); verified is not known (verified=not known); incoming-instruction: next_system = incoming is false (next_system=recurring); verified is not known (verified=not known); recurring-instruction: verified is not known (verified=not known); card-instruction: next_system = card is false (next_system=recurring); verified is not known (verified=not known); access-instruction: next_system = access is false (next_system=recurring); verified is not known (verified=not known); business-instruction: next_system = business is false (next_system=recurring); verified is not known (verified=not known); documents-instruction: next_system = documents is false (next_system=recurring); verified is not known (verified=not known)
+- `submit_request`: register: request_type = register is false (request_type=instruction); register-what-fits-no-type: request_type = other is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); verified is not known (verified=not known); incoming-instruction: next_system = incoming is false (next_system=recurring); verified is not known (verified=not known); recurring-instruction: verified is not known (verified=not known); card-instruction: next_system = card is false (next_system=recurring); verified is not known (verified=not known); access-instruction: next_system = access is false (next_system=recurring); verified is not known (verified=not known); business-instruction: next_system = business is false (next_system=recurring); verified is not known (verified=not known); documents-instruction: next_system = documents is false (next_system=recurring); verified is not known (verified=not known)
 
 ## Final result
 

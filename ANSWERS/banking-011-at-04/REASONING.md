@@ -64,21 +64,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 60. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
 61. `next_system`: not known → recurring (by `asked-recurring`).
 62. The agent asked for `reply` {}.
-63. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
+63. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
 64. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
 65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 66. Called `reply_customer` (attempt 1, key banking-011-at-04:do-reply:17).
-67. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The standing-order record shows active; next run 2025-09-03. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
+67. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The standing-order record shows the instruction as active; next run 2025-09-03. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
 68. `reply_customer` found {}.
 69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 70. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7169 tokens in, 506 out, 5.439 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7380 tokens in, 549 out, 6.409 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. It tells Mara Ellison that her monthly standing order is active and is next due to run on 3 September 2025. I took that date from the bank's recurring-payments record.
+> I've sent the reply. The standing order is active and its next run date is 3 September 2025.
 > 
-> The desk lists her as not verified. I replied anyway because this was a read-only question and nothing was changed on her account. The reply was accepted and the case is closed.
+> The case shows the customer as not verified. The reply was still accepted, and it only gives a read-only date.

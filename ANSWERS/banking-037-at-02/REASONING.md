@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: change, confidence 0.50 → change.
+50. Classifier (jev jev-latest) on `request_type`: change, confidence 0.43 → change.
 51. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 52. `request_type`: not known → change (by `triage`).
 53. `subject`: not known → profile (by `triage`).
@@ -69,8 +69,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4842 tokens in, 486 out, 4.254 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4889 tokens in, 489 out, 4.303 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed with the outcome "submit_request". The name correction from "Elowen Mar" to "Elowen Marr" has been passed to the team that handles profile changes. The customer was verified on the call, and no step was refused. Nothing further is needed from the desk.
+> The case is already in its final state. A correction request for the name on the profile ("Elowen Mar" to "Elowen Marr") has been submitted. The customer was verified on the call, and the desk did not refuse the request. I'm taking no further action.
+> 
+> The data team may ask the customer for supporting information.

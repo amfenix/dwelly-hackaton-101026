@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, an unverified customer on secure chat, asked about a transfer instruction that still had no sent confirmation, wanting to know its current stage and whether she needs to authorise it. The desk classified this as a question about a transfer and asked the payment system about it. That query is sent but has returned nothing yet, so it is still unknown whether the instruction was submitted or needs her authorisation. Nothing else is recorded as left for a person; the reply to her depends on the payment system's answer.
+Elise Rowan, writing over secure chat, asked about a transfer that still has no sent confirmation, and wanted to know its current stage and whether she needs to authorise it. The desk classified this as a question about a transfer and asked the payment system about it. That query returned nothing, and the case closed at that step. Nothing has been answered to her yet, and the record shows she is not verified on this chat.
 
 _Written by a model from the record below; the sections below are the record._
 

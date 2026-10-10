@@ -65,8 +65,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6373 tokens in, 378 out, 3.726 s, cost $0.0127; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6412 tokens in, 394 out, 3.936 s, cost $0.0128; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the incoming-payments system whether the buyer's payment has reached the H&V business account. The system accepted the request, but its answer isn't in the case yet. The case record still shows no confirmation of the payment, so I can't say whether it has arrived. The next step is to reply to the customer once that answer comes in.
+> I asked the incoming-payments system whether the buyer's payment has arrived. The case is now closed at that step. The case record has no result from that system, so I can't yet say whether the payment has reached your H&V business account. The only confirmation on file is "none".

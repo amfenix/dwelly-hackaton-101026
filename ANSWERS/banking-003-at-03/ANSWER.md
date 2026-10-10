@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, an unverified customer on secure chat, asked about a transfer whose instruction has no sent confirmation, and whether she needs to authorise it. The desk classified it as a question about a transfer, set the case to wait on the payment system, and took no actions. The later request to ask the payment system was refused because the case was already in WAITING, so no answer on the transfer's stage came back and the case closed as "wait". The record does not say who picks it up or when.
+Elise Rowan, a customer on secure chat whose identity is not verified, asked about the stage of a transfer instruction and whether she needs to authorise it. The desk classified it as a question about a transfer, found no sent confirmation, and put the case into waiting because the payment system's answer had not come in. A later attempt to ask the payment system was refused because the case was no longer in the triaged state, so the instruction's stage is still unchecked. Nothing was authorised, sent or changed, and the record does not say who picks the case up next.
 
 _Written by a model from the record below; the sections below are the record._
 

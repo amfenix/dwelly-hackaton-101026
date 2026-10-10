@@ -66,7 +66,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 62. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 63. `next_system`: not known → payment (by `asked-payment`).
 64. The agent asked for `reply` {}.
-65. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=REJECTED).
+65. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=REJECTED).
 66. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
 67. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 68. Called `reply_customer` (attempt 1, key banking-044-at-04:do-reply:17).
@@ -77,13 +77,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7348 tokens in, 560 out, 5.27 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7322 tokens in, 492 out, 5.808 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The payment system's answer is already in the case, so the next step is to reply.
-> I've sent the reply, and the desk accepted it. The case is now closed as replied.
+> I've sent the reply. The payment records show row SUP-17 was **rejected**, not paid, even though the batch is marked processed. The recorded reason is that the beneficiary details didn't match the receiving institution's records.
 > 
-> The payment records show row SUP-17 as **rejected**, not paid. The reason on record is that the beneficiary details didn't match the receiving institution's records. The batch can show "processed" even though an individual row was rejected.
-> 
-> The case shows Leona Voss as a viewer, and she hasn't been verified in this chat. I didn't act on her behalf or change anything.
+> I haven't taken any other action on the case.

@@ -54,7 +54,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `confirmation`: not known → requested (by `read-confirmation`).
 51. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
-53. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+53. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
 54. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 55. `request_type`: not known → change (by `triage`).
 56. `subject`: not known → standing_order (by `triage`).
@@ -67,10 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4968 tokens in, 449 out, 4.671 s, cost $0.0106; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5073 tokens in, 512 out, 3.684 s, cost $0.0113; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The change to Mira's standing order is on hold, and I haven't taken any further action. The case is in a final waiting state.
-> 
-> The £42.00 to £68.00 change was sent to her for confirmation in the secure portal, and she hasn't confirmed it yet. She also isn't verified, and her instruction came through chat rather than the portal. The bank can't amend a standing order on those terms. The standing order to Westmere Garden Cooperative stays at £42.00 a month until she confirms the change herself in the portal.
+> The case is waiting on Mira, so I'm taking no further action. I sent the change from £42.00 to £68.00 a month for her confirmation in the secure portal. She hasn't confirmed it, so the standing order still shows £42.00. The bank can't approve or confirm the change for her. The case is in a final waiting state, and it will move on only once she confirms the change herself in the portal.

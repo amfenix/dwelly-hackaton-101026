@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a question about a batch, and the desk routed it to the payment system and sent that system a query about the batch. The case closed at that step, and the record shows no answer back from the payment system. Why the batch failed validation has not been confirmed and no error report has been provided, so a person would need to follow up on the payment system's reply.
+The desk treated the message as a question about a batch and routed it to the payment system, then asked that system about the batch. The case closed as asked, and the record shows no answer coming back from the payment system. What is left is that response: the row-level error report, showing what failed validation and which rows are affected, is not in the case.
 
 _Written by a model from the record below; the sections below are the record._
 

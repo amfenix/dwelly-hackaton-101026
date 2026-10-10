@@ -74,10 +74,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6979 tokens in, 432 out, 7.488 s, cost $0.0145; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6902 tokens in, 406 out, 6.418 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the payment system about the £420 transfer to Alder & Reed Workshop. That is the one step for this case, and the case is now closed at that step.
+> I asked the payment system about the £420 transfer to Alder & Reed Workshop, and the desk accepted the request. The case status shows no answer yet on whether H&V sent it. Nothing in the case says whether the transfer was sent, so I can't tell Mara either way.
 > 
-> The payment system's answer isn't in the case yet. So I can't confirm whether H&V sent the payment. The only record so far is the debit in your account activity.
+> The case is now closed at this step. Mara is not verified on this chat, which may limit what can be shared with her.

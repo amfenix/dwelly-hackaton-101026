@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk checked the card record, which already showed the card as BLOCKED under case HV-022, and replied on the verified call that the journal shows blocked, that this does not establish why it is blocked or whether it can be used, and that no additional card change was made. The case is closed as replied, and the record lists nothing left for a person to do.
+Mara Ellison, a verified caller, said her debit card went missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk checked the card journal, which shows the card as blocked, and replied on the verified call saying so, adding that this doesn't establish why it is blocked or whether it can be used, and that no further card change was made. The case is closed with the reply sent, and the record lists nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-022-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: verified_call), by rule `do-reply`
 
-  > The card journal shows blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made.
+  > The card journal shows your card as blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=instruction)
   - next_system = card → true (next_system=card)
   - card_status present → true (card_status=BLOCKED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

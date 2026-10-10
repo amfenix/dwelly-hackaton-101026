@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, writing on secure chat (identity not verified), asked the desk to check whether the incoming £42.80 entry was for the specific Northmere Home Supplies transfer, after Northmere said it might be returned. The desk found an incoming entry of 42.80 and replied on secure chat that the record shows an incoming payment of that amount, that this does not establish the sender's payment status, and that no payment was changed. The case is closed as replied, and the record shows nothing left for a person to do.
+Elowen Marr asked, over secure chat, whether the £42.80 incoming entry was for the specific Northmere Home Supplies transfer and not another payment. The desk found an incoming entry of £42.80 and replied that the incoming-payment record shows a payment of that amount, that this does not establish the sender's payment status, and that no payment was changed. The case is closed as replied; her identity was never verified, and the desk's own journal note called the entry the refund for that transfer, though the reply itself does not say so.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `incoming-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = incoming → true (next_system=incoming)
   - incoming_found present → true (incoming_found=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether her scheduled rent standing order was executed and what status the bank recorded. The desk replied on the same channel that the record shows not_executed, that this doesn't establish whether a later run will execute, and that no instruction or change was made. The journal did note a reason (insufficient cleared funds at the scheduled processing time), but the reply did not include it. Her identity was not verified, so any change to the standing order or a payment would still need a person to handle it after that check.
+Mara Ellery asked over secure chat whether her scheduled rent standing-order run was executed and what status the bank recorded. The desk checked the standing-order journal, found the run recorded as not executed, and replied on secure chat saying so, noting that this doesn't show whether a later run will execute and that no change or instruction was made. Mara's identity was not verified and nothing else was done on the standing order; the journal's reason (insufficient cleared funds) was not included in the reply, and nothing further is left open in the record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-017-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellery, channel: secure_chat), by rule `do-reply`
 
-  > The standing-order record shows not_executed. This does not establish whether a later run will execute. No additional instruction or change was made.
+  > The standing-order record shows that the scheduled run was not executed. This does not establish whether a later run will execute. No additional instruction or change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `recurring-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = recurring → true (next_system=recurring)
   - recurring_status present → true (recurring_status=NOT_EXECUTED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

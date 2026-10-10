@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting on the second signatory. The desk checked the business record, which shows the package as awaiting the second signatory with no second consent yet, and replied to her with that status. It approved nothing and changed no roles, and her identity was not verified in the chat. The record lists nothing further for a person to do.
+Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting on the second signatory after she gave her first consent. The desk checked the business record, which shows the package as awaiting the second signatory, and replied to her on secure chat saying so and that no approval or role change was made. She is not verified, but this was a status question only, and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-043-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellery, channel: secure_chat), by rule `do-reply`
 
-  > The business record shows awaiting_second_signatory. This does not approve the request for the second signatory. No additional approval or role change was made.
+  > The business record shows the package as awaiting the second signatory. This does not approve the request for the second signatory. No additional approval or role change was made.
 
 
 ## Decision and why
@@ -55,8 +55,10 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `business-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = business → true (next_system=business)
   - business_status present → true (business_status=AWAITING_SECOND_SIGNATORY)
+  - not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=AWAITING_SECOND_SIGNATORY, subject=payment_package)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 

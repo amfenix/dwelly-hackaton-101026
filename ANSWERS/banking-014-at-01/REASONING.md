@@ -67,11 +67,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6712 tokens in, 445 out, 4.687 s, cost $0.0140; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4705 tokens in, 355 out, 2.974 s, cost $0.0089; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case needs the mandate status from the recurring system, so I'll ask it.
-> I asked the recurring system about the Direct Debit to Northmere Water Services. The request was accepted, but no mandate status has come back yet. The case record still holds nothing on whether the mandate is active, so I can't tell you that yet.
-> 
-> The only record so far is the March 2025 statement entry, which shows a past collection and says nothing about the mandate's current state. I haven't cancelled or changed anything, and I haven't looked at what you owe.
+> The case doesn't yet include the mandate's status, and the recurring system holds it. I'll ask that system.
+> The recurring system has been asked about the Northmere Water Services mandate, and the case is now closed on that step. I haven't seen the answer yet, so I can't say whether the mandate is active.

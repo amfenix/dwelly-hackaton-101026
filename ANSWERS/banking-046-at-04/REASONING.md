@@ -63,23 +63,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 59. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
 60. `next_system`: not known → business (by `asked-business`).
 61. The agent asked for `reply` {}.
-62. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_status present → true (business_status=ROLE_REVOKED).
+62. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=instruction); next_system = business → true (next_system=business); business_status present → true (business_status=ROLE_REVOKED); not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=ROLE_REVOKED, subject=role).
 63. State `TRIAGED` → `REPLY_PENDING` (by `business-reply`).
 64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 65. Called `reply_customer` (attempt 1, key banking-046-at-04:do-reply:17).
-66. Action in the world: `reply` {"to": "Mara Ellery", "channel": "verified_call", "text": "The business record shows role_revoked. This does not establish any other role or permission change. No additional approval or role change was made."}.
+66. Action in the world: `reply` {"to": "Mara Ellery", "channel": "verified_call", "text": "The business record shows the role as revoked. This does not establish any other role or permission change. No additional approval or role change was made."}.
 67. `reply_customer` found {}.
 68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 69. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-3 calls, 4988 tokens in, 480 out, 4.282 s, cost $0.0109; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5030 tokens in, 480 out, 4.222 s, cost $0.0109; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to the customer. The business system shows Owen Bell's Payroll Approver role as revoked, so the reply reports that result. The case is closed as replied.
+> The business system's record shows Owen Bell's Payroll Approver role as revoked, so I sent the reply to the customer. The case is closed.
 > 
-> I did not call `case_status` before replying. I relied on the facts already listed for the case.
-> 
-> The review of operations he approved earlier was not part of this step, so the reply doesn't cover it.
+> I did not call `submit_request`, because the record already showed the revocation. The reply only reports what the record shows. Any review of operations he authorised earlier is separate, as the customer asked.

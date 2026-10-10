@@ -43,7 +43,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. Called `check_confirmation` (attempt 1, key banking-037-at-01:read-confirmation:13).
 40. `check_confirmation` found {}.
 41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (jev jev-latest) on `request_type`: register, confidence 0.43 → register.
+42. Classifier (jev jev-latest) on `request_type`: register, confidence 0.45 → register.
 43. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 44. `request_type`: not known → register (by `triage`).
 45. `subject`: not known → profile (by `triage`).
@@ -64,8 +64,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9354 tokens in, 465 out, 4.959 s, cost $0.0196; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 9484 tokens in, 489 out, 5.109 s, cost $0.0199; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent your name correction to the team that handles profile changes. The request was accepted and the case is now marked as requested. I haven't changed the name myself, so your profile will still show "Elowen Mar" until that team makes the change. It will be changed to "Elowen Marr".
+> I've passed your name correction (“Elowen Mar” to “Elowen Marr”) to the team that handles profile changes, and the case is now closed on my side. I haven't changed anything in your profile myself, and I don't know yet whether the team will ask you for anything more.

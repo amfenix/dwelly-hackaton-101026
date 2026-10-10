@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing over secure chat, said their card was declined at a grocery payment and asked for the category of the restriction and whether it has been lifted. The desk replied in the same chat that the card journal shows it as restricted for a temporary security-related reason, that this does not disclose the basis of the restriction, and that no card change was made. The record does not say whether the restriction has been lifted, and the reply did not address that. Rowan was not verified, and nothing further is left open for a person in the record.
+Rowan Ellery, writing over secure chat and not verified, asked for the category of the restriction on their card and whether it had been lifted. The desk replied in the same chat that the card journal shows a temporary restriction, recorded as a temporary security-related restriction, and that the basis is not disclosed. It made no change to the card, and the reply did not say whether the restriction has been lifted. The case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-024-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Rowan Ellery, channel: secure_chat), by rule `do-reply`
 
-  > The card journal shows restricted (recorded reason: temporary security-related restriction.). This does not disclose the basis of the restriction. No additional card change was made.
+  > The card journal shows a temporary restriction on your card (recorded reason: temporary security-related restriction.). This does not disclose the basis of the restriction. No additional card change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = card → true (next_system=card)
   - card_status present → true (card_status=RESTRICTED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

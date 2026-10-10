@@ -63,25 +63,27 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 59. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
 60. `next_system`: not known → recurring (by `asked-recurring`).
 61. The agent asked for `submit_request` {}.
-62. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); incoming-instruction: next_system = incoming is false (next_system=recurring); recurring-instruction: recurring_asked absent is false (recurring_asked=True); card-instruction: next_system = card is false (next_system=recurring); access-instruction: next_system = access is false (next_system=recurring); business-instruction: next_system = business is false (next_system=recurring); documents-instruction: next_system = documents is false (next_system=recurring).
+62. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); register-what-fits-no-type: request_type = other is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); incoming-instruction: next_system = incoming is false (next_system=recurring); recurring-instruction: recurring_asked absent is false (recurring_asked=True); card-instruction: next_system = card is false (next_system=recurring); access-instruction: next_system = access is false (next_system=recurring); business-instruction: next_system = business is false (next_system=recurring); documents-instruction: next_system = documents is false (next_system=recurring).
 63. The agent asked for `reply` {}.
-64. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=CANCELLED).
+64. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=instruction); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=CANCELLED).
 65. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
 66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 67. Called `reply_customer` (attempt 1, key banking-013-at-05:do-reply:17).
-68. Action in the world: `reply` {"to": "Elodie Mercer", "channel": "secure_portal", "text": "The standing-order record shows cancelled. This does not establish a refund or a future payment outcome. No additional instruction or change was made."}.
+68. Action in the world: `reply` {"to": "Elodie Mercer", "channel": "secure_portal", "text": "The standing-order record shows the instruction as cancelled. This does not establish a refund or a future payment outcome. No additional instruction or change was made."}.
 69. `reply_customer` found {}.
 70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 71. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-6 calls, 11078 tokens in, 919 out, 9.273 s, cost $0.0262; models: claude-sonnet-5-5, jev-1.13.0.
+6 calls, 11403 tokens in, 1086 out, 9.761 s, cost $0.0284; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply to Elodie Mercer, and the case is now closed as replied. The bank's recurring-payments record already shows the studio-rent instruction as CANCELLED, so the reply confirms that.
+> I sent the customer a reply with the recurring system's answer. The records show her studio-rent standing order as CANCELLED, and the reply was written on that basis.
 > 
-> I first tried to submit the cancellation as a new instruction. The desk refused it because the recurring system had already been asked and had answered.
+> I first tried to submit a cancellation request. The desk refused it because the recurring system had already been checked, so a second submission wasn't needed.
 > 
-> The portal's first message said the instruction was still active. The record has since been updated, and the reply relies on the record.
+> One thing doesn't fit. The portal message at the start of the case said the instruction was still active. I couldn't see which record came first, so I relied on the CANCELLED status in the case facts.
+> 
+> The case is now closed as replied.

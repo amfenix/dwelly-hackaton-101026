@@ -70,8 +70,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6604 tokens in, 429 out, 4.019 s, cost $0.0137; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6685 tokens in, 421 out, 4.003 s, cost $0.0137; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I queried the business system for the outgoing-payment limit on Maeve's company profile. The desk accepted the request and closed the case at that step. The case record doesn't show the limit figure, and it has no new facts from the business system. So I can't give Maeve a number, and I haven't stated one. I also haven't taken any action on the planned supplier payout, which she hasn't submitted.
+> The facts point to the business system for company limits. I'll ask it.
+> I asked the business system for the current outgoing-payment limit on Maeve's company profile. The case is closed at that step, and the system's answer hasn't come back into the case yet. I haven't given Maeve a figure. The case status lists no limit value, so I have nothing to report.
+> 
+> Maeve's planned supplier payout is still unsubmitted, and I made no changes to it.

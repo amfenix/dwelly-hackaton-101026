@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara asked why her £18.40 card payment at North Quay Books was declined. The desk classed it as a card payment question and, because the bank had already asked her which declined attempt to investigate, put the case into waiting rather than acting. A later attempt to look up the payment in the card system was refused because the case was no longer in the triaged state, so no lookup happened and nothing on the account was changed. What is left is Mara's reply saying which declined attempt she means.
+Mara asked why her £18.40 card payment at North Quay Books was declined. The desk found that the bank had already asked her which declined attempt she means, so it closed the case as "wait" and took no actions. A later request to look the payment up in the card system was refused because the case was already in the waiting state, and what remains is for Mara to answer the bank's question before the card check can happen.
 
 _Written by a model from the record below; the sections below are the record._
 

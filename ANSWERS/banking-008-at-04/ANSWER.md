@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Marlow asked in secure chat what purpose text her transfer to Mallow Pottery Works recorded. The desk looked up the payment and sent a reply saying the record had no recognized payment status and that no new transfer was made. The reply did not give her the purpose text, although the payment journal showed "Deposit for kiln repair estimate". The case closed as replied with nothing left open, though the desk still had her down as unverified despite her saying she had completed the identity checks.
+Elena Marlow asked, over secure chat, for the purpose text she had entered on her payment to Mallow Pottery Works for a kiln repair. The desk looked up the payment record, got a status it could not classify, and replied that it could not confirm a payment status yet and that no new transfer was made. Its reply did not give her the purpose text, although the payment journal noted "Deposit for kiln repair estimate". The desk still lists her as unverified despite her saying she completed the identity checks, and the case is closed with nothing further assigned to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-008-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Elena Marlow, channel: secure_chat), by rule `do-reply`
 
-  > The payment record shows your an answer without a recognized payment status. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made.
+  > The payment record answered, but not with a clear status, so we cannot confirm one yet. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=OTHER)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -88,6 +89,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment)
 
 ## Final result
 

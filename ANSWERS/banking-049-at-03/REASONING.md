@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: document, confidence 0.99 → document.
+55. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → document (by `triage`).
 58. State `READING` → `TRIAGED` (by `triage`).
@@ -67,19 +67,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. The case closed in `WAITING`: **wait**.
 64. The agent asked for `ask_system` {"system": "documents"}.
 65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
-66. The agent asked for `escalate` {"note": "Mara Venn (unverified, secure chat) says she is the authorised manager for North Quay Printworks. She asked for the acquiring report for 1–7 July 2025 and says it isn't showing as available in the business portal. The documents system has already been queried, but it returned no readiness result (document_ready unknown). A further documents check was refused because the case is in WAITING. Please verify the requester's identity and authority, then check whether the report exists and can be generated or released."}.
+66. The agent asked for `escalate` {"note": "Mara Venn, writing via secure chat and not verified, says she is the authorised manager for North Quay Printworks. She asks for the acquiring report for 1–7 July 2025 (card sales and adjustments). The report does not show as available in the portal. The documents system has already been queried, but the case does not record whether the report is ready (document_ready unknown), and a further documents query was refused. Please check whether the report exists, and verify her identity and authority before releasing anything."}.
 67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11025 tokens in, 1023 out, 9.799 s, cost $0.0285; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11061 tokens in, 933 out, 9.025 s, cost $0.0275; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't been able to move this case forward, and it is still open in a waiting state.
+> I couldn't move this case forward, and it is still open in WAITING, so a person will pick it up.
 > 
-> - **Documents check:** the request for the 1–7 July 2025 acquiring report had already been sent to the documents system. It has returned no answer on whether the report is ready, so I don't know if the file exists. A second check was refused because the case is waiting.
-> - **Escalation:** I tried to hand the case to a person with a note, but the desk refused that too. Escalation isn't allowed while the case is in this waiting state.
-> - **Requester:** Mara Venn is not verified. Her claim to be the authorised manager for North Quay Printworks has not been checked.
-> 
-> I'm stopping here because no other step is available. The case stays open for a person to pick up once the documents system replies. Mara should be told the report isn't confirmed as available yet and that her identity and authority will need verifying before any file is released.
+> - **Report status unknown:** The documents system was already asked, but the case doesn't record whether the 1–7 July 2025 acquiring report is ready. My second query to documents was refused because that check has already run.
+> - **Escalation refused:** My escalation for Mara Venn's file request was also refused, because the desk only allows escalation when the case is in the TRIAGED state.
+> - **Not verified:** Mara is unverified and is writing through secure chat, so nothing can be released or promised yet.

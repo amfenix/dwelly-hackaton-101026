@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked, over secure chat, for a CSV export of her transactions from 6 to 9 May 2025 and for word when the file is available in her secure portal. The desk classified this as a question about a document and sent an inquiry to the documents system. No answer has come back, so the record does not show whether the export exists or when it will appear in the portal. Her identity is marked unverified and no export confirmation is on record, and anything further depends on the documents system's reply.
+Mara Ellison, an unverified customer on secure chat, asked how to tell whether her CSV export of transactions from 6 to 9 May 2025 had been created, and asked to be told when the file is available in her secure portal. The desk classified it as a question about a document and sent an inquiry to the documents system, and the case closed in the asked state. The record shows no answer from the documents system yet and nothing sent to the customer, so telling her whether the file exists remains to be done.
 
 _Written by a model from the record below; the sections below are the record._
 

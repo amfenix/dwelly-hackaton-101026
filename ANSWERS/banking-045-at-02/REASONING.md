@@ -51,8 +51,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.98 → authority.
-51. Classifier (jev jev-latest) on `subject`: role, confidence 0.78 → role.
+50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
+51. Classifier (jev jev-latest) on `subject`: role, confidence 0.72 → role.
 52. `request_type`: not known → authority (by `triage`).
 53. `subject`: not known → role (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
@@ -70,8 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4965 tokens in, 491 out, 4.587 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5154 tokens in, 699 out, 6.095 s, cost $0.0133; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've forwarded the access request to the company administrator for approval. Nadia can't approve or assign roles herself. The new colleague gets no portal access until the administrator approves it. The case is now closed on our side.
+> I forwarded Nadia's request to the company administrator for approval, and the desk accepted it. The case is now marked as forwarded.
+> 
+> Nadia can't approve or assign the new colleague's role herself, so access depends on the administrator's decision. I didn't check the business records first. The case doesn't say who the administrator is, so I haven't confirmed who the request went to.

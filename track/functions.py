@@ -1380,6 +1380,18 @@ def _profile_change_process_key(value: Any) -> str | None:
     return "profile-change-process" if re.search(r"\bprofile[- ]change\s+process\b", str(value), re.I) else None
 
 
+def _submitted_to_the_same_process(event: _Event, candidate: _Event, case: Mapping[str, Any]) -> bool:
+    """036: the bank's own note that it submitted to the profile change process the customer confirmed in."""
+    process = _profile_change_process_key(candidate.event.get("to"))
+    return (
+        process is not None
+        and _kind(event) == "system"
+        and _bank_sender(event, case)
+        and _profile_change_process_key(event.event.get("to")) == process
+        and bool(re.search(r"\bI\s+(?:have|'ve|\u2019ve)\s+submitted\b", event.text, re.IGNORECASE))
+    )
+
+
 def _confirmation_processing_event(event: _Event, candidate: _Event, case: Mapping[str, Any]) -> bool:
     if _kind(event) != "system":
         return False
@@ -1467,6 +1479,7 @@ def check_confirmation(ctx: Context) -> dict[str, Any]:
     given: _Event | None = None
     protected_starts = [event for event in events if _protected_change_start(event, ctx.case)]
     unrequested_portal_confirmations: list[_Event] = []
+    unprompted: _Event | None = None  # confirmed with no request from the bank or its process before it
 
     def is_given(text: str) -> bool:
         low = text.casefold().replace("\u2019", "'")
@@ -1510,7 +1523,7 @@ def check_confirmation(ctx: Context) -> dict[str, Any]:
                     r"\b(?:for|awaiting|needs?|require\w*)\s+(?:your\s+)?confirm",
                     low,
                 )
-                or re.search(r"\b(?:please|kindly)\b.{0,30}\bconfirm\w*\b", low)
+                or re.search(r"\b(?:please|kindly)\b.{0,100}\bconfirm\w*\b", low)
             )
         ):
             requested = requested or event
@@ -1529,9 +1542,13 @@ def check_confirmation(ctx: Context) -> dict[str, Any]:
                 == _profile_change_process_key(event.event.get("to"))
                 for start in protected_starts
             )
+            if not has_requested and is_given(low):
+                unprompted = event  # 013, 036: nobody asked; the customer confirmed on their own
             if not has_requested and not has_protected_process:
                 if is_given(low):
                     unrequested_portal_confirmations.append(event)
+                continue
+            if not has_requested:
                 continue
             classification = _confirmation_classification(ctx, event.text)
             if (
@@ -1549,9 +1566,26 @@ def check_confirmation(ctx: Context) -> dict[str, Any]:
             classification = _confirmation_classification(ctx, candidate.text)
             if classification == "GIVEN" or (classification is None and is_given(candidate.text)):
                 given = given or candidate
+    if unprompted is not None and any(
+        _seq_key(event.seq) > _seq_key(unprompted.seq)
+        and (
+            _confirmation_processing_event(event, unprompted, ctx.case)
+            or _submitted_to_the_same_process(event, unprompted, ctx.case)
+        )
+        for event in events
+    ):
+        given = given or unprompted  # the bank has already passed it on: it stands as given, not to pass again
     out: dict[str, Any] = {}
-    evidence = given or requested or outside or conversations[-1]
-    confirmation = "given" if given is not None else "requested" if requested is not None else "none"
+    evidence = given or unprompted or requested or outside or conversations[-1]
+    confirmation = (
+        "given"
+        if given is not None
+        else "unprompted"
+        if unprompted is not None
+        else "requested"
+        if requested is not None
+        else "none"
+    )
     _record(ctx, out, "confirmation", confirmation, evidence)
     _record(ctx, out, "instructed_outside_portal", outside is not None, outside or evidence)
     return out
@@ -1595,9 +1629,7 @@ def ask_system(ctx: Context) -> dict[str, Any]:
 
 @function
 def register_request(ctx: Context) -> dict[str, Any]:
-    team = _field(ctx, "next_system")
-    if team is None:
-        return {}
+    team = _field(ctx, "next_system") or "the team that handles it"  # a request of no known type has no system
     args: dict[str, Any] = {"team": team}
     subject = _field(ctx, "subject")
     if subject is not None:
@@ -1686,6 +1718,52 @@ _LIMITATIONS = {
 }
 
 
+_SHOWS = {
+    "recurring": {
+        "ACTIVE": "the instruction as active",
+        "CANCELLED": "the instruction as cancelled",
+        "NOT_EXECUTED": "that the scheduled run was not executed",
+        "AMENDED": "the instruction as amended",
+    },
+    "card": {
+        "REQUESTED": "your card request as received",
+        "IN_MANUFACTURE": "your card as in manufacture",
+        "DISPATCHED": "your card as dispatched",
+        "BLOCKED": "your card as blocked",
+        "RESTRICTED": "a temporary restriction on your card",
+        "DECLINED": "the card attempt as declined",
+    },
+    "access": {
+        "RESTORED": "your access as restored",
+        "AWAITING_CONFIRMATION": "the device link as awaiting your confirmation",
+        "LINKED": "the device as linked",
+        "PROCEDURE_STARTED": "the secure procedure as started",
+        "EXTRACT_PROVIDED": "the permitted session extract as provided",
+    },
+    "business": {
+        "RECEIVED": "the file as received",
+        "VALIDATION_FAILED": "that the file did not pass validation",
+        "AWAITING_SECOND_SIGNATORY": "the package as awaiting the second signatory",
+        "PENDING_APPROVAL": "the request as awaiting approval",
+        "ROLE_REVOKED": "the role as revoked",
+    },
+    "tariff": {
+        "MATCHES": "that the fee matches the tariff in force for the transaction",
+        "MISMATCH": "that the fee does not match the tariff in force for the transaction",
+    },
+}
+"""A plain phrase for each status, as it reads after "The ... record shows"."""
+
+
+def _unclear(record: str) -> str:
+    return f"The {record} answered, but not with a clear status, so we cannot confirm one yet."
+
+
+def _shows(record: str, system: str, status: str) -> str:
+    phrase = _SHOWS.get(system, {}).get(status)
+    return f"The {record} shows {phrase}." if phrase else _unclear(record)
+
+
 def _reply_text(ctx: Context) -> str | None:
     subject = _field(ctx, "subject")
     next_system = _field(ctx, "next_system")
@@ -1711,9 +1789,9 @@ def _reply_text(ctx: Context) -> str | None:
         )
     if next_system == "payment" and status is not None:
         if str(status) == "OTHER":
-            shown = "an answer without a recognized payment status"
-        else:
-            shown = detail + f" as {str(status).lower()}"
+            middle = _LIMITATIONS["payment"]["OTHER"]
+            return f"{_unclear('payment record')} {middle} No new transfer was made."
+        shown = detail + f" as {str(status).lower().replace('_', ' ')}"
         reason = _field(ctx, "payment_reason")
         if reason is not None:
             shown += f" (recorded reason: {reason})"
@@ -1747,7 +1825,10 @@ def _reply_text(ctx: Context) -> str | None:
             str(recurring), "The record answer does not establish a recognized standing-order status."
         )
         action = "No additional instruction or change was made."
-        return f"The standing-order record shows {str(recurring).lower()}{next_text}. {middle} {action}"
+        head = _shows("standing-order record", "recurring", str(recurring))
+        if next_text:
+            head = head[:-1] + f"{next_text}."
+        return f"{head} {middle} {action}"
     next_run = _field(ctx, "next_run")
     if next_system == "recurring" and next_run is not None:
         return (
@@ -1759,7 +1840,10 @@ def _reply_text(ctx: Context) -> str | None:
         reason = _field(ctx, "card_reason")
         reason_text = f" (recorded reason: {reason})" if reason is not None else ""
         middle = _LIMITATIONS["card"].get(str(card), "The record answer does not establish a recognized card status.")
-        return f"The card journal shows {str(card).lower()}{reason_text}. {middle} No additional card change was made."
+        head = _shows("card journal", "card", str(card))
+        if reason_text:
+            head = head[:-1] + f"{reason_text}."
+        return f"{head} {middle} No additional card change was made."
     business = _field(ctx, "business_status")
     if next_system == "business" and business is not None:
         limit = _field(ctx, "business_limit")
@@ -1769,10 +1853,10 @@ def _reply_text(ctx: Context) -> str | None:
         )
         if business == "RECEIVED" and subject not in {"batch", "payment_package"}:
             middle = "This does not establish validation, authorisation, or payment execution."
-        return (
-            f"The business record shows {str(business).lower()}{limit_text}. "
-            f"{middle} No additional approval or role change was made."
-        )
+        head = _shows("business record", "business", str(business))
+        if limit_text:
+            head = head[:-1] + f"{limit_text}."
+        return f"{head} {middle} No additional approval or role change was made."
     limit = _field(ctx, "business_limit")
     if next_system == "business" and limit is not None:
         return (
@@ -1785,10 +1869,8 @@ def _reply_text(ctx: Context) -> str | None:
         middle = _LIMITATIONS["access"].get(
             str(access), "The record answer does not establish a recognized access status."
         )
-        return (
-            f"The access record shows {str(access).lower()}. "
-            f"{middle} No secret was handled and no additional access change was made."
-        )
+        head = _shows("access record", "access", str(access))
+        return f"{head} {middle} No secret was handled and no additional access change was made."
     if next_system == "registration" and _field(ctx, "registered") is not None:
         registered = bool(_field(ctx, "registered"))
         reference = _field(ctx, "registration_ref")
@@ -1826,7 +1908,7 @@ def _reply_text(ctx: Context) -> str | None:
     if next_system == "tariff" and _field(ctx, "tariff_status") is not None:
         status = str(_field(ctx, "tariff_status"))
         middle = _LIMITATIONS["tariff"].get(status, _LIMITATIONS["tariff"]["OTHER"])
-        return f"The tariff review shows {status.lower()}. {middle} No fee or account change was made."
+        return f"{_shows('tariff review', 'tariff', status)} {middle} No fee or account change was made."
     return None
 
 

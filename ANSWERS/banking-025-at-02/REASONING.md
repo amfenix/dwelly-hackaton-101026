@@ -65,10 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8462 tokens in, 598 out, 4.983 s, cost $0.0191; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8445 tokens in, 549 out, 4.888 s, cost $0.0184; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've stopped here. The case is waiting, and there's nothing more I can do until the customer replies.
+> The case is in WAITING and is already final with the outcome "wait". The bank has asked Mara which declined attempt she means, and nothing more can be done until she answers.
 > 
-> My attempt to look up the declined £18.40 payment in the card system was refused. The case is in a waiting state, and the card lookup is only allowed once the case is triaged. The bank has already asked Mara which declined attempt to investigate, so the case is waiting on her answer. Nothing has been changed on the account.
+> I tried to look up the declined payment in the card system. The desk refused because the case isn't in the state that allows a lookup. I'm not retrying or taking another route. Once Mara replies, the case can be triaged and the card system checked for the reason behind the £18.40 decline at North Quay Books.

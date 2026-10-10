@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.74 → question.
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.70 → question.
 53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → transfer (by `triage`).
@@ -65,18 +65,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "payment"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-64. The agent asked for `escalate` {"note": "Mira Ellison (unverified, secure chat) reports two similar outgoing transfers to North Quay Utilities for £84.20, one Completed and one Pending. She says she intended only one and asks whether they are separate instructions and whether the pending one can be stopped or returned. The payment records check is refused: the case is in WAITING state, not TRIAGED, and payment_asked is already true, so no payment record is in the case. Please verify her identity, check the payment records to see whether this is one instruction shown twice or two, and then advise on stopping or returning the pending one. I have not stated or changed anything on the payment."}.
+64. The agent asked for `escalate` {"note": "Mira Ellison (unverified, secure chat) says she meant to make one transfer and asks whether two £84.20 entries to North Quay Utilities (one Completed, one Pending) are one instruction or two, and whether the pending one can be stopped or returned. The payment system could not be queried because the case is in state WAITING, so no payment record has been read. Nothing is established about duplicate versus separate instructions, and no stop or return has been requested. A person needs to verify her identity, check the payment records, and decide on any stop or return of the pending entry."}.
 65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12854 tokens in, 1103 out, 12.06 s, cost $0.0329; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12861 tokens in, 1078 out, 10.497 s, cost $0.0325; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is still open and waiting, and I couldn't move it forward. Two tool calls were refused:
+> I couldn't move this case forward. It is in a WAITING state, and the desk refused both actions I tried.
 > 
-> - **Payment check:** `ask_system` for payment was refused because the case is in WAITING, not TRIAGED. The facts also show the payment check was already requested, but no payment record is in the case. So I don't know whether the two £84.20 entries to North Quay Utilities are one instruction shown twice or two separate ones.
-> - **Escalation:** `escalate` was refused for the same reason. The case is in WAITING, not TRIAGED.
+> - **Payment check:** I asked the payment system about the two £84.20 entries to North Quay Utilities. The desk refused because the case isn't in the TRIAGED state, so I haven't read any payment record.
+> - **Escalation:** I then tried to hand the case to a person, and that was refused for the same reason.
 > 
-> Mira is not verified, so nothing has been stopped, returned or changed on either payment. The case stays open, and a person will pick it up.
+> So I can't yet say whether the two entries are one instruction shown twice or two separate instructions. No stop or return has been requested on the pending entry. Mira Ellison is also not verified, so any stop or return would need her identity confirmed first.
+> 
+> The case stays open in WAITING, and nothing further can be done from here.

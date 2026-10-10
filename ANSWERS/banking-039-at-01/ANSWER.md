@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked a question about access, which the desk classified as an access question about a sign-in notification for a new device on 11 July 2025 at 08:42 UTC. The desk passed it to the access system with an ask and closed the case at that step. The record shows no answer from the access system, so whether that sign-in was the customer's own device or an unknown one has not been confirmed, and that is left for a person.
+The request was a question about access, and the desk passed it to the access system by asking it about access. The case closed in the "asked" state, and the access system's answer has not come back into the case. Nothing is confirmed in the record, including the new-device sign-in note for 11 July 2025 at 08:42 UTC, so any follow-up on what the access system returns is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

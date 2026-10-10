@@ -68,16 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8814 tokens in, 708 out, 7.387 s, cost $0.0209; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8943 tokens in, 641 out, 7.002 s, cost $0.0203; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't get the payment's stage, and the case is now waiting. I haven't told the customer anything about the payment.
+> I haven't been able to check the payment's stage. The desk refused my request to query the payment records, so I have nothing to tell Mara or Alder Quay Supplies yet.
 > 
-> I tried to ask the payment system, but the desk refused. The case is in the WAITING state, and the payment check only runs while a case is TRIAGED. The case status shows the case as final with the outcome "wait".
+> The case is in a WAITING state, and the payment check only runs on cases in the TRIAGED state. The case status shows the case as final with the outcome "wait". It also shows Mara Ellison as not verified, though the refusal didn't cite that.
 > 
-> The case also shows two things that matter for the reply:
-> - **Not verified:** Mara Ellison is not verified, even though she says she is a signatory. Her claim alone doesn't change that.
-> - **No stage on record:** The case has no payment stage in it yet. The only payment record is the portal event showing the authorisation. That doesn't show whether the payment was sent or received.
-> 
-> I made no further tool calls, because none of the other options fit. A person can pick the case up once Mara is verified.
+> I've stopped here and left the case open. I did not escalate or ask the customer anything, because nothing in the refusal calls for either.

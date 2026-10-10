@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, an unverified viewer on secure chat, asked whether row SUP-17 in her batch had actually been paid, since the batch showed as processed. The desk checked the payment record, found the row rejected because the beneficiary details did not match the receiving institution's records, and replied to her on secure chat with that status and reason. The reply also said it does not authorise a retry and that no new transfer was made; the case is closed as replied and nothing is left open in the record.
+Leona Voss, a viewer who was not verified, asked over secure chat whether row SUP-17 in her batch had actually been paid, since the batch showed as processed. The desk checked the payment record, found SUP-17 rejected because the beneficiary details did not match the receiving institution's records, and replied in secure chat with that status and reason. The reply also said it does not establish a different cause or authorise a retry, and that no new transfer was made. The case is closed and the record lists nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=REJECTED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

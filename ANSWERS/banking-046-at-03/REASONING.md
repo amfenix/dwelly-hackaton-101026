@@ -64,19 +64,16 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 60. State `TRIAGED` → `WAITING` (by `business-waits`).
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `submit_request` {}.
-63. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business).
-64. The agent asked for `escalate` {"note": "Verified administrator Mara Ellery (verified call) instructs revoking Owen Bell's Payroll Approver role for Larkmere Studio Ltd; earlier operations to be reviewed separately. Direct submission was refused: the case is in WAITING state, and the business-instruction route requires business_asked to be absent, but it is already True. The business system has been consulted, yet no answer or confirmation is recorded. Please review and carry out or confirm the role revocation."}.
-65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+63. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business).
 
 ## Model calls
 
-5 calls, 11752 tokens in, 1097 out, 10.932 s, cost $0.0306; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8399 tokens in, 734 out, 7.122 s, cost $0.0202; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't revoked Owen Bell's Payroll Approver role. The case is stuck in a waiting state and has been left open for a person to pick up.
+> I couldn't revoke Owen Bell's Payroll Approver role. The case is in a waiting state, and the policy refused my submission.
 > 
-> - **Revocation:** The desk refused my request to carry out the instruction. The case is in a WAITING state rather than TRIAGED. The business route also only accepts the instruction if the business system hasn't been asked yet, and it already has been. No answer from the business system is recorded in the case.
-> - **Escalation:** The desk refused that too, for the same reason: the case isn't in the TRIAGED state.
+> The refusal came from the state. The case is WAITING, not TRIAGED. The rule for business instructions also requires that the business system hasn't been asked yet, and it already has been. The case record shows no business-system answer, so I can't confirm what that check found.
 > 
-> Mara Ellery's verified instruction is recorded, and the review of Owen Bell's earlier operations stays separate, as she asked. Someone needs to look at why the case is waiting and then revoke the role or confirm it has been revoked.
+> The role is still active. The case is marked final with outcome "wait", so I'm stopping here and leaving it open for a person to pick up.

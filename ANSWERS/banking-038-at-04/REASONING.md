@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `confirmation`: not known → none (by `read-confirmation`).
 53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+55. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
 56. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
 57. `request_type`: not known → question (by `triage`).
 58. `subject`: not known → document (by `triage`).
@@ -64,7 +64,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 60. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
 61. `next_system`: not known → documents (by `asked-documents`).
 62. The agent asked for `reply` {}.
-63. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+63. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
 64. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
 65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 66. Called `reply_customer` (attempt 1, key banking-038-at-04:do-reply:17).
@@ -75,10 +75,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7269 tokens in, 510 out, 4.687 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7291 tokens in, 528 out, 5.174 s, cost $0.0159; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I used `reply` to answer Mara Ellison, and the desk accepted it and closed the case. The documents system shows `account-confirmation-038.pdf` is ready, so the reply is based on that record.
+> I replied to the customer, and the case is closed. The documents system already showed that her account confirmation, `account-confirmation-038.pdf`, is ready, so I didn't query any other system.
 > 
-> The requester is not verified. The reply only points her to her own secure portal and nothing goes outside it.
+> She is not verified in this chat. The reply therefore only points her to the document in her own secure portal and discloses nothing from it. Nothing was sent to anyone else, and no transfer was involved.

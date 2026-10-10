@@ -74,10 +74,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7650 tokens in, 526 out, 4.561 s, cost $0.0168; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7700 tokens in, 520 out, 4.786 s, cost $0.0167; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
+> Asking isn't allowed for an instruction; submit it.
 > I've submitted the request to block your missing debit card. The desk accepted it, and the case is now marked as requested.
 > 
-> Your identity was verified on the call, and you clearly asked for the block. Checking the card system first wasn't needed for this type of request, and the desk refused that lookup. I didn't check how many cards you hold. The block request doesn't name a specific card, so I can't confirm which card it applies to.
+> Your identity was verified on the call, and the instruction was clear. I didn't look up your card records first, because the desk wouldn't let me query the card system for an instruction like this one. I haven't seen confirmation that the block has taken effect.

@@ -53,24 +53,18 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. State `READING` → `TRIAGED` (by `triage`).
 50. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
 51. `next_system`: not known → business (by `route-business`).
-52. The agent asked for `ask_system` {"system": "business"}.
-53. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
-54. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
-55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-56. Called `ask_system` (attempt 1, key banking-046-at-01:do-ask:17).
-57. Action in the world: `ask_system` {"system": "business", "about": "role"}.
-58. `ask_system` found {}.
-59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-60. The case closed in `ASKED`: **ask_system**.
+52. The agent asked for `submit_request` {}.
+53. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); register-what-fits-no-type: request_type = other is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=business); verified is not known (verified=not known); incoming-instruction: next_system = incoming is false (next_system=business); verified is not known (verified=not known); recurring-instruction: next_system = recurring is false (next_system=business); verified is not known (verified=not known); card-instruction: next_system = card is false (next_system=business); verified is not known (verified=not known); access-instruction: next_system = access is false (next_system=business); verified is not known (verified=not known); business-instruction: verified is not known (verified=not known); documents-instruction: next_system = documents is false (next_system=business); verified is not known (verified=not known).
+54. The agent asked for `ask_system` {"system": "business"}.
+55. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+56. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
+57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+58. Called `ask_system` (attempt 1, key banking-046-at-01:do-ask:17).
+59. Action in the world: `ask_system` {"system": "business", "about": "role"}.
+60. `ask_system` found {}.
+61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+62. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 9237 tokens in, 728 out, 6.916 s, cost $0.0219; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I asked the business system about the request, and the case is now closed with that as its outcome. I have not revoked Owen Bell's Payroll Approver role.
-> 
-> The desk's records still show no confirmation of the revocation. The case facts list the request as an instruction on a role and give the business system as the next place to check. They don't record your administrator status, so I couldn't treat the instruction as verified. Nothing came back from the business system that changes this.
-> 
-> The role will still show as active in the portal until the revocation is carried out. You may want to check the portal again, and if it still shows him, raise the request again so the revocation can be carried out.
+5 calls, 9492 tokens in, 461 out, 4.451 s, cost $0.0196; models: claude-sonnet-5-5, jev-1.13.0.

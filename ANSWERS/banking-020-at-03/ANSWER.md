@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren asked, over secure chat, which regular payments are still active on her account before she makes any closure plans. The desk recorded her as not verified, classed the request as a question about standing orders, and had already asked the recurring-payments system, but no answer from it is in the case, so it closed the case as waiting. The agent's later attempts to ask the system again and to escalate to a person were both refused because the case was already in the waiting state, so nothing has been disclosed to her and her verification and the active payments list are still unresolved.
+Elena Wren asked, over secure chat, which regular payments (standing orders and Direct Debits) are still active before she plans to close her account. The desk classified this as a question about standing orders, marked the recurring system as asked, and closed the case in a waiting state because that system's answer is not in yet. The desk shows her as not verified, and a second query to the recurring system and an attempt to escalate to a person were both refused because the case was already waiting. Nothing has been changed on the account, and a person still needs to confirm her identity and retrieve the active recurring instructions.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira Ellison, writing over secure chat and not verified, asked whether her two similar transfers were separate instructions and whether the pending one had been stopped or returned. The desk classified it as a transfer question and put the case in WAITING for the payment system's answer, which has not come in. Its later attempts to ask the payment system again and to escalate were both refused because the case was no longer in the TRIAGED state, so nothing has been stopped, returned or changed, and no one has been handed the case through the desk. Her identity still needs verifying and the payment records still need checking, and the record shows no person assigned to do either.
+Mira Ellison, writing unverified over secure chat, asked whether two £84.20 payments to North Quay Utilities were separate instructions or a duplicate, and whether the pending one had been stopped or returned. The desk closed the case as "wait": it flagged the payment question for the payment system, but the answer never came in, and both the attempt to query that system and the attempt to escalate to a person were refused because the case was already in WAITING. No payment record has been read and no stop or return has been requested, so whether the entries are duplicates is still undetermined, and her identity still needs verifying by a person.
 
 _Written by a model from the record below; the sections below are the record._
 

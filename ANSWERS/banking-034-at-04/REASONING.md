@@ -57,7 +57,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. `confirmation`: not known → none (by `read-confirmation`).
 54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 55. Rule `triage` fired: state = READING → true (state=READING).
-56. Classifier (jev jev-latest) on `request_type`: question, confidence 0.71 → question.
+56. Classifier (jev jev-latest) on `request_type`: question, confidence 0.70 → question.
 57. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
 58. `request_type`: not known → question (by `triage`).
 59. `subject`: not known → fee (by `triage`).
@@ -65,21 +65,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. Rule `asked-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); tariff_asked → true (tariff_asked=True).
 62. `next_system`: not known → tariff (by `asked-tariff`).
 63. The agent asked for `reply` {}.
-64. Rule `tariff-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = tariff → true (next_system=tariff); tariff_status present → true (tariff_status=MATCHES).
+64. Rule `tariff-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = tariff → true (next_system=tariff); tariff_status present → true (tariff_status=MATCHES).
 65. State `TRIAGED` → `REPLY_PENDING` (by `tariff-reply`).
 66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 67. Called `reply_customer` (attempt 1, key banking-034-at-04:do-reply:17).
-68. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The tariff review shows matches. This confirms the recorded fee matches the applicable tariff; it does not authorise a refund or account change. No fee or account change was made."}.
+68. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The tariff review shows that the fee matches the tariff in force for the transaction. This confirms the recorded fee matches the applicable tariff; it does not authorise a refund or account change. No fee or account change was made."}.
 69. `reply_customer` found {}.
 70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 71. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7332 tokens in, 473 out, 4.422 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7414 tokens in, 566 out, 4.941 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The tariff check on the £3.20 fee came back as a match, so the answer was already in the case and I didn't need to query another system or escalate. The desk writes the reply text itself, so I haven't seen its wording.
+> I've sent the reply, which closes the case. The tariff check had already been run: the £3.20 fee matches the tariff entry for that foreign-currency cash withdrawal. The desk now writes the reply to Mara Ellery.
 > 
-> The customer's identity is still marked unverified. I went ahead because this is a question about a fee, not an instruction to change anything.
+> I haven't seen the wording of that reply. The case facts don't include the tariff entry itself or how it works out to £3.20, so I can't say whether the reply covers that. She also asked for the case to be escalated. I didn't do that, because the fee matched the tariff.

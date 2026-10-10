@@ -48,32 +48,33 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `check_registration` found {}.
 45. Rule `read-confirmation` fired: state = READING → true (state=READING).
 46. Called `check_confirmation` (attempt 1, key banking-028-at-04:read-confirmation:13).
-47. Note from `read-confirmation`: event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: confirmation='none', instructed_outside_portal=True]
-48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
-49. `confirmation`: not known → none (by `read-confirmation`).
-50. `instructed_outside_portal`: not known → True (by `read-confirmation`).
-51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
-53. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-54. `request_type`: not known → change (by `triage`).
-55. `subject`: not known → profile (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-58. `next_system`: not known → access (by `asked-access`).
-59. Rule `profile-change-waits-for-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked → true (access_asked=True); confirmation in [none, requested] → true (confirmation=none). The protected change process is running; it asks the customer to confirm.
-60. State `TRIAGED` → `WAITING` (by `profile-change-waits-for-the-process`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `redirect_secure` {}.
-63. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=change).
+47. Note from `read-confirmation`: event 4 (H&V secure profile-change process): Please review the replacement number entered in this secure process and confirm whether you want it applied to your profile. No change will be made until you confirm. [facts: confirmation='requested']
+48. Note from `read-confirmation`: event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: instructed_outside_portal=True]
+49. `check_confirmation` found {"confirmation": "requested", "instructed_outside_portal": true}.
+50. `confirmation`: not known → requested (by `read-confirmation`).
+51. `instructed_outside_portal`: not known → True (by `read-confirmation`).
+52. Rule `triage` fired: state = READING → true (state=READING).
+53. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+54. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+55. `request_type`: not known → change (by `triage`).
+56. `subject`: not known → profile (by `triage`).
+57. State `READING` → `TRIAGED` (by `triage`).
+58. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+59. `next_system`: not known → access (by `asked-access`).
+60. Rule `profile-change-waits-for-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked → true (access_asked=True); confirmation in [none, requested] → true (confirmation=requested). The protected change process is running; it asks the customer to confirm.
+61. State `TRIAGED` → `WAITING` (by `profile-change-waits-for-the-process`).
+62. The case closed in `WAITING`: **wait**.
+63. The agent asked for `reply` {}.
+64. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=profile); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=access); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-4 calls, 7441 tokens in, 637 out, 6.438 s, cost $0.0174; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8181 tokens in, 790 out, 7.65 s, cost $0.0203; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I didn't change the phone number, and no further step is available on this case right now.
+> The case is waiting on you, and I haven't changed your phone number. Nothing else is open on the bank's side.
 > 
-> The customer has passed identification, and the access system has already been asked. But the secure portal has not yet received her confirmation of the replacement number. Her instruction came by email and phone, outside the portal, so it can't authorise the change.
+> The bank has sent a confirmation request through the secure portal, and the case stays in waiting until you answer it. Please check the replacement number shown there. If it's correct, confirm it in the portal, because the bank won't apply the change on your behalf or from an email or call. Your identity checks on the call are already complete.
 > 
-> I tried to point her to the secure process, but the desk refused. The case is waiting rather than triaged, and the request type is a change rather than an access request. The case is therefore left waiting for Elowen Mercer to confirm the new number in the secure portal. Once she does, the change can go ahead.
+> I tried to send you a written reply, but the desk refused it because the case is in a waiting state. This message is the only explanation you'll get from me.

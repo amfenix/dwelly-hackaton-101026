@@ -66,13 +66,18 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 62. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested); registration_asked absent → true (registration_asked=not known). The change was sent to the portal; the customer has not confirmed it yet.
 63. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
 64. The case closed in `WAITING`: **wait**.
+65. The agent asked for `reply` {}.
+66. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=standing_order); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=recurring); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-3 calls, 5176 tokens in, 491 out, 3.914 s, cost $0.0114; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7890 tokens in, 473 out, 4.532 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The change to your standing order is already waiting for your confirmation, so there's nothing more for me to do on this case. I'm leaving it as it is.
+> The change is already with the customer for secure confirmation, and the case is waiting on her. Nothing is left for the desk to do.
+> The change to your standing order is waiting for your secure confirmation, and I haven't altered the instruction myself.
 > 
-> The request to move the Willow Yard Studios payment from 18 September to 22 September 2025 was sent to you for secure confirmation. Nothing has been changed on your instruction yet. The change only takes effect after you confirm it through the secure portal.
+> The desk checked that the next payment to Willow Yard Studios isn't being processed yet. The request to move it from 18 September to 22 September 2025 has been sent to you to confirm. The case is now waiting on you, and there's nothing more for the bank to do until you respond.
+> 
+> My attempt to send a further reply was refused because the case is already in a waiting state. The earlier portal message stands as the update.

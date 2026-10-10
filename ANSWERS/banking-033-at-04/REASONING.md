@@ -57,7 +57,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. `confirmation`: not known → none (by `read-confirmation`).
 54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 55. Rule `triage` fired: state = READING → true (state=READING).
-56. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
+56. Classifier (jev jev-latest) on `request_type`: question, confidence 0.85 → question.
 57. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
 58. `request_type`: not known → question (by `triage`).
 59. `subject`: not known → document (by `triage`).
@@ -65,7 +65,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
 62. `next_system`: not known → documents (by `asked-documents`).
 63. The agent asked for `reply` {}.
-64. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+64. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
 65. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
 66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 67. Called `reply_customer` (attempt 1, key banking-033-at-04:do-reply:17).
@@ -76,11 +76,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7266 tokens in, 480 out, 5.273 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7264 tokens in, 463 out, 5.39 s, cost $0.0152; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The documents system has already answered: the file is ready. I'll reply to the customer with that.
-> I replied to Mara Ellison, and the case is now closed as replied. The documents system confirmed that the CSV export for her period is ready, and the reply passes that on. I didn't read the reply text, so I can't say exactly what it tells her about finding the file in her secure portal.
+> The documents system has already answered, so I'll reply to the customer.
+> I sent the customer a reply, and the case is closed. The documents system had already confirmed the CSV export for 6–9 May 2025 is ready, so the next step was to tell her. The reply is written by the desk, so I can't show you its exact wording.
 > 
-> She isn't verified on this channel. The reply only reports the record that the file is ready, and no account changes were made.
+> The case facts show the customer as not verified. I didn't treat that as blocking, since the reply only said the file is ready in her secure portal.

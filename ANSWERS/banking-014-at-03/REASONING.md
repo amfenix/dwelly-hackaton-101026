@@ -70,12 +70,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 9094 tokens in, 592 out, 6.182 s, cost $0.0202; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9115 tokens in, 669 out, 5.873 s, cost $0.0209; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't check the mandate status, and the case is now waiting with no further step available from me.
+> I've stopped here without taking any further action. The case is in a final WAITING state, and the desk refused my request to ask the recurring system.
 > 
-> The recurring-payments system had already been queried for this case, so my second request was refused. The case is in the WAITING state, and that system's answer isn't in the case yet. Mara Ellery's identity is also still unverified.
+> The refusal says the recurring system has already been asked (`recurring_asked` is true). The case holds no mandate status from that check. The customer, Mara Ellery, is also not verified.
 > 
-> I haven't cancelled or changed anything on the Northmere Water Services mandate. She asked only for its status, and I can't state whether it is active until the record shows it.
+> I can't say whether the Northmere Water Services mandate is active, because nothing in the records answers that yet. I haven't cancelled or changed anything, which matches her request.

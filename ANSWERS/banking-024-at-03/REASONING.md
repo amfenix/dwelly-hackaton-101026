@@ -68,10 +68,14 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8569 tokens in, 595 out, 6.278 s, cost $0.0193; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8640 tokens in, 683 out, 5.687 s, cost $0.0202; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've stopped here, and the case is waiting. I couldn't tell Rowan the restriction category or whether it has been lifted.
+> I haven't answered Rowan yet, and the case is now closed in a waiting state.
 > 
-> The card system refused my lookup. The case is in a waiting state, and the card question has already been asked. The facts also show Rowan is not verified. Until Rowan is verified and replies, I have nothing from the card records to report. I haven't guessed at a restriction category or a lifted status.
+> The card system had already been asked, but its answer isn't in the case. My second request to the card system was refused because the case is in WAITING, not TRIAGED, and the card lookup had already been made.
+> 
+> Rowan is also not verified, so the bank can't give out the restriction category or whether it has been lifted until identity is confirmed.
+> 
+> I'm leaving the case with the team that picks up waiting cases. I didn't escalate, because the facts don't conflict.

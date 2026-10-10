@@ -56,23 +56,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `confirmation`: not known → none (by `read-confirmation`).
 53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: change, confidence 0.45 → change.
+55. Classifier (jev jev-latest) on `request_type`: register, confidence 0.44 → register.
 56. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-57. `request_type`: not known → change (by `triage`).
+57. `request_type`: not known → register (by `triage`).
 58. `subject`: not known → profile (by `triage`).
 59. State `READING` → `TRIAGED` (by `triage`).
 60. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 61. `next_system`: not known → access (by `route-access`).
 62. The agent asked for `submit_request` {}.
-63. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change).
-64. The agent asked for `ask_system` {"system": "access"}.
-65. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
-66. The agent asked for `escalate` {"note": "Verified caller (verified call, ID checks completed) asks to correct the name on their H&V profile from \"Elowen Mar\" to \"Elowen Marr\". The request was already registered as HV-037. The request is a change type, so a standard submit or system lookup was refused. Please pass it to the data team for a name correction. The customer knows supporting documents may be requested. No change has been made and nothing is confirmed to the customer yet."}.
-67. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
-68. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
-69. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
-70. The case closed in `ESCALATED`: **escalate**.
+63. Refused `submit_request` in `TRIAGED`: register: registration_asked absent is false (registration_asked=True); register-what-fits-no-type: request_type = other is false (request_type=register); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=access); request_type = instruction is false (request_type=register); incoming-instruction: next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=register); recurring-instruction: next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=register); card-instruction: next_system = card is false (next_system=access); request_type = instruction is false (request_type=register); access-instruction: request_type = instruction is false (request_type=register); business-instruction: next_system = business is false (next_system=access); request_type = instruction is false (request_type=register); documents-instruction: next_system = documents is false (next_system=access); request_type = instruction is false (request_type=register).
+64. The agent asked for `reply` {}.
+65. Rule `registration-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=register); registration_asked → true (registration_asked=True); registered present → true (registered=True).
+66. State `TRIAGED` → `REPLY_PENDING` (by `registration-reply`).
+67. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+68. Called `reply_customer` (attempt 1, key banking-037-at-04:do-reply:17).
+69. `reply_customer` found {}.
+70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+71. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 11016 tokens in, 858 out, 8.421 s, cost $0.0268; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10306 tokens in, 676 out, 7.524 s, cost $0.0234; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I replied to the customer. The correction request for her name ("Elowen Mar" to "Elowen Marr") was already registered under reference HV-037, so there was nothing further to submit.
+> 
+> My attempt to submit it again was refused because it was already registered. The case is now closed with the reply.
+> 
+> The records show no confirmation that the name has actually been changed. The reply therefore covers only the registration, not a completed correction.

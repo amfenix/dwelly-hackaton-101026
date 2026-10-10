@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified by call, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputes how the tariff was applied. The desk's attempt to query the tariff system was refused, since this was a registration-type request, and it instead registered the request with the tariff team about the fee, which closed the case as requested. Nothing has been checked against her statement preference and the fee has not been changed, so the review is left to the tariff team.
+Mara Ellison, verified on a call, asked for a review of a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputes how the tariff was applied. The desk's attempt to query the tariff system was refused, so it registered a request with the tariff team about the fee, and the case closed as REQUESTED. The tariff records were not checked and the fee has not been judged; that is left for the tariff team's review.
 
 _Written by a model from the record below; the sections below are the record._
 

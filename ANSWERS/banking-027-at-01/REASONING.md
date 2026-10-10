@@ -54,7 +54,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 51. `next_system`: not known → access (by `route-access`).
 52. The agent asked for `redirect_secure` {}.
-53. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
+53. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); request_type = instruction → false (request_type=access); not verified → not known (verified=not known).
 54. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
 55. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
 56. Called `redirect_secure` (attempt 1, key banking-027-at-01:do-redirect:17).
@@ -65,10 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4572 tokens in, 482 out, 3.931 s, cost $0.0102; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4683 tokens in, 564 out, 4.196 s, cost $0.0111; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed the customer to H&V's secure recovery process, and the case is now closed as redirected. The portal had already declined the sign-in and said to use that process. The bank never handles passwords or PINs, so recovery has to go through the secure process and not through this desk.
+> I've pointed the customer to H&V's secure recovery process, and the case is now closed as redirected. The desk accepted the redirect.
 > 
-> I didn't query the access system first. The request was plain sign-in recovery, so I didn't see a need.
+> I chose this because the request is about regaining access after failed sign-in attempts, and the portal had already declined the sign-in and said to use secure recovery. The bank never handles passwords or PINs, so I didn't check the access system or take any other step.

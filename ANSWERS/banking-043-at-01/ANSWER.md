@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a verified customer on the business portal, asked whether Northmere Studio Ltd's payroll payment package is waiting for her co-signer or has moved on, after giving her first consent. The desk classified this as a question about a payment package and put it to the payment system, and the case closed at that step. The payment system's answer is not in the record, so whether the package is waiting for the co-signer is still unanswered.
+Mara Ellery, a verified customer on the business portal, asked whether Northmere Studio Ltd's payroll payment package, which she had given first consent to, is waiting for her co-signer or has moved on. The desk classified it as a question about a payment package and sent an inquiry to the payment system, which closed the case as asked. The record holds no answer from the payment system, so whether the package is waiting for the co-signer is still unknown, and nothing on the package was changed.
 
 _Written by a model from the record below; the sections below are the record._
 

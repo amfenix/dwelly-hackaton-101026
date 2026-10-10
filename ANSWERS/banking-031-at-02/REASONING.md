@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.56 → question.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.62 → question.
 51. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
 52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → statement (by `triage`).
@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6957 tokens in, 466 out, 4.281 s, cost $0.0148; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6958 tokens in, 441 out, 3.972 s, cost $0.0144; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the question to the documents system, which holds statements and exports. The case is now closed at that step.
+> I asked the documents system about the June 2025 statement. The case is now closed at that step.
 > 
-> The documents system hasn't returned any details yet. I can't tell you whether the June 2025 statement exists or why it isn't showing in the portal. Elowen Marr's identity is also still unverified, so nothing has been made available in the portal.
+> The documents system's answer didn't come back in the case details. I don't know yet whether the June statement exists or why it isn't showing in the portal. The case also still shows the requester, Elowen Marr, as not verified.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a verified customer writing through the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed, since the portal shows the status but no reason. The desk classified this as a question about a transfer and sent a query about it to the payment system, and the case closed at that step. The record contains no reason for the failure and no reply from the payment system, so the explanation she asked for is still outstanding.
+Mara Ellery, a verified customer on the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed, since the portal shows the status but no reason. The desk classified this as a question about a transfer and sent a query about it to the payment system. That system's answer is not in the record, so the reason is still unknown and Mara has not yet been given one; the reply to her remains to be sent.
 
 _Written by a model from the record below; the sections below are the record._
 

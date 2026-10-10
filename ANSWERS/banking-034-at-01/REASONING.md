@@ -48,7 +48,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.70 → question.
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.62 → question.
 48. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
 49. `request_type`: not known → question (by `triage`).
 50. `subject`: not known → fee (by `triage`).
@@ -67,8 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6627 tokens in, 420 out, 3.854 s, cost $0.0136; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6666 tokens in, 419 out, 3.768 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the tariff system about the £3.20 fee on your foreign-currency cash withdrawal. The case is now closed at that step. The tariff system's answer isn't in the case record yet, so I can't tell you what the charge is for or how the amount was worked out. Once the answer is in the record, the reply to you can explain it.
+> I've queried the tariff system about the £3.20 fee on your foreign-currency cash withdrawal. The case is now closed at that step, and the desk has not yet recorded a tariff answer. I can't yet say what the charge is for or how its amount was worked out. I'm not going to guess at that without the tariff record.

@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7124 tokens in, 528 out, 8.243 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7115 tokens in, 502 out, 7.154 s, cost $0.0153; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the incoming-payments system whether the kiln contribution has arrived in Elowen Marsh's account. The case is now closed on that step. The system's answer isn't in the case yet, so I can't say whether the money has arrived.
+> I asked the incoming-payments system whether the kiln contribution has arrived. The case is now closed at that step.
 > 
-> The case also shows Elowen as not verified. Whoever writes the reply should keep to what the records show and not confirm account details until verification is done.
+> The system's answer isn't in the case yet. The facts show no result for the payment, so I can't say whether it has arrived. The only facts on record are that Elowen Marsh is not verified and that the sender's transfer is unconfirmed.

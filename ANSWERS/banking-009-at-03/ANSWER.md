@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, a verified customer on a call, asked which amount was actually sent for her property-manager transfer; she remembered £684.20, but the portal's final line shows £648.20. The desk moved the case to WAITING because the payment system had been asked and its answer wasn't in yet, so the sent amount is unconfirmed. Both a further payment query and an escalation to a person were refused because the case was already in WAITING, so nothing was escalated and no one has been told the amount; a person still needs to check the completed instruction in the payment records and confirm the sent figure to her.
+Mara Ellwood, a verified customer on a call, asked which amount H&V actually sent for her transfer, since she remembers the draft as £684.20 but the final line shows £648.20. The desk moved the case to waiting on the payment system, but the payment record was never read, so the sent amount is unconfirmed. Both the agent's attempt to ask the payment system and its attempt to escalate were refused because the case was already in WAITING, so no one has been handed the case, and a person still needs to check the completed instruction in the payment records and tell her the amount shown.
 
 _Written by a model from the record below; the sections below are the record._
 

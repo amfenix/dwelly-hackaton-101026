@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, whose identity is not verified, asked through secure chat for an account confirmation document to be placed in her own secure portal. The desk asked the documents system once and closed the case as waiting because no answer on readiness had come back; a second query to that system and an attempt to escalate with a note were both refused because the case was no longer in the triaged state. Nothing has been issued to her, and the record shows no person has yet picked up the case to verify her and decide whether the confirmation can be released.
+Mara Ellison, writing on secure chat and not verified, asked for an account confirmation document to be made available in her own secure portal only. The desk classified it as a question about a document, asked the documents system, and closed the case as waiting because that system's answer (whether the document is ready) has not come back. A second ask to the documents system and an escalation to a person were both refused because the case was already in WAITING, so no document has been released or confirmed, and her identity still needs verifying and a person still needs to check whether the document can be issued.
 
 _Written by a model from the record below; the sections below are the record._
 

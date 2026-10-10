@@ -62,8 +62,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6180 tokens in, 420 out, 5.179 s, cost $0.0127; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6219 tokens in, 361 out, 3.619 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system for the next run date of the standing order. The case is now closed at that step. The system's answer hasn't appeared in the case facts yet, so I can't give you the date. The next step is the reply to you once that answer is in the case.
+> I asked the recurring payments system about your standing order. The case is now marked as asked, and it's final. The system's answer hasn't come back into the case yet. The case record still lists only the original facts, so I don't have your next due date and can't give you one.

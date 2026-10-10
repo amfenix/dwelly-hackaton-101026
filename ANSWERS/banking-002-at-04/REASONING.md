@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
 55. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → incoming_payment (by `triage`).
@@ -63,7 +63,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 59. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
 60. `next_system`: not known → incoming (by `asked-incoming`).
 61. The agent asked for `reply` {}.
-62. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=False).
+62. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=False).
 63. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
 64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 65. Called `reply_customer` (attempt 1, key banking-002-at-04:do-reply:17).
@@ -74,10 +74,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7167 tokens in, 470 out, 7.506 s, cost $0.0152; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7228 tokens in, 517 out, 7.395 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to the customer. The bank's incoming-payments records show no matching payment from the sender for the kiln contribution. The reply says only that, and it doesn't confirm the transfer was sent or when it might arrive. The case is closed with that reply.
+> I replied to the customer, and the case is now closed as replied.
 > 
-> The requester isn't verified, so the check was only a record lookup. Nothing was changed on the account.
+> The check of incoming payments found no matching transfer for the kiln contribution, and nothing confirms it has arrived. The reply is based on that result alone. It doesn't say the payment was never sent, only that the bank has no record of it.
+> 
+> The customer is still unverified. This was a question about incoming money, so I didn't need verification to answer it, and I made no changes to the account.

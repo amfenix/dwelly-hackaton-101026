@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified on a call, asked the desk to raise the £38.40 Fern & Finch Books card purchase of 14 July 2025, which she doesn't recognise, with the card team and to tell her how to protect her card. The desk registered it as case HV-023, which records the enquiry only and is not a finding of fraud or a decision to refund, and then sent a reply to her; two attempts to ask the card system and to submit the request were refused because registration was already done. The record does not show what the reply said about protecting her card, and nothing further is recorded as left for a person.
+Mara Ellery, verified on a call, said she doesn't recognise a £38.40 Fern & Finch Books card purchase from 14 July 2025. She asked the desk to raise it with the card team and to tell her how to protect her card. The desk registered the enquiry with the card team as case HV-023, which records the enquiry only and is not a finding of fraud or a decision to refund. It then sent a reply to her and closed the case. The desk refused the agent's request to ask the card system for more detail, because this was a registration request, and the record doesn't show what the reply says about protecting the card. Nothing is recorded as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -52,6 +52,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `registration-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=register)
   - registration_asked → true (registration_asked=True)
   - registered present → true (registered=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -93,7 +94,6 @@ No.
 Requests the policy refused:
 
 - `ask_system`: payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card); request_type not in [register, change, authority] is false (request_type=register)
-- `submit_request`: register: registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=card); request_type = instruction is false (request_type=register); incoming-instruction: next_system = incoming is false (next_system=card); request_type = instruction is false (request_type=register); recurring-instruction: next_system = recurring is false (next_system=card); request_type = instruction is false (request_type=register); card-instruction: request_type = instruction is false (request_type=register); access-instruction: next_system = access is false (next_system=card); request_type = instruction is false (request_type=register); business-instruction: next_system = business is false (next_system=card); request_type = instruction is false (request_type=register); documents-instruction: next_system = documents is false (next_system=card); request_type = instruction is false (request_type=register)
 
 ## Final result
 

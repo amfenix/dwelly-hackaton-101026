@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, writing over secure chat and not yet verified, asked whether her Direct Debit mandate with Northmere Water Services is still active, and she asked that nothing be cancelled. The desk classified it as a question, sent a status check to the recurring-payments system, and put the case into waiting because that system's answer has not come back; a second request to that system was refused because it had already been asked. Nothing was changed on the mandate, and the mandate's status is still unknown, so the case stays open until the recurring-payments answer arrives.
+Mara Ellery, a customer who has not been verified, asked through secure chat whether her Direct Debit mandate with Northmere Water Services is still active, and she asked that nothing be cancelled. The desk classified this as a question, asked the recurring-mandate system for the status, and put the case in a final waiting state because that system's answer has not come back; a second request to ask the same system was refused, and no changes were made. What is left is the mandate status itself, which the record does not yet hold, so she has not received an answer.
 
 _Written by a model from the record below; the sections below are the record._
 

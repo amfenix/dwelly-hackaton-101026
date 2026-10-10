@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `confirmation`: not known → none (by `read-confirmation`).
 53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: question, confidence 0.50 → question.
+55. Classifier (jev jev-latest) on `request_type`: question, confidence 0.55 → question.
 56. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
 57. `request_type`: not known → question (by `triage`).
 58. `subject`: not known → statement (by `triage`).
@@ -64,7 +64,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 60. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
 61. `next_system`: not known → documents (by `asked-documents`).
 62. The agent asked for `reply` {}.
-63. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+63. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
 64. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
 65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 66. Called `reply_customer` (attempt 1, key banking-031-at-04:do-reply:17).
@@ -75,10 +75,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7274 tokens in, 483 out, 4.348 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7263 tokens in, 489 out, 4.747 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the customer a reply. The documents system had already confirmed that her June 2025 statement (statement-031.pdf) is ready, and the desk accepted the reply.
+> I used the reply tool, and the desk accepted it and closed the case. The documents system showed the June 2025 statement (`statement-031.pdf`) as ready, so the desk is writing the customer's reply from that record.
 > 
-> She is not verified, so the reply should only point her to the document in the secure portal. It should not include anything from the statement itself. The case is now closed with that reply.
+> The customer is not verified. Our records show she asked for the statement in the portal, not by email.

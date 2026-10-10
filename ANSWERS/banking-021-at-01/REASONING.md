@@ -65,12 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6494 tokens in, 396 out, 3.784 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6533 tokens in, 396 out, 3.987 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the card system whether the replacement card has been dispatched. The query was accepted, but the case doesn't contain the card system's answer yet. I can't tell you whether the card has been dispatched.
+> I've asked the card system about your replacement card. The case now shows the query as asked, but the card system's answer hasn't come back into it yet. That means I can't yet say whether the card has been dispatched.
 > 
-> The only confirmation on record is the secure portal message. It says your request was received. It says nothing about dispatch or delivery.
-> 
-> The case is now closed at this step, so I'm stopping here.
+> The only confirmation on record is the secure portal's message that your request was accepted. That message says the request was received. It doesn't say the card has been dispatched or delivered.

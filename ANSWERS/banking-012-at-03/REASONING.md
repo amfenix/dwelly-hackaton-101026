@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+52. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
 53. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 54. `request_type`: not known → change (by `triage`).
 55. `subject`: not known → standing_order (by `triage`).
@@ -71,8 +71,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5046 tokens in, 601 out, 5.64 s, cost $0.0123; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5039 tokens in, 557 out, 5.098 s, cost $0.0117; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed. Its state is CONFIRMATION_SENT and the outcome is "send_for_confirmation". Mira has not confirmed the change to £68.00, and she isn't verified. The bank can't make the change for her, so it has asked her to confirm it herself. The standing order stays at £42.00 until she does. I'm taking no further action.
+> The case is already closed, so I'm taking no further action. Mira's request to raise the Westmere Garden Cooperative standing order from £42.00 to £68.00 has been sent to her for confirmation. She hasn't confirmed it, and she isn't verified. The standing order stays at £42.00 until she confirms the change through the secure process.

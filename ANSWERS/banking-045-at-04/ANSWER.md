@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Bell wrote through secure chat to ask about the next step for an access request that still needs the company administrator's approval. The desk decided to wait and took no action itself, because the bank had already sent the request to the administrator through the secure portal. No access has been granted, and the case is closed in a waiting state until the administrator decides. Nadia's identity was not verified, and nothing else is left for the desk in the record.
+Nadia Bell, an unverified customer writing over secure chat, asked what happens next with her access request, noting that the company administrator still has to approve it. The desk found the bank had already sent the new-user access request to the administrator through the secure portal, so it took no action and closed the case as waiting. No access has been granted, and the request now rests with the administrator's decision.
 
 _Written by a model from the record below; the sections below are the record._
 

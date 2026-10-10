@@ -54,7 +54,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
-53. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
+53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
 54. `request_type`: not known → register (by `triage`).
 55. `subject`: not known → transfer (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
@@ -74,10 +74,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8031 tokens in, 594 out, 7.795 s, cost $0.0182; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8057 tokens in, 529 out, 5.591 s, cost $0.0174; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the request to seek the return of the £286.40 transfer. It's now with the team that handles returns, and the case shows as requested.
+> I've registered Leona Mercer's request to seek the return of the £286.40 transfer. The case is now in the REQUESTED state and with the team that handles returns.
 > 
-> I didn't look up the transfer in the payment records first, because the desk refused that lookup for a register-type request. The request therefore rests on what you told us on the verified call: the amount and that you picked the wrong saved recipient. No recipient details are in the case yet. Whether the money comes back depends on the returns team and on the recipient's side, so I can't say yet that it will be returned.
+> I didn't look up the payment first. The payment system refused the lookup because this is a register-type request, so I submitted the request directly.
+> 
+> Nothing is left for the desk to do.

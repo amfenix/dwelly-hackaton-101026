@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
 53. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → statement (by `triage`).
@@ -65,19 +65,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "documents"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
-64. The agent asked for `escalate` {"note": "Customer (Mara Ellison, secure chat, identity not verified) asks whether an archived January 2024 statement is available. The documents system was already queried, but no availability result (document_ready unknown) is on the case. The case is in WAITING and a new documents query was refused. Please verify the customer and check the statement archive."}.
-65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 10572 tokens in, 922 out, 8.179 s, cost $0.0266; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7435 tokens in, 640 out, 5.625 s, cost $0.0173; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've taken this case as far as the desk allows, and I couldn't confirm whether the January 2024 statement is available.
+> I made no further move on this case. It stays in the waiting state, and a person will pick it up.
 > 
-> - **Documents check:** The documents system was already asked, but its answer isn't on the case. The desk shows `document_ready` as not known. A second query was refused because the case is in WAITING, not TRIAGED.
-> - **Escalation:** I tried to hand the case to a person with a note, and that was refused for the same reason.
-> - **Identity:** Mara Ellison is not verified yet, so I can't confirm anything about her statements.
+> The documents system has already been asked about the January 2024 statement. Its answer on whether an archived copy exists isn't in the case yet, so I can't tell Mara Ellison whether one is available. When I tried to ask the documents system again, the desk refused. The case is waiting, and the documents check has already been run once.
 > 
-> The case stays in WAITING and is left open for a person to pick up. It needs identity verification and a check of the statement archive.
+> Mara is also not verified on this chat, so no statement can be released to her yet.

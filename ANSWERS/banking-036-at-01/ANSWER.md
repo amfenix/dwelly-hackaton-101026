@@ -1,10 +1,10 @@
 # Case banking-036-at-01: New correspondence address
 
-**Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
+**Decision: redirect_secure**  (final state `REDIRECTED`)
 
 ## Summary
 
-Mara Ellison, an unverified customer, emailed asking the bank to update her correspondence address after a move within the UK, noting that the email alone doesn't change her profile. The desk did not change the profile; it sent her a request to confirm the change, since changes must be confirmed by the customer in the secure portal rather than by email. The case is closed at "confirmation sent," and the address stays as it is until she confirms.
+Mara Ellison emailed to say she had moved within the UK and asked the bank to update her correspondence address. Because the request came by email from an unverified sender, the desk did not change her profile and instead replied telling her to use the secure process in her portal, where her identity is checked. The case is closed as redirected, and nothing is left for a person unless she makes the change herself through the portal.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -30,7 +30,10 @@ Case reference: id banking-036-at-01, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `send_for_confirmation` (change: profile, to: Mara Ellison), by rule `do-confirm`
+- `redirect_secure` (to: Mara Ellison, channel: external_message), by rule `do-redirect`
+
+  > Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.
+
 
 ## Decision and why
 
@@ -38,13 +41,13 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `CONFIRM_PENDING`: rule `change-needs-confirmation` — A change is confirmed by the customer in the secure portal, not in chat or by email.
+- `TRIAGED` → `REDIRECT_PENDING`: rule `change-by-email` — An email does not change anything; the customer is pointed to the secure process.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
-  - confirmation = none → true (confirmation=none)
-  - registration_asked absent → true (registration_asked=not known)
-- `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
-  - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
+  - channel = external_message → true (channel=external_message)
+  - role != third_party → true (role=customer)
+- `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
+  - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
 
 Facts established:
 
@@ -73,4 +76,4 @@ No.
 
 ## Final result
 
-send_for_confirmation (CONFIRMATION_SENT)
+redirect_secure (REDIRECTED)

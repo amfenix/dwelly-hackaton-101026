@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat whether dispatch of her replacement card had been registered, since the portal only said the request was accepted and she had no confirmation of arrival. The desk checked the card journal, which shows the card as dispatched with no receipt recorded, and replied on secure chat saying exactly that and that no further card change was made. Her identity was not verified on this chat, and the case is closed with nothing left for a person.
+Mara Ellison asked over secure chat whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk checked the card journal, which shows the card as dispatched with no record of receipt, and replied to her on secure chat saying exactly that and that no further card change was made. The case is closed as replied; her identity was still unverified when the reply went out, and nothing is recorded as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-021-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
 
-  > The card journal shows dispatched. This does not confirm that the customer has received the card. No additional card change was made.
+  > The card journal shows your card as dispatched. This does not confirm that the customer has received the card. No additional card change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = card → true (next_system=card)
   - card_status present → true (card_status=DISPATCHED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

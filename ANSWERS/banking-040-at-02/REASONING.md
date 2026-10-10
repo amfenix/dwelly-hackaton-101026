@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
 55. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → document (by `triage`).
@@ -71,9 +71,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 67. `ask_system` found {}.
 68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 69. The case closed in `ASKED`: **ask_system**.
-70. The agent asked for `reply` {}.
-71. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=documents); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-5 calls, 10235 tokens in, 467 out, 4.656 s, cost $0.0213; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5019 tokens in, 521 out, 4.141 s, cost $0.0113; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I've asked the documents system for the record of payment HV-040 (£74.00, 14 July 2025, status SENT). The case is waiting on its answer. Once it comes back, the reply to Mara can be written from it.
+> 
+> The facts also show Mara as not verified. I'll keep that in mind when the reply is drafted. The reply should say only what the bank's record shows. It should not claim the contractor has received the money, because the customer already knows that confirmation is separate.

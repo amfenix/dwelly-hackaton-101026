@@ -88,7 +88,7 @@
     "actor_next": "bank"
   },
   "failure": null,
-  "summary": "Maren Ellwood, writing over secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to deal with it. She had not been verified, so the desk did not handle it itself. It sent her a message pointing her to the secure process in her portal, which checks identity there, and told her the bank never asks for a password, PIN or verification code. Nothing on her profile was changed, the case is closed as redirected, and the record lists nothing further for a person to do.",
+  "summary": "Maren Ellwood, an unverified customer on secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to deal with it. The desk classified this as a card access request and redirected her to the secure process in her secure portal, where her identity is checked. The message told her the bank never asks for a password, PIN or verification code, and that nothing on her profile was changed. The case is closed as redirected, and the record lists nothing left for a person to do.",
   "journal": [
     {
       "seq": 1,
@@ -515,7 +515,7 @@
     },
     {
       "seq": 39,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_bank_actions",
       "values": {}
@@ -636,7 +636,7 @@
     },
     {
       "seq": 50,
-      "at": 0.235,
+      "at": 0.237,
       "kind": "choice",
       "field": "request_type",
       "raw": "access",
@@ -648,7 +648,7 @@
     },
     {
       "seq": 51,
-      "at": 0.235,
+      "at": 0.237,
       "kind": "choice",
       "field": "subject",
       "raw": "card",
@@ -660,7 +660,7 @@
     },
     {
       "seq": 52,
-      "at": 0.235,
+      "at": 0.237,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -669,7 +669,7 @@
     },
     {
       "seq": 53,
-      "at": 0.235,
+      "at": 0.237,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -678,7 +678,7 @@
     },
     {
       "seq": 54,
-      "at": 0.235,
+      "at": 0.237,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
@@ -686,7 +686,7 @@
     },
     {
       "seq": 55,
-      "at": 0.235,
+      "at": 0.237,
       "kind": "trigger",
       "name": "route-card",
       "on": null,
@@ -718,7 +718,7 @@
     },
     {
       "seq": 56,
-      "at": 0.235,
+      "at": 0.237,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -727,18 +727,18 @@
     },
     {
       "seq": 57,
-      "at": 1.555,
+      "at": 1.936,
       "kind": "signal",
       "signal": "redirect_secure",
       "args": {}
     },
     {
       "seq": 58,
-      "at": 1.555,
+      "at": 1.936,
       "kind": "trigger",
       "name": "redirect-to-the-secure-process",
       "on": "redirect_secure",
-      "when": "state = TRIAGED and request_type = access",
+      "when": "state = TRIAGED and (request_type = access or (request_type = instruction and not verified))",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -753,13 +753,27 @@
           "values": {
             "request_type": "access"
           }
+        },
+        {
+          "test": "request_type = instruction",
+          "result": false,
+          "values": {
+            "request_type": "access"
+          }
+        },
+        {
+          "test": "not verified",
+          "result": true,
+          "values": {
+            "verified": false
+          }
         }
       ],
       "note": ""
     },
     {
       "seq": 59,
-      "at": 1.555,
+      "at": 1.936,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "REDIRECT_PENDING",
@@ -767,7 +781,7 @@
     },
     {
       "seq": 60,
-      "at": 1.555,
+      "at": 1.936,
       "kind": "trigger",
       "name": "do-redirect",
       "on": null,
@@ -785,7 +799,7 @@
     },
     {
       "seq": 61,
-      "at": 1.555,
+      "at": 1.936,
       "kind": "call",
       "function": "redirect_secure",
       "attempt": 1,
@@ -794,7 +808,7 @@
     },
     {
       "seq": 62,
-      "at": 1.555,
+      "at": 1.936,
       "kind": "action",
       "type": "redirect_secure",
       "args": {
@@ -807,14 +821,14 @@
     },
     {
       "seq": 63,
-      "at": 1.555,
+      "at": 1.936,
       "kind": "returned",
       "function": "redirect_secure",
       "values": {}
     },
     {
       "seq": 64,
-      "at": 1.555,
+      "at": 1.936,
       "kind": "state",
       "frm": "REDIRECT_PENDING",
       "to": "REDIRECTED",
@@ -822,7 +836,7 @@
     },
     {
       "seq": 65,
-      "at": 1.555,
+      "at": 1.936,
       "kind": "final",
       "state": "REDIRECTED",
       "outcome": "redirect_secure"
@@ -846,6 +860,7 @@
               "instruction": "an instruction to act now (block a card, cancel a payment or a mandate, revoke a role)",
               "access": "signing in, a PIN, a password, recovery of access",
               "authority": "something only another person may approve or give (a second signatory, an administrator, a new user's access)",
+              "other": "none of these (a bereavement, a complaint, a request for the personal data the bank holds, closing an account, credit)",
               "unknown": "The text does not say, or says too little to tell."
             }
           },
@@ -877,8 +892,8 @@
       "response": {
         "model": "jev-1.13.0",
         "usage": {
-          "input_tokens": 910,
-          "output_tokens": 199
+          "input_tokens": 949,
+          "output_tokens": 206
         },
         "answers": {
           "request_type": {
@@ -892,6 +907,7 @@
               "instruction": 0.0,
               "access": 1.0,
               "authority": 0.0,
+              "other": 0.0,
               "unknown": 0.0
             }
           },
@@ -920,13 +936,13 @@
           }
         }
       },
-      "seconds": 0.23429689998738468,
-      "input_tokens": 910,
-      "output_tokens": 199,
+      "seconds": 0.23630480002611876,
+      "input_tokens": 949,
+      "output_tokens": 206,
       "cost_usd": null,
       "error": null,
       "replayed": false,
-      "digest": "9b6e3ec08600c36d3428cf5b27e001d4a3b5087588e7bb6175a3d91cd0ab4c5d"
+      "digest": "7943d0e799e880cb17f4281a970ed02d64996f1477702d469561b26bac66f98e"
     },
     {
       "kind": "agent",
@@ -1069,16 +1085,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftaxbCzo8DyMVFjZYCKz",
+        "id": "msg_011CfteZuGGKBpZknmAiL1Q2",
         "container": null,
         "content": [
           {
-            "citations": null,
-            "text": "The customer needs the bank's secure process for a forgotten PIN. The bank never handles PINs, so I'm redirecting her to that process.",
-            "type": "text"
+            "signature": "CAQS7gUKEAgSGAI4AUIIdGhpbmtpbmcSDLWVHumooTeRFS2x5BoMB4FP1BRLnGRoQ2QlIjAr3gPop+5+sRlJ795vZnAVtfeQxcoUYey1OYkUkY4/R/3HLEhwOAKge80VL2JbY5MqiwVN2HfCowBIcfj4pHK8Wp7svladkrTfrPDMypzc6aQjjNvsjuj07kzgHDcooY5q7HD4vHKiuA3poQ63ZQob041vy5mWTDTzOI7svUaaMOGb4huc1OcvCchGZghCI4E54D7FR57GiY/OrL1g36pe7S7NELgA+mb54SVVZk4q1tg0p9N4JFiR3Cr+CxtFwzwpT7twObXY55ytYVKzDMNJLLxJbCf8NYbKNI+0jt4P1VSP4en0LKHkrOaxui0HvHki3lRLksJwZNRl8Mii2tTzvACCxWAG+uN7NLS8TWA87cgP8eWSZ8qefyBD9zbpYLXdixDvzDWDubSgTcEMmVlXC70sO8+kfJwiPFmssHBs802+H6rd23kblVKnqz7iM4NqNIGRcOR5Ut1ddhWOkrNXnw9AfDupiZqbTDsdNC6AempvMCGMGjr1qoo9J2Yy3gMKN9AnemhRMprxM9LYJNXuadmB5ugZOfsCLZwBAuT3zsDsGqh38BvS8eq4iuN2ctyJN1ytTAi+GTqqQER0uD4+Unh/nFrpiyR8udok8E8ehE1ndsj5iz1oKuCedmX0qfRdbPvXPkAHtUcrJSfrTDrpi7Myx+vcSbYr/pGBSr+3wV+dbQjiriRW8g1GB2AN4CtuoXxMGwTfg9KEUj7J7ulJC81rZ4yKf1nvdxFGAQ42Es5n6J617eeebuhKdu45MVHBGtDzwt57FtzUyXoEP87zUJcNkUwF+ld3JdFOi7GUPnoIFlEF1hmJpz1+R4DRM/UTP0JgvZykNMSbLAXXNojlYx8qhkYFcXuj1WTiKdWcKOOfEauJpJChlvot7PqekLzj3/sTQbmEBNvl+eB9GVgAic0A2vPrLPbYZ8AGVk8YAQ==",
+            "thinking": "",
+            "type": "thinking"
           },
           {
-            "id": "toolu_01RkGykvE7j86y3V8m5CcCSU",
+            "id": "toolu_01JmGTHQAy3qLHxPt8McosBX",
             "caller": {
               "type": "direct"
             },
@@ -1104,18 +1120,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1811,
-          "output_tokens": 75,
+          "output_tokens": 108,
           "output_tokens_details": {
-            "thinking_tokens": 0
+            "thinking_tokens": 78
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.319740999955684,
+      "seconds": 1.6983838999876752,
       "input_tokens": 1811,
-      "output_tokens": 75,
-      "cost_usd": 0.004372,
+      "output_tokens": 108,
+      "cost_usd": 0.004702,
       "error": null,
       "replayed": false,
       "digest": "e7ac59b201f2400dd0580d7d5ea92ac0207c4fb83deb579136f789aee0e2b6e3"
@@ -1262,12 +1278,12 @@
             "role": "assistant",
             "content": [
               {
-                "citations": null,
-                "text": "The customer needs the bank's secure process for a forgotten PIN. The bank never handles PINs, so I'm redirecting her to that process.",
-                "type": "text"
+                "signature": "CAQS7gUKEAgSGAI4AUIIdGhpbmtpbmcSDLWVHumooTeRFS2x5BoMB4FP1BRLnGRoQ2QlIjAr3gPop+5+sRlJ795vZnAVtfeQxcoUYey1OYkUkY4/R/3HLEhwOAKge80VL2JbY5MqiwVN2HfCowBIcfj4pHK8Wp7svladkrTfrPDMypzc6aQjjNvsjuj07kzgHDcooY5q7HD4vHKiuA3poQ63ZQob041vy5mWTDTzOI7svUaaMOGb4huc1OcvCchGZghCI4E54D7FR57GiY/OrL1g36pe7S7NELgA+mb54SVVZk4q1tg0p9N4JFiR3Cr+CxtFwzwpT7twObXY55ytYVKzDMNJLLxJbCf8NYbKNI+0jt4P1VSP4en0LKHkrOaxui0HvHki3lRLksJwZNRl8Mii2tTzvACCxWAG+uN7NLS8TWA87cgP8eWSZ8qefyBD9zbpYLXdixDvzDWDubSgTcEMmVlXC70sO8+kfJwiPFmssHBs802+H6rd23kblVKnqz7iM4NqNIGRcOR5Ut1ddhWOkrNXnw9AfDupiZqbTDsdNC6AempvMCGMGjr1qoo9J2Yy3gMKN9AnemhRMprxM9LYJNXuadmB5ugZOfsCLZwBAuT3zsDsGqh38BvS8eq4iuN2ctyJN1ytTAi+GTqqQER0uD4+Unh/nFrpiyR8udok8E8ehE1ndsj5iz1oKuCedmX0qfRdbPvXPkAHtUcrJSfrTDrpi7Myx+vcSbYr/pGBSr+3wV+dbQjiriRW8g1GB2AN4CtuoXxMGwTfg9KEUj7J7ulJC81rZ4yKf1nvdxFGAQ42Es5n6J617eeebuhKdu45MVHBGtDzwt57FtzUyXoEP87zUJcNkUwF+ld3JdFOi7GUPnoIFlEF1hmJpz1+R4DRM/UTP0JgvZykNMSbLAXXNojlYx8qhkYFcXuj1WTiKdWcKOOfEauJpJChlvot7PqekLzj3/sTQbmEBNvl+eB9GVgAic0A2vPrLPbYZ8AGVk8YAQ==",
+                "thinking": "",
+                "type": "thinking"
               },
               {
-                "id": "toolu_01RkGykvE7j86y3V8m5CcCSU",
+                "id": "toolu_01JmGTHQAy3qLHxPt8McosBX",
                 "caller": {
                   "type": "direct"
                 },
@@ -1283,7 +1299,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01RkGykvE7j86y3V8m5CcCSU",
+                "tool_use_id": "toolu_01JmGTHQAy3qLHxPt8McosBX",
                 "content": "{\"accepted\": true, \"state\": \"REDIRECTED\", \"case_closed\": \"redirect_secure\"}"
               }
             ]
@@ -1291,12 +1307,12 @@
         ]
       },
       "response": {
-        "id": "msg_011CftaxgppoXJLWa5PMY22T",
+        "id": "msg_011Cftea1wqmXFx1kvyeEMTM",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I've sent Maren to the bank's secure process for a forgotten PIN, and the case is closed. She didn't share her PIN in chat, and the bank doesn't handle PINs, so nothing more is needed from us here.",
+            "text": "I've pointed Maren to the bank's secure process for a forgotten card PIN. The desk accepted the redirect and closed the case. Nothing else is needed from the desk, and no PIN was requested or handled in the chat.",
             "type": "text"
           }
         ],
@@ -1315,8 +1331,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1926,
-          "output_tokens": 73,
+          "input_tokens": 1959,
+          "output_tokens": 74,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1324,13 +1340,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.1420113999629393,
-      "input_tokens": 1926,
-      "output_tokens": 73,
-      "cost_usd": 0.004582,
+      "seconds": 1.1573109000455588,
+      "input_tokens": 1959,
+      "output_tokens": 74,
+      "cost_usd": 0.004658,
       "error": null,
       "replayed": false,
-      "digest": "582045c99e6847b4716dd950e4cdf396648570f951bb25f10d02d13e86c8c6c0"
+      "digest": "f472f366e75a6181bdaa275392b83ed543d4f3b45099eba4ca2336703779aad6"
     },
     {
       "kind": "generate",
@@ -1343,17 +1359,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"redirect_secure\",\n  \"state\": \"REDIRECTED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Maren Ellwood\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"card\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"access\",\n    \"next_system\": \"card\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"redirect_secure\",\n      \"args\": {\n        \"to\": \"Maren Ellwood\",\n        \"channel\": \"secure_chat\",\n        \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-026-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-026-at-01:read-requester:1).\n4. Note from `read-requester`: event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: requester='Maren Ellwood', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Maren Ellwood\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Maren Ellwood (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-026-at-01:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-026-at-01:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-026-at-01:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-026-at-01:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-026-at-01:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-026-at-01:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-026-at-01:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-026-at-01:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-026-at-01:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n38. Called `check_bank_actions` (attempt 1, key banking-026-at-01:read-bank-actions:11).\n39. `check_bank_actions` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-026-at-01:read-registration:12).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-026-at-01:read-confirmation:13).\n45. Note from `read-confirmation`: event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: confirmation='none', instructed_outside_portal=False]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.\n51. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.\n52. `request_type`: not known → access (by `triage`).\n53. `subject`: not known → card (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).\n56. `next_system`: not known → card (by `route-card`).\n57. The agent asked for `redirect_secure` {}.\n58. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).\n59. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).\n60. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).\n61. Called `redirect_secure` (attempt 1, key banking-026-at-01:do-redirect:17).\n62. Action in the world: `redirect_secure` {\"to\": \"Maren Ellwood\", \"channel\": \"secure_chat\", \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"}.\n63. `redirect_secure` found {}.\n64. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).\n65. The case closed in `REDIRECTED`: **redirect_secure**.\n\n## Model calls\n\n3 calls, 4647 tokens in, 347 out, 2.696 s, cost $0.0090; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The customer needs the bank's secure process for a forgotten PIN. The bank never handles PINs, so I'm redirecting her to that process.\n> I've sent Maren to the bank's secure process for a forgotten PIN, and the case is closed. She didn't share her PIN in chat, and the bank doesn't handle PINs, so nothing more is needed from us here.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"redirect_secure\",\n  \"state\": \"REDIRECTED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Maren Ellwood\",\n    \"role\": \"customer\",\n    \"channel\": \"secure_chat\",\n    \"verified\": false,\n    \"subject\": \"card\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"access\",\n    \"next_system\": \"card\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"redirect_secure\",\n      \"args\": {\n        \"to\": \"Maren Ellwood\",\n        \"channel\": \"secure_chat\",\n        \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-026-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-026-at-01:read-requester:1).\n4. Note from `read-requester`: event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: requester='Maren Ellwood', role='customer', channel='secure_chat', verified=False]\n5. `identify_requester` found {\"requester\": \"Maren Ellwood\", \"role\": \"customer\", \"channel\": \"secure_chat\", \"verified\": false}.\n6. `requester`: not known → Maren Ellwood (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → secure_chat (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-026-at-01:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-026-at-01:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-026-at-01:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-026-at-01:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-026-at-01:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-026-at-01:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-026-at-01:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-026-at-01:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-026-at-01:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n38. Called `check_bank_actions` (attempt 1, key banking-026-at-01:read-bank-actions:11).\n39. `check_bank_actions` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-026-at-01:read-registration:12).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-026-at-01:read-confirmation:13).\n45. Note from `read-confirmation`: event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: confirmation='none', instructed_outside_portal=False]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.\n51. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.\n52. `request_type`: not known → access (by `triage`).\n53. `subject`: not known → card (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).\n56. `next_system`: not known → card (by `route-card`).\n57. The agent asked for `redirect_secure` {}.\n58. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); request_type = instruction → false (request_type=access); not verified → true (verified=False).\n59. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).\n60. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).\n61. Called `redirect_secure` (attempt 1, key banking-026-at-01:do-redirect:17).\n62. Action in the world: `redirect_secure` {\"to\": \"Maren Ellwood\", \"channel\": \"secure_chat\", \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"}.\n63. `redirect_secure` found {}.\n64. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).\n65. The case closed in `REDIRECTED`: **redirect_secure**.\n\n## Model calls\n\n3 calls, 4719 tokens in, 388 out, 3.092 s, cost $0.0094; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've pointed Maren to the bank's secure process for a forgotten card PIN. The desk accepted the redirect and closed the case. Nothing else is needed from the desk, and no PIN was requested or handled in the chat.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011Cftaxmmk5tDsc28hwFfBu",
+        "id": "msg_011Cftea72STE3yXUVpK5FGW",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Maren Ellwood, writing over secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to deal with it. She had not been verified, so the desk did not handle it itself. It sent her a message pointing her to the secure process in her portal, which checks identity there, and told her the bank never asks for a password, PIN or verification code. Nothing on her profile was changed, the case is closed as redirected, and the record lists nothing further for a person to do.",
+            "text": "Maren Ellwood, an unverified customer on secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to deal with it. The desk classified this as a card access request and redirected her to the secure process in her secure portal, where her identity is checked. The message told her the bank never asks for a password, PIN or verification code, and that nothing on her profile was changed. The case is closed as redirected, and the record lists nothing left for a person to do.",
             "type": "text"
           }
         ],
@@ -1372,8 +1388,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2804,
-          "output_tokens": 153,
+          "input_tokens": 2785,
+          "output_tokens": 149,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1381,13 +1397,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.06003910000436,
-      "input_tokens": 2804,
-      "output_tokens": 153,
-      "cost_usd": 0.007138,
+      "seconds": 1.8131874999962747,
+      "input_tokens": 2785,
+      "output_tokens": 149,
+      "cost_usd": 0.00706,
       "error": null,
       "replayed": false,
-      "digest": "b72b34288ec48ef08537fbc82fd8b39f5490e04cfffd65efc5dedde9725d3287"
+      "digest": "efe5bec2a4e3ce08f62dedb8be47bab9c5b0b95b52aa83ea8f7764688255f936"
     }
   ]
 }

@@ -67,7 +67,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 64. `next_system`: not known → payment (by `asked-payment`).
 65. The agent asked for `reply` {}.
-66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
 67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
 68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 69. Called `reply_customer` (attempt 1, key banking-001-at-04:do-reply:17).
@@ -78,10 +78,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4894 tokens in, 449 out, 6.33 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7375 tokens in, 531 out, 7.221 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to the customer. The payment record shows the £420 transfer to Alder & Reed Workshop as SENT, with no confirmation recorded. The case is closed.
+> I replied to Mara. The payment system's record shows the £420 transfer to Alder & Reed Workshop with status SENT, so the reply tells her H&V has sent it. That record carries no confirmation, so the reply goes no further than "sent". The case is now closed as replied.
 > 
-> The facts also show the customer as not verified. I didn't check what the desk's reply included.
+> Mara's identity is not verified on this chat. I still replied because she only asked about the status of her own payment, not for any change.

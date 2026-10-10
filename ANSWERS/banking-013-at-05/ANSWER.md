@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, a verified customer on the secure portal, confirmed she wanted to cancel the future run of her recurring studio-rent payment instruction. The desk's check of the instruction log showed HV-013 with its future run cancelled and no payment in progress. The desk's attempt to submit a new request was refused, so it replied on the portal that the standing-order record shows cancelled, that this does not establish a refund or a future payment outcome, and that no
+Elodie Mercer, verified on the secure portal, confirmed she wanted to cancel the future run of her recurring studio-rent payment instruction. The desk checked the recurring system, which showed instruction HV-013 as cancelled with no payment in progress, and replied on the portal that the standing order is cancelled, without promising anything about a refund or a future payment. An attempt to submit a request was refused as not applicable in that state, and no other change was made; the case is closed as replied with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ Case reference: id banking-013-at-05, track Banking & Financial Services, case 0
 
 - `reply` (to: Elodie Mercer, channel: secure_portal), by rule `do-reply`
 
-  > The standing-order record shows cancelled. This does not establish a refund or a future payment outcome. No additional instruction or change was made.
+  > The standing-order record shows the instruction as cancelled. This does not establish a refund or a future payment outcome. No additional instruction or change was made.
 
 
 ## Decision and why
@@ -59,6 +59,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `recurring-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=instruction)
   - next_system = recurring → true (next_system=recurring)
   - recurring_status present → true (recurring_status=CANCELLED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -95,7 +96,7 @@ No.
 
 Requests the policy refused:
 
-- `submit_request`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); incoming-instruction: next_system = incoming is false (next_system=recurring); recurring-instruction: recurring_asked absent is false (recurring_asked=True); card-instruction: next_system = card is false (next_system=recurring); access-instruction: next_system = access is false (next_system=recurring); business-instruction: next_system = business is false (next_system=recurring); documents-instruction: next_system = documents is false (next_system=recurring)
+- `submit_request`: register: request_type = register is false (request_type=instruction); register-what-fits-no-type: request_type = other is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); incoming-instruction: next_system = incoming is false (next_system=recurring); recurring-instruction: recurring_asked absent is false (recurring_asked=True); card-instruction: next_system = card is false (next_system=recurring); access-instruction: next_system = access is false (next_system=recurring); business-instruction: next_system = business is false (next_system=recurring); documents-instruction: next_system = documents is false (next_system=recurring)
 
 ## Final result
 

@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: change, confidence 0.98 → change.
+54. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
 55. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 56. `request_type`: not known → change (by `triage`).
 57. `subject`: not known → standing_order (by `triage`).
@@ -75,12 +75,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 9638 tokens in, 540 out, 6.072 s, cost $0.0208; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9646 tokens in, 539 out, 6.39 s, cost $0.0207; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is closed with the outcome "send for confirmation". The change has gone to you for secure confirmation, and I have nothing further to do on it.
+> The case is closed. The change has been sent to you for secure confirmation, so nothing more is needed from the desk.
 > 
-> I did not get to check the processing stage of the 18 September run. My check of the recurring-payments records was refused because the case had already moved to the confirmation step. So I can't yet tell you whether that run can still be moved to 22 September 2025.
+> I couldn't check the processing stage of the 18 September run. My check of the standing-order records was refused because the case had already moved to the confirmation step. So I can't tell you whether the next run can still be moved to 22 September 2025.
 > 
-> The change isn't made until you confirm it through the secure process. Your identity is also not yet verified, and the confirmation status still shows "none".
+> Nothing has changed on your standing order to Willow Yard Studios yet. The move only happens if you confirm it through the secure process. We haven't verified your identity in this chat, and the confirmation step is where that gets done.

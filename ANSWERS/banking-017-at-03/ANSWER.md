@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, writing on secure chat and not verified, asked whether her rent standing order was executed this cycle and what status the bank recorded. The desk queried the recurring system, but no answer is in the case, so it closed in WAITING with no actions taken. A second query to the recurring system and an escalation to a person were both refused because the case was already in WAITING, so someone still needs to check the standing-order run and its status and reply to Mara, sharing details only after she is verified.
+Mara Ellery, on secure chat and not verified, asked whether her monthly rent standing order was executed and what status the bank recorded. The desk asked the recurring system, but its answer had not come in, so the case closed in waiting with no actions taken; a second recurring query and an escalation to a person were both refused because the case was already in WAITING. Nothing has been confirmed to Mara, and the execution status and her verification are still outstanding. The agent's own message says a person should check the run record and verify her, but the desk's escalation was refused, so that handoff did not go through.
 
 _Written by a model from the record below; the sections below are the record._
 

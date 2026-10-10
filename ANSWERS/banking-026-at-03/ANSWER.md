@@ -1,10 +1,10 @@
 # Case banking-026-at-03: A Safe Route to a Forgotten PIN
 
-**Decision: reply**  (final state `REPLIED`)
+**Decision: redirect_secure**  (final state `REDIRECTED`)
 
 ## Summary
 
-Maren Ellwood, writing over secure chat, said she had forgotten her debit card PIN and asked for the safe way to deal with it, noting she would not send the PIN in chat. The desk checked the access record, which came back as "other", and replied in secure chat that this does not establish a password, PIN or access change and that no secret was handled and no access change was made. The reply did not give her the PIN procedure the access team's notes described, and the record shows no further action, so she is still without a confirmed way to reset the PIN, and she is marked as not verified.
+Maren Ellwood, an unverified customer on secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to deal with it, without sending the PIN in chat. The desk classified this as an access request and sent her a message telling her to use the secure process in her portal, where her identity is checked, and that the bank never asks for her password, PIN or a verification code. Nothing on her profile was changed, the case is closed as redirected, and nothing further is left for a person on the desk; the PIN procedure itself is for her to open in the secure portal.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,9 +38,9 @@ Case reference: id banking-026-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `reply` (to: Maren Ellwood, channel: secure_chat), by rule `do-reply`
+- `redirect_secure` (to: Maren Ellwood, channel: secure_chat), by rule `do-redirect`
 
-  > The access record shows other. This does not establish a password, PIN, or access change. No secret was handled and no additional access change was made.
+  > Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.
 
 
 ## Decision and why
@@ -49,12 +49,13 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `access-reply` accepted it.
+- `TRIAGED` → `REDIRECT_PENDING`: the agent asked for `redirect_secure`, rule `redirect-to-the-secure-process` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - next_system = access → true (next_system=access)
-  - access_status present → true (access_status=OTHER)
-- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
-  - state = REPLY_PENDING → true (state=REPLY_PENDING)
+  - request_type = access → true (request_type=access)
+  - request_type = instruction → false (request_type=access)
+  - not verified → true (verified=False)
+- `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
+  - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
 
 Facts established:
 
@@ -87,4 +88,4 @@ No.
 
 ## Final result
 
-reply (REPLIED)
+redirect_secure (REDIRECTED)

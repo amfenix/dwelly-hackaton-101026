@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified on a call, asked the desk to have H&V revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The desk classified this as a role instruction and registered a request with the business team, closing the case as requested. Nothing in the record confirms the role has actually been removed, and the review of earlier operations was not part of this request and is left for a separate review.
+Mara Ellery, verified on a call, asked the desk to revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The desk classified this as a role instruction and registered a request to the business team, and the case closed as REQUESTED. The record does not show that the role has actually been removed, so that still needs to be confirmed, and no review of his earlier operations was started.
 
 _Written by a model from the record below; the sections below are the record._
 

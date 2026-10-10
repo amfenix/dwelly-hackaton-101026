@@ -68,14 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8865 tokens in, 760 out, 6.842 s, cost $0.0215; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8868 tokens in, 647 out, 5.812 s, cost $0.0202; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't been able to confirm whether Mara Ellison's replacement card has been dispatched. The case is in a final WAITING state, and the desk refused my request to query the card system.
+> I haven't been able to check whether your replacement card has been dispatched, and I'm stopping here. The card system refused my lookup because the case is in a waiting state and the card system has already been marked as asked. The case record holds no dispatch information, so I can't say what the status is.
 > 
-> - **Why it was refused:** the card system can only be queried while the case is TRIAGED. This case is WAITING, and the records show the card system was already asked (`card_asked` is True).
-> - **What the case holds:** only the portal's "request accepted" message, which says nothing about dispatch or delivery. The facts show `confirmation: none`.
-> - **Verification:** the requester is not verified (`verified: False`), so the bank shouldn't share card details in this chat yet.
+> The only confirmation on file is the portal's message that your request was accepted. That message says nothing about dispatch or delivery, and I'm not claiming more than it shows.
 > 
-> I'm making no further calls. The case stays open and goes to a person. Until they review it, we can only tell the customer that the request was received, not that the card has been sent.
+> Your identity is also not yet verified on this chat. The case stays open in the waiting state, and a person will pick it up from there.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked whether a £42.80 refund from Northmere Home Supplies had reached their account. The desk treated it as a question about an incoming payment and sent a query to the incoming payments system, which accepted it, but no answer is in the case yet. So the refund's status is still unknown; the only entry found is the customer's outgoing transfer, and nothing confirms a refund. The record shows no further step or hand-off to a person, though the agent's own closing message says the case will go to a person if no answer arrives.
+The customer asked whether a £42.80 refund from Northmere Home Supplies had reached their account, since they could only see their outgoing transfer in the portal. The desk classified this as a question about an incoming payment and sent an inquiry to the incoming payments system about that amount. The system's answer is not in the record, so whether the refund has arrived is still unconfirmed and is left for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

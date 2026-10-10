@@ -68,19 +68,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 64. The case closed in `WAITING`: **wait**.
 65. The agent asked for `ask_system` {"system": "incoming"}.
 66. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=incoming); next_system = tariff is false (next_system=incoming); next_system absent is false (next_system=incoming).
-67. The agent asked for `escalate` {"note": "Customer Elowen Marr (secure chat, not verified) asks whether a possible £42.80 refund from Northmere Home Supplies has arrived, and wants it matched to the specific outgoing £42.80 transfer rather than another payment. The incoming system lookup was refused because the case is in WAITING state, not TRIAGED, and no incoming result is on file. Please check incoming entries against that transfer and verify the customer's identity before confirming anything."}.
+67. The agent asked for `escalate` {"note": "Customer Elowen Marr (not verified, secure chat) asks whether a £42.80 refund from Northmere Home Supplies has arrived, and wants it matched to that specific transfer. The incoming system is marked as already asked, but the case holds no incoming result. A new ask to the incoming system was refused because the case is in WAITING state. Please check the incoming entries against the original £42.80 transfer, and verify the customer before sharing account details. Do not confirm a refund until a record shows it."}.
 68. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11469 tokens in, 959 out, 10.075 s, cost $0.0287; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11503 tokens in, 995 out, 10.053 s, cost $0.0289; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't check the incoming entries for you, and the case is now waiting for a person to pick it up.
+> I couldn't confirm whether the £42.80 refund from Northmere Home Supplies has arrived, and the case is still open and waiting.
 > 
-> - **Incoming check refused:** the desk wouldn't run the lookup because the case is in a waiting state, not the triaged state it needs. No incoming result is on file, so I can't say whether the £42.80 refund from Northmere Home Supplies has arrived.
-> - **Escalation refused:** my attempt to hand the case to a person was also refused for the same reason.
-> - **Verification:** your identity is still marked as not verified.
+> - **No incoming result:** The case marks the incoming entries as already asked, but it contains no answer. When I asked the incoming system again, the desk refused because the case is in a waiting state.
+> - **Escalation refused:** My attempt to hand the case to a person was also refused for the same reason.
+> - **Verification:** Elowen Marr is not yet verified on this chat.
+> - **Matching the refund:** Nothing in the records links any incoming entry to the original £42.80 transfer. I can't say a refund has arrived, and I can't say it hasn't.
 > 
-> I haven't confirmed anything about the refund or matched it to your outgoing £42.80 transfer. A person will need to check the incoming entries against that specific transfer, after verifying your identity.
+> No further step is open to me from here, so the case stays with the desk until a person picks it up.

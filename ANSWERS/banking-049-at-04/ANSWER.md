@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, writing over secure chat, asked the desk to escalate a file request because the acquiring report for 1–7 July 2025 was not showing as available. The desk checked the documents system, found the report had been placed in the secure portal, and sent her a reply saying the document is available, that this does not confirm it was downloaded or that funds were credited, and that no email was sent. Her identity was not verified and the file itself was not attached; the record shows no further steps for a person.
+Mara Venn, who said she was the authorised manager, asked over secure chat for her file request to be escalated because the acquiring report for 1–7 July 2025 was not showing as available. The desk checked the documents system, found the report had been placed in the secure portal, and replied in secure chat that the document is available, that this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. The case closed as replied with no escalation; Mara Venn's identity was not verified, and nothing further is recorded as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = documents → true (next_system=documents)
   - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a verified customer writing through the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk checked the payment record, which shows the transfer as declined with the recorded reason "The receiving bank declined the transfer," and sent that to her in a portal reply. The reply also says this does not establish a different cause or authorise a retry, and that no new transfer was made. The case is closed as replied, and the record lists nothing left for a person to do.
+Mara Ellery, a verified customer on the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk checked the payment record, which shows the transfer as declined with the permitted wording "The receiving bank declined the transfer," and sent that reply through the portal. It also said the record doesn't establish a different cause or authorise a retry, and that no new transfer was made. The case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=DECLINED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

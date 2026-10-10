@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
 51. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
 52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → document (by `triage`).
@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6714 tokens in, 450 out, 4.49 s, cost $0.0141; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6741 tokens in, 435 out, 4.472 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the documents system about Mara Ellison's request for a document confirming her account relationship. The desk accepted the request. The case is now in the "ASKED" state and is marked final.
+> I asked the documents system about Mara Ellison's request for a document confirming her account relationship. The desk accepted the request, and the case is now in the "asked" state.
 > 
-> The documents system's answer hasn't come back yet, so I haven't replied to Mara and I don't know whether the document can be made available. Nothing else is needed from me now. If the case stays open, it goes to a person.
+> The documents system's answer isn't in the case yet. Nothing has been made available in the portal, and no reply has gone to her. I'm stopping here, so the case is open for the next step.

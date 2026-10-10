@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.96 → question.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
 55. Classifier (jev jev-latest) on `subject`: payment_package, confidence 1.00 → payment_package.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → payment_package (by `triage`).
@@ -68,10 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5037 tokens in, 586 out, 5.501 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5069 tokens in, 500 out, 4.835 s, cost $0.0111; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I'm not taking another step on this case. The business system has already been asked about the payroll package, and the case is now in a final WAITING state.
+> I checked the case record and the business system has already been asked about this package. It has not given a package status or signing state. The case is now in a final waiting state. The record doesn't show whether the package is waiting for your co-signer or has moved on, so I'm not going to guess.
 > 
-> The case holds no package status. It doesn't show whether the package is waiting for the second signatory or has moved on, so I can't tell Mara either way. The requester is also not verified, so I shouldn't give out company payment details in this chat anyway. The case stays open for a person to pick up.
+> Mara Ellery is also not verified on this chat channel. I haven't made any change or sent anything on her behalf.
+> 
+> The case stays open and goes to a person to follow up.

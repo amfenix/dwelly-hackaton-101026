@@ -68,19 +68,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 64. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
 65. `next_system`: not known → card (by `asked-card`).
 66. The agent asked for `reply` {}.
-67. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_status present → true (card_status=DECLINED).
+67. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=DECLINED).
 68. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
 69. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 70. Called `reply_customer` (attempt 1, key banking-025-at-05:do-reply:17).
-71. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made."}.
+71. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows the card attempt as declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made."}.
 72. `reply_customer` found {}.
 73. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 74. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-3 calls, 4884 tokens in, 369 out, 3.399 s, cost $0.0097; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4921 tokens in, 387 out, 3.603 s, cost $0.0098; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Mara. The card records show the £18.40 payment at North Quay Books was declined because her available balance was too low to cover it. The case is now closed.
+> I've sent the reply to Mara, and the case is closed. The card records show the £18.40 payment at North Quay Books was declined because her available balance wasn't enough to cover it. The reply was written from that record only.

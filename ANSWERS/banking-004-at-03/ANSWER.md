@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a verified customer writing through the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk identified it as a question about a transfer, moved the case to WAITING because the payment system had been asked and its answer was not yet in, and closed it with the outcome "wait". A later request to ask the payment system again was refused because the case was no longer in the state that allows it, so no reason for the non-completion has been found, and a person needs to check the payment record and explain it to her.
+Mara Ellery, a verified customer on the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk identified the transfer, asked the payment system for the decline reason, and put the case into a waiting state because that answer had not come back. A later request to the payment system was refused because the case was no longer in the state that allows it, so no reason has been found or given to her. The case is closed with the outcome "wait", and the missing decline reason is left for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

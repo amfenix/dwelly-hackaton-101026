@@ -65,21 +65,23 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
 62. `next_system`: not known → recurring (by `asked-recurring`).
 63. The agent asked for `reply` {}.
-64. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
+64. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
 65. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
 66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 67. Called `reply_customer` (attempt 1, key banking-014-at-04:do-reply:17).
-68. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The standing-order record shows active. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
+68. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The standing-order record shows the instruction as active. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
 69. `reply_customer` found {}.
 70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 71. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7453 tokens in, 445 out, 5.8 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5082 tokens in, 529 out, 4.299 s, cost $0.0114; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply. The recurring-payments records show the Direct Debit mandate to Northmere Water Services as active. I didn't cancel or change anything, and I didn't assess what you owe.
+> I used the reply tool, and the desk accepted it. The case is now marked as replied and closed.
 > 
-> The case is now closed with that reply.
+> The records show the Direct Debit mandate to Northmere Water Services as ACTIVE. The customer asked only for the mandate's status, so nothing was cancelled or changed. The reply doesn't assess what she owes the organisation.
+> 
+> The facts list her as not verified. The desk accepted the reply anyway.

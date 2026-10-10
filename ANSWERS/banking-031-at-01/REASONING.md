@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.49 → question.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.71 → question.
 51. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
 52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → statement (by `triage`).
@@ -70,8 +70,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6682 tokens in, 373 out, 3.672 s, cost $0.0133; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6661 tokens in, 372 out, 3.404 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system about the customer's June 2025 statement. The case is now closed at that step. The documents system's answer isn't in the case record yet, so I can't say whether the statement is available in the secure portal.
+> I asked the documents system about the June 2025 statement, and it accepted the request. The case status doesn't show what it found, so I can't yet say whether the statement exists or why it isn't visible in the portal. The next step is to reply to Elowen once the documents system's answer is in the case.

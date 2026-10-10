@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked for help restoring access because she can't sign in to her profile. The desk saw the bank had already pointed her to the recovery option in the secure portal, so it set the case to wait and took no action. A later attempt to query the access system was refused because the case was already waiting. The record shows no recovery confirmation on file (confirmation "none"), so the next step is for her to use the secure portal process; the record does not say whether she has finished it, and it contains no reopening instructions.
+Mara Ellison, a verified caller, said she could not sign in to her profile and asked for help restoring access. The desk found the bank had already directed her to the recovery option in H&V's secure portal, so it took no action and closed the case as waiting until she uses that process. A later request to query the access system was refused because the case was already in the waiting state. The record's confirmation field reads "none", though a recovery-system message in it says the checks were completed, so nothing is confirmed on that point; nothing else is left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 

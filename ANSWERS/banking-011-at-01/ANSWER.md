@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a question about a standing order. The desk classified it as such, routed it to the recurring payments system, and sent that system a query about the standing order. The case closed at that step with no answer recorded, so nothing in the record shows what the system replied or gives any date. A person would need to pick up the reply once the system's answer comes in.
+The request was a question about a standing order. The desk classified it that way, routed it to the recurring payments system, and sent that system a query about the standing order. The case closed in the asked state, and the system's answer is not in the record, so nothing has been reported back about the order. Whatever the recurring system returns is left for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

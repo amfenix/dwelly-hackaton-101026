@@ -72,10 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6929 tokens in, 520 out, 4.671 s, cost $0.0153; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7015 tokens in, 480 out, 4.633 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system to look up the status of row SUP-17. The request was accepted and the case is closed at this step. The payment system's answer isn't in the case yet, so I can't tell Leona yet whether SUP-17 was paid or rejected.
+> I've asked the payment system for the status of row SUP-17. The request was accepted and the case is now waiting on that answer. I haven't told Leona anything yet, because the row status isn't in the case until the payment system responds.
 > 
-> Leona Voss is listed as a viewer, and her identity is not yet verified. That didn't block the lookup. It may affect what the desk can tell her when the answer comes back.
+> Her record shows her as unverified, but I went ahead because this is a read-only question. Nothing is being changed.

@@ -46,7 +46,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 42. `confirmation`: not known → none (by `read-confirmation`).
 43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 44. Rule `triage` fired: state = READING → true (state=READING).
-45. Classifier (jev jev-latest) on `request_type`: question, confidence 0.78 → question.
+45. Classifier (jev jev-latest) on `request_type`: question, confidence 0.76 → question.
 46. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
 47. `request_type`: not known → question (by `triage`).
 48. `subject`: not known → transfer (by `triage`).
@@ -65,8 +65,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4603 tokens in, 400 out, 4.153 s, cost $0.0094; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4644 tokens in, 395 out, 3.549 s, cost $0.0093; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system to check whether the two £84.20 entries to North Quay Utilities are one instruction shown twice or two separate instructions. I haven't answered Mira's question about stopping or returning the second one yet. Whether that's possible depends on what the payment records show, so the next step is to read the payment system's answer.
+> I've asked the payment system to check whether the two £84.20 entries to North Quay Utilities are one instruction shown twice or two separate instructions. Once it answers, we can tell Mira whether the second one can be stopped or returned. Nothing has been stopped or changed yet.

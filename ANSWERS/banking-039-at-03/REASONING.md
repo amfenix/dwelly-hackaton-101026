@@ -46,12 +46,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 42. `check_registration` found {}.
 43. Rule `read-confirmation` fired: state = READING → true (state=READING).
 44. Called `check_confirmation` (attempt 1, key banking-039-at-03:read-confirmation:13).
-45. Note from `read-confirmation`: event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='none', instructed_outside_portal=False]
-46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-47. `confirmation`: not known → none (by `read-confirmation`).
+45. Note from `read-confirmation`: event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='unprompted', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "unprompted", "instructed_outside_portal": false}.
+47. `confirmation`: not known → unprompted (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
 51. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
 52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → access (by `triage`).
@@ -67,13 +67,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. `ask_system` found {}.
 64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 65. The case closed in `ASKED`: **ask_system**.
-66. The agent asked for `reply` {}.
-67. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=access); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=access); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=access); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-5 calls, 9692 tokens in, 343 out, 4.912 s, cost $0.0190; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4861 tokens in, 356 out, 3.242 s, cost $0.0093; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The session information sits in the access system, so I'll ask it.
+> I've queried the access system for the sign-in sessions on Nerys Wren's profile. The request was accepted and the case is marked as asked. The next step is to reply to her once the access system's answer is in the case.

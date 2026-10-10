@@ -65,10 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8598 tokens in, 465 out, 5.227 s, cost $0.0180; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8637 tokens in, 515 out, 5.315 s, cost $0.0184; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I queried the payment system for the stage of the Alder Quay Supplies payment. The query was accepted and the case is now closed with the outcome "ask_system".
+> I checked the payment system for the Alder Quay Supplies transfer. The case is now closed, but the check didn't return a payment stage. The case record has no details of the payment's progress, so I can't tell you what stage it has reached.
 > 
-> The case record doesn't show the payment system's answer, so I can't tell you what stage the payment has reached. The only record I can see is the portal event showing your authorisation was recorded. I haven't passed on a stage or a reason for the missing payment, because the records don't support one.
+> The only thing the records show is the authorisation recorded in the business portal. There is no confirmation of the payment beyond that. I haven't sent the customer a reply, because I have no stage to report and don't want to claim more than the records show.

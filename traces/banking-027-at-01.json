@@ -88,7 +88,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The customer's request was about regaining access to their account, and the desk classified it as an access request. It sent them a message pointing to the secure process in their secure portal, which checks identity there, and said the bank never asks for a password, PIN or verification code. Nothing on the profile was changed, the case is closed as redirected, and nothing is left for a person.",
+  "summary": "The customer's request was about regaining access to their account, and the desk classified it as an access matter. Because the customer's identity was not confirmed, it did not act on the profile and instead sent the customer a message to use the secure process in their secure portal, which checks identity there. The message also said the bank never asks for a password, PIN or verification code, and that nothing on the profile was changed; the case is closed as redirected, with nothing left for a person.",
   "journal": [
     {
       "seq": 1,
@@ -588,7 +588,7 @@
     },
     {
       "seq": 45,
-      "at": 0.243,
+      "at": 0.265,
       "kind": "choice",
       "field": "request_type",
       "raw": "access",
@@ -600,7 +600,7 @@
     },
     {
       "seq": 46,
-      "at": 0.243,
+      "at": 0.265,
       "kind": "choice",
       "field": "subject",
       "raw": "access",
@@ -612,7 +612,7 @@
     },
     {
       "seq": 47,
-      "at": 0.243,
+      "at": 0.265,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -621,7 +621,7 @@
     },
     {
       "seq": 48,
-      "at": 0.243,
+      "at": 0.265,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -630,7 +630,7 @@
     },
     {
       "seq": 49,
-      "at": 0.243,
+      "at": 0.265,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
@@ -638,7 +638,7 @@
     },
     {
       "seq": 50,
-      "at": 0.243,
+      "at": 0.265,
       "kind": "trigger",
       "name": "route-access",
       "on": null,
@@ -670,7 +670,7 @@
     },
     {
       "seq": 51,
-      "at": 0.243,
+      "at": 0.265,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -679,18 +679,18 @@
     },
     {
       "seq": 52,
-      "at": 2.189,
+      "at": 2.56,
       "kind": "signal",
       "signal": "redirect_secure",
       "args": {}
     },
     {
       "seq": 53,
-      "at": 2.189,
+      "at": 2.56,
       "kind": "trigger",
       "name": "redirect-to-the-secure-process",
       "on": "redirect_secure",
-      "when": "state = TRIAGED and request_type = access",
+      "when": "state = TRIAGED and (request_type = access or (request_type = instruction and not verified))",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -705,13 +705,27 @@
           "values": {
             "request_type": "access"
           }
+        },
+        {
+          "test": "request_type = instruction",
+          "result": false,
+          "values": {
+            "request_type": "access"
+          }
+        },
+        {
+          "test": "not verified",
+          "result": null,
+          "values": {
+            "verified": null
+          }
         }
       ],
       "note": ""
     },
     {
       "seq": 54,
-      "at": 2.189,
+      "at": 2.56,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "REDIRECT_PENDING",
@@ -719,7 +733,7 @@
     },
     {
       "seq": 55,
-      "at": 2.189,
+      "at": 2.561,
       "kind": "trigger",
       "name": "do-redirect",
       "on": null,
@@ -737,7 +751,7 @@
     },
     {
       "seq": 56,
-      "at": 2.189,
+      "at": 2.561,
       "kind": "call",
       "function": "redirect_secure",
       "attempt": 1,
@@ -746,7 +760,7 @@
     },
     {
       "seq": 57,
-      "at": 2.189,
+      "at": 2.561,
       "kind": "action",
       "type": "redirect_secure",
       "args": {
@@ -759,14 +773,14 @@
     },
     {
       "seq": 58,
-      "at": 2.189,
+      "at": 2.561,
       "kind": "returned",
       "function": "redirect_secure",
       "values": {}
     },
     {
       "seq": 59,
-      "at": 2.189,
+      "at": 2.561,
       "kind": "state",
       "frm": "REDIRECT_PENDING",
       "to": "REDIRECTED",
@@ -774,7 +788,7 @@
     },
     {
       "seq": 60,
-      "at": 2.189,
+      "at": 2.561,
       "kind": "final",
       "state": "REDIRECTED",
       "outcome": "redirect_secure"
@@ -798,6 +812,7 @@
               "instruction": "an instruction to act now (block a card, cancel a payment or a mandate, revoke a role)",
               "access": "signing in, a PIN, a password, recovery of access",
               "authority": "something only another person may approve or give (a second signatory, an administrator, a new user's access)",
+              "other": "none of these (a bereavement, a complaint, a request for the personal data the bank holds, closing an account, credit)",
               "unknown": "The text does not say, or says too little to tell."
             }
           },
@@ -829,8 +844,8 @@
       "response": {
         "model": "jev-1.13.0",
         "usage": {
-          "input_tokens": 904,
-          "output_tokens": 199
+          "input_tokens": 943,
+          "output_tokens": 206
         },
         "answers": {
           "request_type": {
@@ -844,6 +859,7 @@
               "instruction": 0.0,
               "access": 1.0,
               "authority": 0.0,
+              "other": 0.0,
               "unknown": 0.0
             }
           },
@@ -872,13 +888,13 @@
           }
         }
       },
-      "seconds": 0.24278420000337064,
-      "input_tokens": 904,
-      "output_tokens": 199,
+      "seconds": 0.26469839992932975,
+      "input_tokens": 943,
+      "output_tokens": 206,
       "cost_usd": null,
       "error": null,
       "replayed": false,
-      "digest": "b58afb0ab9d7f97cc18fce74f2d861566375f28a5c31c53594e8fc05d16f9dbd"
+      "digest": "384eafdfb63d834e8dbcde17a75db1bec49e08fda75613a8b146cc9b27fac31c"
     },
     {
       "kind": "agent",
@@ -1021,16 +1037,16 @@
         ]
       },
       "response": {
-        "id": "msg_011CftaxrpbmkQXP2bq5bjmb",
+        "id": "msg_011Cftea27WoY1Ayn5EeBqBS",
         "container": null,
         "content": [
           {
-            "signature": "CAQSqQcKEAgSGAI4AUIIdGhpbmtpbmcSDOazpSkk8eV3n/p3DxoMAQsQ6/TlOQsMhADVIjBiUMMYhzmPWAyb9d/ixR4bwKl5fXF/Ghy5tzD6ft+5dvYxMYrh8pxR3DZZNtcsAbMqxgasgbJuzxm7x8vSwhNtFPdAjQPx1pn7APBhzeZNKL4B02FdprgLPl2WY8qFJ+GbJYRJaNkYpveXkv9K2JBUsLEu73ofeOT7o23sYaAGTDpcNps2I0JlXB5RESc4t3rZsygGwYdn4Jnl+N2xpGLhri5Qnwc4Hg7iBKswt0UycryKsH89mnJdIRp7ppdt28eT3+u2osMh39uP2NdNt7LgiT5jUNhO8NRRjN7p5Gl+huEQW33BvQgfDB3Qw45he/EL4jRGHZUR+oTLrxM3pscJu3Jo7YxwJP8kRMw6YeuwR4CNGkLkkgGTneYwxZeNUWUnVQZX18TDzb3S9fBZ+9qvuBNeNGFPnja/CmQIyjxLIf0OlDJQ8G8m879dPHb3AhY08QB1P3bHiqei0vKLMjSDo47bNsNgUbn25szf5dCA+HgZ60bpBb3ukdRPV5d4Xq3RjVajacqE2+K2AJq+QAmrLGPLSKeCIa9mHc4Ca/cL8kW1jlI4YhX/Z6vhA7ule9DGZ8lRaBrsx/+a7K3JuxO0fXY7G0iEO3OlEWNcxsuNXBLrtWOUNDouNwDkDdWxrN3wawoYZeHA3j6plyaXURbpR2FzV+opGEtcYi+eOPMPEd6DKNn40uFLn4BUzG3vT4EShta+JtcGxKFkVDvff5vqeTq5UPA6F5TuRNrSZIitYBP6+X3zCAPE98pOiuTZE20qC/J76ZThUG0nsJmFNkBrAWe5nHAM6GxfODYyi5/lBUKd0ByeMYYBip/Pu/ZZxkfG160NCLjKLPhYbdiMCTDQeQmzLwEG04WmruvxgKzPQLrobXjJ6hSqrBxtkH8jTbP+AwuQffnrkQJB+aUWE+5/v1t4q0znPzZ6UzKDeg28uZfwCRVGm6T3T/3wonuaU94iuOmsrI79IeixBeWYHazQeL1nl/W6zFnwRemPjh3HIz/GGi2gXihsUesFr93Z7W7IF00HmkS+gegrgzvAQjscnKRKPVkLBSX354UvR8DPfpX3yi1GBbkITQXxGGC+YflmGbuOIVk/ZeB/9fRaILTWru/kUMD+MY7Jo0tl4M/F6rE8dmr1tNDcpgcpL886R5K1unmHIo68FtABrcVffso2GXxD0VcZwSoCGAE=",
+            "signature": "CAQSmwkKEAgSGAI4AUIIdGhpbmtpbmcSDJWtmRPQlI36BBlsUxoMqmlfuSyXezHeLwMeIjDO1gPxlQhERHuAnMLWsEhvkb2iLZwv/74OcdL1no0kxUAAGhwzIVXslx+8TjKTaqoquAgOZZZhDXyL9+ZVfyaB0t1x1FtdfND1Mh+TyjyPYjvZlAB1l/QjUR7d+ZuelGnQgfCWRxCCNx+chZ3/uRUabZnIHFNPhuUd9d++B1J2aYaqjIi3xakhpuN2x0pqweDEafkidzezjf75baEdV2bfHierrhPp67lSVzpYQMrPkuBdHT0SjQ5NhbguC+3VccQIfB6ykBO4Lf9wthzWHHXqqOH12pcc3ZVpnBykm2NTJEErTaO90+1YDbW5HtXtuGu3yXs8gnxOjAKMhwsiQlUfHUjqlfgYwj8qExd8L6lWT8GA2NNhNRtlbqoLYs0AmEC8XMX1BXUMK01qhK5DVsq+Hy6G48NnRWe7obVFALF+GmQdrwFA+7T3WEoCHMaUxyZoOdmk48XTa4Wrkh6sTKdiVYO2L17HGz8Mpr0nSJOn0j4hVpl/v6ezOiT/pElwIRfwDLxfb+cSipVrv1hnV29uHHx3LdzSUQJgIb+maQVCyAqX61wCRl6ESKNkFegHyY+XQIHXR6naN8xugcrOqeODkks4AM0e+cvKwBMw0QP7I4+3fmbctWfK1o7ujbkCNPoBK/c6CjrBd2eFabmj6PWrMUNey4F2jBNmQW7Sq1gIJcOBZ2bKVEc2H3kseJeS2C0oSvX+JgI+448b1fluTDglGAjlIz7lF/mwmGTXgfC0JBQnJWNfn1zuOjnT4F0+t/bVhfDSHfcq+dOSCP2Tjazn3zkvTOAxCowY2dsuMyEHdrzRs2Efgsh5tXnczI4UPpCPU1jVzLPa88KVLbDh6ArtdD76aaM9QHjRoBMgiCfMDnvAQ3651+5+AlzGh/2AiNikfo9f7h9A/RiZys4S6+O7aQk/vxZZvl4GHnHkEHbLctvOb/aoymNBdKznB41LIPubqGAhXYdxUUS0FIQarG+XJlOKXu44aCFy3Rd4O+UV6Zmhl8Qvd0FDWUsKl3p5HE9gmCoOUUwDkAyWVZuSihrAdaTveaCXWBTWcDHIdxAG7UoxNf9O9Od7SgBJiXRQ292JEmyD35SZGWTpJQSSV30XM19NpMntpUmuLxWVtapVGKKOA+Fta+Gou2TO8UzBGVedFqrCq8pZCriMlxXlwl428SzzCJ5YyslkygnEObdXjFG5WC8Cn1kiEYR9gvIcqGwLJh1x3GfgudumrfiPDgXqXWuqCFLDhGMgDAcZ2cnQsnXCoPdC9jIUoDpiIhRc/pAnO4Vy1GJ5bqZ4Q1iV/OazXzpOLHyIW28ReXB0E2sPPRVYojPvECfkfBuk7/jMGfEhLnEKq4blZ0ht3mZ1ZrOOy2m/YmJRvP0dJwxkKcPpDlWe5kTg7RqoQHHk8Ba7i04mWupctATrWIH1h/T8ns7d1pzPxQATVVk7DzCFl22Wd8Nrh9RNPrUjWfkys+BhngjgJ/Y8rkMpwQufYA0T0JZYYfgXIAQyLWtvUrUYAQ==",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_01UBLRqf9PjqjLoYcfxCwEM3",
+            "id": "toolu_013EvFgd5Jym4c7xikvETNzy",
             "caller": {
               "type": "direct"
             },
@@ -1056,18 +1072,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1732,
-          "output_tokens": 164,
+          "output_tokens": 236,
           "output_tokens_details": {
-            "thinking_tokens": 134
+            "thinking_tokens": 206
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.9446874000132084,
+      "seconds": 2.2947391000343487,
       "input_tokens": 1732,
-      "output_tokens": 164,
-      "cost_usd": 0.005104,
+      "output_tokens": 236,
+      "cost_usd": 0.005824,
       "error": null,
       "replayed": false,
       "digest": "160d8b36c98f07052f564121a93615a27a9699dd7146a68d880481fb1cb0b97b"
@@ -1214,12 +1230,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQSqQcKEAgSGAI4AUIIdGhpbmtpbmcSDOazpSkk8eV3n/p3DxoMAQsQ6/TlOQsMhADVIjBiUMMYhzmPWAyb9d/ixR4bwKl5fXF/Ghy5tzD6ft+5dvYxMYrh8pxR3DZZNtcsAbMqxgasgbJuzxm7x8vSwhNtFPdAjQPx1pn7APBhzeZNKL4B02FdprgLPl2WY8qFJ+GbJYRJaNkYpveXkv9K2JBUsLEu73ofeOT7o23sYaAGTDpcNps2I0JlXB5RESc4t3rZsygGwYdn4Jnl+N2xpGLhri5Qnwc4Hg7iBKswt0UycryKsH89mnJdIRp7ppdt28eT3+u2osMh39uP2NdNt7LgiT5jUNhO8NRRjN7p5Gl+huEQW33BvQgfDB3Qw45he/EL4jRGHZUR+oTLrxM3pscJu3Jo7YxwJP8kRMw6YeuwR4CNGkLkkgGTneYwxZeNUWUnVQZX18TDzb3S9fBZ+9qvuBNeNGFPnja/CmQIyjxLIf0OlDJQ8G8m879dPHb3AhY08QB1P3bHiqei0vKLMjSDo47bNsNgUbn25szf5dCA+HgZ60bpBb3ukdRPV5d4Xq3RjVajacqE2+K2AJq+QAmrLGPLSKeCIa9mHc4Ca/cL8kW1jlI4YhX/Z6vhA7ule9DGZ8lRaBrsx/+a7K3JuxO0fXY7G0iEO3OlEWNcxsuNXBLrtWOUNDouNwDkDdWxrN3wawoYZeHA3j6plyaXURbpR2FzV+opGEtcYi+eOPMPEd6DKNn40uFLn4BUzG3vT4EShta+JtcGxKFkVDvff5vqeTq5UPA6F5TuRNrSZIitYBP6+X3zCAPE98pOiuTZE20qC/J76ZThUG0nsJmFNkBrAWe5nHAM6GxfODYyi5/lBUKd0ByeMYYBip/Pu/ZZxkfG160NCLjKLPhYbdiMCTDQeQmzLwEG04WmruvxgKzPQLrobXjJ6hSqrBxtkH8jTbP+AwuQffnrkQJB+aUWE+5/v1t4q0znPzZ6UzKDeg28uZfwCRVGm6T3T/3wonuaU94iuOmsrI79IeixBeWYHazQeL1nl/W6zFnwRemPjh3HIz/GGi2gXihsUesFr93Z7W7IF00HmkS+gegrgzvAQjscnKRKPVkLBSX354UvR8DPfpX3yi1GBbkITQXxGGC+YflmGbuOIVk/ZeB/9fRaILTWru/kUMD+MY7Jo0tl4M/F6rE8dmr1tNDcpgcpL886R5K1unmHIo68FtABrcVffso2GXxD0VcZwSoCGAE=",
+                "signature": "CAQSmwkKEAgSGAI4AUIIdGhpbmtpbmcSDJWtmRPQlI36BBlsUxoMqmlfuSyXezHeLwMeIjDO1gPxlQhERHuAnMLWsEhvkb2iLZwv/74OcdL1no0kxUAAGhwzIVXslx+8TjKTaqoquAgOZZZhDXyL9+ZVfyaB0t1x1FtdfND1Mh+TyjyPYjvZlAB1l/QjUR7d+ZuelGnQgfCWRxCCNx+chZ3/uRUabZnIHFNPhuUd9d++B1J2aYaqjIi3xakhpuN2x0pqweDEafkidzezjf75baEdV2bfHierrhPp67lSVzpYQMrPkuBdHT0SjQ5NhbguC+3VccQIfB6ykBO4Lf9wthzWHHXqqOH12pcc3ZVpnBykm2NTJEErTaO90+1YDbW5HtXtuGu3yXs8gnxOjAKMhwsiQlUfHUjqlfgYwj8qExd8L6lWT8GA2NNhNRtlbqoLYs0AmEC8XMX1BXUMK01qhK5DVsq+Hy6G48NnRWe7obVFALF+GmQdrwFA+7T3WEoCHMaUxyZoOdmk48XTa4Wrkh6sTKdiVYO2L17HGz8Mpr0nSJOn0j4hVpl/v6ezOiT/pElwIRfwDLxfb+cSipVrv1hnV29uHHx3LdzSUQJgIb+maQVCyAqX61wCRl6ESKNkFegHyY+XQIHXR6naN8xugcrOqeODkks4AM0e+cvKwBMw0QP7I4+3fmbctWfK1o7ujbkCNPoBK/c6CjrBd2eFabmj6PWrMUNey4F2jBNmQW7Sq1gIJcOBZ2bKVEc2H3kseJeS2C0oSvX+JgI+448b1fluTDglGAjlIz7lF/mwmGTXgfC0JBQnJWNfn1zuOjnT4F0+t/bVhfDSHfcq+dOSCP2Tjazn3zkvTOAxCowY2dsuMyEHdrzRs2Efgsh5tXnczI4UPpCPU1jVzLPa88KVLbDh6ArtdD76aaM9QHjRoBMgiCfMDnvAQ3651+5+AlzGh/2AiNikfo9f7h9A/RiZys4S6+O7aQk/vxZZvl4GHnHkEHbLctvOb/aoymNBdKznB41LIPubqGAhXYdxUUS0FIQarG+XJlOKXu44aCFy3Rd4O+UV6Zmhl8Qvd0FDWUsKl3p5HE9gmCoOUUwDkAyWVZuSihrAdaTveaCXWBTWcDHIdxAG7UoxNf9O9Od7SgBJiXRQ292JEmyD35SZGWTpJQSSV30XM19NpMntpUmuLxWVtapVGKKOA+Fta+Gou2TO8UzBGVedFqrCq8pZCriMlxXlwl428SzzCJ5YyslkygnEObdXjFG5WC8Cn1kiEYR9gvIcqGwLJh1x3GfgudumrfiPDgXqXWuqCFLDhGMgDAcZ2cnQsnXCoPdC9jIUoDpiIhRc/pAnO4Vy1GJ5bqZ4Q1iV/OazXzpOLHyIW28ReXB0E2sPPRVYojPvECfkfBuk7/jMGfEhLnEKq4blZ0ht3mZ1ZrOOy2m/YmJRvP0dJwxkKcPpDlWe5kTg7RqoQHHk8Ba7i04mWupctATrWIH1h/T8ns7d1pzPxQATVVk7DzCFl22Wd8Nrh9RNPrUjWfkys+BhngjgJ/Y8rkMpwQufYA0T0JZYYfgXIAQyLWtvUrUYAQ==",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_01UBLRqf9PjqjLoYcfxCwEM3",
+                "id": "toolu_013EvFgd5Jym4c7xikvETNzy",
                 "caller": {
                   "type": "direct"
                 },
@@ -1235,7 +1251,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01UBLRqf9PjqjLoYcfxCwEM3",
+                "tool_use_id": "toolu_013EvFgd5Jym4c7xikvETNzy",
                 "content": "{\"accepted\": true, \"state\": \"REDIRECTED\", \"case_closed\": \"redirect_secure\"}"
               }
             ]
@@ -1243,12 +1259,12 @@
         ]
       },
       "response": {
-        "id": "msg_011Cftay11xzEoTv1DBiVZyt",
+        "id": "msg_011CfteaBqv3XANYY4PB81xS",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "I've pointed the customer to H&V's secure recovery process, and the case is now closed as redirected. The portal had already declined the sign-in and said to use that process. The bank never handles passwords or PINs, so recovery has to go through the secure process and not through this desk.\n\nI didn't query the access system first. The request was plain sign-in recovery, so I didn't see a need.",
+            "text": "I've pointed the customer to H&V's secure recovery process, and the case is now closed as redirected. The desk accepted the redirect.\n\nI chose this because the request is about regaining access after failed sign-in attempts, and the portal had already declined the sign-in and said to use secure recovery. The bank never handles passwords or PINs, so I didn't check the access system or take any other step.",
             "type": "text"
           }
         ],
@@ -1267,8 +1283,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1936,
-          "output_tokens": 119,
+          "input_tokens": 2008,
+          "output_tokens": 122,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1276,13 +1292,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.7434778000460938,
-      "input_tokens": 1936,
-      "output_tokens": 119,
-      "cost_usd": 0.005062,
+      "seconds": 1.6364342999877408,
+      "input_tokens": 2008,
+      "output_tokens": 122,
+      "cost_usd": 0.005236,
       "error": null,
       "replayed": false,
-      "digest": "a00b211d7dd06276751f613eddb8a0c88351d0041911ffaca49ae404c620e1f4"
+      "digest": "20d52b21ab9a60d7fd4ec886e7c8e49c69f0efb9b83c0232f19d03b5940787be"
     },
     {
       "kind": "generate",
@@ -1295,17 +1311,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"redirect_secure\",\n  \"state\": \"REDIRECTED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"access\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"access\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"redirect_secure\",\n      \"args\": {\n        \"to\": \"the customer\",\n        \"channel\": null,\n        \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-027-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-027-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-027-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-027-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-027-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-027-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-027-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-027-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-027-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-027-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-027-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-027-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-027-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-027-at-01:read-confirmation:13).\n40. Note from `read-confirmation`: event 1 (H&V app): Sign-in declined. Use H&V’s secure recovery process to restore access. [facts: confirmation='none', instructed_outside_portal=False]\n41. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n42. `confirmation`: not known → none (by `read-confirmation`).\n43. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n44. Rule `triage` fired: state = READING → true (state=READING).\n45. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.\n46. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.\n47. `request_type`: not known → access (by `triage`).\n48. `subject`: not known → access (by `triage`).\n49. State `READING` → `TRIAGED` (by `triage`).\n50. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).\n51. `next_system`: not known → access (by `route-access`).\n52. The agent asked for `redirect_secure` {}.\n53. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).\n54. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).\n55. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).\n56. Called `redirect_secure` (attempt 1, key banking-027-at-01:do-redirect:17).\n57. Action in the world: `redirect_secure` {\"to\": \"the customer\", \"channel\": null, \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"}.\n58. `redirect_secure` found {}.\n59. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).\n60. The case closed in `REDIRECTED`: **redirect_secure**.\n\n## Model calls\n\n3 calls, 4572 tokens in, 482 out, 3.931 s, cost $0.0102; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've pointed the customer to H&V's secure recovery process, and the case is now closed as redirected. The portal had already declined the sign-in and said to use that process. The bank never handles passwords or PINs, so recovery has to go through the secure process and not through this desk.\n> \n> I didn't query the access system first. The request was plain sign-in recovery, so I didn't see a need.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"redirect_secure\",\n  \"state\": \"REDIRECTED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"access\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"access\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"redirect_secure\",\n      \"args\": {\n        \"to\": \"the customer\",\n        \"channel\": null,\n        \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-027-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-027-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-027-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-027-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-027-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-027-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-027-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-027-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-027-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-027-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-027-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-027-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-027-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-027-at-01:read-confirmation:13).\n40. Note from `read-confirmation`: event 1 (H&V app): Sign-in declined. Use H&V’s secure recovery process to restore access. [facts: confirmation='none', instructed_outside_portal=False]\n41. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n42. `confirmation`: not known → none (by `read-confirmation`).\n43. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n44. Rule `triage` fired: state = READING → true (state=READING).\n45. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.\n46. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.\n47. `request_type`: not known → access (by `triage`).\n48. `subject`: not known → access (by `triage`).\n49. State `READING` → `TRIAGED` (by `triage`).\n50. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).\n51. `next_system`: not known → access (by `route-access`).\n52. The agent asked for `redirect_secure` {}.\n53. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); request_type = instruction → false (request_type=access); not verified → not known (verified=not known).\n54. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).\n55. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).\n56. Called `redirect_secure` (attempt 1, key banking-027-at-01:do-redirect:17).\n57. Action in the world: `redirect_secure` {\"to\": \"the customer\", \"channel\": null, \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"}.\n58. `redirect_secure` found {}.\n59. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).\n60. The case closed in `REDIRECTED`: **redirect_secure**.\n\n## Model calls\n\n3 calls, 4683 tokens in, 564 out, 4.196 s, cost $0.0111; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've pointed the customer to H&V's secure recovery process, and the case is now closed as redirected. The desk accepted the redirect.\n> \n> I chose this because the request is about regaining access after failed sign-in attempts, and the portal had already declined the sign-in and said to use secure recovery. The bank never handles passwords or PINs, so I didn't check the access system or take any other step.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011Cftay8YA7uAMfynqGkdHq",
+        "id": "msg_011CfteaJz2rM2EiiJj3tKtF",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The customer's request was about regaining access to their account, and the desk classified it as an access request. It sent them a message pointing to the secure process in their secure portal, which checks identity there, and said the bank never asks for a password, PIN or verification code. Nothing on the profile was changed, the case is closed as redirected, and nothing is left for a person.",
+            "text": "The customer's request was about regaining access to their account, and the desk classified it as an access matter. Because the customer's identity was not confirmed, it did not act on the profile and instead sent the customer a message to use the secure process in their secure portal, which checks identity there. The message also said the bank never asks for a password, PIN or verification code, and that nothing on the profile was changed; the case is closed as redirected, with nothing left for a person.",
             "type": "text"
           }
         ],
@@ -1324,8 +1340,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2457,
-          "output_tokens": 109,
+          "input_tokens": 2489,
+          "output_tokens": 137,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1333,13 +1349,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.6750626999419183,
-      "input_tokens": 2457,
-      "output_tokens": 109,
-      "cost_usd": 0.006004,
+      "seconds": 2.014617200009525,
+      "input_tokens": 2489,
+      "output_tokens": 137,
+      "cost_usd": 0.006348,
       "error": null,
       "replayed": false,
-      "digest": "10c318c0f6557b52a48955a23ec229f63da8d789578780e33d5080dbb54598bd"
+      "digest": "3dda12040a89cbf2fb557a91dd6501971a2eb86eaa87ab05e2cec04d2156a882"
     }
   ]
 }

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer's request was about regaining access to their account, and the desk classified it as an access request. It sent them a message pointing to the secure process in their secure portal, which checks identity there, and said the bank never asks for a password, PIN or verification code. Nothing on the profile was changed, the case is closed as redirected, and nothing is left for a person.
+The customer's request was about regaining access to their account, and the desk classified it as an access matter. Because the customer's identity was not confirmed, it did not act on the profile and instead sent the customer a message to use the secure process in their secure portal, which checks identity there. The message also said the bank never asks for a password, PIN or verification code, and that nothing on the profile was changed; the case is closed as redirected, with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,6 +44,8 @@ How the case moved:
 - `TRIAGED` → `REDIRECT_PENDING`: the agent asked for `redirect_secure`, rule `redirect-to-the-secure-process` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = access → true (request_type=access)
+  - request_type = instruction → false (request_type=access)
+  - not verified → not known (verified=not known)
 - `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
   - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
 

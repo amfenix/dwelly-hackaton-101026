@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, a viewer whose identity was not verified, asked over secure chat whether row SUP-17 in a batch marked processed was actually paid. The desk treated it as a question about payments and put the case into waiting because the payment system had been asked but no row-level status has come back. The agent's repeat query to the payment system and its attempt to escalate to a person were both refused because the case was already in waiting, so nothing has been told to Leona and the status of SUP-17 is still unknown. A person still needs to verify the requester and check the SUP-17 row status.
+Leona Voss, an unverified viewer writing over secure chat, asked the desk to check whether row SUP-17 in a batch marked processed was actually paid. The desk queried the payment system and put the case into waiting, because that system's answer had not come back, so there is no row-level status to report. Its later attempts to ask the payment system again and to escalate to a person were both refused because the case was already in waiting, so nothing was escalated and no one has been handed the case. Her question about SUP-17 is still unanswered, and her identity remains unverified.
 
 _Written by a model from the record below; the sections below are the record._
 

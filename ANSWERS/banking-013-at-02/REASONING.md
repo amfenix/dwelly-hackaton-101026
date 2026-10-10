@@ -70,12 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7114 tokens in, 585 out, 5.059 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7149 tokens in, 516 out, 4.495 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the cancellation of the next run of your studio-rent standing order to the recurring-payments system. The request was accepted. The case is now at "requested", and nothing has been confirmed as cancelled yet.
+> I've submitted your request to cancel the next scheduled run of your studio-rent standing order. The request is accepted, but the cancellation isn't confirmed yet. The case records no confirmation so far, and I can't say the run is cancelled until the recurring payments system has carried it out.
 > 
-> I did this because you passed the identification checks on the call and your instruction was clear. The portal also shows the instruction as active, with the next run not yet started.
-> 
-> Please check the secure portal to see whether the instruction now shows the next run as cancelled. I can't tell you it is cancelled until the system's record shows that.
+> Your portal shows the instruction as active and the next run hasn't started. You can check the portal again to see the updated status.

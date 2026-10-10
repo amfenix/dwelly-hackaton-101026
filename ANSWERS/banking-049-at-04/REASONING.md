@@ -65,7 +65,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
 62. `next_system`: not known → documents (by `asked-documents`).
 63. The agent asked for `reply` {}.
-64. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+64. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
 65. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
 66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 67. Called `reply_customer` (attempt 1, key banking-049-at-04:do-reply:17).
@@ -76,10 +76,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7258 tokens in, 514 out, 4.622 s, cost $0.0159; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7263 tokens in, 529 out, 5.144 s, cost $0.0159; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply, and the case is closed. The documents system shows the acquiring report for 1–7 July 2025 as ready, so the file didn't need escalating. The reply covers that status only.
+> The documents system has already answered: the report is ready. The next step is to tell the customer, so no escalation is needed.
+> I sent the customer a reply, and the policy accepted it, which closed the case. The documents system showed the 1–7 July 2025 acquiring report for North Quay Printworks as ready. I did not escalate, since the file exists and escalation wasn't needed.
 > 
-> Mara Venn isn't verified, so I didn't release or attach the file itself.
+> The requester, Mara Venn, is not verified. I didn't check the reply's wording, so I can't confirm how it handles that.

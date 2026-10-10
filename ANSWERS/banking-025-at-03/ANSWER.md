@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer calling in, asked why her £18.40 payment at North Quay Books was declined. The desk classified this as a question about a card payment and sent an inquiry about that payment to the card system, and the case closed with that request made. The record shows no answer returned from the card system (the call came back empty), so the reply to Mara is still for a person to give.
+Mara Ellison, a verified customer on a call, asked why her £18.40 payment at North Quay Books was declined. The desk classified it as a card payment question and sent a query about that payment to the card system, then closed the case at that step. The card system's answer isn't in the record, so the reason for the decline hasn't been given to her and is still open.
 
 _Written by a model from the record below; the sections below are the record._
 

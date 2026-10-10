@@ -68,12 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 9174 tokens in, 677 out, 5.524 s, cost $0.0213; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9113 tokens in, 662 out, 5.68 s, cost $0.0209; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is closed in a waiting state, and no further bank action is needed. It is waiting for Mara Ellison to sign in again.
+> I took no further action on this case, and it is now waiting on Ms. Ellison.
 > 
-> She finished the recovery checks in the secure portal, and the portal's last message told her to return to sign-in. I tried to query the access system, but the desk refused because the case is in a waiting state. I made no other changes, and no password or code was shared at any point.
+> She has already been pointed to H&V's secure recovery process, and the portal shows she completed the recovery checks. The next step is hers: return to the sign-in page and sign in again. The bank doesn't handle passwords or verification codes, and nothing was asked of her outside the portal.
 > 
-> If she still can't sign in after the recovery, she should contact the bank again and the case can be reopened.
+> I tried to query the access system, but the desk refused because the case is in a waiting state. The case status confirms the state is final: "wait". If she still can't sign in after the recovery, the case will need to be reopened.

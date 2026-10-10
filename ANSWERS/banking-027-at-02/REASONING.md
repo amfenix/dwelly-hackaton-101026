@@ -58,22 +58,22 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 56. `next_system`: not known → access (by `route-access`).
-57. The agent asked for `redirect_secure` {}.
-58. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
-59. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
-60. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
-61. Called `redirect_secure` (attempt 1, key banking-027-at-02:do-redirect:17).
-62. Action in the world: `redirect_secure` {"to": "Mara Ellison", "channel": "verified_call", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
-63. `redirect_secure` found {}.
-64. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
-65. The case closed in `REDIRECTED`: **redirect_secure**.
+57. The agent asked for `ask_system` {"system": "access"}.
+58. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=access).
+59. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
+60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+61. Called `ask_system` (attempt 1, key banking-027-at-02:do-ask:17).
+62. Action in the world: `ask_system` {"system": "access", "about": "access"}.
+63. `ask_system` found {}.
+64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+65. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4855 tokens in, 529 out, 3.916 s, cost $0.0112; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7193 tokens in, 594 out, 5.145 s, cost $0.0164; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed the customer to H&V's secure recovery process to get back into their profile. The desk accepted this and the case is closed.
+> I asked the access system about Mara Ellison's sign-in problem. The desk accepted the request and the case is closed at that step. No answer from the access system is in the case yet, so I haven't told her what is wrong with her profile.
 > 
-> I didn't look up the profile in the access system first. Recovery goes through the secure process whatever the cause of the lockout. The bank never handles passwords or codes, and the customer didn't share any.
+> I haven't sent her to the secure recovery process or taken any other step. She is verified on the call and has shared no password or code.

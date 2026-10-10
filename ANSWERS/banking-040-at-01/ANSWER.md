@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they could share evidence of it. The desk classed this as a document question, found the outgoing payment (reference HV-040, bank status SENT), and asked the documents system about it, and the case closed in the asked state. The documents system's reply is not in the record, so whether a document has been produced, and anything to be told to the customer, is still open for a person.
+The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they could share evidence of it. The desk classed this as a document question and sent a request to the documents system about the £74.00 payment. The bank history shows an outgoing payment of £74.00 on 14 July 2025, reference HV-040, status SENT. The case is closed as asked, and nothing further is recorded as pending for a person; the document itself has not yet been supplied.
 
 _Written by a model from the record below; the sections below are the record._
 

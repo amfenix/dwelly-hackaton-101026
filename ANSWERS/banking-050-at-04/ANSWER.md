@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing on secure chat as the company signatory, asked the desk to check what stage her transfer to Alder Quay Supplies had reached, since the supplier says it hasn't received the funds. The desk replied that the payment record shows the transfer as sent, that this does not confirm the recipient bank received or credited it, and that no new transfer was made. A second attempt to query the payment system was refused because it had already been checked, and the case is closed with nothing further assigned. Mara Ellison was not verified on this chat, though the record does not show that this changed the reply.
+Mara Ellison, writing as company signatory over secure chat, asked the desk to check the stage of a payment that Alder Quay Supplies says it has not received. The desk replied that the payment record shows the transfer as sent, that this does not confirm receipt or credit by the recipient bank, and that no new transfer was made. Her identity was marked as not verified, and the case is closed with that reply, with nothing recorded as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=SENT)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

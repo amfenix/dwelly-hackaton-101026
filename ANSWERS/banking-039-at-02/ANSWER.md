@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nerys Wren, a verified customer on a call, said a new-device notification looked unusual and asked for a list of the sign-in sessions on her profile. The desk classified this as an access question and sent a request to the access system for that information, and the case closed at that step. No session details have come back yet, so what the access system returns is still outstanding and nothing has been reported to her.
+Nerys Wren, verified on a call, asked for a list of sign-in sessions on her profile after a new-device notification looked unusual to her. The desk classified it as an access question and asked the access system about it, but the system returned nothing, so the case closed as "asked" with no access status. The desk refused the attempted reply to her because it had no status to base it on, so she has not been told anything about her sessions and the follow-up is left to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -76,6 +76,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=access); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=access); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=access); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=access); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

@@ -65,7 +65,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The agent asked for `ask_system` {"system": "payment"}.
 62. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
 63. The agent asked for `reply` {}.
-64. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+64. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
 65. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
 66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 67. Called `reply_customer` (attempt 1, key banking-050-at-04:do-reply:17).
@@ -76,13 +76,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10742 tokens in, 695 out, 6.784 s, cost $0.0246; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10704 tokens in, 744 out, 7.514 s, cost $0.0249; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The payment system has already been checked, so the answer is in the case. I'll reply with it.
-> I sent the reply. The payment to Alder Quay Supplies is shown as SENT in H&V's records, with no confirmation recorded.
+> Payment was already asked; the answer is in the case. Reply.
+> I sent the reply. It will tell Mara Ellison that H&V's records show the Alder Quay Supplies payment at the "SENT" stage, with no confirmation recorded yet.
 > 
-> I didn't need to query the payment system again. It had already been checked, and when I tried to ask it a second time the desk refused. The case is closed.
+> The payment system had already been asked, so its answer was already in the case. A second ask was refused for that reason. The reply is limited to what the record shows. It doesn't claim the supplier has received the funds.
 > 
-> The requester, Mara Ellison, is not verified on this chat.
+> Her identity is still marked as not verified, and the case file doesn't say whether the reply explains that. The case is now closed with the reply as its outcome.

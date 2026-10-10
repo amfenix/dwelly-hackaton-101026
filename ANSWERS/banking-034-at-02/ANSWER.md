@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a customer on secure chat whose identity is not verified, asked the desk to escalate and check which tariff entry applied to the £3.20 fee on a withdrawal and how it accounts for that amount. The desk classified it as a fee question and sent a query about the £3.20 fee to the tariff system, then closed the case as "ask_system". The tariff system's answer is not in the record, so the question about the entry and the amount is still unanswered and nothing has been sent back to her.
+Mara Ellery, an unverified customer on secure chat, asked why a £3.20 fee appeared against a withdrawal and asked for it to be escalated and checked against the tariff. The desk classed it as a fee question and sent a query about the £3.20 fee to the tariff system, then closed the case in the asked state. A direct reply to her was refused, and the record shows no answer from the tariff system, so she has not yet been told how the fee arose.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -78,6 +78,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=tariff); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=tariff); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=tariff); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=tariff); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=tariff); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=tariff); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=fee); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=tariff); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

@@ -64,20 +64,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 60. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
 61. `next_system`: not known → card (by `asked-card`).
 62. The agent asked for `reply` {}.
-63. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_status present → true (card_status=IN_MANUFACTURE).
+63. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=IN_MANUFACTURE).
 64. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
 65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 66. Called `reply_customer` (attempt 1, key banking-030-at-04:do-reply:17).
-67. Action in the world: `reply` {"to": "Maren Ellery", "channel": "secure_chat", "text": "The card journal shows in_manufacture. This does not establish dispatch or receipt. No additional card change was made."}.
+67. Action in the world: `reply` {"to": "Maren Ellery", "channel": "secure_chat", "text": "The card journal shows your card as in manufacture. This does not establish dispatch or receipt. No additional card change was made."}.
 68. `reply_customer` found {}.
 69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 70. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7225 tokens in, 402 out, 3.86 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7367 tokens in, 477 out, 4.363 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The card system has already answered: the card is in manufacture. I'll reply with that.
-> I sent the reply to Maren. The card system shows her replacement card (reference HV-030) as in manufacture, so it is being made but there is no record yet that it has been sent. The case is closed.
+> I sent the reply to Maren. The card system shows her replacement card (reference HV-030) as in manufacture. I didn't make any changes to her account.
+> 
+> The records only show that the card is being made, so the reply doesn't say it has been sent. The case is now closed.

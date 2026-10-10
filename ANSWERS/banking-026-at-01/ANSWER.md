@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellwood, writing over secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to deal with it. She had not been verified, so the desk did not handle it itself. It sent her a message pointing her to the secure process in her portal, which checks identity there, and told her the bank never asks for a password, PIN or verification code. Nothing on her profile was changed, the case is closed as redirected, and the record lists nothing further for a person to do.
+Maren Ellwood, an unverified customer on secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to deal with it. The desk classified this as a card access request and redirected her to the secure process in her secure portal, where her identity is checked. The message told her the bank never asks for a password, PIN or verification code, and that nothing on her profile was changed. The case is closed as redirected, and the record lists nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,6 +44,8 @@ How the case moved:
 - `TRIAGED` → `REDIRECT_PENDING`: the agent asked for `redirect_secure`, rule `redirect-to-the-secure-process` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = access → true (request_type=access)
+  - request_type = instruction → false (request_type=access)
+  - not verified → true (verified=False)
 - `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
   - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
 

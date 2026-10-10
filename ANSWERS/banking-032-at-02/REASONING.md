@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
 53. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → statement (by `triage`).
@@ -65,15 +65,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 61. The case closed in `WAITING`: **wait**.
 62. The agent asked for `ask_system` {"system": "documents"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
+64. The agent asked for `redirect_secure` {}.
+65. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question); request_type = instruction is false (request_type=question).
+66. The agent asked for `escalate` {"note": "Mara Ellison (unverified, secure chat) asks whether an archived January 2024 statement is available. The case is in WAITING. The documents system was already asked, but no document_ready result is recorded. A new ask to documents and a secure-process redirect were both refused because the state is not TRIAGED. The requester is not verified, so no statement details should be disclosed until identity is confirmed. Please verify the customer and check archive availability."}.
+67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8608 tokens in, 640 out, 5.995 s, cost $0.0198; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I haven't been able to confirm whether a January 2024 statement is available, and I'm leaving the case with a person.
-> 
-> The documents system had already been asked once on this case, and it returned no result. When I tried to ask it again, the desk refused. The case is in a waiting state and is closed to further requests.
-> 
-> The requester is also not verified. Until identity is confirmed through the bank's secure process, nothing should be sent or described as available.
+5 calls, 10592 tokens in, 822 out, 7.461 s, cost $0.0255; models: claude-sonnet-5-5, jev-1.13.0.

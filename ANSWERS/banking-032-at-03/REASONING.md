@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.93 → question.
 55. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → statement (by `triage`).
@@ -74,10 +74,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6892 tokens in, 466 out, 4.188 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6930 tokens in, 469 out, 3.921 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system whether an archived copy of the January 2024 statement exists. The request was accepted, and I'm stopping here until its answer comes back.
-> 
-> Mara Ellison hasn't been verified yet, so no statement should be released until that is done.
+> I've asked the documents system whether an archived copy of the January 2024 statement is available. Nothing has come back yet, so I can't tell the customer either way. The customer, Mara Ellison, is also not verified yet. I'll write the reply once the documents system answers.

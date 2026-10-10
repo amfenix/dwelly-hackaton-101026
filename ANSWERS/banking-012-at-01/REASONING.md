@@ -48,7 +48,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+47. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
 48. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 49. `request_type`: not known → change (by `triage`).
 50. `subject`: not known → standing_order (by `triage`).
@@ -62,15 +62,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 58. `send_for_confirmation` found {}.
 59. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
 60. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
-61. The agent asked for `ask_system` {"system": "recurring"}.
-62. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-4 calls, 9360 tokens in, 606 out, 6.09 s, cost $0.0209; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4692 tokens in, 439 out, 3.505 s, cost $0.0098; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The standing order has not been changed. Mira hasn't authorised the increase from £42.00 to £68.00, so the case has closed at "send for confirmation". A confirmation request has gone to her, and the change stays on hold until she confirms it.
-> 
-> My attempt to look up the standing order in the recurring-payments system was refused because the case had already moved to that state. I didn't try anything further, since there is nothing left for the desk to do until she replies.
+> The case is closed. A confirmation request has gone to Mira to authorise raising the Westmere Garden Cooperative standing order from £42.00 to £68.00 a month. Nothing has changed on the standing order yet. The change only goes ahead once Mira confirms it, so I'm taking no further action.

@@ -59,15 +59,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. `confirmation`: not known → none (by `read-confirmation`).
 56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 57. Rule `triage` fired: state = READING → true (state=READING).
-58. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.89 → instruction.
-59. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.67 → standing_order.
+58. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.90 → instruction.
+59. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
 60. `request_type`: not known → instruction (by `triage`).
 61. `subject`: not known → standing_order (by `triage`).
 62. State `READING` → `TRIAGED` (by `triage`).
 63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 64. `next_system`: not known → payment (by `asked-payment`).
 65. The agent asked for `reply` {}.
-66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
+66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=instruction); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
 67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
 68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 69. Called `reply_customer` (attempt 1, key banking-018-at-04:do-reply:17).
@@ -78,10 +78,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8069 tokens in, 843 out, 7.285 s, cost $0.0186; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8018 tokens in, 784 out, 7.201 s, cost $0.0178; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to the customer with what the payment records show: two £34.80 payments to Northmere Heating. The records don't show which one is a duplicate, and the customer doesn't know either. No payment has been removed, because nobody has confirmed which line to cancel. The case is closed as replied.
+> I replied to the customer, and the case is closed as replied. I did not remove either payment.
 > 
-> I didn't check the standing orders system, even though the case subject is a standing order. If the customer wants to follow this up, that is the next place to look.
+> The payment system's answer came back marked OTHER: it shows two £34.80 payments to Northmere Heating, and nothing in the records says one is a duplicate of the other. Mara doesn't know which line is the duplicate either, so there was no clear instruction to act on.
+> 
+> I didn't check the recurring system, which holds standing orders. The case lists the subject as a standing order, so that check might have shown whether the two lines are linked.

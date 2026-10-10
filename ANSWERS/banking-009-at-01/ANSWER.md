@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked which amount was actually sent, since they remembered entering £684.20 in the transfer draft but the final payment line shows £648.20. The desk classified this as a question about a transfer and put it to the payment system, asking about the transfer of £648.20; the request went through and the case closed as asked. The payment system's answer is not yet in the record, so the reply to the customer is still to be written once it arrives.
+The customer asked which amount was actually sent, saying they remembered entering £684.20 in the transfer draft while the final payment line shows £648.20. The desk classed this as a question about a transfer and asked the payment system about the £648.20 transfer, and that request went through with no error. The record does not show the payment system's answer yet, so the customer has not been given a confirmed figure.
 
 _Written by a model from the record below; the sections below are the record._
 

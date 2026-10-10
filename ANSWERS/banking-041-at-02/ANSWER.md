@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an unverified uploader writing over secure chat, asked whether H&V had received her batch file (reference HV-041, £420.00) and said she wanted receipt checked only, not any payment approved or released. The desk classified this as a question about a batch and sent a query to the payment system about that reference and amount; the query went through with no error, and nothing was approved or released. The record shows no answer from the payment system yet, so the receipt status is still outstanding.
+Mara Ellison, an uploader writing over secure chat, asked the desk to check whether batch-041.csv (reference HV-041, £420.00 listed for Staff A) had been received, and said she was not asking for any payment to be approved or released. The desk classified it as a question about a batch and put a query to the payment system about HV-041; that request went through and the case closed at that step. No answer on receipt has come back, the record shows no confirmation for the batch, and Mara is still marked as not verified, so whether the file arrived is still open for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 

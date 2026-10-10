@@ -48,7 +48,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
 48. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.98 → transfer.
 49. `request_type`: not known → question (by `triage`).
 50. `subject`: not known → transfer (by `triage`).
@@ -67,8 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4552 tokens in, 366 out, 3.597 s, cost $0.0089; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4591 tokens in, 373 out, 3.034 s, cost $0.0089; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The payment system has been asked to confirm the amount actually sent. Its answer will come back into the case, and the reply to the customer will be based on that record.
+> The payment system has been asked for the amount of the transfer that was actually sent. Once its answer is in the case, the next step is to reply to the customer.

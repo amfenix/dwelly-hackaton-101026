@@ -67,21 +67,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
 64. `next_system`: not known → card (by `asked-card`).
 65. The agent asked for `reply` {}.
-66. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_status present → true (card_status=BLOCKED).
+66. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=instruction); next_system = card → true (next_system=card); card_status present → true (card_status=BLOCKED).
 67. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
 68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 69. Called `reply_customer` (attempt 1, key banking-022-at-04:do-reply:17).
-70. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made."}.
+70. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows your card as blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made."}.
 71. `reply_customer` found {}.
 72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7203 tokens in, 550 out, 5.241 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7252 tokens in, 551 out, 5.287 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I used the reply tool, and the desk accepted it and closed the case. The card record already shows the card as BLOCKED, so the reply tells Mara Ellison that. I didn't submit a new block request, because the record shows nothing left to block.
-> 
-> The case facts show no separate confirmation of the block, so the reply can only report what the record shows.
+> I replied to Mara Ellison, and the case is closed. The bank's records already show her debit card as BLOCKED, so I submitted no new block request. The reply is based on that record. The case has no block confirmation, so the reply shouldn't claim the bank blocked the card during this call.

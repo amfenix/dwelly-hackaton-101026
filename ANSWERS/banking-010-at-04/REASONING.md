@@ -67,7 +67,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
 64. `next_system`: not known → incoming (by `asked-incoming`).
 65. The agent asked for `reply` {}.
-66. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=True).
+66. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=True).
 67. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
 68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 69. Called `reply_customer` (attempt 1, key banking-010-at-04:do-reply:17).
@@ -78,10 +78,14 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7473 tokens in, 449 out, 5.462 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5127 tokens in, 553 out, 4.408 s, cost $0.0118; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The incoming records show an entry for £42.80, which matches the amount you asked about. The case is now closed.
+> I used `reply`, and the desk accepted it. The case is now in the REPLIED state and closed.
 > 
-> Two limits on what the records show. The incoming check confirmed an amount, not that the entry is the refund for your Northmere transfer. Your identity also isn't verified on this chat channel.
+> The incoming-payments check found an entry of £42.80, which matches the amount you asked about. The record shows no confirmation that it is the refund for your Northmere Home Supplies transfer. The reply therefore shouldn't say it is that refund.
+> 
+> I didn't read the reply text the desk wrote, so I can't say exactly how it words this.
+> 
+> Your identity is also still marked as not verified in this chat.

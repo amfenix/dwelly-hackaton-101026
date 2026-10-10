@@ -73,10 +73,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7186 tokens in, 453 out, 4.94 s, cost $0.0150; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7275 tokens in, 487 out, 5.196 s, cost $0.0154; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the incoming-payments system to check whether the £42.80 refund from Northmere Home Supplies has reached your account. That check is the next step, and I haven't received its result yet. So I can't yet confirm whether the refund has arrived or whether any incoming entry matches your outgoing transfer.
+> I asked the incoming-payments system about the £42.80 from Northmere Home Supplies. The case is now marked final, and the query has gone through.
 > 
-> Once the result is in the case, the desk will reply to you with what the records show.
+> I haven't confirmed the status of the refund yet. Case status shows no new facts after the query, so there is no incoming entry in the case for me to report on or match to your original transfer. Elowen Marr's identity is also still marked as unverified.

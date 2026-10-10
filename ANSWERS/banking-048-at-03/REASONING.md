@@ -68,12 +68,14 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7817 tokens in, 769 out, 6.5 s, cost $0.0195; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7833 tokens in, 707 out, 6.44 s, cost $0.0188; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't confirmed whether the payment has reached the account, and I've left the case in its waiting state. I tried to query the incoming-payments system, and the desk refused. The incoming-payments check is already marked as asked, and the case is now in WAITING rather than TRIAGED, so it can't be run again.
+> I've made no further change to this case. It is in a final waiting state, and I'm leaving it open for a person to pick up.
 > 
-> The case has no incoming-payment result, so there is nothing yet to confirm that a credit has arrived. The requester, Mara Ellison, is also not verified on this chat. The only outstanding item is the buyer's own message saying they sent payment, which is not evidence that it arrived.
+> - **What I tried:** I asked the incoming-payments system to check for the credit. The desk refused, because that check is already marked as asked and the case is no longer in a state that allows another one.
+> - **What the case shows:** The record has no result for it. Confirmation is still "none".
+> - **Verification:** Mara Ellison, who says she is the company's authorised accountant, is not verified. The desk can't say anything about the account's incoming activity until she is.
 > 
-> I'm not escalating or sending a reply, because neither would add anything the records support. A person can pick the case up if it stays open.
+> I can't tell the customer whether the buyer's payment has arrived. Nothing in the records shows it either way.

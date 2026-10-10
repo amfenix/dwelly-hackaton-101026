@@ -4,7 +4,7 @@
 
 ## Summary
 
-The account holder asked why a transfer to Northmere Housing Co-operative on 14 July 2025, shown as not completed in the secure portal, had not gone through. The desk classed it as a question about a transfer and sent it on to the payment system, and the case closed in that asked state. The desk's own attempt to reply was refused because no payment status had come back, so the reason for the failed transfer has not been given and is still open.
+The account holder asked why their 14 July 2025 transfer to Northmere Housing Co-operative showed as not completed in the secure portal. The desk classified it as a question about a transfer and sent a query to the payment system, which closed the case at that step. The payment system's answer isn't in the record, so the reason for the failure is still unknown and nothing has yet been explained to the customer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -67,10 +67,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

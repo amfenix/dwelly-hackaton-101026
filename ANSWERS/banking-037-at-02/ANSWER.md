@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk treated it as a verified customer's profile change and registered a request with the access team, and the case closed as submitted. The record shows no refusals or errors and names no remaining step for the desk, though it doesn't say whether the data team will ask for supporting information.
+Elowen Marr, a customer verified on a call, asked for the name on her profile to be corrected from "Elowen Mar" to "Elowen Marr". The desk treated this as a verified customer's profile change and registered a request with the access team, and the case closed as submitted. The record shows nothing further for the desk to do, though the customer's message says the data team may ask her for supporting information.
 
 _Written by a model from the record below; the sections below are the record._
 

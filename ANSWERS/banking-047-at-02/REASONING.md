@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7003 tokens in, 531 out, 4.68 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7020 tokens in, 484 out, 4.433 s, cost $0.0150; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the business system for the current outgoing-payment limit on Maeve's company profile. The desk accepted the request and closed the case at that step. No limit figure is in the case yet, so there is nothing to tell Maeve at this point.
+> I asked the business system for the company's current outgoing-payment limit. The case is now marked final with the outcome "ask_system", so I stopped there.
 > 
-> Maeve's identity is still unverified (`verified: False`), and her role is viewer. I made no change to any payment. The planned supplier payout she mentioned is unsubmitted, and I left it alone.
+> The limit itself has not come back into the case, so I have nothing to tell Maeve yet. Her identity is also not verified. The record shows her role as viewer.

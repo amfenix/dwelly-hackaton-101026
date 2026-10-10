@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, verified on a call, raised a question about a transfer: she remembered the draft as £684.20, but the final line shows £648.20. The desk identified her, read the amount as £648.20 and asked the payment system about the transfer for that amount, then closed the case at that step. Nothing has confirmed that £648.20 is what was actually sent, so the answer is still pending from the payment system's record.
+Mara Ellwood, verified on a call, raised a question about a transfer after noticing that the draft amount she remembered (£684.20) differed from the final line (£648.20). The desk identified her, found £648.20 as the amount on the completed instruction, and asked the payment system about the transfer for that amount. The payment system returned nothing further, and no answer or outcome has been recorded, so a person still needs to pick up the payment system's response and report back to her.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.79 → question.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.74 → question.
 51. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
 52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → transfer (by `triage`).
@@ -70,10 +70,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7029 tokens in, 466 out, 6.411 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7032 tokens in, 498 out, 5.159 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the query to the payment system to check whether the two £84.20 entries to North Quay Utilities are one instruction or two. The system accepted it, but no answer is in the case yet, so I can't say what the entries are or whether the pending one has been stopped or returned.
+> I've asked the payment system to look into the two North Quay Utilities entries for £84.20. That is the next step, and the case stays here for now.
 > 
-> Mira hasn't been verified in this chat. I made no change to either payment, only a records check.
+> The payment records haven't come back with anything yet. So I can't say whether the two entries are one instruction shown twice or two separate ones. I also can't say whether the pending one has been stopped or returned.
+> 
+> Mira hasn't been verified yet. Until she is, the bank can't stop or return the pending transfer for her, and I haven't submitted any request to do so.

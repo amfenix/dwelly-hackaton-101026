@@ -73,10 +73,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7456 tokens in, 617 out, 5.18 s, cost $0.0172; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5220 tokens in, 677 out, 5.354 s, cost $0.0132; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed Mara Ellery's dispute to the card team. It covers the £38.40 Fern & Finch Books purchase posted on 14 July 2025, which she doesn't recognise. She was identified on a verified call, and the desk accepted the request.
+> I've passed the dispute for the £38.40 Fern & Finch Books purchase on 14 July 2025 to the card team. The desk accepted it, and the case is now in the REQUESTED state.
 > 
-> I haven't written the reply to her yet. It should say that the team is now looking at the purchase and that its appearance in her transaction list doesn't show who made it. The bank also can't act for her or take a PIN or password, so any card-protection steps need to go through the bank's secure process.
+> I haven't yet given you any advice on protecting your card. The desk will do that in its reply to you.

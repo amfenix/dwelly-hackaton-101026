@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the documents system, which showed the statement ready for secure-portal access, and replied in the chat that the document is available, without confirming any download or credit and noting that no email was sent. She was not verified as the account holder, and the record lists nothing further for a person to do.
+Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the document record, found the statement ready for secure-portal access, and replied in the chat that the document is available, without confirming any download or crediting of funds, and noting that no email was sent. The case is closed as replied; the record shows she is not verified, and nothing else is left open for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -59,6 +59,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = documents → true (next_system=documents)
   - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

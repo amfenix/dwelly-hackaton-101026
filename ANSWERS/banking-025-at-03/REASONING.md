@@ -74,9 +74,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4766 tokens in, 348 out, 2.89 s, cost $0.0092; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6989 tokens in, 418 out, 3.978 s, cost $0.0142; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The customer is verified and has identified the payment (£18.40 at North Quay Books). The answer sits in the card system, so I'll ask it.
-> I've asked the card system about the declined £18.40 payment at North Quay Books. Its answer should now be in the case, so the next step is to reply to Mara with it.
+> The customer is verified and has identified the payment (£18.40 at North Quay Books). The facts point to the card system as the next place to look, so I'll ask it why the payment was declined.
+> I asked the card system about the declined £18.40 payment at North Quay Books, and the desk accepted the request. The case is now closed at that step. The card system's answer isn't in the case yet, so I can't tell Mara why the payment was declined.

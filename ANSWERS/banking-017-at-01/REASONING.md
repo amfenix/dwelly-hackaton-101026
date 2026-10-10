@@ -65,8 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6407 tokens in, 386 out, 4.629 s, cost $0.0129; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6446 tokens in, 444 out, 5.349 s, cost $0.0134; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've checked the recurring payments system, which is the next step for a standing order question. The case is now in the "ASKED" state, and the case status shows no further action is open. The standing order record hasn't come back yet, so I can't say whether the rent payment was sent or why it wasn't. When the answer arrives, the reply to you can state what the record shows.
+> I've checked the recurring-payments system about your rent standing order. The check was accepted, but it hasn't returned any details yet. The case record shows no confirmation that the payment was sent, and it gives no reason why it might not have been. I can't tell you yet whether the payment went out.
+> 
+> The desk shows this case as final after that check, so I'm stopping here. A person will pick up the case.

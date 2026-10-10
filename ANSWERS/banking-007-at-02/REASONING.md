@@ -70,12 +70,14 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6920 tokens in, 508 out, 5.196 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6975 tokens in, 512 out, 4.391 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the payment system about this transfer. The case is now closed at that step, and the system's answer isn't in the case yet. I can't tell you the transfer's current stage or whether the beneficiary has received it.
+> I queried the payment system for the status of your international transfer. The case is now closed at this step, and I have no further status detail to report.
 > 
-> What the case does show is that H&V recorded the instruction as sent, and that there is no confirmation of receipt on record. "Sent" only means the payment left H&V. It isn't proof that the beneficiary has the money.
+> The only facts on the case are these:
+> - H&V recorded the instruction as sent.
+> - No confirmation of receipt by the beneficiary appears in the records. I can't say the beneficiary has received the money.
 > 
-> Your identity also hasn't been verified in this chat. Detailed status information may need that to be completed first.
+> The payment system's answer didn't add any new facts, such as a processing stage or a confirmation of receipt. I can't tell you more than the "sent" status you already see.

@@ -66,23 +66,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 62. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
 63. `next_system`: not known → business (by `asked-business`).
 64. The agent asked for `reply` {}.
-65. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_status present → true (business_status=RECEIVED).
+65. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = business → true (next_system=business); business_status present → true (business_status=RECEIVED); not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=RECEIVED, subject=batch).
 66. State `TRIAGED` → `REPLY_PENDING` (by `business-reply`).
 67. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 68. Called `reply_customer` (attempt 1, key banking-041-at-04:do-reply:17).
-69. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The business record shows received. This does not establish that every row was paid or processed. No additional approval or role change was made."}.
+69. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The business record shows the file as received. This does not establish that every row was paid or processed. No additional approval or role change was made."}.
 70. `reply_customer` found {}.
 71. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 72. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7525 tokens in, 519 out, 4.696 s, cost $0.0164; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5155 tokens in, 527 out, 4.615 s, cost $0.0116; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I used the reply tool, and the desk accepted it. The case is now marked REPLIED and closed.
+> I've sent the reply. The business system's record shows batch-041.csv (reference HV-041) as RECEIVED, so the reply gives that receipt status and nothing more. It doesn't approve or release any payment, which is what the customer asked for. The case is now closed.
 > 
-> The business system's record shows batch-041.csv (reference HV-041) as RECEIVED, so the reply reports that receipt status. The desk wrote the reply text, and I did not see it.
-> 
-> The requester, Mara Ellison, is listed as an uploader but is not verified on this chat channel. I went ahead because she asked only for the file's receipt status, not for any approval or release of payments.
+> The facts also list the requester as not verified. I replied anyway because the answer was only the file's receipt status.

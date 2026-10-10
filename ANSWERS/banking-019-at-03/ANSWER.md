@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Ellery asked the desk to check whether her monthly standing order to Willow Yard Studios could be moved from 18 September to 22 September 2025, and to send any eligible change to her for confirmation. The desk sent the change to her for confirmation and closed the case, though her identity was not verified and no confirmation had been received. Its later request to check the recurring-payments system was refused because the case had already moved to the confirmation step, so the processing stage of the 18 September run was never checked and it is still unknown whether that run can be moved; the change is not made until she confirms it.
+Maeve Ellery asked the desk to check whether her standing order to Willow Yard Studios could be moved from 18 September to 22 September 2025, and to send any eligible change to her for confirmation. The desk sent the change to her for confirmation, then closed the case. Her identity was not verified in chat, and the later request to check the standing-order system's processing stage was refused because the case had already moved to the confirmation step. So it was never established whether the 18 September run can still be changed, and nothing on the standing order has changed unless she confirms it herself. The change as sent still lists the date as 18 September 2025.
 
 _Written by a model from the record below; the sections below are the record._
 

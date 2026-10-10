@@ -126,6 +126,7 @@ the reply tool is safe to use.
 | reader fixes and `check_tariff` (track functions) | 123 (83%) |
 | labels: a system's answer that reaches the customer after a request is `wait`; "I'll check" is a check; the policy: a confirmed change is applied by the system, a step the bank took is not taken again (`check_bank_actions`), a registration wait only for registrations, a document not ready is ordered, a card instruction needs no check, the latest request to a system stands | 137 (92%) |
 | a profile change goes through the bank's protected change process; "referred" labelled as a submission | 141 (95%) |
+| a confirmation nobody asked for is passed on (013, 036); `other` request type with a safe default; an unverified instruction is sent to verify instead of escalated; replies in plain sentences | 143 (96%) |
 
 A difference of one or two points between runs is the agent's own variation. Still open: 3 (the
 functions' owner), 4d (waits for `check_tariff`), 5 (triage wording), and two new findings: 045@4

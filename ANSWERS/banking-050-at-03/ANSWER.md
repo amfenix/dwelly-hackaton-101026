@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat as a signatory and not verified, asked the desk to check the stage of a payment that Alder Quay Supplies says it hasn't received. The desk classed it as a question about a transfer and moved the case to waiting for the payment system's answer, which had not come in; a later attempt to ask the payment system was refused because the case was no longer in the state that allows it. No payment stage is on record and nothing was done or said about the payment, so a person needs to pick the case up once Mara is verified.
+Mara Ellison, writing as company signatory over secure chat, asked the desk to check what stage a payment to Alder Quay Supplies had reached, saying the supplier had not received the funds. The desk classified it as a question about a transfer, put the case into waiting because the payment system's answer was not yet in, and took no other action. A later request to query the payment system was refused because the case was already in WAITING, so the payment stage was never checked and nothing has been reported back; Mara's identity is also recorded as not verified, and a person would need to pick up the payment check.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was treated as a question about a transfer, and the desk decided to ask the payment system about it, which it did. The case is closed with that query sent, but the record shows no answer from the payment system. The only related entry is a portal note that a payment authorisation was recorded for the Alder Quay Supplies materials invoice, so the payment's current stage is not known and nothing further is recorded as pending for a person.
+The request was a question about a transfer, and the desk sent it to the payment system by asking it about the transfer. The case closed in the asked state. The ask returned nothing, so the record has no payment stage. The only thing it shows is the authorisation recorded in the business portal for the Alder Quay Supplies materials invoice. No reply has been sent to the customer, so someone still needs to find out where the payment stands and answer them.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
+54. Classifier (jev jev-latest) on `request_type`: change, confidence 0.97 → change.
 55. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 56. `request_type`: not known → change (by `triage`).
 57. `subject`: not known → standing_order (by `triage`).
@@ -75,10 +75,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 9605 tokens in, 493 out, 5.868 s, cost $0.0203; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9646 tokens in, 514 out, 5.864 s, cost $0.0204; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already in its final state. The change has been sent to the customer for secure confirmation, so nothing more is needed from me.
+> The case is closed. A confirmation request has already gone to the customer through the secure process, so nothing more is needed from the desk.
 > 
-> My check of the recurring system was refused because the case had already moved past triage. That means I couldn't confirm the standing order's processing stage, and I haven't told the customer that the 22 September date is eligible. Whether the next run can still be moved depends on that stage. It will be checked when Maeve confirms the change through the secure process.
+> I couldn't check the processing stage of the 18 September run. The recurring-payments check was refused because the case had already moved to the confirmation-sent state. So I can't say whether that run can still move to 22 September 2025.
+> 
+> Maeve Ellery isn't verified yet, and nothing has been confirmed. The change will only go ahead once she confirms it securely.

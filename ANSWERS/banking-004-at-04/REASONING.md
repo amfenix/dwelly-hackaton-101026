@@ -67,7 +67,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 64. `next_system`: not known → payment (by `asked-payment`).
 65. The agent asked for `reply` {}.
-66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=DECLINED).
+66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=DECLINED).
 67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
 68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 69. Called `reply_customer` (attempt 1, key banking-004-at-04:do-reply:17).
@@ -78,12 +78,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4906 tokens in, 505 out, 3.894 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4924 tokens in, 431 out, 3.657 s, cost $0.0102; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I used the reply tool, and the desk accepted it. The case is now closed as replied.
-> 
-> The records already held the answer, so I didn't query the payment system again. The 14 July 2025 transfer to Northmere Housing Co-operative shows as DECLINED. The recorded reason is "The receiving bank declined the transfer." The records give no further detail, so the reply doesn't go beyond that.
-> 
-> I didn't read the reply text the desk wrote, so I can't confirm its exact wording.
+> I've sent the reply to Mara Ellery. The payment record shows the 14 July 2025 transfer to Northmere Housing Co-operative as declined, with the reason "The receiving bank declined the transfer." The record gives no further detail, so the reply says no more than that. The case is now closed.

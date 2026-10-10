@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellery, a verified customer in secure chat, asked whether her replacement card is being made and whether it has been sent. The desk checked the card journal, which shows the replacement as in manufacture with no record of dispatch or delivery, and replied to her in secure chat saying exactly that and that no card change was made. The case is closed with the reply sent, and nothing is left for a person.
+Maren Ellery, a verified customer in secure chat, asked whether her replacement card was being made and whether it had been sent. The desk checked the card journal, which shows the replacement (reference HV-030) as in manufacture and gives no confirmation of dispatch or delivery, and replied to her in secure chat saying exactly that. No change was made to her card or account, the case is closed, and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-030-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Maren Ellery, channel: secure_chat), by rule `do-reply`
 
-  > The card journal shows in_manufacture. This does not establish dispatch or receipt. No additional card change was made.
+  > The card journal shows your card as in manufacture. This does not establish dispatch or receipt. No additional card change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = card → true (next_system=card)
   - card_status present → true (card_status=IN_MANUFACTURE)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

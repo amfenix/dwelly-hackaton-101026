@@ -67,11 +67,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 63. `ask_system` found {}.
 64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 65. The case closed in `ASKED`: **ask_system**.
+66. The agent asked for `reply` {}.
+67. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=card); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-4 calls, 6825 tokens in, 478 out, 5.363 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10637 tokens in, 588 out, 7.172 s, cost $0.0232; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the card system about Rowan's declined card. The case is now closed with that request as its outcome. The card system's answer isn't in the case yet, so I can't say what category the restriction falls into or whether it has been lifted. Rowan's identity is also still unverified (`verified` is false), so nothing about the card should be shared until the desk verifies them.
+> I asked the card system about Rowan's declined card. That is the one step this case allows, and the case is now closed at that step.
+> 
+> The card system's answer isn't in the case, so I have no restriction category or lifted/not-lifted status to give Rowan. I tried to send a reply, but the desk refused it because no card status has been recorded. I haven't told Rowan anything about the restriction.
+> 
+> Rowan is also not verified. That is worth checking before any card details go out.

@@ -48,10 +48,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `check_registration` found {}.
 45. Rule `read-confirmation` fired: state = READING → true (state=READING).
 46. Called `check_confirmation` (attempt 1, key banking-036-at-04:read-confirmation:13).
-47. Note from `read-confirmation`: event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: confirmation='given']
+47. Note from `read-confirmation`: event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: confirmation='unprompted']
 48. Note from `read-confirmation`: event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: instructed_outside_portal=True]
-49. `check_confirmation` found {"confirmation": "given", "instructed_outside_portal": true}.
-50. `confirmation`: not known → given (by `read-confirmation`).
+49. `check_confirmation` found {"confirmation": "unprompted", "instructed_outside_portal": true}.
+50. `confirmation`: not known → unprompted (by `read-confirmation`).
 51. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
 53. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
@@ -61,16 +61,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. State `READING` → `TRIAGED` (by `triage`).
 58. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
 59. `next_system`: not known → access (by `asked-access`).
-60. Rule `change-applied-by-the-system` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = given → true (confirmation=given); registration_asked absent → true (registration_asked=not known). The customer confirmed the change in the secure portal; the system applies it.
-61. State `TRIAGED` → `WAITING` (by `change-applied-by-the-system`).
-62. The case closed in `WAITING`: **wait**.
-63. The agent asked for `submit_request` {}.
-64. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=WAITING); access_asked absent is false (access_asked=True); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change).
-65. The agent asked for `redirect_secure` {}.
-66. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=change).
-67. The agent asked for `escalate` {"note": "Verified customer Mara Ellison (secure portal) asked to change her correspondence address and confirmed the change in-portal. The case is WAITING, not TRIAGED. submit_request and redirect_secure were both refused because of that state and the request type (change). The new address is not in the case. A person needs to complete the profile address change through the secure profile process."}.
-68. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+60. Rule `unprompted-confirmation-is-passed-on` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = unprompted → true (confirmation=unprompted); verified → true (verified=True); registration_asked absent → true (registration_asked=not known). The customer confirmed the change on their own; the bank passes the confirmed change on.
+61. State `TRIAGED` → `REQUEST_PENDING` (by `unprompted-confirmation-is-passed-on`).
+62. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+63. Called `register_request` (attempt 1, key banking-036-at-04:do-request:17).
+64. Action in the world: `register_request` {"team": "access", "about": "profile"}.
+65. `register_request` found {}.
+66. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+67. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-6 calls, 11039 tokens in, 813 out, 8.252 s, cost $0.0251; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4887 tokens in, 367 out, 3.461 s, cost $0.0095; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> The address change has already been submitted. The case status shows it as final with the outcome "submit_request", and no refusals are recorded. Mara Ellison is verified in the secure portal and confirmed the change herself, so nothing is left for me to do.

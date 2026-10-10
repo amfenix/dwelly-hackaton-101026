@@ -4,7 +4,7 @@
 
 ## Summary
 
-A buyer asked to be told when their payment for the workshop invoice reaches the business. The desk classified this as a question about an incoming payment and sent it to the incoming-payments system. The system accepted the query but returned no answer, so there is still no confirmation that the payment has arrived. The record does not say who will reply to the customer, though the agent's note says that reply should follow once the system's answer comes in.
+The requester said they had sent payment for a workshop invoice and asked to be told when it arrives. The desk classified this as a question about an incoming payment and sent an inquiry to the incoming-payments system, then closed the case at that step. The record shows no answer from that system and no confirmation of receipt, so whether the payment has arrived is still unknown and no one has been told.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.73 → question.
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.63 → question.
 53. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → fee (by `triage`).
@@ -69,13 +69,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 65. `ask_system` found {}.
 66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 67. The case closed in `ASKED`: **ask_system**.
+68. The agent asked for `reply` {}.
+69. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=tariff); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=tariff); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=tariff); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=tariff); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=tariff); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=tariff); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=fee); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=tariff); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-4 calls, 7112 tokens in, 469 out, 4.862 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I asked the tariff system about the £3.20 fee, and the desk accepted the request. The case is now marked final with the outcome "ask_system".
-> 
-> The tariff system's answer isn't in the case yet. The case record still shows only the facts from before, so I can't yet say which tariff entry applied or how the amount was worked out. Nothing has been sent to Mara Ellery. Her identity is also still unverified.
+5 calls, 9858 tokens in, 333 out, 3.668 s, cost $0.0190; models: claude-sonnet-5-5, jev-1.13.0.

@@ -1,10 +1,10 @@
 # Case banking-036-at-04: New correspondence address
 
-**Decision: wait**  (final state `WAITING`)
+**Decision: submit_request**  (final state `REQUESTED`)
 
 ## Summary
 
-Mara Ellison, a verified customer writing through the secure portal, asked the desk to update her correspondence address and confirmed the change in the portal. The desk classified it as a profile change and closed the case in a waiting state, on the basis that the system applies a customer-confirmed change itself; no actions were taken. The agent's attempts to submit the request, redirect to the secure process and escalate were all refused because the case was already in WAITING, and the new address is not recorded in the case, so nothing in the record shows the address was actually changed.
+Mara Ellison, a verified customer writing through the secure portal, asked the desk to update the address it uses for her correspondence after she moved within the UK. The desk treated this as a profile change she had confirmed herself, registered a request with the access team about her profile, and closed the case as submitted. Nothing failed or was refused, and the record lists no further steps for a person, though it also does not show the address being changed yet, only the request being passed on.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,7 @@ Case reference: id banking-036-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `register_request` (team: access, about: profile), by rule `do-request`
 
 ## Decision and why
 
@@ -50,11 +50,14 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `WAITING`: rule `change-applied-by-the-system` — The customer confirmed the change in the secure portal; the system applies it.
+- `TRIAGED` → `REQUEST_PENDING`: rule `unprompted-confirmation-is-passed-on` — The customer confirmed the change on their own; the bank passes the confirmed change on.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
-  - confirmation = given → true (confirmation=given)
+  - confirmation = unprompted → true (confirmation=unprompted)
+  - verified → true (verified=True)
   - registration_asked absent → true (registration_asked=not known)
+- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
+  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 
 Facts established:
 
@@ -64,7 +67,7 @@ Facts established:
 - verified: **True**
 - subject: **profile**
 - access_asked: **True**
-- confirmation: **given**
+- confirmation: **unprompted**
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
@@ -73,7 +76,7 @@ Where they came from:
 
 - event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: requester='Mara Ellison', role='customer', channel='secure_portal', verified=True]
 - event 3 (H&V profile change process): I have checked Mara’s identity and reviewed the workflow’s requirements. I’m opening the address-change process for case HV-036; no address is recorded in this note. [facts: access_asked=True]
-- event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: confirmation='given']
+- event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: confirmation='unprompted']
 - event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: instructed_outside_portal=True]
 
 ## Escalated
@@ -84,12 +87,6 @@ No.
 
 - nothing
 
-Requests the policy refused:
-
-- `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=WAITING); access_asked absent is false (access_asked=True); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change)
-- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=change)
-- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
-
 ## Final result
 
-wait (WAITING)
+submit_request (REQUESTED)

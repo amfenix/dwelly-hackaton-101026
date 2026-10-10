@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, a verified customer on the business portal, asked for the acquiring report covering 1–7 July 2025 so she could review card sales and adjustments. The desk classified this as a question about a document and sent a query to the documents system, which accepted it without returning an answer. The case closed in that asked state, so the report itself has not been provided and nothing further is recorded as being done.
+Mara Venn, a verified customer using the business portal, asked for the acquiring report covering 1–7 July 2025 for North Quay Printworks so she could review card sales and adjustments. The desk treated it as a question about a document and sent an inquiry to the documents system, which accepted it, and the case closed at that step. No answer or report file has come back and nothing has been sent to Mara, so a person still needs to follow up once the documents system responds.
 
 _Written by a model from the record below; the sections below are the record._
 

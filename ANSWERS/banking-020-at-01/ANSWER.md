@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren, an unverified customer writing from outside the portal, asked what active instructions are linked to her account and what to consider before closing it. The desk classed this as a question about a standing order and asked the recurring-payments system about it, and the case closed in the ASKED state. No answer has come back from that system, and an attempted reply was refused, so Elena has received nothing yet and a person would need to pick up the case once the recurring-payments response is in.
+Elena Wren, an unverified customer writing through an external message, asked which active instructions are linked to her account and what she should consider before closing it. The desk classified this as a question about a standing order and asked the recurring-payments system about it; that was the only action taken, and the case closed in the asked state. No answer to Elena is recorded, and the record does not show what the recurring system returned.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -72,10 +72,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=recurring); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=recurring); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

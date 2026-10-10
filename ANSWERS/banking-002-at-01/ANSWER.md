@@ -4,7 +4,7 @@
 
 ## Summary
 
-The sender said they had sent a contribution for the kiln by bank transfer, and the desk treated this as a question about an incoming payment. It asked the incoming-payments system about it and closed the case at that step. The record shows no confirmation of the transfer, and the incoming-payments system's answer came back empty. Nothing has been told to the sender, so whether the money has arrived is still unresolved for a person to follow up.
+The sender asked about a bank transfer they said they had made for the kiln contribution, and the desk classified it as a question about an incoming payment. It asked the incoming-payments system about it and closed the case at that step. The system's answer is not in the record, so whether the payment has arrived is still unknown. The only support so far is the sender's own message, and the desk's checks found no confirmation. Anything further depends on the incoming-payments system's reply.
 
 _Written by a model from the record below; the sections below are the record._
 

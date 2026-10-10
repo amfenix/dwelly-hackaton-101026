@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, a verified caller, asked about her transfer, and the desk checked the payment record. It shows £648.20 as sent, not the £684.20 she remembered from the draft. The desk replied to her on the verified call saying the payment is recorded as sent, that this does not confirm the recipient bank received or credited it, and that no new transfer was made. One attempt to query the payment system again was refused because the lookup had already been done, and nothing is left for a person.
+Mara Ellwood, verified on a call, asked about her transfer, which she remembered as £684.20 in the draft while the final line shows £648.20. The desk checked the payment record, which shows £648.20 as sent, and replied that the transfer is recorded as sent, that this does not confirm the recipient bank received or credited it, and that no new transfer was made. A second payment lookup was refused as a duplicate, and the reply came from the existing record. Nothing in the record explains the £684.20 draft figure or offers any follow-up on the difference, so that is left for a person if she meant to send the higher amount.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=SENT)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

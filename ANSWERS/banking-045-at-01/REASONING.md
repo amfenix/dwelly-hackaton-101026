@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.98 → authority.
+50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
 51. Classifier (jev jev-latest) on `subject`: role, confidence 0.75 → role.
 52. `request_type`: not known → authority (by `triage`).
 53. `subject`: not known → role (by `triage`).
@@ -70,10 +70,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4964 tokens in, 614 out, 5.485 s, cost $0.0122; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4911 tokens in, 505 out, 4.334 s, cost $0.0109; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I forwarded the request to the company administrator for approval, and the desk accepted it. The case is now closed on our side.
-> 
-> Nadia isn't the administrator and can't assign roles. So the new colleague gets no portal access until the administrator approves. I didn't look up who the administrator is, and Nadia's identity is still unverified.
+> I've forwarded the request to the company administrator. Nadia said she can't approve or assign roles, so the administrator has to approve the new colleague's portal access. The bank accepted the forward, and the case is closed on our side. No access has been set up yet.

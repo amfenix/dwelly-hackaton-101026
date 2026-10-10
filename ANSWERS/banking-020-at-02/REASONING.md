@@ -51,8 +51,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.85 → question.
+51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.68 → standing_order.
 52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → standing_order (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
@@ -70,8 +70,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4863 tokens in, 487 out, 3.779 s, cost $0.0108; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 9498 tokens in, 612 out, 6.449 s, cost $0.0211; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system, which holds standing orders and Direct Debits, for the active instructions linked to Elena's account. The request was accepted. Once the answer is in the case, the next step is to reply to her with what is active and what to consider before closing.
+> The answer sits in the recurring system, so I'll query it. If the desk refuses because the customer isn't verified, that refusal will tell me what to do next.
+> I asked the recurring payments system, which holds standing orders and Direct Debits, for the active instructions linked to Elena Wren's account. The desk accepted the request and closed the case at that step.
+> 
+> The system's answer is not in the case yet, so I haven't told her which instructions are active. I also haven't covered what to consider before closing the account.
+> 
+> The desk still lists her as not verified, even though she says she has signed in and completed the account-holder checks. I didn't act on her statement. The desk didn't refuse the lookup, so I took it as allowed.

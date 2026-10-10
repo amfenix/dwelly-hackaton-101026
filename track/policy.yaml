@@ -56,10 +56,10 @@ fields:
   registered:         bool
   registration_ref:   text
   # --- has the customer confirmed a change (check_confirmation)
-  confirmation:              enum [none, requested, given]
+  confirmation:              enum [none, requested, given, unprompted]
   instructed_outside_portal: bool
   # --- the policy's own
-  request_type: enum [question, register, change, instruction, access, authority]
+  request_type: enum [question, register, change, instruction, access, authority, other]
   next_system:  { type: enum, values: [payment, incoming, recurring, card, access, business, documents, tariff], description: the system that holds the answer }
   reason:       enum [UNVERIFIED, OUTSIDE_PARTY, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED]
   clarify_need: { type: enum, values: [which_transaction, which_card, which_instruction, more_details], description: what the customer is asked for }
@@ -133,6 +133,7 @@ triggers:
           instruction: an instruction to act now (block a card, cancel a payment or a mandate, revoke a role)
           access: signing in, a PIN, a password, recovery of access
           authority: something only another person may approve or give (a second signatory, an administrator, a new user's access)
+          other: none of these (a bereavement, a complaint, a request for the personal data the bank holds, closing an account, credit)
       subject:
         choice: "What is the request about?"
         options:
@@ -175,12 +176,6 @@ triggers:
   - { name: route-tariff, when: "state = TRIAGED and next_system absent and subject = fee", set: { next_system: tariff } }
 
   # ------------------------------------------------------------------ safety first, before the agent
-  - name: unverified-instruction
-    when: "state = TRIAGED and request_type = instruction and not verified"
-    note: An instruction to act needs a verified customer.
-    set: { reason: UNVERIFIED }
-    to: ESCALATED
-
   # 028, 036: a profile change goes into the bank's protected change process, which asks the
   # customer to confirm by itself; the desk does not send its own confirmation request
   # a change asked for by someone else is not sent anywhere for confirmation (S28: a "CEO" email)
@@ -228,6 +223,11 @@ triggers:
     note: The change was sent to the portal; the customer has not confirmed it yet.
     to: WAITING
 
+  - name: unprompted-confirmation-is-passed-on   # 013, 036: nobody asked; the customer confirmed
+    when: "state = TRIAGED and request_type = change and confirmation = unprompted and verified and registration_asked absent"
+    note: The customer confirmed the change on their own; the bank passes the confirmed change on.
+    to: REQUEST_PENDING
+
   - name: change-applied-by-the-system   # 012, 019, 028: the system applies what the customer confirmed
     when: "state = TRIAGED and request_type = change and confirmation = given and registration_asked absent"
     note: The customer confirmed the change in the secure portal; the system applies it.
@@ -262,9 +262,14 @@ triggers:
     when: "state = TRIAGED and request_type = register and registration_asked absent"
     to: REQUEST_PENDING
 
+  - name: register-what-fits-no-type
+    on: submit_request
+    when: "state = TRIAGED and request_type = other and registration_asked absent"
+    to: REQUEST_PENDING
+
   - name: registration-reply
     on: reply
-    when: "state = TRIAGED and registration_asked and registered present"
+    when: "state = TRIAGED and request_type != other and registration_asked and registered present"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ payment
@@ -286,7 +291,7 @@ triggers:
 
   - name: payment-reply
     on: reply
-    when: "state = TRIAGED and next_system = payment and payment_status present"
+    when: "state = TRIAGED and request_type != other and next_system = payment and payment_status present"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ incoming
@@ -308,7 +313,7 @@ triggers:
 
   - name: incoming-reply
     on: reply
-    when: "state = TRIAGED and next_system = incoming and incoming_found present"
+    when: "state = TRIAGED and request_type != other and next_system = incoming and incoming_found present"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ recurring
@@ -330,7 +335,7 @@ triggers:
 
   - name: recurring-reply
     on: reply
-    when: "state = TRIAGED and next_system = recurring and recurring_status present"
+    when: "state = TRIAGED and request_type != other and next_system = recurring and recurring_status present"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ card
@@ -352,7 +357,7 @@ triggers:
 
   - name: card-reply
     on: reply
-    when: "state = TRIAGED and next_system = card and card_status present"
+    when: "state = TRIAGED and request_type != other and next_system = card and card_status present"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ access
@@ -374,7 +379,7 @@ triggers:
 
   - name: access-reply
     on: reply
-    when: "state = TRIAGED and next_system = access and access_status present"
+    when: "state = TRIAGED and request_type != other and next_system = access and access_status present"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ business
@@ -396,7 +401,7 @@ triggers:
 
   - name: business-reply   # not to someone whose own role the record shows revoked (a former employee)
     on: reply
-    when: "state = TRIAGED and next_system = business and business_status present and not (business_status = ROLE_REVOKED and subject != 'role')"
+    when: "state = TRIAGED and request_type != other and next_system = business and business_status present and not (business_status = ROLE_REVOKED and subject != 'role')"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ documents
@@ -418,7 +423,7 @@ triggers:
 
   - name: documents-reply
     on: reply
-    when: "state = TRIAGED and next_system = documents and document_ready"
+    when: "state = TRIAGED and request_type != other and next_system = documents and document_ready"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ tariff
@@ -435,7 +440,7 @@ triggers:
 
   - name: tariff-reply
     on: reply
-    when: "state = TRIAGED and next_system = tariff and tariff_status present"
+    when: "state = TRIAGED and request_type != other and next_system = tariff and tariff_status present"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ before any system answers
@@ -448,8 +453,8 @@ triggers:
   # 026, 027: sign-in, recovery, PIN: the bank's secure process, never the secret
   - name: redirect-to-the-secure-process
     on: redirect_secure
-    when: "state = TRIAGED and request_type = access"
-    to: REDIRECT_PENDING
+    when: "state = TRIAGED and (request_type = access or (request_type = instruction and not verified))"
+    to: REDIRECT_PENDING   # an instruction to act needs a verified customer: they verify in the secure process
 
   # 043, 045: what needs another person's approval goes to that person; the desk approves nothing
   - name: forward-to-the-authority

@@ -70,10 +70,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6655 tokens in, 416 out, 4.872 s, cost $0.0137; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6744 tokens in, 455 out, 4.127 s, cost $0.0141; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the payment system for Elise Rowan's saved transfer instruction. The check was accepted, but the case record doesn't show what the payment system found. So I can't yet say whether the transfer was submitted or what stage it's at, and I haven't told the customer either.
-> 
-> The case is closed on this step, so I'm stopping here.
+> The facts point to the payment system as the next place to check, so I'll ask it.
+> I asked the payment system about the saved transfer instruction. It accepted the request, but its answer hasn't come back into the case yet. So I can't tell Elise Rowan whether the transfer was submitted or what stage it is at. The case shows no confirmation, and the transfer wasn't instructed outside the portal. I'm stopping here, and the case now goes to a person.

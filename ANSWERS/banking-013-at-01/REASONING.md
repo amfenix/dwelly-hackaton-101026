@@ -65,10 +65,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9177 tokens in, 674 out, 7.192 s, cost $0.0213; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7018 tokens in, 682 out, 5.641 s, cost $0.0169; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the recurring payments system about the studio-rent standing order, and the case is now closed at that step. I haven't cancelled the instruction, so I can't yet confirm to the customer that the next run is stopped.
-> 
-> The only information so far is the portal note: the instruction is active and the next scheduled run hasn't started. The recurring system returned no new facts, and the case status still shows no confirmation of a cancellation.
+> I've checked the recurring payments records for your studio-rent instruction. I haven't cancelled anything yet, so I can't confirm a cancellation. The records show the instruction is active and the next run hasn't started. The cancellation request is still to be submitted, and I'll confirm once it has gone through.

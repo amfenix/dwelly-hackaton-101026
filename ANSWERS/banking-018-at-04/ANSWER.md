@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked the desk to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate. The desk looked at the payment record, found two separate instructions (one standing order and one direct debit mandate, with distinct references), and replied on the call that the record shows 2 separate instructions, that this doesn't establish execution or the recipient's outcome, and that no new transfer was made. Nothing was cancelled, and the case is closed as replied, so any decision on which line, if either, to remove is still open.
+Mara Ellison, verified by call, asked the desk to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate. The desk found two separate instruction records, one standing order and one direct debit mandate, with distinct types and references. It cancelled neither and made no new transfer, and it replied on the verified call that the payment record shows two separate instructions with no combined outcome. The case is closed as replied, and nothing in the record shows a person picking it up, though Mara still does not know which line, if either, is a duplicate.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=instruction)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=OTHER)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

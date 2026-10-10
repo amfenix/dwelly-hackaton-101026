@@ -70,10 +70,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6879 tokens in, 471 out, 3.97 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4781 tokens in, 434 out, 3.529 s, cost $0.0099; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the card system about Maren's replacement request (reference HV-030). The request was accepted, and the case is now in the "asked" state. The system hasn't returned any details yet, so I can't say whether the card is being made or has been sent.
-> 
-> Maren's identity is also still unverified on this chat. That may limit what the desk can tell her when the card record comes back.
+> I've queried the card system for the status of Maren's replacement card (reference HV-030). Her question is whether the card is being made and whether it has been sent. The query was accepted, and the answer will come back into the case. The next step is to reply to her with whatever the card system's record shows.

@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
 55. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → statement (by `triage`).
@@ -63,7 +63,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 59. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
 60. `next_system`: not known → documents (by `asked-documents`).
 61. The agent asked for `reply` {}.
-62. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+62. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
 63. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
 64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 65. Called `reply_customer` (attempt 1, key banking-032-at-05:do-reply:17).
@@ -74,10 +74,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6818 tokens in, 414 out, 3.874 s, cost $0.0140; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6936 tokens in, 428 out, 4.129 s, cost $0.0142; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply. The documents system shows that an archived copy of the January 2024 statement is ready. The case is now closed with that reply.
+> I sent the reply. The documents system had already been checked and showed the January 2024 statement as ready. The case is now marked replied and closed.
 > 
-> Mara Ellison is not yet verified in this chat. The reply therefore only confirms that the statement is available.
+> The customer is not verified yet, so the reply should only say the statement is available.

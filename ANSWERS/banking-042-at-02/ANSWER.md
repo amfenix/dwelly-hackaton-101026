@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Fenwick, a viewer whose identity is unverified, wrote over secure chat that she uploaded batch HV-042 but can't see which rows need attention, and asked for help accessing the report. The desk classified this as a question about a batch, routed it to the payment system, and sent that system a query about HV-042, then closed the case. The record shows no answer from the payment system, so nothing has been given to Nadia about the rows, and what happens next with her access request is left for a person.
+Nadia Fenwick, an unverified viewer writing over secure chat, said she uploaded batch HV-042 for Fenwick Workshop, couldn't see which rows need attention, and asked for help accessing the report. The desk classified this as a question about a batch and asked the payment system about HV-042, which returned nothing. The case closed with that request as its outcome. The record shows no row-level details found and nothing shared with her, and her identity and entitlement to the report are still unverified, so that remains for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

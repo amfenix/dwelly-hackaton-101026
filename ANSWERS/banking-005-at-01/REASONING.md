@@ -66,10 +66,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9653 tokens in, 561 out, 6.681 s, cost $0.0211; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 9750 tokens in, 580 out, 6.975 s, cost $0.0213; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted your request to the team that handles returns of misdirected payments. It covers the £286.40 transfer you sent to the wrong saved recipient for the pottery-studio bill. The case is now registered.
+> I've submitted the request to seek the return of the £286.40 transfer you sent to the wrong saved recipient. The desk accepted it and the case is now in the requested state.
 > 
-> I haven't confirmed the transfer details against your payment records, and I can't say whether the money will come back. Returning a payment usually depends on the recipient's bank and the recipient. I don't have an update on that yet.
+> I didn't look up the transfer in the payment records first. The desk wouldn't let me query them for a registration request, so the request went in on the amount you gave. I haven't confirmed the recipient or whether any money has come back.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat when her active monthly standing order is next due. The desk checked the standing-order record, then replied that it shows active with its next run on 2025-09-03, that this does not guarantee the future payment will execute, and that no change or additional instruction was made. She was not verified, but the request was a read-only question; the case is closed as replied and nothing is left for a person.
+Mara Ellison asked over secure chat when her active monthly household contribution standing order is next due. The desk checked the standing-order record, found it active with the next run on 2025-09-03, and replied with that date, noting that this does not guarantee the future payment will execute and that no change or instruction was made. Her identity was not verified, but the reply only gave a read-only date, and the case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-011-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
 
-  > The standing-order record shows active; next run 2025-09-03. This does not guarantee that the future payment will execute. No additional instruction or change was made.
+  > The standing-order record shows the instruction as active; next run 2025-09-03. This does not guarantee that the future payment will execute. No additional instruction or change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `recurring-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = recurring → true (next_system=recurring)
   - recurring_status present → true (recurring_status=ACTIVE)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

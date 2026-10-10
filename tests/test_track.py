@@ -243,10 +243,30 @@ def test_sign_in_goes_through_the_secure_process() -> None:
     assert "secure process" in case.journal.of("action")[-1].data["args"]["text"]
 
 
-def test_an_unverified_instruction_goes_to_a_person() -> None:
+def test_an_unverified_instruction_is_not_acted_on_but_sent_to_verify() -> None:
     block = ("External message", CUSTOMER, "Harrow & Vale Bank plc", "Block my card now.")
-    case = started(block, request_type="instruction")
-    assert case.state == "ESCALATED" and case.fields["reason"] == "UNVERIFIED"
+    case = started(block, request_type="instruction", subject="card")
+    assert case.state == "TRIAGED" and not case.send("submit_request").accepted  # nothing is done unverified
+    assert case.send("redirect_secure").accepted and case.state == "REDIRECTED"
+
+
+def test_a_request_of_no_known_type_is_put_to_a_team_never_answered() -> None:
+    dsar = ("Secure chat", CUSTOMER, "H&V service agent", "Send me all the personal data you hold on me.")
+    case = started(dsar, TO_JOURNAL, FROM_JOURNAL, request_type="other", subject="transfer")
+    assert not case.send("reply").accepted
+    assert case.send("submit_request").accepted and case.state == "REQUESTED"
+    assert case.journal.of("action")[-1].data["args"]["team"]  # a team is named even with no system
+
+
+def test_a_confirmation_nobody_asked_for_is_passed_on() -> None:
+    change = ("Verified call", CUSTOMER, "H&V service agent", "After the identity checks: change my address.")
+    opened = ("Internal note", "H&V service agent", "H&V profile change process", "I am opening the change process.")
+    confirm = ("Secure portal", CUSTOMER, "H&V profile change process", "I confirm I want the new address used.")
+    case = started(change, opened, confirm, request_type="change", subject="profile")
+    assert case.fields["confirmation"] == "unprompted" and case.state == "REQUESTED"
+    passed_on = ("Internal note", "H&V service agent", "H&V profile change process", "I have submitted the request.")
+    case = started(change, opened, confirm, passed_on, request_type="change", subject="profile")
+    assert case.fields["confirmation"] == "given" and case.state == "WAITING"  # not passed on a second time
 
 
 def test_a_change_asked_in_chat_is_sent_for_confirmation() -> None:

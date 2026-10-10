@@ -58,7 +58,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 55. Rule `triage` fired: state = READING → true (state=READING).
 56. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-57. Classifier (jev jev-latest) on `subject`: document, confidence 0.90 → document.
+57. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.
 58. `request_type`: not known → question (by `triage`).
 59. `subject`: not known → document (by `triage`).
 60. State `READING` → `TRIAGED` (by `triage`).
@@ -72,10 +72,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8960 tokens in, 589 out, 5.179 s, cost $0.0200; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9073 tokens in, 744 out, 7.289 s, cost $0.0216; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't sent a reply to Mara. The case is in a final WAITING state, and a person will pick it up.
+> I haven't taken any further action on this case. The documents system has already been asked, and the case is now in a final WAITING state. The desk refused a second documents request because no document is recorded as ready and the case isn't in a state that allows another ask.
 > 
-> The documents system has already been asked about HV-040 (`documents_asked` is true), but no result is in the case, so `document_ready` is unknown. My second request to the documents system was refused because the case is in WAITING rather than TRIAGED. I haven't made up a document or stated any payment stage beyond what the record shows.
+> The case record shows:
+> - **Payment:** HV-040, £74.00, status SENT.
+> - **Customer:** Mara Ellison, who is not yet verified.
+> - **Contractor's confirmation:** none recorded. The customer says they understand this is separate from the bank's record.
+> 
+> The case stays open and goes to a person. No document has been issued, and I haven't claimed anything beyond the SENT status in the record.

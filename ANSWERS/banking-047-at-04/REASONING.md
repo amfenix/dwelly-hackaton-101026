@@ -64,23 +64,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 60. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
 61. `next_system`: not known → business (by `asked-business`).
 62. The agent asked for `reply` {}.
-63. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_status present → true (business_status=OTHER).
+63. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = business → true (next_system=business); business_status present → true (business_status=OTHER); not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=OTHER, subject=limit).
 64. State `TRIAGED` → `REPLY_PENDING` (by `business-reply`).
 65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 66. Called `reply_customer` (attempt 1, key banking-047-at-04:do-reply:17).
-67. Action in the world: `reply` {"to": "Maeve Calder", "channel": "secure_chat", "text": "The business record shows other; maximum £20000.00. The answer does not establish a recognized business-record status. No additional approval or role change was made."}.
+67. Action in the world: `reply` {"to": "Maeve Calder", "channel": "secure_chat", "text": "The business record answered, but not with a clear status, so we cannot confirm one yet; maximum £20000.00. The answer does not establish a recognized business-record status. No additional approval or role change was made."}.
 68. `reply_customer` found {}.
 69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 70. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 7738 tokens in, 683 out, 6.214 s, cost $0.0168; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 7741 tokens in, 624 out, 5.748 s, cost $0.0160; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I used the `reply` tool, and the desk accepted it. The case is now marked replied and closed.
+> I sent the reply to Maeve with the current outgoing-payment limit on her company profile, which the business system shows as 20,000.00. The desk accepted it and the case is closed.
 > 
-> The business system returned a current outgoing-payment limit of 20,000.00 for the company profile. Its status came back as OTHER, which the desk treats as an answer to report. The desk writes the reply to Maeve, so I haven't seen its wording.
-> 
-> One thing is unresolved. The facts show Maeve as not verified, though her role is viewer and she asked through secure chat. I did not escalate, and the reply went ahead anyway.
+> Maeve's identity is still marked unverified in the case. I went ahead anyway because her role is viewer, which can see limits, and the reply only reports what the record shows. It doesn't change anything or approve any payment.

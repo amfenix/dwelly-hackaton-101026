@@ -71,8 +71,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4991 tokens in, 540 out, 4.579 s, cost $0.0116; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5023 tokens in, 584 out, 4.322 s, cost $0.0119; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed. Its state is CONFIRMATION_SENT and the outcome is "send_for_confirmation". Mira hasn't authorised the change, and the desk can't treat the chat message as her confirmation. She is also not verified, and she gave the instruction outside the portal. No further action is needed from me, so I'm making no changes and the standing order stays at £42.00 until she confirms it through the secure process.
+> The case is already closed. Its state is CONFIRMATION_SENT and the outcome is "send_for_confirmation", so I took no further action.
+> 
+> Mira's request to raise the Westmere Garden Cooperative standing order from £42.00 to £68.00 has not been applied. She is not verified, and she has not confirmed the change. She gave the instruction in chat rather than in the portal. The standing order stays at £42.00 until she confirms the change herself.

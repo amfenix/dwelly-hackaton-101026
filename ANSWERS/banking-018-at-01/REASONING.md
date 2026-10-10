@@ -49,7 +49,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.86 → instruction.
+48. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.92 → instruction.
 49. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.69 → standing_order.
 50. `request_type`: not known → instruction (by `triage`).
 51. `subject`: not known → standing_order (by `triage`).
@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6611 tokens in, 443 out, 4.264 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6648 tokens in, 444 out, 4.042 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system about the two £34.80 payments to Northmere Heating. I haven't removed anything, because it isn't yet established whether they are duplicates.
+> I checked the recurring payments system for the two £34.80 payments to Northmere Heating. The check ran, but it added no new facts to the case. So I still don't know whether the two payments are duplicates, and I haven't removed or cancelled anything.
 > 
-> The system accepted the request, but its answer isn't in the case yet. The case facts still list the payments as standing orders with no confirmation. I'll compare the two lines once the records arrive. Only then can I say whether one can be removed.
+> The case is closed at this step. Whether the two payments are duplicates still has to be established, and the customer hasn't confirmed which one to remove.

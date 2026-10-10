@@ -1,10 +1,10 @@
 # Case banking-027-at-02: Access Restored
 
-**Decision: redirect_secure**  (final state `REDIRECTED`)
+**Decision: ask_system**  (final state `ASKED`)
 
 ## Summary
 
-Mara Ellison, a verified caller, said she still couldn't sign in to her profile and asked for help restoring access. The desk classified this as an access request and redirected her to the secure process in her portal, telling her it checks her identity there, that the bank never asks for passwords, PINs or codes, and that nothing on her profile was changed. The case is closed as redirected, and nothing is left for a person on the desk, though restoring her access depends on her completing the secure process herself.
+Mara Ellison, a customer verified on the call, said she still can't sign in to her profile and asked for help restoring access. The desk classified this as an access request and put a question to the access system, which was accepted, and the case closed at that step. The record contains no answer from the access system, so nothing has been said to her about what is wrong with her profile and no restoration step has been taken; that part is still open.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -34,10 +34,7 @@ Case reference: id banking-027-at-02, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `redirect_secure` (to: Mara Ellison, channel: verified_call), by rule `do-redirect`
-
-  > Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.
-
+- `ask_system` (system: access, about: access), by rule `do-ask`
 
 ## Decision and why
 
@@ -45,11 +42,15 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REDIRECT_PENDING`: the agent asked for `redirect_secure`, rule `redirect-to-the-secure-process` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `access-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type = access → true (request_type=access)
-- `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
-  - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
+  - args.system = access → true (args.system=access)
+  - next_system = access → true (next_system=access)
+  - next_system absent → false (next_system=access)
+  - access_asked absent → true (access_asked=not known)
+  - request_type not in [register, change, authority] → true (request_type=access)
+- `ASK_PENDING` → `ASKED`: rule `do-ask`.
+  - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
@@ -78,4 +79,4 @@ No.
 
 ## Final result
 
-redirect_secure (REDIRECTED)
+ask_system (ASKED)

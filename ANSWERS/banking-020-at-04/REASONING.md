@@ -55,29 +55,29 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
-55. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.68 → standing_order.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.83 → question.
+55. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.59 → standing_order.
 56. `request_type`: not known → question (by `triage`).
 57. `subject`: not known → standing_order (by `triage`).
 58. State `READING` → `TRIAGED` (by `triage`).
 59. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
 60. `next_system`: not known → recurring (by `asked-recurring`).
 61. The agent asked for `reply` {}.
-62. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
+62. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
 63. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
 64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 65. Called `reply_customer` (attempt 1, key banking-020-at-04:do-reply:17).
-66. Action in the world: `reply` {"to": "Elena Wren", "channel": "secure_chat", "text": "The standing-order record shows active. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
+66. Action in the world: `reply` {"to": "Elena Wren", "channel": "secure_chat", "text": "The standing-order record shows the instruction as active. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
 67. `reply_customer` found {}.
 68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 69. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7235 tokens in, 532 out, 4.969 s, cost $0.0160; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7216 tokens in, 532 out, 5.037 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Elena, based on the recurring-payments record, which shows an active standing order. The desk accepted it and the case is closed.
+> I sent the reply, and the desk accepted it and closed the case. The recurring-payments check shows the standing order on Elena Wren's account is still ACTIVE.
 > 
-> The case facts still list her as not verified, even though she says she completed the account-holder checks. The desk didn't refuse the reply, so I sent it.
+> I didn't write the reply text myself. The desk writes it from what the records show. The case still lists the customer as not verified, even though she says she completed the account-holder checks in secure chat. I replied anyway because her request was a question, not an instruction to change anything.

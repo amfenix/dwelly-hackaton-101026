@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren, writing through secure chat, asked which regular payments are still active before she makes any closure plans. The desk classed this as a question about a standing order and asked the recurring payments system about her standing orders, and that request went through; the record does not show any reply from that system. Her verified status is recorded as false, and no reply to Elena is recorded, so that is left for a person.
+Elena Wren, writing over secure chat, asked which regular payments are still active before she makes any plans to close her account. The desk queried the recurring payments system about her standing orders and closed the case at that step. The system's answer is not in the record, so she has not yet been told which payments are active, and the desk still lists her as unverified despite her saying she completed the account-holder checks.
 
 _Written by a model from the record below; the sections below are the record._
 

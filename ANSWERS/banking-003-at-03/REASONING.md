@@ -68,12 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8785 tokens in, 578 out, 5.423 s, cost $0.0195; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8770 tokens in, 619 out, 6.504 s, cost $0.0198; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't check the transfer's stage, so the customer has no answer yet. The payment system refused my request because the case is in a WAITING state, and the payment check only runs once the case is TRIAGED.
+> I haven't been able to check your saved transfer instruction yet, so I can't tell you its stage or whether you need to authorise it.
 > 
-> The case status shows this as final with the outcome "wait". Nothing else is available to me now, so I'm stopping here. The case stays open and will be handed to a person.
+> The payment system refused my lookup. The case is in a waiting state, and the lookup is only allowed once the case has been triaged. Your identity is also not yet verified on this chat. I can't confirm anything about the instruction until the records have been read.
 > 
-> Elise Rowan is also not verified, so even with a stage lookup the reply would have needed to stay within what the bank can share with an unverified requester.
+> The case stays open and goes to a person on the desk. Nothing has been sent, changed or authorised on your behalf.

@@ -70,8 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4807 tokens in, 419 out, 4.164 s, cost $0.0100; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7085 tokens in, 492 out, 5.284 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system to look up your saved transfer instruction and its current stage. I don't have its answer yet, so I can't say whether the instruction was submitted or whether you need to authorise it. The reply will go to you once the payment system's answer is in the case.
+> I asked the payment system about the transfer. The case is now closed at this step, and I don't have the transfer's stage or whether it needs your authorisation yet. Once the payment system's answer is in the case, a reply can be written to you.
+> 
+> You are also not verified on this chat, so the reply may be limited until you are.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, on a verified call, asked H&V to revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The desk passed the instruction to the business administration process, which returned a status of role_revoked, and replied to her on the call reporting that status. The reply also said that no other role or permission change was established or made, and the case is closed; the record shows nothing left for a person, and the review of earlier operations was not part of this step.
+Mara Ellery, verified by call, asked the desk to have H&V revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The business record showed the role as revoked, so the desk replied to her on the call saying that and noting that no other role or permission change was established or made. The case is closed with nothing left for a person, and the review of earlier operations was not part of this reply.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-046-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellery, channel: verified_call), by rule `do-reply`
 
-  > The business record shows role_revoked. This does not establish any other role or permission change. No additional approval or role change was made.
+  > The business record shows the role as revoked. This does not establish any other role or permission change. No additional approval or role change was made.
 
 
 ## Decision and why
@@ -55,8 +55,10 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `business-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=instruction)
   - next_system = business → true (next_system=business)
   - business_status present → true (business_status=ROLE_REVOKED)
+  - not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=ROLE_REVOKED, subject=role)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 

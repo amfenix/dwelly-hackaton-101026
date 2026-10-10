@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked the desk to investigate a £38.40 card purchase at Fern & Finch Books on 14 July 2025 that they don't recognise, and to advise how to protect their card. The desk registered a request with the card team about the card payment, and the case closed as requested; a separate attempt to query the card system was refused. What is left is the card team's investigation, which hasn't reported, so nothing is decided about who made the purchase. No advice on protecting the card has been given and no change has been made to the card.
+The customer asked the bank to investigate a posted card purchase of £38.40 at Fern & Finch Books on 14 July 2025, which they did not recognise, and to tell them how to protect their card. The desk registered a request with the card team about the card payment, and the case closed as requested. A separate attempt to ask the card system a question was refused. The record does not show the card-protection advice being handled by the desk, and the agent's reply says that part has not yet been answered, so that is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

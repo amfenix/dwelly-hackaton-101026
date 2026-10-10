@@ -65,10 +65,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6514 tokens in, 431 out, 4.356 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8710 tokens in, 474 out, 5.173 s, cost $0.0182; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I queried the payment system for the transfer to Mallow Pottery Works. The query was accepted, but the case record doesn't show what the system returned. The purpose text on your transfer instruction isn't in the case yet, so I can't tell you what it says.
+> The answer sits in the payment system, so I'll query that.
+> I queried the payment system, and the case is now closed with the outcome "ask_system". The query added no new facts to the case. That means I don't have the purpose text your transfer recorded, and I can't tell you what it said.
 > 
-> The case is marked final after this step. Nothing has been sent to Mallow Pottery Works, and I haven't given you any purpose text.
+> No reply has gone to you or to Mallow Pottery Works. For now, you can check the transfer's details in your online banking transaction history.

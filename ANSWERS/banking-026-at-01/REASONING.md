@@ -59,7 +59,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 56. `next_system`: not known → card (by `route-card`).
 57. The agent asked for `redirect_secure` {}.
-58. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
+58. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); request_type = instruction → false (request_type=access); not verified → true (verified=False).
 59. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
 60. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
 61. Called `redirect_secure` (attempt 1, key banking-026-at-01:do-redirect:17).
@@ -70,9 +70,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4647 tokens in, 347 out, 2.696 s, cost $0.0090; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4719 tokens in, 388 out, 3.092 s, cost $0.0094; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The customer needs the bank's secure process for a forgotten PIN. The bank never handles PINs, so I'm redirecting her to that process.
-> I've sent Maren to the bank's secure process for a forgotten PIN, and the case is closed. She didn't share her PIN in chat, and the bank doesn't handle PINs, so nothing more is needed from us here.
+> I've pointed Maren to the bank's secure process for a forgotten card PIN. The desk accepted the redirect and closed the case. Nothing else is needed from the desk, and no PIN was requested or handled in the chat.

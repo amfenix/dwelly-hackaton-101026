@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira Ellison, writing over secure chat and not verified, said she meant to make only one transfer and asked whether these were separate instructions and whether the pending one had been stopped or returned. The desk replied that the payment record shows 2 separate payment instructions with no single combined outcome, that this does not establish execution or the recipient's outcome, and that no new transfer was made. The desk did not stop or return the pending instruction, and the reply does not say whether either one was completed or is still pending, so that question is still open for a person.
+Mira Ellison, writing over secure chat as an unverified requester, asked whether her two transfers were separate instructions and whether the pending one had been stopped or returned. The desk checked the payment record, found two payment instructions, and replied that there are two with no single combined outcome, that this does not establish execution or the recipient's outcome, and that no new transfer was made. The desk did not cancel or return either instruction, and the case closed as replied with nothing further queued for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=OTHER)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

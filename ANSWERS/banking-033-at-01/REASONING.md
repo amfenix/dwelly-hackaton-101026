@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.78 → question.
 53. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → document (by `triage`).
@@ -69,15 +69,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 65. `ask_system` found {}.
 66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 67. The case closed in `ASKED`: **ask_system**.
+68. The agent asked for `reply` {}.
+69. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=document); documents-reply: state = TRIAGED is false (state=ASKED); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=documents); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-4 calls, 6777 tokens in, 450 out, 4.746 s, cost $0.0142; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I asked the documents system about the export. The case now shows as closed with the outcome "ask_system".
-> 
-> The documents system's answer isn't in the case facts. The only confirmation field reads "none". So I can't yet tell Mara whether the CSV for 6–9 May 2025 has been created or when it will appear in her secure portal. I haven't made any claim about that to her.
-> 
-> No further step is available to me.
+5 calls, 9579 tokens in, 332 out, 5.255 s, cost $0.0185; models: claude-sonnet-5-5, jev-1.13.0.

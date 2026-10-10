@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a customer verified on a call, asked for help restoring access to her profile because she can't sign in. The desk decided to wait: a service agent had already pointed her to the recovery option in H&V's secure portal, so there is nothing to do until she completes the checks there. The agent's attempt to send another secure-process redirect was refused because the case was already in the waiting state, so no new redirect went out, and nothing is left for a person unless she uses the portal and comes back.
+Mara Ellison, verified on a call, said she still can't sign in to her profile and asked for help restoring access. The desk found that an H&V service agent had already pointed her to the recovery option in the secure portal, so it decided to wait and closed the case in WAITING without taking any action. The agent's later attempts to query the access system and to redirect her to the secure process were both refused because the case was no longer in the triaged state. What remains is for Mara to complete the recovery checks in the secure portal, and nothing more can be done from the desk until she does.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -80,7 +80,8 @@ No.
 
 Requests the policy refused:
 
-- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING)
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access)
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=access); not verified is false (verified=True)
 
 ## Final result
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk classified this as a question about a card, checked the card journal, and closed the case in a final WAITING state because the card system had been asked but its answer was not yet in. The agent's later request to ask the card system again was refused because the case was no longer in the triaged state, so no dispatch status was obtained. Mara is not verified and the case holds no confirmation of dispatch, so what remains is for a person to review it and for the card system's answer to arrive.
+Mara Ellison, a customer on secure chat whose identity is not verified, asked the desk to check whether dispatch of her replacement card had been registered. The desk classified this as a card question and marked the card system as asked, but no answer from it is in the record. The case closed in a waiting state, and a second attempt to ask the card system was refused because the case was already waiting. No dispatch status was found, so nothing can be said about whether the card has been sent; a person is left to pick the case up.
 
 _Written by a model from the record below; the sections below are the record._
 

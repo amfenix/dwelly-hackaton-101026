@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat why a £3.20 fee appeared against a withdrawal, and asked the desk to escalate and check which tariff entry applied. The tariff review found that the fee matches the entry for a foreign-currency cash withdrawal on its processing date, so the desk replied to her with that result and did not escalate. The reply states that no refund or account change was authorised or made. Her identity was still unverified, and the record shows nothing left open for a person.
+Mara Ellery, a customer on secure chat whose identity was not verified, asked the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal. The desk ran the tariff check, which found the fee matches the entry for a foreign-currency cash withdrawal on its processing date. It then replied to her on secure chat saying the fee matches the tariff in force, and that no refund, fee change or account change was made or authorised. The case closed as replied, and the record shows no escalation and nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-034-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellery, channel: secure_chat), by rule `do-reply`
 
-  > The tariff review shows matches. This confirms the recorded fee matches the applicable tariff; it does not authorise a refund or account change. No fee or account change was made.
+  > The tariff review shows that the fee matches the tariff in force for the transaction. This confirms the recorded fee matches the applicable tariff; it does not authorise a refund or account change. No fee or account change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `tariff-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = tariff → true (next_system=tariff)
   - tariff_status present → true (tariff_status=MATCHES)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

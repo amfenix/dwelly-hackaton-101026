@@ -73,8 +73,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4854 tokens in, 464 out, 4.079 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4940 tokens in, 592 out, 4.353 s, cost $0.0118; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted your instruction to cancel the active Northmere Fitness Direct Debit mandate, and the bank accepted it. This is an instruction to your bank only, so your agreement with Northmere Fitness is unchanged. If you want to end that agreement, you'll need to tell them yourself.
+> I've submitted the instruction to cancel your Northmere Fitness Direct Debit mandate, and the desk accepted it. The case is now marked as requested.
+> 
+> Mara Ellison passed the identification checks on the call. The portal shows the Northmere Fitness mandate as active, so it was clear which mandate to cancel.
+> 
+> This cancels only the mandate at the bank, so Northmere Fitness can't use it for future collections. Your agreement with Northmere Fitness is not cancelled, and you would need to end that with them directly.

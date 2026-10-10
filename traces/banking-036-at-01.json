@@ -1,7 +1,7 @@
 {
   "id": "banking-036-at-01",
-  "outcome": "send_for_confirmation",
-  "state": "CONFIRMATION_SENT",
+  "outcome": "redirect_secure",
+  "state": "REDIRECTED",
   "final": true,
   "fields": {
     "requester": "Mara Ellison",
@@ -51,10 +51,11 @@
   },
   "actions": [
     {
-      "type": "send_for_confirmation",
+      "type": "redirect_secure",
       "args": {
-        "change": "profile",
-        "to": "Mara Ellison"
+        "to": "Mara Ellison",
+        "channel": "external_message",
+        "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."
       }
     }
   ],
@@ -87,7 +88,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "Mara Ellison, an unverified customer, emailed asking the bank to update her correspondence address after a move within the UK, noting that the email alone doesn't change her profile. The desk did not change the profile; it sent her a request to confirm the change, since changes must be confirmed by the customer in the secure portal rather than by email. The case is closed at \"confirmation sent,\" and the address stays as it is until she confirms.",
+  "summary": "Mara Ellison emailed to say she had moved within the UK and asked the bank to update her correspondence address. Because the request came by email from an unverified sender, the desk did not change her profile and instead replied telling her to use the secure process in her portal, where her identity is checked. The case is closed as redirected, and nothing is left for a person unless she makes the change herself through the portal.",
   "journal": [
     {
       "seq": 1,
@@ -582,14 +583,14 @@
     },
     {
       "seq": 45,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "note",
       "text": "event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: confirmation='none', instructed_outside_portal=True]",
       "by": "read-confirmation"
     },
     {
       "seq": 46,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "returned",
       "function": "check_confirmation",
       "values": {
@@ -599,7 +600,7 @@
     },
     {
       "seq": 47,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "set",
       "field": "confirmation",
       "old": null,
@@ -608,7 +609,7 @@
     },
     {
       "seq": 48,
-      "at": 0.001,
+      "at": 0.0,
       "kind": "set",
       "field": "instructed_outside_portal",
       "old": null,
@@ -635,7 +636,7 @@
     },
     {
       "seq": 50,
-      "at": 0.239,
+      "at": 0.25,
       "kind": "choice",
       "field": "request_type",
       "raw": "change",
@@ -647,7 +648,7 @@
     },
     {
       "seq": 51,
-      "at": 0.239,
+      "at": 0.25,
       "kind": "choice",
       "field": "subject",
       "raw": "profile",
@@ -659,7 +660,7 @@
     },
     {
       "seq": 52,
-      "at": 0.239,
+      "at": 0.25,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -668,7 +669,7 @@
     },
     {
       "seq": 53,
-      "at": 0.239,
+      "at": 0.25,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -677,7 +678,7 @@
     },
     {
       "seq": 54,
-      "at": 0.239,
+      "at": 0.25,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
@@ -685,7 +686,7 @@
     },
     {
       "seq": 55,
-      "at": 0.239,
+      "at": 0.25,
       "kind": "trigger",
       "name": "route-access",
       "on": null,
@@ -717,7 +718,7 @@
     },
     {
       "seq": 56,
-      "at": 0.239,
+      "at": 0.25,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -726,11 +727,11 @@
     },
     {
       "seq": 57,
-      "at": 0.239,
+      "at": 0.25,
       "kind": "trigger",
-      "name": "change-needs-confirmation",
+      "name": "change-by-email",
       "on": null,
-      "when": "state = TRIAGED and request_type = change and confirmation = none and registration_asked absent",
+      "when": "state = TRIAGED and request_type = change and channel = external_message and role != third_party",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -747,43 +748,43 @@
           }
         },
         {
-          "test": "confirmation = none",
+          "test": "channel = external_message",
           "result": true,
           "values": {
-            "confirmation": "none"
+            "channel": "external_message"
           }
         },
         {
-          "test": "registration_asked absent",
+          "test": "role != third_party",
           "result": true,
           "values": {
-            "registration_asked": null
+            "role": "customer"
           }
         }
       ],
-      "note": "A change is confirmed by the customer in the secure portal, not in chat or by email."
+      "note": "An email does not change anything; the customer is pointed to the secure process."
     },
     {
       "seq": 58,
-      "at": 0.239,
+      "at": 0.25,
       "kind": "state",
       "frm": "TRIAGED",
-      "to": "CONFIRM_PENDING",
-      "by": "change-needs-confirmation"
+      "to": "REDIRECT_PENDING",
+      "by": "change-by-email"
     },
     {
       "seq": 59,
-      "at": 0.24,
+      "at": 0.25,
       "kind": "trigger",
-      "name": "do-confirm",
+      "name": "do-redirect",
       "on": null,
-      "when": "state = CONFIRM_PENDING",
+      "when": "state = REDIRECT_PENDING",
       "why": [
         {
-          "test": "state = CONFIRM_PENDING",
+          "test": "state = REDIRECT_PENDING",
           "result": true,
           "values": {
-            "state": "CONFIRM_PENDING"
+            "state": "REDIRECT_PENDING"
           }
         }
       ],
@@ -791,46 +792,47 @@
     },
     {
       "seq": 60,
-      "at": 0.24,
+      "at": 0.25,
       "kind": "call",
-      "function": "send_for_confirmation",
+      "function": "redirect_secure",
       "attempt": 1,
-      "key": "banking-036-at-01:do-confirm:17",
+      "key": "banking-036-at-01:do-redirect:17",
       "args": {}
     },
     {
       "seq": 61,
-      "at": 0.24,
+      "at": 0.25,
       "kind": "action",
-      "type": "send_for_confirmation",
+      "type": "redirect_secure",
       "args": {
-        "change": "profile",
-        "to": "Mara Ellison"
+        "to": "Mara Ellison",
+        "channel": "external_message",
+        "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."
       },
-      "by": "do-confirm",
-      "key": "banking-036-at-01:do-confirm:17"
+      "by": "do-redirect",
+      "key": "banking-036-at-01:do-redirect:17"
     },
     {
       "seq": 62,
-      "at": 0.24,
+      "at": 0.25,
       "kind": "returned",
-      "function": "send_for_confirmation",
+      "function": "redirect_secure",
       "values": {}
     },
     {
       "seq": 63,
-      "at": 0.24,
+      "at": 0.25,
       "kind": "state",
-      "frm": "CONFIRM_PENDING",
-      "to": "CONFIRMATION_SENT",
-      "by": "do-confirm"
+      "frm": "REDIRECT_PENDING",
+      "to": "REDIRECTED",
+      "by": "do-redirect"
     },
     {
       "seq": 64,
-      "at": 0.24,
+      "at": 0.25,
       "kind": "final",
-      "state": "CONFIRMATION_SENT",
-      "outcome": "send_for_confirmation"
+      "state": "REDIRECTED",
+      "outcome": "redirect_secure"
     }
   ],
   "calls": [
@@ -851,6 +853,7 @@
               "instruction": "an instruction to act now (block a card, cancel a payment or a mandate, revoke a role)",
               "access": "signing in, a PIN, a password, recovery of access",
               "authority": "something only another person may approve or give (a second signatory, an administrator, a new user's access)",
+              "other": "none of these (a bereavement, a complaint, a request for the personal data the bank holds, closing an account, credit)",
               "unknown": "The text does not say, or says too little to tell."
             }
           },
@@ -882,8 +885,8 @@
       "response": {
         "model": "jev-1.13.0",
         "usage": {
-          "input_tokens": 894,
-          "output_tokens": 199
+          "input_tokens": 933,
+          "output_tokens": 206
         },
         "answers": {
           "request_type": {
@@ -897,6 +900,7 @@
               "instruction": 0.0,
               "access": 0.0,
               "authority": 0.0,
+              "other": 0.0,
               "unknown": 0.0
             }
           },
@@ -925,13 +929,13 @@
           }
         }
       },
-      "seconds": 0.23866909998469055,
-      "input_tokens": 894,
-      "output_tokens": 199,
+      "seconds": 0.24948310002218932,
+      "input_tokens": 933,
+      "output_tokens": 206,
       "cost_usd": null,
       "error": null,
       "replayed": false,
-      "digest": "f6bde06fff24426d8d9925db73416e93f37127250f91b8ee5bd39414963b4214"
+      "digest": "f83e779c1db4b524b852b0c356997c6283e2b19cd559345520937b59f25c04d8"
     },
     {
       "kind": "agent",
@@ -1074,16 +1078,16 @@
         ]
       },
       "response": {
-        "id": "msg_011Cftb1Sc9zVv9o31aVFk7a",
+        "id": "msg_011CftecfB2NXkpsiKBWCzB6",
         "container": null,
         "content": [
           {
-            "signature": "CAQS0wYKEAgSGAI4AUIIdGhpbmtpbmcSDAesEJoV+dUAvfOeXxoMHhMs1ZSeW76rtcDRIjCGt1gBhPK8RwZIbefudrJ6fQ1hZGgGRKpaFj5m052Aym6NAZfXWFgLKIPS3ia8mzkq8AVw9ud4vdoiOwP5Sy8Et02AQj3QO38UESP+v1kjn2ShGIWXVsoyJSVWn0/Ubqiejk80ZwifI2XS3LepGr+0PFwzyrwKCI9V2tti58oRLWwY/y9/ASwPH4Bxy31aWqOGzgH2MJSlAwxMLRKsMlCwTBR6BOGZluLPainjwJJnhlm99KW4+Ug4WsVrargI599Ofvd+any54NQZMfZyYndaZzsjV84f5pDg/jIB26b0jr4cQpPZT4c1V49jhHQWgHfag0/6reAXsXVf7CcBCi8ihgy0xEUQce0ih7eIpEsDzNn2jewYIJzlWhQ+e3b9wVjsRpNcr/InPyBTpNq1hJttX1FyJMbdLY5WR2Atc4Rwqt9NSOPIZgYrE1NkGI2c8A+Dy6dege0jogeUKC0/YwboB/oSZchVtFe9uTMIeK4GkA6txut7b53ItoB7WPXgXWCeNn4MseijmT7hSpKSp29uLjz8ciSrxhJEvHDerKWWbkc9BYsVaSIoiCXQ8SO192dy9Aj89kjPf/HH1SWv3uAt0Jt/8un9BwtoLxhOrlOutpzPpohW24EDgfA2WH54bOUyPpPIk+awhUtk90ApJ4ICc0eobnJv2//rok9vibGQBHPlJ+x0QQCG1JjeD0m3FEsEJFiT1sqbuLUmSrDJz7ypQ6tub6Qmjjd71AFxVFZ+eqnwVUQiS4/aYWhgw7MvW3c3JYKEpNlyYULNe6TDsYx37kECa40/v+8Uxox3VomJW1Rc/YxgByjcRDgU76uN9KmJgEg1/rsm+d2TUn+2yRY2jkAvWImJZpjIrlBOR0zkDHB9PpZCOfP6/r+hLGmy1bdOGPoLTmReYoNc4/DO3XGc2dpGxIMGb40FE4bUM+xbjA4I7DoeG4136RVg4ztbAIFMbBSS1CBvRxZF5x8GGcIbw9nVtdSKa5RjYy7/Q38b8n8QFU7XtFSg6+ieXRinE4wQAxaHx1eOoHG84iZlIp08lRoheP2+TTOautlVrY1PKYWeyBgB",
+            "signature": "CAQSxggKEAgSGAI4AUIIdGhpbmtpbmcSDNYTkM1dkFEkmezj2xoM1LRSoCjiRflSv4PRIjBs7XBl9+/NSGrypzUVdn69f49HMorloQ+MYhsiY96IAL5slVP0rsnnJ7paD4XcZtMq4wcTNNUOHq74f8jEdd4YWDgx9cdE1qJwCFty/VFR+eXtdWAJqinnLG2Xc4c9WPZbinJEhTgpaDOoMqiWnIfG1TC2E2sYoXzG1z3zR1Pp+9ftO6S4ztO1kUZKR15UN84mzOp4IOsSAWKqn3ntTYK8TZ/eY4Wol6OAGHFXa9emFd16oNSX1pbgseySIgB8BgoUxcvhAOujX0J/DNSSTMCkTY2uWoHwoPsc4LzcDdnj9aH9QRZX4aEK6T0qotFD5osPrecAqDYfWeMmwrKngZxWGLQ2jRr/Iq+RGxTqARa5y/B5zUdcNSq6qR44Zle6l3LA3kBO9w7Iqq8BpW23k/JhNLxXKTqv+HPzM4BCJjuyRpbX4ytbL7T9Q59NMvPIWSUPK76G8TdQoIy3rY2VrGaFYbwTc/ZJPixLqktPJUWYjg/Ghpx31Z12ae6akeAPJ7eAItL9j2n2s1Udo8YTnGlPfBfPl8J0xsnjgRE5nUA8SBr5xubklTf5gobxBMqyWbpa3YKIAgmE3/lwNxNzxEyTUe1NKD48p3004qBTMuDYUpH+C/SDMQWf9np0+SRyluw7anxZFq6nB4q5i49cIjTNEVXaZQ3CX0v8FtYnRVHGunR/A3HngBRS/gFsM9yELkpvwpWYxzheURiJmM2ukBdw6IDJVpYLNYYLG1h1DP263TjciKGnmA1Q9vfNaeZ7437J3CbOLQnarXkzSRB0Ztmn7RokNbOAzBYBxZ8hIlgghclV/TwlfeF/RJQPqJwjRTnjgHu5b3Y10pU07ko3vzUqkqZ/QTWqnKYk7Y1JzgMjNWoF0UUbjNyUMlsDCdtUJTuKzUgtLddNSs6W77D4m8v0XlgjHM2nenWGx2ZakNj9obtD7pBVQmIkguZopZd1olSZogcIyrpdtnZdCWRkthu048BgOn6JqWpLK7+f6B5rlF9Wqq5kTPmL5BBUVXZ2PkuqKO0L0qjV2ozFI2XMsCh41Brkg4cOLYxsby2l1IH/TEpbUQp0WS4EsWC0dzblkdceKk7TVFggef6J3cAq8XDo5cdb/BmESByz3zK+UW0AJloDw5WQpQclah7nR5jWwsGqjXwnEr+D1MG7M1ttwEkkhlJryXjcuYXM5uGpXYtB7Qiggfx1Nhe5d7frxqWYeraTfdf06m5Lo0PyCbYhQdH9Iy0+i+0DRtl3Hm8WWrEQ2WpM8pLKxTC4CDRq8k7cUG4Ikgi7p6UbSpbo1d8LT264TzR8oogDhFM72jMkf3JTPRzC7IDytk8CoynoairtOEls+X7y2CaN2g1pJTjfI8oNPSCTBvS3xjAsNmEWRh52EI9BHfU7mBgB",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_013STbV6LUD6Y1UfExaGmP69",
+            "id": "toolu_01TtH3AqjqwUc9k1rQRyhM1R",
             "caller": {
               "type": "direct"
             },
@@ -1109,18 +1113,18 @@
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
           "input_tokens": 1774,
-          "output_tokens": 120,
+          "output_tokens": 197,
           "output_tokens_details": {
-            "thinking_tokens": 93
+            "thinking_tokens": 170
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.548388099996373,
+      "seconds": 2.1524820999475196,
       "input_tokens": 1774,
-      "output_tokens": 120,
-      "cost_usd": 0.004748,
+      "output_tokens": 197,
+      "cost_usd": 0.005518,
       "error": null,
       "replayed": false,
       "digest": "6dc224834271db10cac2b7994068f9b8dd3f4533b5e872eb64e55e6e4d761b97"
@@ -1267,12 +1271,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS0wYKEAgSGAI4AUIIdGhpbmtpbmcSDAesEJoV+dUAvfOeXxoMHhMs1ZSeW76rtcDRIjCGt1gBhPK8RwZIbefudrJ6fQ1hZGgGRKpaFj5m052Aym6NAZfXWFgLKIPS3ia8mzkq8AVw9ud4vdoiOwP5Sy8Et02AQj3QO38UESP+v1kjn2ShGIWXVsoyJSVWn0/Ubqiejk80ZwifI2XS3LepGr+0PFwzyrwKCI9V2tti58oRLWwY/y9/ASwPH4Bxy31aWqOGzgH2MJSlAwxMLRKsMlCwTBR6BOGZluLPainjwJJnhlm99KW4+Ug4WsVrargI599Ofvd+any54NQZMfZyYndaZzsjV84f5pDg/jIB26b0jr4cQpPZT4c1V49jhHQWgHfag0/6reAXsXVf7CcBCi8ihgy0xEUQce0ih7eIpEsDzNn2jewYIJzlWhQ+e3b9wVjsRpNcr/InPyBTpNq1hJttX1FyJMbdLY5WR2Atc4Rwqt9NSOPIZgYrE1NkGI2c8A+Dy6dege0jogeUKC0/YwboB/oSZchVtFe9uTMIeK4GkA6txut7b53ItoB7WPXgXWCeNn4MseijmT7hSpKSp29uLjz8ciSrxhJEvHDerKWWbkc9BYsVaSIoiCXQ8SO192dy9Aj89kjPf/HH1SWv3uAt0Jt/8un9BwtoLxhOrlOutpzPpohW24EDgfA2WH54bOUyPpPIk+awhUtk90ApJ4ICc0eobnJv2//rok9vibGQBHPlJ+x0QQCG1JjeD0m3FEsEJFiT1sqbuLUmSrDJz7ypQ6tub6Qmjjd71AFxVFZ+eqnwVUQiS4/aYWhgw7MvW3c3JYKEpNlyYULNe6TDsYx37kECa40/v+8Uxox3VomJW1Rc/YxgByjcRDgU76uN9KmJgEg1/rsm+d2TUn+2yRY2jkAvWImJZpjIrlBOR0zkDHB9PpZCOfP6/r+hLGmy1bdOGPoLTmReYoNc4/DO3XGc2dpGxIMGb40FE4bUM+xbjA4I7DoeG4136RVg4ztbAIFMbBSS1CBvRxZF5x8GGcIbw9nVtdSKa5RjYy7/Q38b8n8QFU7XtFSg6+ieXRinE4wQAxaHx1eOoHG84iZlIp08lRoheP2+TTOautlVrY1PKYWeyBgB",
+                "signature": "CAQSxggKEAgSGAI4AUIIdGhpbmtpbmcSDNYTkM1dkFEkmezj2xoM1LRSoCjiRflSv4PRIjBs7XBl9+/NSGrypzUVdn69f49HMorloQ+MYhsiY96IAL5slVP0rsnnJ7paD4XcZtMq4wcTNNUOHq74f8jEdd4YWDgx9cdE1qJwCFty/VFR+eXtdWAJqinnLG2Xc4c9WPZbinJEhTgpaDOoMqiWnIfG1TC2E2sYoXzG1z3zR1Pp+9ftO6S4ztO1kUZKR15UN84mzOp4IOsSAWKqn3ntTYK8TZ/eY4Wol6OAGHFXa9emFd16oNSX1pbgseySIgB8BgoUxcvhAOujX0J/DNSSTMCkTY2uWoHwoPsc4LzcDdnj9aH9QRZX4aEK6T0qotFD5osPrecAqDYfWeMmwrKngZxWGLQ2jRr/Iq+RGxTqARa5y/B5zUdcNSq6qR44Zle6l3LA3kBO9w7Iqq8BpW23k/JhNLxXKTqv+HPzM4BCJjuyRpbX4ytbL7T9Q59NMvPIWSUPK76G8TdQoIy3rY2VrGaFYbwTc/ZJPixLqktPJUWYjg/Ghpx31Z12ae6akeAPJ7eAItL9j2n2s1Udo8YTnGlPfBfPl8J0xsnjgRE5nUA8SBr5xubklTf5gobxBMqyWbpa3YKIAgmE3/lwNxNzxEyTUe1NKD48p3004qBTMuDYUpH+C/SDMQWf9np0+SRyluw7anxZFq6nB4q5i49cIjTNEVXaZQ3CX0v8FtYnRVHGunR/A3HngBRS/gFsM9yELkpvwpWYxzheURiJmM2ukBdw6IDJVpYLNYYLG1h1DP263TjciKGnmA1Q9vfNaeZ7437J3CbOLQnarXkzSRB0Ztmn7RokNbOAzBYBxZ8hIlgghclV/TwlfeF/RJQPqJwjRTnjgHu5b3Y10pU07ko3vzUqkqZ/QTWqnKYk7Y1JzgMjNWoF0UUbjNyUMlsDCdtUJTuKzUgtLddNSs6W77D4m8v0XlgjHM2nenWGx2ZakNj9obtD7pBVQmIkguZopZd1olSZogcIyrpdtnZdCWRkthu048BgOn6JqWpLK7+f6B5rlF9Wqq5kTPmL5BBUVXZ2PkuqKO0L0qjV2ozFI2XMsCh41Brkg4cOLYxsby2l1IH/TEpbUQp0WS4EsWC0dzblkdceKk7TVFggef6J3cAq8XDo5cdb/BmESByz3zK+UW0AJloDw5WQpQclah7nR5jWwsGqjXwnEr+D1MG7M1ttwEkkhlJryXjcuYXM5uGpXYtB7Qiggfx1Nhe5d7frxqWYeraTfdf06m5Lo0PyCbYhQdH9Iy0+i+0DRtl3Hm8WWrEQ2WpM8pLKxTC4CDRq8k7cUG4Ikgi7p6UbSpbo1d8LT264TzR8oogDhFM72jMkf3JTPRzC7IDytk8CoynoairtOEls+X7y2CaN2g1pJTjfI8oNPSCTBvS3xjAsNmEWRh52EI9BHfU7mBgB",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_013STbV6LUD6Y1UfExaGmP69",
+                "id": "toolu_01TtH3AqjqwUc9k1rQRyhM1R",
                 "caller": {
                   "type": "direct"
                 },
@@ -1288,25 +1292,20 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_013STbV6LUD6Y1UfExaGmP69",
-                "content": "{\"state\": \"CONFIRMATION_SENT\", \"final\": true, \"outcome\": \"send_for_confirmation\", \"facts\": {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"external_message\", \"verified\": false, \"subject\": \"profile\", \"confirmation\": \"none\", \"instructed_outside_portal\": true, \"request_type\": \"change\", \"next_system\": \"access\"}, \"refused\": []}"
+                "tool_use_id": "toolu_01TtH3AqjqwUc9k1rQRyhM1R",
+                "content": "{\"state\": \"REDIRECTED\", \"final\": true, \"outcome\": \"redirect_secure\", \"facts\": {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"external_message\", \"verified\": false, \"subject\": \"profile\", \"confirmation\": \"none\", \"instructed_outside_portal\": true, \"request_type\": \"change\", \"next_system\": \"access\"}, \"refused\": []}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011Cftb1aMEhmGDLfEn8iyN3",
+        "id": "msg_011CftecpJx3DzaVevDNCDGU",
         "container": null,
         "content": [
           {
-            "signature": "CAQSiwYKEAgSGAI4AUIIdGhpbmtpbmcSDP5GsdZLN+GDKmqfTRoMRTm2HZpvLzRwjJN+IjDtlpsdrtl6TeUgG24YteFQR2KcuqhaRf268OLinbvEbOw75jBMMdfJiY96auBIihsqqAUj5dqArD55tYQ7AuvOxRVVBCcMw4mgB++BGtrtcMhrqqqe32m25HikRzvayNkKyd2x+LOy+FefuROoeFCzC1C/PKbFCU/NOezuZUSd/grL8ogbAiVOC41aVJXd/UvKle9rMGTy4LS7ezq0y3i2WzzGTVSGXNLanYu//2GYiKqSTPx9p7YM2DniuCR3BjAXBOeart3OqaKFW/Zzexi7TFpHeY2d6aETfE1jJOn3NW+YfxcsOEuINcW2aHt9vwT678xS5H19eYzhxHrlPwvr6p+Pzjh4HAelfgepns7YutFQDIqmY2zFZSF9CvOSMRTc44aqXWg1Q3B4a/IprY2179oTCiZmqLRupITk1u7INmzpG5/nMOK8v1vqZbaUujo4K5ab63fSidX0zBhPadukVTcUhhUb+sLmDaKoHQ72X8L7XIqyCZnjgS0C7ImhOPh4fYJ5uMnHjRuFEkyhOvk++ujpm/jL7IdMIfSVEArfPSzZcqI6+Wvj7xN8YkgMgGqhELuNslEhk86MSD5imjyXtBpElh2lgQfLRmY8rcXJB9/Xb3/Ka19Vw9ULRniK6qUStMupa4JcUqIcXdgSThyaS/gbHqkU+Cqv6RJlswrnkHyS5r5sJpmd+CF7EVfciHFpmTArT01/5Nl3zSo021x1AUeqyzWzqJG0YJhbYf83w+Uz1mwC/KYpfG3AvVfoOZlp7CgxbLO8McY3UYvnSWZz6stn+rvNyZ9qMf6Tlg2Re107oKnMLb+pQHmLZYx2AVKfhsdXmUm29DBHQSshhqN/VstAQ6t4hp4liu0y7l+LB3L1Ncl8HkOTXVwTnLyc0WHes6dH9Lkt8HRM1JIdT+N7WYvzzsT4B/5STLO02WnaA0ZfxXJvrjIeENzTjuUKWmcS/DKWu6cLU9kC2xgB",
-            "thinking": "",
-            "type": "thinking"
-          },
-          {
             "citations": null,
-            "text": "The case is already closed, and I took no further action. Its state is \"confirmation sent\" and its outcome is \"send for confirmation\".\n\nMara Ellison isn't verified, and her request came by email, outside the portal. The email can't change her profile by itself, as she says herself. The address change needs her confirmation through the bank's secure process first.",
+            "text": "The case is already closed. It was redirected to the bank's secure process, and the status shows that outcome as final.\n\nMara Ellison isn't verified, and she sent the request by email rather than through the portal. So the bank can't change her correspondence address from this message. She needs to make the change herself through the secure process. I took no further action.",
             "type": "text"
           }
         ],
@@ -1325,22 +1324,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2031,
-          "output_tokens": 171,
+          "input_tokens": 2101,
+          "output_tokens": 103,
           "output_tokens_details": {
-            "thinking_tokens": 64
+            "thinking_tokens": 0
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 2.2346437999513,
-      "input_tokens": 2031,
-      "output_tokens": 171,
-      "cost_usd": 0.005772,
+      "seconds": 1.3794079000363126,
+      "input_tokens": 2101,
+      "output_tokens": 103,
+      "cost_usd": 0.005232,
       "error": null,
       "replayed": false,
-      "digest": "4c2198a284423358c5538e79240f5f809e0b41280c4f2413949769d27939a0a0"
+      "digest": "84c3c34026b312f14d60d4ce421c0e71268a6da8f4a2697255267c4972bbaead"
     },
     {
       "kind": "generate",
@@ -1353,17 +1352,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"send_for_confirmation\",\n  \"state\": \"CONFIRMATION_SENT\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison\",\n    \"role\": \"customer\",\n    \"channel\": \"external_message\",\n    \"verified\": false,\n    \"subject\": \"profile\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": true,\n    \"request_type\": \"change\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"send_for_confirmation\",\n      \"args\": {\n        \"change\": \"profile\",\n        \"to\": \"Mara Ellison\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-036-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-036-at-01:read-requester:1).\n4. Note from `read-requester`: event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: requester='Mara Ellison', role='customer', channel='external_message', verified=False]\n5. `identify_requester` found {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"external_message\", \"verified\": false}.\n6. `requester`: not known → Mara Ellison (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → external_message (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-036-at-01:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-036-at-01:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-036-at-01:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-036-at-01:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-036-at-01:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-036-at-01:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-036-at-01:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-036-at-01:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-036-at-01:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n38. Called `check_bank_actions` (attempt 1, key banking-036-at-01:read-bank-actions:11).\n39. `check_bank_actions` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-036-at-01:read-registration:12).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-036-at-01:read-confirmation:13).\n45. Note from `read-confirmation`: event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: confirmation='none', instructed_outside_portal=True]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": true}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → True (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.\n51. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.\n52. `request_type`: not known → change (by `triage`).\n53. `subject`: not known → profile (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).\n56. `next_system`: not known → access (by `route-access`).\n57. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.\n58. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).\n59. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).\n60. Called `send_for_confirmation` (attempt 1, key banking-036-at-01:do-confirm:17).\n61. Action in the world: `send_for_confirmation` {\"change\": \"profile\", \"to\": \"Mara Ellison\"}.\n62. `send_for_confirmation` found {}.\n63. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).\n64. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.\n\n## Model calls\n\n3 calls, 4699 tokens in, 490 out, 4.022 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The case is already closed, and I took no further action. Its state is \"confirmation sent\" and its outcome is \"send for confirmation\".\n> \n> Mara Ellison isn't verified, and her request came by email, outside the portal. The email can't change her profile by itself, as she says herself. The address change needs her confirmation through the bank's secure process first.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"redirect_secure\",\n  \"state\": \"REDIRECTED\",\n  \"final\": true,\n  \"facts\": {\n    \"requester\": \"Mara Ellison\",\n    \"role\": \"customer\",\n    \"channel\": \"external_message\",\n    \"verified\": false,\n    \"subject\": \"profile\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": true,\n    \"request_type\": \"change\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"redirect_secure\",\n      \"args\": {\n        \"to\": \"Mara Ellison\",\n        \"channel\": \"external_message\",\n        \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-036-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-036-at-01:read-requester:1).\n4. Note from `read-requester`: event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: requester='Mara Ellison', role='customer', channel='external_message', verified=False]\n5. `identify_requester` found {\"requester\": \"Mara Ellison\", \"role\": \"customer\", \"channel\": \"external_message\", \"verified\": false}.\n6. `requester`: not known → Mara Ellison (by `read-requester`).\n7. `role`: not known → customer (by `read-requester`).\n8. `channel`: not known → external_message (by `read-requester`).\n9. `verified`: not known → False (by `read-requester`).\n10. Rule `read-subject` fired: state = READING → true (state=READING).\n11. Called `find_subject` (attempt 1, key banking-036-at-01:read-subject:2).\n12. `find_subject` found {}.\n13. Rule `read-payment` fired: state = READING → true (state=READING).\n14. Called `check_payment` (attempt 1, key banking-036-at-01:read-payment:3).\n15. `check_payment` found {}.\n16. Rule `read-incoming` fired: state = READING → true (state=READING).\n17. Called `check_incoming` (attempt 1, key banking-036-at-01:read-incoming:4).\n18. `check_incoming` found {}.\n19. Rule `read-recurring` fired: state = READING → true (state=READING).\n20. Called `check_recurring` (attempt 1, key banking-036-at-01:read-recurring:5).\n21. `check_recurring` found {}.\n22. Rule `read-card` fired: state = READING → true (state=READING).\n23. Called `check_card` (attempt 1, key banking-036-at-01:read-card:6).\n24. `check_card` found {}.\n25. Rule `read-access` fired: state = READING → true (state=READING).\n26. Called `check_access` (attempt 1, key banking-036-at-01:read-access:7).\n27. `check_access` found {}.\n28. Rule `read-business` fired: state = READING → true (state=READING).\n29. Called `check_business` (attempt 1, key banking-036-at-01:read-business:8).\n30. `check_business` found {}.\n31. Rule `read-documents` fired: state = READING → true (state=READING).\n32. Called `check_documents` (attempt 1, key banking-036-at-01:read-documents:9).\n33. `check_documents` found {}.\n34. Rule `read-tariff` fired: state = READING → true (state=READING).\n35. Called `check_tariff` (attempt 1, key banking-036-at-01:read-tariff:10).\n36. `check_tariff` found {}.\n37. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n38. Called `check_bank_actions` (attempt 1, key banking-036-at-01:read-bank-actions:11).\n39. `check_bank_actions` found {}.\n40. Rule `read-registration` fired: state = READING → true (state=READING).\n41. Called `check_registration` (attempt 1, key banking-036-at-01:read-registration:12).\n42. `check_registration` found {}.\n43. Rule `read-confirmation` fired: state = READING → true (state=READING).\n44. Called `check_confirmation` (attempt 1, key banking-036-at-01:read-confirmation:13).\n45. Note from `read-confirmation`: event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: confirmation='none', instructed_outside_portal=True]\n46. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": true}.\n47. `confirmation`: not known → none (by `read-confirmation`).\n48. `instructed_outside_portal`: not known → True (by `read-confirmation`).\n49. Rule `triage` fired: state = READING → true (state=READING).\n50. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.\n51. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.\n52. `request_type`: not known → change (by `triage`).\n53. `subject`: not known → profile (by `triage`).\n54. State `READING` → `TRIAGED` (by `triage`).\n55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).\n56. `next_system`: not known → access (by `route-access`).\n57. Rule `change-by-email` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); channel = external_message → true (channel=external_message); role != third_party → true (role=customer). An email does not change anything; the customer is pointed to the secure process.\n58. State `TRIAGED` → `REDIRECT_PENDING` (by `change-by-email`).\n59. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).\n60. Called `redirect_secure` (attempt 1, key banking-036-at-01:do-redirect:17).\n61. Action in the world: `redirect_secure` {\"to\": \"Mara Ellison\", \"channel\": \"external_message\", \"text\": \"Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.\"}.\n62. `redirect_secure` found {}.\n63. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).\n64. The case closed in `REDIRECTED`: **redirect_secure**.\n\n## Model calls\n\n3 calls, 4808 tokens in, 506 out, 3.781 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> The case is already closed. It was redirected to the bank's secure process, and the status shows that outcome as final.\n> \n> Mara Ellison isn't verified, and she sent the request by email rather than through the portal. So the bank can't change her correspondence address from this message. She needs to make the change herself through the secure process. I took no further action.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011Cftb1injaR8KQe5gwuEYA",
+        "id": "msg_011CftecvHrpSESxE4N5QUBi",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "Mara Ellison, an unverified customer, emailed asking the bank to update her correspondence address after a move within the UK, noting that the email alone doesn't change her profile. The desk did not change the profile; it sent her a request to confirm the change, since changes must be confirmed by the customer in the secure portal rather than by email. The case is closed at \"confirmation sent,\" and the address stays as it is until she confirms.",
+            "text": "Mara Ellison emailed to say she had moved within the UK and asked the bank to update her correspondence address. Because the request came by email from an unverified sender, the desk did not change her profile and instead replied telling her to use the secure process in her portal, where her identity is checked. The case is closed as redirected, and nothing is left for a person unless she makes the change herself through the portal.",
             "type": "text"
           }
         ],
@@ -1382,8 +1381,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2685,
-          "output_tokens": 133,
+          "input_tokens": 2759,
+          "output_tokens": 121,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1391,13 +1390,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.9034652999835089,
-      "input_tokens": 2685,
-      "output_tokens": 133,
-      "cost_usd": 0.0067,
+      "seconds": 1.6921875000698492,
+      "input_tokens": 2759,
+      "output_tokens": 121,
+      "cost_usd": 0.006728,
       "error": null,
       "replayed": false,
-      "digest": "2a2222f201dcfa26339c410d9a6d0f6dc56ce8d7120a69570dd9c05ac54682c4"
+      "digest": "9e7c25c78a011d36587ada14cc44e6e7134292bde12d7bc62a1688b44bbe797f"
     }
   ]
 }

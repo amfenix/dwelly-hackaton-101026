@@ -66,18 +66,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 62. The agent asked for `ask_system` {"system": "access"}.
 63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access).
 64. The agent asked for `redirect_secure` {}.
-65. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question).
+65. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question); request_type = instruction is false (request_type=question).
+66. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks whether her new tablet is linked to H&V mobile banking and can be used for banking. Access system was already queried (access_asked=True) but no device status is in the case, and further access queries and a secure-process redirect were refused by policy because the case is in WAITING. Identity not verified. Needs a person to verify the customer and confirm the device registration status from the records."}.
+67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12449 tokens in, 839 out, 7.571 s, cost $0.0295; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I couldn't check whether the tablet is linked, and I made no changes. The case is now waiting.
-> 
-> - **Access check refused:** The desk wouldn't run it. It had already been marked as asked, and the case is in a waiting state rather than the triaged state that check needs.
-> - **Redirect to the secure process refused:** The desk also refused that. The request is classed as a question, not an access request.
-> - **Verification:** Mara Ellison is not verified on this chat. Until she is, nothing in her account records should be shared with her.
-> 
-> I have no record showing whether the registration finished or whether the tablet can be used for banking. I'm leaving the case open, so a person will pick it up.
+5 calls, 10645 tokens in, 659 out, 5.745 s, cost $0.0239; models: claude-sonnet-5-5, jev-1.13.0.

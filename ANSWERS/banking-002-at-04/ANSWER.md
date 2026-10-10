@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marsh, who was not verified, asked over secure chat whether H&V had received a transfer for her pottery studio's kiln contribution. The desk checked the incoming-payment records, found no incoming payment for the account, and replied that this does not establish the sender didn't pay and that no payment was made. The case is closed with that reply, and the record shows nothing left for a person to do.
+Elowen Marsh asked over secure chat whether H&V had received a transfer for her pottery studio's kiln contribution that the sender said they had made. The desk checked the incoming-payment record, found no incoming payment for the account, and replied in the chat saying so, adding that this does not establish the sender didn't pay and that no payment was made. The case is closed as replied, Elowen Marsh was not verified, and the record lists nothing further for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `incoming-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = incoming → true (next_system=incoming)
   - incoming_found present → true (incoming_found=False)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

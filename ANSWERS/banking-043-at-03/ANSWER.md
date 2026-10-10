@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, writing over secure chat, asked whether Northmere Studio Ltd's payroll payment package is still waiting for the second signatory or has moved on. The desk asked the business system about the package's signing queue, but no answer has come back, so it recorded a wait and took no other action; it did not approve or release anything. The package status is still unknown and Mara is unverified, so a person needs to pick up the case once the business system responds.
+Mara Ellery, who is not verified on secure chat, asked whether Northmere Studio Ltd's payroll payment package is still waiting for her co-signer or has moved on. The desk had already asked the business system about the package, but its answer, including the signing status, had not come in, so the case closed in a waiting state. No actions were taken and nothing was approved or released on anyone's behalf; the record does not show whether the co-signer still needs to act, and that remains open until the business system responds.
 
 _Written by a model from the record below; the sections below are the record._
 

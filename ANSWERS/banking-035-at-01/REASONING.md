@@ -70,10 +70,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8071 tokens in, 601 out, 4.911 s, cost $0.0183; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8219 tokens in, 685 out, 6.417 s, cost $0.0193; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed Mara's request to the team that handles fee disputes and reviews. They will look at whether the £4.50 paper statement fee dated 18 June 2025 was correctly applied, given that she says she had chosen electronic statements. The case is now logged as requested.
+> I've passed Mara's request to the team that handles fee reviews. They will look at whether the £4.50 paper statement fee dated 18 June 2025 was correctly applied, given that she says she had chosen electronic statements.
 > 
-> I first tried to check the fee in the tariff records, but the desk refused. It treats this case as a request to register a review, not a question to look up. So the fee has not been checked yet, and nothing has been decided about whether it will be changed.
+> I first tried to check the fee against the tariff records. The desk refused that check because the case is a request to register a dispute, so I submitted the review request instead. This means I haven't checked her statement preference or the fee myself, and I can't say yet whether the fee will be changed.
+> 
+> The case is now marked as requested, and there is nothing left for me to do on it.

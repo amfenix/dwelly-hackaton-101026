@@ -54,7 +54,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-53. Classifier (jev jev-latest) on `subject`: batch, confidence 0.96 → batch.
+53. Classifier (jev jev-latest) on `subject`: batch, confidence 0.97 → batch.
 54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → batch (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
@@ -72,10 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9470 tokens in, 562 out, 6.53 s, cost $0.0207; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7049 tokens in, 541 out, 5.571 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the payment system about batch HV-042, and the desk accepted the request. The case is now closed at that step.
+> I've asked the payment system for the details on batch HV-042. The case is now marked final with the outcome "ask_system", and I haven't seen the row-level error report yet. The facts on the case haven't changed since the request.
 > 
-> The payment system's answer hasn't been added to the case yet. That means I can't tell Nadia which rows failed validation, and I haven't told her anything about them. Her identity is also still unverified. She is a viewer on the account, so any release of the row-level report would have to follow the bank's access rules.
+> Nadia Fenwick is not verified, and her role on the account is viewer. The bank hasn't confirmed that she is entitled to see the report. Nothing has been shared with her.

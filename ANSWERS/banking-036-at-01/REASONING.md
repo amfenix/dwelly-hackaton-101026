@@ -58,21 +58,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 56. `next_system`: not known → access (by `route-access`).
-57. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-58. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-59. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-60. Called `send_for_confirmation` (attempt 1, key banking-036-at-01:do-confirm:17).
-61. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Mara Ellison"}.
-62. `send_for_confirmation` found {}.
-63. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-64. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+57. Rule `change-by-email` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); channel = external_message → true (channel=external_message); role != third_party → true (role=customer). An email does not change anything; the customer is pointed to the secure process.
+58. State `TRIAGED` → `REDIRECT_PENDING` (by `change-by-email`).
+59. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
+60. Called `redirect_secure` (attempt 1, key banking-036-at-01:do-redirect:17).
+61. Action in the world: `redirect_secure` {"to": "Mara Ellison", "channel": "external_message", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
+62. `redirect_secure` found {}.
+63. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
+64. The case closed in `REDIRECTED`: **redirect_secure**.
 
 ## Model calls
 
-3 calls, 4699 tokens in, 490 out, 4.022 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4808 tokens in, 506 out, 3.781 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed, and I took no further action. Its state is "confirmation sent" and its outcome is "send for confirmation".
+> The case is already closed. It was redirected to the bank's secure process, and the status shows that outcome as final.
 > 
-> Mara Ellison isn't verified, and her request came by email, outside the portal. The email can't change her profile by itself, as she says herself. The address change needs her confirmation through the bank's secure process first.
+> Mara Ellison isn't verified, and she sent the request by email rather than through the portal. So the bank can't change her correspondence address from this message. She needs to make the change herself through the secure process. I took no further action.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a question about a standing order, apparently whether the monthly rent payment to Elm Quay Property Services for this cycle had gone out, since no payment was visible and no confirmation was on file. The desk classified it as a standing order question and put it to the recurring payments system, and the case closed in the asked state. The recurring system's answer had not come back, so it is not yet known whether the payment was sent or why it might not have been, and the reply to the customer still has to be written once that answer arrives.
+The request was a question about a monthly rent payment to Elm Quay Property Services, which the desk identified as a standing order that it could not see for this cycle. The desk asked the recurring-payments system about the standing order; the request went through but returned no details, so the case closed as final with no confirmation either way that the payment was sent. The record does not say what a person will do next, only that the requester was told to check with their bank whether it was sent.
 
 _Written by a model from the record below; the sections below are the record._
 

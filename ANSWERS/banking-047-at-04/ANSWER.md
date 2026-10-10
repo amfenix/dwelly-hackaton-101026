@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder, a viewer writing over secure chat, asked for the company's current payment limit. The desk checked the business limit register, which showed a maximum of £20,000.00 per outgoing payment, and replied to her on secure chat with that figure. The reply also said the record's status of "other" does not establish a recognised business-record status, and that no approval or role change was made. She was marked as not verified and the case closed as replied without escalation, so whether that should have been checked is left for a person.
+Maeve Calder asked over secure chat for the company's current payment limit, and the desk replied on that channel. The reply gave the maximum as £20,000.00 and said the business record returned no recognised status, so no status could be confirmed; it also said no approval or role change was made. Her identity was still marked unverified in the record, and nothing is left open for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-047-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Maeve Calder, channel: secure_chat), by rule `do-reply`
 
-  > The business record shows other; maximum £20000.00. The answer does not establish a recognized business-record status. No additional approval or role change was made.
+  > The business record answered, but not with a clear status, so we cannot confirm one yet; maximum £20000.00. The answer does not establish a recognized business-record status. No additional approval or role change was made.
 
 
 ## Decision and why
@@ -55,8 +55,10 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `business-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = business → true (next_system=business)
   - business_status present → true (business_status=OTHER)
+  - not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=OTHER, subject=limit)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 

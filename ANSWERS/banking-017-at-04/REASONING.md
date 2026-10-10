@@ -63,23 +63,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 59. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
 60. `next_system`: not known → recurring (by `asked-recurring`).
 61. The agent asked for `reply` {}.
-62. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=NOT_EXECUTED).
+62. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=NOT_EXECUTED).
 63. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
 64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 65. Called `reply_customer` (attempt 1, key banking-017-at-04:do-reply:17).
-66. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The standing-order record shows not_executed. This does not establish whether a later run will execute. No additional instruction or change was made."}.
+66. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The standing-order record shows that the scheduled run was not executed. This does not establish whether a later run will execute. No additional instruction or change was made."}.
 67. `reply_customer` found {}.
 68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 69. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7168 tokens in, 516 out, 5.768 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7180 tokens in, 486 out, 5.433 s, cost $0.0153; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to Mara. The bank's records show her rent standing order was not executed for this cycle. That matches what her landlord is seeing.
+> I've sent the reply to Mara Ellery. It reports what the bank's records show: the monthly rent standing order has the status NOT_EXECUTED, so it wasn't sent this cycle. The records don't give a reason, so the reply doesn't offer one.
 > 
-> The records don't give a reason for the non-execution. The reply therefore only reports the recorded status. I didn't look into the cause or restart the payment.
-> 
-> The case is closed as replied. Mara's identity is not verified on this chat, so any follow-up that changes the standing order or makes the payment would need that check first.
+> The case is now marked as replied. Mara's identity is still unverified, so I didn't take any other action on the standing order.

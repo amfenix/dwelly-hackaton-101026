@@ -4,9 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether her Direct Debit mandate with Northmere Water Services is still active, without cancelling it. The desk checked the mandate record, which shows it as active, and replied to her on secure chat saying so. The reply also said this doesn't guarantee a future payment will execute, and that no change was made; the requester was not verified, and the case is closed with nothing left for a person.
-
-One wrinkle: the reply text calls it a "standing-order record", while the record itself describes a Direct Debit mandate.
+Mara Ellery asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, and said not to cancel it. The desk checked the mandate record, which shows it as active, and replied to her on secure chat saying so, that this doesn't guarantee a future payment will execute, and that no change was made. The case is closed as replied with nothing left for a person, though the record lists her as not verified and the reply went out anyway. The reply also refers to a "standing-order record" although the mandate in question is a Direct Debit.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -46,7 +44,7 @@ Case reference: id banking-014-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellery, channel: secure_chat), by rule `do-reply`
 
-  > The standing-order record shows active. This does not guarantee that the future payment will execute. No additional instruction or change was made.
+  > The standing-order record shows the instruction as active. This does not guarantee that the future payment will execute. No additional instruction or change was made.
 
 
 ## Decision and why
@@ -57,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `recurring-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = recurring → true (next_system=recurring)
   - recurring_status present → true (recurring_status=ACTIVE)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

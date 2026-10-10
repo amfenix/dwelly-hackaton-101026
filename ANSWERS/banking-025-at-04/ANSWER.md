@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk identified her, classified the request as a card question and asked the card system, and the case closed as "wait" because that system's answer had not come back. A second attempt to ask the card system was refused because the case was already in the waiting state and the card had already been asked, so no reason for the decline is on record and nothing was done for her; the case is left for a person to pick up.
+Mara Ellison, a verified customer on a call, asked why her £18.40 card payment at North Quay Books was declined. The desk asked the card system and closed the case as waiting, because that system's answer had not come back, so no decline reason is recorded. A second card request and the agent's escalation were both refused because the case was already in the waiting state, so nobody has yet been handed the case to check the card records and tell her the reason.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -90,6 +90,7 @@ No.
 Requests the policy refused:
 
 - `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Bell, an unverified customer writing over secure chat, followed up on an access request that still needs the company administrator's approval. The desk classified it as an authority request about a role, and since she is not a business admin, it forwarded the matter to the verified company administrator and closed the case as forwarded. Nothing further is recorded for the desk to do; the approval itself remains with the administrator.
+Nadia Bell, an unverified customer writing over secure chat, followed up on an access request that still needed the company administrator's approval. The desk classified it as an authority request about a role and, because she isn't a business admin, forwarded it to the verified company administrator; the case closed as forwarded. Approval now rests with the administrator, and the record doesn't show who that person is or any response from them.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer on a call, asked why her £18.40 card payment at North Quay Books was declined. The desk checked the card authorisation journal, found the matching attempt declined because her available balance was insufficient, and replied to her on the call with that recorded reason, noting it doesn't establish another cause or authorise a retry. No card change was made, and the case is closed with nothing left for a person.
+Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk found the matching attempt in the card journal, which shows it declined because her available balance was insufficient (the recorded reason is cut off at "£18."). It replied to her on the verified call with that reason, said this does not establish a different cause or authorise a retry, and made no card changes; the case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ Case reference: id banking-025-at-05, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: verified_call), by rule `do-reply`
 
-  > The card journal shows declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made.
+  > The card journal shows the card attempt as declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made.
 
 
 ## Decision and why
@@ -59,6 +59,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = card → true (next_system=card)
   - card_status present → true (card_status=DECLINED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira asked to raise her monthly standing order to Westmere Garden Cooperative from £42.00 to £68.00, but she hadn't yet authorised the change. The desk decided a change needs her confirmation in the secure portal, so it sent a confirmation request and closed the case at "confirmation sent"; the standing order itself has not been changed. A later attempt to query the recurring-payments system was refused because the case had already closed, and what remains is for Mira to confirm the change.
+Mira asked to raise her monthly standing order to Westmere Garden Cooperative from £42.00 to £68.00, but she had not yet authorised the change. The desk found no existing confirmation, since a change has to be confirmed by the customer in the secure portal, so it sent her a confirmation request and closed the case. The standing order itself is unchanged, and the change goes ahead only if Mira confirms it.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -67,10 +67,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `ask_system`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change)
 
 ## Final result
 
