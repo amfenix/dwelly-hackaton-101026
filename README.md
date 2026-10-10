@@ -10,6 +10,13 @@ the customer what they mean, point them to the bank's secure process, forward a 
 person whose approval it needs, refuse with the reason and the permitted route, or hand the case to
 a person. Every answer it writes says what it received, what it did, why, and what failed.
 
+**Try it live: [dwelly-desk.vercel.app](https://dwelly-desk.vercel.app).** Pick a decision point or a
+voice call, or write or speak your own message, and watch the real desk work on it step by step:
+facts, triage, the agent's step, the rule that accepts it, the outcome. *Replay* answers from the
+recorded traces; *Live* runs the models now. The same page runs locally with
+`uv run python flowkit/live/server.py`; the report of the committed run is at
+[/report/](https://dwelly-desk.vercel.app/report/).
+
 ## 1. What we built
 
 - **A policy** (`track/policy.yaml`): the case's facts, its states, the steps the agent may ask
