@@ -60,9 +60,14 @@ escalate_human 4, redirect_secure 3, send_for_confirmation 2, wait 2, submit_pro
 
 ```bash
 uv run python evals/synthetic/validate.py evals/synthetic/banking      # format + manifest
-uv run python track/convert.py evals/synthetic/banking --out runs/synthetic-cases.json \
-    --expected runs/synthetic-expected.json                            # once the converter exists
+uv run python track/convert.py evals/synthetic/banking --out track/synthetic/cases.json \
+    --expected track/synthetic/expected.json                           # the desk cases, one per point
+uv run desk run --cases track/synthetic/cases.json --out runs/synthetic/ANSWERS \
+    --traces runs/synthetic/traces --results runs/synthetic/results.jsonl
 ```
+
+The converted cases live next to the public ones (`track/cases.json`), never over them; their
+attachments go to `track/attachments/banking/S<nn>/`, beside the public cases' folders.
 
 Run the desk on the **decision point in `manifest.yaml`** of each case (that is the hard one; the
 converter also emits every other point, which you can run too). For each failure, note the layer:
