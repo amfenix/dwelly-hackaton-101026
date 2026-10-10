@@ -79,11 +79,14 @@ class Case:
     sections: dict[str, str]
     events: list[Event]
     attachments: list[Path]
+    request: str = ""
+    warnings: list[str] = field(default_factory=list)
 
 
 @dataclass
 class Report:
     skipped: list[str] = field(default_factory=list)
+    warnings: list[str] = field(default_factory=list)
     unplaced_events: list[str] = field(default_factory=list)
     unavailable_attachments: list[str] = field(default_factory=list)
 
@@ -124,7 +127,8 @@ def _paragraphs(lines: list[str]) -> str:
     return "\n\n".join(p.strip() for p in re.split(r"\n\s*\n", text) if p.strip())
 
 
-def _events(history: str, folder: Path) -> list[Event]:
+def _events(history: str, folder: Path, warnings: list[str] | None = None) -> list[Event]:
+    warnings = warnings if warnings is not None else []
     blocks: list[tuple[re.Match[str], list[str]]] = []
     for line in history.splitlines():
         match = _EVENT_RE.match(line)
@@ -146,44 +150,60 @@ def _events(history: str, folder: Path) -> list[Event]:
                 break
         for key in ("Channel", "From", "To"):
             if not meta.get(key):
-                raise CaseError(f"{folder}: event {seq} has no {key}")
+                warnings.append(f"{folder.name}: event {seq} has no {key}; taken as 'unknown'")
+                meta[key] = "unknown"
         text = _paragraphs(lines[body_start:])
         if not text:
-            raise CaseError(f"{folder}: event {seq} has no text")
+            warnings.append(f"{folder.name}: event {seq} has no text")
         extra = {k: v for k, v in meta.items() if k not in ("Channel", "From", "To")}
         events.append(Event(int(seq), f"{date}T{time}Z", meta["Channel"], meta["From"], meta["To"], text, extra))
     return events
 
 
 def read_case(folder: Path) -> Case:
-    """Parses `index.md` and `history.md`; raises CaseError when the case is malformed."""
+    """Parses `index.md` and `history.md`.
+
+    Only a case with no events is skipped (CaseError): there is nothing to answer. Anything else
+    that is missing or odd is filled in and reported as a warning, so every case gets an answer.
+    """
     index_file, history_file = folder / "index.md", folder / "history.md"
-    if not index_file.is_file() or not history_file.is_file():
-        raise CaseError(f"{folder}: index.md or history.md is missing")
-    title_line, sections = _sections(index_file.read_text(encoding="utf-8"))
+    if not history_file.is_file():
+        raise CaseError(f"{folder}: history.md is missing")
+    warnings: list[str] = []
+    title_line, sections = _sections(index_file.read_text(encoding="utf-8")) if index_file.is_file() else ("", {})
+    if not index_file.is_file():
+        warnings.append(f"{folder.name}: index.md is missing")
     title = _TITLE_RE.match(title_line)
     if not title:
-        raise CaseError(f"{folder}: index.md has no '# Case <n>: <title>' line")
-    for needed in ("Case details", "Initial request"):
-        if not sections.get(needed):
-            raise CaseError(f"{folder}: index.md has no '{needed}' section")
+        warnings.append(f"{folder.name}: index.md has no '# Case <n>: <title>' line; the folder name is the title")
     history = history_file.read_text(encoding="utf-8")
-    events = _events(history, folder)
+    events = _events(history, folder, warnings)
     if not events:
         raise CaseError(f"{folder}: history.md has no events")
     if [e.seq for e in events] != list(range(1, len(events) + 1)):
-        raise CaseError(f"{folder}: events are not numbered 1 to {len(events)}")
-    total = re.search(r"^Total events:\s*(\d+)", history, re.MULTILINE)
+        warnings.append(f"{folder.name}: events are not numbered 1 to {len(events)}; renumbered in order")
+        for number, event in enumerate(events, 1):
+            event.seq = number
+    total = re.search(r"Total events:\s*(\d+)", history)
     if total and int(total.group(1)) != len(events):
-        raise CaseError(f"{folder}: 'Total events: {total.group(1)}' but {len(events)} events found")
-    details = _bullets(sections["Case details"])
+        warnings.append(f"{folder.name}: 'Total events: {total.group(1)}' but {len(events)} events found")
+    if not sections.get("Case details"):
+        warnings.append(f"{folder.name}: index.md has no 'Case details' section")
+    details = _bullets(sections.get("Case details", ""))
     org = [details[k] for k in ORG_DETAILS if details.get(k)]
     for event in events:
         event.kind = event_kind(event, org)
     attachments_dir = folder / "attachments"
     attachments = sorted(p for p in attachments_dir.iterdir() if p.is_file()) if attachments_dir.is_dir() else []
+    request = sections.get("Initial request", "")
+    if not request:
+        # the customer's first words stand in for a missing request
+        first = next((e for e in events if not is_bank_side(e.sender, org)), events[0])
+        request = first.text
+        warnings.append(f"{folder.name}: index.md has no 'Initial request'; the request is event {first.seq}")
     track = folder.resolve().parent.name
-    return Case(track, folder.name, title.group(1).strip(), details, sections, events, attachments)
+    name = title.group(1).strip() if title else folder.name
+    return Case(track, folder.name, name, details, sections, events, attachments, request, warnings)
 
 
 # ------------------------------------------------------------------------------------- rules
@@ -298,7 +318,7 @@ def _desk_case(case: Case, point: int, whole: bool, placed: Mapping[Path, str] |
         "point": point,
         "title": case.title,
         "details": {k: v for k, v in case.details.items() if k not in HIDDEN_DETAILS},
-        "request": case.sections["Initial request"],
+        "request": case.request,
         "events": [_event_dict(e) for e in events],
         "attachments": [{"name": a.name, "path": (placed or {}).get(a) or _path(a)} for a in available],
     }
@@ -381,6 +401,7 @@ def convert(
         except CaseError as error:
             report.skipped.append(str(error))
             continue
+        report.warnings.extend(case.warnings)
         org = [case.details[k] for k in ORG_DETAILS if case.details.get(k)]
         for event in case.events:
             if unplaced(event, org):
@@ -444,6 +465,7 @@ def main(argv: list[str] | None = None) -> int:
     print(f"{len(cases)} desk cases from {folders} case folders ({bank} with the bank acting next) -> {args.out}")
     for title, lines in (
         ("skipped", report.skipped),
+        ("converted with warnings", report.warnings),
         ("events placed by default", report.unplaced_events),
         ("attachments available at no point", report.unavailable_attachments),
     ):

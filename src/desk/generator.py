@@ -5,7 +5,7 @@ from __future__ import annotations
 from typing import Any
 
 from desk.calls import Recorder
-from desk.classifier import claude_invoke, claude_text
+from desk.classifier import CLAUDE_TIMEOUT, claude_invoke, claude_text
 
 
 class Generator:
@@ -21,7 +21,7 @@ class Generator:
         if self._client is None:  # pragma: no cover - needs the real SDK and a key
             import anthropic
 
-            self._client = anthropic.Anthropic()
+            self._client = anthropic.Anthropic(timeout=CLAUDE_TIMEOUT)
         return self._client
 
     def generate(self, system: str, prompt: str, *, model: str | None = None, max_tokens: int | None = None) -> str:
