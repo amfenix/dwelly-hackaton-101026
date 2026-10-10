@@ -2,13 +2,17 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
 import pytest
 
-from desk import CaseError
+from desk import CaseError, ModelError
+from desk.calls import CallRecord, Recorder
+from desk.classifier import ClaudeClassifier, JevClassifier
 from desk.machine import load_functions
+from tests.conftest import FakeAnthropic, FakeTypeSafe, text_reply
 
 TRACK = Path(__file__).resolve().parents[1] / "track"
 FUNCTIONS, _ = load_functions(TRACK / "functions.py")
@@ -28,6 +32,26 @@ class Probe:
 
     def act(self, type_: str, **args: Any) -> None:
         self.actions.append({"type": type_, "args": args})
+
+
+class ClassifyingProbe(Probe):
+    def __init__(self, case: dict[str, Any], answer: Any) -> None:
+        super().__init__(case)
+        self.answer = answer
+        self.classifications: list[tuple[str, dict[str, Any]]] = []
+
+    def classify(self, text: str, questions: dict[str, Any]) -> dict[str, Any]:
+        self.classifications.append((text, questions))
+        return {"status": self.answer, "confirmation": self.answer}
+
+
+class AdapterProbe(Probe):
+    def __init__(self, case: dict[str, Any], classifier: Any) -> None:
+        super().__init__(case)
+        self.classifier = classifier
+
+    def classify(self, text: str, questions: dict[str, Any]) -> dict[str, Any]:
+        return self.classifier.classify(text, questions)
 
 
 def event(
@@ -115,19 +139,19 @@ def test_requester_subject_and_channel_are_from_the_customer_conversation() -> N
         ),
     )
     requester, requester_probe = invoke("identify_requester", data)
-    subject, subject_probe = invoke("find_subject", data)
+    structured, subject_probe = invoke("find_subject", data)
     assert requester == {
         "requester": "Mara Ellison",
         "role": "customer",
         "channel": "secure_chat",
         "verified": False,
     }
-    assert subject == {
-        "subject": "transfer",
+    assert structured == {
         "amount": "420.00",
         "counterparty": "Alder & Reed Workshop",
         "subject_date": "2025-07-14",
     }
+    assert "subject" not in structured
     assert all("event 2" in note for note in requester_probe.notes + subject_probe.notes)
 
 
@@ -257,6 +281,353 @@ def test_payment_asked_answer_and_unknown_answer_are_sequenced() -> None:
     facts, probe = invoke("check_payment", other)
     assert facts["payment_status"] == "OTHER"
     assert any("Purpose: deposit" in note for note in probe.notes)
+
+
+def test_payment_count_and_pending_are_read_from_the_same_system_answer() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V payment instruction journal", "Check the instructions."),
+        event(
+            2,
+            "system",
+            "H&V payment instruction journal",
+            "H&V agent",
+            "Journal match: two distinct instruction references. One instruction is Completed; the other is Pending.",
+        ),
+    )
+    facts, _ = invoke("check_payment", data)
+    assert facts["payment_status"] == "OTHER" and facts["payment_count"] == 2
+
+
+def test_multiple_transfers_are_counted() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V payment instruction journal", "Check the transfers."),
+        event(2, "system", "H&V payment instruction journal", "H&V agent", "Two separate transfers were completed."),
+    )
+    facts, _ = invoke("check_payment", data)
+    assert facts["payment_count"] == 2 and facts["payment_status"] == "COMPLETED"
+
+
+def test_mixed_instruction_statuses_remain_aggregate_other() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V payment instruction journal", "Check the instructions."),
+        event(
+            2,
+            "system",
+            "H&V payment instruction journal",
+            "H&V agent",
+            "Two separate payment instructions: one COMPLETED and one PENDING.",
+        ),
+    )
+    facts, _ = invoke("check_payment", data)
+    assert facts["payment_count"] == 2 and facts["payment_status"] == "OTHER"
+
+
+def test_protected_instruction_process_alias_matches_instruction_log() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V protected instruction process", "Submit cancellation."),
+        event(2, "system", "H&V instruction log", "H&V agent", "HV-013 — Future run cancelled."),
+    )
+    facts, _ = invoke("check_recurring", data)
+    assert facts == {"recurring_asked": True, "recurring_status": "CANCELLED"}
+
+
+def test_case_record_quote_uses_the_pending_system_request() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V signing log", "Check the signing queue."),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V case record HV-043",
+            "The queue shows no second consent and no individual payment submissions.",
+        ),
+    )
+    facts, _ = invoke("check_business", data)
+    assert facts == {"business_asked": True, "business_status": "AWAITING_SECOND_SIGNATORY"}
+
+
+def test_unquoted_case_record_claim_does_not_answer_a_pending_request() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V transfer journal", "Check transfer HV-123."),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V case record HV-123",
+            "Customer says the transfer was SENT; HV-123 is awaiting the journal answer.",
+        ),
+    )
+    facts, _ = invoke("check_payment", data)
+    assert facts == {"payment_asked": True}
+
+
+def test_quoted_case_record_claim_does_not_answer_a_pending_request() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V transfer journal", "Check transfer HV-123."),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V case record HV-123",
+            "Customer says the transfer journal shows SENT; awaiting journal answer.",
+        ),
+    )
+    facts, _ = invoke("check_payment", data)
+    assert facts == {"payment_asked": True}
+
+
+def test_case_record_result_from_another_domain_does_not_answer_the_request() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V transfer journal", "Check transfer HV-123."),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V case record HV-123",
+            "The card status record shows REJECTED for case HV-123.",
+        ),
+    )
+    facts, _ = invoke("check_payment", data)
+    assert facts == {"payment_asked": True}
+
+
+def test_named_case_record_question_is_not_an_answer() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V transfer journal", "Check transfer HV-123."),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V case record HV-123",
+            "I asked the transfer journal whether the payment was sent.",
+        ),
+    )
+    facts, _ = invoke("check_payment", data)
+    assert facts == {"payment_asked": True}
+
+
+@pytest.mark.parametrize(
+    ("text", "expected"),
+    [
+        ("Check whether the transfer journal shows SENT.", {"payment_asked": True}),
+        ("Does the transfer journal show SENT?", {"payment_asked": True}),
+        ("Does the transfer journal show SENT", {"payment_asked": True}),
+        ("The transfer journal shows SENT?", {"payment_asked": True}),
+        (
+            "Does the transfer journal show SENT? The transfer journal shows PENDING.",
+            {"payment_asked": True, "payment_status": "PENDING"},
+        ),
+        (
+            "The transfer journal shows SENT?\nThe transfer journal shows PENDING.",
+            {"payment_asked": True, "payment_status": "PENDING"},
+        ),
+        ("The transfer journal shows SENT.", {"payment_asked": True, "payment_status": "SENT"}),
+    ],
+)
+def test_case_record_requires_a_positive_result_attribution(text: str, expected: dict[str, Any]) -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V transfer journal", "Check transfer HV-123."),
+        event(2, "system", "H&V agent", "H&V case record HV-123", text),
+    )
+    facts, _ = invoke("check_payment", data)
+    assert facts == expected
+
+
+def test_shared_reference_uses_the_answer_domain_before_consuming_a_request() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V transfer journal", "Check transfer HV-123."),
+        event(2, "system", "H&V agent", "H&V card journal", "Check card HV-123."),
+        event(
+            3,
+            "system",
+            "Harrow & Vale Bank plc",
+            "Mara Ellison",
+            "Card status: REJECTED. Case HV-123.",
+            "Secure portal",
+        ),
+        event(4, "system", "H&V transfer journal", "H&V agent", "Transfer status: SENT."),
+    )
+    payment, _ = invoke("check_payment", data)
+    card, _ = invoke("check_card", data)
+    assert payment["payment_status"] == "SENT"
+    assert card["card_status"] == "OTHER"
+
+
+def test_card_portal_domain_does_not_consume_a_transfer_with_a_shared_reference() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V transfer journal", "Check transfer HV-123."),
+        event(2, "system", "H&V agent", "H&V card journal", "Check card HV-123."),
+        event(
+            3,
+            "system",
+            "Harrow & Vale Bank plc",
+            "Mara Ellison",
+            "Card payment status: DECLINED. Case HV-123.",
+            "Secure portal",
+        ),
+        event(4, "system", "H&V transfer journal", "H&V agent", "Transfer status: SENT."),
+    )
+    payment, _ = invoke("check_payment", data)
+    card, _ = invoke("check_card", data)
+    assert payment["payment_status"] == "SENT"
+    assert card["card_status"] == "DECLINED"
+
+
+def test_payment_portal_case_reference_is_not_registration() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V transfer journal", "Check transfer HV-123."),
+        event(
+            2,
+            "system",
+            "Harrow & Vale Bank plc",
+            "Mara Ellison",
+            "Payment status: SENT. Case HV-123.",
+            "Secure portal",
+        ),
+    )
+    facts, _ = invoke("check_payment", data)
+    assert facts == {"payment_asked": True, "payment_status": "SENT"}
+
+
+def test_conflicting_portal_status_domains_consume_neither_request() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V transfer journal", "Check transfer HV-123."),
+        event(2, "system", "H&V agent", "H&V card journal", "Check card HV-123."),
+        event(
+            3,
+            "system",
+            "Harrow & Vale Bank plc",
+            "Mara Ellison",
+            "Card status: DECLINED. Payment status: SENT. Case HV-123.",
+            "Secure portal",
+        ),
+    )
+    payment, _ = invoke("check_payment", data)
+    card, _ = invoke("check_card", data)
+    assert payment == {"payment_asked": True}
+    assert card == {"card_asked": True}
+
+
+def test_incoming_portal_status_is_not_generic_payment_status() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V incoming-payment journal", "Check incoming payment HV-123."),
+        event(
+            2,
+            "system",
+            "Harrow & Vale Bank plc",
+            "Mara Ellison",
+            "Incoming payment status: FOUND. Case HV-123.",
+            "Secure portal",
+        ),
+    )
+    facts, _ = invoke("check_incoming", data)
+    assert facts == {"incoming_asked": True, "incoming_found": True}
+
+
+def test_bank_portal_system_record_matches_by_requested_reference() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V import service", "Retrieve validation report HV-042."),
+        event(
+            2,
+            "system",
+            "Harrow & Vale Bank plc",
+            "Nadia Fenwick",
+            "Validation report validation-042.txt for batch HV-042 is available; validation FAILED.",
+            "Business portal",
+        ),
+    )
+    facts, _ = invoke("check_business", data)
+    assert facts == {"business_asked": True, "business_status": "VALIDATION_FAILED"}
+
+
+def test_same_bank_portal_body_as_conversation_is_not_a_system_answer() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V import service", "Retrieve validation report HV-042."),
+        event(
+            2,
+            "conversation",
+            "Harrow & Vale Bank plc",
+            "Nadia Fenwick",
+            "Validation report validation-042.txt for batch HV-042 is available; validation FAILED.",
+            "Business portal",
+        ),
+    )
+    facts, _ = invoke("check_business", data)
+    assert facts == {"business_asked": True}
+
+
+def test_generated_document_is_ready_but_name_still_requires_an_attachment() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V document service", "Generate the record."),
+        event(2, "system", "H&V document service", "H&V agent", "Record HV-040 generated; status is SENT."),
+    )
+    facts, _ = invoke("check_documents", data)
+    assert facts == {"documents_asked": True, "document_ready": True}
+
+
+def test_document_not_generated_is_not_ready() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V document service", "Generate the record."),
+        event(2, "system", "H&V document service", "H&V agent", "The document has not been generated."),
+    )
+    facts, _ = invoke("check_documents", data)
+    assert facts == {"documents_asked": True, "document_ready": False}
+
+
+def test_unknown_status_uses_one_choice_on_the_system_answer_and_invalid_is_other() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V card journal", "Check the card."),
+        event(2, "system", "H&V card journal", "H&V agent", "The card is in a special queue."),
+    )
+    probe = ClassifyingProbe(data, type("Answer", (), {"value": "NOT_A_CARD_STATUS"})())
+    facts = FUNCTIONS["check_card"](probe)
+    assert facts["card_status"] == "OTHER"
+    assert len(probe.classifications) == 1
+    text, questions = probe.classifications[0]
+    assert text == "The card is in a special queue." and set(questions) == {"status"}
+
+
+@pytest.mark.parametrize("backend", ["jev", "claude"])
+def test_unknown_status_uses_each_fake_classifier_and_replays_once(backend: str) -> None:
+    if backend == "jev":
+        body: dict[str, Any] = {
+            "model": "jev-1.13.0",
+            "usage": {"input_tokens": 1, "output_tokens": 1},
+            "answers": {"status": {"type": "choice", "choice": "OTHER", "confidence": 0.9, "probabilities": {}}},
+        }
+        recorder = Recorder()
+        classifier = JevClassifier(recorder, client=FakeTypeSafe(body))
+    else:
+        recorder = Recorder()
+        classifier = ClaudeClassifier(recorder, client=FakeAnthropic(text_reply('{"status":"OTHER"}')))
+
+    data = case(
+        event(1, "system", "H&V agent", "H&V card journal", "Check the card."),
+        event(2, "system", "H&V card journal", "H&V agent", "The card is in a special queue."),
+    )
+    probe = AdapterProbe(data, classifier)
+    assert FUNCTIONS["check_card"](probe)["card_status"] == "OTHER"
+    assert len(recorder.calls) == 1 and recorder.calls[0].kind == "classify"
+
+    saved = [CallRecord.from_json(json.loads(json.dumps(record.to_json()))) for record in recorder.calls]
+    replay_recorder = Recorder(replay=saved)
+    replay_classifier = JevClassifier(replay_recorder) if backend == "jev" else ClaudeClassifier(replay_recorder)
+    replay_probe = AdapterProbe(data, replay_classifier)
+    assert FUNCTIONS["check_card"](replay_probe)["card_status"] == "OTHER"
+    assert replay_recorder.calls[0].replayed and replay_recorder.unused() == 0
+
+
+def test_classifier_rejects_an_invalid_enum_before_the_reader_can_use_it() -> None:
+    client = FakeAnthropic(text_reply('{"status":"NOT_A_CARD_STATUS"}'))
+    probe = AdapterProbe(
+        case(
+            event(1, "system", "H&V agent", "H&V card journal", "Check the card."),
+            event(2, "system", "H&V card journal", "H&V agent", "The card is in a special queue."),
+        ),
+        ClaudeClassifier(Recorder(), client=client),
+    )
+    with pytest.raises(ModelError, match="not one of"):
+        FUNCTIONS["check_card"](probe)
 
 
 def test_an_answer_before_its_request_is_not_a_fact() -> None:
@@ -396,6 +767,12 @@ def test_enum_readers_preserve_unlisted_answers_as_other(name: str, to: str, ans
             "H&V limit register",
             "The maximum is £20,000 per outgoing payment.",
             {"business_limit": "20000.00"},
+        ),
+        (
+            "check_business",
+            "H&V import service",
+            "Validation report validation-042.txt for batch HV-042 is available; validation status: FAILED.",
+            {"business_status": "VALIDATION_FAILED"},
         ),
         (
             "check_documents",
@@ -545,6 +922,7 @@ def test_reply_is_three_parts_and_does_not_use_agent_words() -> None:
     fields = {
         "requester": "Mara",
         "channel": "secure_portal",
+        "next_system": "payment",
         "subject": "transfer",
         "amount": "420.00",
         "counterparty": "Alder & Reed Workshop",
@@ -555,6 +933,21 @@ def test_reply_is_three_parts_and_does_not_use_agent_words() -> None:
     text = probe.actions[0]["args"]["text"]
     assert text.count(".") >= 3
     assert "recipient bank" in text and "No new transfer was made" in text
+
+
+def test_reply_dispatches_by_next_system() -> None:
+    fields = {
+        "requester": "Mara",
+        "channel": "secure_portal",
+        "next_system": "documents",
+        "subject": "document",
+        "document_ready": True,
+        "payment_status": "SENT",
+    }
+    probe = Probe(case(), fields)
+    FUNCTIONS["reply_customer"](probe)
+    text = probe.actions[0]["args"]["text"]
+    assert "document record" in text and "payment record" not in text
 
 
 @pytest.mark.parametrize(
@@ -588,7 +981,14 @@ def test_completed_identity_check_retains_the_bank_event_as_evidence(kind: str, 
 
 
 @pytest.mark.parametrize(
-    "text", ["Where is the confirmation button?", "How do I confirm it", "I confirm?", "Approval is pending."]
+    "text",
+    [
+        "Where is the confirmation button?",
+        "How do I confirm it",
+        "I confirm?",
+        "Approval is pending.",
+        "I confirm receipt of your message.",
+    ],
 )
 def test_confirmation_requires_an_affirmative_statement(text: str) -> None:
     data = case(
@@ -597,6 +997,59 @@ def test_confirmation_requires_an_affirmative_statement(text: str) -> None:
     )
     facts, _ = invoke("check_confirmation", data)
     assert facts["confirmation"] == "requested"
+
+
+@pytest.mark.parametrize("backend", ["jev", "claude"])
+def test_confirmation_uses_a_fake_classifier_only_for_a_later_secure_portal_customer_message(backend: str) -> None:
+    data = case(
+        event(1, "conversation", "Mara", "H&V", "I confirm the change.", "Secure portal"),
+        event(2, "conversation", "H&V agent", "Mara", "I sent the change for confirmation.", "Secure portal"),
+        event(
+            3,
+            "conversation",
+            "Mara",
+            "H&V",
+            "The amended amount is acceptable and authorised.",
+            "Secure portal",
+        ),
+    )
+    recorder = Recorder()
+    if backend == "jev":
+        client = FakeTypeSafe(
+            {
+                "model": "jev-1.13.0",
+                "usage": {"input_tokens": 1, "output_tokens": 1},
+                "answers": {
+                    "confirmation": {
+                        "type": "choice",
+                        "choice": "GIVEN",
+                        "confidence": 0.9,
+                        "probabilities": {},
+                    }
+                },
+            }
+        )
+        classifier = JevClassifier(recorder, client=client)
+    else:
+        classifier = ClaudeClassifier(
+            recorder,
+            client=FakeAnthropic(text_reply('{"confirmation":"GIVEN"}')),
+        )
+    facts = FUNCTIONS["check_confirmation"](AdapterProbe(data, classifier))
+    assert facts == {"confirmation": "given", "instructed_outside_portal": False}
+    assert len(recorder.calls) == 1
+
+
+def test_confirmation_classifier_overrides_a_receipt_acknowledgement_fast_path() -> None:
+    data = case(
+        event(1, "conversation", "H&V agent", "Mara", "I sent the change for confirmation.", "Secure portal"),
+        event(2, "conversation", "Mara", "H&V", "I confirm receipt of your message.", "Secure portal"),
+    )
+    answer = type("Answer", (), {"value": "NOT_GIVEN"})()
+    probe = ClassifyingProbe(data, answer)
+    facts = FUNCTIONS["check_confirmation"](probe)
+    assert facts["confirmation"] == "requested"
+    assert len(probe.classifications) == 1
 
 
 def test_business_portal_is_not_secure_portal_change_confirmation() -> None:
@@ -630,7 +1083,13 @@ def test_request_reference_and_long_date_evidence_are_preserved() -> None:
     ],
 )
 def test_reply_does_not_deny_a_recorded_change(subject: str, field: str, status: str) -> None:
-    facts = {"requester": "Mara", "channel": "secure_portal", "subject": subject, field: status}
+    system = {
+        "recurring_status": "recurring",
+        "business_status": "business",
+        "access_status": "access",
+        "card_status": "card",
+    }[field]
+    facts = {"requester": "Mara", "channel": "secure_portal", "next_system": system, "subject": subject, field: status}
     _, probe = invoke("reply_customer", case(), facts)
     assert "additional" in probe.actions[0]["args"]["text"]
 
