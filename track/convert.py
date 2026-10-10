@@ -51,6 +51,7 @@ _EVENT_RE = re.compile(r"^## (\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) UTC — eve
 _BULLET_RE = re.compile(r"^- \*\*([^*]+):\*\*\s*(.*)$")
 _ANCHOR_RE = re.compile(r"^<a id=\"[^\"]*\"></a>\s*$")
 _TITLE_RE = re.compile(r"^# Case [^:]+:\s*(.+)$")
+_PORTAL_STATUS_RE = re.compile(r"(?:^|[\n;|—])\s*(?:[\w-]+\s+){0,2}status\s*:\s*\S", re.IGNORECASE)
 
 
 class CaseError(Exception):
@@ -200,9 +201,26 @@ def is_bank_side(name: str, org: list[str] | None = None) -> bool:
     return names_system(name) or any(marker.lower() in lowered for marker in markers)
 
 
+def _portal_bank_author(name: str, org: list[str] | None = None) -> bool:
+    """Portal records need a named bank author, not a generic service/support word."""
+    identities = ["H&V", "Harrow & Vale", *(org or [])]
+    for identity in identities:
+        identity = re.sub(r"\s*\([^)]*\)\s*$", "", identity).strip()
+        if identity and re.match(re.escape(identity) + r"(?:\b|$)", name.strip(), re.IGNORECASE):
+            return True
+    return False
+
+
 def event_kind(event: Event, org: list[str] | None = None) -> str:
-    """`system` for a record between the bank's staff and its internal systems; else `conversation`."""
+    """Internal exchanges and structured bank portal records are `system`; dialogue is `conversation`."""
     if event.channel.lower() in INTERNAL_CHANNELS:
+        return "system"
+    if (
+        event.channel.lower() in {"secure portal", "business portal"}
+        and _portal_bank_author(event.sender, org)
+        and not _portal_bank_author(event.recipient, org)
+        and _PORTAL_STATUS_RE.search(event.text)
+    ):
         return "system"
     both_bank = is_bank_side(event.sender, org) and is_bank_side(event.recipient, org)
     if both_bank and (names_system(event.sender) or names_system(event.recipient)):

@@ -248,6 +248,46 @@ def test_event_kind(channel: str, sender: str, recipient: str, kind: str) -> Non
     assert convert.event_kind(event) == kind
 
 
+@pytest.mark.parametrize(
+    ("channel", "sender", "text", "kind"),
+    [
+        ("Business portal", "H&V secure portal", "Row PAY-12 — status: Rejected. Reason: invalid payee.", "system"),
+        (
+            "Business portal",
+            "Harrow & Vale Bank plc",
+            "Report is available. Batch HV-100 | 4 July 2025; Validation status: FAILED; Row 3: invalid payee.",
+            "system",
+        ),
+        ("Secure portal", "H&V", "Payment status: SENT.", "system"),
+        ("Secure portal", "Ana Lopes", "Payment status: SENT.", "conversation"),
+        ("Secure chat", "H&V agent", "Payment status: SENT.", "conversation"),
+        ("Secure portal", "H&V agent", "I checked the record and your payment was sent.", "conversation"),
+        ("Secure portal", "H&V agent", "I did not say status: SENT.", "conversation"),
+    ],
+)
+def test_bank_portal_records_are_distinct_from_customer_claims_and_dialogue(
+    channel: str, sender: str, text: str, kind: str
+) -> None:
+    record = convert.Event(1, "", channel, sender, "Ana Lopes", text)
+    assert convert.event_kind(record) == kind
+
+
+def test_portal_record_recognizes_the_case_organization() -> None:
+    record = convert.Event(1, "", "Secure portal", "Test Lending Ltd", "Ana Lopes", "Payment status: SENT.")
+    assert convert.event_kind(record, ["Test Lending Ltd"]) == "system"
+
+
+@pytest.mark.parametrize("sender", ["Riverside Support Services Ltd", "Independent agent", "Customer H&V"])
+def test_customer_names_do_not_authorize_portal_records(sender: str) -> None:
+    record = convert.Event(1, "", "Secure portal", sender, "H&V agent", "Payment status: SENT; HV-123.")
+    assert convert.event_kind(record) == "conversation"
+
+
+def test_portal_record_recognizes_organization_without_fictional_suffix() -> None:
+    record = convert.Event(1, "", "Secure portal", "Test Lending Ltd", "Ana Lopes", "Payment status: SENT.")
+    assert convert.event_kind(record, ["Test Lending Ltd (fictional)"]) == "system"
+
+
 def test_command_line(track: Path, tmp_path: Path, capsys: pytest.CaptureFixture[str]) -> None:
     make_case(track)
     out, exp = tmp_path / "out" / "cases.json", tmp_path / "out" / "expected.json"
