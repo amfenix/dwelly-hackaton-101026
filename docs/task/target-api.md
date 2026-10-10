@@ -30,13 +30,26 @@ The same case at different points gives different facts, so a different decision
 - Read from `ctx.case` only (read only). `ctx.world` is not used for now.
 - Found nothing → return `{}`: the field stays unknown, which is a fact the policy uses.
   Raise only when the input itself is broken (no `events` list, an event with no `text`).
-- For every fact, write where it came from: `ctx.note("event 4 (H&V transfer journal): Transfer
-  status: SENT")`. That line is the evidence in REASONING.md.
+- For every fact, write where it came from. A reader groups facts from one source event into one
+  note, such as `ctx.note("event 4 (H&V transfer journal): ... [facts: payment_status='SENT']")`;
+  that line is the evidence in REASONING.md.
 - Deterministic: the same input gives the same facts (replay depends on it). Prefer plain text
   rules; where the wording varies too much, use `ctx.classify` with a `Choice` over the listed
-  values, on the one system event only, never on the customer's words.
+  values. For system-status readers, classify the one system event only, never the customer's words.
 - Never take a fact from a `conversation` event when a `system` event is required: the customer
   saying "it was sent" is not `payment_status: SENT`.
+
+The converter may mark a bank-authored structured portal record as `kind: system` even when its
+sender is the bank and its recipient is the customer. Such an event is trusted only when it has a
+reference (for example `HV-042` or `SUP-17`) also present in the pending system request **and** its
+answer wording matches that request's system domain (a card answer cannot satisfy a transfer
+request). Bare case, file, report or review words do not establish that domain, and conflicting
+structured status domains remain unmatched. The same text in a `conversation` event remains
+customer-visible context and cannot answer the request. A note to a case record is accepted only
+when a result-bearing clause positively attributes the result to a record, journal, log or entry
+(for example, it says that the journal shows or records the result); questions, conditional checks,
+customer claims and pending-answer notes are not answers. A signing queue's explicit second-consent
+result is the narrow business exception.
 
 ## The input (from the converter)
 
@@ -90,18 +103,18 @@ Types are the policy's: `text`, `bool`, `money` (exact decimal, `"420.00"`), `da
 
 ### What it is about
 
-`find_subject` — from `request` and the customer's events.
+`find_subject` — from `request` and the customer's events. The policy classifies the subject from
+the briefing; this function only extracts structured values for that classifier and later tools.
 
 | Field | Type | |
 |---|---|---|
-| `subject` | enum `transfer, incoming_payment, standing_order, direct_debit, card, card_payment, batch, payment_package, profile, access, statement, document, fee, limit, role` | |
 | `amount` | money | the amount named for the subject, if one |
 | `counterparty` | text | payee, payer, merchant or organisation named |
 | `reference` | text | a reference such as `HV-041`, a row such as `SUP-17`, a file name |
 | `subject_date` | date | the date named for the subject, if one |
 
-(The kind of request — status, reason, change, … — is a classifier question in the policy, not a
-function.)
+(The subject and kind of request — status, reason, change, … — are classifier questions in the
+policy, not function facts.)
 
 ### What the systems answered
 
@@ -126,6 +139,10 @@ answer's fields when the answer is there too.
 
 `check_confirmation` — from `conversation` events.
 
+Classify the customer's secure-portal response only after the bank has requested confirmation.
+An affirmative classifier answer cannot turn an earlier response, a bank message, or a response
+on another channel into authorisation. Unknown or invalid answers leave confirmation requested.
+
 | Field | Type | |
 |---|---|---|
 | `confirmation` | enum `none, requested, given` | `requested`: the bank sent the change to the secure portal; `given`: the customer confirmed it **in the secure portal** afterwards |
@@ -141,9 +158,9 @@ words, and record what they do with `ctx.act`. Each returns `{}` (or the one fie
 | `ask_system` | `ctx.act("ask_system", system=<check>, about=<subject>, reference=..., amount=...)` | `next_system` (enum of the checks, set by the policy), the subject fields |
 | `register_request` | `ctx.act("register_request", team=..., about=..., reference=...)` | the subject fields, `next_system` |
 | `send_for_confirmation` | `ctx.act("send_for_confirmation", change=..., to=<requester>)` | the subject fields |
-| `reply_customer` | `ctx.act("reply", to=<requester>, channel=..., text=...)` | every fact |
+| `reply_customer` | `ctx.act("reply", to=<requester>, channel=..., text=...)` | `next_system` and every fact |
 
-`reply_customer` builds the text from a template per `subject` and status, in three parts:
+`reply_customer` builds the text from a template per selected `next_system` and status, in three parts:
 **what the record shows**, **what it does not establish**, **what was not done** — e.g. for
 `payment_status: SENT`: "H&V's journal records your £420.00 transfer to Alder & Reed Workshop as
 sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."
