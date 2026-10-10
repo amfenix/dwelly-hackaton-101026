@@ -16,6 +16,7 @@ from tests.conftest import FakeAnthropic, FakeTypeSafe, text_reply
 
 TRACK = Path(__file__).resolve().parents[1] / "track"
 FUNCTIONS, _ = load_functions(TRACK / "functions.py")
+BANKING_CASES = json.loads((TRACK / "cases.json").read_text())
 
 
 class Probe:
@@ -95,6 +96,10 @@ def invoke(name: str, data: dict[str, Any], fields: dict[str, Any] | None = None
     return FUNCTIONS[name](probe), probe
 
 
+def banking_point(case_id: str, point: int) -> dict[str, Any]:
+    return next(item for item in BANKING_CASES if item["case"] == case_id and item["point"] == point)
+
+
 @pytest.mark.parametrize(
     "name",
     [
@@ -107,6 +112,7 @@ def invoke(name: str, data: dict[str, Any], fields: dict[str, Any] | None = None
         "check_access",
         "check_business",
         "check_documents",
+        "check_tariff",
         "check_registration",
         "check_confirmation",
     ],
@@ -1103,3 +1109,332 @@ def test_permitted_card_restriction_category_maps_to_restricted() -> None:
     )
     facts, _ = invoke("check_card", data)
     assert facts["card_status"] == "RESTRICTED"
+
+
+@pytest.mark.parametrize(
+    ("case_id", "point", "reader", "expected"),
+    [
+        ("030", 4, "check_card", {"card_asked": True, "card_status": "IN_MANUFACTURE"}),
+        ("032", 3, "check_documents", {"documents_asked": True, "document_ready": False}),
+        ("032", 4, "check_documents", {"documents_asked": True, "document_ready": False}),
+        ("028", 5, "check_confirmation", {"confirmation": "given", "instructed_outside_portal": True}),
+        ("036", 4, "check_confirmation", {"confirmation": "given", "instructed_outside_portal": True}),
+        ("013", 5, "check_confirmation", {"confirmation": "given", "instructed_outside_portal": False}),
+        ("046", 4, "check_business", {"business_asked": True, "business_status": "ROLE_REVOKED"}),
+        ("006", 4, "check_payment", {"payment_asked": True, "payment_status": "OTHER", "payment_count": 2}),
+        ("018", 4, "check_payment", {"payment_asked": True, "payment_status": "OTHER", "payment_count": 2}),
+        ("034", 4, "check_tariff", {"tariff_asked": True, "tariff_status": "MATCHES"}),
+    ],
+)
+def test_section3_regressions_on_the_public_case_points(
+    case_id: str, point: int, reader: str, expected: dict[str, Any]
+) -> None:
+    facts, _ = invoke(reader, banking_point(case_id, point))
+    assert facts == expected
+
+
+@pytest.mark.parametrize("case_id", ["006", "018"])
+def test_separate_instruction_answers_have_a_safe_reply_template(case_id: str) -> None:
+    data = banking_point(case_id, 4)
+    facts, _ = invoke("check_payment", data)
+    fields = {
+        **facts,
+        "requester": "Mara Ellison",
+        "channel": "secure_portal",
+        "next_system": "payment",
+        "subject": "payment",
+    }
+    _, probe = invoke("reply_customer", data, fields)
+    text = probe.actions[0]["args"]["text"]
+    assert "2 separate payment instructions" in text
+    assert "No new transfer was made" in text
+    assert "does not establish execution" in text
+
+
+def test_agent_card_note_needs_a_direct_result_and_not_a_question() -> None:
+    data = case(
+        event(
+            1,
+            "system",
+            "H&V agent",
+            "H&V card journal",
+            "I checked whether the card journal shows the replacement status.",
+        )
+    )
+    facts, _ = invoke("check_card", data)
+    assert facts == {"card_asked": True}
+
+
+def test_confirmation_inside_an_unmatched_process_is_not_authorisation() -> None:
+    data = case(
+        event(
+            1,
+            "system",
+            "H&V service agent",
+            "H&V profile change process",
+            "I started the approved profile change process.",
+        ),
+        event(
+            2,
+            "conversation",
+            "Mara Ellison",
+            "H&V",
+            "I confirm that I want the change.",
+            "Secure portal",
+        ),
+    )
+    facts, _ = invoke("check_confirmation", data)
+    assert facts["confirmation"] == "none"
+
+
+@pytest.mark.parametrize(
+    "start_text",
+    [
+        "I have not yet started the approved profile change process.",
+        "I will start the approved profile change process after checking authority.",
+        "If I started the profile change process, confirm securely.",
+        "The customer says I started the profile change process.",
+    ],
+)
+def test_confirmation_does_not_treat_a_planned_process_as_started(start_text: str) -> None:
+    data = case(
+        event(1, "system", "H&V service agent", "H&V profile change process", start_text),
+        event(
+            2,
+            "conversation",
+            "Mara Ellison",
+            "H&V profile change process",
+            "I confirm that I want the change.",
+            "Secure portal",
+        ),
+    )
+    facts, _ = invoke("check_confirmation", data)
+    assert facts["confirmation"] == "none"
+
+
+def test_question_or_imperative_process_start_does_not_gate_confirmation() -> None:
+    for text in ("Should I start the profile change?", "Please start the profile change after checking authority."):
+        data = case(
+            event(1, "system", "H&V service agent", "H&V profile change process", text),
+            event(
+                2,
+                "conversation",
+                "Mara Ellison",
+                "H&V profile change process",
+                "I confirm that I want the change.",
+                "Secure portal",
+            ),
+        )
+        facts, _ = invoke("check_confirmation", data)
+        assert facts["confirmation"] == "none"
+
+
+def test_unrequested_portal_confirmation_needs_a_bank_record_of_adoption() -> None:
+    data = case(
+        event(
+            1,
+            "conversation",
+            "Mara Ellison",
+            "H&V",
+            "I confirm that I want the change.",
+            "Secure portal",
+        ),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V case record",
+            "The portal confirmation is mentioned in the case history.",
+        ),
+    )
+    facts, _ = invoke("check_confirmation", data)
+    assert facts["confirmation"] == "none"
+
+
+@pytest.mark.parametrize(
+    "processing_text",
+    [
+        "I am not submitting the secure-portal confirmation HV-111.",
+        "Please submit the secure-portal confirmation HV-111 when checks complete.",
+        "I am submitting Alice's secure-portal confirmation HV-222.",
+    ],
+)
+def test_portal_confirmation_adoption_must_be_positive_and_for_the_same_change(processing_text: str) -> None:
+    data = case(
+        event(
+            1,
+            "conversation",
+            "Mara Ellison",
+            "H&V",
+            "I confirm the change for reference HV-111.",
+            "Secure portal",
+        ),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V protected instruction process",
+            processing_text,
+        ),
+    )
+    facts, _ = invoke("check_confirmation", data)
+    assert facts["confirmation"] == "none"
+
+
+def test_future_portal_confirmation_is_not_adopted_as_given() -> None:
+    data = case(
+        event(
+            1,
+            "conversation",
+            "Mara Ellison",
+            "H&V",
+            "I will confirm the change for reference HV-111 later.",
+            "Secure portal",
+        ),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V protected instruction process",
+            "I am submitting Mara Ellison's secure-portal confirmation HV-111.",
+        ),
+    )
+    facts, _ = invoke("check_confirmation", data)
+    assert facts["confirmation"] == "none"
+
+
+def test_unbound_portal_confirmation_pronoun_is_not_adopted() -> None:
+    data = case(
+        event(1, "conversation", "Mara Ellison", "H&V", "I confirm the change.", "Secure portal"),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V protected instruction process",
+            "I am submitting her secure-portal confirmation for HV-222.",
+        ),
+    )
+    facts, _ = invoke("check_confirmation", data)
+    assert facts["confirmation"] == "none"
+
+
+@pytest.mark.parametrize(
+    "processing_text",
+    [
+        (
+            "Mara Ellison has an unresolved instruction. Alice Smith completed confirmation. "
+            "I am submitting her secure-portal confirmation."
+        ),
+        "Mara Ellison and Alice Smith have unresolved instructions. I am submitting her secure-portal confirmation.",
+    ],
+)
+def test_portal_adoption_pronoun_needs_an_immediate_unambiguous_owner(processing_text: str) -> None:
+    data = case(
+        event(1, "conversation", "Mara Ellison", "H&V", "I confirm the change.", "Secure portal"),
+        event(2, "system", "H&V agent", "H&V protected instruction process", processing_text),
+    )
+    facts, _ = invoke("check_confirmation", data)
+    assert facts["confirmation"] == "none"
+
+
+@pytest.mark.parametrize(
+    ("candidate", "adoption", "expected"),
+    [
+        (
+            "I confirm the change for reference HV-111.",
+            "HV-111 still awaits authority checks. I am submitting Alice's secure-portal confirmation HV-222.",
+            "none",
+        ),
+        (
+            "I confirm the change for reference HV-111.",
+            "I am submitting Alice's secure-portal confirmation HV-111.",
+            "none",
+        ),
+        (
+            "I confirm the change for reference HV-111.",
+            "I am submitting Mara Ellison's secure-portal confirmation HV-111.",
+            "given",
+        ),
+        (
+            "I confirm the change for reference HV-111.",
+            "I am submitting Mara Smith's secure-portal confirmation HV-111.",
+            "none",
+        ),
+    ],
+)
+def test_portal_adoption_uses_the_action_clause_and_customer(candidate: str, adoption: str, expected: str) -> None:
+    data = case(
+        event(1, "conversation", "Mara Ellison", "H&V", candidate, "Secure portal"),
+        event(2, "system", "H&V agent", "H&V protected instruction process", adoption),
+    )
+    facts, _ = invoke("check_confirmation", data)
+    assert facts["confirmation"] == expected
+
+
+def test_self_contained_card_result_matches_an_existing_card_request() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V card journal", "Check the replacement."),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V card journal",
+            "I checked the card journal. The record shows the replacement is in manufacture.",
+        ),
+    )
+    facts, _ = invoke("check_card", data)
+    assert facts == {"card_asked": True, "card_status": "IN_MANUFACTURE"}
+
+
+def test_self_contained_card_note_does_not_answer_a_card_team_request() -> None:
+    data = case(
+        event(1, "system", "H&V agent", "H&V card team", "Please check the replacement."),
+        event(
+            2,
+            "system",
+            "H&V agent",
+            "H&V card journal",
+            "I checked the card journal. The record shows the replacement is in manufacture.",
+        ),
+    )
+    facts, _ = invoke("check_card", data)
+    assert facts == {"card_asked": True}
+
+
+def test_tariff_mismatch_is_distinct_from_a_matching_fee() -> None:
+    data = case(
+        event(1, "system", "H&V service agent", "H&V transaction records", "Check the fee against the tariff."),
+        event(2, "system", "H&V transaction records", "H&V service agent", "The fee does not match the tariff entry."),
+    )
+    facts, _ = invoke("check_tariff", data)
+    assert facts == {"tariff_asked": True, "tariff_status": "MISMATCH"}
+
+
+@pytest.mark.parametrize(
+    "answer",
+    [
+        "Please check whether the fee matches the tariff entry.",
+        "If the fee matches the tariff entry, reply to the customer.",
+    ],
+)
+def test_tariff_questions_and_conditions_are_not_matches(answer: str) -> None:
+    data = case(
+        event(1, "system", "H&V service agent", "H&V transaction records", "Check the fee against the tariff."),
+        event(2, "system", "H&V transaction records", "H&V service agent", answer),
+    )
+    facts, _ = invoke("check_tariff", data)
+    assert facts == {"tariff_asked": True, "tariff_status": "OTHER"}
+
+
+@pytest.mark.parametrize("status", ["MATCHES", "MISMATCH", "OTHER"])
+def test_tariff_reply_template_is_narrow_and_safe(status: str) -> None:
+    fields = {
+        "requester": "Mara",
+        "channel": "secure_portal",
+        "next_system": "tariff",
+        "subject": "fee",
+        "tariff_status": status,
+    }
+    _, probe = invoke("reply_customer", case(), fields)
+    text = probe.actions[0]["args"]["text"]
+    assert "tariff review" in text and "No fee or account change was made" in text
