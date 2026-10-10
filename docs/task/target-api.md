@@ -79,11 +79,13 @@ place (`SYSTEMS` in functions.py), matched case-insensitively on these words:
 | `business` | signing log, import journal, import service, limit register, admin process, admin log, access-request journal |
 | `documents` | statements service, archive group, statement service, document service, data service, acquiring service |
 | `registration` | any team asked to **register, review or open a case** (Direct Debit team, card team, tariff team, data team), request log, case journal |
+| `tariff` | tariff team, tariff register or entry, transaction records |
 
 A request **to** the system is `<check>_asked`; the first later event **from** it (or a note to a
-case record quoting it) is the answer. A request to a team counts as `registration` when it asks
-to register, review or open a case; otherwise it belongs to that team's own check (a card team
-asked for a card's status is `card`).
+case record quoting it) is the answer. A narrowly attributed agent note that says it checked the
+card journal and reports what the record shows is also a card answer. A request to a team counts
+as `registration` when it asks to register, review or open a case; otherwise it belongs to that
+team's own check (a card team asked for a card's status is `card`).
 
 ## The functions and their fields
 
@@ -130,22 +132,31 @@ answer's fields when the answer is there too.
 | `check_access` | `access_asked` bool; `access_status` enum `RESTORED, AWAITING_CONFIRMATION, LINKED, PROCEDURE_STARTED, EXTRACT_PROVIDED, OTHER` |
 | `check_business` | `business_asked` bool; `business_status` enum `RECEIVED, VALIDATION_FAILED, AWAITING_SECOND_SIGNATORY, PENDING_APPROVAL, ROLE_REVOKED, OTHER`; `business_limit` money |
 | `check_documents` | `documents_asked` bool; `document_ready` bool; `document_name` text (an attachment available at this point) |
+| `check_tariff` | `tariff_asked` bool; `tariff_status` enum `MATCHES, MISMATCH, OTHER` |
 | `check_registration` | `registration_asked` bool; `registered` bool; `registration_ref` text |
 
 `OTHER` means the system answered something the list does not have: return it with a
 `ctx.note` quoting the answer, so we can extend the list.
 
+For `check_documents`, a statement being **available to order** is not ready: an order still has
+to be placed. `check_tariff` reports whether the recorded fee matches the applicable tariff;
+`MATCHES` and `MISMATCH` are the explicit outcomes and `OTHER` covers an answer without either.
+
 ### Has the customer confirmed a change
 
 `check_confirmation` — from `conversation` events.
 
-Classify the customer's secure-portal response only after the bank has requested confirmation.
-An affirmative classifier answer cannot turn an earlier response, a bank message, or a response
-on another channel into authorisation. Unknown or invalid answers leave confirmation requested.
+Classify the customer's secure-portal response after the bank has requested confirmation or
+started the protected profile-change process addressed by that response. The history may also
+contain a portal confirmation before the request: accept that confirmation only when a later,
+bank-authored system record explicitly submits or records that same secure-portal confirmation.
+An affirmative classifier answer cannot authorise an unrequested response without that bank
+acceptance, a bank message, or a response on another channel. Unknown or invalid answers leave
+confirmation requested when a request is present.
 
 | Field | Type | |
 |---|---|---|
-| `confirmation` | enum `none, requested, given` | `requested`: the bank sent the change to the secure portal; `given`: the customer confirmed it **in the secure portal** afterwards |
+| `confirmation` | enum `none, requested, given` | `requested`: the bank sent the change to the secure portal; `given`: the customer confirmed it **in the secure portal** after a request or protected-process start, or the bank explicitly accepted that earlier portal confirmation |
 | `instructed_outside_portal` | bool | the change was asked for by email or chat only (not an authorisation) |
 
 ## Actions
