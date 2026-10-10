@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nerys Wren, a verified customer on the secure portal, asked for the permitted session extract for her profile to be delivered through the portal. The desk classified it as an access question and put a query to the access system, which accepted it, and the case closed as asked. The record shows no answer from the access system and no extract delivered, so nothing has gone to her yet.
+Nerys Wren, a verified customer writing through the secure portal, asked for the permitted session extract for her profile to be delivered in the portal. The desk classified it as an access question and sent a query to the access system, and the case closed at that step. The record shows no response from the access system yet, so nothing has been delivered to her, and the delivery is still outstanding.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -67,6 +67,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

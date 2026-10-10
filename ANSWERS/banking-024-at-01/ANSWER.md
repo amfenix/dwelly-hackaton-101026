@@ -4,7 +4,7 @@
 
 ## Summary
 
-The message was classified as a question about a card, and the desk routed it to the card system and sent it a query on that subject. The case closed in the asked state. The desk's attempt to send a reply was refused because none of the conditions for a reply were met, so no answer has gone back to the requester. The record does not say whether the card system has responded.
+The message was a question about a card. The desk classified it as a card question with no request for credentials and no joint-holder change, and it passed the question to the card system, which closed the case in the asked state. The desk then tried to send a reply and was refused, because no card status or other result had come back, so no answer has gone to the requester and the case is left for the card system's response or a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -53,6 +53,8 @@ Facts established:
 - subject: **card**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 ## Escalated
 

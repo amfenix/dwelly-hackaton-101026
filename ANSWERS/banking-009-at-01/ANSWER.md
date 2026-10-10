@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked which amount was actually sent, saying they remembered entering £684.20 in the transfer draft while the final payment line shows £648.20. The desk classed this as a question about a transfer and asked the payment system about the £648.20 transfer, and that request went through with no error. The record does not show the payment system's answer yet, so the customer has not been given a confirmed figure.
+The customer asked the desk to confirm the amount actually sent, because they remembered entering £684.20 in the transfer draft while the final payment line showed £648.20. The desk read the case as a question about a transfer and put a query to the payment system about the £648.20 transfer; the case closed at that point with no amount confirmed. The record shows nothing further for a person to do, and the payment system's answer had not yet come back.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,6 +56,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

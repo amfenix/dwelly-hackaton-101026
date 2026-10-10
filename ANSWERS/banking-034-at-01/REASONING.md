@@ -48,27 +48,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.62 → question.
-48. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → fee (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
-53. `next_system`: not known → tariff (by `route-tariff`).
-54. The agent asked for `ask_system` {"system": "tariff"}.
-55. Rule `tariff-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = tariff → true (args.system=tariff); next_system = tariff → true (next_system=tariff); next_system absent → false (next_system=tariff); tariff_asked absent → true (tariff_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `tariff-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-034-at-01:do-ask:17).
-59. Action in the world: `ask_system` {"system": "tariff", "about": "fee", "amount": "3.20"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.76 → question.
+48. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+49. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+50. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
+51. `request_type`: not known → question (by `triage`).
+52. `credentials_requested`: not known → False (by `triage`).
+53. `joint_holder_change`: not known → False (by `triage`).
+54. `subject`: not known → fee (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
+57. `next_system`: not known → tariff (by `route-tariff`).
+58. The agent asked for `ask_system` {"system": "tariff"}.
+59. Rule `tariff-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = tariff → true (args.system=tariff); next_system = tariff → true (next_system=tariff); next_system absent → false (next_system=tariff); tariff_asked absent → true (tariff_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+60. State `TRIAGED` → `ASK_PENDING` (by `tariff-ask`).
+61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+62. Called `ask_system` (attempt 1, key banking-034-at-01:do-ask:17).
+63. Action in the world: `ask_system` {"system": "tariff", "about": "fee", "amount": "3.20"}.
+64. `ask_system` found {}.
+65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+66. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6666 tokens in, 419 out, 3.768 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7507 tokens in, 430 out, 3.984 s, cost $0.0148; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've queried the tariff system about the £3.20 fee on your foreign-currency cash withdrawal. The case is now closed at that step, and the desk has not yet recorded a tariff answer. I can't yet say what the charge is for or how its amount was worked out. I'm not going to guess at that without the tariff record.
+> I've queried the tariff system about the £3.20 fee on your foreign-currency cash withdrawal. The query was accepted, but no tariff answer has come back yet. The case record still shows only the fee amount and that you asked a question, so I can't yet say what the charge is for or how it was calculated. I'll write to you once the tariff details arrive.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, who is not verified and wrote via secure chat, said she is the authorised manager for North Quay Printworks and asked for the acquiring report for 1–7 July 2025 because it wasn't showing as available. The desk asked the documents system and closed the case in WAITING, since that system's answer on whether the report is ready had not come back. A second documents query and the agent's escalation note were both refused because the case was already in WAITING, so nothing was released or promised. Someone still needs to check whether the report exists and verify Mara's identity and authority.
+Mara Venn, who is unverified and writing over secure chat, said she is the shop's authorised manager and asked for the acquiring report for 1–7 July 2025, which isn't showing as available, to be escalated. The desk had already asked the documents system and had no answer yet, so it closed the case as waiting. Its later attempts to ask the documents system again and to escalate to a person were both refused because the case was no longer open, and nothing was released or sent. Her identity and authority are still unconfirmed, and someone will need to pick the case up to find out why the report isn't available.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

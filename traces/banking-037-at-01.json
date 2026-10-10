@@ -1,7 +1,7 @@
 {
   "id": "banking-037-at-01",
-  "outcome": "submit_request",
-  "state": "REQUESTED",
+  "outcome": "escalate",
+  "state": "ESCALATED",
   "final": true,
   "fields": {
     "requester": null,
@@ -44,20 +44,15 @@
     "registration_ref": null,
     "confirmation": null,
     "instructed_outside_portal": null,
-    "request_type": "register",
+    "request_type": "change",
     "next_system": "access",
-    "reason": null,
-    "clarify_need": null
+    "reason": "AGENT_ESCALATED",
+    "clarify_need": null,
+    "refusal_reason": null,
+    "credentials_requested": false,
+    "joint_holder_change": false
   },
-  "actions": [
-    {
-      "type": "register_request",
-      "args": {
-        "team": "access",
-        "about": "profile"
-      }
-    }
-  ],
+  "actions": [],
   "error": null,
   "input": {
     "id": "banking-037-at-01",
@@ -87,7 +82,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The request was treated as a registration about the customer's profile, which the message described as a name correction (\"Elowen Mar\" to \"Elowen Marr\"). The desk routed it to the access team and registered the request there; it changed nothing in the profile itself. An attempt to ask the access system a question first was refused, and the case then closed as submitted. Whether the team will need anything more from the customer is not known from the record.",
+  "summary": "The customer asked to correct the name on their profile from \"Elowen Mar\" to \"Elowen Marr\". The desk classified it as a profile change, not a credentials request or joint-holder change, but policy refused both the query to the access system and the submission of the request, and the customer's identity was not verified. The case was escalated with no actions taken, so a person still needs to verify the customer and handle the legal-name correction, which the agent's note says usually needs supporting ID.",
   "journal": [
     {
       "seq": 1,
@@ -559,19 +554,43 @@
     },
     {
       "seq": 42,
-      "at": 0.29,
+      "at": 0.242,
       "kind": "choice",
       "field": "request_type",
-      "raw": "register",
-      "confidence": 0.45,
-      "value": "register",
+      "raw": "change",
+      "confidence": 0.46,
+      "value": "change",
       "backend": "jev",
       "model": "jev-latest",
       "attempt": 1
     },
     {
       "seq": 43,
-      "at": 0.29,
+      "at": 0.242,
+      "kind": "noul",
+      "field": "credentials_requested",
+      "raw": 0.01,
+      "confidence": null,
+      "value": false,
+      "backend": "jev",
+      "model": "jev-latest",
+      "attempt": 1
+    },
+    {
+      "seq": 44,
+      "at": 0.242,
+      "kind": "noul",
+      "field": "joint_holder_change",
+      "raw": 0.05,
+      "confidence": null,
+      "value": false,
+      "backend": "jev",
+      "model": "jev-latest",
+      "attempt": 1
+    },
+    {
+      "seq": 45,
+      "at": 0.242,
       "kind": "choice",
       "field": "subject",
       "raw": "profile",
@@ -582,17 +601,35 @@
       "attempt": 1
     },
     {
-      "seq": 44,
-      "at": 0.29,
+      "seq": 46,
+      "at": 0.242,
       "kind": "set",
       "field": "request_type",
       "old": null,
-      "new": "register",
+      "new": "change",
       "by": "triage"
     },
     {
-      "seq": 45,
-      "at": 0.29,
+      "seq": 47,
+      "at": 0.242,
+      "kind": "set",
+      "field": "credentials_requested",
+      "old": null,
+      "new": false,
+      "by": "triage"
+    },
+    {
+      "seq": 48,
+      "at": 0.242,
+      "kind": "set",
+      "field": "joint_holder_change",
+      "old": null,
+      "new": false,
+      "by": "triage"
+    },
+    {
+      "seq": 49,
+      "at": 0.242,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -600,16 +637,16 @@
       "by": "triage"
     },
     {
-      "seq": 46,
-      "at": 0.29,
+      "seq": 50,
+      "at": 0.242,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 47,
-      "at": 0.29,
+      "seq": 51,
+      "at": 0.242,
       "kind": "trigger",
       "name": "route-access",
       "on": null,
@@ -640,8 +677,8 @@
       "note": ""
     },
     {
-      "seq": 48,
-      "at": 0.29,
+      "seq": 52,
+      "at": 0.242,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -649,8 +686,8 @@
       "by": "route-access"
     },
     {
-      "seq": 49,
-      "at": 2.558,
+      "seq": 53,
+      "at": 2.239,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -658,27 +695,44 @@
       }
     },
     {
-      "seq": 50,
-      "at": 2.558,
+      "seq": 54,
+      "at": 2.239,
       "kind": "refused",
       "signal": "ask_system",
-      "reason": "payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)",
+      "reason": "payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change)",
       "state": "TRIAGED"
     },
     {
-      "seq": 51,
-      "at": 3.616,
+      "seq": 55,
+      "at": 3.658,
       "kind": "signal",
       "signal": "submit_request",
       "args": {}
     },
     {
-      "seq": 52,
-      "at": 3.617,
+      "seq": 56,
+      "at": 3.658,
+      "kind": "refused",
+      "signal": "submit_request",
+      "reason": "register: request_type = register is false (request_type=change); register-what-fits-no-type: request_type = other is false (request_type=change); payment-instruction: next_system = payment is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); recurring-instruction: next_system = recurring is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); access-instruction: verified is not known (verified=not known); request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change)",
+      "state": "TRIAGED"
+    },
+    {
+      "seq": 57,
+      "at": 5.976,
+      "kind": "signal",
+      "signal": "escalate",
+      "args": {
+        "note": "Customer asks to correct the profile name from \"Elowen Mar\" to \"Elowen Marr\". This is a profile change request. Not a credentials request and not a joint-holder change. Asking the access system and submitting the request were both refused by policy, and the customer's identity is not verified. A person needs to verify the customer and handle the legal-name correction, which usually needs supporting ID."
+      }
+    },
+    {
+      "seq": 58,
+      "at": 5.976,
       "kind": "trigger",
-      "name": "register",
-      "on": "submit_request",
-      "when": "state = TRIAGED and request_type = register and registration_asked absent",
+      "name": "agent-escalates",
+      "on": "escalate",
+      "when": "state = TRIAGED",
       "why": [
         {
           "test": "state = TRIAGED",
@@ -686,92 +740,33 @@
           "values": {
             "state": "TRIAGED"
           }
-        },
-        {
-          "test": "request_type = register",
-          "result": true,
-          "values": {
-            "request_type": "register"
-          }
-        },
-        {
-          "test": "registration_asked absent",
-          "result": true,
-          "values": {
-            "registration_asked": null
-          }
         }
       ],
       "note": ""
-    },
-    {
-      "seq": 53,
-      "at": 3.617,
-      "kind": "state",
-      "frm": "TRIAGED",
-      "to": "REQUEST_PENDING",
-      "by": "register"
-    },
-    {
-      "seq": 54,
-      "at": 3.617,
-      "kind": "trigger",
-      "name": "do-request",
-      "on": null,
-      "when": "state = REQUEST_PENDING",
-      "why": [
-        {
-          "test": "state = REQUEST_PENDING",
-          "result": true,
-          "values": {
-            "state": "REQUEST_PENDING"
-          }
-        }
-      ],
-      "note": ""
-    },
-    {
-      "seq": 55,
-      "at": 3.617,
-      "kind": "call",
-      "function": "register_request",
-      "attempt": 1,
-      "key": "banking-037-at-01:do-request:17",
-      "args": {}
-    },
-    {
-      "seq": 56,
-      "at": 3.617,
-      "kind": "action",
-      "type": "register_request",
-      "args": {
-        "team": "access",
-        "about": "profile"
-      },
-      "by": "do-request",
-      "key": "banking-037-at-01:do-request:17"
-    },
-    {
-      "seq": 57,
-      "at": 3.617,
-      "kind": "returned",
-      "function": "register_request",
-      "values": {}
-    },
-    {
-      "seq": 58,
-      "at": 3.617,
-      "kind": "state",
-      "frm": "REQUEST_PENDING",
-      "to": "REQUESTED",
-      "by": "do-request"
     },
     {
       "seq": 59,
-      "at": 3.617,
+      "at": 5.976,
+      "kind": "set",
+      "field": "reason",
+      "old": null,
+      "new": "AGENT_ESCALATED",
+      "by": "agent-escalates"
+    },
+    {
+      "seq": 60,
+      "at": 5.976,
+      "kind": "state",
+      "frm": "TRIAGED",
+      "to": "ESCALATED",
+      "by": "agent-escalates"
+    },
+    {
+      "seq": 61,
+      "at": 5.976,
       "kind": "final",
-      "state": "REQUESTED",
-      "outcome": "submit_request"
+      "state": "ESCALATED",
+      "outcome": "escalate"
     }
   ],
   "calls": [
@@ -795,6 +790,14 @@
               "other": "none of these (a bereavement, a complaint, a request for the personal data the bank holds, closing an account, credit)",
               "unknown": "The text does not say, or says too little to tell."
             }
+          },
+          "credentials_requested": {
+            "type": "noul",
+            "instructions": "Does the message ask the bank to use another person's login, or to give or read out a one-time code, a PIN or a password?"
+          },
+          "joint_holder_change": {
+            "type": "noul",
+            "instructions": "Does one holder of a joint account ask to remove or change another holder?"
           },
           "subject": {
             "type": "choice",
@@ -824,24 +827,32 @@
       "response": {
         "model": "jev-1.13.0",
         "usage": {
-          "input_tokens": 946,
-          "output_tokens": 206
+          "input_tokens": 1005,
+          "output_tokens": 241
         },
         "answers": {
           "request_type": {
             "type": "choice",
-            "choice": "register",
-            "confidence": 0.45,
+            "choice": "change",
+            "confidence": 0.46,
             "probabilities": {
               "question": 0.0,
-              "register": 0.52,
-              "change": 0.48,
+              "register": 0.47,
+              "change": 0.53,
               "instruction": 0.0,
               "access": 0.0,
               "authority": 0.0,
               "other": 0.0,
               "unknown": 0.0
             }
+          },
+          "credentials_requested": {
+            "type": "noul",
+            "noul": 0.01
+          },
+          "joint_holder_change": {
+            "type": "noul",
+            "noul": 0.05
           },
           "subject": {
             "type": "choice",
@@ -868,13 +879,13 @@
           }
         }
       },
-      "seconds": 0.2882303000660613,
-      "input_tokens": 946,
-      "output_tokens": 206,
+      "seconds": 0.24020629993174225,
+      "input_tokens": 1005,
+      "output_tokens": 241,
       "cost_usd": null,
       "error": null,
       "replayed": false,
-      "digest": "e72490114c5613f1874d693ce6ee757b39932db2b0aaca0f693689440546aedd"
+      "digest": "72a8a2077a795d01e97c9206fd3ebc6ca3cb5f3c00dc0c5ee905913e01e8550f"
     },
     {
       "kind": "agent",
@@ -982,6 +993,31 @@
             "strict": true
           },
           {
+            "name": "refuse",
+            "description": "A last resort, when the bank can do what was asked in no permitted way: someone else's account, another person's login or a code, PIN or password, a request from someone without the authority, a change to a joint account by one holder. Name the reason; the desk writes the reply with the permitted route. Not when the request can be forwarded or checked instead.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "someone_elses_account",
+                    "credentials",
+                    "no_authority",
+                    "needs_all_holders",
+                    "other"
+                  ],
+                  "description": "why the bank cannot do it"
+                }
+              },
+              "required": [
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          },
+          {
             "name": "escalate",
             "description": "Nothing above fits, or the facts conflict: hand the case to a person.",
             "input_schema": {
@@ -1012,21 +1048,16 @@
         "messages": [
           {
             "role": "user",
-            "content": "<case>\nRequest: Please correct the spelling of my name in my H&V profile. It shows “Elowen Mar”; my correct name is “Elowen Marr”.\n</case>\nFacts established: {'subject': 'profile', 'request_type': 'register', 'next_system': 'access'}"
+            "content": "<case>\nRequest: Please correct the spelling of my name in my H&V profile. It shows “Elowen Mar”; my correct name is “Elowen Marr”.\n</case>\nFacts established: {'subject': 'profile', 'request_type': 'change', 'next_system': 'access', 'credentials_requested': 'False', 'joint_holder_change': 'False'}"
           }
         ]
       },
       "response": {
-        "id": "msg_011Cfted2rztJPTc1MEuAQss",
+        "id": "msg_011CftfqNvSapqXHp5GYCkyW",
         "container": null,
         "content": [
           {
-            "signature": "CAQS1gUKEAgSGAI4AUIIdGhpbmtpbmcSDBK8JiCELO8Itf+NtBoMIXq7Es4KOjwEIwYGIjDTCXLueZXCdaGvpJnddEuAroJnp+6aa2cyBkh6udlDFPWs136ytQUzKUQlrPG3bs8q8wSI74bOOVB1aQBQtXxc7W3P0OEoPfNavmpa/sFoXzP91mopCR9YEj9RLDlCOY5UpFU3uK4Hj5HGACLN0uEThUPTh0FHLlTXn5rM/me57MMo+szzQMWnIuXjwdeNsVaIuxc5ln3sGBixDQimNPYmQJyrpv/agh8UpIRyQF3KICdQR63sn/BybV9vtTjklhcvz0C0xJDCpE/X2VbY3vLAg0yGHssvQAbConXV9ipqj05u/z4FXN2umM3gvqDZU7eTEXyBzMBMrFNKRPSxvyH9Fx/ivaZ1bjUSmgM2lvYffmZjJ1Pjc+WDL7lo2yWiTFKr0YScCq5GDdqBLsUiXCMMyuT5zxEF1k9w2kdL9nAnZSmEjkszQjS4seQUBTV1mFQFz7EXpHP0hTcBmN6x86tclnIa8veoeszBryQyLVx+JChZg42+RCe1X9AsHZABOvcnruURHjaEsSvhbDGISmaswnPCZwRHM06RzyhVvn2YzthfOOGHyeGnR7FjDqVFtx4hXOZWnFh9Cf22ZUD7tufR25PPpA2d8uOxRSkObENafnaobuEhug9hXVADUM3wWc4gEtAnpKuGJK2qol/SiJ47cfA9IeL5BGWrYhEhoWKD4ymDWXuzmZI+/axF5T6yCJtzdDgOOqLu+mgGWASd5GsMLoFeFNESb+9lrgyjMi78UqgqVzERonoGXjdJn945O3lQUX2/LzciY+1S6ixfQjk3UBmi4FjP/NOKYDXUbHGAx5GcXH8MqhKfOBVDfFskeFQ5BuHnQywLTq/NP2uldzHlm9dknoUsdcGbxyxe7QF1XtRHg4eVq8f55ITdRlwbHWAqL6+G6QcYAQ==",
-            "thinking": "",
-            "type": "thinking"
-          },
-          {
-            "id": "toolu_013QNyYYttdiESjkTBnjyCx4",
+            "id": "toolu_01FRs6uQnhP7C6fEcLrLD1nf",
             "caller": {
               "type": "direct"
             },
@@ -1051,22 +1082,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1671,
-          "output_tokens": 85,
+          "input_tokens": 1925,
+          "output_tokens": 26,
           "output_tokens_details": {
-            "thinking_tokens": 58
+            "thinking_tokens": 0
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.4727173999417573,
-      "input_tokens": 1671,
-      "output_tokens": 85,
-      "cost_usd": 0.004192,
+      "seconds": 0.8388288000132889,
+      "input_tokens": 1925,
+      "output_tokens": 26,
+      "cost_usd": 0.00411,
       "error": null,
       "replayed": false,
-      "digest": "b817a099228195098af93e40285f94f51e97e467490a8e39e5691fee794b03ed"
+      "digest": "651cccbcd22f98a5c48a647582730b0511aad64b16ffcd4881a30ccf1db5e32e"
     },
     {
       "kind": "agent",
@@ -1174,6 +1205,31 @@
             "strict": true
           },
           {
+            "name": "refuse",
+            "description": "A last resort, when the bank can do what was asked in no permitted way: someone else's account, another person's login or a code, PIN or password, a request from someone without the authority, a change to a joint account by one holder. Name the reason; the desk writes the reply with the permitted route. Not when the request can be forwarded or checked instead.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "someone_elses_account",
+                    "credentials",
+                    "no_authority",
+                    "needs_all_holders",
+                    "other"
+                  ],
+                  "description": "why the bank cannot do it"
+                }
+              },
+              "required": [
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          },
+          {
             "name": "escalate",
             "description": "Nothing above fits, or the facts conflict: hand the case to a person.",
             "input_schema": {
@@ -1204,18 +1260,13 @@
         "messages": [
           {
             "role": "user",
-            "content": "<case>\nRequest: Please correct the spelling of my name in my H&V profile. It shows “Elowen Mar”; my correct name is “Elowen Marr”.\n</case>\nFacts established: {'subject': 'profile', 'request_type': 'register', 'next_system': 'access'}"
+            "content": "<case>\nRequest: Please correct the spelling of my name in my H&V profile. It shows “Elowen Mar”; my correct name is “Elowen Marr”.\n</case>\nFacts established: {'subject': 'profile', 'request_type': 'change', 'next_system': 'access', 'credentials_requested': 'False', 'joint_holder_change': 'False'}"
           },
           {
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS1gUKEAgSGAI4AUIIdGhpbmtpbmcSDBK8JiCELO8Itf+NtBoMIXq7Es4KOjwEIwYGIjDTCXLueZXCdaGvpJnddEuAroJnp+6aa2cyBkh6udlDFPWs136ytQUzKUQlrPG3bs8q8wSI74bOOVB1aQBQtXxc7W3P0OEoPfNavmpa/sFoXzP91mopCR9YEj9RLDlCOY5UpFU3uK4Hj5HGACLN0uEThUPTh0FHLlTXn5rM/me57MMo+szzQMWnIuXjwdeNsVaIuxc5ln3sGBixDQimNPYmQJyrpv/agh8UpIRyQF3KICdQR63sn/BybV9vtTjklhcvz0C0xJDCpE/X2VbY3vLAg0yGHssvQAbConXV9ipqj05u/z4FXN2umM3gvqDZU7eTEXyBzMBMrFNKRPSxvyH9Fx/ivaZ1bjUSmgM2lvYffmZjJ1Pjc+WDL7lo2yWiTFKr0YScCq5GDdqBLsUiXCMMyuT5zxEF1k9w2kdL9nAnZSmEjkszQjS4seQUBTV1mFQFz7EXpHP0hTcBmN6x86tclnIa8veoeszBryQyLVx+JChZg42+RCe1X9AsHZABOvcnruURHjaEsSvhbDGISmaswnPCZwRHM06RzyhVvn2YzthfOOGHyeGnR7FjDqVFtx4hXOZWnFh9Cf22ZUD7tufR25PPpA2d8uOxRSkObENafnaobuEhug9hXVADUM3wWc4gEtAnpKuGJK2qol/SiJ47cfA9IeL5BGWrYhEhoWKD4ymDWXuzmZI+/axF5T6yCJtzdDgOOqLu+mgGWASd5GsMLoFeFNESb+9lrgyjMi78UqgqVzERonoGXjdJn945O3lQUX2/LzciY+1S6ixfQjk3UBmi4FjP/NOKYDXUbHGAx5GcXH8MqhKfOBVDfFskeFQ5BuHnQywLTq/NP2uldzHlm9dknoUsdcGbxyxe7QF1XtRHg4eVq8f55ITdRlwbHWAqL6+G6QcYAQ==",
-                "thinking": "",
-                "type": "thinking"
-              },
-              {
-                "id": "toolu_013QNyYYttdiESjkTBnjyCx4",
+                "id": "toolu_01FRs6uQnhP7C6fEcLrLD1nf",
                 "caller": {
                   "type": "direct"
                 },
@@ -1231,19 +1282,24 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_013QNyYYttdiESjkTBnjyCx4",
-                "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"profile\", \"request_type\": \"register\", \"next_system\": \"access\"}, \"refused\": []}"
+                "tool_use_id": "toolu_01FRs6uQnhP7C6fEcLrLD1nf",
+                "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"profile\", \"request_type\": \"change\", \"next_system\": \"access\", \"credentials_requested\": false, \"joint_holder_change\": false}, \"refused\": []}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011Cfted96YHEAGixUYcPWEQ",
+        "id": "msg_011CftfqSV2162QMaD2xY9WH",
         "container": null,
         "content": [
           {
-            "id": "toolu_01PpyE5G8K1wyf4c4gCPvVZU",
+            "signature": "CAQS4QQKEAgSGAI4AUIIdGhpbmtpbmcSDKlf7nEoiOg6rP0TAxoM1kxvRmi1ApCkrA3MIjBftjEnm0dFrTecoJuPtoftxDqvwcDqUWJvnpt/itobxlFIxuMYxo3y8HBZc5/xPOEq/gO3CB5G/cWmpwD/mrnzSZ95bckqbUmxd1CtcsX/DNfTUELzK8YoWeR9Ks1gO4Ksnn8e5Ofarra1o4wswZddrKJEavQ9/RIST+cqUvQfBSbO+kXvNKR7v8mGzmKll3+1285PZrmzh3eZJI0JilZaBQ5f9k/Pk0nB0Q+jft04lvOlZnsl66V5CYypegZQ/IWtomQ5xt2Ok2sorznef09WZRbV1z8pjDTr1OIt2LkhGTTNnzN4nzYToe14m9hTHFNyEPV+/Xfvy0tuvHkTJljXE6F6Kcib195+K9QjFFBJwB2JFArK4IK9qwZM+r6UuzTpWKUlVOSD2rwOXMOs3jgp8INEYi0sL5cDdNzxk5tWSQ8F6dU3rP3tzE1mz+uEl8X5pcj38r5RQecTBN2Edy0nTkV8I/YyOeSFWCBD0vTeNLftxM02UKnHO41XObUHSJFYCI04KIGnrGBYkIMGOaydgAHFGTZQiZClCK3VZ2uBx8dw1mBP/9h8N9ui08XO6XKcfSCKWgC0MBP+yGmeHUymol0/f/TmsiQ7u/GG4Pk/O+FfV7NELq4ipDkEe12GnpMeAzA0yEZDU1dFPktagq0YMFNaUkjKXSLGgh+l6Z+6mYQPorccfJ0Uw+hPYq7iE5G1PlDCSckMtDdOb4vDnFo7pd90wMC6zhBu3UNEK78wOV4YAQ==",
+            "thinking": "",
+            "type": "thinking"
+          },
+          {
+            "id": "toolu_011Cj5qH9eez3DhWNiTNRWYG",
             "caller": {
               "type": "direct"
             },
@@ -1270,22 +1326,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1822,
-          "output_tokens": 48,
+          "input_tokens": 2037,
+          "output_tokens": 68,
           "output_tokens_details": {
-            "thinking_tokens": 0
+            "thinking_tokens": 19
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 0.7942584999836981,
-      "input_tokens": 1822,
-      "output_tokens": 48,
-      "cost_usd": 0.004124,
+      "seconds": 1.1570459000067785,
+      "input_tokens": 2037,
+      "output_tokens": 68,
+      "cost_usd": 0.004754,
       "error": null,
       "replayed": false,
-      "digest": "eb3e6b01b6959294f555edc675853840a80f7461793b532b4ef91a1e221020ff"
+      "digest": "285336305ab1544c5696474ccc794f3e3aad36c1c4cd87bb18c05de9a9f91ade"
     },
     {
       "kind": "agent",
@@ -1393,6 +1449,31 @@
             "strict": true
           },
           {
+            "name": "refuse",
+            "description": "A last resort, when the bank can do what was asked in no permitted way: someone else's account, another person's login or a code, PIN or password, a request from someone without the authority, a change to a joint account by one holder. Name the reason; the desk writes the reply with the permitted route. Not when the request can be forwarded or checked instead.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "someone_elses_account",
+                    "credentials",
+                    "no_authority",
+                    "needs_all_holders",
+                    "other"
+                  ],
+                  "description": "why the bank cannot do it"
+                }
+              },
+              "required": [
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          },
+          {
             "name": "escalate",
             "description": "Nothing above fits, or the facts conflict: hand the case to a person.",
             "input_schema": {
@@ -1423,18 +1504,13 @@
         "messages": [
           {
             "role": "user",
-            "content": "<case>\nRequest: Please correct the spelling of my name in my H&V profile. It shows “Elowen Mar”; my correct name is “Elowen Marr”.\n</case>\nFacts established: {'subject': 'profile', 'request_type': 'register', 'next_system': 'access'}"
+            "content": "<case>\nRequest: Please correct the spelling of my name in my H&V profile. It shows “Elowen Mar”; my correct name is “Elowen Marr”.\n</case>\nFacts established: {'subject': 'profile', 'request_type': 'change', 'next_system': 'access', 'credentials_requested': 'False', 'joint_holder_change': 'False'}"
           },
           {
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS1gUKEAgSGAI4AUIIdGhpbmtpbmcSDBK8JiCELO8Itf+NtBoMIXq7Es4KOjwEIwYGIjDTCXLueZXCdaGvpJnddEuAroJnp+6aa2cyBkh6udlDFPWs136ytQUzKUQlrPG3bs8q8wSI74bOOVB1aQBQtXxc7W3P0OEoPfNavmpa/sFoXzP91mopCR9YEj9RLDlCOY5UpFU3uK4Hj5HGACLN0uEThUPTh0FHLlTXn5rM/me57MMo+szzQMWnIuXjwdeNsVaIuxc5ln3sGBixDQimNPYmQJyrpv/agh8UpIRyQF3KICdQR63sn/BybV9vtTjklhcvz0C0xJDCpE/X2VbY3vLAg0yGHssvQAbConXV9ipqj05u/z4FXN2umM3gvqDZU7eTEXyBzMBMrFNKRPSxvyH9Fx/ivaZ1bjUSmgM2lvYffmZjJ1Pjc+WDL7lo2yWiTFKr0YScCq5GDdqBLsUiXCMMyuT5zxEF1k9w2kdL9nAnZSmEjkszQjS4seQUBTV1mFQFz7EXpHP0hTcBmN6x86tclnIa8veoeszBryQyLVx+JChZg42+RCe1X9AsHZABOvcnruURHjaEsSvhbDGISmaswnPCZwRHM06RzyhVvn2YzthfOOGHyeGnR7FjDqVFtx4hXOZWnFh9Cf22ZUD7tufR25PPpA2d8uOxRSkObENafnaobuEhug9hXVADUM3wWc4gEtAnpKuGJK2qol/SiJ47cfA9IeL5BGWrYhEhoWKD4ymDWXuzmZI+/axF5T6yCJtzdDgOOqLu+mgGWASd5GsMLoFeFNESb+9lrgyjMi78UqgqVzERonoGXjdJn945O3lQUX2/LzciY+1S6ixfQjk3UBmi4FjP/NOKYDXUbHGAx5GcXH8MqhKfOBVDfFskeFQ5BuHnQywLTq/NP2uldzHlm9dknoUsdcGbxyxe7QF1XtRHg4eVq8f55ITdRlwbHWAqL6+G6QcYAQ==",
-                "thinking": "",
-                "type": "thinking"
-              },
-              {
-                "id": "toolu_013QNyYYttdiESjkTBnjyCx4",
+                "id": "toolu_01FRs6uQnhP7C6fEcLrLD1nf",
                 "caller": {
                   "type": "direct"
                 },
@@ -1450,8 +1526,8 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_013QNyYYttdiESjkTBnjyCx4",
-                "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"profile\", \"request_type\": \"register\", \"next_system\": \"access\"}, \"refused\": []}"
+                "tool_use_id": "toolu_01FRs6uQnhP7C6fEcLrLD1nf",
+                "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"profile\", \"request_type\": \"change\", \"next_system\": \"access\", \"credentials_requested\": false, \"joint_holder_change\": false}, \"refused\": []}"
               }
             ]
           },
@@ -1459,7 +1535,12 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01PpyE5G8K1wyf4c4gCPvVZU",
+                "signature": "CAQS4QQKEAgSGAI4AUIIdGhpbmtpbmcSDKlf7nEoiOg6rP0TAxoM1kxvRmi1ApCkrA3MIjBftjEnm0dFrTecoJuPtoftxDqvwcDqUWJvnpt/itobxlFIxuMYxo3y8HBZc5/xPOEq/gO3CB5G/cWmpwD/mrnzSZ95bckqbUmxd1CtcsX/DNfTUELzK8YoWeR9Ks1gO4Ksnn8e5Ofarra1o4wswZddrKJEavQ9/RIST+cqUvQfBSbO+kXvNKR7v8mGzmKll3+1285PZrmzh3eZJI0JilZaBQ5f9k/Pk0nB0Q+jft04lvOlZnsl66V5CYypegZQ/IWtomQ5xt2Ok2sorznef09WZRbV1z8pjDTr1OIt2LkhGTTNnzN4nzYToe14m9hTHFNyEPV+/Xfvy0tuvHkTJljXE6F6Kcib195+K9QjFFBJwB2JFArK4IK9qwZM+r6UuzTpWKUlVOSD2rwOXMOs3jgp8INEYi0sL5cDdNzxk5tWSQ8F6dU3rP3tzE1mz+uEl8X5pcj38r5RQecTBN2Edy0nTkV8I/YyOeSFWCBD0vTeNLftxM02UKnHO41XObUHSJFYCI04KIGnrGBYkIMGOaydgAHFGTZQiZClCK3VZ2uBx8dw1mBP/9h8N9ui08XO6XKcfSCKWgC0MBP+yGmeHUymol0/f/TmsiQ7u/GG4Pk/O+FfV7NELq4ipDkEe12GnpMeAzA0yEZDU1dFPktagq0YMFNaUkjKXSLGgh+l6Z+6mYQPorccfJ0Uw+hPYq7iE5G1PlDCSckMtDdOb4vDnFo7pd90wMC6zhBu3UNEK78wOV4YAQ==",
+                "thinking": "",
+                "type": "thinking"
+              },
+              {
+                "id": "toolu_011Cj5qH9eez3DhWNiTNRWYG",
                 "caller": {
                   "type": "direct"
                 },
@@ -1477,24 +1558,24 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01PpyE5G8K1wyf4c4gCPvVZU",
-                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)\"}"
+                "tool_use_id": "toolu_011Cj5qH9eez3DhWNiTNRWYG",
+                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change)\"}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011CftedCTTB8ZHaUQjtunie",
+        "id": "msg_011CftfqXPBnfaXyuhMxoN9A",
         "container": null,
         "content": [
           {
-            "signature": "CAQS3wUKEAgSGAI4AUIIdGhpbmtpbmcSDOnRKAj3lgCciQ11DhoMzL59EPUBjHYzYu0wIjD1FGfoMHMgy2mQP+8DYzJz4WB8Lb71dHNgg7mvqqSTPTbvYw5RWqkn6PW1mwFu+5Yq/ASNuyJjqdFwOihFIh0x7Nf9mxMNruuNCnhhsP803INBQijNUzhxMoUNVqQnaLtI/APvlgppcaRsfGBEhVi8gr7XMmk+4WYmuyEUYyxjSS9SRFMPuzyFAQ7oEkxfiiUiwJzx4weDSJgI+mzYyelNHOB5nQQFfFmZlzCJvDnPaA09QtlGurFRVYiuf4cb/tw0ABR+lVwBLUYi8GYldi4gC4H7aqMjXyekKy/cvPEhYrXtowQ7i+NMI6OrlLtwDlb4iVWiejRPlGbwS1j9HTG1c5e+GxA7N3THRfbDwygoxjXiElNKN3YfGIIj845OJxDJGMJKLE8S5DssKNJK8vmqUhwrLPByQkEDBGPcAsWMisRkE4ubYwa/+56fVhpZs/glbLm6DgVDYVvjjz8kl/gS5/rtqk7Q3vL9Fp5iiYSFSaWokzN4UQxET+Q2G436NYdRBiv2fX/HUHhwdbE+9F5YvHtGWm0kDFhF6A9KxoVnBEWvhSw8LMo9WQOaaCc5JDni+Q/cYBCQj5809o7jJtZhE1p0TaE6F0+227iBkIIoutJGA+Qyp3Dh6/NOBKjqC1SAuUeRSu0TT7/MrupEIuUIyKjOlQw6IkcFb3AA+kjD0LDjoiD8qNttjyrMHdMs7Uzfv80vnrh8tLN6J82sJfQBRN+v443q7DkPK6syNA/SPnLVxmYHQpZmp9C64fqTJ0QrhSdfORw2rOLRhn+mt0EABtabPynAgWb+t0Jf/gCXwVLX1VJnkRRFS4lLaY6r5OP1lNO8RPikazpAQNmrCIS11ZtFovdzbFyIXTl6+yU8Qhxlo00aQu7O5jlQPUkPL4k7+qYs/gjaaJevy9ypBBUYAQ==",
+            "signature": "CAQSwQYKEAgSGAI4AUIIdGhpbmtpbmcSDAylZ91lh//aOr03YxoM0VmwtHGgJpVQQsazIjCEPM9U/yjQ+mB0nws1ngmTy+XN+nHdgzu25ukRSdfDRInrO2/4qHNNf0BPWb96Omcq3gUeUXxNHHVwwnnGEw0+OrY8FfOqgAUQambEMQt7TTwtWXDpjaqYSAQ5A7lyUrm0UlFJQi23UwNuuWEnOIpVfCy1OqjQAmmEPUzrlDLo8rrzDIdpVQZhojRt6tfdeETZuOUVAMVQYLSNZnnlE8HQsfXd3qFzc9nv7ldTP29Ri6cXiyezOIH38O7JDooxveMXC3YER68gzRM/0xzDAS4RY5W46OtRQPOP6Q3S+bWg1cNsvxlJjoq+4g3ve8nc4YpoKDwWmrrO8sCKqOtvYe71V669WiuyECFqrdXnTDgzSHaLc5Ciq0PBTQL55ovQ9auJ0s444fXu2qLpfh6M2PYK5VrW2mUVIp7LKGcfwmspn8RIBVqBRF0gnrRtdpgeCzrn6qn0+jxPS0PvO+PPZ2v9iwKTAxmRgYCplE7lftJ1T8FNyEmet2bH/XAxjXQz/v6Sj9G8kN+lQPChcD6OzNO1tg+g2NEVSVCfH54YkIUsJXv+BzwGhYimr1rnjnFTRdwYCty5royJwtv/vCm3Wi1urbl999Wus6tzbwG6CW05kVZ/SjiSziunpNosnXAq82WBa0Y3DEOihDMy2RNrgXra9OLYho3K4YF1qx3DzIPT4rz7wm35d89p6S4w6r5C877Rw9ZcjIFgp6u9fAAWzcsgJEA1ncPIL6TMEaZXNUhex+Ogo/TqKdcrXHgh3Scw858Yx+t9T8unocTqrL7XEZAHlU0Bw64T0BhFooa+UBqNEm0qp+H1x8MQqv8Gv0TSOqPr/9GY/J1Cqc0TJFEsyPBtzmP7b9Z+qzmFREOcuqgHMfSWYNOosDUETKc0oiJXrdF5vfufxoqFVtBqAh4yfSagpyWjfYEa/VLhQ+Dh6xP99fG/HB5UNzYoublmaCnfD5QsAUjcNSGePloBqZ2DeB+SjNzNQpG6J+X5AiYQRAyVqJhlDB0V5kqiHEvsgLXcXLFruHfoAHCZgCheI9V8rRZwwBgB",
             "thinking": "",
             "type": "thinking"
           },
           {
-            "id": "toolu_019EoNe7Hrnj9KoZcEk1b56Z",
+            "id": "toolu_017db5SoUur73jWN4bQf3yRp",
             "caller": {
               "type": "direct"
             },
@@ -1519,22 +1600,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2473,
-          "output_tokens": 62,
+          "input_tokens": 2708,
+          "output_tokens": 86,
           "output_tokens_details": {
-            "thinking_tokens": 34
+            "thinking_tokens": 58
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.05805530003272,
-      "input_tokens": 2473,
-      "output_tokens": 62,
-      "cost_usd": 0.005566,
+      "seconds": 1.4191079000011086,
+      "input_tokens": 2708,
+      "output_tokens": 86,
+      "cost_usd": 0.006276,
       "error": null,
       "replayed": false,
-      "digest": "47883750326561870b89b013a53e5598b112701c45205bf3d5f8a57046eff58b"
+      "digest": "0f03b6c34e1dd9bd7ed0854f20e58554abdc20d67dc24f2f3cbc886d532a4488"
     },
     {
       "kind": "agent",
@@ -1642,6 +1723,31 @@
             "strict": true
           },
           {
+            "name": "refuse",
+            "description": "A last resort, when the bank can do what was asked in no permitted way: someone else's account, another person's login or a code, PIN or password, a request from someone without the authority, a change to a joint account by one holder. Name the reason; the desk writes the reply with the permitted route. Not when the request can be forwarded or checked instead.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "someone_elses_account",
+                    "credentials",
+                    "no_authority",
+                    "needs_all_holders",
+                    "other"
+                  ],
+                  "description": "why the bank cannot do it"
+                }
+              },
+              "required": [
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          },
+          {
             "name": "escalate",
             "description": "Nothing above fits, or the facts conflict: hand the case to a person.",
             "input_schema": {
@@ -1672,18 +1778,13 @@
         "messages": [
           {
             "role": "user",
-            "content": "<case>\nRequest: Please correct the spelling of my name in my H&V profile. It shows “Elowen Mar”; my correct name is “Elowen Marr”.\n</case>\nFacts established: {'subject': 'profile', 'request_type': 'register', 'next_system': 'access'}"
+            "content": "<case>\nRequest: Please correct the spelling of my name in my H&V profile. It shows “Elowen Mar”; my correct name is “Elowen Marr”.\n</case>\nFacts established: {'subject': 'profile', 'request_type': 'change', 'next_system': 'access', 'credentials_requested': 'False', 'joint_holder_change': 'False'}"
           },
           {
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS1gUKEAgSGAI4AUIIdGhpbmtpbmcSDBK8JiCELO8Itf+NtBoMIXq7Es4KOjwEIwYGIjDTCXLueZXCdaGvpJnddEuAroJnp+6aa2cyBkh6udlDFPWs136ytQUzKUQlrPG3bs8q8wSI74bOOVB1aQBQtXxc7W3P0OEoPfNavmpa/sFoXzP91mopCR9YEj9RLDlCOY5UpFU3uK4Hj5HGACLN0uEThUPTh0FHLlTXn5rM/me57MMo+szzQMWnIuXjwdeNsVaIuxc5ln3sGBixDQimNPYmQJyrpv/agh8UpIRyQF3KICdQR63sn/BybV9vtTjklhcvz0C0xJDCpE/X2VbY3vLAg0yGHssvQAbConXV9ipqj05u/z4FXN2umM3gvqDZU7eTEXyBzMBMrFNKRPSxvyH9Fx/ivaZ1bjUSmgM2lvYffmZjJ1Pjc+WDL7lo2yWiTFKr0YScCq5GDdqBLsUiXCMMyuT5zxEF1k9w2kdL9nAnZSmEjkszQjS4seQUBTV1mFQFz7EXpHP0hTcBmN6x86tclnIa8veoeszBryQyLVx+JChZg42+RCe1X9AsHZABOvcnruURHjaEsSvhbDGISmaswnPCZwRHM06RzyhVvn2YzthfOOGHyeGnR7FjDqVFtx4hXOZWnFh9Cf22ZUD7tufR25PPpA2d8uOxRSkObENafnaobuEhug9hXVADUM3wWc4gEtAnpKuGJK2qol/SiJ47cfA9IeL5BGWrYhEhoWKD4ymDWXuzmZI+/axF5T6yCJtzdDgOOqLu+mgGWASd5GsMLoFeFNESb+9lrgyjMi78UqgqVzERonoGXjdJn945O3lQUX2/LzciY+1S6ixfQjk3UBmi4FjP/NOKYDXUbHGAx5GcXH8MqhKfOBVDfFskeFQ5BuHnQywLTq/NP2uldzHlm9dknoUsdcGbxyxe7QF1XtRHg4eVq8f55ITdRlwbHWAqL6+G6QcYAQ==",
-                "thinking": "",
-                "type": "thinking"
-              },
-              {
-                "id": "toolu_013QNyYYttdiESjkTBnjyCx4",
+                "id": "toolu_01FRs6uQnhP7C6fEcLrLD1nf",
                 "caller": {
                   "type": "direct"
                 },
@@ -1699,8 +1800,8 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_013QNyYYttdiESjkTBnjyCx4",
-                "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"profile\", \"request_type\": \"register\", \"next_system\": \"access\"}, \"refused\": []}"
+                "tool_use_id": "toolu_01FRs6uQnhP7C6fEcLrLD1nf",
+                "content": "{\"state\": \"TRIAGED\", \"final\": false, \"outcome\": null, \"facts\": {\"subject\": \"profile\", \"request_type\": \"change\", \"next_system\": \"access\", \"credentials_requested\": false, \"joint_holder_change\": false}, \"refused\": []}"
               }
             ]
           },
@@ -1708,7 +1809,12 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01PpyE5G8K1wyf4c4gCPvVZU",
+                "signature": "CAQS4QQKEAgSGAI4AUIIdGhpbmtpbmcSDKlf7nEoiOg6rP0TAxoM1kxvRmi1ApCkrA3MIjBftjEnm0dFrTecoJuPtoftxDqvwcDqUWJvnpt/itobxlFIxuMYxo3y8HBZc5/xPOEq/gO3CB5G/cWmpwD/mrnzSZ95bckqbUmxd1CtcsX/DNfTUELzK8YoWeR9Ks1gO4Ksnn8e5Ofarra1o4wswZddrKJEavQ9/RIST+cqUvQfBSbO+kXvNKR7v8mGzmKll3+1285PZrmzh3eZJI0JilZaBQ5f9k/Pk0nB0Q+jft04lvOlZnsl66V5CYypegZQ/IWtomQ5xt2Ok2sorznef09WZRbV1z8pjDTr1OIt2LkhGTTNnzN4nzYToe14m9hTHFNyEPV+/Xfvy0tuvHkTJljXE6F6Kcib195+K9QjFFBJwB2JFArK4IK9qwZM+r6UuzTpWKUlVOSD2rwOXMOs3jgp8INEYi0sL5cDdNzxk5tWSQ8F6dU3rP3tzE1mz+uEl8X5pcj38r5RQecTBN2Edy0nTkV8I/YyOeSFWCBD0vTeNLftxM02UKnHO41XObUHSJFYCI04KIGnrGBYkIMGOaydgAHFGTZQiZClCK3VZ2uBx8dw1mBP/9h8N9ui08XO6XKcfSCKWgC0MBP+yGmeHUymol0/f/TmsiQ7u/GG4Pk/O+FfV7NELq4ipDkEe12GnpMeAzA0yEZDU1dFPktagq0YMFNaUkjKXSLGgh+l6Z+6mYQPorccfJ0Uw+hPYq7iE5G1PlDCSckMtDdOb4vDnFo7pd90wMC6zhBu3UNEK78wOV4YAQ==",
+                "thinking": "",
+                "type": "thinking"
+              },
+              {
+                "id": "toolu_011Cj5qH9eez3DhWNiTNRWYG",
                 "caller": {
                   "type": "direct"
                 },
@@ -1726,8 +1832,8 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01PpyE5G8K1wyf4c4gCPvVZU",
-                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)\"}"
+                "tool_use_id": "toolu_011Cj5qH9eez3DhWNiTNRWYG",
+                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change)\"}"
               }
             ]
           },
@@ -1735,12 +1841,12 @@
             "role": "assistant",
             "content": [
               {
-                "signature": "CAQS3wUKEAgSGAI4AUIIdGhpbmtpbmcSDOnRKAj3lgCciQ11DhoMzL59EPUBjHYzYu0wIjD1FGfoMHMgy2mQP+8DYzJz4WB8Lb71dHNgg7mvqqSTPTbvYw5RWqkn6PW1mwFu+5Yq/ASNuyJjqdFwOihFIh0x7Nf9mxMNruuNCnhhsP803INBQijNUzhxMoUNVqQnaLtI/APvlgppcaRsfGBEhVi8gr7XMmk+4WYmuyEUYyxjSS9SRFMPuzyFAQ7oEkxfiiUiwJzx4weDSJgI+mzYyelNHOB5nQQFfFmZlzCJvDnPaA09QtlGurFRVYiuf4cb/tw0ABR+lVwBLUYi8GYldi4gC4H7aqMjXyekKy/cvPEhYrXtowQ7i+NMI6OrlLtwDlb4iVWiejRPlGbwS1j9HTG1c5e+GxA7N3THRfbDwygoxjXiElNKN3YfGIIj845OJxDJGMJKLE8S5DssKNJK8vmqUhwrLPByQkEDBGPcAsWMisRkE4ubYwa/+56fVhpZs/glbLm6DgVDYVvjjz8kl/gS5/rtqk7Q3vL9Fp5iiYSFSaWokzN4UQxET+Q2G436NYdRBiv2fX/HUHhwdbE+9F5YvHtGWm0kDFhF6A9KxoVnBEWvhSw8LMo9WQOaaCc5JDni+Q/cYBCQj5809o7jJtZhE1p0TaE6F0+227iBkIIoutJGA+Qyp3Dh6/NOBKjqC1SAuUeRSu0TT7/MrupEIuUIyKjOlQw6IkcFb3AA+kjD0LDjoiD8qNttjyrMHdMs7Uzfv80vnrh8tLN6J82sJfQBRN+v443q7DkPK6syNA/SPnLVxmYHQpZmp9C64fqTJ0QrhSdfORw2rOLRhn+mt0EABtabPynAgWb+t0Jf/gCXwVLX1VJnkRRFS4lLaY6r5OP1lNO8RPikazpAQNmrCIS11ZtFovdzbFyIXTl6+yU8Qhxlo00aQu7O5jlQPUkPL4k7+qYs/gjaaJevy9ypBBUYAQ==",
+                "signature": "CAQSwQYKEAgSGAI4AUIIdGhpbmtpbmcSDAylZ91lh//aOr03YxoM0VmwtHGgJpVQQsazIjCEPM9U/yjQ+mB0nws1ngmTy+XN+nHdgzu25ukRSdfDRInrO2/4qHNNf0BPWb96Omcq3gUeUXxNHHVwwnnGEw0+OrY8FfOqgAUQambEMQt7TTwtWXDpjaqYSAQ5A7lyUrm0UlFJQi23UwNuuWEnOIpVfCy1OqjQAmmEPUzrlDLo8rrzDIdpVQZhojRt6tfdeETZuOUVAMVQYLSNZnnlE8HQsfXd3qFzc9nv7ldTP29Ri6cXiyezOIH38O7JDooxveMXC3YER68gzRM/0xzDAS4RY5W46OtRQPOP6Q3S+bWg1cNsvxlJjoq+4g3ve8nc4YpoKDwWmrrO8sCKqOtvYe71V669WiuyECFqrdXnTDgzSHaLc5Ciq0PBTQL55ovQ9auJ0s444fXu2qLpfh6M2PYK5VrW2mUVIp7LKGcfwmspn8RIBVqBRF0gnrRtdpgeCzrn6qn0+jxPS0PvO+PPZ2v9iwKTAxmRgYCplE7lftJ1T8FNyEmet2bH/XAxjXQz/v6Sj9G8kN+lQPChcD6OzNO1tg+g2NEVSVCfH54YkIUsJXv+BzwGhYimr1rnjnFTRdwYCty5royJwtv/vCm3Wi1urbl999Wus6tzbwG6CW05kVZ/SjiSziunpNosnXAq82WBa0Y3DEOihDMy2RNrgXra9OLYho3K4YF1qx3DzIPT4rz7wm35d89p6S4w6r5C877Rw9ZcjIFgp6u9fAAWzcsgJEA1ncPIL6TMEaZXNUhex+Ogo/TqKdcrXHgh3Scw858Yx+t9T8unocTqrL7XEZAHlU0Bw64T0BhFooa+UBqNEm0qp+H1x8MQqv8Gv0TSOqPr/9GY/J1Cqc0TJFEsyPBtzmP7b9Z+qzmFREOcuqgHMfSWYNOosDUETKc0oiJXrdF5vfufxoqFVtBqAh4yfSagpyWjfYEa/VLhQ+Dh6xP99fG/HB5UNzYoublmaCnfD5QsAUjcNSGePloBqZ2DeB+SjNzNQpG6J+X5AiYQRAyVqJhlDB0V5kqiHEvsgLXcXLFruHfoAHCZgCheI9V8rRZwwBgB",
                 "thinking": "",
                 "type": "thinking"
               },
               {
-                "id": "toolu_019EoNe7Hrnj9KoZcEk1b56Z",
+                "id": "toolu_017db5SoUur73jWN4bQf3yRp",
                 "caller": {
                   "type": "direct"
                 },
@@ -1756,28 +1862,40 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_019EoNe7Hrnj9KoZcEk1b56Z",
-                "content": "{\"accepted\": true, \"state\": \"REQUESTED\", \"case_closed\": \"submit_request\"}"
+                "tool_use_id": "toolu_017db5SoUur73jWN4bQf3yRp",
+                "content": "{\"accepted\": false, \"state\": \"TRIAGED\", \"refused_because\": \"register: request_type = register is false (request_type=change); register-what-fits-no-type: request_type = other is false (request_type=change); payment-instruction: next_system = payment is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); recurring-instruction: next_system = recurring is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); access-instruction: verified is not known (verified=not known); request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change)\"}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011CftedH2YDm9Y9EBwcajPH",
+        "id": "msg_011CftfqdVJWQrLgq6MpPPNm",
         "container": null,
         "content": [
           {
-            "citations": null,
-            "text": "I've passed your name correction (“Elowen Mar” to “Elowen Marr”) to the team that handles profile changes, and the case is now closed on my side. I haven't changed anything in your profile myself, and I don't know yet whether the team will ask you for anything more.",
-            "type": "text"
+            "signature": "CAQSigcKEAgSGAI4AUIIdGhpbmtpbmcSDDlnDLdkFvQsZw6KghoMwcGDZ7LNvPO/AEyqIjDfhcAX8mH6t948UYcDdXf3nXVGRTOqFlEgHw0oOvarDo+RzdvPcOyG6nioVIZC0hMqpwagxPc6VpzV1JZXAe7lCwZR/MIP6ScfB0d1Eyx/X+bqy9irPgMx7PLjqzLXdAr7ouVLAqlW0o+kzssZyuDSRyzVQSmN3aLX19ZLtYvzcdUm1yMXXNgsi4hPpHaWstiqC28Ie4AlsJebIWPX0kZveFM2evVIQ1kDBYMWJduTR+I6+uEmpghdZVSYkf9sMGfQ8W/+PycQipUpiaWKaZhN5hp3gnDYBlwWA/l3rrQ39hHpNxtbCw5o+qh9beyOuxMr1pkfvcln/KtW553SAzpJLa1Qy83VRkNVCoUEA7le30Vm8XAektmazxrySY6L1agIgPLJLtNKJElOU/irIsZbk5h4fHxnlMKij22HfX/viAJ5cBRqUz8yUuZbvZQe02wdzSRO0tHF2CfZG6LYiS38wEcjc3bjoYlmn+QEjncXLYfHTiqmac4vunjBWDWvuXXFYF20iFMxHl0CXDnJehy7GeGUoFu3/6nQa49FYXI5/OipafYNL/ANoYbz3lYDnSyK6TXkPnWP+vsRwS93RdtwxraFwMrQ1bavoy/BsuzD1ahKGOkuivE5YPlVcqhWJOr+i3mWENhPyWs0KlucTZDuuLvsLrlf/Q2iusJLl3ls1ZjA38RdGufozlXqRqGaZf6h2XKL8fbV2NBAbmmIrlqy+dH5edz2/lAHH+sc7/xfIIQd7OPgAG0OvB+QdRhpweWJfR969cbfr2mTefEf/Yr3moNTtTrNaALYzil4Udm+wVMpkp8edVv0tJIS/0yMNIstBCeB6r2BPnWgyFqeSGNc3HSZnJk/SozRV7ytQ2UU/yjGORXCml6s9OuuiHt2zs6mLRXM2H3lr9TxHhnTLLy+F+ZsBNog4GoxD4IZqHrg379E8A9+tfC7ZdbgBk55AFZwoUo7uUoESaJODYVA4t/EaBsgqRhCmwNmZk79+bQNjU7V1jktBOfr1Kj06LKSc1xiNBBx3KzxAQGl8Mi071IGOXisqtQJnLCkO/8ckABUHAU1bcAxCzHr6dhMuq9LHSMU8lSd8ChjsQ3HPY/G/KljLNxc8W4EF1nIisI5GcCRgDFah00TnmLItnMYAQ==",
+            "thinking": "",
+            "type": "thinking"
+          },
+          {
+            "id": "toolu_01VFz6pLR14izSBDcsT5sGpE",
+            "caller": {
+              "type": "direct"
+            },
+            "input": {
+              "note": "Customer asks to correct the profile name from \"Elowen Mar\" to \"Elowen Marr\". This is a profile change request. Not a credentials request and not a joint-holder change. Asking the access system and submitting the request were both refused by policy, and the customer's identity is not verified. A person needs to verify the customer and handle the legal-name correction, which usually needs supporting ID."
+            },
+            "name": "escalate",
+            "type": "tool_use",
+            "toolset_name": null
           }
         ],
         "diagnostics": null,
         "model": "claude-sonnet-5-5",
         "role": "assistant",
         "stop_details": null,
-        "stop_reason": "end_turn",
+        "stop_reason": "tool_use",
         "stop_sequence": null,
         "type": "message",
         "usage": {
@@ -1788,22 +1906,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2572,
-          "output_tokens": 88,
+          "input_tokens": 3202,
+          "output_tokens": 264,
           "output_tokens_details": {
-            "thinking_tokens": 0
+            "thinking_tokens": 96
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 1.4955733000533655,
-      "input_tokens": 2572,
-      "output_tokens": 88,
-      "cost_usd": 0.006024,
+      "seconds": 2.3172642999561504,
+      "input_tokens": 3202,
+      "output_tokens": 264,
+      "cost_usd": 0.009044,
       "error": null,
       "replayed": false,
-      "digest": "1acbaceeb08084101b64f366b198dc477422bb6f8bc12e87a4f2736f6208803a"
+      "digest": "e5e369c445366052ec75aee9b956aae07020aaee812f0501f6261c6dcc4aff4a"
     },
     {
       "kind": "generate",
@@ -1816,17 +1934,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"submit_request\",\n  \"state\": \"REQUESTED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"profile\",\n    \"request_type\": \"register\",\n    \"next_system\": \"access\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"register_request\",\n      \"args\": {\n        \"team\": \"access\",\n        \"about\": \"profile\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-037-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-037-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-037-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-037-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-037-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-037-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-037-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-037-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-037-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-037-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-037-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-037-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-037-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-037-at-01:read-confirmation:13).\n40. `check_confirmation` found {}.\n41. Rule `triage` fired: state = READING → true (state=READING).\n42. Classifier (jev jev-latest) on `request_type`: register, confidence 0.45 → register.\n43. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.\n44. `request_type`: not known → register (by `triage`).\n45. `subject`: not known → profile (by `triage`).\n46. State `READING` → `TRIAGED` (by `triage`).\n47. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).\n48. `next_system`: not known → access (by `route-access`).\n49. The agent asked for `ask_system` {\"system\": \"access\"}.\n50. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register).\n51. The agent asked for `submit_request` {}.\n52. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).\n53. State `TRIAGED` → `REQUEST_PENDING` (by `register`).\n54. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).\n55. Called `register_request` (attempt 1, key banking-037-at-01:do-request:17).\n56. Action in the world: `register_request` {\"team\": \"access\", \"about\": \"profile\"}.\n57. `register_request` found {}.\n58. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).\n59. The case closed in `REQUESTED`: **submit_request**.\n\n## Model calls\n\n5 calls, 9484 tokens in, 489 out, 5.109 s, cost $0.0199; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I've passed your name correction (“Elowen Mar” to “Elowen Marr”) to the team that handles profile changes, and the case is now closed on my side. I haven't changed anything in your profile myself, and I don't know yet whether the team will ask you for anything more.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"escalate\",\n  \"state\": \"ESCALATED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"profile\",\n    \"request_type\": \"change\",\n    \"next_system\": \"access\",\n    \"reason\": \"AGENT_ESCALATED\",\n    \"credentials_requested\": false,\n    \"joint_holder_change\": false\n  },\n  \"actions\": [],\n  \"error\": null\n}\n\n# Case banking-037-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-037-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-037-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-037-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-037-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-037-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-037-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-037-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-037-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-037-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-037-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-037-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-037-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-037-at-01:read-confirmation:13).\n40. `check_confirmation` found {}.\n41. Rule `triage` fired: state = READING → true (state=READING).\n42. Classifier (jev jev-latest) on `request_type`: change, confidence 0.46 → change.\n43. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.\n44. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.\n45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.\n46. `request_type`: not known → change (by `triage`).\n47. `credentials_requested`: not known → False (by `triage`).\n48. `joint_holder_change`: not known → False (by `triage`).\n49. `subject`: not known → profile (by `triage`).\n50. State `READING` → `TRIAGED` (by `triage`).\n51. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).\n52. `next_system`: not known → access (by `route-access`).\n53. The agent asked for `ask_system` {\"system\": \"access\"}.\n54. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).\n55. The agent asked for `submit_request` {}.\n56. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=change); register-what-fits-no-type: request_type = other is false (request_type=change); payment-instruction: next_system = payment is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); recurring-instruction: next_system = recurring is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); access-instruction: verified is not known (verified=not known); request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change).\n57. The agent asked for `escalate` {\"note\": \"Customer asks to correct the profile name from \\\"Elowen Mar\\\" to \\\"Elowen Marr\\\". This is a profile change request. Not a credentials request and not a joint-holder change. Asking the access system and submitting the request were both refused by policy, and the customer's identity is not verified. A person needs to verify the customer and handle the legal-name correction, which usually needs supporting ID.\"}.\n58. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).\n59. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).\n60. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).\n61. The case closed in `ESCALATED`: **escalate**.\n\n## Model calls\n\n5 calls, 10877 tokens in, 685 out, 5.972 s, cost $0.0242; models: claude-sonnet-5-5, jev-1.13.0.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CftedPR22wXHTDyUSAfbc",
+        "id": "msg_011CftfqoVZoMYCXFP4eJUbq",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The request was treated as a registration about the customer's profile, which the message described as a name correction (\"Elowen Mar\" to \"Elowen Marr\"). The desk routed it to the access team and registered the request there; it changed nothing in the profile itself. An attempt to ask the access system a question first was refused, and the case then closed as submitted. Whether the team will need anything more from the customer is not known from the record.",
+            "text": "The customer asked to correct the name on their profile from \"Elowen Mar\" to \"Elowen Marr\". The desk classified it as a profile change, not a credentials request or joint-holder change, but policy refused both the query to the access system and the submission of the request, and the customer's identity was not verified. The case was escalated with no actions taken, so a person still needs to verify the customer and handle the legal-name correction, which the agent's note says usually needs supporting ID.",
             "type": "text"
           }
         ],
@@ -1845,8 +1963,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2709,
-          "output_tokens": 128,
+          "input_tokens": 3124,
+          "output_tokens": 147,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1854,13 +1972,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.8494931999593973,
-      "input_tokens": 2709,
-      "output_tokens": 128,
-      "cost_usd": 0.006698,
+      "seconds": 1.7890162999974564,
+      "input_tokens": 3124,
+      "output_tokens": 147,
+      "cost_usd": 0.007718,
       "error": null,
       "replayed": false,
-      "digest": "fa1026584c64b4e3ebdb5f62843261b90b266fb32c7ed2e1a56dd3c17eb1a88c"
+      "digest": "0a3807bcbab9f9f523a4c21c2dffeb34b70eca8c817b040621314a21b2f7c944"
     }
   ]
 }

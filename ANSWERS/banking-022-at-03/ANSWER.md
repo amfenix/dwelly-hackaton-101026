@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk classified this as a card instruction, found the card system had already been asked, and closed the case in WAITING because that system's answer isn't in yet. Its later attempts to ask the card system again and to submit the request were refused because the case was no longer in the triaged state, so no action was taken by the desk. The record does not show the block as completed, and what remains is for someone to pick the case up once the card system replies.
+Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk found the card system had already been asked and its answer was not yet in, so it closed the case as waiting and took no action of its own. Two further attempts, one to ask the card system again and one to submit the request, were refused because the case was already in the waiting state, so the block still depends on the card system's answer. The agent's own note saying the case is waiting on Mara to say which card she means is not supported by the record, which shows no such question.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -66,6 +66,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -47,28 +47,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 44. Rule `triage` fired: state = READING → true (state=READING).
 45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-46. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-47. `request_type`: not known → question (by `triage`).
-48. `subject`: not known → standing_order (by `triage`).
-49. State `READING` → `TRIAGED` (by `triage`).
-50. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-51. `next_system`: not known → recurring (by `route-recurring`).
-52. The agent asked for `ask_system` {"system": "recurring"}.
-53. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-54. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-56. Called `ask_system` (attempt 1, key banking-017-at-01:do-ask:17).
-57. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
-58. `ask_system` found {}.
-59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-60. The case closed in `ASKED`: **ask_system**.
+46. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+47. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+48. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+49. `request_type`: not known → question (by `triage`).
+50. `credentials_requested`: not known → False (by `triage`).
+51. `joint_holder_change`: not known → False (by `triage`).
+52. `subject`: not known → standing_order (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+55. `next_system`: not known → recurring (by `route-recurring`).
+56. The agent asked for `ask_system` {"system": "recurring"}.
+57. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+58. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-017-at-01:do-ask:17).
+61. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6446 tokens in, 444 out, 5.349 s, cost $0.0134; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7287 tokens in, 467 out, 5.426 s, cost $0.0148; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've checked the recurring-payments system about your rent standing order. The check was accepted, but it hasn't returned any details yet. The case record shows no confirmation that the payment was sent, and it gives no reason why it might not have been. I can't tell you yet whether the payment went out.
+> I checked the recurring payments system for your standing order. The case is now closed at that step, and no standing order details have come back into the case yet. So I can't yet tell you whether this month's rent payment was sent, or why it wasn't.
 > 
-> The desk shows this case as final after that check, so I'm stopping here. A person will pick up the case.
+> I haven't made any change to your standing order. Your landlord's message says they can't see the payment, but that doesn't confirm it wasn't sent.

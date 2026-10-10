@@ -63,11 +63,14 @@ fields:
   next_system:  { type: enum, values: [payment, incoming, recurring, card, access, business, documents, tariff], description: the system that holds the answer }
   reason:       enum [UNVERIFIED, OUTSIDE_PARTY, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED]
   clarify_need: { type: enum, values: [which_transaction, which_card, which_instruction, more_details], description: what the customer is asked for }
+  refusal_reason: { type: enum, values: [someone_elses_account, credentials, no_authority, needs_all_holders, other], description: why the bank cannot do what was asked }
+  credentials_requested: { type: bool, description: "the message asks the bank to use another person's login, or to give or read out a code, a PIN or a password" }
+  joint_holder_change: { type: bool, description: "one holder asks to remove or change another holder of a joint account" }
 
 states: [READING, TRIAGED, ASK_PENDING, REPLY_PENDING, REQUEST_PENDING, CONFIRM_PENDING,
-         CLARIFY_PENDING, REDIRECT_PENDING, FORWARD_PENDING,
+         CLARIFY_PENDING, REDIRECT_PENDING, FORWARD_PENDING, REFUSE_PENDING,
          ASKED, WAITING, REPLIED, REQUESTED, CONFIRMATION_SENT, CLARIFIED, REDIRECTED, FORWARDED,
-         ESCALATED]
+         REFUSED, ESCALATED]
 initial: READING
 final:
   ASKED: ask_system
@@ -78,6 +81,7 @@ final:
   CLARIFIED: clarify
   REDIRECTED: redirect_secure
   FORWARDED: forward_to_authority
+  REFUSED: refuse
   ESCALATED: escalate
 
 signals:
@@ -99,6 +103,14 @@ signals:
     description: "Signing in, recovery, a PIN or a password: point the customer to the bank's secure process."
   forward_to_authority:
     description: "The request needs someone else's approval (a company administrator, a second signatory): send it to that person."
+  refuse:
+    description: >
+      A last resort, when the bank can do what was asked in no permitted way: someone else's
+      account, another person's login or a code, PIN or password, a request from someone without
+      the authority, a change to a joint account by one holder. Name the reason; the desk writes the
+      reply with the permitted route. Not when the request can be forwarded or checked instead.
+    args:
+      reason: { type: enum, values: [someone_elses_account, credentials, no_authority, needs_all_holders, other], description: why the bank cannot do it }
   escalate:
     description: "Nothing above fits, or the facts conflict: hand the case to a person."
     args:
@@ -134,6 +146,14 @@ triggers:
           access: signing in, a PIN, a password, recovery of access
           authority: something only another person may approve or give (a second signatory, an administrator, a new user's access)
           other: none of these (a bereavement, a complaint, a request for the personal data the bank holds, closing an account, credit)
+      credentials_requested:
+        noul: "Does the message ask the bank to use another person's login, or to give or read out a one-time code, a PIN or a password?"
+        above: 0.7
+        below: 0.3
+      joint_holder_change:
+        noul: "Does one holder of a joint account ask to remove or change another holder?"
+        above: 0.7
+        below: 0.3
       subject:
         choice: "What is the request about?"
         options:
@@ -462,6 +482,38 @@ triggers:
     when: "state = TRIAGED and request_type = authority and role != business_admin"
     to: FORWARD_PENDING
 
+  # ------------------------------------------------------------------ refusal, a last resort
+  # Each reason is accepted only on the fact that makes the request impossible to meet.
+  - name: refuse-someone-elses-account   # S31: a landlord asks whether a tenant paid
+    on: refuse
+    when: "state = TRIAGED and args.reason = someone_elses_account and role = third_party and request_type in [question, other]"
+    set: { refusal_reason: someone_elses_account }
+    to: REFUSE_PENDING
+
+  - name: refuse-credentials   # S09, S29: another person's login, a code read out
+    on: refuse
+    when: "state = TRIAGED and args.reason = credentials and credentials_requested"
+    set: { refusal_reason: credentials }
+    to: REFUSE_PENDING
+
+  - name: refuse-no-authority   # S24, S37: a viewer, a former employee
+    on: refuse
+    when: "state = TRIAGED and args.reason = no_authority and ((business_status = ROLE_REVOKED and subject != 'role') or (role in [viewer, employee, third_party] and request_type in [change, instruction, authority]))"
+    set: { refusal_reason: no_authority }
+    to: REFUSE_PENDING
+
+  - name: refuse-needs-all-holders   # S22: one holder removes the other
+    on: refuse
+    when: "state = TRIAGED and args.reason = needs_all_holders and joint_holder_change"
+    set: { refusal_reason: needs_all_holders }
+    to: REFUSE_PENDING
+
+  - name: refuse-other   # only a request of no known type
+    on: refuse
+    when: "state = TRIAGED and args.reason = other and request_type = other"
+    set: { refusal_reason: other }
+    to: REFUSE_PENDING
+
   # ------------------------------------------------------------------ the agent hands over
   - name: agent-escalates
     on: escalate
@@ -477,6 +529,7 @@ triggers:
   - { name: do-clarify,  when: "state = CLARIFY_PENDING",  call: clarify_customer,     to: CLARIFIED }
   - { name: do-redirect, when: "state = REDIRECT_PENDING", call: redirect_secure,      to: REDIRECTED }
   - { name: do-forward,  when: "state = FORWARD_PENDING",  call: forward_to_authority, to: FORWARDED }
+  - { name: do-refuse,   when: "state = REFUSE_PENDING",   call: refuse_customer,      to: REFUSED }
 
 on_error:
   set: { reason: ACTION_FAILED }

@@ -53,27 +53,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.83 → question.
-53. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → document (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
-58. `next_system`: not known → documents (by `route-documents`).
-59. The agent asked for `ask_system` {"system": "documents"}.
-60. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
-61. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-63. Called `ask_system` (attempt 1, key banking-033-at-02:do-ask:17).
-64. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
-65. `ask_system` found {}.
-66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-67. The case closed in `ASKED`: **ask_system**.
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.84 → question.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+55. Classifier (jev jev-latest) on `subject`: document, confidence 0.99 → document.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → document (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+62. `next_system`: not known → documents (by `route-documents`).
+63. The agent asked for `ask_system` {"system": "documents"}.
+64. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
+65. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+66. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+67. Called `ask_system` (attempt 1, key banking-033-at-02:do-ask:17).
+68. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
+69. `ask_system` found {}.
+70. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+71. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4922 tokens in, 423 out, 3.488 s, cost $0.0101; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5455 tokens in, 436 out, 3.276 s, cost $0.0108; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system about the CSV export for 6–9 May 2025. The case is now waiting on its answer. I'll use that answer to tell the customer whether the file has been created and when it will be in her secure portal.
+> I've asked the documents system about your CSV export for 6–9 May 2025. I don't have its answer yet, so I can't tell you whether the file has been created or when it will be in your secure portal. Once the answer comes back, we'll reply to you with the status.

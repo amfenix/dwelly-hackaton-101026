@@ -50,26 +50,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
 48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → incoming_payment (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-54. `next_system`: not known → incoming (by `route-incoming`).
-55. The agent asked for `ask_system` {"system": "incoming"}.
-56. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-57. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-58. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-59. Called `ask_system` (attempt 1, key banking-010-at-01:do-ask:17).
-60. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
-61. `ask_system` found {}.
-62. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-63. The case closed in `ASKED`: **ask_system**.
+49. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+50. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+51. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+52. `request_type`: not known → question (by `triage`).
+53. `credentials_requested`: not known → False (by `triage`).
+54. `joint_holder_change`: not known → False (by `triage`).
+55. `subject`: not known → incoming_payment (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+58. `next_system`: not known → incoming (by `route-incoming`).
+59. The agent asked for `ask_system` {"system": "incoming"}.
+60. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+61. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+63. Called `ask_system` (attempt 1, key banking-010-at-01:do-ask:17).
+64. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
+65. `ask_system` found {}.
+66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+67. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6723 tokens in, 365 out, 3.406 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7564 tokens in, 503 out, 5.578 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the incoming payments system for the £42.80 refund from Northmere Home Supplies. The system's answer isn't in the case yet, so I can't confirm whether the refund has arrived. The case is closed on that check, and I'm stopping here.
+> I checked the incoming payments system for the £42.80 refund from Northmere Home Supplies. The system accepted the check, but the case record doesn't yet show what it found. It shows no confirmation of a refund, so I can't say whether the money has arrived. I'm not going to claim that it has or hasn't.
+> 
+> The case is now closed at this step, so any further action goes to a person on the desk.

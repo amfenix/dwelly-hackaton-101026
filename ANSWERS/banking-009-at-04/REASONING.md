@@ -57,32 +57,36 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. `confirmation`: not known → none (by `read-confirmation`).
 54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 55. Rule `triage` fired: state = READING → true (state=READING).
-56. Classifier (jev jev-latest) on `request_type`: question, confidence 0.97 → question.
-57. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.97 → transfer.
-58. `request_type`: not known → question (by `triage`).
-59. `subject`: not known → transfer (by `triage`).
-60. State `READING` → `TRIAGED` (by `triage`).
-61. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-62. `next_system`: not known → payment (by `asked-payment`).
-63. The agent asked for `ask_system` {"system": "payment"}.
-64. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-65. The agent asked for `reply` {}.
-66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
-67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-69. Called `reply_customer` (attempt 1, key banking-009-at-04:do-reply:17).
-70. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "verified_call", "text": "The payment record shows your £648.20 transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
-71. `reply_customer` found {}.
-72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-73. The case closed in `REPLIED`: **reply**.
+56. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+57. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+58. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+59. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.91 → transfer.
+60. `request_type`: not known → question (by `triage`).
+61. `credentials_requested`: not known → False (by `triage`).
+62. `joint_holder_change`: not known → False (by `triage`).
+63. `subject`: not known → transfer (by `triage`).
+64. State `READING` → `TRIAGED` (by `triage`).
+65. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+66. `next_system`: not known → payment (by `asked-payment`).
+67. The agent asked for `ask_system` {"system": "payment"}.
+68. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+69. The agent asked for `reply` {}.
+70. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+71. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-009-at-04:do-reply:17).
+74. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "verified_call", "text": "The payment record shows your £648.20 transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
+75. `reply_customer` found {}.
+76. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+77. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 10489 tokens in, 621 out, 6.009 s, cost $0.0232; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8844 tokens in, 601 out, 5.583 s, cost $0.0193; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The payment has already been looked up, so the answer is in the case. I'll reply.
-> I've sent the reply to Mara. The bank's record of the completed transfer shows £648.20, with status SENT. That is the amount H&V sent to the property manager, and it matches the final line in the portal.
+> Payment has already been asked, so the answer is in the case. I'll reply.
+> I sent the reply to Mara Ellwood. The payment record shows the transfer as SENT for £648.20, not the £684.20 she remembers entering in the draft.
 > 
-> The payment system had already been checked, so a second lookup was refused as a duplicate and I replied from the existing record. I have no record of the £684.20 she remembers entering in the draft. If that was the amount she meant to send, the transfer went out £36.00 short. That would need a separate follow-up. The reply doesn't offer one.
+> My first attempt to query the payment system was refused because that check had already been done. The amount was already in the case, so I replied from it. The record shows no confirmation for the payment. The case is now closed with the reply.

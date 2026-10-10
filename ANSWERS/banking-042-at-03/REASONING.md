@@ -56,30 +56,34 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: batch, confidence 0.96 → batch.
-56. `request_type`: not known → question (by `triage`).
-57. `subject`: not known → batch (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
-60. `next_system`: not known → business (by `asked-business`).
-61. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
-62. State `TRIAGED` → `WAITING` (by `business-waits`).
-63. The case closed in `WAITING`: **wait**.
-64. The agent asked for `ask_system` {"system": "business"}.
-65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
-66. The agent asked for `escalate` {"note": "Nadia Fenwick (role: viewer, NOT verified, secure chat) asks for the row-level validation error report for batch HV-042 (Fenwick Workshop). The business system has already been asked, but no answer or report is in the case, and a repeat ask is refused. Identity and entitlement to view the report are unconfirmed, so nothing has been disclosed. Please verify the requester and confirm whether the viewer role may access the batch error report. Then give it to her through the portal."}.
-67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+57. Classifier (jev jev-latest) on `subject`: batch, confidence 0.96 → batch.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → batch (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
+64. `next_system`: not known → business (by `asked-business`).
+65. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
+66. State `TRIAGED` → `WAITING` (by `business-waits`).
+67. The case closed in `WAITING`: **wait**.
+68. The agent asked for `ask_system` {"system": "business"}.
+69. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
+70. The agent asked for `escalate` {"note": "Nadia Fenwick (role: viewer, not verified, secure chat) asks for the row-level validation error report for batch HV-042 (Fenwick Workshop). The business system was already queried, but the case holds no answer on report access or permissions. Further business asks are refused because the case is in WAITING. Please verify the requester and confirm whether a viewer may see the report, then provide it or the permitted route."}.
+71. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11121 tokens in, 1092 out, 10.712 s, cost $0.0292; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12154 tokens in, 1041 out, 10.684 s, cost $0.0303; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is in a waiting state and I can't take any further step on it.
+> I haven't been able to move this case forward, and it is still waiting.
 > 
-> - **Business system:** It was already asked about batch HV-042, but no answer or error report came back into the case. A second ask was refused.
-> - **Escalation:** I tried to hand the case to a person, and the desk refused that too, because it only allows escalation when the case is in the TRIAGED state.
-> - **Requester:** Nadia Fenwick is a viewer and is not verified. I have not shared any report details with her.
+> - **Business system:** It was already queried for this case, but the case holds no answer about the HV-042 error report or whether a viewer may see it. A second request was refused because the case is in WAITING.
+> - **Escalation:** I tried to hand the case to a person with the details, but that was also refused for the same reason.
+> - **Requester:** Nadia Fenwick is a viewer on the account and has not been verified. So I haven't shared or described any report content.
 > 
-> The case stays open and goes to a person, as the desk's rules say for a case left open.
+> The case stays open for a person to pick up. It needs two things: verification of Nadia, and confirmation of whether a viewer may see the row-level report for batch HV-042.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The requester said they had sent payment for a workshop invoice and asked to be told when it arrives. The desk classified this as a question about an incoming payment and sent an inquiry to the incoming-payments system, then closed the case at that step. The record shows no answer from that system and no confirmation of receipt, so whether the payment has arrived is still unknown and no one has been told.
+A buyer said they had sent payment for a workshop invoice and asked to be told when it arrives. The desk classified this as a question about an incoming payment and put it to the incoming-payments system. The case closed at that step, and the system's answer did not come back into the record, so whether the payment has arrived is still unknown and the buyer has not been told anything. Someone will need to get the answer from the incoming-payments system and reply to the buyer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

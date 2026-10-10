@@ -60,32 +60,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 57. Rule `triage` fired: state = READING → true (state=READING).
 58. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-59. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-60. `request_type`: not known → question (by `triage`).
-61. `subject`: not known → incoming_payment (by `triage`).
-62. State `READING` → `TRIAGED` (by `triage`).
-63. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
-64. `next_system`: not known → incoming (by `asked-incoming`).
-65. The agent asked for `reply` {}.
-66. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=True).
-67. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
-68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-69. Called `reply_customer` (attempt 1, key banking-010-at-04:do-reply:17).
-70. Action in the world: `reply` {"to": "Elowen Marr", "channel": "secure_chat", "text": "The incoming-payment record shows an incoming payment of 42.80. This does not establish the sender's payment status. No payment was changed."}.
-71. `reply_customer` found {}.
-72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-73. The case closed in `REPLIED`: **reply**.
+59. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+60. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+61. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+62. `request_type`: not known → question (by `triage`).
+63. `credentials_requested`: not known → False (by `triage`).
+64. `joint_holder_change`: not known → False (by `triage`).
+65. `subject`: not known → incoming_payment (by `triage`).
+66. State `READING` → `TRIAGED` (by `triage`).
+67. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
+68. `next_system`: not known → incoming (by `asked-incoming`).
+69. The agent asked for `reply` {}.
+70. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=True).
+71. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-010-at-04:do-reply:17).
+74. Action in the world: `reply` {"to": "Elowen Marr", "channel": "secure_chat", "text": "The incoming-payment record shows an incoming payment of 42.80. This does not establish the sender's payment status. No payment was changed."}.
+75. `reply_customer` found {}.
+76. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+77. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-3 calls, 5127 tokens in, 553 out, 4.408 s, cost $0.0118; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8492 tokens in, 522 out, 5.008 s, cost $0.0177; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I used `reply`, and the desk accepted it. The case is now in the REPLIED state and closed.
-> 
-> The incoming-payments check found an entry of £42.80, which matches the amount you asked about. The record shows no confirmation that it is the refund for your Northmere Home Supplies transfer. The reply therefore shouldn't say it is that refund.
-> 
-> I didn't read the reply text the desk wrote, so I can't say exactly how it words this.
-> 
-> Your identity is also still marked as not verified in this chat.
+> I've replied to the customer. The incoming check found an entry for £42.80. The records show no confirmation that it is the refund for the Northmere Home Supplies transfer, so the reply should say that and go no further. The case is closed.

@@ -54,26 +54,34 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-53. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-54. `request_type`: not known → access (by `triage`).
-55. `subject`: not known → access (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-58. `next_system`: not known → access (by `route-access`).
-59. Rule `already-redirected` fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); bank_redirected → true (bank_redirected=True). The customer was pointed to the secure process; nothing to do until they use it.
-60. State `TRIAGED` → `WAITING` (by `already-redirected`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `ask_system` {"system": "access"}.
-63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access).
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.11 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+55. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+56. `request_type`: not known → access (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → access (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+62. `next_system`: not known → access (by `route-access`).
+63. Rule `already-redirected` fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); bank_redirected → true (bank_redirected=True). The customer was pointed to the secure process; nothing to do until they use it.
+64. State `TRIAGED` → `WAITING` (by `already-redirected`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `ask_system` {"system": "access"}.
+67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access).
+68. The agent asked for `redirect_secure` {}.
+69. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=access); not verified is false (verified=True).
 
 ## Model calls
 
-4 calls, 9113 tokens in, 662 out, 5.68 s, cost $0.0209; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 13978 tokens in, 839 out, 7.917 s, cost $0.0319; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I took no further action on this case, and it is now waiting on Ms. Ellison.
+> The case is waiting on Mara, and I've done nothing further on it.
 > 
-> She has already been pointed to H&V's secure recovery process, and the portal shows she completed the recovery checks. The next step is hers: return to the sign-in page and sign in again. The bank doesn't handle passwords or verification codes, and nothing was asked of her outside the portal.
+> Mara completed the secure recovery checks in the portal, and the bank has already pointed her to that process. Her next step is to go back to the sign-in page and try again. If sign-in still fails, the case needs a fresh look.
 > 
-> I tried to query the access system, but the desk refused because the case is in a waiting state. The case status confirms the state is final: "wait". If she still can't sign in after the recovery, the case will need to be reopened.
+> Both of my attempts to act were refused because the case is in the WAITING state, not TRIAGED:
+> - **Access check:** I tried to look up her access record, so I can't confirm from a record that her access is restored.
+> - **Redirect to the secure process:** I tried this a second time, and it was also refused.

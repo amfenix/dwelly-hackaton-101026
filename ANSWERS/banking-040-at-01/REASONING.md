@@ -48,27 +48,37 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-48. Classifier (jev jev-latest) on `subject`: document, confidence 0.91 → document.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → document (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
-53. `next_system`: not known → documents (by `route-documents`).
-54. The agent asked for `ask_system` {"system": "documents"}.
-55. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-040-at-01:do-ask:17).
-59. Action in the world: `ask_system` {"system": "documents", "about": "document", "amount": "74.00"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+48. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+49. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+50. Classifier (jev jev-latest) on `subject`: document, confidence 0.89 → document.
+51. `request_type`: not known → question (by `triage`).
+52. `credentials_requested`: not known → False (by `triage`).
+53. `joint_holder_change`: not known → False (by `triage`).
+54. `subject`: not known → document (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+57. `next_system`: not known → documents (by `route-documents`).
+58. The agent asked for `ask_system` {"system": "documents"}.
+59. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
+60. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+62. Called `ask_system` (attempt 1, key banking-040-at-01:do-ask:17).
+63. Action in the world: `ask_system` {"system": "documents", "about": "document", "amount": "74.00"}.
+64. `ask_system` found {}.
+65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+66. The case closed in `ASKED`: **ask_system**.
+67. The agent asked for `reply` {}.
+68. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=document); documents-reply: state = TRIAGED is false (state=ASKED); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=documents); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-3 calls, 4685 tokens in, 376 out, 3.184 s, cost $0.0091; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11346 tokens in, 570 out, 6.767 s, cost $0.0239; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is now with the documents system, which holds the record of the £74.00 payment (reference HV-040, status SENT). I've asked it for a document showing the payment's current stage. I'm stopping here until it answers.
+> I asked the documents system about this request, but its answer hasn't come back into the case. The case now shows as ASKED and final, with no `document_ready` fact recorded.
+> 
+> I tried to reply to the customer, but the desk refused. A reply needs the documents answer to be in the case first. I haven't told the customer anything about whether a document exists, because the records don't show that yet.
+> 
+> I'm stopping here. The case stays open and goes to a person to follow up on the documents check.

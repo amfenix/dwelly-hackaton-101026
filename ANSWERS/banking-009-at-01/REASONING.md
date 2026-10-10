@@ -48,27 +48,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
-48. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.98 → transfer.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → transfer (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-53. `next_system`: not known → payment (by `route-payment`).
-54. The agent asked for `ask_system` {"system": "payment"}.
-55. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-009-at-01:do-ask:17).
-59. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "648.20"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 0.97 → question.
+48. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+49. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+50. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.97 → transfer.
+51. `request_type`: not known → question (by `triage`).
+52. `credentials_requested`: not known → False (by `triage`).
+53. `joint_holder_change`: not known → False (by `triage`).
+54. `subject`: not known → transfer (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+57. `next_system`: not known → payment (by `route-payment`).
+58. The agent asked for `ask_system` {"system": "payment"}.
+59. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+60. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+62. Called `ask_system` (attempt 1, key banking-009-at-01:do-ask:17).
+63. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "648.20"}.
+64. `ask_system` found {}.
+65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+66. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4591 tokens in, 373 out, 3.034 s, cost $0.0089; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5156 tokens in, 453 out, 4.247 s, cost $0.0104; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The payment system has been asked for the amount of the transfer that was actually sent. Once its answer is in the case, the next step is to reply to the customer.
+> I've asked the payment system to check the record of what was actually sent. I'll reply to you once it answers, and I won't confirm an amount until then. The only figure I have so far is the £648.20 on the final payment line in your portal. That doesn't match the £684.20 you remember entering in the draft.

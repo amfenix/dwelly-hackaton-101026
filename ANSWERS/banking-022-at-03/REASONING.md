@@ -58,26 +58,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 55. Rule `triage` fired: state = READING → true (state=READING).
 56. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-57. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-58. `request_type`: not known → instruction (by `triage`).
-59. `subject`: not known → card (by `triage`).
-60. State `READING` → `TRIAGED` (by `triage`).
-61. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-62. `next_system`: not known → card (by `asked-card`).
-63. Rule `card-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked → true (card_asked=True); card_status absent → true (card_status=not known). The system was asked; its answer is not in yet.
-64. State `TRIAGED` → `WAITING` (by `card-waits`).
-65. The case closed in `WAITING`: **wait**.
-66. The agent asked for `ask_system` {"system": "card"}.
-67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
-68. The agent asked for `submit_request` {}.
-69. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); registration_asked absent is false (registration_asked=True); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=instruction); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); card-instruction: state = TRIAGED is false (state=WAITING); card_asked absent is false (card_asked=True); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card).
+57. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+58. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+59. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+60. `request_type`: not known → instruction (by `triage`).
+61. `credentials_requested`: not known → False (by `triage`).
+62. `joint_holder_change`: not known → False (by `triage`).
+63. `subject`: not known → card (by `triage`).
+64. State `READING` → `TRIAGED` (by `triage`).
+65. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+66. `next_system`: not known → card (by `asked-card`).
+67. Rule `card-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked → true (card_asked=True); card_status absent → true (card_status=not known). The system was asked; its answer is not in yet.
+68. State `TRIAGED` → `WAITING` (by `card-waits`).
+69. The case closed in `WAITING`: **wait**.
+70. The agent asked for `ask_system` {"system": "card"}.
+71. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
+72. The agent asked for `submit_request` {}.
+73. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); registration_asked absent is false (registration_asked=True); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=instruction); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); card-instruction: state = TRIAGED is false (state=WAITING); card_asked absent is false (card_asked=True); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card).
 
 ## Model calls
 
-5 calls, 11039 tokens in, 716 out, 6.873 s, cost $0.0253; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12300 tokens in, 791 out, 7.879 s, cost $0.0281; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The block hasn't been submitted. The case is in WAITING, not TRIAGED, so the desk refused both the card lookup and the block instruction.
+> I haven't blocked the card yet. The case is waiting on Mara's answer about which card she means.
 > 
-> The case record shows the desk has already asked which card and for its registration. I'm waiting for Mara Ellison's answer, so I'm leaving the case open and not escalating. Once she replies, the case can move on and the block can go to the card system.
+> The records show the desk has already asked which card to block, and the case is parked in a waiting state. Both of my attempts to move it on were refused. One asked the card system, the other submitted the block. Both were refused because the card question is still open.
+> 
+> I'm leaving the case as it is. Once Mara says which card was lost, the block can be submitted.

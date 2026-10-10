@@ -54,28 +54,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-53. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → batch (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
-58. `next_system`: not known → payment (by `route-payment`).
-59. The agent asked for `ask_system` {"system": "payment"}.
-60. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-61. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-63. Called `ask_system` (attempt 1, key banking-044-at-02:do-ask:17).
-64. Action in the world: `ask_system` {"system": "payment", "about": "batch", "reference": "SUP-17"}.
-65. `ask_system` found {}.
-66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-67. The case closed in `ASKED`: **ask_system**.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+55. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → batch (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
+62. `next_system`: not known → payment (by `route-payment`).
+63. The agent asked for `ask_system` {"system": "payment"}.
+64. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+65. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+66. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+67. Called `ask_system` (attempt 1, key banking-044-at-02:do-ask:17).
+68. Action in the world: `ask_system` {"system": "payment", "about": "batch", "reference": "SUP-17"}.
+69. `ask_system` found {}.
+70. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+71. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7015 tokens in, 480 out, 4.633 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5347 tokens in, 427 out, 4.374 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system for the status of row SUP-17. The request was accepted and the case is now waiting on that answer. I haven't told Leona anything yet, because the row status isn't in the case until the payment system responds.
-> 
-> Her record shows her as unverified, but I went ahead because this is a read-only question. Nothing is being changed.
+> The row-level status for SUP-17 is held in the payment system, so I've queried it. The reply is the next step.

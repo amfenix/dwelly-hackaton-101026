@@ -4,7 +4,7 @@
 
 ## Summary
 
-You asked whether Harrow & Vale sent your £420 one-off payment to Alder & Reed Workshop, since you could see the debit. The desk classed it as a question about a transfer and sent an inquiry to the payment system about that £420 transfer. No answer is on record yet, and the only evidence found is the debit in your account activity with no confirmation. Someone will need to read the payment system's reply and pass it on to you.
+The customer asked whether Harrow & Vale sent the £420 one-off transfer to Alder & Reed Workshop, which shows as a debit on their account. The desk classed it as a question about a transfer and put it to the payment system, and the request went through. No answer has come back yet, so whether the payment was sent is still unconfirmed; the only evidence so far is the debit in the account activity, with no confirmation found.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -57,6 +57,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

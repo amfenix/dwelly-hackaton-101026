@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, who is unverified and wrote over secure chat, asked whether her new tablet is linked so she can use it for banking. The desk queried the access system, but no device status came back, so the case closed in WAITING with no actions taken. The agent's further attempts to ask the access system again, redirect to the secure process, and escalate were all refused because the case was already in WAITING, and the answer from the access system is still outstanding.
+Mara Ellison, an unverified customer on secure chat, asked whether her new tablet is linked before she uses it for banking. The desk classed it as an access question, marked the access system as asked, and closed the case in WAITING because that system's answer had not come in, so no device status was given. The agent's later attempts to ask the access system again, redirect to the secure process, and escalate with a note for a person to verify her and check the device registration were all refused because the case was no longer in the triaged state, so the case remains waiting on the access answer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

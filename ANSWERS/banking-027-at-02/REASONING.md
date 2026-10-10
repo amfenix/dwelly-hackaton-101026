@@ -52,28 +52,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-51. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-52. `request_type`: not known → access (by `triage`).
-53. `subject`: not known → access (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-56. `next_system`: not known → access (by `route-access`).
-57. The agent asked for `ask_system` {"system": "access"}.
-58. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=access).
-59. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-027-at-02:do-ask:17).
-62. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.1 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+53. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+54. `request_type`: not known → access (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → access (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+60. `next_system`: not known → access (by `route-access`).
+61. The agent asked for `ask_system` {"system": "access"}.
+62. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=access).
+63. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-027-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "access", "about": "access"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7193 tokens in, 594 out, 5.145 s, cost $0.0164; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5640 tokens in, 693 out, 5.593 s, cost $0.0138; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the access system about Mara Ellison's sign-in problem. The desk accepted the request and the case is closed at that step. No answer from the access system is in the case yet, so I haven't told her what is wrong with her profile.
-> 
-> I haven't sent her to the secure recovery process or taken any other step. She is verified on the call and has shared no password or code.
+> The access system has been asked about the sign-in problem. Its answer will come back into the case, and the reply to Mara will be written from that.

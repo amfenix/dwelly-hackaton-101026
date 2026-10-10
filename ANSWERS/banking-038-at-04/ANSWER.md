@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked, over secure chat, for an account confirmation to be made available in her own secure portal and not sent to anyone else. The desk checked the documents system, which showed account-confirmation-038.pdf as available, and replied in the chat that the document is available, that this does not confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied; the record shows she was not verified in this chat, and nothing further is left for a person.
+Mara Ellison asked, over secure chat, for an account confirmation document to be available in her own secure portal and not sent to anyone else. The desk found account-confirmation-038.pdf ready and replied in the chat that it is available, noting that this does not confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied; she is not verified on this chat, and nothing else is left for a person in the record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -75,6 +75,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

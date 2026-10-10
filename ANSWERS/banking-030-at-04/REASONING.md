@@ -57,28 +57,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
 55. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-56. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-57. `request_type`: not known → question (by `triage`).
-58. `subject`: not known → card (by `triage`).
-59. State `READING` → `TRIAGED` (by `triage`).
-60. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-61. `next_system`: not known → card (by `asked-card`).
-62. The agent asked for `reply` {}.
-63. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=IN_MANUFACTURE).
-64. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
-65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-66. Called `reply_customer` (attempt 1, key banking-030-at-04:do-reply:17).
-67. Action in the world: `reply` {"to": "Maren Ellery", "channel": "secure_chat", "text": "The card journal shows your card as in manufacture. This does not establish dispatch or receipt. No additional card change was made."}.
-68. `reply_customer` found {}.
-69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-70. The case closed in `REPLIED`: **reply**.
+56. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+57. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+58. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+59. `request_type`: not known → question (by `triage`).
+60. `credentials_requested`: not known → False (by `triage`).
+61. `joint_holder_change`: not known → False (by `triage`).
+62. `subject`: not known → card (by `triage`).
+63. State `READING` → `TRIAGED` (by `triage`).
+64. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+65. `next_system`: not known → card (by `asked-card`).
+66. The agent asked for `reply` {}.
+67. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=IN_MANUFACTURE).
+68. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
+69. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+70. Called `reply_customer` (attempt 1, key banking-030-at-04:do-reply:17).
+71. Action in the world: `reply` {"to": "Maren Ellery", "channel": "secure_chat", "text": "The card journal shows your card as in manufacture. This does not establish dispatch or receipt. No additional card change was made."}.
+72. `reply_customer` found {}.
+73. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+74. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7367 tokens in, 477 out, 4.363 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5461 tokens in, 355 out, 3.255 s, cost $0.0100; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply to Maren. The card system shows her replacement card (reference HV-030) as in manufacture. I didn't make any changes to her account.
-> 
-> The records only show that the card is being made, so the reply doesn't say it has been sent. The case is now closed.
+> I've sent Maren a reply. The card record shows her replacement card is in manufacture, and the case is now closed.

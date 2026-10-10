@@ -54,26 +54,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → transfer (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-58. `next_system`: not known → payment (by `asked-payment`).
-59. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
-60. State `TRIAGED` → `WAITING` (by `payment-waits`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `ask_system` {"system": "payment"}.
-63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+55. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → transfer (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+62. `next_system`: not known → payment (by `asked-payment`).
+63. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
+64. State `TRIAGED` → `WAITING` (by `payment-waits`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `ask_system` {"system": "payment"}.
+67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+68. The agent asked for `escalate` {"note": "Mara Ellison, claiming to be signatory for Northmere Studio Ltd, asks what stage the authorised payment to Alder Quay Supplies is at (supplier says it has not arrived). Her identity is not verified (verified=False), and the case is in WAITING, so the payment system check was refused. Please verify her identity and signatory authority, then check the payment stage in the records. Nothing has been disclosed yet."}.
+69. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8943 tokens in, 641 out, 7.002 s, cost $0.0203; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12104 tokens in, 901 out, 9.014 s, cost $0.0288; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't been able to check the payment's stage. The desk refused my request to query the payment records, so I have nothing to tell Mara or Alder Quay Supplies yet.
+> I couldn't move this case forward. The payment check and the escalation were both refused because the case is in a WAITING state, not TRIAGED. The case is final, so it stays open and goes to a person.
 > 
-> The case is in a WAITING state, and the payment check only runs on cases in the TRIAGED state. The case status shows the case as final with the outcome "wait". It also shows Mara Ellison as not verified, though the refusal didn't cite that.
+> Mara Ellison's identity is not verified, so I haven't looked up the payment or told her anything about it. Her signatory role is also unconfirmed.
 > 
-> I've stopped here and left the case open. I did not escalate or ask the customer anything, because nothing in the refusal calls for either.
+> Someone needs to verify her identity and her authority to sign for Northmere Studio Ltd. After that, the payment to Alder Quay Supplies can be checked in H&V's records for its current stage.

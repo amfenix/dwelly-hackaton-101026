@@ -55,28 +55,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
 53. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-54. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-55. `request_type`: not known → question (by `triage`).
-56. `subject`: not known → incoming_payment (by `triage`).
-57. State `READING` → `TRIAGED` (by `triage`).
-58. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-59. `next_system`: not known → incoming (by `route-incoming`).
-60. The agent asked for `ask_system` {"system": "incoming"}.
-61. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-62. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-63. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-64. Called `ask_system` (attempt 1, key banking-010-at-02:do-ask:17).
-65. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
-66. `ask_system` found {}.
-67. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-68. The case closed in `ASKED`: **ask_system**.
+54. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+55. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+56. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+57. `request_type`: not known → question (by `triage`).
+58. `credentials_requested`: not known → False (by `triage`).
+59. `joint_holder_change`: not known → False (by `triage`).
+60. `subject`: not known → incoming_payment (by `triage`).
+61. State `READING` → `TRIAGED` (by `triage`).
+62. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+63. `next_system`: not known → incoming (by `route-incoming`).
+64. The agent asked for `ask_system` {"system": "incoming"}.
+65. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+66. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+67. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+68. Called `ask_system` (attempt 1, key banking-010-at-02:do-ask:17).
+69. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
+70. `ask_system` found {}.
+71. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+72. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7275 tokens in, 487 out, 5.196 s, cost $0.0154; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8094 tokens in, 505 out, 6.471 s, cost $0.0168; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the incoming-payments system about the £42.80 from Northmere Home Supplies. The case is now marked final, and the query has gone through.
+> I've checked the incoming payments system for the £42.80 from Northmere Home Supplies. The check didn't return an incoming entry, so I can't yet confirm whether the refund has reached your account. The case is closed at this step, and nothing further has been done.
 > 
-> I haven't confirmed the status of the refund yet. Case status shows no new facts after the query, so there is no incoming entry in the case for me to report on or match to your original transfer. Elowen Marr's identity is also still marked as unverified.
+> Your identity is also still marked as unverified on this chat. Until that's done, I can't confirm details of your account.

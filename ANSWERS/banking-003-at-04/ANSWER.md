@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, who was not verified, asked over secure chat about the stage of her transfer instruction and whether she needed to authorise it. The desk checked the payment record, found it "awaiting authorisation" with no sent confirmation, and replied in secure chat saying so, that the reply does not authorise the payment, and that no new transfer was made. The case is closed as replied, and the record shows nothing left for a person to do.
+Elise Rowan, an unverified customer on secure chat, asked about the stage of her transfer and whether she needed to authorise it. The desk checked the payment record, found the transfer at "awaiting authorisation" with no confirmation sent, and replied with that status, saying the reply does not authorise the payment and that no new transfer was made. The case closed as replied, with nothing left for a person in the record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -74,6 +74,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

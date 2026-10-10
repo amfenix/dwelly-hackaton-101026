@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an unverified customer on secure chat, asked how to tell whether her CSV export of transactions from 6 to 9 May 2025 had been created, and asked to be told when the file is available in her secure portal. The desk classified it as a question about a document and sent an inquiry to the documents system, and the case closed in the asked state. The record shows no answer from the documents system yet and nothing sent to the customer, so telling her whether the file exists remains to be done.
+Mara Ellison, an unverified customer writing over secure chat, asked for a CSV export of her transactions from 6 to 9 May 2025 and wanted to know when the file would be available in her secure portal. The desk treated it as a question about a document and sent an inquiry to the documents system about it. That system's answer is not in the record, so it is not known whether the export has been created, and the case closed at the point of asking.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

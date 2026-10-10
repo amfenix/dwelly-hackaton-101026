@@ -52,30 +52,36 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
-51. Classifier (jev jev-latest) on `subject`: role, confidence 0.77 → role.
-52. `request_type`: not known → authority (by `triage`).
-53. `subject`: not known → role (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
-56. `next_system`: not known → business (by `route-business`).
-57. The agent asked for `ask_system` {"system": "business"}.
-58. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); incoming-ask: args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); recurring-ask: args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); card-ask: args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority, instruction] is false (request_type=authority); access-ask: args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); business-ask: next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); documents-ask: args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=authority); tariff-ask: args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority).
-59. The agent asked for `forward_to_authority` {}.
-60. Rule `forward-to-the-authority` (on `forward_to_authority`) fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); role != business_admin → true (role=customer).
-61. State `TRIAGED` → `FORWARD_PENDING` (by `forward-to-the-authority`).
-62. Rule `do-forward` fired: state = FORWARD_PENDING → true (state=FORWARD_PENDING).
-63. Called `forward_to_authority` (attempt 1, key banking-045-at-03:do-forward:17).
-64. Action in the world: `forward_to_authority` {"to": "the verified company administrator", "about": "role", "requester": "Nadia Bell"}.
-65. `forward_to_authority` found {}.
-66. State `FORWARD_PENDING` → `FORWARDED` (by `do-forward`).
-67. The case closed in `FORWARDED`: **forward_to_authority**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.05 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+53. Classifier (jev jev-latest) on `subject`: role, confidence 0.78 → role.
+54. `request_type`: not known → authority (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → role (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
+60. `next_system`: not known → business (by `route-business`).
+61. The agent asked for `ask_system` {"system": "business"}.
+62. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); incoming-ask: args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); recurring-ask: args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); card-ask: args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority, instruction] is false (request_type=authority); access-ask: args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); business-ask: next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); documents-ask: args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=authority); tariff-ask: args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority).
+63. The agent asked for `forward_to_authority` {}.
+64. Rule `forward-to-the-authority` (on `forward_to_authority`) fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); role != business_admin → true (role=customer).
+65. State `TRIAGED` → `FORWARD_PENDING` (by `forward-to-the-authority`).
+66. Rule `do-forward` fired: state = FORWARD_PENDING → true (state=FORWARD_PENDING).
+67. Called `forward_to_authority` (attempt 1, key banking-045-at-03:do-forward:17).
+68. Action in the world: `forward_to_authority` {"to": "the verified company administrator", "about": "role", "requester": "Nadia Bell"}.
+69. `forward_to_authority` found {}.
+70. State `FORWARD_PENDING` → `FORWARDED` (by `do-forward`).
+71. The case closed in `FORWARDED`: **forward_to_authority**.
 
 ## Model calls
 
-5 calls, 12840 tokens in, 692 out, 6.944 s, cost $0.0286; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 13937 tokens in, 674 out, 7.254 s, cost $0.0302; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I forwarded the access request to the company administrator for approval, and the case is now closed on our side. Nadia can't approve or assign roles herself, and the bank can't grant access based on her email or job role. The new colleague gets no portal access unless the administrator approves.
+> I forwarded the access request to the company administrator for approval. The desk accepted it and the case is now in the FORWARDED state.
 > 
-> My first step was to check the company-administrator record in the business system. The desk refused that check, so I didn't confirm the administrator's identity against the record. I forwarded the request anyway because it needs someone else's approval.
+> My first step was to ask the business system to check the administrator record, but the desk refused that. For a request of this type the desk only allows forwarding it to the person with authority.
+> 
+> Nadia isn't the administrator, so the bank has not granted any access. The new colleague gets portal access only if the administrator approves.

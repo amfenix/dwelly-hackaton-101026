@@ -51,27 +51,33 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → unprompted (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
-51. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → access (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-56. `next_system`: not known → access (by `route-access`).
-57. The agent asked for `ask_system` {"system": "access"}.
-58. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-039-at-03:do-ask:17).
-62. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.04 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.1 → False.
+53. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → access (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+60. `next_system`: not known → access (by `route-access`).
+61. The agent asked for `ask_system` {"system": "access"}.
+62. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-039-at-03:do-ask:17).
+66. Action in the world: `ask_system` {"system": "access", "about": "access"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4861 tokens in, 356 out, 3.242 s, cost $0.0093; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7900 tokens in, 479 out, 5.302 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've queried the access system for the sign-in sessions on Nerys Wren's profile. The request was accepted and the case is marked as asked. The next step is to reply to her once the access system's answer is in the case.
+> I asked the access system for the sign-in session records on Nerys Wren's profile. The desk accepted the request and closed the case at that step. No session list has come back yet, so there is nothing to send to the customer.
+> 
+> Nerys is verified and made the request in the secure portal. She asked for the list to be delivered there, and she didn't ask for any password, PIN or code.

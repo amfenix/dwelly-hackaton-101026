@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, an unverified customer on secure chat, asked what a £3.20 fee on a withdrawal was for and asked for escalation and a check of which tariff entry applied. The desk had already queried the tariff system and put the case in a waiting state because no answer had come back. A second tariff request and the attempt to escalate were both refused because the case was in WAITING, so no explanation of the fee was given, no refund or account change was made, and the escalation did not go through. What remains is the tariff system's answer, which is not yet in, and a person to check the tariff entry and verify her identity.
+Mara Ellery, an unverified customer on secure chat, asked the desk to escalate and check which tariff entry produced the £3.20 fee on a withdrawal and how it accounts for the amount. The desk had already queried the tariff system, whose answer was not yet in, so it closed the case as "wait" in the WAITING state. The agent's later attempts to query the tariff system again and to escalate were both refused because the case was no longer in the TRIAGED state, so no escalation was made and no actions were taken. The tariff answer is still outstanding, and Mara's identity has not been verified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **tariff**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer on a call, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputed how the tariff was applied. The desk registered this as request HV-035 and routed it to the Tariff Team, then sent her a reply confirming the registration; the record says registration is not a decision on the fee. The agent's attempts to query the tariff system and to submit the request were refused, and nothing in the record shows the fee itself being decided, so the dispute is left with the Tariff Team.
+Mara Ellison, a verified customer on a call, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputes how the tariff was applied. The desk found her request already registered as HV-035 and routed to the Tariff Team, refused an attempt to query the tariff system directly, and sent her a reply confirming the registration. The record shows no decision on whether the fee was correct or will be changed, so that remains with the Tariff Team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -74,6 +74,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **tariff**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -94,7 +96,6 @@ No.
 Requests the policy refused:
 
 - `ask_system`: payment-ask: args.system = payment is false (args.system=tariff); next_system = payment is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=tariff); next_system = incoming is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=tariff); next_system = recurring is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=tariff); next_system = card is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=tariff); next_system = access is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=tariff); next_system = business is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=tariff); next_system = documents is false (next_system=tariff); next_system absent is false (next_system=tariff); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register)
-- `submit_request`: register: registration_asked absent is false (registration_asked=True); register-what-fits-no-type: request_type = other is false (request_type=register); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=tariff); request_type = instruction is false (request_type=register); incoming-instruction: next_system = incoming is false (next_system=tariff); request_type = instruction is false (request_type=register); recurring-instruction: next_system = recurring is false (next_system=tariff); request_type = instruction is false (request_type=register); card-instruction: next_system = card is false (next_system=tariff); request_type = instruction is false (request_type=register); access-instruction: next_system = access is false (next_system=tariff); request_type = instruction is false (request_type=register); business-instruction: next_system = business is false (next_system=tariff); request_type = instruction is false (request_type=register); documents-instruction: next_system = documents is false (next_system=tariff); request_type = instruction is false (request_type=register)
 
 ## Final result
 

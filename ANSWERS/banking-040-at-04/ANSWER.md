@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat for a document showing the stage of her £74.00 payment HV-040, so she could share it with her repair contractor. The desk found the document ready (bank status SENT) and replied in secure chat that it is available, that this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied; her identity is recorded as not verified, and nothing is left for a person in the record.
+Mara Ellison asked, over secure chat, for a document showing the stage of her £74.00 payment HV-040 so she could give it to her repair contractor. The desk found the record had been generated and replied on secure chat that the document is available, that this does not confirm it was downloaded or that funds were credited, and that no email was sent; the case is closed as replied. The record shows she was not verified on this chat and no verification was attempted, and no contractor confirmation is on file; nothing else is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -76,6 +76,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

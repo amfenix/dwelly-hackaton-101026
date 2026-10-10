@@ -52,28 +52,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → standing_order (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-56. `next_system`: not known → recurring (by `route-recurring`).
-57. The agent asked for `ask_system` {"system": "recurring"}.
-58. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-017-at-02:do-ask:17).
-62. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+53. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → standing_order (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+60. `next_system`: not known → recurring (by `route-recurring`).
+61. The agent asked for `ask_system` {"system": "recurring"}.
+62. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-017-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7103 tokens in, 533 out, 5.365 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7844 tokens in, 505 out, 7.18 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the recurring payments system (standing orders and Direct Debits) about Mara's rent standing order. The request was accepted, and the case is now closed at that step.
+> I've asked the recurring payments system about your rent standing order. The case is now closed on that step. The system's answer isn't in the case yet, so I can't tell you whether the order was sent or what status the bank recorded.
 > 
-> The system's answer isn't in the case yet. Nothing has been established about whether the rent payment was sent or what status the bank recorded. The case also still shows Mara as not verified.
+> Your identity is also not verified yet. That may limit what we can share about the order in this chat.

@@ -56,29 +56,33 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `confirmation`: not known → none (by `read-confirmation`).
 53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: question, confidence 0.55 → question.
-56. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
-57. `request_type`: not known → question (by `triage`).
-58. `subject`: not known → statement (by `triage`).
-59. State `READING` → `TRIAGED` (by `triage`).
-60. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-61. `next_system`: not known → documents (by `asked-documents`).
-62. The agent asked for `reply` {}.
-63. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
-64. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
-65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-66. Called `reply_customer` (attempt 1, key banking-031-at-04:do-reply:17).
-67. Action in the world: `reply` {"to": "Elowen Marr", "channel": "secure_chat", "text": "The document record shows that the document (statement-031.pdf) is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
-68. `reply_customer` found {}.
-69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-70. The case closed in `REPLIED`: **reply**.
+55. Classifier (jev jev-latest) on `request_type`: question, confidence 0.67 → question.
+56. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+57. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+58. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+59. `request_type`: not known → question (by `triage`).
+60. `credentials_requested`: not known → False (by `triage`).
+61. `joint_holder_change`: not known → False (by `triage`).
+62. `subject`: not known → statement (by `triage`).
+63. State `READING` → `TRIAGED` (by `triage`).
+64. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+65. `next_system`: not known → documents (by `asked-documents`).
+66. The agent asked for `reply` {}.
+67. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+68. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
+69. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+70. Called `reply_customer` (attempt 1, key banking-031-at-04:do-reply:17).
+71. Action in the world: `reply` {"to": "Elowen Marr", "channel": "secure_chat", "text": "The document record shows that the document (statement-031.pdf) is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
+72. `reply_customer` found {}.
+73. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+74. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7263 tokens in, 489 out, 4.747 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5498 tokens in, 509 out, 4.674 s, cost $0.0117; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I used the reply tool, and the desk accepted it and closed the case. The documents system showed the June 2025 statement (`statement-031.pdf`) as ready, so the desk is writing the customer's reply from that record.
+> I sent the reply. The records show the June 2025 statement is ready as `statement-031.pdf`, and the reply tells the customer it is available to open in the secure portal. The case is now closed.
 > 
-> The customer is not verified. Our records show she asked for the statement in the portal, not by email.
+> The desk's checks list the requester as not verified. The reply only points to the document in the portal. It doesn't send the statement or show what's in it.

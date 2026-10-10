@@ -58,22 +58,24 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 55. Rule `triage` fired: state = READING → true (state=READING).
 56. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-57. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
-58. `request_type`: not known → access (by `triage`).
-59. `subject`: not known → card (by `triage`).
-60. State `READING` → `TRIAGED` (by `triage`).
-61. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-62. `next_system`: not known → access (by `asked-access`).
-63. Rule `already-redirected` fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); bank_redirected → true (bank_redirected=True). The customer was pointed to the secure process; nothing to do until they use it.
-64. State `TRIAGED` → `WAITING` (by `already-redirected`).
-65. The case closed in `WAITING`: **wait**.
-66. The agent asked for `reply` {}.
-67. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=card); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=access); tariff_status present is false (tariff_status=not known).
+57. Classifier (jev jev-latest) on `credentials_requested`: 0.19 → False.
+58. Classifier (jev jev-latest) on `joint_holder_change`: 0.08 → False.
+59. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
+60. `request_type`: not known → access (by `triage`).
+61. `credentials_requested`: not known → False (by `triage`).
+62. `joint_holder_change`: not known → False (by `triage`).
+63. `subject`: not known → card (by `triage`).
+64. State `READING` → `TRIAGED` (by `triage`).
+65. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+66. `next_system`: not known → access (by `asked-access`).
+67. Rule `already-redirected` fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); bank_redirected → true (bank_redirected=True). The customer was pointed to the secure process; nothing to do until they use it.
+68. State `TRIAGED` → `WAITING` (by `already-redirected`).
+69. The case closed in `WAITING`: **wait**.
 
 ## Model calls
 
-5 calls, 8190 tokens in, 568 out, 5.541 s, cost $0.0164; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 5996 tokens in, 487 out, 3.843 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is in WAITING, and nothing more is needed from the bank's side. The bank has already opened the secure PIN procedure for Maren in the portal. The next move is hers: she needs to finish the procedure there. I tried to send a further reply, but the desk refused it because the case isn't in the state where replies are accepted. I've left the case as it is.
+> The case is already in its final waiting state, so I'm taking no further action. The bank has already sent Maren to the secure PIN procedure in the portal, and she needs to finish it there. No PIN or other credential has been requested or shared in chat.

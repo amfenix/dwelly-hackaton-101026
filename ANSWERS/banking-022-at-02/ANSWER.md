@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk classified this as a card instruction and registered a request with the card team, and the case closed as requested. The desk refused a lookup in the card system first, so it did not check which card is on her account, and the record shows no further steps left for a person.
+Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk treated this as a card instruction, refused an attempt to query the card system first, and registered a request to the card team, and the case closed as requested. The record does not show that the block has taken effect, so that remains with the card team, and it does not show which card is meant.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

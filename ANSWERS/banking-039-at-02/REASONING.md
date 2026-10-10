@@ -52,31 +52,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.97 → question.
-51. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → access (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-56. `next_system`: not known → access (by `route-access`).
-57. The agent asked for `ask_system` {"system": "access"}.
-58. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-039-at-02:do-ask:17).
-62. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
-66. The agent asked for `reply` {}.
-67. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=access); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=access); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=access); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=access); tariff_status present is false (tariff_status=not known).
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.04 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.09 → False.
+53. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → access (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+60. `next_system`: not known → access (by `route-access`).
+61. The agent asked for `ask_system` {"system": "access"}.
+62. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-039-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "access", "about": "access"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 10736 tokens in, 584 out, 7.044 s, cost $0.0234; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7804 tokens in, 505 out, 6.809 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've queried the access system for the sign-in sessions on Nerys Wren's profile. The case now holds its answer, and the next step is to reply to her with it.
-> I asked the access system for the sign-in sessions, but its answer never reached the case. I couldn't reply to Nerys Wren with a session list.
-> 
-> The case is closed at the "asked" step. It holds no access status, and the desk refused my reply because a reply needs that status first. I haven't told her anything about her sessions, since I have no record to base it on. Because the case is closed without an answer, it goes to a person to follow up.
+> The access system has been asked for the sign-in session information. The case is now at the point where the reply can be written from its answer.
+> I asked the access system for the sign-in sessions on Nerys Wren's profile. That was the right next step because she is verified and wants information, not a change. The case is now closed at that step. The access system's answer isn't in the case yet, so I haven't told her anything about her sessions or the 11 July 2025 new-device notification.

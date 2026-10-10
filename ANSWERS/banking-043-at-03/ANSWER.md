@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, who is not verified on secure chat, asked whether Northmere Studio Ltd's payroll payment package is still waiting for her co-signer or has moved on. The desk had already asked the business system about the package, but its answer, including the signing status, had not come in, so the case closed in a waiting state. No actions were taken and nothing was approved or released on anyone's behalf; the record does not show whether the co-signer still needs to act, and that remains open until the business system responds.
+Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting for her co-signer or had moved on, after she gave her first consent. The desk asked the business system about the package and closed the case as waiting, because that system's answer has not come back; a second ask to the business system was refused once the case was in the waiting state. No actions were taken on the package, and her session is not verified. What remains is for the business system's reply to arrive so the status and the second signatory's position can be answered.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -80,6 +82,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business)
 
 ## Final result
 

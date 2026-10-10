@@ -56,26 +56,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-56. `request_type`: not known → question (by `triage`).
-57. `subject`: not known → transfer (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-60. `next_system`: not known → payment (by `asked-payment`).
-61. The agent asked for `reply` {}.
-62. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=AWAITING_AUTHORISATION).
-63. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-65. Called `reply_customer` (attempt 1, key banking-003-at-04:do-reply:17).
-66. Action in the world: `reply` {"to": "Elise Rowan", "channel": "secure_chat", "text": "The payment record shows your transfer as awaiting authorisation. This does not authorise the payment. No new transfer was made."}.
-67. `reply_customer` found {}.
-68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-69. The case closed in `REPLIED`: **reply**.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+57. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → transfer (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+64. `next_system`: not known → payment (by `asked-payment`).
+65. The agent asked for `reply` {}.
+66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=AWAITING_AUTHORISATION).
+67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+69. Called `reply_customer` (attempt 1, key banking-003-at-04:do-reply:17).
+70. Action in the world: `reply` {"to": "Elise Rowan", "channel": "secure_chat", "text": "The payment record shows your transfer as awaiting authorisation. This does not authorise the payment. No new transfer was made."}.
+71. `reply_customer` found {}.
+72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7269 tokens in, 474 out, 4.879 s, cost $0.0153; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8216 tokens in, 528 out, 5.023 s, cost $0.0173; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The reply has been accepted and the case is closed. The bank's records show the transfer instruction is at the "awaiting authorisation" stage. It has not been sent, which is why there is no sent confirmation. The desk writes the customer-facing wording, so I haven't seen the exact text of the reply.
+> I've sent the reply. The payment record shows your transfer instruction is saved but has not been sent. It is at the "awaiting authorisation" stage, and no confirmation has been issued because it hasn't been authorised yet.

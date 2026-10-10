@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing through secure chat, asked for a document showing the stage of her £74.00 payment (reference HV-040) so she could give it to her repair contractor. The desk classed it as a question about a document and sent a request to the documents system for that record. The case is closed at that point with the answer still awaited, so a reply to Mara has not yet been written, and she is recorded as not verified.
+Mara Ellison, a customer on secure chat who is not marked as verified, asked for a document showing the stage of her £74.00 payment HV-040 so she could give it to her repair contractor. The desk classed this as a question about a document and sent a request to the documents system for that payment, then closed the case with that request as its only action. The documents system has not returned anything yet, so no document has been provided, and what happens next depends on its reply and on whether her unverified status affects release.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -66,6 +66,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -56,28 +56,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-56. `request_type`: not known → question (by `triage`).
-57. `subject`: not known → card (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-60. `next_system`: not known → card (by `asked-card`).
-61. The agent asked for `reply` {}.
-62. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=DISPATCHED).
-63. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
-64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-65. Called `reply_customer` (attempt 1, key banking-021-at-04:do-reply:17).
-66. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The card journal shows your card as dispatched. This does not confirm that the customer has received the card. No additional card change was made."}.
-67. `reply_customer` found {}.
-68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-69. The case closed in `REPLIED`: **reply**.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+57. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → card (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+64. `next_system`: not known → card (by `asked-card`).
+65. The agent asked for `reply` {}.
+66. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=DISPATCHED).
+67. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
+68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+69. Called `reply_customer` (attempt 1, key banking-021-at-04:do-reply:17).
+70. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The card journal shows your card as dispatched. This does not confirm that the customer has received the card. No additional card change was made."}.
+71. `reply_customer` found {}.
+72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7325 tokens in, 518 out, 5.196 s, cost $0.0159; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5560 tokens in, 483 out, 3.845 s, cost $0.0115; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The card system's record shows the replacement card as dispatched. I sent the reply to Mara Ellison, and the desk accepted it and closed the case.
-> 
-> The case shows no delivery confirmation, so the reply can only report dispatch, not arrival. Her identity was still marked unverified when I replied. The desk accepted the reply anyway.
+> I've sent the reply. The card record shows the replacement card as dispatched. There is no delivery confirmation on record, and the reply says so.

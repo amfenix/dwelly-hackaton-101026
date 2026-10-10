@@ -54,28 +54,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-53. Classifier (jev jev-latest) on `subject`: batch, confidence 0.97 → batch.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → batch (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
-58. `next_system`: not known → payment (by `route-payment`).
-59. The agent asked for `ask_system` {"system": "payment"}.
-60. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-61. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-63. Called `ask_system` (attempt 1, key banking-042-at-02:do-ask:17).
-64. Action in the world: `ask_system` {"system": "payment", "about": "batch", "reference": "HV-042"}.
-65. `ask_system` found {}.
-66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-67. The case closed in `ASKED`: **ask_system**.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+55. Classifier (jev jev-latest) on `subject`: batch, confidence 0.96 → batch.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → batch (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
+62. `next_system`: not known → payment (by `route-payment`).
+63. The agent asked for `ask_system` {"system": "payment"}.
+64. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+65. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+66. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+67. Called `ask_system` (attempt 1, key banking-042-at-02:do-ask:17).
+68. Action in the world: `ask_system` {"system": "payment", "about": "batch", "reference": "HV-042"}.
+69. `ask_system` found {}.
+70. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+71. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7049 tokens in, 541 out, 5.571 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7864 tokens in, 546 out, 6.507 s, cost $0.0168; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system for the details on batch HV-042. The case is now marked final with the outcome "ask_system", and I haven't seen the row-level error report yet. The facts on the case haven't changed since the request.
+> I've sent the question about batch HV-042 to the payment system, which holds the validation results. The case is now closed on this step.
 > 
-> Nadia Fenwick is not verified, and her role on the account is viewer. The bank hasn't confirmed that she is entitled to see the report. Nothing has been shared with her.
+> The payment system hasn't returned an answer yet, so I don't have the row-level error report to give you. Nadia Fenwick's identity is also still marked as unverified, so the desk will need to confirm that before any report is shared.

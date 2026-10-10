@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer on the secure portal, asked whether her new tablet finished registering in the H&V app. The desk classified it as an access question and sent it to the access system, which returned no registration status. The desk's attempt to reply to her was refused for lack of established facts, and its attempt to escalate to a person was also refused because the case had already closed as asked. So nothing has been confirmed to her, and the device registration still needs to be checked.
+Mara Ellison, a verified customer writing through the secure portal, asked whether registering her new tablet in the H&V app had finished, since she left the screen before she could tell. The desk classed it as a question about access and sent a query to the access system, which returned nothing, and the case closed at that step. Whether the tablet is registered is still unanswered and is left for a person; the agent's note says she could restart registration in the app if it didn't finish, but that is not a decision the record shows the desk making.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -59,6 +59,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -72,11 +74,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=access); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=access); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=access); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=access); tariff_status present is false (tariff_status=not known)
-- `escalate`: agent-escalates: state = TRIAGED is false (state=ASKED)
 
 ## Final result
 

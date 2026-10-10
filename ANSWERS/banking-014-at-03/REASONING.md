@@ -56,26 +56,34 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
-56. `request_type`: not known → question (by `triage`).
-57. `subject`: not known → direct_debit (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
-60. `next_system`: not known → recurring (by `asked-recurring`).
-61. Rule `recurring-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked → true (recurring_asked=True); recurring_status absent → true (recurring_status=not known). The system was asked; its answer is not in yet.
-62. State `TRIAGED` → `WAITING` (by `recurring-waits`).
-63. The case closed in `WAITING`: **wait**.
-64. The agent asked for `ask_system` {"system": "recurring"}.
-65. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring).
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+57. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → direct_debit (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
+64. `next_system`: not known → recurring (by `asked-recurring`).
+65. Rule `recurring-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked → true (recurring_asked=True); recurring_status absent → true (recurring_status=not known). The system was asked; its answer is not in yet.
+66. State `TRIAGED` → `WAITING` (by `recurring-waits`).
+67. The case closed in `WAITING`: **wait**.
+68. The agent asked for `ask_system` {"system": "recurring"}.
+69. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring).
+70. The agent asked for `escalate` {"note": "Customer Mara Ellery (unverified, secure chat) asks only whether the Direct Debit mandate to Northmere Water Services is active. No cancellation requested. The recurring system is marked as already asked, but no mandate status is in the case. A new recurring ask was refused because the case is in WAITING. Please check the mandate status after verifying the customer, and reply with only what the record shows."}.
+71. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 9115 tokens in, 669 out, 5.873 s, cost $0.0209; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 14207 tokens in, 1035 out, 10.895 s, cost $0.0343; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've stopped here without taking any further action. The case is in a final WAITING state, and the desk refused my request to ask the recurring system.
+> I couldn't tell Mara whether the Northmere Water Services mandate is active, and the case is now closed in a waiting state with nothing further to do.
 > 
-> The refusal says the recurring system has already been asked (`recurring_asked` is true). The case holds no mandate status from that check. The customer, Mara Ellery, is also not verified.
+> - **Mandate check:** my request to the recurring system was refused because the case is in WAITING, not TRIAGED. The case also shows that system as already asked, but it holds no mandate status.
+> - **Escalation:** my attempt to hand the case to a person was refused for the same reason.
+> - **Customer:** she is not yet verified. She asked only for the mandate's status, not a cancellation, so nothing was changed on her account.
 > 
-> I can't say whether the Northmere Water Services mandate is active, because nothing in the records answers that yet. I haven't cancelled or changed anything, which matches her request.
+> Someone will need to reopen the case, verify her, and check the mandate status before anyone replies.

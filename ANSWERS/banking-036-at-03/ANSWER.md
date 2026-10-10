@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address. The desk put the case on hold (waiting) because the protected profile-change process is running and still needs her to confirm, and no confirmation has been received yet. No change was made to her address; the agent's two follow-up attempts, `submit_request` and `redirect_secure`, were both refused because the case was already in the waiting state. What is left is her confirmation in the profile process.
+Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address. The desk found the protected profile-change process already running and asking her to confirm. It closed the case as waiting, with no confirmation recorded yet and nothing updated. The desk's later attempts to submit the request and to redirect her to the secure process were both refused because the case was already in the waiting state. What is left is for her to confirm in the profile process.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

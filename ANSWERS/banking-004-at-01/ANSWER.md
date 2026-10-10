@@ -4,7 +4,7 @@
 
 ## Summary
 
-The account holder asked why their 14 July 2025 transfer to Northmere Housing Co-operative showed as not completed in the secure portal. The desk classified it as a question about a transfer and sent a query to the payment system, which closed the case at that step. The payment system's answer isn't in the record, so the reason for the failure is still unknown and nothing has yet been explained to the customer.
+The customer, who said they were the account holder, asked why their 14 July 2025 transfer to Northmere Housing Co-operative showed as not completed in the secure portal. The desk classed it as a question about a transfer and queried the payment system about it. That query returned nothing, so no reason for the failure was found, and none was given to the customer. The case closed on that step, so a person would have to follow up to find the reason.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - subject_date: **2025-07-14**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

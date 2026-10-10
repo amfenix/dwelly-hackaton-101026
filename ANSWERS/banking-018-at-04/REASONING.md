@@ -59,31 +59,35 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. `confirmation`: not known → none (by `read-confirmation`).
 56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 57. Rule `triage` fired: state = READING → true (state=READING).
-58. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.90 → instruction.
-59. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
-60. `request_type`: not known → instruction (by `triage`).
-61. `subject`: not known → standing_order (by `triage`).
-62. State `READING` → `TRIAGED` (by `triage`).
-63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-64. `next_system`: not known → payment (by `asked-payment`).
-65. The agent asked for `reply` {}.
-66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=instruction); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
-67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-69. Called `reply_customer` (attempt 1, key banking-018-at-04:do-reply:17).
-70. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The payment record shows 2 separate payment instructions. Their individual status is recorded without a single combined outcome. This does not establish execution or the recipient's outcome. No new transfer was made."}.
-71. `reply_customer` found {}.
-72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-73. The case closed in `REPLIED`: **reply**.
+58. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.91 → instruction.
+59. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+60. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+61. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.63 → standing_order.
+62. `request_type`: not known → instruction (by `triage`).
+63. `credentials_requested`: not known → False (by `triage`).
+64. `joint_holder_change`: not known → False (by `triage`).
+65. `subject`: not known → standing_order (by `triage`).
+66. State `READING` → `TRIAGED` (by `triage`).
+67. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+68. `next_system`: not known → payment (by `asked-payment`).
+69. The agent asked for `ask_system` {"system": "recurring"}.
+70. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+71. The agent asked for `reply` {}.
+72. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=instruction); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
+73. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+74. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+75. Called `reply_customer` (attempt 1, key banking-018-at-04:do-reply:17).
+76. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The payment record shows 2 separate payment instructions. Their individual status is recorded without a single combined outcome. This does not establish execution or the recipient's outcome. No new transfer was made."}.
+77. `reply_customer` found {}.
+78. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+79. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 8018 tokens in, 784 out, 7.201 s, cost $0.0178; models: claude-sonnet-5-5, jev-1.13.0.
+6 calls, 12597 tokens in, 922 out, 8.688 s, cost $0.0279; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer, and the case is closed as replied. I did not remove either payment.
+> I replied to the customer. The payment check found two £34.80 payments to Northmere Heating but returned a status of OTHER. So the reply reports what the record shows. It does not claim either payment is a duplicate, and I removed nothing.
 > 
-> The payment system's answer came back marked OTHER: it shows two £34.80 payments to Northmere Heating, and nothing in the records says one is a duplicate of the other. Mara doesn't know which line is the duplicate either, so there was no clear instruction to act on.
-> 
-> I didn't check the recurring system, which holds standing orders. The case lists the subject as a standing order, so that check might have shown whether the two lines are linked.
+> I couldn't check the standing orders to see whether the two lines are linked. The recurring system refused the request because the desk had already routed this case to payments. The case is closed as replied, with no person assigned. The customer also asked for it to be escalated, and I did not do that.

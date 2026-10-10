@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, said her debit card went missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk checked the card journal, which shows the card as blocked, and replied on the verified call saying so, adding that this doesn't establish why it is blocked or whether it can be used, and that no further card change was made. The case is closed with the reply sent, and the record lists nothing left for a person.
+Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk checked the card journal, which shows the card as blocked, and replied to her on the verified call saying so, that this doesn't establish why it is blocked or whether it can be used, and that no additional card change was made. The case is closed as replied, and the record lists nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -76,6 +76,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

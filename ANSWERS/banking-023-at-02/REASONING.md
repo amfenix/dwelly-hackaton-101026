@@ -54,29 +54,33 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `confirmation`: not known → none (by `read-confirmation`).
 51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
-53. Classifier (jev jev-latest) on `request_type`: register, confidence 0.98 → register.
-54. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
-55. `request_type`: not known → register (by `triage`).
-56. `subject`: not known → card_payment (by `triage`).
-57. State `READING` → `TRIAGED` (by `triage`).
-58. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
-59. `next_system`: not known → card (by `route-card`).
-60. The agent asked for `submit_request` {}.
-61. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-62. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-63. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-64. Called `register_request` (attempt 1, key banking-023-at-02:do-request:17).
-65. Action in the world: `register_request` {"team": "card", "about": "card_payment"}.
-66. `register_request` found {}.
-67. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-68. The case closed in `REQUESTED`: **submit_request**.
+53. Classifier (jev jev-latest) on `request_type`: register, confidence 0.99 → register.
+54. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+55. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+56. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+57. `request_type`: not known → register (by `triage`).
+58. `credentials_requested`: not known → False (by `triage`).
+59. `joint_holder_change`: not known → False (by `triage`).
+60. `subject`: not known → card_payment (by `triage`).
+61. State `READING` → `TRIAGED` (by `triage`).
+62. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
+63. `next_system`: not known → card (by `route-card`).
+64. The agent asked for `submit_request` {}.
+65. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+66. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+67. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+68. Called `register_request` (attempt 1, key banking-023-at-02:do-request:17).
+69. Action in the world: `register_request` {"team": "card", "about": "card_payment"}.
+70. `register_request` found {}.
+71. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+72. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 5220 tokens in, 677 out, 5.354 s, cost $0.0132; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8354 tokens in, 614 out, 6.689 s, cost $0.0184; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed the dispute for the £38.40 Fern & Finch Books purchase on 14 July 2025 to the card team. The desk accepted it, and the case is now in the REQUESTED state.
+> I've passed your dispute about the £38.40 Fern & Finch Books purchase on 14 July 2025 to the card team to investigate. The request was accepted, and the case is now at the "requested" stage. I haven't blocked your card or made any other change to it.
 > 
-> I haven't yet given you any advice on protecting your card. The desk will do that in its reply to you.
+> The reply to you should cover how to protect your card safely. If you want to stop any further use of it while the team looks into this, you can tell us to block the card. We will never ask you for your PIN or password.

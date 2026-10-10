@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, a verified customer using the secure portal, confirmed she wants to cancel the next run of her recurring studio-rent payment instruction. The desk classified it as a standing-order instruction, asked the recurring system, and closed the case as "wait" because that system's answer was not yet in. The agent's attempt to submit the cancellation was refused because the case was already in the waiting state, so nothing has been cancelled and the instruction remains active. A person still needs to pick up the case and cancel the next run before it starts.
+Elodie Mercer, a verified customer on the secure portal, confirmed she wanted to cancel the next run of her recurring studio-rent standing order. The desk checked the recurring-payments system and the case closed in a waiting state, because that system's answer had not come back. No cancellation was submitted and no reply went to her: the agent's attempts to submit the request, reply and escalate were all refused because the case was no longer in the triaged state. Nothing was done on the cancellation, so it stays open until the recurring system's answer arrives and someone acts on it.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -68,6 +68,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -86,6 +88,8 @@ No.
 Requests the policy refused:
 
 - `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); recurring-instruction: state = TRIAGED is false (state=WAITING); recurring_asked absent is false (recurring_asked=True); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring)
+- `reply`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=standing_order); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=recurring); tariff_status present is false (tariff_status=not known)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

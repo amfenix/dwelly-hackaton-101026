@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing over secure chat and not verified, said their card was declined at a grocery payment and asked for the category of the restriction and whether it has been lifted. The desk classified this as a card question and put it to the card system, then closed the case at that step. The card system returned nothing, and the desk refused the attempted reply because no card status was on record, so Rowan has not been told anything about the restriction and a person would need to follow up, including checking Rowan's identity before any card details are shared.
+Rowan Ellery, writing over secure chat as a cardholder whose card was declined at a grocery payment, asked which category of restriction applies and whether it has been lifted. The desk classified this as a card question, sent a query to the card system, and closed the case in the ASKED state. The card system returned no status, and the desk refused the follow-up reply because the case was no longer triaged and no card status was on record, so Rowan has not been told the restriction category or whether it was lifted. Rowan's identity is also unverified, and a person has to take the case from here.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -54,26 +54,35 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-53. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
-54. `request_type`: not known → instruction (by `triage`).
-55. `subject`: not known → role (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
-58. `next_system`: not known → business (by `asked-business`).
-59. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
-60. State `TRIAGED` → `WAITING` (by `business-waits`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `submit_request` {}.
-63. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business).
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.22 → False.
+55. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
+56. `request_type`: not known → instruction (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → role (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
+62. `next_system`: not known → business (by `asked-business`).
+63. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
+64. State `TRIAGED` → `WAITING` (by `business-waits`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `submit_request` {}.
+67. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business).
+68. The agent asked for `escalate` {"note": "Verified administrator Mara Ellery (Larkmere Studio Ltd) instructed by verified call to revoke former employee Owen Bell's Payroll Approver role; review of earlier operations to be handled separately. The business system was already queried, but the case is in WAITING (final) and the instruction was refused by the desk because the state is not TRIAGED. No role-change result is recorded. A person needs to confirm the role status and carry out or arrange the revocation."}.
+69. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8399 tokens in, 734 out, 7.122 s, cost $0.0202; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 13021 tokens in, 1032 out, 8.439 s, cost $0.0319; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't revoke Owen Bell's Payroll Approver role. The case is in a waiting state, and the policy refused my submission.
+> I haven't revoked Owen Bell's Payroll Approver role, and the case is still open.
 > 
-> The refusal came from the state. The case is WAITING, not TRIAGED. The rule for business instructions also requires that the business system hasn't been asked yet, and it already has been. The case record shows no business-system answer, so I can't confirm what that check found.
+> The desk refused two of my attempts, both because the case is in a WAITING state rather than TRIAGED:
 > 
-> The role is still active. The case is marked final with outcome "wait", so I'm stopping here and leaving it open for a person to pick up.
+> - **Revoke request:** I tried to pass the revocation to the business system. The desk refused it. The case also shows the business system was already asked, but no answer from it is recorded.
+> - **Escalation:** I tried to hand the case to a person with a note. The desk refused that too, for the same reason.
+> 
+> I stopped there. Nothing is recorded as changed on Larkmere Studio's role setup, and the case is left in WAITING for a person to pick up.

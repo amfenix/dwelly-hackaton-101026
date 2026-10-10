@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nerys Wren, a verified customer on the secure portal, asked for the permitted session extract for her profile. The desk found the access record showed the extract as provided, and replied to her through the portal saying so, with no password or PIN handled and no other access change made. The case closed as replied. The record notes that the origin of the new session was not determined and that device and network identifiers were withheld, but it lists no further step for a person.
+Nerys Wren, a verified customer on the secure portal, asked for the permitted session extract for her profile. The desk's access check returned the extract as provided, with device and network identifiers withheld and the origin of the new session not determined. The desk replied to her through the secure portal saying the extract was provided and that no password, PIN or other access change was involved, and the case closed as replied with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -78,6 +78,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

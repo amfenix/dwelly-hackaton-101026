@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, verified on a call, asked to cancel the next run of her studio-rent standing order and asked how to confirm it securely. The desk registered a request with the recurring payments team about the standing order, and the case closed as requested. The record shows no confirmation and no cancellation yet, so the cancellation is for the recurring team to carry out. The record does not show any answer to her question about how to confirm securely.
+Elodie Mercer, identified on a verified call, asked to cancel the next run of her studio-rent standing order, to have it escalated, and to be told how to confirm it securely. The desk registered a request with the recurring team about the standing order and closed the case as requested. Nothing in the record shows the run has actually been cancelled, and the record does not show that the secure confirmation method she asked about was given. The agent's reply also says her records showed the instruction as active with the next run not yet started, but no check in the record supports that.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -62,6 +62,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

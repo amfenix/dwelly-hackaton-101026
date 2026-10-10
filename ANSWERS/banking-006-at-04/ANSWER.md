@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira Ellison, writing over secure chat as an unverified requester, asked whether her two transfers were separate instructions and whether the pending one had been stopped or returned. The desk checked the payment record, found two payment instructions, and replied that there are two with no single combined outcome, that this does not establish execution or the recipient's outcome, and that no new transfer was made. The desk did not cancel or return either instruction, and the case closed as replied with nothing further queued for a person.
+Mira Ellison, writing over secure chat and not yet verified, asked whether her two transfers were separate instructions and whether the pending one had been stopped or returned. The desk checked the payment record and replied that it shows two separate payment instructions with no single combined outcome, that this does not establish execution or the recipient's outcome, and that no new transfer was made. The desk did not stop or return the pending instruction, and the case closed as replied with nothing further queued for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -75,6 +75,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

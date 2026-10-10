@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was an instruction about a user's role; the confirmation check showed Owen Bell holding the active Payroll Approver role at Larkmere Studio Ltd, with no confirmation and nothing instructed outside the portal. The desk classified it as a role instruction and routed it to the business system. It first tried to submit the request, but that was refused because the requester had not been verified, so it instead asked the business system about the role, and the case closed in that asked state. The record shows no further step for a person.
+Someone asked the desk to act on a role, which the desk read as an instruction to revoke Owen Bell's Payroll Approver role at Larkmere Studio Ltd. The desk refused to submit it because the requester was not verified, and instead sent a question about the role to the business system, which closed the case without any verification result. The role has not been revoked, and a person still needs to confirm the requester's identity and administrator authority before the revocation can be submitted.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, asked the desk to check whether two future £34.80 payments to Northmere Heating are duplicates and to remove the duplicate, though she could not say which line it was. The desk classed this as a standing-order instruction, asked the payment system about it and closed the case in a waiting state because that answer had not come back; nothing was cancelled or changed. The agent's later attempts to ask the payment system again, escalate to a person and ask the customer which transaction she meant were all refused because the case was no longer in the triaged state, so the case is still waiting on the payment system's reply.
+Mara Ellison, a verified customer on a call, asked the desk to check two future £34.80 payments to Northmere Heating and remove the duplicate, though she doesn't know which line it is. The desk classed it as a standing-order instruction, found that a payment check was needed, and put the case into WAITING because the payment system's answer isn't in yet. Both later attempts, to ask the payment system and to escalate to a person, were refused because the case was no longer in the TRIAGED state, so nothing has been cancelled or removed and no one has yet been handed the case.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -66,6 +66,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -86,7 +88,6 @@ Requests the policy refused:
 
 - `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment)
 - `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
-- `clarify`: clarify-transaction: state = TRIAGED is false (state=WAITING); amount absent is false (amount=34.80); counterparty absent is false (counterparty=Northmere Heating); clarify-card: state = TRIAGED is false (state=WAITING); args.need = which_card is false (args.need=which_transaction); amount absent is false (amount=34.80); counterparty absent is false (counterparty=Northmere Heating); clarify-instruction: state = TRIAGED is false (state=WAITING); args.need = which_instruction is false (args.need=which_transaction); amount absent is false (amount=34.80); counterparty absent is false (counterparty=Northmere Heating); clarify-details: state = TRIAGED is false (state=WAITING); args.need = more_details is false (args.need=which_transaction); amount absent is false (amount=34.80); counterparty absent is false (counterparty=Northmere Heating)
 
 ## Final result
 

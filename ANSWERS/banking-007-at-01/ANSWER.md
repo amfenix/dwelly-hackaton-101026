@@ -4,7 +4,7 @@
 
 ## Summary
 
-The requester asked a question about a transfer, and the desk classified it as such and sent a query about the transfer to the payment system. The case is closed in the asked state, and the answer from the payment system has not come back. The only record so far is a note that H&V marked the international payment instruction as sent, with no confirmation recorded, so the transfer's current stage is still for the payment system's reply to settle.
+The customer asked a question about an international transfer. The desk classified it as a transfer question, routed it to the payment system and asked that system about the transfer, which closed the case. The reply to the customer said H&V has recorded the transfer as sent, that nothing shows the beneficiary has received it, and that no further status came back, so the desk can't confirm arrival. The record lists nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an uploader writing over secure chat, asked the desk to check whether batch-041.csv (reference HV-041, £420.00 listed for Staff A) had been received, and said she was not asking for any payment to be approved or released. The desk classified it as a question about a batch and put a query to the payment system about HV-041; that request went through and the case closed at that step. No answer on receipt has come back, the record shows no confirmation for the batch, and Mara is still marked as not verified, so whether the file arrived is still open for a person to follow up.
+Mara Ellison, an uploader writing over secure chat, asked whether batch-041.csv (reference HV-041, £420.00 for Staff A) had been received, and said she was not asking for any payment to be approved or released. The desk classified it as a question about a batch, routed it to the payment system, and sent that system a query about the batch, and the case closed in the asked state. The payment system's answer is not in the record, no confirmation of receipt is on file, and Mara Ellison's identity was not verified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

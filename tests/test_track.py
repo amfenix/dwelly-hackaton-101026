@@ -5,6 +5,7 @@ from __future__ import annotations
 from pathlib import Path
 from typing import Any
 
+from desk.classifier import Noul
 from desk.machine import Case, Services, load_functions
 from desk.policy import load_policy
 from tests.conftest import FakeClassifier
@@ -20,10 +21,11 @@ FROM_JOURNAL = ("Internal note", "H&V transfer journal", "H&V service agent", "T
 
 
 class Triage(FakeClassifier):
-    """Answers the triage; any other question (a reader's fallback) is not known."""
+    """Answers the triage; a yes/no it is not told is "no", any other question is not known."""
 
     def classify(self, text: str, questions: Any) -> Any:
-        self.answers = {name: self.answers.get(name, "unknown") for name in {*self.answers, *questions}}
+        for name, question in questions.items():
+            self.answers.setdefault(name, 0.0 if isinstance(question, Noul) else "unknown")
         return super().classify(text, questions)
 
 
@@ -38,6 +40,7 @@ def started(
     request_type: str = "question",
     subject: str = "transfer",
     role: str = "Bank customer",
+    **yes_no: float,
 ) -> Case:
     case_input = {
         "id": "t",
@@ -48,7 +51,11 @@ def started(
         "attachments": [],
     }
     machine = Case(
-        POLICY, FUNCTIONS, case_input, None, Services(Triage({"request_type": request_type, "subject": subject}))
+        POLICY,
+        FUNCTIONS,
+        case_input,
+        None,
+        Services(Triage({"request_type": request_type, "subject": subject, **yes_no})),
     )
     machine.start()
     return machine
@@ -279,3 +286,33 @@ def test_the_agent_can_hand_over() -> None:
     case = started(ASK)
     assert case.send("escalate", {"note": "the customer also disputes a fee"}).accepted
     assert case.state == "ESCALATED" and case.fields["reason"] == "AGENT_ESCALATED"
+
+
+def refused(case: Case) -> dict[str, Any]:
+    return dict(case.journal.of("action")[-1].data["args"])
+
+
+def test_a_refusal_is_accepted_only_on_the_fact_that_makes_the_request_impossible() -> None:
+    code = ("Secure chat", CUSTOMER, "H&V service agent", "Read me the code you just sent so I can verify.")
+    assert not started(code).send("refuse", {"reason": "credentials"}).accepted  # no fact: refused
+    case = started(code, credentials_requested=0.95)
+    assert case.send("refuse", {"reason": "credentials"}).accepted and case.state == "REFUSED"
+    args = refused(case)
+    assert args["reason"] == "credentials" and "never ask for or read out" in args["text"] and "portal" in args["text"]
+
+
+def test_someone_elses_account_is_refused_only_to_a_third_party() -> None:
+    landlord = ("External message", "Landlord", "Harrow & Vale Bank plc", "Has my tenant paid the rent?")
+    assert not started(landlord).send("refuse", {"reason": "someone_elses_account"}).accepted
+    case = started(landlord, role="Third party")
+    assert case.send("refuse", {"reason": "someone_elses_account"}).accepted and case.outcome == "refuse"
+
+
+def test_the_other_reasons_need_their_facts() -> None:
+    joint = ("Secure chat", CUSTOMER, "H&V service agent", "Remove my ex from our joint account.")
+    assert not started(joint, request_type="instruction").send("refuse", {"reason": "needs_all_holders"}).accepted
+    case = started(joint, request_type="instruction", joint_holder_change=0.9)
+    assert case.send("refuse", {"reason": "needs_all_holders"}).accepted
+    assert not started(ASK).send("refuse", {"reason": "other"}).accepted  # only a request of no known type
+    assert started(ASK, request_type="other").send("refuse", {"reason": "other"}).accepted
+    assert not started(ASK).send("refuse", {"reason": "no_authority"}).accepted

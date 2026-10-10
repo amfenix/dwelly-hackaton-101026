@@ -55,26 +55,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
 53. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-54. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-55. `request_type`: not known → question (by `triage`).
-56. `subject`: not known → transfer (by `triage`).
-57. State `READING` → `TRIAGED` (by `triage`).
-58. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-59. `next_system`: not known → payment (by `route-payment`).
-60. The agent asked for `ask_system` {"system": "payment"}.
-61. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-62. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-63. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-64. Called `ask_system` (attempt 1, key banking-004-at-02:do-ask:17).
-65. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
-66. `ask_system` found {}.
-67. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-68. The case closed in `ASKED`: **ask_system**.
+54. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+55. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+56. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+57. `request_type`: not known → question (by `triage`).
+58. `credentials_requested`: not known → False (by `triage`).
+59. `joint_holder_change`: not known → False (by `triage`).
+60. `subject`: not known → transfer (by `triage`).
+61. State `READING` → `TRIAGED` (by `triage`).
+62. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+63. `next_system`: not known → payment (by `route-payment`).
+64. The agent asked for `ask_system` {"system": "payment"}.
+65. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+66. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+67. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+68. Called `ask_system` (attempt 1, key banking-004-at-02:do-ask:17).
+69. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
+70. `ask_system` found {}.
+71. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+72. The case closed in `ASKED`: **ask_system**.
+73. The agent asked for `reply` {}.
+74. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=transfer); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).
+75. The agent asked for `escalate` {"note": "Verified customer Mara Ellery asks why her 14 July 2025 transfer to Northmere Housing Co-operative shows as not completed in the portal. The payment system was queried, but no payment_status or failure reason was recorded in the case, and the case is now closed at ASKED. A person needs to check the payment record and explain the reason to the customer."}.
+76. Refused `escalate` in `ASKED`: agent-escalates: state = TRIAGED is false (state=ASKED).
 
 ## Model calls
 
-4 calls, 6863 tokens in, 370 out, 4.447 s, cost $0.0134; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I've asked the payments system about your 14 July transfer to Northmere Housing Co-operative. Its answer isn't in the case yet, so I can't tell you why the transfer wasn't completed. This is as far as I can take the case in this step, and the reply to you comes next.
+5 calls, 11639 tokens in, 572 out, 6.925 s, cost $0.0245; models: claude-sonnet-5-5, jev-1.13.0.

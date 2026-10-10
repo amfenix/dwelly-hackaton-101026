@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Fenwick, a viewer who is not verified and wrote over secure chat, asked for help seeing which rows of batch HV-042 need attention. The desk asked the business system about the report, closed the case as waiting because that answer has not come in, and shared no report details with her. The agent's attempts to ask the business system again and to escalate to a person were both refused because the case was already in the waiting state, so nothing has been handed to anyone yet and the case remains open.
+Nadia Fenwick, an unverified viewer writing over secure chat, asked for help seeing which rows in batch HV-042 need attention. The desk asked the business system about her access, and the case closed in WAITING because no answer from it has come in yet. A second ask to the business system and an attempt to escalate to a person were both refused because the case was already in WAITING, so no report content was shared and nothing was handed to anyone. Still open: the system's answer, verifying Nadia, and confirming whether a viewer may see the report.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

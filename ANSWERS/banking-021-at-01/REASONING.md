@@ -47,28 +47,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 44. Rule `triage` fired: state = READING → true (state=READING).
 45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-46. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-47. `request_type`: not known → question (by `triage`).
-48. `subject`: not known → card (by `triage`).
-49. State `READING` → `TRIAGED` (by `triage`).
-50. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-51. `next_system`: not known → card (by `route-card`).
-52. The agent asked for `ask_system` {"system": "card"}.
-53. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
-54. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-56. Called `ask_system` (attempt 1, key banking-021-at-01:do-ask:17).
-57. Action in the world: `ask_system` {"system": "card", "about": "card"}.
-58. `ask_system` found {}.
-59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-60. The case closed in `ASKED`: **ask_system**.
+46. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+47. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+48. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+49. `request_type`: not known → question (by `triage`).
+50. `credentials_requested`: not known → False (by `triage`).
+51. `joint_holder_change`: not known → False (by `triage`).
+52. `subject`: not known → card (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+55. `next_system`: not known → card (by `route-card`).
+56. The agent asked for `ask_system` {"system": "card"}.
+57. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
+58. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-021-at-01:do-ask:17).
+61. Action in the world: `ask_system` {"system": "card", "about": "card"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6533 tokens in, 396 out, 3.987 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7374 tokens in, 462 out, 4.527 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the card system about your replacement card. The case now shows the query as asked, but the card system's answer hasn't come back into it yet. That means I can't yet say whether the card has been dispatched.
+> I asked the card system about your replacement card. The case is now closed at this step, and the system hasn't given me any dispatch or delivery details.
 > 
-> The only confirmation on record is the secure portal's message that your request was accepted. That message says the request was received. It doesn't say the card has been dispatched or delivered.
+> So I can't yet tell you whether the card has been sent. The only confirmation on record is the portal message that your request was accepted. That message says it doesn't confirm dispatch or delivery.

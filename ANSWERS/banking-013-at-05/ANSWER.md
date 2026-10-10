@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, verified on the secure portal, confirmed she wanted to cancel the future run of her recurring studio-rent payment instruction. The desk checked the recurring system, which showed instruction HV-013 as cancelled with no payment in progress, and replied on the portal that the standing order is cancelled, without promising anything about a refund or a future payment. An attempt to submit a request was refused as not applicable in that state, and no other change was made; the case is closed as replied with nothing left for a person.
+Elodie Mercer, verified in the secure portal, confirmed she wanted to cancel the future run of her recurring studio-rent payment instruction. The desk checked the standing-order record, which shows instruction HV-013 as cancelled with no payment in progress, and replied to her in the portal saying so. The reply also said it does not establish a refund or a future payment outcome, and that no additional instruction or change was made. The case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -78,6 +78,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -93,10 +95,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `submit_request`: register: request_type = register is false (request_type=instruction); register-what-fits-no-type: request_type = other is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); incoming-instruction: next_system = incoming is false (next_system=recurring); recurring-instruction: recurring_asked absent is false (recurring_asked=True); card-instruction: next_system = card is false (next_system=recurring); access-instruction: next_system = access is false (next_system=recurring); business-instruction: next_system = business is false (next_system=recurring); documents-instruction: next_system = documents is false (next_system=recurring)
 
 ## Final result
 

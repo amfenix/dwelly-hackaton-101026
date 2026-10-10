@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer writing through the secure portal, asked the desk to update the address it uses for her correspondence after she moved within the UK. The desk treated this as a profile change she had confirmed herself, registered a request with the access team about her profile, and closed the case as submitted. Nothing failed or was refused, and the record lists no further steps for a person, though it also does not show the address being changed yet, only the request being passed on.
+Mara Ellison, a verified customer writing through the secure portal, asked the bank to update her correspondence address and confirmed the change herself. The desk registered a profile change request with the access team and closed the case as submit_request. The agent's later attempts to submit again, redirect to the secure process and escalate were all refused because the case was already closed in REQUESTED, and nothing in the record shows the address itself was changed, so any further processing is for the access team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -71,6 +71,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -86,6 +88,12 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `submit_request`: register: state = TRIAGED is false (state=REQUESTED); request_type = register is false (request_type=change); register-what-fits-no-type: state = TRIAGED is false (state=REQUESTED); request_type = other is false (request_type=change); payment-instruction: state = TRIAGED is false (state=REQUESTED); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=REQUESTED); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=REQUESTED); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=REQUESTED); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=REQUESTED); access_asked absent is false (access_asked=True); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=REQUESTED); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=REQUESTED); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change)
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=REQUESTED); request_type = access is false (request_type=change); request_type = instruction is false (request_type=change); not verified is false (verified=True)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=REQUESTED)
 
 ## Final result
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk had already asked the documents system about it, but no answer has come back, so the case closed as waiting. A second attempt to ask the documents system was refused because the case was already waiting. What is left is the documents system's answer, and Mara is not verified on this chat, so no statement can be released to her yet.
+Mara Ellison, writing over secure chat and not yet verified, asked whether an archived copy of her January 2024 statement is available. The desk had already asked the documents system, but its answer has not come back, so the case closed in a waiting state with no actions taken. A second request to the documents system was refused because the case was already waiting. The record does not say who will pick the case up or when; the statement has not been released to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -68,6 +68,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

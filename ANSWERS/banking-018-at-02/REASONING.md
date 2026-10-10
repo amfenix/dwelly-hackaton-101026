@@ -54,29 +54,33 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `confirmation`: not known → none (by `read-confirmation`).
 51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
-53. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.89 → instruction.
-54. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
-55. `request_type`: not known → instruction (by `triage`).
-56. `subject`: not known → standing_order (by `triage`).
-57. State `READING` → `TRIAGED` (by `triage`).
-58. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-59. `next_system`: not known → recurring (by `route-recurring`).
-60. The agent asked for `ask_system` {"system": "recurring"}.
-61. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
-62. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-63. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-64. Called `ask_system` (attempt 1, key banking-018-at-02:do-ask:17).
-65. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order", "amount": "34.80"}.
-66. `ask_system` found {}.
-67. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-68. The case closed in `ASKED`: **ask_system**.
+53. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.91 → instruction.
+54. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+55. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+56. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.64 → standing_order.
+57. `request_type`: not known → instruction (by `triage`).
+58. `credentials_requested`: not known → False (by `triage`).
+59. `joint_holder_change`: not known → False (by `triage`).
+60. `subject`: not known → standing_order (by `triage`).
+61. State `READING` → `TRIAGED` (by `triage`).
+62. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+63. `next_system`: not known → recurring (by `route-recurring`).
+64. The agent asked for `ask_system` {"system": "recurring"}.
+65. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+66. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+67. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+68. Called `ask_system` (attempt 1, key banking-018-at-02:do-ask:17).
+69. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order", "amount": "34.80"}.
+70. `ask_system` found {}.
+71. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+72. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6965 tokens in, 453 out, 4.198 s, cost $0.0145; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7830 tokens in, 483 out, 5.927 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system to look up the two £34.80 Northmere Heating payments. Its answer isn't in the case yet, so I don't know whether they are duplicates or which line would be the duplicate. I haven't removed or cancelled anything.
+> I've asked the recurring payments system for the records on the two £34.80 Northmere Heating payments. Nothing has been removed or changed yet.
 > 
-> Mara Ellison's identity is verified. Once the records come back, the next step is to tell her what they show. If they confirm a duplicate, we can then act on her instruction to remove it.
+> Mara doesn't know which line is the duplicate, and the case doesn't yet show how the two lines relate. The records need to show that before anything is cancelled. The recurring system's answer isn't in the case yet, so the case is closed at this step.

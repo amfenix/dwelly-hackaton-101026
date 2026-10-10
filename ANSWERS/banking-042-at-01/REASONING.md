@@ -44,28 +44,28 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 40. `check_confirmation` found {}.
 41. Rule `triage` fired: state = READING → true (state=READING).
 42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-43. Classifier (jev jev-latest) on `subject`: batch, confidence 0.96 → batch.
-44. `request_type`: not known → question (by `triage`).
-45. `subject`: not known → batch (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
-48. `next_system`: not known → payment (by `route-payment`).
-49. The agent asked for `ask_system` {"system": "payment"}.
-50. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-51. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-53. Called `ask_system` (attempt 1, key banking-042-at-01:do-ask:17).
-54. Action in the world: `ask_system` {"system": "payment", "about": "batch"}.
-55. `ask_system` found {}.
-56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-57. The case closed in `ASKED`: **ask_system**.
+43. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+44. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+45. Classifier (jev jev-latest) on `subject`: batch, confidence 0.97 → batch.
+46. `request_type`: not known → question (by `triage`).
+47. `credentials_requested`: not known → False (by `triage`).
+48. `joint_holder_change`: not known → False (by `triage`).
+49. `subject`: not known → batch (by `triage`).
+50. State `READING` → `TRIAGED` (by `triage`).
+51. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
+52. `next_system`: not known → payment (by `route-payment`).
+53. The agent asked for `ask_system` {"system": "payment"}.
+54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+55. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+57. Called `ask_system` (attempt 1, key banking-042-at-01:do-ask:17).
+58. Action in the world: `ask_system` {"system": "payment", "about": "batch"}.
+59. `ask_system` found {}.
+60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+61. The case closed in `ASKED`: **ask_system**.
+62. The agent asked for `reply` {}.
+63. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=batch); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-5 calls, 8216 tokens in, 416 out, 5.538 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I asked the payment system about the Fenwick Workshop batch, and the desk accepted that request. The case is now closed with the outcome "ask_system".
-> 
-> No answer about the batch has come back yet, so the row-level error report is not in the case. I haven't seen what failed validation or which rows are affected, and the report hasn't been made available to you.
+5 calls, 9852 tokens in, 367 out, 5.997 s, cost $0.0189; models: claude-sonnet-5-5, jev-1.13.0.

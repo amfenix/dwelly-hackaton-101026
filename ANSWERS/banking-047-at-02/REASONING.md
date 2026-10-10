@@ -52,28 +52,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-51. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → limit (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=limit).
-56. `next_system`: not known → business (by `route-business`).
-57. The agent asked for `ask_system` {"system": "business"}.
-58. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-047-at-02:do-ask:17).
-62. Action in the world: `ask_system` {"system": "business", "about": "limit"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+53. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → limit (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=limit).
+60. `next_system`: not known → business (by `route-business`).
+61. The agent asked for `ask_system` {"system": "business"}.
+62. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-047-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "business", "about": "limit"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7020 tokens in, 484 out, 4.433 s, cost $0.0150; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5401 tokens in, 507 out, 4.943 s, cost $0.0115; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the business system for the company's current outgoing-payment limit. The case is now marked final with the outcome "ask_system", so I stopped there.
+> I've asked the business system for the current outgoing-payment limit on the company profile. The case now holds that request, and the next step is to reply to Maeve once the answer comes back.
 > 
-> The limit itself has not come back into the case, so I have nothing to tell Maeve yet. Her identity is also not verified. The record shows her role as viewer.
+> Maeve's identity is not verified yet, and her role on the profile is viewer. I'll have to check that she's allowed to see the limit before I share it.

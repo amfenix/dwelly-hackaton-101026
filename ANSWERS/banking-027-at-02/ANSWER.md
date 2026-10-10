@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a customer verified on the call, said she still can't sign in to her profile and asked for help restoring access. The desk classified this as an access request and put a question to the access system, which was accepted, and the case closed at that step. The record contains no answer from the access system, so nothing has been said to her about what is wrong with her profile and no restoration step has been taken; that part is still open.
+Mara Ellison, a customer on a verified call, said she had passed the identification checks but still couldn't sign in to her profile, and asked for help restoring access; she did not share any password or verification code. The desk classified this as an access request and asked the access system about it. That was the only action taken, and the case closed as asked. What is left is the access system's answer, which has not come back yet, and the reply to Mara will be written from it.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **access**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

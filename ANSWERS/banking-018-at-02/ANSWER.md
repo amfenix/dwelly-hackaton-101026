@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked the desk to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate. The desk classed it as a standing order query and sent a question to the recurring payments system about the £34.80 standing order. Nothing has been removed or cancelled, and the system's answer isn't in the record, so it is still unknown whether the payments are duplicates or which line would be the duplicate. A person needs to pick up the answer when it arrives and decide what to do about her request.
+Mara Ellison, verified on a call, asked the desk to check two future £34.80 payments to Northmere Heating and remove the duplicate, though she doesn't know which line it is. The desk treated this as a standing order query and sent a question to the recurring payments system about the £34.80 standing order. Nothing has been cancelled or changed, and the recurring system's answer is not in the record, so working out which line is the duplicate and removing it is still outstanding.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

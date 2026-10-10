@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked when her active monthly household contribution standing order is next due. The desk classified this as a question about a standing order and sent a query about it to the recurring payments system, which accepted it; the case is closed in the asked state. No answer has come back yet, so nothing has been sent to her, and she is recorded as not verified, which a person would need to check before any account details are shared.
+Mara Ellison, writing over secure chat without being verified, asked the desk to check when her monthly household contribution standing order is next due. The desk classed it as a question about a standing order and sent a query to the recurring payments system about it, and the case closed in the asked state. The record shows no answer back yet, so the date still has to be passed on to her once the recurring system replies.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

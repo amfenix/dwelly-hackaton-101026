@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellwood, a customer on secure chat, said she had forgotten her debit card PIN and asked for the safe way to deal with it, without sending the PIN in chat. The desk classed it as a card access request, and the Access team has already been asked and has escalated it for the PIN route. The case closed in a waiting state because Access's answer isn't in yet. The later attempts to redirect her to the secure process, ask Access again and send a reply were all refused because the case was no longer in the triaged state, so no reply has gone to her and nothing is left for a person beyond the pending Access response.
+Maren Ellwood, writing over secure chat, said she had forgotten her debit card PIN and asked for the safe way to deal with it. She has not been verified. The desk classed it as an access request, saw that the Access team had already escalated it for the prescribed PIN route, and put the case on hold to wait for their answer, which is not in yet. The agent's later attempts to redirect her to the secure process, ask the access system again and send a reply were all refused because the case was already waiting, so no reply has gone to her and nothing is left for a person beyond awaiting the Access team's response.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -60,6 +60,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **access**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

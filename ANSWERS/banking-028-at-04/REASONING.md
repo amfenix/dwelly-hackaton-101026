@@ -55,26 +55,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
 53. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
-54. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-55. `request_type`: not known → change (by `triage`).
-56. `subject`: not known → profile (by `triage`).
-57. State `READING` → `TRIAGED` (by `triage`).
-58. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-59. `next_system`: not known → access (by `asked-access`).
-60. Rule `profile-change-waits-for-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked → true (access_asked=True); confirmation in [none, requested] → true (confirmation=requested). The protected change process is running; it asks the customer to confirm.
-61. State `TRIAGED` → `WAITING` (by `profile-change-waits-for-the-process`).
-62. The case closed in `WAITING`: **wait**.
-63. The agent asked for `reply` {}.
-64. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=profile); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=access); tariff_status present is false (tariff_status=not known).
+54. Classifier (jev jev-latest) on `credentials_requested`: 0.1 → False.
+55. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+56. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+57. `request_type`: not known → change (by `triage`).
+58. `credentials_requested`: not known → False (by `triage`).
+59. `joint_holder_change`: not known → False (by `triage`).
+60. `subject`: not known → profile (by `triage`).
+61. State `READING` → `TRIAGED` (by `triage`).
+62. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+63. `next_system`: not known → access (by `asked-access`).
+64. Rule `profile-change-waits-for-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked → true (access_asked=True); confirmation in [none, requested] → true (confirmation=requested). The protected change process is running; it asks the customer to confirm.
+65. State `TRIAGED` → `WAITING` (by `profile-change-waits-for-the-process`).
+66. The case closed in `WAITING`: **wait**.
+67. The agent asked for `ask_system` {"system": "access"}.
+68. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-4 calls, 8181 tokens in, 790 out, 7.65 s, cost $0.0203; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 10518 tokens in, 688 out, 8.283 s, cost $0.0235; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is waiting on you, and I haven't changed your phone number. Nothing else is open on the bank's side.
+> The case is now waiting on Elowen Mercer, so I'm making no further call. The secure portal has asked her to review the replacement number and confirm it, and nothing changes on her profile until she does.
 > 
-> The bank has sent a confirmation request through the secure portal, and the case stays in waiting until you answer it. Please check the replacement number shown there. If it's correct, confirm it in the portal, because the bank won't apply the change on your behalf or from an email or call. Your identity checks on the call are already complete.
+> - **What was verified:** her identity was checked on the call.
+> - **What the bank can't do:** it can't apply the change on the strength of her email or the call. The change has to be confirmed by her inside the secure portal.
+> - **What my one call did:** my attempt to query the access system was refused. The case is in a waiting state and access had already been asked.
 > 
-> I tried to send you a written reply, but the desk refused it because the case is in a waiting state. This message is the only explanation you'll get from me.
+> The case stays open until she confirms in the portal.

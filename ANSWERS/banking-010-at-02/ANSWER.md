@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, a customer writing over secure chat, asked the desk to check whether an incoming £42.80 entry from Northmere Home Supplies was for her specific transfer, because the merchant had said it might be returned. The desk classified it as a question about an incoming payment and sent a query to the incoming-payments system with the amount, and the case closed as asked. The query returned nothing, so whether the entry matches her transfer is still unanswered, and her identity remains unverified, which a person would need to follow up.
+Elowen Marr asked over secure chat whether an incoming £42.80 entry from Northmere Home Supplies relates to the specific transfer that company said might be returned. The desk classed it as a question about an incoming payment and put it to the incoming payments system, and the case closed at that step. The record shows no answer returned, so whether the entry matches that transfer is still open, and her identity is still marked unverified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

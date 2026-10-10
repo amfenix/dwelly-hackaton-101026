@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat whether H&V had sent her £420 payment to Alder & Reed Workshop, which she can see debited. The desk classified it as a transfer question and sent a query about it to the payment system, and the case closed at that step. The record contains no answer on whether the transfer was sent, and Mara is not verified on this chat, so a person will need to pick up the reply and respond to her.
+Mara Ellison, who was not verified, asked over secure chat whether H&V had sent her £420 payment to Alder & Reed Workshop, which she could see as a debit. The desk classed it as a question about a transfer and sent an ask to the payment system about the £420 transfer. That system's answer is not in the record, so whether the payment was sent is still unknown and nothing has been confirmed to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

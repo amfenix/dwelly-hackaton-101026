@@ -52,28 +52,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
-51. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → statement (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=statement).
-56. `next_system`: not known → documents (by `route-documents`).
-57. The agent asked for `ask_system` {"system": "documents"}.
-58. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-032-at-01:do-ask:17).
-62. Action in the world: `ask_system` {"system": "documents", "about": "statement"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+53. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → statement (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=statement).
+60. `next_system`: not known → documents (by `route-documents`).
+61. The agent asked for `ask_system` {"system": "documents"}.
+62. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-032-at-01:do-ask:17).
+66. Action in the world: `ask_system` {"system": "documents", "about": "statement"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6784 tokens in, 483 out, 4.382 s, cost $0.0145; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5212 tokens in, 464 out, 3.677 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the documents system for Mara Ellison's January 2024 statement request. The desk accepted the query and closed the case at that step. The case shows no answer on whether an archived copy exists, so there is nothing to report on availability yet.
+> I've asked the documents system whether an archived copy of the January 2024 statement exists. The request was accepted, but no answer is in the case yet. Once the system responds, the reply to Mara Ellison can say what it found.
 > 
-> Mara is still not verified. The desk's facts show no confirmation and no refusals.
+> Mara's identity is still marked unverified. I haven't released any statement, only checked whether one is available.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer on a call, asked why her £18.40 card payment at North Quay Books was declined. The desk asked the card system and closed the case as waiting, because that system's answer had not come back, so no decline reason is recorded. A second card request and the agent's escalation were both refused because the case was already in the waiting state, so nobody has yet been handed the case to check the card records and tell her the reason.
+Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk asked the card system and closed the case as waiting, because no answer from it is recorded yet. A second ask to the card system and an attempt to escalate to a person were both refused because the case was already in the waiting state, so no reason for the decline has been found or given to her. Someone still needs to check the declined attempt on the card records and tell her the reason.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -69,6 +69,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -54,28 +54,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-53. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
-54. `request_type`: not known → instruction (by `triage`).
-55. `subject`: not known → direct_debit (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
-58. `next_system`: not known → recurring (by `route-recurring`).
-59. The agent asked for `submit_request` {}.
-60. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
-61. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
-62. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-63. Called `register_request` (attempt 1, key banking-015-at-02:do-request:17).
-64. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
-65. `register_request` found {}.
-66. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-67. The case closed in `REQUESTED`: **submit_request**.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+55. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+56. `request_type`: not known → instruction (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → direct_debit (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+62. `next_system`: not known → recurring (by `route-recurring`).
+63. The agent asked for `submit_request` {}.
+64. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
+65. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
+66. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+67. Called `register_request` (attempt 1, key banking-015-at-02:do-request:17).
+68. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
+69. `register_request` found {}.
+70. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+71. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 7199 tokens in, 533 out, 4.604 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5489 tokens in, 584 out, 5.202 s, cost $0.0124; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted Mara Ellison's instruction to cancel her Northmere Fitness Direct Debit mandate, and the desk accepted it. The case is now in the REQUESTED state and closed.
+> I've submitted the instruction to cancel your Northmere Fitness Direct Debit mandate, and the desk accepted it. Your identity was verified on the call, and the mandate was shown as active in the portal. The case now shows as requested.
 > 
-> She was verified on the call, the portal shows the mandate as active, and her instruction was clear. She also confirmed she understands this cancels the mandate at the bank, not her agreement with Northmere Fitness. I didn't query the recurring-payments system first, because the case already identified the mandate.
+> This only cancels the mandate at H&V, so Northmere Fitness can't collect through it in future. Your agreement with Northmere Fitness is unaffected, so cancel that with them separately if you want it ended.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren asked over secure chat which regular payments are still active before she makes any closure plans. The desk checked the recurring-payments register, which showed the standing order as active, and replied on secure chat that the record shows it as active, that this doesn't guarantee the future payment will execute, and that no change was made. The case closed as replied with nothing left for a person, though the record still lists her as not verified despite her saying she completed the account-holder checks.
+Elena Wren asked over secure chat which regular payments are still active before she makes any closure plans. The desk checked the recurring-payments register, which showed her standing order as active, and replied saying so, adding that this does not guarantee a future payment will execute and that nothing was changed. The register also listed an active direct debit mandate for Northmere Energy, but the reply did not mention it. The desk's records still show her as not verified despite her saying she completed the checks, and the case is closed with nothing further left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -74,6 +74,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -47,7 +47,10 @@
     "request_type": "question",
     "next_system": "incoming",
     "reason": null,
-    "clarify_need": null
+    "clarify_need": null,
+    "refusal_reason": null,
+    "credentials_requested": false,
+    "joint_holder_change": false
   },
   "actions": [
     {
@@ -87,7 +90,7 @@
     "actor_next": "other"
   },
   "failure": null,
-  "summary": "The sender asked about a bank transfer they said they had made for the kiln contribution, and the desk classified it as a question about an incoming payment. It asked the incoming-payments system about it and closed the case at that step. The system's answer is not in the record, so whether the payment has arrived is still unknown. The only support so far is the sender's own message, and the desk's checks found no confirmation. Anything further depends on the incoming-payments system's reply.",
+  "summary": "The message was a question about an incoming payment: the sender said they had sent a bank transfer as a contribution for the kiln. The desk classified it as an incoming-payment question and put it to the incoming-payments system, then closed the case as asked. The system's answer isn't in the record, so whether the money has arrived is still unknown, and no reply to the sender is recorded.",
   "journal": [
     {
       "seq": 1,
@@ -167,7 +170,7 @@
     },
     {
       "seq": 8,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "trigger",
       "name": "read-payment",
       "on": null,
@@ -185,7 +188,7 @@
     },
     {
       "seq": 9,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "call",
       "function": "check_payment",
       "attempt": 1,
@@ -194,7 +197,7 @@
     },
     {
       "seq": 10,
-      "at": 0.0,
+      "at": 0.001,
       "kind": "returned",
       "function": "check_payment",
       "values": {}
@@ -587,7 +590,7 @@
     },
     {
       "seq": 45,
-      "at": 0.583,
+      "at": 0.609,
       "kind": "choice",
       "field": "request_type",
       "raw": "question",
@@ -599,7 +602,31 @@
     },
     {
       "seq": 46,
-      "at": 0.583,
+      "at": 0.609,
+      "kind": "noul",
+      "field": "credentials_requested",
+      "raw": 0.02,
+      "confidence": null,
+      "value": false,
+      "backend": "jev",
+      "model": "jev-latest",
+      "attempt": 1
+    },
+    {
+      "seq": 47,
+      "at": 0.609,
+      "kind": "noul",
+      "field": "joint_holder_change",
+      "raw": 0.03,
+      "confidence": null,
+      "value": false,
+      "backend": "jev",
+      "model": "jev-latest",
+      "attempt": 1
+    },
+    {
+      "seq": 48,
+      "at": 0.609,
       "kind": "choice",
       "field": "subject",
       "raw": "incoming_payment",
@@ -610,8 +637,8 @@
       "attempt": 1
     },
     {
-      "seq": 47,
-      "at": 0.583,
+      "seq": 49,
+      "at": 0.609,
       "kind": "set",
       "field": "request_type",
       "old": null,
@@ -619,8 +646,26 @@
       "by": "triage"
     },
     {
-      "seq": 48,
-      "at": 0.583,
+      "seq": 50,
+      "at": 0.609,
+      "kind": "set",
+      "field": "credentials_requested",
+      "old": null,
+      "new": false,
+      "by": "triage"
+    },
+    {
+      "seq": 51,
+      "at": 0.609,
+      "kind": "set",
+      "field": "joint_holder_change",
+      "old": null,
+      "new": false,
+      "by": "triage"
+    },
+    {
+      "seq": 52,
+      "at": 0.609,
       "kind": "set",
       "field": "subject",
       "old": null,
@@ -628,16 +673,16 @@
       "by": "triage"
     },
     {
-      "seq": 49,
-      "at": 0.583,
+      "seq": 53,
+      "at": 0.609,
       "kind": "state",
       "frm": "READING",
       "to": "TRIAGED",
       "by": "triage"
     },
     {
-      "seq": 50,
-      "at": 0.583,
+      "seq": 54,
+      "at": 0.609,
       "kind": "trigger",
       "name": "route-incoming",
       "on": null,
@@ -668,8 +713,8 @@
       "note": ""
     },
     {
-      "seq": 51,
-      "at": 0.583,
+      "seq": 55,
+      "at": 0.609,
       "kind": "set",
       "field": "next_system",
       "old": null,
@@ -677,8 +722,8 @@
       "by": "route-incoming"
     },
     {
-      "seq": 52,
-      "at": 4.001,
+      "seq": 56,
+      "at": 3.982,
       "kind": "signal",
       "signal": "ask_system",
       "args": {
@@ -686,8 +731,8 @@
       }
     },
     {
-      "seq": 53,
-      "at": 4.001,
+      "seq": 57,
+      "at": 3.982,
       "kind": "trigger",
       "name": "incoming-ask",
       "on": "ask_system",
@@ -739,16 +784,16 @@
       "note": ""
     },
     {
-      "seq": 54,
-      "at": 4.001,
+      "seq": 58,
+      "at": 3.982,
       "kind": "state",
       "frm": "TRIAGED",
       "to": "ASK_PENDING",
       "by": "incoming-ask"
     },
     {
-      "seq": 55,
-      "at": 4.001,
+      "seq": 59,
+      "at": 3.982,
       "kind": "trigger",
       "name": "do-ask",
       "on": null,
@@ -765,8 +810,8 @@
       "note": ""
     },
     {
-      "seq": 56,
-      "at": 4.001,
+      "seq": 60,
+      "at": 3.982,
       "kind": "call",
       "function": "ask_system",
       "attempt": 1,
@@ -774,8 +819,8 @@
       "args": {}
     },
     {
-      "seq": 57,
-      "at": 4.001,
+      "seq": 61,
+      "at": 3.982,
       "kind": "action",
       "type": "ask_system",
       "args": {
@@ -786,23 +831,23 @@
       "key": "banking-002-at-01:do-ask:17"
     },
     {
-      "seq": 58,
-      "at": 4.001,
+      "seq": 62,
+      "at": 3.982,
       "kind": "returned",
       "function": "ask_system",
       "values": {}
     },
     {
-      "seq": 59,
-      "at": 4.001,
+      "seq": 63,
+      "at": 3.982,
       "kind": "state",
       "frm": "ASK_PENDING",
       "to": "ASKED",
       "by": "do-ask"
     },
     {
-      "seq": 60,
-      "at": 4.001,
+      "seq": 64,
+      "at": 3.982,
       "kind": "final",
       "state": "ASKED",
       "outcome": "ask_system"
@@ -829,6 +874,14 @@
               "other": "none of these (a bereavement, a complaint, a request for the personal data the bank holds, closing an account, credit)",
               "unknown": "The text does not say, or says too little to tell."
             }
+          },
+          "credentials_requested": {
+            "type": "noul",
+            "instructions": "Does the message ask the bank to use another person's login, or to give or read out a one-time code, a PIN or a password?"
+          },
+          "joint_holder_change": {
+            "type": "noul",
+            "instructions": "Does one holder of a joint account ask to remove or change another holder?"
           },
           "subject": {
             "type": "choice",
@@ -858,8 +911,8 @@
       "response": {
         "model": "jev-1.13.0",
         "usage": {
-          "input_tokens": 960,
-          "output_tokens": 207
+          "input_tokens": 1019,
+          "output_tokens": 242
         },
         "answers": {
           "request_type": {
@@ -876,6 +929,14 @@
               "other": 0.0,
               "unknown": 0.0
             }
+          },
+          "credentials_requested": {
+            "type": "noul",
+            "noul": 0.02
+          },
+          "joint_holder_change": {
+            "type": "noul",
+            "noul": 0.03
           },
           "subject": {
             "type": "choice",
@@ -902,13 +963,13 @@
           }
         }
       },
-      "seconds": 0.5824860000284389,
-      "input_tokens": 960,
-      "output_tokens": 207,
+      "seconds": 0.6078350000316277,
+      "input_tokens": 1019,
+      "output_tokens": 242,
       "cost_usd": null,
       "error": null,
       "replayed": false,
-      "digest": "0bfafd7b068ca427bd176f365df75714de0b3c354c23b4771cfffab84bc0867f"
+      "digest": "c4607ee92da6998a06c7204e6161b5d52cd7234ae4ad06319384773090149321"
     },
     {
       "kind": "agent",
@@ -1016,6 +1077,31 @@
             "strict": true
           },
           {
+            "name": "refuse",
+            "description": "A last resort, when the bank can do what was asked in no permitted way: someone else's account, another person's login or a code, PIN or password, a request from someone without the authority, a change to a joint account by one holder. Name the reason; the desk writes the reply with the permitted route. Not when the request can be forwarded or checked instead.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "someone_elses_account",
+                    "credentials",
+                    "no_authority",
+                    "needs_all_holders",
+                    "other"
+                  ],
+                  "description": "why the bank cannot do it"
+                }
+              },
+              "required": [
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          },
+          {
             "name": "escalate",
             "description": "Nothing above fits, or the facts conflict: hand the case to a person.",
             "input_schema": {
@@ -1046,16 +1132,16 @@
         "messages": [
           {
             "role": "user",
-            "content": "<case>\nRequest: I’m expecting a contribution toward the cost of a shared pottery studio kiln. The sender told me by phone that they had transferred it, but I can’t see it in my H&V account; please check whether it has arrived.\nevent 1 (External message): I’ve sent the contribution for the kiln by bank transfer.\n</case>\nFacts established: {'subject': 'incoming_payment', 'confirmation': 'none', 'instructed_outside_portal': 'False', 'request_type': 'question', 'next_system': 'incoming'}"
+            "content": "<case>\nRequest: I’m expecting a contribution toward the cost of a shared pottery studio kiln. The sender told me by phone that they had transferred it, but I can’t see it in my H&V account; please check whether it has arrived.\nevent 1 (External message): I’ve sent the contribution for the kiln by bank transfer.\n</case>\nFacts established: {'subject': 'incoming_payment', 'confirmation': 'none', 'instructed_outside_portal': 'False', 'request_type': 'question', 'next_system': 'incoming', 'credentials_requested': 'False', 'joint_holder_change': 'False'}"
           }
         ]
       },
       "response": {
-        "id": "msg_011CfteSYGWgYtggAc5r45e8",
+        "id": "msg_011Cftfdv3NZKzDyMzRzHiZw",
         "container": null,
         "content": [
           {
-            "id": "toolu_01QEs3PViL4XEeeEzrF5dRyJ",
+            "id": "toolu_01Pk2PpAkZ4HmvWHKvZNRt9h",
             "caller": {
               "type": "direct"
             },
@@ -1082,7 +1168,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1756,
+          "input_tokens": 2010,
           "output_tokens": 50,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1091,13 +1177,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 3.417374899960123,
-      "input_tokens": 1756,
+      "seconds": 3.372533499961719,
+      "input_tokens": 2010,
       "output_tokens": 50,
-      "cost_usd": 0.004012,
+      "cost_usd": 0.00452,
       "error": null,
       "replayed": false,
-      "digest": "2940ae168838424d8ac623ae72efd980a01a047041e83f057da917e197f2f56d"
+      "digest": "f92af48a21757880f3d19464fdf0da9bf3f7731c311f8f0d9c5927af182f4466"
     },
     {
       "kind": "agent",
@@ -1205,6 +1291,31 @@
             "strict": true
           },
           {
+            "name": "refuse",
+            "description": "A last resort, when the bank can do what was asked in no permitted way: someone else's account, another person's login or a code, PIN or password, a request from someone without the authority, a change to a joint account by one holder. Name the reason; the desk writes the reply with the permitted route. Not when the request can be forwarded or checked instead.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "someone_elses_account",
+                    "credentials",
+                    "no_authority",
+                    "needs_all_holders",
+                    "other"
+                  ],
+                  "description": "why the bank cannot do it"
+                }
+              },
+              "required": [
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          },
+          {
             "name": "escalate",
             "description": "Nothing above fits, or the facts conflict: hand the case to a person.",
             "input_schema": {
@@ -1235,13 +1346,13 @@
         "messages": [
           {
             "role": "user",
-            "content": "<case>\nRequest: I’m expecting a contribution toward the cost of a shared pottery studio kiln. The sender told me by phone that they had transferred it, but I can’t see it in my H&V account; please check whether it has arrived.\nevent 1 (External message): I’ve sent the contribution for the kiln by bank transfer.\n</case>\nFacts established: {'subject': 'incoming_payment', 'confirmation': 'none', 'instructed_outside_portal': 'False', 'request_type': 'question', 'next_system': 'incoming'}"
+            "content": "<case>\nRequest: I’m expecting a contribution toward the cost of a shared pottery studio kiln. The sender told me by phone that they had transferred it, but I can’t see it in my H&V account; please check whether it has arrived.\nevent 1 (External message): I’ve sent the contribution for the kiln by bank transfer.\n</case>\nFacts established: {'subject': 'incoming_payment', 'confirmation': 'none', 'instructed_outside_portal': 'False', 'request_type': 'question', 'next_system': 'incoming', 'credentials_requested': 'False', 'joint_holder_change': 'False'}"
           },
           {
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01QEs3PViL4XEeeEzrF5dRyJ",
+                "id": "toolu_01Pk2PpAkZ4HmvWHKvZNRt9h",
                 "caller": {
                   "type": "direct"
                 },
@@ -1259,7 +1370,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01QEs3PViL4XEeeEzrF5dRyJ",
+                "tool_use_id": "toolu_01Pk2PpAkZ4HmvWHKvZNRt9h",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1267,11 +1378,11 @@
         ]
       },
       "response": {
-        "id": "msg_011CfteSh2sMQKzMJcajW3Jo",
+        "id": "msg_011Cftfe4FUmTZ3QwFMrr9rK",
         "container": null,
         "content": [
           {
-            "id": "toolu_011nEUEb63wYTqUtM6FdsbJ3",
+            "id": "toolu_01DWvEdhAwRQYBzPDkjsLRra",
             "caller": {
               "type": "direct"
             },
@@ -1296,7 +1407,7 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1841,
+          "input_tokens": 2095,
           "output_tokens": 26,
           "output_tokens_details": {
             "thinking_tokens": 0
@@ -1305,13 +1416,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 1.055527099990286,
-      "input_tokens": 1841,
+      "seconds": 1.3345154999988154,
+      "input_tokens": 2095,
       "output_tokens": 26,
-      "cost_usd": 0.003942,
+      "cost_usd": 0.00445,
       "error": null,
       "replayed": false,
-      "digest": "1ef650b379ea849d1f406c713c439aa899c6c337769ff742dbb1c0740e7134ab"
+      "digest": "fd2f4321798524d28ac08efe8af4b999a537ed7ef98a53e709c08b883c50d7a7"
     },
     {
       "kind": "agent",
@@ -1419,6 +1530,31 @@
             "strict": true
           },
           {
+            "name": "refuse",
+            "description": "A last resort, when the bank can do what was asked in no permitted way: someone else's account, another person's login or a code, PIN or password, a request from someone without the authority, a change to a joint account by one holder. Name the reason; the desk writes the reply with the permitted route. Not when the request can be forwarded or checked instead.",
+            "input_schema": {
+              "type": "object",
+              "properties": {
+                "reason": {
+                  "type": "string",
+                  "enum": [
+                    "someone_elses_account",
+                    "credentials",
+                    "no_authority",
+                    "needs_all_holders",
+                    "other"
+                  ],
+                  "description": "why the bank cannot do it"
+                }
+              },
+              "required": [
+                "reason"
+              ],
+              "additionalProperties": false
+            },
+            "strict": true
+          },
+          {
             "name": "escalate",
             "description": "Nothing above fits, or the facts conflict: hand the case to a person.",
             "input_schema": {
@@ -1449,13 +1585,13 @@
         "messages": [
           {
             "role": "user",
-            "content": "<case>\nRequest: I’m expecting a contribution toward the cost of a shared pottery studio kiln. The sender told me by phone that they had transferred it, but I can’t see it in my H&V account; please check whether it has arrived.\nevent 1 (External message): I’ve sent the contribution for the kiln by bank transfer.\n</case>\nFacts established: {'subject': 'incoming_payment', 'confirmation': 'none', 'instructed_outside_portal': 'False', 'request_type': 'question', 'next_system': 'incoming'}"
+            "content": "<case>\nRequest: I’m expecting a contribution toward the cost of a shared pottery studio kiln. The sender told me by phone that they had transferred it, but I can’t see it in my H&V account; please check whether it has arrived.\nevent 1 (External message): I’ve sent the contribution for the kiln by bank transfer.\n</case>\nFacts established: {'subject': 'incoming_payment', 'confirmation': 'none', 'instructed_outside_portal': 'False', 'request_type': 'question', 'next_system': 'incoming', 'credentials_requested': 'False', 'joint_holder_change': 'False'}"
           },
           {
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_01QEs3PViL4XEeeEzrF5dRyJ",
+                "id": "toolu_01Pk2PpAkZ4HmvWHKvZNRt9h",
                 "caller": {
                   "type": "direct"
                 },
@@ -1473,7 +1609,7 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_01QEs3PViL4XEeeEzrF5dRyJ",
+                "tool_use_id": "toolu_01Pk2PpAkZ4HmvWHKvZNRt9h",
                 "content": "{\"accepted\": true, \"state\": \"ASKED\", \"case_closed\": \"ask_system\"}"
               }
             ]
@@ -1482,7 +1618,7 @@
             "role": "assistant",
             "content": [
               {
-                "id": "toolu_011nEUEb63wYTqUtM6FdsbJ3",
+                "id": "toolu_01DWvEdhAwRQYBzPDkjsLRra",
                 "caller": {
                   "type": "direct"
                 },
@@ -1498,25 +1634,25 @@
             "content": [
               {
                 "type": "tool_result",
-                "tool_use_id": "toolu_011nEUEb63wYTqUtM6FdsbJ3",
-                "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"subject\": \"incoming_payment\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"incoming\"}, \"refused\": []}"
+                "tool_use_id": "toolu_01DWvEdhAwRQYBzPDkjsLRra",
+                "content": "{\"state\": \"ASKED\", \"final\": true, \"outcome\": \"ask_system\", \"facts\": {\"subject\": \"incoming_payment\", \"confirmation\": \"none\", \"instructed_outside_portal\": false, \"request_type\": \"question\", \"next_system\": \"incoming\", \"credentials_requested\": false, \"joint_holder_change\": false}, \"refused\": []}"
               }
             ]
           }
         ]
       },
       "response": {
-        "id": "msg_011CfteSkLJDyPpCcTY5H6QG",
+        "id": "msg_011Cftfe9vYN8C2CfEyQG8Tu",
         "container": null,
         "content": [
           {
-            "signature": "CAQS3QUKEAgSGAI4AUIIdGhpbmtpbmcSDC6rt8/JnSWQZ9vQYRoM1FNstiLcl0Nuv/KLIjDNkiA6mEEGr4TEcCHlC6W4k1k7sEFR8B2qBPWsUX6GsIEc6t/QcfPwSYjIiTdNW6oq+gSd4OFebWqOmqv8G055zgwViC8j55OMrdoWe3hh298E+L3GonEIqxPKWWeMpiyGBP3RdGBzmlk4ZFWnfzknmwDX8deT/KkuC8lYfoNn+Z/NtCmNCnQLenMJE36pVaSrN2inPe08pKhSKOGCetDmN0ZwjY2k2Zu+y/PSyQlnczQ6hVE30egfwDF4raEKWuPqUh25+qVEJqCUTIycHwnxCtbhGjIspjUHAE9aV9oKLcFWmKb8LImJmQ1QOjWsWelGhmlEr6Py0MrwDwYEr61p8Oay74C+4UV7DinyyDuu9w84E0ICJ5PudRCwOEOZi3ITSlHQcp5hNtkMPTf6q764TqyLw3LtfRJYGYWzyqdjxL0ZuKQG9TrV09TjUXxpyPk83+xkQqJXUpw8T3ggHQTtr3ygh8HZlcNEeQLSLyYUlGmJ15WY5t1gl0t2dDbRqiwcHpCSFcVG3qhxvQXzkS1uiL7Vv8aBU4sIXvmLd7I07D3Bd+5oIdQNBUWgT6D8+fI67Q5nRrEQBs/Rq9Bo4S9ieWRtDbwLG9MT29oJHQ6Tm2w09Q2fNMSkUUozWioDhYwiR3AcwbMCSvfmL03xS3k289MgCBoZaneJAhlnWPT3wFtqcDX9kssydAe3e1w5goXokvXSDZifVIn0Dx5e8pA3pMiy3QOGU2oCDxdmknvis7qGDbg4EwCWMDaH0pO50IRJhXufHlawxIp+NWIAIQnqsNfxwQISmLfl3bcum9khmn2tWShbb8Ed3F4ZtzdGj3NfU/bcjqlPKvsRtZY674vpM2bff+dKTxCFHS+QvDOCrgPIwVlWBqnmrflqezvTZ+sTVqB9p3PJR4eqgYHyGAE=",
+            "signature": "CAQS0QUKEAgSGAI4AUIIdGhpbmtpbmcSDBLuVWUrpp4mRx/lAxoMBjRwwkKzHS4ybb1kIjAzWKy8b8Hdtp05q9pxJOLgFDX4xyYu1TCQ2cbNH5kWp+9nZzS1Oi9lSl3Qu6EcJgUq7gSEUe5jXIINAgEBfwLsilpmW3Org0syYAwGmKylUcQMCkSBAqP3exIuC6ekQv+eSwngv/NSFgPZLC/LfW3/tjbgSMNlv5eTcoWWhJ0oDCPrd+iem4o+rzxCVCr/C1UpEHRQQ6UFS5CFHsmEmWvQw+KH4G6Avttp1InDc1MOtWAaSVu3rUg6ABzmI57hoTos2KBJxRDsQXVtlROz8HnrqZPla2LFnuzALKZ7mbPUepk7mraTbIJtmt8BvS8/NHJoFzOI4xSRQvJJrXgeTWxKSuhlt3TAPwZdidPsjpFBDoZNAD4Z+zVU6cM21BdLnksEV5SAW74c35x44mSc32hFn1svQrjEKzKIaVM9AHK1CcDdeEHEaTrzq717WhXtW/UK4eCB2QRRg4vSBeqG8IbBpLxBRiiu1wC2vKSKg+l2ZhjGMdgfQIFrmZypeIloVYFQFo0jn2AOT4QiZYnnhCLHyvcV+7byFMv04ryGFvTtENrgAuM8TVzHzYzoxd0IVR3VRTm0XdxpAurI9mLdKBG2RhSFSYlP6apZWT4n7BJQAHLySVyWfgTttmYsX0EcTFm6OohPHrAWL8+1TivX5d10uduMC5MXDPQy0K6LP1Gq7hRb1zW+Kn4gpvRtJG71uQTXJlSGZARKb51Q7NB3k+rBtFDqFcodh7pbVDQYcj+q0ZgEki4IMLWklt0AlTsMkIXF1QUOD0KM7keDByxWAYoi521bGIdJ66pfX53SML1ls8rt4iWoXOpTu13ahliZDHZZe6sposavNT/I50ZDO8nFlacxny01JCt76bubqiJLHnZLmGrUbCEhPv6UPO4VOIXxGAE=",
             "thinking": "",
             "type": "thinking"
           },
           {
             "citations": null,
-            "text": "I asked the incoming-payments system whether the kiln contribution has arrived. The case is now closed at that step. Its answer isn't in the case record yet, so I can't tell you whether the money has arrived. The only confirmation on file is the sender's own message saying they sent it. The bank has no record of a payment arriving.",
+            "text": "I asked the incoming-payments system whether the kiln contribution has arrived. The case is now closed, and the system's answer isn't in the case record. I can't tell you whether the money has arrived, and I haven't sent a reply to the customer.",
             "type": "text"
           }
         ],
@@ -1535,22 +1671,22 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 1963,
-          "output_tokens": 159,
+          "input_tokens": 2237,
+          "output_tokens": 133,
           "output_tokens_details": {
-            "thinking_tokens": 56
+            "thinking_tokens": 55
           },
           "server_tool_use": null,
           "service_tier": "standard"
         }
       },
-      "seconds": 2.0038382000057027,
-      "input_tokens": 1963,
-      "output_tokens": 159,
-      "cost_usd": 0.005516,
+      "seconds": 2.248380500008352,
+      "input_tokens": 2237,
+      "output_tokens": 133,
+      "cost_usd": 0.005804,
       "error": null,
       "replayed": false,
-      "digest": "97d13d12e118c81c9fb2b0c9507e93c59ab5d590fbc838715761e5c2ebcca52b"
+      "digest": "f8d4b1182b895e4b82fd01de375382bdfc677aaf327bbb2918f423172d0cc1c6"
     },
     {
       "kind": "generate",
@@ -1563,17 +1699,17 @@
         "messages": [
           {
             "role": "user",
-            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"incoming_payment\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"incoming\"\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"incoming\",\n        \"about\": \"incoming_payment\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-002-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-002-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-002-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-002-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-002-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-002-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-002-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-002-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-002-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-002-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-002-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-002-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-002-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-002-at-01:read-confirmation:13).\n40. Note from `read-confirmation`: event 1 (Sender): I’ve sent the contribution for the kiln by bank transfer. [facts: confirmation='none', instructed_outside_portal=False]\n41. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n42. `confirmation`: not known → none (by `read-confirmation`).\n43. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n44. Rule `triage` fired: state = READING → true (state=READING).\n45. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.\n46. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.\n47. `request_type`: not known → question (by `triage`).\n48. `subject`: not known → incoming_payment (by `triage`).\n49. State `READING` → `TRIAGED` (by `triage`).\n50. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).\n51. `next_system`: not known → incoming (by `route-incoming`).\n52. The agent asked for `ask_system` {\"system\": \"incoming\"}.\n53. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n54. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).\n55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n56. Called `ask_system` (attempt 1, key banking-002-at-01:do-ask:17).\n57. Action in the world: `ask_system` {\"system\": \"incoming\", \"about\": \"incoming_payment\"}.\n58. `ask_system` found {}.\n59. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n60. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 6520 tokens in, 442 out, 7.059 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the incoming-payments system whether the kiln contribution has arrived. The case is now closed at that step. Its answer isn't in the case record yet, so I can't tell you whether the money has arrived. The only confirmation on file is the sender's own message saying they sent it. The bank has no record of a payment arriving.\n</record>"
+            "content": "<record>\n{\n  \"outcome\": \"ask_system\",\n  \"state\": \"ASKED\",\n  \"final\": true,\n  \"facts\": {\n    \"subject\": \"incoming_payment\",\n    \"confirmation\": \"none\",\n    \"instructed_outside_portal\": false,\n    \"request_type\": \"question\",\n    \"next_system\": \"incoming\",\n    \"credentials_requested\": false,\n    \"joint_holder_change\": false\n  },\n  \"actions\": [\n    {\n      \"type\": \"ask_system\",\n      \"args\": {\n        \"system\": \"incoming\",\n        \"about\": \"incoming_payment\"\n      }\n    }\n  ],\n  \"error\": null\n}\n\n# Case banking-002-at-01: how the decision was reached\n\nEvery line below is a record of the run, in order: the agent's requests, the rules that fired with the facts they saw, what checks returned, and each change of state.\n\n1. Case opened in `READING` under policy banking-desk v1.\n2. Rule `read-requester` fired: state = READING → true (state=READING).\n3. Called `identify_requester` (attempt 1, key banking-002-at-01:read-requester:1).\n4. `identify_requester` found {}.\n5. Rule `read-subject` fired: state = READING → true (state=READING).\n6. Called `find_subject` (attempt 1, key banking-002-at-01:read-subject:2).\n7. `find_subject` found {}.\n8. Rule `read-payment` fired: state = READING → true (state=READING).\n9. Called `check_payment` (attempt 1, key banking-002-at-01:read-payment:3).\n10. `check_payment` found {}.\n11. Rule `read-incoming` fired: state = READING → true (state=READING).\n12. Called `check_incoming` (attempt 1, key banking-002-at-01:read-incoming:4).\n13. `check_incoming` found {}.\n14. Rule `read-recurring` fired: state = READING → true (state=READING).\n15. Called `check_recurring` (attempt 1, key banking-002-at-01:read-recurring:5).\n16. `check_recurring` found {}.\n17. Rule `read-card` fired: state = READING → true (state=READING).\n18. Called `check_card` (attempt 1, key banking-002-at-01:read-card:6).\n19. `check_card` found {}.\n20. Rule `read-access` fired: state = READING → true (state=READING).\n21. Called `check_access` (attempt 1, key banking-002-at-01:read-access:7).\n22. `check_access` found {}.\n23. Rule `read-business` fired: state = READING → true (state=READING).\n24. Called `check_business` (attempt 1, key banking-002-at-01:read-business:8).\n25. `check_business` found {}.\n26. Rule `read-documents` fired: state = READING → true (state=READING).\n27. Called `check_documents` (attempt 1, key banking-002-at-01:read-documents:9).\n28. `check_documents` found {}.\n29. Rule `read-tariff` fired: state = READING → true (state=READING).\n30. Called `check_tariff` (attempt 1, key banking-002-at-01:read-tariff:10).\n31. `check_tariff` found {}.\n32. Rule `read-bank-actions` fired: state = READING → true (state=READING).\n33. Called `check_bank_actions` (attempt 1, key banking-002-at-01:read-bank-actions:11).\n34. `check_bank_actions` found {}.\n35. Rule `read-registration` fired: state = READING → true (state=READING).\n36. Called `check_registration` (attempt 1, key banking-002-at-01:read-registration:12).\n37. `check_registration` found {}.\n38. Rule `read-confirmation` fired: state = READING → true (state=READING).\n39. Called `check_confirmation` (attempt 1, key banking-002-at-01:read-confirmation:13).\n40. Note from `read-confirmation`: event 1 (Sender): I’ve sent the contribution for the kiln by bank transfer. [facts: confirmation='none', instructed_outside_portal=False]\n41. `check_confirmation` found {\"confirmation\": \"none\", \"instructed_outside_portal\": false}.\n42. `confirmation`: not known → none (by `read-confirmation`).\n43. `instructed_outside_portal`: not known → False (by `read-confirmation`).\n44. Rule `triage` fired: state = READING → true (state=READING).\n45. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.\n46. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.\n47. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.\n48. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.\n49. `request_type`: not known → question (by `triage`).\n50. `credentials_requested`: not known → False (by `triage`).\n51. `joint_holder_change`: not known → False (by `triage`).\n52. `subject`: not known → incoming_payment (by `triage`).\n53. State `READING` → `TRIAGED` (by `triage`).\n54. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).\n55. `next_system`: not known → incoming (by `route-incoming`).\n56. The agent asked for `ask_system` {\"system\": \"incoming\"}.\n57. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).\n58. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).\n59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).\n60. Called `ask_system` (attempt 1, key banking-002-at-01:do-ask:17).\n61. Action in the world: `ask_system` {\"system\": \"incoming\", \"about\": \"incoming_payment\"}.\n62. `ask_system` found {}.\n63. State `ASK_PENDING` → `ASKED` (by `do-ask`).\n64. The case closed in `ASKED`: **ask_system**.\n\n## Model calls\n\n4 calls, 7361 tokens in, 451 out, 7.563 s, cost $0.0148; models: claude-sonnet-5-5, jev-1.13.0.\n\n## What the agent said\n\n> I asked the incoming-payments system whether the kiln contribution has arrived. The case is now closed, and the system's answer isn't in the case record. I can't tell you whether the money has arrived, and I haven't sent a reply to the customer.\n</record>"
           }
         ]
       },
       "response": {
-        "id": "msg_011CfteStySxKQPfgAQVeCKw",
+        "id": "msg_011CftfeKeCKoF1CWyjPncWs",
         "container": null,
         "content": [
           {
             "citations": null,
-            "text": "The sender asked about a bank transfer they said they had made for the kiln contribution, and the desk classified it as a question about an incoming payment. It asked the incoming-payments system about it and closed the case at that step. The system's answer is not in the record, so whether the payment has arrived is still unknown. The only support so far is the sender's own message, and the desk's checks found no confirmation. Anything further depends on the incoming-payments system's reply.",
+            "text": "The message was a question about an incoming payment: the sender said they had sent a bank transfer as a contribution for the kiln. The desk classified it as an incoming-payment question and put it to the incoming-payments system, then closed the case as asked. The system's answer isn't in the record, so whether the money has arrived is still unknown, and no reply to the sender is recorded.",
             "type": "text"
           }
         ],
@@ -1592,8 +1728,8 @@
           "cache_creation_input_tokens": 0,
           "cache_read_input_tokens": 0,
           "inference_geo": "global",
-          "input_tokens": 2394,
-          "output_tokens": 141,
+          "input_tokens": 2509,
+          "output_tokens": 117,
           "output_tokens_details": {
             "thinking_tokens": 0
           },
@@ -1601,13 +1737,13 @@
           "service_tier": "standard"
         }
       },
-      "seconds": 2.0566726999823004,
-      "input_tokens": 2394,
-      "output_tokens": 141,
-      "cost_usd": 0.006198,
+      "seconds": 2.2474513000342995,
+      "input_tokens": 2509,
+      "output_tokens": 117,
+      "cost_usd": 0.006188,
       "error": null,
       "replayed": false,
-      "digest": "c99bcdbba8b4970cf7d494d0cef6f71bed2c7524e81329cf26cc4610178cc783"
+      "digest": "c4446309d59da2eb0a03d7eaf4cf1ba262d2b53318a4cb34ee60f14cf037deec"
     }
   ]
 }

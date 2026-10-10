@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, verified by call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The data team had already registered the request as HV-037, so the desk's attempt to submit it again was refused and it sent the customer a reply about the registration instead. The record shows the basis for the correction is not yet validated and the profile name is unchanged, so the correction itself is still with the data team's review.
+Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk logged the request with the H&V data team as reference HV-037 and replied to her. The data team has not yet validated the basis for the correction, and the profile name is unchanged. Whatever supporting information the data team needs, and the correction itself, remains for a person to handle.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -52,7 +52,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `registration-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type != other → true (request_type=register)
+  - request_type != other → true (request_type=change)
   - registration_asked → true (registration_asked=True)
   - registered present → true (registered=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -70,8 +70,10 @@ Facts established:
 - registration_ref: **HV-037**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **register**
+- request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -90,7 +92,8 @@ No.
 
 Requests the policy refused:
 
-- `submit_request`: register: registration_asked absent is false (registration_asked=True); register-what-fits-no-type: request_type = other is false (request_type=register); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=access); request_type = instruction is false (request_type=register); incoming-instruction: next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=register); recurring-instruction: next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=register); card-instruction: next_system = card is false (next_system=access); request_type = instruction is false (request_type=register); access-instruction: request_type = instruction is false (request_type=register); business-instruction: next_system = business is false (next_system=access); request_type = instruction is false (request_type=register); documents-instruction: next_system = documents is false (next_system=access); request_type = instruction is false (request_type=register)
+- `submit_request`: register: request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); register-what-fits-no-type: request_type = other is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change)
+- `ask_system`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change)
 
 ## Final result
 

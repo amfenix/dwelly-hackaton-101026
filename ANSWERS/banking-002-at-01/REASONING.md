@@ -47,26 +47,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 44. Rule `triage` fired: state = READING → true (state=READING).
 45. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-46. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-47. `request_type`: not known → question (by `triage`).
-48. `subject`: not known → incoming_payment (by `triage`).
-49. State `READING` → `TRIAGED` (by `triage`).
-50. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-51. `next_system`: not known → incoming (by `route-incoming`).
-52. The agent asked for `ask_system` {"system": "incoming"}.
-53. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-54. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-56. Called `ask_system` (attempt 1, key banking-002-at-01:do-ask:17).
-57. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
-58. `ask_system` found {}.
-59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-60. The case closed in `ASKED`: **ask_system**.
+46. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+47. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+48. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+49. `request_type`: not known → question (by `triage`).
+50. `credentials_requested`: not known → False (by `triage`).
+51. `joint_holder_change`: not known → False (by `triage`).
+52. `subject`: not known → incoming_payment (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+55. `next_system`: not known → incoming (by `route-incoming`).
+56. The agent asked for `ask_system` {"system": "incoming"}.
+57. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+58. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-002-at-01:do-ask:17).
+61. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6520 tokens in, 442 out, 7.059 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7361 tokens in, 451 out, 7.563 s, cost $0.0148; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the incoming-payments system whether the kiln contribution has arrived. The case is now closed at that step. Its answer isn't in the case record yet, so I can't tell you whether the money has arrived. The only confirmation on file is the sender's own message saying they sent it. The bank has no record of a payment arriving.
+> I asked the incoming-payments system whether the kiln contribution has arrived. The case is now closed, and the system's answer isn't in the case record. I can't tell you whether the money has arrived, and I haven't sent a reply to the customer.

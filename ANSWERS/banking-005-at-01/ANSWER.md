@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked the desk to register a request to seek the return of a £286.40 transfer sent to the wrong saved recipient. The desk classified it as a registration request about a transfer and registered it with the payment team; the case closed as requested. The desk refused a query of the payment system for this type of request, so the transfer was not looked up and the recipient and any return of the money are unconfirmed.
+The customer asked the desk to register a request to seek the return of a £286.40 transfer, sent to the wrong saved recipient for a shared pottery-studio bill. The desk classified it as a register request about a transfer and registered it with the payment team, and the case closed in "requested" status. The desk refused a separate ask to the payment system, so the transfer and recipient were not looked up or confirmed, and the request carries only the details the customer gave.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -51,6 +51,8 @@ Facts established:
 - amount: **286.40**
 - request_type: **register**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

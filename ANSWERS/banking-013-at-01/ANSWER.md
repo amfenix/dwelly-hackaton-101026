@@ -4,7 +4,7 @@
 
 ## Summary
 
-The desk treated the message as an instruction about a standing order (the studio-rent payment) and asked the recurring-payments system about it. The records show the instruction is active and the next scheduled run has not started, and no confirmation or outside-portal instruction was found. Nothing was cancelled or changed. The record shows only that the question was sent, and it does not say whether an answer has come back or what happens next.
+The request was an instruction about a standing order, and the desk classified it as such with full confidence. It checked the portal, which showed the studio-rent instruction as active with its next run not yet started, then asked the recurring payments system about the standing order. Nothing has been cancelled or changed so far, and the case closed in the asked state, so the system's answer is still awaited before any further step.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

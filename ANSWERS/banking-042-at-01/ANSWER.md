@@ -4,7 +4,7 @@
 
 ## Summary
 
-The desk treated the message as a question about a batch and routed it to the payment system, then asked that system about the batch. The case closed as asked, and the record shows no answer coming back from the payment system. What is left is that response: the row-level error report, showing what failed validation and which rows are affected, is not in the case.
+The message was a question about a batch. The desk classified it as a question with no request for credentials and no joint-holder change, and sent it on to the payment system, where it asked about the batch. The case closed in the asked state. A later attempt to send a reply was refused because nothing had come back from the payment system yet, so no answer has gone to the requester and the case waits on the payment system's response.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -53,6 +53,8 @@ Facts established:
 - subject: **batch**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 ## Escalated
 
@@ -61,6 +63,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=batch); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

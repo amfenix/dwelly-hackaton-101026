@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mallow Pottery Works wrote asking for the purpose of a transfer made for a kiln repair, and the desk classed it as a question about a transfer. It routed the case to the payment system and queried it about the transfer, but the query returned no information, so the purpose of the transfer is still unknown. No reply has gone to the requester or to Mallow Pottery Works, so someone still needs to find the purpose and answer.
+The message was a follow-up from Mallow Pottery Works asking for the purpose of a transfer for a kiln repair, and the desk classed it as a question about a transfer. It routed the case to the payment system and sent that system a query about the transfer, and the case closed in the asked state. No answer from the payment system is in the record, so what the transfer's purpose was remains unknown and is left for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Fenwick, a viewer on secure chat who is not verified, asked for help seeing which rows of batch HV-042 need attention. The desk checked with the bank, which reported that the batch failed validation. It replied on secure chat saying only that the file did not pass validation, that this does not show a corrected file was received or a payment made, and that no approval or role change was made. The reply did not include the row-level report, and the case is closed with nothing further left for a person in the record.
+Nadia Fenwick, a viewer on the account, asked via secure chat for help seeing which rows of batch HV-042 need attention. The desk checked with the bank's business records, which showed the batch failed validation, and replied to her on secure chat saying so. The reply also said it did not establish that a corrected file was received or that any payment was made, and that no extra approval or role change was made. The case is closed as replied, her identity was not verified, and the reply did not include the row-level detail or the report itself.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -76,6 +76,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

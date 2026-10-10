@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Mercer emailed asking to change the phone number on her profile because she no longer has her old phone, and asked for the approved way to confirm a replacement. She is not verified and her email said it was not authorisation, so the desk changed nothing and sent her a message pointing her to the secure process in her portal, which checks identity there. The case closed as redirected, and two later attempts, one to query the access system and one to resend the redirect, were refused because the case was already closed; nothing is left for a person in the record.
+Elowen Mercer emailed to change the phone number on her profile because she no longer has her old phone, and asked for the approved way to confirm a replacement. The desk made no change, since an email can't change a profile and she was unverified, and it replied telling her to use the secure process in her secure portal, which checks identity there, and that the bank never asks for passwords, PINs or verification codes. The case is closed as redirected; two later attempts by the agent (a further system query and a second redirect) were refused because the case had already closed, and nothing is left for a person in the record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -60,6 +60,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

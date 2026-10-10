@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a question about access, and the desk passed it to the access system by asking it about access. The case closed in the "asked" state, and the access system's answer has not come back into the case. Nothing is confirmed in the record, including the new-device sign-in note for 11 July 2025 at 08:42 UTC, so any follow-up on what the access system returns is left for a person.
+The message was classified as a question about access, with no sign of a credentials request or a joint-holder change. The desk sent a query to the access system and closed the case at that step. The record doesn't show any answer from the access system, so nothing is confirmed about the sign-in notification for a new device on 11 July 2025, and any follow-up on that answer is left to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -49,24 +49,28 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
 47. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
-48. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-49. `request_type`: not known → change (by `triage`).
-50. `subject`: not known → standing_order (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-53. `next_system`: not known → recurring (by `route-recurring`).
-54. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-55. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-56. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-57. Called `send_for_confirmation` (attempt 1, key banking-012-at-01:do-confirm:17).
-58. `send_for_confirmation` found {}.
-59. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-60. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+48. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+49. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+50. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+51. `request_type`: not known → change (by `triage`).
+52. `credentials_requested`: not known → False (by `triage`).
+53. `joint_holder_change`: not known → False (by `triage`).
+54. `subject`: not known → standing_order (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+57. `next_system`: not known → recurring (by `route-recurring`).
+58. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
+59. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
+60. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
+61. Called `send_for_confirmation` (attempt 1, key banking-012-at-01:do-confirm:17).
+62. `send_for_confirmation` found {}.
+63. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
+64. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
 
 ## Model calls
 
-3 calls, 4692 tokens in, 439 out, 3.505 s, cost $0.0098; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5389 tokens in, 578 out, 5.44 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is closed. A confirmation request has gone to Mira to authorise raising the Westmere Garden Cooperative standing order from £42.00 to £68.00 a month. Nothing has changed on the standing order yet. The change only goes ahead once Mira confirms it, so I'm taking no further action.
+> The case is already at its final state. A confirmation request has been sent to Mira, and the outcome is "send_for_confirmation". Her change from £42.00 to £68.00 a month to Westmere Garden Cooperative can't go ahead until she confirms it. I'm taking no further action.

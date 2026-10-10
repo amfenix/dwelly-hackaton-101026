@@ -53,25 +53,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.78 → question.
-53. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → document (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
-58. `next_system`: not known → documents (by `route-documents`).
-59. The agent asked for `ask_system` {"system": "documents"}.
-60. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
-61. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-63. Called `ask_system` (attempt 1, key banking-033-at-01:do-ask:17).
-64. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
-65. `ask_system` found {}.
-66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-67. The case closed in `ASKED`: **ask_system**.
-68. The agent asked for `reply` {}.
-69. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=document); documents-reply: state = TRIAGED is false (state=ASKED); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=documents); tariff_status present is false (tariff_status=not known).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.84 → question.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+55. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → document (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+62. `next_system`: not known → documents (by `route-documents`).
+63. The agent asked for `ask_system` {"system": "documents"}.
+64. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
+65. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+66. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+67. Called `ask_system` (attempt 1, key banking-033-at-01:do-ask:17).
+68. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
+69. `ask_system` found {}.
+70. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+71. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 9579 tokens in, 332 out, 5.255 s, cost $0.0185; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7715 tokens in, 417 out, 4.44 s, cost $0.0152; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I've asked the documents system about your CSV export request, and the case is now with that system. The records I can see don't yet show whether an export for 6–9 May 2025 has been created, so I can't tell you yet whether the file is available.

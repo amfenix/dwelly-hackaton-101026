@@ -58,31 +58,33 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 55. Rule `triage` fired: state = READING → true (state=READING).
 56. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-57. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-58. `request_type`: not known → question (by `triage`).
-59. `subject`: not known → transfer (by `triage`).
-60. State `READING` → `TRIAGED` (by `triage`).
-61. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-62. `next_system`: not known → payment (by `asked-payment`).
-63. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
-64. State `TRIAGED` → `WAITING` (by `payment-waits`).
-65. The case closed in `WAITING`: **wait**.
-66. The agent asked for `ask_system` {"system": "payment"}.
-67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-68. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks whether H&V sent the £420 one-off transfer to Alder & Reed Workshop; the debit is visible. The payment system is flagged as already asked (payment_asked=True), but no transfer status is in the case, and a new payment query was refused because the case is in WAITING. Please check the transfer status and reply. Verify identity before sharing details."}.
-69. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+57. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+58. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+59. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+60. `request_type`: not known → question (by `triage`).
+61. `credentials_requested`: not known → False (by `triage`).
+62. `joint_holder_change`: not known → False (by `triage`).
+63. `subject`: not known → transfer (by `triage`).
+64. State `READING` → `TRIAGED` (by `triage`).
+65. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+66. `next_system`: not known → payment (by `asked-payment`).
+67. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
+68. State `TRIAGED` → `WAITING` (by `payment-waits`).
+69. The case closed in `WAITING`: **wait**.
+70. The agent asked for `ask_system` {"system": "payment"}.
+71. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+72. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks whether the £420 one-off transfer to Alder & Reed Workshop was sent by H&V; she can see the debit. The payment system check was refused because the case is in WAITING state, not TRIAGED, so transfer status could not be read. Please verify the customer and check the transfer status."}.
+73. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12576 tokens in, 859 out, 10.052 s, cost $0.0298; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 13621 tokens in, 825 out, 11.087 s, cost $0.0311; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't move this case forward, so it stays open for a person to pick up.
+> I couldn't check whether the £420 payment to Alder & Reed Workshop was sent, and the case is still open and waiting.
 > 
-> - **Payment check refused:** my request to the payment system was refused because the case is in a WAITING state, not TRIAGED.
-> - **No status in the case:** the facts show the payment system was already asked (`payment_asked=True`), but no transfer status is recorded. I can't say whether H&V sent the £420 to Alder & Reed Workshop.
-> - **Escalation refused:** my escalation was refused for the same reason.
-> - **Unverified customer:** Mara Ellison isn't verified, so identity should be checked before any transfer details are shared with her.
+> - **Payment check:** the payment system refused my request because the case is in the WAITING state. It only accepts the check once the case is TRIAGED.
+> - **Escalation:** I then tried to hand the case to a person, and that was refused for the same reason.
 > 
-> I haven't replied to the customer, and nothing was changed.
+> Mara Ellison is also not yet verified, which may be what is holding the case in WAITING. Someone needs to verify her, and the case then needs to be triaged so the payment status can be read. I haven't told the customer anything about the payment, because no record shows whether it was sent.

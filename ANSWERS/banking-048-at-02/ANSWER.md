@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison of Alder Quay Studio Ltd., writing over secure chat as the business's accountant, asked the desk to check whether an identifiable credit for a buyer's workshop invoice payment had reached the account. The desk classified this as a question about an incoming payment and sent an inquiry to the incoming-payments system, which was accepted, and the case closed at that step. The system's answer is not in the record, so whether the credit has arrived is still unknown, and her identity is marked as not verified, so any reply should keep within that limit.
+Mara Ellison, writing for Alder Quay Studio Ltd. over secure chat, asked the desk to check whether an identifiable credit for a buyer's workshop invoice payment had reached the account. The desk classified it as a question about an incoming payment, noted that her identity was not verified, and sent the query to the incoming payments system, then closed the case as asked. The record shows no result from that query, so the outcome of the check and any reply to her are left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

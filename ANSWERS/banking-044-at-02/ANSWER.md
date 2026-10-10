@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, an unverified viewer writing over secure chat, asked the desk to check whether row SUP-17 in the payout batch, for her studio materials supplier, was actually paid, since the batch only shows as processed. The desk classed it as a read-only question and sent a query to the payment system about SUP-17, which was accepted and returned nothing yet. The case is closed in the asked state, and the row's status has not been given to Leona, because the payment system's answer is not yet in the record.
+Leona Voss, an unverified viewer writing over secure chat, asked the desk to check whether row SUP-17 in a payout batch (for her studio materials supplier) had actually been paid, since the batch only showed "processed". The desk classed it as a question about a batch, routed it to the payment system, and sent a query about SUP-17 there, with no errors. The payment system's reply is still to come, and nothing in the record says what the row's status is or that an answer has gone back to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

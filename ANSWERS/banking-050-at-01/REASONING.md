@@ -47,28 +47,35 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 44. Rule `triage` fired: state = READING → true (state=READING).
 45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-46. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-47. `request_type`: not known → question (by `triage`).
-48. `subject`: not known → transfer (by `triage`).
-49. State `READING` → `TRIAGED` (by `triage`).
-50. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-51. `next_system`: not known → payment (by `route-payment`).
-52. The agent asked for `ask_system` {"system": "payment"}.
-53. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-54. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-56. Called `ask_system` (attempt 1, key banking-050-at-01:do-ask:17).
-57. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
-58. `ask_system` found {}.
-59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-60. The case closed in `ASKED`: **ask_system**.
+46. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+47. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+48. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+49. `request_type`: not known → question (by `triage`).
+50. `credentials_requested`: not known → False (by `triage`).
+51. `joint_holder_change`: not known → False (by `triage`).
+52. `subject`: not known → transfer (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+55. `next_system`: not known → payment (by `route-payment`).
+56. The agent asked for `ask_system` {"system": "payment"}.
+57. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+58. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-050-at-01:do-ask:17).
+61. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
+65. The agent asked for `reply` {}.
+66. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=transfer); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-5 calls, 8637 tokens in, 515 out, 5.315 s, cost $0.0184; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11313 tokens in, 529 out, 6.236 s, cost $0.0235; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the payment system for the Alder Quay Supplies transfer. The case is now closed, but the check didn't return a payment stage. The case record has no details of the payment's progress, so I can't tell you what stage it has reached.
+> The facts show the next system is payment, and its answer isn't in the case yet. I'll ask it.
+> I asked the payment system about this transfer. It hasn't returned an answer yet, so I can't say which stage the payment has reached. The case is still open and marked final, which means it goes to a person to pick up.
 > 
-> The only thing the records show is the authorisation recorded in the business portal. There is no confirmation of the payment beyond that. I haven't sent the customer a reply, because I have no stage to report and don't want to claim more than the records show.
+> Right now the records show only that the payment authorisation was recorded in the business portal for the Alder Quay Supplies materials invoice. I tried to reply to the customer, but the desk refused because no payment status is on the case. I can't tell the customer where the payment is until that status comes back.

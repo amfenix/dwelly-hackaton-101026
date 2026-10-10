@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a customer on secure chat whose identity was not verified, asked the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal. The desk ran the tariff check, which found the fee matches the entry for a foreign-currency cash withdrawal on its processing date. It then replied to her on secure chat saying the fee matches the tariff in force, and that no refund, fee change or account change was made or authorised. The case closed as replied, and the record shows no escalation and nothing left for a person.
+Mara Ellery asked over secure chat why a £3.20 fee appeared against a withdrawal, and asked for the tariff entry that applied to be checked. The desk ran the tariff check, which found that the fee matches the entry in force for that transaction, and replied on secure chat saying so. The reply also said it authorises no refund or account change and that none was made. The record lists nothing left for a person, though the requester was not verified and the request to escalate was not acted on beyond the tariff reply.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -75,6 +75,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **tariff**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
