@@ -124,6 +124,9 @@ A list, one entry per decision point:
   - `system`: a record between the bank's staff and its internal systems — `Channel` is
     `Internal note`, or `From` or `To` names a journal, log, register, team, service or process
     (e.g. `H&V transfer journal`, `Tariff Team`, `Statements service`);
+    also a bank-authored secure/business portal record with an explicit status field, such as
+    a row status or a validation report. These are system results delivered through the portal;
+    ordinary bank replies and customer claims remain conversation events.
   - `conversation`: everything said to or by the customer or a third party (secure portal, secure
     chat, verified call, business portal, external message).
 
