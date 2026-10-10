@@ -1,10 +1,10 @@
 # Case banking-037-at-04: Profile Name Typo
 
-**Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
+**Decision: reply**  (final state `REPLIED`)
 
 ## Summary
 
-Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk found the correction already registered for review by the data team as HV-037, then sent the profile change to her for confirmation in the secure portal. Nothing has been changed yet: the data team has not validated the basis for the correction, and the change awaits her confirmation.
+Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk logged the request with the H&V data team as reference HV-037 and replied to her. The data team has not yet validated the basis for the correction, and the profile name is unchanged. Whatever supporting information the data team needs, and the correction itself, remains for a person to handle.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,7 @@ Case reference: id banking-037-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `send_for_confirmation` (change: profile, to: Elowen Marr), by rule `do-confirm`
+- none
 
 ## Decision and why
 
@@ -50,12 +50,13 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `CONFIRM_PENDING`: rule `change-needs-confirmation` — A change is confirmed by the customer in the secure portal, not in chat or by email.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `registration-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type = change → true (request_type=change)
-  - confirmation = none → true (confirmation=none)
-- `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
-  - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
+  - request_type != other → true (request_type=change)
+  - registration_asked → true (registration_asked=True)
+  - registered present → true (registered=True)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -71,6 +72,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -87,6 +90,11 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `submit_request`: register: request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); register-what-fits-no-type: request_type = other is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change)
+- `ask_system`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change)
+
 ## Final result
 
-send_for_confirmation (CONFIRMATION_SENT)
+reply (REPLIED)

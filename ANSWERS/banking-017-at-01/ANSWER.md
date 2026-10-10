@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a status question about a monthly rent standing order, after a note that this cycle's rent payment wasn't visible. The desk classified it as a standing order status request and asked the recurring payments system about it, and that question has been sent. No answer has come back yet, so whether the payment went out is still unknown. The record shows nothing further for a person to do beyond waiting for that reply.
+The customer asked a question about a standing order, prompted by a message from the landlord (Elm Quay Property Services) saying they couldn't see this cycle's monthly rent payment. The desk classified it as a standing order question and put it to the recurring payments system, which returned nothing, so the case closed at that step with no standing order details on file. Whether the rent payment was sent is still unknown, no change was made to the standing order, and the record names no further step, so any follow-up is for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = recurring → true (next_system=recurring)
   - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -53,8 +53,10 @@ Facts established:
 - subject: **standing_order**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

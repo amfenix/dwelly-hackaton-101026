@@ -39,34 +39,46 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-019-at-04:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-019-at-04:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-019-at-04:read-confirmation:11).
-43. Note from `read-confirmation`: event 4 (H&V service agent): I’ve checked that the next run is not yet being processed and have sent the requested change from 18 September to 22 September 2025 for your secure confirmation. I have not changed the instruction on your behalf. [facts: confirmation='requested']
-44. Note from `read-confirmation`: event 2 (Maeve Ellery): I’m escalating my request to move the next run of my standing order to Willow Yard Studios from 18 September to 22 September 2025. Please check its processing stage and send any eligible change to me for confirmation. [facts: instructed_outside_portal=True]
-45. `check_confirmation` found {"confirmation": "requested", "instructed_outside_portal": true}.
-46. `confirmation`: not known → requested (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → True (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-50. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-51. `request_type`: not known → change (by `triage`).
-52. `subject`: not known → standing_order (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-55. `next_system`: not known → recurring (by `route-recurring`).
-56. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested). The change was sent to the portal; the customer has not confirmed it yet.
-57. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
-58. The case closed in `WAITING`: **wait**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-019-at-04:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-019-at-04:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-019-at-04:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-019-at-04:read-confirmation:13).
+49. Note from `read-confirmation`: event 4 (H&V service agent): I’ve checked that the next run is not yet being processed and have sent the requested change from 18 September to 22 September 2025 for your secure confirmation. I have not changed the instruction on your behalf. [facts: confirmation='requested']
+50. Note from `read-confirmation`: event 2 (Maeve Ellery): I’m escalating my request to move the next run of my standing order to Willow Yard Studios from 18 September to 22 September 2025. Please check its processing stage and send any eligible change to me for confirmation. [facts: instructed_outside_portal=True]
+51. `check_confirmation` found {"confirmation": "requested", "instructed_outside_portal": true}.
+52. `confirmation`: not known → requested (by `read-confirmation`).
+53. `instructed_outside_portal`: not known → True (by `read-confirmation`).
+54. Rule `triage` fired: state = READING → true (state=READING).
+55. Classifier (jev jev-latest) on `request_type`: change, confidence 0.98 → change.
+56. Classifier (jev jev-latest) on `credentials_requested`: 0.04 → False.
+57. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+58. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+59. `request_type`: not known → change (by `triage`).
+60. `credentials_requested`: not known → False (by `triage`).
+61. `joint_holder_change`: not known → False (by `triage`).
+62. `subject`: not known → standing_order (by `triage`).
+63. State `READING` → `TRIAGED` (by `triage`).
+64. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+65. `next_system`: not known → recurring (by `route-recurring`).
+66. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested); registration_asked absent → true (registration_asked=not known). The change was sent to the portal; the customer has not confirmed it yet.
+67. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
+68. The case closed in `WAITING`: **wait**.
 
 ## Model calls
 
-3 calls, 5559 tokens in, 125 out, 4.009 s, cost $0.0097; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5797 tokens in, 629 out, 9.297 s, cost $0.0134; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is in a waiting state. The change has already been sent to the customer's secure portal for confirmation, and nothing more is needed from the bank until she confirms it.
+> This case is waiting for you, Maeve Ellery. The change to your Willow Yard Studios standing order has been sent for your secure confirmation, and nothing more can be done until you confirm it.
 > 
-> I'm taking no further action. The standing order has not been changed on her behalf.
+> The change moves the next run from 18 September 2025 to 22 September 2025. The bank has not changed the instruction on your behalf. Once you confirm it in the secure portal, the change can go ahead.
+> 
+> I took no further action on the case.

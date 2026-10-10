@@ -4,7 +4,7 @@
 
 ## Summary
 
-Someone from Mallow Pottery Works wrote asking to clarify the purpose of a transfer for a kiln repair, and the desk treated this as a request to look up a recorded fact about the transfer. It checked the record, found no confirmation and no sign of instruction outside the portal, and sent a query to the payment system about the transfer. That query is the only action taken: the payment system's answer hasn't come back, so what the purpose text says is still unknown, and nothing is left for a person unless the answer needs handling.
+The message was a follow-up from Mallow Pottery Works asking for the purpose of a transfer for a kiln repair, and the desk classed it as a question about a transfer. It routed the case to the payment system and sent that system a query about the transfer, and the case closed in the asked state. No answer from the payment system is in the record, so what the transfer's purpose was remains unknown and is left for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -53,8 +53,10 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

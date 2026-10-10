@@ -4,9 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether her Direct Debit mandate to Northmere Water Services is currently active, and said she did not want it cancelled. The desk found the mandate record showing Active and replied on secure chat with that status, noting it does not guarantee a future payment will execute and that nothing was changed. One thing to know is that the record shows her as not verified, though the reply went out anyway; nothing else is left open.
-
-One detail: the reply text calls it a "standing-order record" while the case concerns a Direct Debit mandate.
+Mara Ellery asked over secure chat whether her Direct Debit mandate with Northmere Water Services is currently active, without cancelling it. The desk checked the mandate record, which shows it as active, and replied saying so, adding that this doesn't guarantee a future payment will execute and that no change was made. The reply went to a requester the record marks as not verified, and the desk did not check whether sharing the status with an unverified requester is allowed, so that is left for a person. The reply's wording also calls it a "standing-order record" and an "instruction", although the request and the record concern a Direct Debit mandate.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -46,7 +44,7 @@ Case reference: id banking-014-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellery, channel: secure_chat), by rule `do-reply`
 
-  > The standing-order record shows active. This does not guarantee that the future payment will execute. No additional instruction or change was made.
+  > The standing-order record shows the instruction as active. This does not guarantee that the future payment will execute. No additional instruction or change was made.
 
 
 ## Decision and why
@@ -57,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `recurring-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = recurring → true (next_system=recurring)
   - recurring_status present → true (recurring_status=ACTIVE)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -74,8 +73,10 @@ Facts established:
 - recurring_status: **ACTIVE**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

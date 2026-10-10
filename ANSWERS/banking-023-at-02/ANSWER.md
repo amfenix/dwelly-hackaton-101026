@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified on a call, said she doesn't recognise a £38.40 Fern & Finch Books card purchase from 14 July 2025. She asked for it to be raised with the card team and for advice on protecting her card. The desk registered the request with the card team about that card payment and closed the case as submitted. Nothing was blocked or changed on her card, and the card-protection steps she asked for were not given in the record; the decision on the dispute is left to the card team.
+Mara Ellery, verified on a call, said she doesn't recognise a £38.40 Fern & Finch Books card purchase from 14 July 2025. She asked for it to be raised with the card team and for advice on protecting her card. The desk registered a request to the card team about the card payment and closed the case as requested; no change was made to the card itself. The record does not show the card-protection advice being given beyond the agent's draft reply, so any follow-up with her and the card team's investigation are left to people.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -62,6 +62,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

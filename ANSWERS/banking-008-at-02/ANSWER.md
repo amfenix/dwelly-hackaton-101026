@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Marlow asked, in a secure chat, for the purpose text recorded on her payment to Mallow Pottery Works for a kiln repair. The desk classified this as a record lookup about a transfer and sent a question to the payment system, which returned nothing yet. The case closed with that question still open, and the record still shows her as not verified despite her saying she completed the identity checks, so nothing has been shared with her and what happens once the payment system answers is left for a person.
+Elena Marlow asked, in a secure chat, for the desk to look up the purpose text her instruction recorded for a payment to Mallow Pottery Works for a kiln repair. The desk classified it as a question about a transfer and sent a lookup to the payment system, then closed the case in the asked state. The payment system's answer is not in the record, so the purpose text is still unknown, and the record still lists her as not verified even though she said she completed the identity checks.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

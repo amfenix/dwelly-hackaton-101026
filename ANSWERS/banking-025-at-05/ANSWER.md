@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk checked the card authorisation journal, found the matching attempt declined for insufficient available balance, and replied to her on the verified call saying so, with no retry authorised and no card change made. The case is closed with nothing left for a person, though the stored reason text is cut off after "£18.", so the reply relies on the declined status and the insufficient-balance wording.
+Mara Ellison, verified on a call, asked why her £18.40 payment at North Quay Books was declined. The desk checked the card authorisation journal, found the matching attempt declined because her available balance was insufficient, and replied to her on the call saying so, with no card change made and no retry authorised. The recorded reason text is cut off after "£18.", so the reply rests only on what the record shows, and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ Case reference: id banking-025-at-05, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: verified_call), by rule `do-reply`
 
-  > The card journal shows declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made.
+  > The card journal shows the card attempt as declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made.
 
 
 ## Decision and why
@@ -59,6 +59,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = card → true (next_system=card)
   - card_status present → true (card_status=DECLINED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -77,8 +78,10 @@ Facts established:
 - card_reason: **available balance was insufficient to cover the £18.**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -87,6 +90,7 @@ Where they came from:
 - event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: amount='18.40']
 - event 4 (H&V card authorisation journal): I’m searching the journal for Mara Ellison’s North Quay Books authorisation attempt for £18.40, using the merchant and amount she identified. I’ll check the recorded response for that attempt. [facts: card_asked=True]
 - event 5 (H&V card authorisation journal): Matching authorisation found: declined because available balance was insufficient to cover the £18.40 authorisation at the time of the attempt. [facts: card_status='DECLINED', card_reason='available balance was insufficient to cover the £18.']
+- event 2 (H&V agent): the bank already acted: I’ve completed the required identification checks. Please tell me which declined attempt you want me to investigate; I won’t ask you to share any secret codes.
 - event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated

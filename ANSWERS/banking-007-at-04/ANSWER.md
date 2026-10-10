@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, a customer on secure chat whose identity was not verified, asked what stage her transfer had reached and whether the beneficiary had confirmed receiving it. The desk checked the payment record, which shows the transfer as sent, with no confirmation of receipt, and replied saying so, noting that receipt or credit by the recipient bank is not confirmed and that no new transfer was made. The case is closed with that reply, and the record shows nothing left for a person to do.
+Mara Ellwood, a customer on secure chat who had not been verified, asked what stage her transfer had reached and whether the beneficiary had confirmed receipt. The desk replied that the payment record shows the transfer as sent, that this does not confirm receipt or credit by the recipient bank, and that no new transfer was made. A second payment-system check was refused because the status was already in the case, and the case closed as replied, with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=SENT)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -71,8 +72,10 @@ Facts established:
 - payment_status: **SENT**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -88,6 +91,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment)
 
 ## Final result
 

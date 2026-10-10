@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked for the £18.40 Direct Debit to Northmere Water Services to be investigated because they dispute the amount debited. The desk classified it as a request to register a Direct Debit dispute and registered it with the recurring payments team, and the case closed as requested. The record shows no decision on the dispute itself and no refund or change to the payment, so the outcome of the investigation is still open for the team that now holds it.
+The customer asked for the £18.40 Direct Debit to Northmere Water Services to be investigated because they dispute the amount debited. The desk classed it as a request to register, refused the agent's attempt to query the recurring-payments system first, and then registered the dispute with the recurring team. Nothing has been checked against the Direct Debit record, and the investigation itself is left to that team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -54,6 +54,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -67,6 +69,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register)
 
 ## Final result
 

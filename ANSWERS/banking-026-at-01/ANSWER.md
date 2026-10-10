@@ -1,10 +1,10 @@
 # Case banking-026-at-01: A Safe Route to a Forgotten PIN
 
-**Decision: ask_system**  (final state `ASKED`)
+**Decision: redirect_secure**  (final state `REDIRECTED`)
 
 ## Summary
 
-Maren Ellwood, an unverified customer on secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to deal with it, noting she would not send the PIN in chat. The desk classified this as a card access request and asked the card system about it; that question was sent and the case closed in the asked state. The record shows no answer from the card system and no reply to Maren, so a person still needs to pick up the reply to her, and her identity is still unverified.
+Maren Ellwood asked, over secure chat, for the safe way to deal with a forgotten PIN on her debit card. The desk could not verify her identity there, so it did not handle the PIN itself. It sent her a message pointing her to the secure process in her portal, which checks identity, and told her the bank never asks for a password, PIN or verification code. Nothing on her profile was changed, the case is closed as redirected, and the record shows nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -30,7 +30,10 @@ Case reference: id banking-026-at-01, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `ask_system` (system: card, about: card), by rule `do-ask`
+- `redirect_secure` (to: Maren Ellwood, channel: secure_chat), by rule `do-redirect`
+
+  > Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.
+
 
 ## Decision and why
 
@@ -38,15 +41,13 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `card-ask` accepted it.
+- `TRIAGED` → `REDIRECT_PENDING`: the agent asked for `redirect_secure`, rule `redirect-to-the-secure-process` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - args.system = card → true (args.system=card)
-  - next_system = card → true (next_system=card)
-  - next_system absent → false (next_system=card)
-  - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=access)
-- `ASK_PENDING` → `ASKED`: rule `do-ask`.
-  - state = ASK_PENDING → true (state=ASK_PENDING)
+  - request_type = access → true (request_type=access)
+  - request_type = instruction → false (request_type=access)
+  - not verified → true (verified=False)
+- `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
+  - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
 
 Facts established:
 
@@ -59,6 +60,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **access**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -75,4 +78,4 @@ No.
 
 ## Final result
 
-ask_system (ASKED)
+redirect_secure (REDIRECTED)

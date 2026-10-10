@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, verified on a call, asked about a transfer where she remembered the draft as £684.20 but the final line shows £648.20. The desk asked the payment system to confirm the amount actually sent and put the case in a waiting state, since that answer hasn't come in. No reply has gone to her yet, and what is left is to give her the amount from the payment record once it arrives.
+Verified customer Mara Ellwood asked the desk to confirm the amount actually sent on a transfer to her property manager. She remembers the draft as £684.20, but the final line shows £648.20. The desk put the case in a waiting state because the payment system had been asked and its answer was not yet in. The agent's later attempts to query payment again, send a reply and escalate were all refused because the case was no longer in the triaged state, so no reply went out and nothing was escalated. What is left is the payment system's answer, and a person confirming the sent amount to the customer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,8 +63,10 @@ Facts established:
 - payment_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -80,6 +82,12 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment)
+- `reply`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=transfer); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

@@ -30,44 +30,47 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 26. Rule `read-documents` fired: state = READING → true (state=READING).
 27. Called `check_documents` (attempt 1, key banking-006-at-01:read-documents:9).
 28. `check_documents` found {}.
-29. Rule `read-registration` fired: state = READING → true (state=READING).
-30. Called `check_registration` (attempt 1, key banking-006-at-01:read-registration:10).
-31. `check_registration` found {}.
-32. Rule `read-confirmation` fired: state = READING → true (state=READING).
-33. Called `check_confirmation` (attempt 1, key banking-006-at-01:read-confirmation:11).
-34. Note from `read-confirmation`: event 1 (H&V): Your payment activity shows two similar outgoing transfer entries to North Quay Utilities for £84.20. One is marked Completed and the other Pending. [facts: confirmation='none', instructed_outside_portal=False]
-35. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-36. `confirmation`: not known → none (by `read-confirmation`).
-37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-40. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-41. `request_type`: not known → register (by `triage`).
-42. `subject`: not known → transfer (by `triage`).
-43. State `READING` → `TRIAGED` (by `triage`).
-44. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-45. `next_system`: not known → payment (by `route-payment`).
-46. The agent asked for `ask_system` {"system": "payment"}.
-47. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register).
-48. The agent asked for `submit_request` {}.
-49. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-50. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-51. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-52. Called `register_request` (attempt 1, key banking-006-at-01:do-request:15).
-53. Action in the world: `register_request` {"team": "payment", "about": "transfer"}.
-54. `register_request` found {}.
-55. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-56. The case closed in `REQUESTED`: **submit_request**.
+29. Rule `read-tariff` fired: state = READING → true (state=READING).
+30. Called `check_tariff` (attempt 1, key banking-006-at-01:read-tariff:10).
+31. `check_tariff` found {}.
+32. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+33. Called `check_bank_actions` (attempt 1, key banking-006-at-01:read-bank-actions:11).
+34. `check_bank_actions` found {}.
+35. Rule `read-registration` fired: state = READING → true (state=READING).
+36. Called `check_registration` (attempt 1, key banking-006-at-01:read-registration:12).
+37. `check_registration` found {}.
+38. Rule `read-confirmation` fired: state = READING → true (state=READING).
+39. Called `check_confirmation` (attempt 1, key banking-006-at-01:read-confirmation:13).
+40. Note from `read-confirmation`: event 1 (H&V): Your payment activity shows two similar outgoing transfer entries to North Quay Utilities for £84.20. One is marked Completed and the other Pending. [facts: confirmation='none', instructed_outside_portal=False]
+41. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+42. `confirmation`: not known → none (by `read-confirmation`).
+43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+44. Rule `triage` fired: state = READING → true (state=READING).
+45. Classifier (jev jev-latest) on `request_type`: question, confidence 0.71 → question.
+46. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+47. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+48. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+49. `request_type`: not known → question (by `triage`).
+50. `credentials_requested`: not known → False (by `triage`).
+51. `joint_holder_change`: not known → False (by `triage`).
+52. `subject`: not known → transfer (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+55. `next_system`: not known → payment (by `route-payment`).
+56. The agent asked for `ask_system` {"system": "payment"}.
+57. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+58. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-006-at-01:do-ask:17).
+61. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 10420 tokens in, 480 out, 7.238 s, cost $0.0219; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5207 tokens in, 413 out, 4.225 s, cost $0.0101; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The payment system holds the answer, and it isn't in the case yet, so I'll ask it.
-> I passed Mira's request to the team that handles payment reviews. It asked them to work out whether the two North Quay Utilities entries for £84.20 are one instruction shown twice or two separate instructions. It also asked whether the second one can be stopped or returned.
-> 
-> I first tried to ask the payment system directly, but the desk refused. The request is a review, so it has to go to the review team. That means I haven't checked the payment records myself. I can't yet say whether the entries are a duplicate, and nothing has been stopped or returned.
-> 
-> The review team will decide what happens next.
+> I've asked the payment system to check whether the two £84.20 entries to North Quay Utilities are one instruction or two. Its answer will also show whether the Pending one can still be stopped or returned. I'm not changing anything until that comes back.

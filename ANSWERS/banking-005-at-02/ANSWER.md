@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Mercer, a verified customer calling in, asked the desk to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient for a pottery-studio bill. The desk registered that request with the payment team and the case closed as requested. This only logs the request: nothing has been recovered, and the record doesn't say whether the money will come back or what the payment team will do next.
+Leona Mercer, verified on a call, asked the desk to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient. The desk registered that request with the payment team and closed the case as requested. Its attempt to ask the payment system first was refused, so the transfer was not looked up in the payment records before the request went in, and the record does not say whether the money will be returned.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -61,6 +61,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -75,6 +77,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register)
 
 ## Final result
 

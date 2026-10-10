@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing through secure chat without being verified, asked the desk to check when her active monthly household contribution standing order is next due. The desk classed this as a request for a record fact and put the question to the recurring payments system. That system had returned nothing when the case closed, so the due date is still unknown and nobody has told her yet. The record does not say who will pass the answer on once it arrives.
+Mara Ellison, writing over secure chat without being verified, asked the desk to check when her monthly household contribution standing order is next due. The desk classed it as a question about a standing order and sent a query to the recurring payments system about it, and the case closed in the asked state. The record shows no answer back yet, so the date still has to be passed on to her once the recurring system replies.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = recurring → true (next_system=recurring)
   - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **standing_order**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

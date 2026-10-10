@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified authorised file uploader on the business portal, asked the desk to confirm whether her batch file (reference HV-041, with the first line at £420.00) had been received. The desk classed it as a status request and asked the payment system about that batch, and the case closed in the asked state. The record holds no answer yet on whether the file was received, so that is still outstanding, and no payment was authorised or approved.
+Mara Ellison, a verified authorised file uploader on the business portal, asked the desk to confirm whether her payroll file batch-041.csv (reference HV-041) had been received. The desk classed it as a question about a batch and put a query to the payment system giving the reference and the £420.00 amount; that query returned nothing, and the case closed at that step. The desk has not confirmed receipt, so Mara has no answer yet and the record shows no further step.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -59,8 +59,10 @@ Facts established:
 - reference: **HV-041**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing as company signatory over secure chat, asked the desk to check what stage a payment to Alder Quay Supplies had reached, since the supplier says it has not received the funds. The desk classified this as a status request about a transfer and sent a query to the payment system, which returned nothing yet. No reply has gone to Mara, her identity is still marked as unverified, and the case is waiting on the payment system's answer.
+Mara Ellison, writing over secure chat as the company signatory, asked the desk to check what stage a transfer to Alder Quay Supplies had reached, since the supplier says it hasn't received the funds. The desk classed this as a question about a transfer and sent a query to the payment system, then closed the case. The payment system's answer is not in the record, so she has not been told the payment's stage, and her identity is still unverified, which a person would need to settle before anything is shared with her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

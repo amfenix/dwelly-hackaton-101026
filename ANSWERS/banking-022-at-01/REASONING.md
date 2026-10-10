@@ -37,37 +37,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-022-at-01:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-022-at-01:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-022-at-01:read-confirmation:11).
-41. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]
-42. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-43. `confirmation`: not known → none (by `read-confirmation`).
-44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-47. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
-48. `request_type`: not known → instruction (by `triage`).
-49. `subject`: not known → card (by `triage`).
-50. State `READING` → `TRIAGED` (by `triage`).
-51. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-52. `next_system`: not known → card (by `route-card`).
-53. The agent asked for `submit_request` {}.
-54. Rule `card-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked absent → true (card_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction); request_type = change → false (request_type=instruction); confirmation = given → false (confirmation=none).
-55. State `TRIAGED` → `REQUEST_PENDING` (by `card-instruction`).
-56. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-57. Called `register_request` (attempt 1, key banking-022-at-01:do-request:15).
-58. Action in the world: `register_request` {"team": "card", "about": "card"}.
-59. `register_request` found {}.
-60. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-61. The case closed in `REQUESTED`: **submit_request**.
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-022-at-01:read-tariff:10).
+38. `check_tariff` found {}.
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-022-at-01:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-022-at-01:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-022-at-01:read-confirmation:13).
+47. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+55. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+56. `request_type`: not known → instruction (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → card (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+62. `next_system`: not known → card (by `route-card`).
+63. The agent asked for `submit_request` {}.
+64. Rule `card-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked absent → true (card_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
+65. State `TRIAGED` → `REQUEST_PENDING` (by `card-instruction`).
+66. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+67. Called `register_request` (attempt 1, key banking-022-at-01:do-request:17).
+68. Action in the world: `register_request` {"team": "card", "about": "card"}.
+69. `register_request` found {}.
+70. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+71. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 5182 tokens in, 175 out, 3.786 s, cost $0.0095; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5537 tokens in, 728 out, 6.24 s, cost $0.0140; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed your request to block the missing debit card to the team that handles card blocks. The bank records and forwards this instruction. It doesn't carry out the block itself, and I haven't yet seen confirmation that the card is blocked.
+> I've submitted the request to block Mara Ellison's missing debit card. The desk accepted it, and the case is now in the REQUESTED state. The block itself has not been confirmed yet.
+> 
+> The call was verified and the instruction was clear, so I sent it straight to the card system. I didn't look up which card it is first. The case doesn't say whether she holds more than one debit card, so the card system will need to apply the block to the right one.

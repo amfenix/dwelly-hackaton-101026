@@ -37,39 +37,51 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-005-at-02:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-005-at-02:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-005-at-02:read-confirmation:11).
-41. Note from `read-confirmation`: event 2 (Leona Mercer): I selected the wrong saved recipient for my pottery-studio bill transfer. My identity checks are complete, and I want H&V to register a request to seek the money's return. [facts: confirmation='none', instructed_outside_portal=False]
-42. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-43. `confirmation`: not known → none (by `read-confirmation`).
-44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-47. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-48. `request_type`: not known → register (by `triage`).
-49. `subject`: not known → transfer (by `triage`).
-50. State `READING` → `TRIAGED` (by `triage`).
-51. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-52. `next_system`: not known → payment (by `route-payment`).
-53. The agent asked for `submit_request` {}.
-54. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-55. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-56. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-57. Called `register_request` (attempt 1, key banking-005-at-02:do-request:15).
-58. Action in the world: `register_request` {"team": "payment", "about": "transfer"}.
-59. `register_request` found {}.
-60. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-61. The case closed in `REQUESTED`: **submit_request**.
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-005-at-02:read-tariff:10).
+38. `check_tariff` found {}.
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-005-at-02:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-005-at-02:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-005-at-02:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Leona Mercer): I selected the wrong saved recipient for my pottery-studio bill transfer. My identity checks are complete, and I want H&V to register a request to seek the money's return. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+55. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+56. `request_type`: not known → register (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → transfer (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+62. `next_system`: not known → payment (by `route-payment`).
+63. The agent asked for `ask_system` {"system": "payment"}.
+64. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register).
+65. The agent asked for `submit_request` {}.
+66. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+67. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+68. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+69. Called `register_request` (attempt 1, key banking-005-at-02:do-request:17).
+70. Action in the world: `register_request` {"team": "payment", "about": "transfer"}.
+71. `register_request` found {}.
+72. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+73. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 7663 tokens in, 369 out, 6.753 s, cost $0.0164; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8844 tokens in, 568 out, 6.724 s, cost $0.0189; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed Leona Mercer's request to the team that handles returns, and the system accepted it. She is verified, and she asked us to seek the return of the £286.40 transfer she sent to the wrong saved recipient.
+> I've registered the request to seek the return of the £286.40 transfer, which you sent to the wrong saved recipient. It has gone to the team that handles returns. Your identity was already verified on the call. I did not look up the transfer in the payment records first. The records check was refused, and the request was accepted without it.
 > 
-> This only registers the request. I didn't check the payment record first. Nothing has been recovered, and the bank hasn't said whether the money will come back. The returns team will review the case from here.
+> I can't confirm yet whether the money will come back. Recovery depends on the recipient's bank and on the recipient.

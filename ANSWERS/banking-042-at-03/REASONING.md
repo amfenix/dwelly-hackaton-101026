@@ -39,33 +39,51 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-042-at-03:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-042-at-03:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-042-at-03:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Nadia Fenwick): I uploaded batch HV-042 for Fenwick Workshop, but I can’t see which rows need attention. I’m authorised to view the report; please help me access it. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-49. Classifier (claude claude-haiku-5-5) on `subject`: batch → batch.
-50. `request_type`: not known → document (by `triage`).
-51. `subject`: not known → batch (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
-54. `next_system`: not known → business (by `asked-business`).
-55. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
-56. State `TRIAGED` → `WAITING` (by `business-waits`).
-57. The case closed in `WAITING`: **wait**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-042-at-03:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-042-at-03:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-042-at-03:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-042-at-03:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Nadia Fenwick): I uploaded batch HV-042 for Fenwick Workshop, but I can’t see which rows need attention. I’m authorised to view the report; please help me access it. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+57. Classifier (jev jev-latest) on `subject`: batch, confidence 0.96 → batch.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → batch (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
+64. `next_system`: not known → business (by `asked-business`).
+65. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
+66. State `TRIAGED` → `WAITING` (by `business-waits`).
+67. The case closed in `WAITING`: **wait**.
+68. The agent asked for `ask_system` {"system": "business"}.
+69. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
+70. The agent asked for `escalate` {"note": "Nadia Fenwick (role: viewer, not verified, secure chat) asks for the row-level validation error report for batch HV-042 (Fenwick Workshop). The business system was already queried, but the case holds no answer on report access or permissions. Further business asks are refused because the case is in WAITING. Please verify the requester and confirm whether a viewer may see the report, then provide it or the permitted route."}.
+71. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-3 calls, 5301 tokens in, 170 out, 4.393 s, cost $0.0097; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 12154 tokens in, 1041 out, 10.684 s, cost $0.0303; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've already asked the business system about batch HV-042. The case is waiting on its answer, so I'm taking no further step now.
+> I haven't been able to move this case forward, and it is still waiting.
 > 
-> The facts also show that Nadia Fenwick is not verified and has a viewer role. Once the business system answers, we can see what the record says about her access to the row-level error report.
+> - **Business system:** It was already queried for this case, but the case holds no answer about the HV-042 error report or whether a viewer may see it. A second request was refused because the case is in WAITING.
+> - **Escalation:** I tried to hand the case to a person with the details, but that was also refused for the same reason.
+> - **Requester:** Nadia Fenwick is a viewer on the account and has not been verified. So I haven't shared or described any report content.
+> 
+> The case stays open for a person to pick up. It needs two things: verification of Nadia, and confirmation of whether a viewer may see the row-level report for batch HV-042.

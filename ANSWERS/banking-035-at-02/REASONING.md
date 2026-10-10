@@ -38,39 +38,53 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-documents` fired: state = READING → true (state=READING).
 35. Called `check_documents` (attempt 1, key banking-035-at-02:read-documents:9).
 36. `check_documents` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-035-at-02:read-registration:10).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-035-at-02:read-confirmation:11).
-42. Note from `read-confirmation`: event 2 (Mara Ellison): After completing H&V’s identification checks, I asked you to review the £4.50 paper statement fee dated 18 June 2025. I had chosen electronic statements, so I dispute how the tariff was applied. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-48. Classifier (claude claude-haiku-5-5) on `subject`: fee → fee.
-49. `request_type`: not known → register (by `triage`).
-50. `subject`: not known → fee (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=fee).
-53. `next_system`: not known → documents (by `route-documents`).
-54. The agent asked for `submit_request` {}.
-55. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-56. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-57. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-58. Called `register_request` (attempt 1, key banking-035-at-02:do-request:15).
-59. Action in the world: `register_request` {"team": "documents", "about": "fee"}.
-60. `register_request` found {}.
-61. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-62. The case closed in `REQUESTED`: **submit_request**.
+37. Rule `read-tariff` fired: state = READING → true (state=READING).
+38. Called `check_tariff` (attempt 1, key banking-035-at-02:read-tariff:10).
+39. `check_tariff` found {}.
+40. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+41. Called `check_bank_actions` (attempt 1, key banking-035-at-02:read-bank-actions:11).
+42. `check_bank_actions` found {}.
+43. Rule `read-registration` fired: state = READING → true (state=READING).
+44. Called `check_registration` (attempt 1, key banking-035-at-02:read-registration:12).
+45. `check_registration` found {}.
+46. Rule `read-confirmation` fired: state = READING → true (state=READING).
+47. Called `check_confirmation` (attempt 1, key banking-035-at-02:read-confirmation:13).
+48. Note from `read-confirmation`: event 2 (Mara Ellison): After completing H&V’s identification checks, I asked you to review the £4.50 paper statement fee dated 18 June 2025. I had chosen electronic statements, so I dispute how the tariff was applied. [facts: confirmation='none', instructed_outside_portal=False]
+49. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+50. `confirmation`: not known → none (by `read-confirmation`).
+51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+52. Rule `triage` fired: state = READING → true (state=READING).
+53. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+54. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+55. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+56. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
+57. `request_type`: not known → register (by `triage`).
+58. `credentials_requested`: not known → False (by `triage`).
+59. `joint_holder_change`: not known → False (by `triage`).
+60. `subject`: not known → fee (by `triage`).
+61. State `READING` → `TRIAGED` (by `triage`).
+62. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
+63. `next_system`: not known → tariff (by `route-tariff`).
+64. The agent asked for `ask_system` {"system": "tariff"}.
+65. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=tariff); next_system = payment is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=tariff); next_system = incoming is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=tariff); next_system = recurring is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=tariff); next_system = card is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=tariff); next_system = access is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=tariff); next_system = business is false (next_system=tariff); next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=tariff); next_system = documents is false (next_system=tariff); next_system absent is false (next_system=tariff); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: next_system absent is false (next_system=tariff); request_type not in [register, change, authority] is false (request_type=register).
+66. The agent asked for `submit_request` {}.
+67. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+68. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+69. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+70. Called `register_request` (attempt 1, key banking-035-at-02:do-request:17).
+71. Action in the world: `register_request` {"team": "tariff", "about": "fee"}.
+72. `register_request` found {}.
+73. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+74. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 8061 tokens in, 388 out, 5.936 s, cost $0.0174; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 9317 tokens in, 656 out, 6.357 s, cost $0.0207; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed Mara's request to the team that handles fee reviews. It asks them to check whether the £4.50 paper statement fee dated 18 June 2025 was correctly applied, given that she says she had chosen electronic statements. She was verified on the call, and the request was accepted.
+> I've passed Mara's dispute of the £4.50 paper statement fee dated 18 June 2025 to the team that handles fee reviews. The request was accepted and the case is now marked as requested.
 > 
-> I haven't checked the fee against her statement settings, and nothing has been decided about refunding or changing the fee. The review team will make that decision.
+> I first tried to look up the fee in the tariff system, but the desk refused that. The request is a dispute to register, not a question to answer, so it went straight to the review team.
+> 
+> Nothing is confirmed about the fee yet. Whether it was applied correctly, and whether it will be changed, is for the review to decide.

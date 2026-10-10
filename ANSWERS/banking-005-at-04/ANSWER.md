@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Mercer, on a verified call, asked H&V to register a request to seek the return of a £286.40 transfer she had sent to the wrong saved recipient. The desk found the request was already registered under reference HV-005, so it did not submit it again and sent her a reply saying so. The reply does not promise the money will come back, since registration does not confirm that, and nothing further is left for a person in the record.
+Leona Mercer, a verified caller, said she sent a £286.40 pottery-studio bill transfer to the wrong saved recipient and asked H&V to register a request to seek its return. The desk found the payment team had already registered the return request under reference HV-005, so it refused the further ask to the payment system and the extra submission as unnecessary, then replied to her and closed the case. Registration does not confirm the money will be returned, and the record lists nothing further left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -52,7 +52,8 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `registration-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type = register → true (request_type=register)
+  - request_type != other → true (request_type=register)
+  - registration_asked → true (registration_asked=True)
   - registered present → true (registered=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
@@ -72,6 +73,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -88,6 +91,11 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register)
+- `submit_request`: register: registration_asked absent is false (registration_asked=True); register-what-fits-no-type: request_type = other is false (request_type=register); registration_asked absent is false (registration_asked=True); payment-instruction: request_type = instruction is false (request_type=register); incoming-instruction: next_system = incoming is false (next_system=payment); request_type = instruction is false (request_type=register); recurring-instruction: next_system = recurring is false (next_system=payment); request_type = instruction is false (request_type=register); card-instruction: next_system = card is false (next_system=payment); request_type = instruction is false (request_type=register); access-instruction: next_system = access is false (next_system=payment); request_type = instruction is false (request_type=register); business-instruction: next_system = business is false (next_system=payment); request_type = instruction is false (request_type=register); documents-instruction: next_system = documents is false (next_system=payment); request_type = instruction is false (request_type=register)
 
 ## Final result
 

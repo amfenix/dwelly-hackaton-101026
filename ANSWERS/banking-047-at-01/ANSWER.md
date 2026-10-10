@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder, a verified customer using the business portal, asked for the current outgoing-payment limit on her company profile before arranging a planned supplier payout she has not yet submitted. The desk classified this as a record-fact request and asked the business system about the limit; that request has been sent and the case closed in the asked state. The record shows no answer yet, so the limit has not been given to her, and the payout was not touched.
+Maeve Calder, a verified customer using the business portal, asked what the current outgoing-payment limit is for her company profile before she arranges a planned supplier payout. The desk classified this as a question about limits and sent an ask to the business system about the limit; the ask went through but returned no information, so no limit figure is in the record. Nothing else was submitted or changed, and she still has no figure for the limit, so someone will need to get it to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = business → true (next_system=business)
   - next_system absent → false (next_system=business)
   - business_asked absent → true (business_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -57,8 +57,10 @@ Facts established:
 - subject: **limit**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

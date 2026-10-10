@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, a verified customer on the secure portal, said she saved a transfer instruction for an invoice but had not seen confirmation that it was sent. The desk classified this as a status request about a transfer and asked the payment system about it. That query is the only action taken and the case closed there with no answer recorded, so what the payment system says about the transfer is still outstanding.
+Elise Rowan, a verified customer writing through the secure portal, said she saved a transfer instruction for an invoice and had not seen a confirmation that it was sent. The desk classified this as a question about a transfer and put a query to the payment system about it, and the case closed in that asked state. The record contains no answer from the payment system, so whether the transfer was submitted or what stage it is at is still unknown, and nothing else was sent or changed.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -57,8 +57,10 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

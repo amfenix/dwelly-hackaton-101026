@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a status question about a transfer, specifically the Alder Quay Supplies materials payment. The desk's checks of the requester, payment and other records found nothing, so it routed the case to the payment system and sent that system a query about the transfer. The case is closed as asked, with no answer yet, and the payment system's reply will come back to the case later; nothing else is recorded as needed from a person.
+The request was a question about a transfer, and the desk decided to ask the payment system about it. That query was sent, but no answer has come back, so no payment status is on the case. The desk refused the agent's attempt to reply to the customer for that reason. The only thing on record is that a payment authorisation was logged in the business portal for the Alder Quay Supplies materials invoice. The case closed in the asked state, and a person has to pick it up and tell the customer where the payment stands once the status is known.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -53,8 +53,10 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -67,6 +69,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=transfer); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

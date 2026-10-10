@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira Ellery, a customer who had not been verified, asked over secure chat to raise her standing order from £42.00 to £68.00 a month. The desk sent the change to the portal for her confirmation and put the case into a waiting state without changing the standing order, which still stands at £42.00. What is left is for Mira to confirm the change herself in the portal, since a chat instruction is not enough.
+Mira Ellery asked to raise her standing order from £42.00 to £68.00 a month. The desk sent the change to her in the portal for confirmation, left the standing order as it was, and closed the case as waiting because she hasn't confirmed yet. Nothing is left for a person to do beyond that; the change can move on to the recurring system only once she confirms it herself in her portal session.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -54,6 +54,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = requested → true (confirmation=requested)
+  - registration_asked absent → true (registration_asked=not known)
 
 Facts established:
 
@@ -67,6 +68,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

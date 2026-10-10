@@ -32,37 +32,50 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 28. Rule `read-documents` fired: state = READING → true (state=READING).
 29. Called `check_documents` (attempt 1, key banking-014-at-01:read-documents:9).
 30. `check_documents` found {}.
-31. Rule `read-registration` fired: state = READING → true (state=READING).
-32. Called `check_registration` (attempt 1, key banking-014-at-01:read-registration:10).
-33. `check_registration` found {}.
-34. Rule `read-confirmation` fired: state = READING → true (state=READING).
-35. Called `check_confirmation` (attempt 1, key banking-014-at-01:read-confirmation:11).
-36. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Your statement for the period ending 31 March 2025 shows a Direct Debit collection to Northmere Water Services. This is a historic statement entry. [facts: confirmation='none', instructed_outside_portal=False]
-37. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-38. `confirmation`: not known → none (by `read-confirmation`).
-39. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-40. Rule `triage` fired: state = READING → true (state=READING).
-41. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-42. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
-43. `request_type`: not known → record_fact (by `triage`).
-44. `subject`: not known → direct_debit (by `triage`).
-45. State `READING` → `TRIAGED` (by `triage`).
-46. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
-47. `next_system`: not known → recurring (by `route-recurring`).
-48. The agent asked for `ask_system` {"system": "recurring"}.
-49. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
-50. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-51. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-52. Called `ask_system` (attempt 1, key banking-014-at-01:do-ask:15).
-53. Action in the world: `ask_system` {"system": "recurring", "about": "direct_debit"}.
-54. `ask_system` found {}.
-55. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-56. The case closed in `ASKED`: **ask_system**.
+31. Rule `read-tariff` fired: state = READING → true (state=READING).
+32. Called `check_tariff` (attempt 1, key banking-014-at-01:read-tariff:10).
+33. `check_tariff` found {}.
+34. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+35. Called `check_bank_actions` (attempt 1, key banking-014-at-01:read-bank-actions:11).
+36. `check_bank_actions` found {}.
+37. Rule `read-registration` fired: state = READING → true (state=READING).
+38. Called `check_registration` (attempt 1, key banking-014-at-01:read-registration:12).
+39. `check_registration` found {}.
+40. Rule `read-confirmation` fired: state = READING → true (state=READING).
+41. Called `check_confirmation` (attempt 1, key banking-014-at-01:read-confirmation:13).
+42. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Your statement for the period ending 31 March 2025 shows a Direct Debit collection to Northmere Water Services. This is a historic statement entry. [facts: confirmation='none', instructed_outside_portal=False]
+43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+44. `confirmation`: not known → none (by `read-confirmation`).
+45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+46. Rule `triage` fired: state = READING → true (state=READING).
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+48. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+49. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+50. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+51. `request_type`: not known → question (by `triage`).
+52. `credentials_requested`: not known → False (by `triage`).
+53. `joint_holder_change`: not known → False (by `triage`).
+54. `subject`: not known → direct_debit (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+57. `next_system`: not known → recurring (by `route-recurring`).
+58. The agent asked for `ask_system` {"system": "recurring"}.
+59. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+60. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+62. Called `ask_system` (attempt 1, key banking-014-at-01:do-ask:17).
+63. Action in the world: `ask_system` {"system": "recurring", "about": "direct_debit"}.
+64. `ask_system` found {}.
+65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+66. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 5171 tokens in, 151 out, 3.658 s, cost $0.0091; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7608 tokens in, 494 out, 5.039 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system whether the Direct Debit mandate to Northmere Water Services is currently active. The answer isn't in yet. I haven't cancelled or changed anything, and I haven't looked at what you owe.
+> The answer is in the recurring system, which holds Direct Debit mandates, so I'll ask it.
+> I asked the recurring system, which holds Direct Debit mandates, whether the Northmere Water Services mandate is active. The desk accepted the request and closed the case at that step. No answer on the mandate's status has come back yet, so I can't tell you whether it is active.
+> 
+> The only record in the case is the March statement entry, which shows a past collection and says nothing about the mandate's current state. I haven't cancelled anything or looked at what you owe.

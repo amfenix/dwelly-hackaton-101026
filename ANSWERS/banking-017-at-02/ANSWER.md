@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a customer on secure chat whose identity was not verified, asked the desk to check whether her rent standing order was executed by H&V and what status the bank has recorded. The desk classified this as a status request about a standing order and sent a query to the recurring payments system. That system had returned nothing when the case closed, so the answer to her question is still outstanding and no one has yet told her whether the order ran.
+Mara Ellery, writing over secure chat, asked the desk to check her rent standing-order run and say whether H&V executed it and what status the bank recorded. The desk classified this as a question about a standing order and sent an inquiry to the recurring payments system, then closed the case at that step. The system's reply isn't in the record, so whether the order ran and its status are still unanswered, and Mara's identity is also still unverified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = recurring → true (next_system=recurring)
   - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **standing_order**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

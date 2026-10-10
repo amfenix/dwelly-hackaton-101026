@@ -33,40 +33,50 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 29. Rule `read-documents` fired: state = READING → true (state=READING).
 30. Called `check_documents` (attempt 1, key banking-018-at-01:read-documents:9).
 31. `check_documents` found {}.
-32. Rule `read-registration` fired: state = READING → true (state=READING).
-33. Called `check_registration` (attempt 1, key banking-018-at-01:read-registration:10).
-34. `check_registration` found {}.
-35. Rule `read-confirmation` fired: state = READING → true (state=READING).
-36. Called `check_confirmation` (attempt 1, key banking-018-at-01:read-confirmation:11).
-37. Note from `read-confirmation`: event 1 (H&V secure portal): Two future payment lines of £34.80 to Northmere Heating are shown. Their relationship has not been established. [facts: confirmation='none', instructed_outside_portal=False]
-38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-39. `confirmation`: not known → none (by `read-confirmation`).
-40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-43. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-44. `request_type`: not known → instruction (by `triage`).
-45. `subject`: not known → standing_order (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-48. `next_system`: not known → recurring (by `route-recurring`).
-49. The agent asked for `ask_system` {"system": "recurring"}.
-50. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction).
-51. The agent asked for `escalate` {"note": "The customer sees two future payments of £34.80 to Northmere Heating. They want them checked for duplicates and the duplicate removed. The portal does not show how the two lines relate. They may be two standing orders, or one standing order plus a one-off payment. The desk could not query the recurring system for this case, because the ask was refused while the case is typed as an instruction. No confirmation from the customer is recorded, and nothing was instructed outside the portal. Nothing has been cancelled or changed. A person needs to check the recurring records to see whether the two lines are duplicates. If they are, the person should get the customer's confirmation of which line to cancel before cancelling it."}.
-52. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
-53. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
-54. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
-55. The case closed in `ESCALATED`: **escalate**.
+32. Rule `read-tariff` fired: state = READING → true (state=READING).
+33. Called `check_tariff` (attempt 1, key banking-018-at-01:read-tariff:10).
+34. `check_tariff` found {}.
+35. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+36. Called `check_bank_actions` (attempt 1, key banking-018-at-01:read-bank-actions:11).
+37. `check_bank_actions` found {}.
+38. Rule `read-registration` fired: state = READING → true (state=READING).
+39. Called `check_registration` (attempt 1, key banking-018-at-01:read-registration:12).
+40. `check_registration` found {}.
+41. Rule `read-confirmation` fired: state = READING → true (state=READING).
+42. Called `check_confirmation` (attempt 1, key banking-018-at-01:read-confirmation:13).
+43. Note from `read-confirmation`: event 1 (H&V secure portal): Two future payment lines of £34.80 to Northmere Heating are shown. Their relationship has not been established. [facts: confirmation='none', instructed_outside_portal=False]
+44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+45. `confirmation`: not known → none (by `read-confirmation`).
+46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+47. Rule `triage` fired: state = READING → true (state=READING).
+48. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.91 → instruction.
+49. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+50. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
+52. `request_type`: not known → instruction (by `triage`).
+53. `credentials_requested`: not known → False (by `triage`).
+54. `joint_holder_change`: not known → False (by `triage`).
+55. `subject`: not known → standing_order (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+58. `next_system`: not known → recurring (by `route-recurring`).
+59. The agent asked for `ask_system` {"system": "recurring"}.
+60. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+61. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+63. Called `ask_system` (attempt 1, key banking-018-at-01:do-ask:17).
+64. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order", "amount": "34.80"}.
+65. `ask_system` found {}.
+66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+67. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 10967 tokens in, 814 out, 8.922 s, cost $0.0274; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7523 tokens in, 458 out, 5.021 s, cost $0.0152; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The answer on whether they are duplicates sits in the recurring system.
-> I've handed this case to a person. Nothing has been cancelled or changed, and we don't yet know whether the two £34.80 payments to Northmere Heating are duplicates.
+> The case doesn't yet show whether the two payments are duplicates. The facts point to the recurring system as the next place to check, so I'll ask it before changing anything.
+> I asked the recurring system about the two £34.80 payments to Northmere Heating. Its answer isn't in the case yet, so I don't know whether they are duplicates. I haven't removed or changed anything.
 > 
-> I tried to check the recurring payments records, but the system refused the request. The portal shows two payment lines but not how they relate. They could be two standing orders, or one standing order plus a one-off payment.
-> 
-> The case also has no confirmation from you on record, so I couldn't pass on a cancellation. The person who picks this up will check the records to see whether the two lines are duplicates. If they are, they will get your confirmation of which line to cancel before cancelling it.
+> The case is closed on this step. A person will pick it up from here.

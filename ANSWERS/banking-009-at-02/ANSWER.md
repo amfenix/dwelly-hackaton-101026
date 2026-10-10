@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, a verified customer on a call, raised a transfer whose amount appears as £648.20 in the final instruction, and the desk was asked to establish that fact. The desk classified it as a record query and asked the payment system about the £648.20 transfer; it made no change and took no other action. The case is closed in the asked state with the payment system's answer still outstanding, so the amount remains unconfirmed until it replies.
+Mara Ellwood, verified on a call, raised a question about a transfer. She recalled a draft of £684.20, but the completed instruction shows £648.20. The desk asked the payment system about the £648.20 transfer; the record shows no confirmation on file and no instruction given outside the portal. The case is closed at the asked stage, and the payment system's answer is still outstanding, so nobody has yet told Mara what was actually sent.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -62,8 +62,10 @@ Facts established:
 - amount: **648.20**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

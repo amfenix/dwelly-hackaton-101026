@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, a verified customer using the business portal, asked for the acquiring report for North Quay Printworks covering 1–7 July 2025 so she could review card sales and adjustments. The desk classified it as a document request and sent a query to the documents system, and the case closed in the asked state. No answer has come back from that system and nothing has been sent to the customer yet, so the file still has to be delivered.
+Mara Venn, a verified customer on the business portal, asked for the acquiring report for North Quay Printworks covering 1–7 July 2025, so she could review card sales and adjustments. The desk classified it as a question about a document and sent an ask to the documents system, and the case closed at that step. The documents system's answer is not in the record, so it is unknown whether the report is available, and Mara Venn has not been sent a reply.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,8 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - document_ready = false → not known (document_ready=not known)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -58,8 +59,10 @@ Facts established:
 - subject_date: **2025-07-07**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked what a £3.20 fee beside a foreign-currency cash withdrawal in their secure portal is for, and how it was calculated against the tariff. The desk classed it as a request about a record fact on a fee and sent a question about that fee and amount to the documents system, and nothing on the account was changed. The case closed with the question asked; the record shows no answer from the documents system yet, so the explanation of the fee is still outstanding.
+The customer asked what a £3.20 fee beside a foreign-currency cash withdrawal in their portal is for and how it was calculated, and asked for it to be checked against the applicable tariff. The desk classed it as a fee question, sent a query about the £3.20 fee to the tariff system, and closed the case in the asked state. No tariff answer is in the record, so the reason for the charge and how it was calculated remain unexplained. The agent's message says it will write once the tariff details arrive, but the record shows no such step.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -30,7 +30,7 @@ Case reference: id banking-034-at-01, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `ask_system` (system: documents, about: fee, amount: 3.20), by rule `do-ask`
+- `ask_system` (system: tariff, about: fee, amount: 3.20), by rule `do-ask`
 
 ## Decision and why
 
@@ -38,13 +38,13 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `documents-ask` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `tariff-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - args.system = documents → true (args.system=documents)
-  - next_system = documents → true (next_system=documents)
-  - next_system absent → false (next_system=documents)
-  - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - args.system = tariff → true (args.system=tariff)
+  - next_system = tariff → true (next_system=tariff)
+  - next_system absent → false (next_system=tariff)
+  - tariff_asked absent → true (tariff_asked=not known)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -54,8 +54,10 @@ Facts established:
 - amount: **3.20**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
-- next_system: **documents**
+- request_type: **question**
+- next_system: **tariff**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

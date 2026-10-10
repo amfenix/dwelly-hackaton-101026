@@ -35,35 +35,43 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-045-at-04:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-045-at-04:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-045-at-04:read-confirmation:11).
-39. Note from `read-confirmation`: event 4 (H&V business support agent): I’ve sent the new-user access request to you through the secure portal for approval. No access has been granted; the request is awaiting your decision. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: authority → authority.
-45. Classifier (claude claude-haiku-5-5) on `subject`: role → role.
-46. `request_type`: not known → authority (by `triage`).
-47. `subject`: not known → role (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `no-authority` fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); role != business_admin → true (role=customer). Only the person with the authority may approve this; the desk does not act for them.
-50. `reason`: not known → NO_AUTHORITY (by `no-authority`).
-51. State `TRIAGED` → `ESCALATED` (by `no-authority`).
-52. The case closed in `ESCALATED`: **escalate**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-045-at-04:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-045-at-04:read-bank-actions:11).
+39. Note from `read-bank-actions`: event 4 (H&V business support agent): the bank already acted: I’ve sent the new-user access request to you through the secure portal for approval. No access has been granted; the request is awaiting your decision.
+40. `check_bank_actions` found {"bank_forwarded": true}.
+41. `bank_forwarded`: not known → True (by `read-bank-actions`).
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-045-at-04:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-045-at-04:read-confirmation:13).
+47. Note from `read-confirmation`: event 4 (H&V business support agent): I’ve sent the new-user access request to you through the secure portal for approval. No access has been granted; the request is awaiting your decision. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.05 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+55. Classifier (jev jev-latest) on `subject`: role, confidence 0.77 → role.
+56. `request_type`: not known → authority (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → role (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
+62. `next_system`: not known → business (by `route-business`).
+63. Rule `already-forwarded` fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); bank_forwarded → true (bank_forwarded=True). The request is with the person whose approval it needs.
+64. State `TRIAGED` → `WAITING` (by `already-forwarded`).
+65. The case closed in `WAITING`: **wait**.
 
 ## Model calls
 
-3 calls, 5639 tokens in, 380 out, 5.614 s, cost $0.0111; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5875 tokens in, 437 out, 4.294 s, cost $0.0117; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> This case is already escalated to a person, and that status is final, so I'm taking no further action.
-> 
-> The case stands as follows:
-> - **Request:** Nadia Bell asked for portal access for a new colleague. She isn't the company administrator, so she can't approve or assign roles.
-> - **What has happened:** The access request has been sent to the administrator through the secure portal. It is awaiting their decision, and no access has been granted.
-> - **Next step:** Only the company administrator can approve the request. Nothing more is needed from the desk until they respond.
+> The request is already with the company administrator for approval, and no access has been granted. The case is in a waiting state, and I'm not taking any further action.

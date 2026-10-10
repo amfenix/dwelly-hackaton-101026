@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting for the second signatory after she gave her first consent. The desk checked the business record, which shows the package as awaiting the second signatory, and replied to her in secure chat with that status, stating that no approval or role change was made. Her identity was not verified, though the request was only a status check, and nothing is left for a person in the record.
+Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting on her co-signer after she gave her first consent. The desk checked the business record, which shows the package as awaiting the second signatory with no second consent yet, and replied on secure chat to say so. The reply also said that no approval or role change was made on anyone's behalf. The case is closed as replied, nothing is left for a person in the record, and her identity was not verified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-043-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellery, channel: secure_chat), by rule `do-reply`
 
-  > The business record shows awaiting_second_signatory. This does not approve the request for the second signatory. No additional approval or role change was made.
+  > The business record shows the package as awaiting the second signatory. This does not approve the request for the second signatory. No additional approval or role change was made.
 
 
 ## Decision and why
@@ -55,8 +55,10 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `business-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = business → true (next_system=business)
   - business_status present → true (business_status=AWAITING_SECOND_SIGNATORY)
+  - not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=AWAITING_SECOND_SIGNATORY, subject=payment_package)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
@@ -72,8 +74,10 @@ Facts established:
 - business_status: **AWAITING_SECOND_SIGNATORY**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

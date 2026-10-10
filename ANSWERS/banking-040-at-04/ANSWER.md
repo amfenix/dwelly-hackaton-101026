@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat for a document showing the stage of her £74.00 payment HV-040, to give to her repair contractor. The desk found the document record ready, with a bank status of SENT, and replied in secure chat that the document is available, that this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. The record shows her identity as unverified, and nothing is left open for a person.
+Mara Ellison asked, over secure chat, for a document showing the stage of her £74.00 payment HV-040 so she could give it to her repair contractor. The desk found the record had been generated and replied on secure chat that the document is available, that this does not confirm it was downloaded or that funds were credited, and that no email was sent; the case is closed as replied. The record shows she was not verified on this chat and no verification was attempted, and no contractor confirmation is on file; nothing else is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,8 +55,9 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
@@ -73,8 +74,10 @@ Facts established:
 - document_ready: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

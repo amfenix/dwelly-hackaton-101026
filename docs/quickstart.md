@@ -34,7 +34,7 @@ are never sent out: the text is built from the records.
 ```bash
 git clone git@github.com:amfenix/dwelly-hackaton-101026.git && cd dwelly-hackaton-101026
 uv sync
-cp .env.example .env        # fill in ANTHROPIC_API_KEY (and TYPESAFE_API_KEY for Jev)
+cp .env.example .env        # fill in ANTHROPIC_API_KEY and TYPESAFE_API_KEY (Jev classifies)
 uv run desk check           # the policy and functions load; lists the agent's tools
 ```
 

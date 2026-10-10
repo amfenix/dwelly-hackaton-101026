@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked whether H&V sent the £420.00 one-off transfer to Alder & Reed Workshop, which they could see as a debit in their account activity. The desk checked the case and found no confirmation of the transfer and no sign it was instructed outside the portal, so it asked the payment system about the transfer and closed the case in the asked state. The payment system's answer had not come back in the record, so the question of whether the transfer was sent remains open.
+The customer asked whether Harrow & Vale sent the £420 one-off transfer to Alder & Reed Workshop, which shows as a debit on their account. The desk classed it as a question about a transfer and put it to the payment system, and the request went through. No answer has come back yet, so whether the payment was sent is still unconfirmed; the only evidence so far is the debit in the account activity, with no confirmation found.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -55,8 +55,10 @@ Facts established:
 - counterparty: **Alder & Reed Workshop**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

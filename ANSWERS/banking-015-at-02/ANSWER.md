@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer calling in, asked the desk to cancel her Northmere Fitness Direct Debit mandate. The desk classified it as an instruction and registered a request with the recurring team about the direct debit, and the case closed as requested. The record does not show the cancellation being carried out, so the recurring team still has to act on it.
+Mara Ellison, verified on a call, asked the desk to cancel her Northmere Fitness Direct Debit mandate, and she acknowledged this is an instruction to her bank, not a cancellation of her agreement with the recipient. The desk classed it as a Direct Debit instruction, routed it to the recurring team, and registered the request with them, so the case closed as requested. The record does not show the mandate itself being cancelled, so that rests with the recurring team, and the record doesn't say whether the mandate was active in the portal, as the agent's reply claimed.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,8 +48,6 @@ How the case moved:
   - recurring_asked absent → true (recurring_asked=not known)
   - verified → true (verified=True)
   - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
 - `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
   - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 
@@ -65,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

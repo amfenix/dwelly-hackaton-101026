@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer writing through the secure portal, asked for a CSV export of her transactions from 6 to 9 May 2025 and wanted to know how to tell whether it had been created. The desk classified this as a document request and sent a query about it to the documents system. That system's answer had not come back when the case closed, so whether the export exists is still unknown and nothing further is recorded as pending for a person.
+Mara Ellison, a verified customer writing through the secure portal, asked for a CSV export of her transactions from 6 to 9 May 2025 and wanted to know how to tell whether the export had been created. The desk classed it as a question about a document and sent an inquiry to the documents system, and the case closed in the asked state. The record does not show whether the export exists, so that answer is still to come from the documents system.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,8 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - document_ready = false → not known (document_ready=not known)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -58,8 +59,10 @@ Facts established:
 - subject_date: **2025-05-09**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

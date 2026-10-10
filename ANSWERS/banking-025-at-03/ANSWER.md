@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked why her £18.40 payment at North Quay Books was declined. The desk identified it as a card payment query and sent a question about that payment to the card system. The case closed with that question asked, and the record shows no reply yet, so the reason for the decline is still unknown and someone still needs to pass the answer to Mara once it arrives.
+Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk confirmed her identity, classified this as a card question, and asked the card system about that payment; the request was accepted but returned no answer, so the reason for the decline is not known. The case closed in the "asked" state, and the record does not say who, if anyone, follows up on the missing answer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -52,7 +52,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=reason)
+  - request_type not in [register, change, authority, instruction] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -66,14 +66,17 @@ Facts established:
 - amount: **18.40**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: requester='Mara Ellison', role='customer', channel='verified_call']
 - event 2 (H&V agent): I’ve completed the required identification checks. Please tell me which declined attempt you want me to investigate; I won’t ask you to share any secret codes. [facts: verified=True]
 - event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: amount='18.40']
+- event 2 (H&V agent): the bank already acted: I’ve completed the required identification checks. Please tell me which declined attempt you want me to investigate; I won’t ask you to share any secret codes.
 - event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated

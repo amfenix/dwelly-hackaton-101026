@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked why her £18.40 card payment at North Quay Books was declined. The desk identified her, classified this as a request for a reason on a card payment, and put the question to the card system. The card system's answer hasn't come back, so the case is closed in a waiting state with no actions taken, and nothing has been told to her yet about why the payment was declined.
+Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk asked the card system and closed the case as waiting, because no answer from it is recorded yet. A second ask to the card system and an attempt to escalate to a person were both refused because the case was already in the waiting state, so no reason for the decline has been found or given to her. Someone still needs to check the declined attempt on the card records and tell her the reason.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -67,8 +67,10 @@ Facts established:
 - card_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -76,6 +78,7 @@ Where they came from:
 - event 2 (H&V agent): I’ve completed the required identification checks. Please tell me which declined attempt you want me to investigate; I won’t ask you to share any secret codes. [facts: verified=True]
 - event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: amount='18.40']
 - event 4 (H&V card authorisation journal): I’m searching the journal for Mara Ellison’s North Quay Books authorisation attempt for £18.40, using the merchant and amount she identified. I’ll check the recorded response for that attempt. [facts: card_asked=True]
+- event 2 (H&V agent): the bank already acted: I’ve completed the required identification checks. Please tell me which declined attempt you want me to investigate; I won’t ask you to share any secret codes.
 - event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -85,6 +88,11 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

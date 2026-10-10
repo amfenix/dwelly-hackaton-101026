@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, writing over secure chat and not verified, asked for the status of Northmere Studio Ltd's payroll payment package, including whether her co-signer still needs to act. The desk treated it as a status request and asked the payment system about the package; that query returned nothing, and no changes or approvals were made. The record does not show an answer on the package status or the second signatory, so that is still outstanding.
+Mara Ellery, writing over secure chat, asked whether Northmere Studio Ltd's payroll payment package is waiting for her co-signer or has moved on, after giving her first consent. The desk classified this as a question about a payment package and put it to the payment system, and the case closed as asked. The payment system's answer is not in the record, so Mara has not been told the package status, and her identity is still unverified, which matters for how anyone replies to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -62,8 +62,10 @@ Facts established:
 - counterparty: **Northmere Studio Ltd’s payroll payment package**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

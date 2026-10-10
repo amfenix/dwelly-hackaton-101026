@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, verified on a call, asked to cancel the next run of her studio-rent standing order, to have it escalated, and to be told how to confirm it securely. The desk registered a request with the recurring payments team about the standing order; no confirmation had been given, so the cancellation itself is not confirmed. What is left is for that team to act on it. The desk's reply also said it could not send a secure confirmation step, but the record does not show what the portal said about the instruction's status, so that part of the earlier message is not supported here.
+Elodie Mercer, identified on a verified call, asked to cancel the next run of her studio-rent standing order, to have it escalated, and to be told how to confirm it securely. The desk registered a request with the recurring team about the standing order and closed the case as requested. Nothing in the record shows the run has actually been cancelled, and the record does not show that the secure confirmation method she asked about was given. The agent's reply also says her records showed the instruction as active with the next run not yet started, but no check in the record supports that.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,8 +48,6 @@ How the case moved:
   - recurring_asked absent → true (recurring_asked=not known)
   - verified → true (verified=True)
   - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
 - `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
   - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 
@@ -64,6 +62,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

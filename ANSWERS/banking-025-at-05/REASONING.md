@@ -43,39 +43,48 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. Rule `read-documents` fired: state = READING → true (state=READING).
 40. Called `check_documents` (attempt 1, key banking-025-at-05:read-documents:9).
 41. `check_documents` found {}.
-42. Rule `read-registration` fired: state = READING → true (state=READING).
-43. Called `check_registration` (attempt 1, key banking-025-at-05:read-registration:10).
-44. `check_registration` found {}.
-45. Rule `read-confirmation` fired: state = READING → true (state=READING).
-46. Called `check_confirmation` (attempt 1, key banking-025-at-05:read-confirmation:11).
-47. Note from `read-confirmation`: event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: confirmation='none', instructed_outside_portal=False]
-48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-49. `confirmation`: not known → none (by `read-confirmation`).
-50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-53. Classifier (claude claude-haiku-5-5) on `subject`: card_payment → card_payment.
-54. `request_type`: not known → reason (by `triage`).
-55. `subject`: not known → card_payment (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-58. `next_system`: not known → card (by `asked-card`).
-59. The agent asked for `reply` {}.
-60. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_status present → true (card_status=DECLINED).
-61. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
-62. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-63. Called `reply_customer` (attempt 1, key banking-025-at-05:do-reply:15).
-64. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made."}.
-65. `reply_customer` found {}.
-66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-67. The case closed in `REPLIED`: **reply**.
+42. Rule `read-tariff` fired: state = READING → true (state=READING).
+43. Called `check_tariff` (attempt 1, key banking-025-at-05:read-tariff:10).
+44. `check_tariff` found {}.
+45. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+46. Called `check_bank_actions` (attempt 1, key banking-025-at-05:read-bank-actions:11).
+47. Note from `read-bank-actions`: event 2 (H&V agent): the bank already acted: I’ve completed the required identification checks. Please tell me which declined attempt you want me to investigate; I won’t ask you to share any secret codes.
+48. `check_bank_actions` found {}.
+49. Rule `read-registration` fired: state = READING → true (state=READING).
+50. Called `check_registration` (attempt 1, key banking-025-at-05:read-registration:12).
+51. `check_registration` found {}.
+52. Rule `read-confirmation` fired: state = READING → true (state=READING).
+53. Called `check_confirmation` (attempt 1, key banking-025-at-05:read-confirmation:13).
+54. Note from `read-confirmation`: event 3 (Mara Ellison): I’m calling to find out why my £18.40 payment at North Quay Books was declined. Please check that particular attempt. [facts: confirmation='none', instructed_outside_portal=False]
+55. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+56. `confirmation`: not known → none (by `read-confirmation`).
+57. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+58. Rule `triage` fired: state = READING → true (state=READING).
+59. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+60. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+61. Classifier (jev jev-latest) on `joint_holder_change`: 0.1 → False.
+62. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+63. `request_type`: not known → question (by `triage`).
+64. `credentials_requested`: not known → False (by `triage`).
+65. `joint_holder_change`: not known → False (by `triage`).
+66. `subject`: not known → card_payment (by `triage`).
+67. State `READING` → `TRIAGED` (by `triage`).
+68. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+69. `next_system`: not known → card (by `asked-card`).
+70. The agent asked for `reply` {}.
+71. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=DECLINED).
+72. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
+73. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+74. Called `reply_customer` (attempt 1, key banking-025-at-05:do-reply:17).
+75. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows the card attempt as declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made."}.
+76. `reply_customer` found {}.
+77. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+78. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-3 calls, 5370 tokens in, 206 out, 4.152 s, cost $0.0102; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5460 tokens in, 410 out, 4.073 s, cost $0.0106; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to Mara. The card record shows the £18.40 payment at North Quay Books was declined because her available balance wasn't enough to cover it. The case is now closed.
-> 
-> The stored reason text is cut off after "£18.", so the reply relies on the status and the insufficient-balance wording. I didn't ask any other system.
+> I've sent the reply to Mara. The card system's record shows the £18.40 payment at North Quay Books was declined because her available balance wasn't enough to cover it. The reason text in the record is cut off after "£18.", so the reply rests on what the record does show.

@@ -1,10 +1,10 @@
 # Case banking-036-at-01: New correspondence address
 
-**Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
+**Decision: redirect_secure**  (final state `REDIRECTED`)
 
 ## Summary
 
-Mara Ellison, writing by email, asked the desk to update the correspondence address on her profile after a move within the UK. The desk treated this as a profile change that needs her confirmation in the secure portal, and it sent her that confirmation request. Her profile has not been changed, and the record shows nothing further for a person to do beyond her confirming it herself.
+Mara Ellison, an unverified customer, emailed to ask that the address used for her correspondence be updated after a move within the UK. The desk did not change her profile; it replied to her by message, pointing her to the secure portal process, where her identity is checked, and saying nothing was changed. The case is closed as redirected, and a second redirect attempt was refused because the case was already in that state. Making the address change in the secure portal is left to Mara.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -30,7 +30,10 @@ Case reference: id banking-036-at-01, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `send_for_confirmation` (change: profile, to: Mara Ellison), by rule `do-confirm`
+- `redirect_secure` (to: Mara Ellison, channel: external_message), by rule `do-redirect`
+
+  > Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.
+
 
 ## Decision and why
 
@@ -38,12 +41,13 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `CONFIRM_PENDING`: rule `change-needs-confirmation` — A change is confirmed by the customer in the secure portal, not in chat or by email.
+- `TRIAGED` → `REDIRECT_PENDING`: rule `change-by-email` — An email does not change anything; the customer is pointed to the secure process.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
-  - confirmation = none → true (confirmation=none)
-- `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
-  - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
+  - channel = external_message → true (channel=external_message)
+  - role != third_party → true (role=customer)
+- `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
+  - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
 
 Facts established:
 
@@ -56,6 +60,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -70,6 +76,10 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=REDIRECTED); request_type = access is false (request_type=change); request_type = instruction is false (request_type=change)
+
 ## Final result
 
-send_for_confirmation (CONFIRMATION_SENT)
+redirect_secure (REDIRECTED)

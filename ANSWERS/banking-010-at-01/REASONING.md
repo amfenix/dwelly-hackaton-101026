@@ -33,37 +33,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 29. Rule `read-documents` fired: state = READING → true (state=READING).
 30. Called `check_documents` (attempt 1, key banking-010-at-01:read-documents:9).
 31. `check_documents` found {}.
-32. Rule `read-registration` fired: state = READING → true (state=READING).
-33. Called `check_registration` (attempt 1, key banking-010-at-01:read-registration:10).
-34. `check_registration` found {}.
-35. Rule `read-confirmation` fired: state = READING → true (state=READING).
-36. Called `check_confirmation` (attempt 1, key banking-010-at-01:read-confirmation:11).
-37. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Outgoing transfer — Northmere Home Supplies — £42.80 — shown in account history. [facts: confirmation='none', instructed_outside_portal=False]
-38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-39. `confirmation`: not known → none (by `read-confirmation`).
-40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-43. Classifier (claude claude-haiku-5-5) on `subject`: incoming_payment → incoming_payment.
-44. `request_type`: not known → status (by `triage`).
-45. `subject`: not known → incoming_payment (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-48. `next_system`: not known → incoming (by `route-incoming`).
-49. The agent asked for `ask_system` {"system": "incoming"}.
-50. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
-51. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-53. Called `ask_system` (attempt 1, key banking-010-at-01:do-ask:15).
-54. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
-55. `ask_system` found {}.
-56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-57. The case closed in `ASKED`: **ask_system**.
+32. Rule `read-tariff` fired: state = READING → true (state=READING).
+33. Called `check_tariff` (attempt 1, key banking-010-at-01:read-tariff:10).
+34. `check_tariff` found {}.
+35. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+36. Called `check_bank_actions` (attempt 1, key banking-010-at-01:read-bank-actions:11).
+37. `check_bank_actions` found {}.
+38. Rule `read-registration` fired: state = READING → true (state=READING).
+39. Called `check_registration` (attempt 1, key banking-010-at-01:read-registration:12).
+40. `check_registration` found {}.
+41. Rule `read-confirmation` fired: state = READING → true (state=READING).
+42. Called `check_confirmation` (attempt 1, key banking-010-at-01:read-confirmation:13).
+43. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Outgoing transfer — Northmere Home Supplies — £42.80 — shown in account history. [facts: confirmation='none', instructed_outside_portal=False]
+44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+45. `confirmation`: not known → none (by `read-confirmation`).
+46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+47. Rule `triage` fired: state = READING → true (state=READING).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+50. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+51. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+52. `request_type`: not known → question (by `triage`).
+53. `credentials_requested`: not known → False (by `triage`).
+54. `joint_holder_change`: not known → False (by `triage`).
+55. `subject`: not known → incoming_payment (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+58. `next_system`: not known → incoming (by `route-incoming`).
+59. The agent asked for `ask_system` {"system": "incoming"}.
+60. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+61. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+63. Called `ask_system` (attempt 1, key banking-010-at-01:do-ask:17).
+64. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment", "amount": "42.80"}.
+65. `ask_system` found {}.
+66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+67. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 5172 tokens in, 132 out, 3.732 s, cost $0.0090; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7564 tokens in, 503 out, 5.578 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the incoming payments system whether the £42.80 refund from Northmere Home Supplies has arrived. The answer will come back later, so I can't confirm its status yet.
+> I checked the incoming payments system for the £42.80 refund from Northmere Home Supplies. The system accepted the check, but the case record doesn't yet show what it found. It shows no confirmation of a refund, so I can't say whether the money has arrived. I'm not going to claim that it has or hasn't.
+> 
+> The case is now closed at this step, so any further action goes to a person on the desk.

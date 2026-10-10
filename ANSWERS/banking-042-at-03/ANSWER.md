@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Fenwick, a viewer on secure chat who is not verified, said she uploaded batch HV-042 for Fenwick Workshop and asked for help accessing its report to see which rows need attention. The desk had already asked the business system about the batch, so it took no action and put the case in a waiting state, since that system's answer has not come in yet. Nothing is left for a person to do now; the case resumes when the business system replies.
+Nadia Fenwick, an unverified viewer writing over secure chat, asked for help seeing which rows in batch HV-042 need attention. The desk asked the business system about her access, and the case closed in WAITING because no answer from it has come in yet. A second ask to the business system and an attempt to escalate to a person were both refused because the case was already in WAITING, so no report content was shared and nothing was handed to anyone. Still open: the system's answer, verifying Nadia, and confirming whether a viewer may see the report.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,8 +63,10 @@ Facts established:
 - business_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -80,6 +82,11 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

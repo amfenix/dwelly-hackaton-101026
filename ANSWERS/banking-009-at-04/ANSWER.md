@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, verified on a call, asked about her completed transfer, and she remembered the draft amount as £684.20 while the final line showed £648.20. The desk checked the payment record, which shows £648.20 as sent, and replied on the verified call that the transfer is recorded as sent, that this does not confirm receipt or credit by the recipient bank, and that no new transfer was made. The case is closed on that reply, with nothing left for a person in the record.
+Mara Ellwood, verified on a call, asked about her transfer, and noted she remembered the draft as £684.20 while the final line shows £648.20. The desk checked the payment record, which shows £648.20 as sent, and replied on the verified call saying so, that this does not confirm the recipient bank received or credited it, and that no new transfer was made. One attempt to query the payment system again was refused because that check had already been done; the case is closed with the reply and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=SENT)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -72,8 +73,10 @@ Facts established:
 - payment_status: **SENT**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -90,6 +93,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment)
 
 ## Final result
 

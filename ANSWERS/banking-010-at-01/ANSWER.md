@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked whether a £42.80 refund from Northmere Home Supplies, which the supplier had said it might send, has reached their account. The desk classed it as a status request about an incoming payment and sent a query to the incoming payments system about that amount. No answer has come back yet, so the refund's status is still unconfirmed, and nothing further is recorded as left for a person.
+The customer asked whether a £42.80 refund from Northmere Home Supplies had reached their account. The desk identified it as a question about an incoming payment and sent a query to the incoming payments system. That query was accepted, but the record shows no result, so it is still unknown whether the refund has arrived; the only matching entry found was the original outgoing transfer. The case closed at that step, so a person needs to follow up on the answer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = incoming → true (next_system=incoming)
   - next_system absent → false (next_system=incoming)
   - incoming_asked absent → true (incoming_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -55,8 +55,10 @@ Facts established:
 - counterparty: **Northmere Home Supplies**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

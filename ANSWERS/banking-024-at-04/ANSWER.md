@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing on secure chat and not identity-verified, said their card was declined and asked what category of restriction applied and whether it had been lifted. The desk checked the card journal and replied that the card shows as restricted, with the recorded reason being a temporary security-related restriction, that the basis is not disclosed, and that no card change was made. The record shows no further action and nothing left for a person.
+Rowan Ellery, writing on secure chat as the cardholder, asked what category of restriction applied to their declined card and whether it had been lifted. The desk replied on the same chat that the card journal shows a temporary restriction, recorded as a temporary security-related restriction, without disclosing its basis, and that no card change was made. The reply did not say whether the restriction has been lifted or will be, and Rowan was not verified in this chat; the case is closed with nothing further assigned to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-024-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Rowan Ellery, channel: secure_chat), by rule `do-reply`
 
-  > The card journal shows restricted (recorded reason: temporary security-related restriction.). This does not disclose the basis of the restriction. No additional card change was made.
+  > The card journal shows a temporary restriction on your card (recorded reason: temporary security-related restriction.). This does not disclose the basis of the restriction. No additional card change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = card → true (next_system=card)
   - card_status present → true (card_status=RESTRICTED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -72,8 +73,10 @@ Facts established:
 - card_reason: **temporary security-related restriction.**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

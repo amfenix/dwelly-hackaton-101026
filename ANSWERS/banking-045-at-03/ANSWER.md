@@ -1,10 +1,10 @@
 # Case banking-045-at-03: New employee access request
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: forward_to_authority**  (final state `FORWARDED`)
 
 ## Summary
 
-Nadia Bell, a customer writing over secure chat who has not been verified, followed up on an access request that still needed the company administrator's approval. The desk escalated the case, because only the person with that authority can approve it and the desk does not act for them. No actions were taken and nothing was granted or approved. A later attempt to query the business system was refused because the case had already closed as escalated, and what is left for a person is to check the authorised company-administrator record and, if confirmed, send the request to that administrator.
+Nadia Bell, writing from an unverified customer account over secure chat, asked about the next step for an access request that still needs the company administrator's approval. The desk refused its first attempt to query the business system, then forwarded the request about her role to the verified company administrator, and the case closed as forwarded. No access has been granted, and what happens next depends on the administrator's approval.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,7 +38,7 @@ Case reference: id banking-045-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `forward_to_authority` (to: the verified company administrator, about: role, requester: Nadia Bell), by rule `do-forward`
 
 ## Decision and why
 
@@ -46,10 +46,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: rule `no-authority` — Only the person with the authority may approve this; the desk does not act for them.
+- `TRIAGED` → `FORWARD_PENDING`: the agent asked for `forward_to_authority`, rule `forward-to-the-authority` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = authority → true (request_type=authority)
   - role != business_admin → true (role=customer)
+- `FORWARD_PENDING` → `FORWARDED`: rule `do-forward`.
+  - state = FORWARD_PENDING → true (state=FORWARD_PENDING)
 
 Facts established:
 
@@ -61,7 +63,9 @@ Facts established:
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **authority**
-- reason: **NO_AUTHORITY**
+- next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -70,8 +74,7 @@ Where they came from:
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
@@ -79,8 +82,8 @@ A person picking this up has the facts above, the actions already taken, and the
 
 Requests the policy refused:
 
-- `ask_system`: payment-ask: state = TRIAGED is false (state=ESCALATED); args.system = payment is false (args.system=business); next_system = payment is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=authority); incoming-ask: state = TRIAGED is false (state=ESCALATED); args.system = incoming is false (args.system=business); next_system = incoming is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=authority); recurring-ask: state = TRIAGED is false (state=ESCALATED); args.system = recurring is false (args.system=business); next_system = recurring is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=authority); card-ask: state = TRIAGED is false (state=ESCALATED); args.system = card is false (args.system=business); next_system = card is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=authority); access-ask: state = TRIAGED is false (state=ESCALATED); args.system = access is false (args.system=business); next_system = access is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=authority); business-ask: state = TRIAGED is false (state=ESCALATED); next_system = business is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=authority); documents-ask: state = TRIAGED is false (state=ESCALATED); args.system = documents is false (args.system=business); next_system = documents is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=authority)
+- `ask_system`: payment-ask: args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); incoming-ask: args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); recurring-ask: args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); card-ask: args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority, instruction] is false (request_type=authority); access-ask: args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); business-ask: next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority); documents-ask: args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=authority); tariff-ask: args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business); request_type not in [register, change, authority] is false (request_type=authority)
 
 ## Final result
 
-escalate (ESCALATED)
+forward_to_authority (FORWARDED)

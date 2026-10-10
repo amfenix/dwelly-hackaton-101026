@@ -30,37 +30,47 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 26. Rule `read-documents` fired: state = READING → true (state=READING).
 27. Called `check_documents` (attempt 1, key banking-008-at-01:read-documents:9).
 28. `check_documents` found {}.
-29. Rule `read-registration` fired: state = READING → true (state=READING).
-30. Called `check_registration` (attempt 1, key banking-008-at-01:read-registration:10).
-31. `check_registration` found {}.
-32. Rule `read-confirmation` fired: state = READING → true (state=READING).
-33. Called `check_confirmation` (attempt 1, key banking-008-at-01:read-confirmation:11).
-34. Note from `read-confirmation`: event 1 (Mallow Pottery Works): I’m following up about your payment for the kiln repair. Please clarify the purpose of the transfer. “Please clarify the purpose.” [facts: confirmation='none', instructed_outside_portal=False]
-35. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-36. `confirmation`: not known → none (by `read-confirmation`).
-37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-40. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-41. `request_type`: not known → record_fact (by `triage`).
-42. `subject`: not known → transfer (by `triage`).
-43. State `READING` → `TRIAGED` (by `triage`).
-44. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-45. `next_system`: not known → payment (by `route-payment`).
-46. The agent asked for `ask_system` {"system": "payment"}.
-47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
-48. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-50. Called `ask_system` (attempt 1, key banking-008-at-01:do-ask:15).
-51. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
-52. `ask_system` found {}.
-53. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-54. The case closed in `ASKED`: **ask_system**.
+29. Rule `read-tariff` fired: state = READING → true (state=READING).
+30. Called `check_tariff` (attempt 1, key banking-008-at-01:read-tariff:10).
+31. `check_tariff` found {}.
+32. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+33. Called `check_bank_actions` (attempt 1, key banking-008-at-01:read-bank-actions:11).
+34. `check_bank_actions` found {}.
+35. Rule `read-registration` fired: state = READING → true (state=READING).
+36. Called `check_registration` (attempt 1, key banking-008-at-01:read-registration:12).
+37. `check_registration` found {}.
+38. Rule `read-confirmation` fired: state = READING → true (state=READING).
+39. Called `check_confirmation` (attempt 1, key banking-008-at-01:read-confirmation:13).
+40. Note from `read-confirmation`: event 1 (Mallow Pottery Works): I’m following up about your payment for the kiln repair. Please clarify the purpose of the transfer. “Please clarify the purpose.” [facts: confirmation='none', instructed_outside_portal=False]
+41. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+42. `confirmation`: not known → none (by `read-confirmation`).
+43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+44. Rule `triage` fired: state = READING → true (state=READING).
+45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+46. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+47. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+48. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+49. `request_type`: not known → question (by `triage`).
+50. `credentials_requested`: not known → False (by `triage`).
+51. `joint_holder_change`: not known → False (by `triage`).
+52. `subject`: not known → transfer (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+55. `next_system`: not known → payment (by `route-payment`).
+56. The agent asked for `ask_system` {"system": "payment"}.
+57. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+58. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-008-at-01:do-ask:17).
+61. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7176 tokens in, 158 out, 4.401 s, cost $0.0132; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7498 tokens in, 476 out, 4.431 s, cost $0.0153; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system for the purpose text recorded on your transfer to Mallow Pottery Works. Its answer will come back to this case. I can't tell you what the text says yet.
+> I've asked the payment system for the record of your transfer to Mallow Pottery Works, which should include the purpose text you entered. The answer hasn't come back yet, so I can't tell you what it says. Once it arrives, we can tell you exactly what the instruction recorded, and you can pass that on to Mallow Pottery Works.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat for the next due date of her active monthly household contribution standing order. The desk checked the standing-order record and replied that it shows active with its next run on 2025-09-03, noting that this does not guarantee the future payment will execute and that no instruction or change was made. The case is closed as replied with nothing left for a person, though the record shows the requester was not verified and the reply went out anyway because it was a read-only question.
+Mara Ellison asked over secure chat when her active monthly household standing order is next due. The desk checked the standing-order record and replied in the same chat that the order is active with its next run on 2025-09-03, noting that this does not guarantee the future payment will execute and that no change or additional instruction was made. The case is closed with nothing left for a person, though the record shows she was not verified in this chat.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-011-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
 
-  > The standing-order record shows active; next run 2025-09-03. This does not guarantee that the future payment will execute. No additional instruction or change was made.
+  > The standing-order record shows the instruction as active; next run 2025-09-03. This does not guarantee that the future payment will execute. No additional instruction or change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `recurring-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = recurring → true (next_system=recurring)
   - recurring_status present → true (recurring_status=ACTIVE)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -72,8 +73,10 @@ Facts established:
 - next_run: **2025-09-03**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

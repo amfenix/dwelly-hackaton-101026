@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, which they could share as evidence of payment. The desk classified it as a document request and sent a query to the documents system about the £74.00 payment. That is the only action taken, and the case closed in the asked state. No document has been produced or sent yet, and the record shows no response from the documents system, so what happens next depends on its answer.
+The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they can share evidence of it. The desk classed this as a document question and passed it to the documents system, and the case closed as asked; the bank's records show an outgoing payment of £74.00 dated 14 July 2025, reference HV-040, status SENT. The documents system's answer has not come back into the case, and the desk refused to send a reply to the customer, so nothing has been said to them about whether a document exists, and a person needs to follow up on the documents check.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,8 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - document_ready = false → not known (document_ready=not known)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -54,8 +55,10 @@ Facts established:
 - amount: **74.00**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -69,6 +72,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=document); documents-reply: state = TRIAGED is false (state=ASKED); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=documents); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

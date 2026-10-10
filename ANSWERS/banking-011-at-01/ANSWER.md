@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was classified as a record-fact question about a standing order, and the desk routed it to the recurring payments system. It sent that system a query about the standing order, and the case closed in the "asked" state. No answer from the recurring system is in the record, so the question is still open and the requester has not yet been given a reply.
+The customer asked a question about a standing order. The desk classified it as a question with no credential request or joint-holder change, routed it to the recurring payments system, and sent that system an ask about the standing order, which it accepted. The case closed at that step; the record shows no answer or next run date yet, and nothing is listed as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,15 +44,17 @@ How the case moved:
   - next_system = recurring → true (next_system=recurring)
   - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
 - subject: **standing_order**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 ## Escalated
 

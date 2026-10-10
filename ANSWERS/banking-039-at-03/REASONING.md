@@ -35,38 +35,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-039-at-03:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-039-at-03:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-039-at-03:read-confirmation:11).
-39. Note from `read-confirmation`: event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-45. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
-46. `request_type`: not known → document (by `triage`).
-47. `subject`: not known → access (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-50. `next_system`: not known → access (by `route-access`).
-51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
-53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-039-at-03:do-ask:15).
-56. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-039-at-03:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-039-at-03:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-039-at-03:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-039-at-03:read-confirmation:13).
+45. Note from `read-confirmation`: event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='unprompted', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "unprompted", "instructed_outside_portal": false}.
+47. `confirmation`: not known → unprompted (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.04 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.1 → False.
+53. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → access (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+60. `next_system`: not known → access (by `route-access`).
+61. The agent asked for `ask_system` {"system": "access"}.
+62. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-039-at-03:do-ask:17).
+66. Action in the world: `ask_system` {"system": "access", "about": "access"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7614 tokens in, 193 out, 5.608 s, cost $0.0146; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7900 tokens in, 479 out, 5.302 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The session list is held by the access system, and its answer isn't in the case yet, so I'm asking that system.
-> I've asked the access system for the list of sign-in sessions on your profile. Its answer hasn't come back yet, so I can't tell you what the list shows. Nothing has been sent to your secure portal so far.
+> I asked the access system for the sign-in session records on Nerys Wren's profile. The desk accepted the request and closed the case at that step. No session list has come back yet, so there is nothing to send to the customer.
+> 
+> Nerys is verified and made the request in the secure portal. She asked for the list to be delivered there, and she didn't ask for any password, PIN or code.

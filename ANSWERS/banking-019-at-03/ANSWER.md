@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Ellery asked the desk to check whether her Willow Yard Studios standing order run on 18 September 2025 could still be moved to 22 September, and to send any eligible change to her for confirmation. The desk sent the change to her for confirmation, since a change has to be confirmed by the customer in the secure portal, and nothing on the standing order has been altered. The desk never established the order's processing stage, because its later request to the recurring system was refused after the case had closed. So whether the run can still be moved is unknown, and the change takes effect only if it is eligible and she confirms it, which she has not yet done.
+Maeve Ellery, an unverified customer, asked in secure chat to move the next run of her standing order to Willow Yard Studios from 18 September to 22 September 2025, and to have its processing stage checked. The desk sent the change to her for confirmation, listing the 18 September date, and closed the case there; a later check of the recurring system was refused because the case had already reached that stage. Nothing has been changed yet, and the desk did not establish whether the 18 September run can still be changed, so that and her confirmation remain open.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -50,6 +50,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = none → true (confirmation=none)
+  - registration_asked absent → true (registration_asked=not known)
 - `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
   - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 
@@ -66,6 +67,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -84,7 +87,7 @@ No.
 
 Requests the policy refused:
 
-- `ask_system`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change)
+- `ask_system`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change)
 
 ## Final result
 

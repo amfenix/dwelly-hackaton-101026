@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marsh, writing over secure chat and not verified, asked the desk to check whether H&V had received a transfer for her pottery studio's kiln contribution that the sender said they had made. The desk checked the incoming-payment records, found no incoming payment for the account, and replied on secure chat saying so, adding that this does not establish the sender didn't pay and that no payment was made. The case closed with that reply, and the record lists nothing further left for a person.
+Elowen Marsh, who is not verified, asked over secure chat whether H&V had received a transfer for her pottery studio's kiln contribution. The desk checked the incoming-payment record, found no incoming payment for the account, and replied saying exactly that, noting that this does not establish the sender didn't pay and that no payment was made. The case is closed with that reply, and the record lists nothing further for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `incoming-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = incoming → true (next_system=incoming)
   - incoming_found present → true (incoming_found=False)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -71,8 +72,10 @@ Facts established:
 - incoming_found: **False**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

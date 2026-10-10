@@ -43,39 +43,47 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. Rule `read-documents` fired: state = READING → true (state=READING).
 40. Called `check_documents` (attempt 1, key banking-001-at-04:read-documents:9).
 41. `check_documents` found {}.
-42. Rule `read-registration` fired: state = READING → true (state=READING).
-43. Called `check_registration` (attempt 1, key banking-001-at-04:read-registration:10).
-44. `check_registration` found {}.
-45. Rule `read-confirmation` fired: state = READING → true (state=READING).
-46. Called `check_confirmation` (attempt 1, key banking-001-at-04:read-confirmation:11).
-47. Note from `read-confirmation`: event 2 (Mara Ellison): I arranged this £420 payment for a bookcase and can see the debit. Has H&V sent it? Please check the transfer status. [facts: confirmation='none', instructed_outside_portal=False]
-48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-49. `confirmation`: not known → none (by `read-confirmation`).
-50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-53. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-54. `request_type`: not known → status (by `triage`).
-55. `subject`: not known → transfer (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-58. `next_system`: not known → payment (by `asked-payment`).
-59. The agent asked for `reply` {}.
-60. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
-61. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-62. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-63. Called `reply_customer` (attempt 1, key banking-001-at-04:do-reply:15).
-64. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The payment record shows your £420.00 transfer to Alder & Reed Workshop as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
-65. `reply_customer` found {}.
-66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-67. The case closed in `REPLIED`: **reply**.
+42. Rule `read-tariff` fired: state = READING → true (state=READING).
+43. Called `check_tariff` (attempt 1, key banking-001-at-04:read-tariff:10).
+44. `check_tariff` found {}.
+45. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+46. Called `check_bank_actions` (attempt 1, key banking-001-at-04:read-bank-actions:11).
+47. `check_bank_actions` found {}.
+48. Rule `read-registration` fired: state = READING → true (state=READING).
+49. Called `check_registration` (attempt 1, key banking-001-at-04:read-registration:12).
+50. `check_registration` found {}.
+51. Rule `read-confirmation` fired: state = READING → true (state=READING).
+52. Called `check_confirmation` (attempt 1, key banking-001-at-04:read-confirmation:13).
+53. Note from `read-confirmation`: event 2 (Mara Ellison): I arranged this £420 payment for a bookcase and can see the debit. Has H&V sent it? Please check the transfer status. [facts: confirmation='none', instructed_outside_portal=False]
+54. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+55. `confirmation`: not known → none (by `read-confirmation`).
+56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+57. Rule `triage` fired: state = READING → true (state=READING).
+58. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+59. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+60. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+61. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+62. `request_type`: not known → question (by `triage`).
+63. `credentials_requested`: not known → False (by `triage`).
+64. `joint_holder_change`: not known → False (by `triage`).
+65. `subject`: not known → transfer (by `triage`).
+66. State `READING` → `TRIAGED` (by `triage`).
+67. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+68. `next_system`: not known → payment (by `asked-payment`).
+69. The agent asked for `reply` {}.
+70. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+71. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-001-at-04:do-reply:17).
+74. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The payment record shows your £420.00 transfer to Alder & Reed Workshop as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
+75. `reply_customer` found {}.
+76. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+77. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7879 tokens in, 304 out, 7.691 s, cost $0.0162; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5484 tokens in, 463 out, 5.945 s, cost $0.0112; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to the customer. The payment system's record shows the £420.00 transfer to Alder & Reed Workshop with a status of SENT, so the reply said that H&V has sent it.
-> 
-> The record has no confirmation from the recipient's side, so the reply doesn't say the money has arrived. I didn't need to ask the payment system again because the status was already in the case.
+> I sent the reply, and the case is now closed. The payment record shows the £420 transfer to Alder & Reed Workshop as SENT. The records hold no confirmation beyond that status, so the reply should say no more than that.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, an unverified customer on secure chat, asked about the status of a transfer that has no sent confirmation, and whether she needs to authorise it. The desk classified it as a status request and asked the payment system about the transfer. That query has been sent but no answer is recorded, so the transfer's current stage and whether authorisation is needed are still unconfirmed.
+Elise Rowan, an unverified customer on secure chat, asked about a transfer instruction that still has no sent confirmation. She wanted to know its current stage and whether she needs to authorise it. The desk classified it as a question about a transfer and asked the payment system to check it. The record shows no reply from that system yet, so the stage and whether she must authorise it are still unanswered, and someone needs to relay the payment system's answer to her once it comes.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

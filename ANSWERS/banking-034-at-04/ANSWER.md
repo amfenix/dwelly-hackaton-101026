@@ -1,10 +1,10 @@
 # Case banking-034-at-04: Explaining a service fee
 
-**Decision: ask_system**  (final state `ASKED`)
+**Decision: reply**  (final state `REPLIED`)
 
 ## Summary
 
-Mara Ellery, writing over secure chat without being verified, asked the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal, and how it accounts for the amount. The desk classed it as a request for a record fact about a fee and sent a query about the £3.20 fee to the documents system, and the case closed with that question asked. No answer from the documents system is in the record, so the explanation of the fee is still outstanding.
+Mara Ellery asked over secure chat why a £3.20 fee appeared against a withdrawal, and asked for the tariff entry that applied to be checked. The desk ran the tariff check, which found that the fee matches the entry in force for that transaction, and replied on secure chat saying so. The reply also said it authorises no refund or account change and that none was made. The record lists nothing left for a person, though the requester was not verified and the request to escalate was not acted on beyond the tariff reply.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,10 @@ Case reference: id banking-034-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `ask_system` (system: documents, about: fee, amount: 3.20), by rule `do-ask`
+- `reply` (to: Mara Ellery, channel: secure_chat), by rule `do-reply`
+
+  > The tariff review shows that the fee matches the tariff in force for the transaction. This confirms the recorded fee matches the applicable tariff; it does not authorise a refund or account change. No fee or account change was made.
+
 
 ## Decision and why
 
@@ -50,15 +53,13 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `documents-ask` accepted it.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `tariff-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - args.system = documents → true (args.system=documents)
-  - next_system = documents → true (next_system=documents)
-  - next_system absent → false (next_system=documents)
-  - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
-- `ASK_PENDING` → `ASKED`: rule `do-ask`.
-  - state = ASK_PENDING → true (state=ASK_PENDING)
+  - request_type != other → true (request_type=question)
+  - next_system = tariff → true (next_system=tariff)
+  - tariff_status present → true (tariff_status=MATCHES)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -68,15 +69,21 @@ Facts established:
 - verified: **False**
 - subject: **fee**
 - amount: **3.20**
+- tariff_asked: **True**
+- tariff_status: **MATCHES**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
-- next_system: **documents**
+- request_type: **question**
+- next_system: **tariff**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: requester='Mara Ellery', role='customer', channel='secure_chat', verified=False]
 - event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: amount='3.20']
+- event 3 (H&V service agent): I am starting the review by matching the recorded transaction type and processing date against the tariff in force on that date. Case HV-034; no refund or account change is authorised by this review. [facts: tariff_asked=True]
+- event 4 (H&V service agent): I checked the transaction record against the applicable tariff entry. The record identifies a foreign-currency cash withdrawal, and the £3.20 fee matches the entry applicable to that transaction on its processing date. [facts: tariff_status='MATCHES']
 - event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -89,4 +96,4 @@ No.
 
 ## Final result
 
-ask_system (ASKED)
+reply (REPLIED)

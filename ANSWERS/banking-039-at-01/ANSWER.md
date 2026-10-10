@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was classified as a document request about account access, and the desk found no confirmation and no instruction given outside the portal. It then asked the access system about access, which was the only action taken. The case is closed as asked; the requester has not been replied to yet and nothing on their profile was changed, so the access system's answer still has to come back to the case and be passed on.
+The message was classified as a question about access, with no sign of a credentials request or a joint-holder change. The desk sent a query to the access system and closed the case at that step. The record doesn't show any answer from the access system, so nothing is confirmed about the sign-in notification for a new device on 11 July 2025, and any follow-up on that answer is left to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = access → true (next_system=access)
   - next_system absent → false (next_system=access)
   - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -53,8 +53,10 @@ Facts established:
 - subject: **access**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

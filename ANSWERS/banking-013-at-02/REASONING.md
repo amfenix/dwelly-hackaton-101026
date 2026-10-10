@@ -35,41 +35,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-013-at-02:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-013-at-02:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-013-at-02:read-confirmation:11).
-39. Note from `read-confirmation`: event 2 (Elodie Mercer): I completed your identification checks. I want to cancel the next run of my studio-rent instruction; please escalate this and tell me how to confirm it securely. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-45. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-46. `request_type`: not known → instruction (by `triage`).
-47. `subject`: not known → standing_order (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-50. `next_system`: not known → recurring (by `route-recurring`).
-51. The agent asked for `submit_request` {}.
-52. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction); request_type = change → false (request_type=instruction); confirmation = given → false (confirmation=none).
-53. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
-54. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-55. Called `register_request` (attempt 1, key banking-013-at-02:do-request:15).
-56. Action in the world: `register_request` {"team": "recurring", "about": "standing_order"}.
-57. `register_request` found {}.
-58. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-59. The case closed in `REQUESTED`: **submit_request**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-013-at-02:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-013-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-013-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-013-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Elodie Mercer): I completed your identification checks. I want to cancel the next run of my studio-rent instruction; please escalate this and tell me how to confirm it securely. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+53. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+54. `request_type`: not known → instruction (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → standing_order (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+60. `next_system`: not known → recurring (by `route-recurring`).
+61. The agent asked for `submit_request` {}.
+62. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
+63. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
+64. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+65. Called `register_request` (attempt 1, key banking-013-at-02:do-request:17).
+66. Action in the world: `register_request` {"team": "recurring", "about": "standing_order"}.
+67. `register_request` found {}.
+68. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+69. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 7766 tokens in, 425 out, 6.451 s, cost $0.0171; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8017 tokens in, 577 out, 5.131 s, cost $0.0174; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed your request to cancel the next run of your studio-rent instruction to the team that handles recurring payments. The cancellation is not confirmed yet, so please don't treat it as cancelled until the bank confirms it.
+> I've submitted your request to cancel the next scheduled run of your studio-rent standing order. The desk accepted it, but nothing yet confirms that the run is actually cancelled.
 > 
-> The portal showed the instruction as active and the next run as not yet started. I haven't checked the instruction's current status since then. Your identification checks on the call were completed.
-> 
-> I couldn't send you a secure confirmation step from here. Please use the confirmation the bank sends you, and check your portal to see whether the instruction's status changes.
+> Your records showed the instruction as active, with the next run not yet started. Please check the instruction in the secure portal to see whether the next run now shows as cancelled. Don't treat it as cancelled until the portal shows that.

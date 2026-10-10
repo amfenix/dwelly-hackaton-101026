@@ -41,31 +41,53 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 37. Note from `read-documents`: event 3 (H&V document service): I matched the customer’s request to payment HV-040 in the authenticated secure-portal session. Please generate the payment record for this operation for delivery to the customer’s secure portal. [facts: documents_asked=True]
 38. `check_documents` found {"documents_asked": true}.
 39. `documents_asked`: not known → True (by `read-documents`).
-40. Rule `read-registration` fired: state = READING → true (state=READING).
-41. Called `check_registration` (attempt 1, key banking-040-at-03:read-registration:10).
-42. `check_registration` found {}.
-43. Rule `read-confirmation` fired: state = READING → true (state=READING).
-44. Called `check_confirmation` (attempt 1, key banking-040-at-03:read-confirmation:11).
-45. Note from `read-confirmation`: event 2 (Mara Ellison): I need a record for this particular payment to give my repair contractor. I can see HV-040 in my history, but I need a document showing its stage; I understand that the contractor’s confirmation of receipt is separate. [facts: confirmation='none', instructed_outside_portal=False]
-46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-47. `confirmation`: not known → none (by `read-confirmation`).
-48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-51. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-52. `request_type`: not known → document (by `triage`).
-53. `subject`: not known → document (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-56. `next_system`: not known → documents (by `asked-documents`).
-57. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
-58. State `TRIAGED` → `WAITING` (by `documents-waits`).
-59. The case closed in `WAITING`: **wait**.
+40. Rule `read-tariff` fired: state = READING → true (state=READING).
+41. Called `check_tariff` (attempt 1, key banking-040-at-03:read-tariff:10).
+42. `check_tariff` found {}.
+43. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+44. Called `check_bank_actions` (attempt 1, key banking-040-at-03:read-bank-actions:11).
+45. `check_bank_actions` found {}.
+46. Rule `read-registration` fired: state = READING → true (state=READING).
+47. Called `check_registration` (attempt 1, key banking-040-at-03:read-registration:12).
+48. `check_registration` found {}.
+49. Rule `read-confirmation` fired: state = READING → true (state=READING).
+50. Called `check_confirmation` (attempt 1, key banking-040-at-03:read-confirmation:13).
+51. Note from `read-confirmation`: event 2 (Mara Ellison): I need a record for this particular payment to give my repair contractor. I can see HV-040 in my history, but I need a document showing its stage; I understand that the contractor’s confirmation of receipt is separate. [facts: confirmation='none', instructed_outside_portal=False]
+52. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+53. `confirmation`: not known → none (by `read-confirmation`).
+54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+55. Rule `triage` fired: state = READING → true (state=READING).
+56. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+57. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+58. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+59. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.
+60. `request_type`: not known → question (by `triage`).
+61. `credentials_requested`: not known → False (by `triage`).
+62. `joint_holder_change`: not known → False (by `triage`).
+63. `subject`: not known → document (by `triage`).
+64. State `READING` → `TRIAGED` (by `triage`).
+65. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+66. `next_system`: not known → documents (by `asked-documents`).
+67. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
+68. State `TRIAGED` → `WAITING` (by `documents-waits`).
+69. The case closed in `WAITING`: **wait**.
+70. The agent asked for `ask_system` {"system": "documents"}.
+71. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
+72. The agent asked for `escalate` {"note": "Customer Mara Ellison (unverified, secure chat) asks for a bank record/document of outgoing £74.00 payment ref HV-040, dated 14 July 2025, status SENT, to share as evidence with a contractor. She understands receipt confirmation by the contractor is separate. Documents lookup already done, but no document_ready result is recorded, and the case is in WAITING so the documents system can't be queried again. Needs identity verification and a person to confirm whether a payment record can be issued. Do not state anything beyond the SENT status."}.
+73. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-3 calls, 5509 tokens in, 154 out, 4.361 s, cost $0.0099; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 14252 tokens in, 1174 out, 12.013 s, cost $0.0358; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system for the record of payment HV-040. Its answer hasn't come back yet, so the case is waiting and I'm not taking any further step now. Once the answer arrives, the reply to Mara can say what the record shows.
+> I couldn't move this case forward, and it is still waiting.
+> 
+> - **Documents check:** My request to the documents system was refused because the case is in WAITING, not TRIAGED. The desk had already asked documents once, and that left no result on whether a document is ready.
+> - **Escalation:** The escalation to a person was refused for the same reason.
+> - **Customer:** Nothing has been sent to Mara Ellison, and no document has been issued.
+> - **Verification:** She is not verified.
+> - **What the record shows:** The only status on record for HV-040 (£74.00, 14 July 2025) is SENT. Nothing shows whether the contractor has received it.
+> 
+> The case is final in WAITING, so it will be handed to a person.

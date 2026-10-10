@@ -38,37 +38,47 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-documents` fired: state = READING → true (state=READING).
 35. Called `check_documents` (attempt 1, key banking-004-at-02:read-documents:9).
 36. `check_documents` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-004-at-02:read-registration:10).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-004-at-02:read-confirmation:11).
-42. Note from `read-confirmation`: event 2 (Mara Ellery): I am the account holder and this was my transfer. Please tell me why it was not completed; the portal shows the status but no reason. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-48. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-49. `request_type`: not known → reason (by `triage`).
-50. `subject`: not known → transfer (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-53. `next_system`: not known → payment (by `route-payment`).
-54. The agent asked for `ask_system` {"system": "payment"}.
-55. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=reason).
-56. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-004-at-02:do-ask:15).
-59. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+37. Rule `read-tariff` fired: state = READING → true (state=READING).
+38. Called `check_tariff` (attempt 1, key banking-004-at-02:read-tariff:10).
+39. `check_tariff` found {}.
+40. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+41. Called `check_bank_actions` (attempt 1, key banking-004-at-02:read-bank-actions:11).
+42. `check_bank_actions` found {}.
+43. Rule `read-registration` fired: state = READING → true (state=READING).
+44. Called `check_registration` (attempt 1, key banking-004-at-02:read-registration:12).
+45. `check_registration` found {}.
+46. Rule `read-confirmation` fired: state = READING → true (state=READING).
+47. Called `check_confirmation` (attempt 1, key banking-004-at-02:read-confirmation:13).
+48. Note from `read-confirmation`: event 2 (Mara Ellery): I am the account holder and this was my transfer. Please tell me why it was not completed; the portal shows the status but no reason. [facts: confirmation='none', instructed_outside_portal=False]
+49. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+50. `confirmation`: not known → none (by `read-confirmation`).
+51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+52. Rule `triage` fired: state = READING → true (state=READING).
+53. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+54. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+55. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+56. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+57. `request_type`: not known → question (by `triage`).
+58. `credentials_requested`: not known → False (by `triage`).
+59. `joint_holder_change`: not known → False (by `triage`).
+60. `subject`: not known → transfer (by `triage`).
+61. State `READING` → `TRIAGED` (by `triage`).
+62. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+63. `next_system`: not known → payment (by `route-payment`).
+64. The agent asked for `ask_system` {"system": "payment"}.
+65. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+66. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+67. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+68. Called `ask_system` (attempt 1, key banking-004-at-02:do-ask:17).
+69. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
+70. `ask_system` found {}.
+71. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+72. The case closed in `ASKED`: **ask_system**.
+73. The agent asked for `reply` {}.
+74. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=transfer); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).
+75. The agent asked for `escalate` {"note": "Verified customer Mara Ellery asks why her 14 July 2025 transfer to Northmere Housing Co-operative shows as not completed in the portal. The payment system was queried, but no payment_status or failure reason was recorded in the case, and the case is now closed at ASKED. A person needs to check the payment record and explain the reason to the customer."}.
+76. Refused `escalate` in `ASKED`: agent-escalates: state = TRIAGED is false (state=ASKED).
 
 ## Model calls
 
-3 calls, 5230 tokens in, 131 out, 3.607 s, cost $0.0091; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've asked the payment system why the 14 July transfer to Northmere Housing Co-operative wasn't completed. The answer will come back to this case, and we can reply to you once we have it.
+5 calls, 11639 tokens in, 572 out, 6.925 s, cost $0.0245; models: claude-sonnet-5-5, jev-1.13.0.

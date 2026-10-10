@@ -38,39 +38,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-documents` fired: state = READING → true (state=READING).
 35. Called `check_documents` (attempt 1, key banking-023-at-02:read-documents:9).
 36. `check_documents` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-023-at-02:read-registration:10).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-023-at-02:read-confirmation:11).
-42. Note from `read-confirmation`: event 2 (Mara Ellery): After completing your identification checks, I’m calling to report that I don’t recognise the Fern & Finch Books purchase. Please raise it with the card team and tell me how to protect my card safely. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-48. Classifier (claude claude-haiku-5-5) on `subject`: card_payment → card_payment.
-49. `request_type`: not known → register (by `triage`).
-50. `subject`: not known → card_payment (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
-53. `next_system`: not known → card (by `route-card`).
-54. The agent asked for `submit_request` {}.
-55. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-56. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-57. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-58. Called `register_request` (attempt 1, key banking-023-at-02:do-request:15).
-59. Action in the world: `register_request` {"team": "card", "about": "card_payment"}.
-60. `register_request` found {}.
-61. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-62. The case closed in `REQUESTED`: **submit_request**.
+37. Rule `read-tariff` fired: state = READING → true (state=READING).
+38. Called `check_tariff` (attempt 1, key banking-023-at-02:read-tariff:10).
+39. `check_tariff` found {}.
+40. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+41. Called `check_bank_actions` (attempt 1, key banking-023-at-02:read-bank-actions:11).
+42. `check_bank_actions` found {}.
+43. Rule `read-registration` fired: state = READING → true (state=READING).
+44. Called `check_registration` (attempt 1, key banking-023-at-02:read-registration:12).
+45. `check_registration` found {}.
+46. Rule `read-confirmation` fired: state = READING → true (state=READING).
+47. Called `check_confirmation` (attempt 1, key banking-023-at-02:read-confirmation:13).
+48. Note from `read-confirmation`: event 2 (Mara Ellery): After completing your identification checks, I’m calling to report that I don’t recognise the Fern & Finch Books purchase. Please raise it with the card team and tell me how to protect my card safely. [facts: confirmation='none', instructed_outside_portal=False]
+49. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+50. `confirmation`: not known → none (by `read-confirmation`).
+51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+52. Rule `triage` fired: state = READING → true (state=READING).
+53. Classifier (jev jev-latest) on `request_type`: register, confidence 0.99 → register.
+54. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+55. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+56. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+57. `request_type`: not known → register (by `triage`).
+58. `credentials_requested`: not known → False (by `triage`).
+59. `joint_holder_change`: not known → False (by `triage`).
+60. `subject`: not known → card_payment (by `triage`).
+61. State `READING` → `TRIAGED` (by `triage`).
+62. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
+63. `next_system`: not known → card (by `route-card`).
+64. The agent asked for `submit_request` {}.
+65. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+66. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+67. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+68. Called `register_request` (attempt 1, key banking-023-at-02:do-request:17).
+69. Action in the world: `register_request` {"team": "card", "about": "card_payment"}.
+70. `register_request` found {}.
+71. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+72. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 5545 tokens in, 486 out, 5.732 s, cost $0.0127; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8354 tokens in, 614 out, 6.689 s, cost $0.0184; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed your dispute about the £38.40 Fern & Finch Books purchase on 14 July 2025 to the card team to investigate. The bank doesn't decide the outcome of that review, and the purchase showing in your transaction list doesn't establish who made it.
+> I've passed your dispute about the £38.40 Fern & Finch Books purchase on 14 July 2025 to the card team to investigate. The request was accepted, and the case is now at the "requested" stage. I haven't blocked your card or made any other change to it.
 > 
-> I haven't blocked or changed anything on your card. You haven't asked me to block it, and I haven't given you any card-protection steps yet. If you want the card blocked, tell us and we'll pass that instruction on. Never share your PIN or password with anyone, including anyone claiming to be from the bank.
+> The reply to you should cover how to protect your card safely. If you want to stop any further use of it while the team looks into this, you can tell us to block the card. We will never ask you for your PIN or password.

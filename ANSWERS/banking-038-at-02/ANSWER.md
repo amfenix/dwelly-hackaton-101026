@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing through secure chat, asked for an account confirmation document to be made available in her own secure portal and not sent to anyone else. The desk could not verify her identity, so it routed the request to the documents system and asked it about the document. Nothing has been issued or sent, and the documents system's answer has not come back, so what happens next depends on that answer, and her identity is still unverified.
+Mara Ellison, writing through secure chat, asked for an account confirmation document to be made available in her own secure portal and not sent to anyone else. She is not verified. The desk classified this as a question about a document and sent a query to the documents system, which accepted it and returned nothing further, so the case closed in the asked state. The record shows no answer from the documents system yet, and no document has been provided to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,8 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - document_ready = false → not known (document_ready=not known)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +62,10 @@ Facts established:
 - subject: **document**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

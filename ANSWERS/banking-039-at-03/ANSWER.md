@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nerys Wren, a verified customer using the secure portal, asked for the permitted session extract for her profile to be delivered through the portal. The desk classified it as a document request about access and asked the access system for the information. That system's answer has not come back, so nothing has been sent to the portal yet, and the case is waiting on that reply.
+Nerys Wren, a verified customer writing through the secure portal, asked for the permitted session extract for her profile to be delivered in the portal. The desk classified it as an access question and sent a query to the access system, and the case closed at that step. The record shows no response from the access system yet, so nothing has been delivered to her, and the delivery is still outstanding.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -52,7 +52,7 @@ How the case moved:
   - next_system = access → true (next_system=access)
   - next_system absent → false (next_system=access)
   - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -63,15 +63,17 @@ Facts established:
 - channel: **secure_portal**
 - verified: **True**
 - subject: **access**
-- confirmation: **none**
+- confirmation: **unprompted**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: requester='Nerys Wren', role='customer', channel='secure_portal', verified=True]
-- event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='none', instructed_outside_portal=False]
+- event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='unprompted', instructed_outside_portal=False]
 
 ## Escalated
 

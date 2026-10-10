@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing over secure chat as an unverified customer, asked what category of restriction caused their card to be declined at a grocery payment and whether it has been lifted. The desk asked the card system and is waiting for its answer, so it has taken no other action and sent no reply to Rowan. What is left is the card system's response, which the record does not yet contain, so nothing about the restriction has been disclosed to Rowan.
+Rowan Ellery, writing over secure chat and not verified, asked which category of restriction caused a card decline at a grocery payment and whether it has been lifted. The desk classed it as a card question, noted that the card system had been asked, and left the case waiting because no answer from that system is in yet. A second request to ask the card system was refused because the case was already in the waiting state, so nothing was answered or disclosed to Rowan, and what remains for a person is the card system's reply on the restriction category and whether it has been lifted.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -62,8 +62,10 @@ Facts established:
 - card_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -78,6 +80,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card)
 
 ## Final result
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked, over secure chat, for her account confirmation document to be made available only in her own secure portal. The desk found that account-confirmation-038.pdf is ready and replied in the chat saying it is available, while noting that this does not confirm it was downloaded or that funds were credited, and that no email was sent. The record shows she was not verified in this chat, and nothing further is left open for a person.
+Mara Ellison asked, over secure chat, for an account confirmation document to be available in her own secure portal and not sent to anyone else. The desk found account-confirmation-038.pdf ready and replied in the chat that it is available, noting that this does not confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied; she is not verified on this chat, and nothing else is left for a person in the record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,8 +55,9 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
@@ -72,8 +73,10 @@ Facts established:
 - document_name: **account-confirmation-038.pdf**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

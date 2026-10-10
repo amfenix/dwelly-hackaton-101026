@@ -1,10 +1,10 @@
 # Case banking-046-at-04: Revoke a former employee’s role
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: reply**  (final state `REPLIED`)
 
 ## Summary
 
-Mara Ellery, on a verified call, asked the desk to revoke former employee Owen Bell's Payroll Approver role for Larkmere Studio Ltd and to keep the review of earlier operations separate. The business system had already been asked and returned a status of "OTHER", the desk's attempt to submit the request was refused, and the case was escalated, so the revocation has not been done by the desk. A person still needs to review the business record and handle the revocation.
+Mara Ellery, on a verified call, confirmed that Owen Bell is a former employee and instructed the bank to revoke his Payroll Approver role. The desk passed the instruction to the business administration process, which reported the role as revoked, and the desk replied to her by verified call saying the business record shows the role as revoked and that no other role or permission change was made or established. The case is closed with nothing left for a person, and the reply did not address her request to keep the review of earlier operations separate.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,10 @@ Case reference: id banking-046-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `reply` (to: Mara Ellery, channel: verified_call), by rule `do-reply`
+
+  > The business record shows the role as revoked. This does not establish any other role or permission change. No additional approval or role change was made.
+
 
 ## Decision and why
 
@@ -50,8 +53,14 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `business-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=instruction)
+  - next_system = business → true (next_system=business)
+  - business_status present → true (business_status=ROLE_REVOKED)
+  - not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=ROLE_REVOKED, subject=role)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -61,33 +70,29 @@ Facts established:
 - verified: **True**
 - subject: **role**
 - business_asked: **True**
-- business_status: **OTHER**
+- business_status: **ROLE_REVOKED**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **business**
-- reason: **AGENT_ESCALATED**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 2 (Mara Ellery): My identity and administrator mandate have been checked. I confirm that Owen Bell is a former employee and instruct H&V to revoke his Payroll Approver role; please keep the review of any earlier operations separate. [facts: requester='Mara Ellery', role='customer', channel='verified_call', verified=True]
 - event 3 (H&V admin process): I am submitting the verified administrator’s instruction to revoke Owen Bell’s Payroll Approver role for Larkmere Studio Ltd. The administrator’s mandate and the role to be removed have been checked. [facts: business_asked=True]
-- event 4 (H&V admin process): Revocation instruction processed. The admin-log status is available to the business administrator in the secure portal. [facts: business_status='OTHER']
+- event 4 (H&V admin process): Revocation instruction processed. The admin-log status is available to the business administrator in the secure portal. [facts: business_status='ROLE_REVOKED']
 - event 2 (Mara Ellery): My identity and administrator mandate have been checked. I confirm that Owen Bell is a former employee and instruct H&V to revoke his Payroll Approver role; please keep the review of any earlier operations separate. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
 - nothing
 
-Requests the policy refused:
-
-- `submit_request`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: business_asked absent is false (business_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
-
 ## Final result
 
-escalate (ESCALATED)
+reply (REPLIED)

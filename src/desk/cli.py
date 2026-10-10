@@ -138,7 +138,7 @@ def parser() -> argparse.ArgumentParser:
     p.add_argument("--out", default=None, help="ANSWERS (replay/ANSWERS for a replay)")
     p.add_argument("--traces", default=None, help="traces (replay/traces for a replay)")
     p.add_argument("--results", default=None, help="results.jsonl (replay/results.jsonl for a replay)")
-    p.add_argument("--classifier", choices=["claude", "jev"], default="claude")
+    p.add_argument("--classifier", choices=["claude", "jev"], default="jev")
     p.add_argument("--classifier-model", default=None)
     p.add_argument("--generator-model", default="claude-sonnet-5-5")
     p.add_argument("--agent-model", default=None, help="defaults to the policy's agent.model")

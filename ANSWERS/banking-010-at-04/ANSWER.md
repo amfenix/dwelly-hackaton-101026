@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, who is not verified, asked over secure chat whether the incoming £42.80 entry relates to her Northmere Home Supplies transfer, as Northmere had said it might be returned. The desk found an incoming credit of 42.80 and replied that the record shows an incoming payment of that amount, that this does not establish the sender's payment status, and that no payment was changed. Nothing is left open in the record, though the reply does not confirm the credit is the refund for that specific transfer.
+Elowen Marr, writing over secure chat (not verified), asked the desk to check whether an incoming £42.80 entry was for the specific Northmere Home Supplies transfer that might be returned. The desk found an incoming entry for 42.80 and replied that the incoming-payment record shows that amount, that this does not establish the sender's payment status, and that no payment was changed. The reply did not say the entry is the refund for that transfer, even though one journal note in the record describes it that way, and the case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `incoming-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = incoming → true (next_system=incoming)
   - incoming_found present → true (incoming_found=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -74,8 +75,10 @@ Facts established:
 - incoming_amount: **42.80**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

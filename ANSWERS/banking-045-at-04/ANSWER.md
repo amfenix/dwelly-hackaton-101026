@@ -1,10 +1,10 @@
 # Case banking-045-at-04: New employee access request
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Nadia Bell, writing as a customer over secure chat, followed up on an access request that still needs the company administrator's approval. The desk escalated the case without taking any action, because only the person with that authority can approve it and the desk does not act for them. No access has been granted, and the decision remains with the company administrator.
+Nadia Bell, an unverified customer writing over secure chat, asked what happens next with her access request, which still needs the company administrator's approval. The desk found that the bank had already sent the request to the administrator through the secure portal and that no access has been granted, so it took no action and closed the case as waiting. Nothing is left for the desk to do; the request now depends on the administrator's decision.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -50,10 +50,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: rule `no-authority` — Only the person with the authority may approve this; the desk does not act for them.
+- `TRIAGED` → `WAITING`: rule `already-forwarded` — The request is with the person whose approval it needs.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = authority → true (request_type=authority)
-  - role != business_admin → true (role=customer)
+  - bank_forwarded → true (bank_forwarded=True)
 
 Facts established:
 
@@ -62,20 +62,23 @@ Facts established:
 - channel: **secure_chat**
 - verified: **False**
 - subject: **role**
+- bank_forwarded: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **authority**
-- reason: **NO_AUTHORITY**
+- next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 2 (Nadia Bell): I’m following up to find out the next step for the access request. I still need the company administrator to approve it. [facts: requester='Nadia Bell', role='customer', channel='secure_chat', verified=False]
+- event 4 (H&V business support agent): the bank already acted: I’ve sent the new-user access request to you through the secure portal for approval. No access has been granted; the request is awaiting your decision.
 - event 4 (H&V business support agent): I’ve sent the new-user access request to you through the secure portal for approval. No access has been granted; the request is awaiting your decision. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
@@ -83,4 +86,4 @@ A person picking this up has the facts above, the actions already taken, and the
 
 ## Final result
 
-escalate (ESCALATED)
+wait (WAITING)

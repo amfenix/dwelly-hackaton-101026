@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat and not verified, asked whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk classified it as a status request about a card and sent a query to the card system. The case closed in the asked state with no answer recorded yet, so dispatch and delivery remain unconfirmed and the reply to her is still outstanding.
+Mara Ellison, writing over secure chat and not verified, asked the desk to check whether dispatch had been registered for her replacement card, since the portal only said the request was accepted. The desk classed this as a question about her card and sent a query to the card system, and the case closed in the asked state. The record contains no answer from the card system yet, so nobody has replied to Mara and the dispatch status is still unknown.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority, instruction] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **card**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

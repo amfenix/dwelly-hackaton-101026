@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren, an unverified customer writing in by external message, asked what active instructions are linked to her account and what to consider before closing it after she moves her regular payments. The desk classed this as a request for a record fact about a standing order and sent a query to the recurring payments system. That query is the only action taken, no reply has come back, and nothing has yet been sent to Elena, so a person still needs to answer her once the system responds.
+Elena Wren, an unverified customer writing by external message, asked what active instructions are linked to her account and what to consider before closing it after she moves her regular payments. The desk classified this as a question about standing orders and asked the recurring payments system about them; no answer has come back in the record. Nothing else was done, and the record does not say whether anyone will reply to Elena, so that is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = recurring → true (next_system=recurring)
   - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -57,8 +57,10 @@ Facts established:
 - subject: **standing_order**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

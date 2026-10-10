@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Fenwick, a viewer who was not verified and wrote over secure chat, said she uploaded batch HV-042 for Fenwick Workshop, couldn't see which rows need attention, and asked for help accessing the report. The desk classified this as a document request about a batch and sent a query about HV-042 to the payment system; that was the only action taken. No report has been sent to her and nothing on the batch was changed, so the case is waiting on the payment system's answer.
+Nadia Fenwick, a viewer writing over secure chat, asked for help seeing which rows in batch HV-042 need attention. The desk treated it as a question about a batch and sent it to the payment system, then closed the case at that step. The payment system returned nothing, so no row-level report has been given, and her identity is still marked unverified, which a person would need to settle before any report is shared.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -62,8 +62,10 @@ Facts established:
 - reference: **HV-042**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

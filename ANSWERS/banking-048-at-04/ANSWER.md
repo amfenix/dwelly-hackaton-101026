@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison of Alder Quay Studio Ltd. asked over secure chat whether an identifiable credit had reached the account for a buyer's workshop invoice payment. The desk checked the incoming account activity, found no matching credit, and replied in the chat that none was found, that this does not establish the sender didn't pay, and that no payment was made. The case is closed with that reply; the requester remained unverified, and the record shows no further action or follow-up left for a person.
+Mara Ellison of Alder Quay Studio Ltd., writing over secure chat, asked the desk to check whether an identifiable credit for a buyer's workshop invoice payment had reached the account. The desk checked the incoming account activity, found no matching credit, and replied in the chat that none was found, that this does not establish the sender didn't pay, and that no payment was made. The case is closed as replied; the requester was not verified, and nothing in the record confirms the buyer actually sent a payment, with no further step recorded for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `incoming-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = incoming → true (next_system=incoming)
   - incoming_found present → true (incoming_found=False)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -71,8 +72,10 @@ Facts established:
 - incoming_found: **False**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

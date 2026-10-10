@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, who was not verified, asked over secure chat whether the incoming £42.80 entry from Northmere Home Supplies matches the specific transfer that company said might be returned. The desk treated it as a status request and asked the incoming payments system about that payment, and the case closed with that question sent. No answer is recorded yet, so nothing has been confirmed about whether the entry matches, and a person still has to deal with the system's reply.
+Elowen Marr asked over secure chat whether an incoming £42.80 entry from Northmere Home Supplies relates to the specific transfer that company said might be returned. The desk classed it as a question about an incoming payment and put it to the incoming payments system, and the case closed at that step. The record shows no answer returned, so whether the entry matches that transfer is still open, and her identity is still marked unverified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = incoming → true (next_system=incoming)
   - next_system absent → false (next_system=incoming)
   - incoming_asked absent → true (incoming_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -63,8 +63,10 @@ Facts established:
 - counterparty: **Northmere Home Supplies**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

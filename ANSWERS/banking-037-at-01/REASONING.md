@@ -30,34 +30,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 26. Rule `read-documents` fired: state = READING → true (state=READING).
 27. Called `check_documents` (attempt 1, key banking-037-at-01:read-documents:9).
 28. `check_documents` found {}.
-29. Rule `read-registration` fired: state = READING → true (state=READING).
-30. Called `check_registration` (attempt 1, key banking-037-at-01:read-registration:10).
-31. `check_registration` found {}.
-32. Rule `read-confirmation` fired: state = READING → true (state=READING).
-33. Called `check_confirmation` (attempt 1, key banking-037-at-01:read-confirmation:11).
-34. `check_confirmation` found {}.
-35. Rule `triage` fired: state = READING → true (state=READING).
-36. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-37. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
-38. `request_type`: not known → change (by `triage`).
-39. `subject`: not known → profile (by `triage`).
-40. State `READING` → `TRIAGED` (by `triage`).
-41. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
-42. `next_system`: not known → access (by `route-access`).
-43. The agent asked for `ask_system` {"system": "access"}.
-44. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change).
-45. The agent asked for `escalate` {"note": "Customer asks to correct the name on their H&V profile from \"Elowen Mar\" to \"Elowen Marr\". It is a profile data change, so the access system cannot be queried for it. The bank can't change a legal name on its own authority. A person needs to verify the customer's identity and supporting documents, then make the correction or send it to the customer's secure portal to confirm. Nothing has been changed yet."}.
-46. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
-47. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
-48. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
-49. The case closed in `ESCALATED`: **escalate**.
+29. Rule `read-tariff` fired: state = READING → true (state=READING).
+30. Called `check_tariff` (attempt 1, key banking-037-at-01:read-tariff:10).
+31. `check_tariff` found {}.
+32. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+33. Called `check_bank_actions` (attempt 1, key banking-037-at-01:read-bank-actions:11).
+34. `check_bank_actions` found {}.
+35. Rule `read-registration` fired: state = READING → true (state=READING).
+36. Called `check_registration` (attempt 1, key banking-037-at-01:read-registration:12).
+37. `check_registration` found {}.
+38. Rule `read-confirmation` fired: state = READING → true (state=READING).
+39. Called `check_confirmation` (attempt 1, key banking-037-at-01:read-confirmation:13).
+40. `check_confirmation` found {}.
+41. Rule `triage` fired: state = READING → true (state=READING).
+42. Classifier (jev jev-latest) on `request_type`: change, confidence 0.46 → change.
+43. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+44. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+46. `request_type`: not known → change (by `triage`).
+47. `credentials_requested`: not known → False (by `triage`).
+48. `joint_holder_change`: not known → False (by `triage`).
+49. `subject`: not known → profile (by `triage`).
+50. State `READING` → `TRIAGED` (by `triage`).
+51. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
+52. `next_system`: not known → access (by `route-access`).
+53. The agent asked for `ask_system` {"system": "access"}.
+54. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
+55. The agent asked for `submit_request` {}.
+56. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=change); register-what-fits-no-type: request_type = other is false (request_type=change); payment-instruction: next_system = payment is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); recurring-instruction: next_system = recurring is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); access-instruction: verified is not known (verified=not known); request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change).
+57. The agent asked for `escalate` {"note": "Customer asks to correct the profile name from \"Elowen Mar\" to \"Elowen Marr\". This is a profile change request. Not a credentials request and not a joint-holder change. Asking the access system and submitting the request were both refused by policy, and the customer's identity is not verified. A person needs to verify the customer and handle the legal-name correction, which usually needs supporting ID."}.
+58. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
+59. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
+60. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
+61. The case closed in `ESCALATED`: **escalate**.
 
 ## Model calls
 
-5 calls, 10426 tokens in, 607 out, 9.221 s, cost $0.0243; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've handed your name correction to a person at the bank. Nothing on your profile has changed yet.
-> 
-> Changing the name on a profile is not something I can do myself. A colleague will need to check your identity and any supporting documents before correcting "Elowen Mar" to "Elowen Marr". They may then send the change to your secure portal for you to confirm.
+5 calls, 10877 tokens in, 685 out, 5.972 s, cost $0.0242; models: claude-sonnet-5-5, jev-1.13.0.

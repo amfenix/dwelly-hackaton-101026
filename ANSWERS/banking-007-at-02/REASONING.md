@@ -35,37 +35,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-007-at-02:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-007-at-02:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-007-at-02:read-confirmation:11).
-39. Note from `read-confirmation`: event 2 (Mara Ellwood): I can see the sent status, but I need to know what stage the transfer has reached. Can you check whether there is confirmation that the beneficiary received it? [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-45. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-46. `request_type`: not known → status (by `triage`).
-47. `subject`: not known → transfer (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-50. `next_system`: not known → payment (by `route-payment`).
-51. The agent asked for `ask_system` {"system": "payment"}.
-52. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
-53. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-007-at-02:do-ask:15).
-56. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-007-at-02:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-007-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-007-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-007-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Mara Ellwood): I can see the sent status, but I need to know what stage the transfer has reached. Can you check whether there is confirmation that the beneficiary received it? [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → transfer (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+60. `next_system`: not known → payment (by `route-payment`).
+61. The agent asked for `ask_system` {"system": "payment"}.
+62. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-007-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7470 tokens in, 202 out, 4.635 s, cost $0.0143; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7804 tokens in, 513 out, 5.229 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payments system for the current status of your international transfer, including whether the beneficiary's receipt has been confirmed. The answer isn't back yet. So far, the only thing on record is that H&V has marked the transfer as sent. Nothing confirms that the beneficiary has received it. I'll reply once the payments system answers.
+> I've queried the payment system about your international transfer. The case is now closed at that step. The payment system hasn't returned any details on the transfer yet, so I can't tell you its current stage.
+> 
+> The records show no confirmation that the beneficiary has received the money. H&V has recorded the transfer as sent, and nothing more is on file. I'm not claiming it has arrived, and I'm not claiming it hasn't.

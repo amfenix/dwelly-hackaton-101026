@@ -35,37 +35,47 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-011-at-02:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-011-at-02:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-011-at-02:read-confirmation:11).
-39. Note from `read-confirmation`: event 2 (Mara Ellison): I can see that my monthly household contribution standing order is active, but I cannot remember when it is next due. Please check the date for me; I am planning my budget. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-45. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-46. `request_type`: not known → record_fact (by `triage`).
-47. `subject`: not known → standing_order (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-50. `next_system`: not known → recurring (by `route-recurring`).
-51. The agent asked for `ask_system` {"system": "recurring"}.
-52. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
-53. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-011-at-02:do-ask:15).
-56. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-011-at-02:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-011-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-011-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-011-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Mara Ellison): I can see that my monthly household contribution standing order is active, but I cannot remember when it is next due. Please check the date for me; I am planning my budget. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+53. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → standing_order (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+60. `next_system`: not known → recurring (by `route-recurring`).
+61. The agent asked for `ask_system` {"system": "recurring"}.
+62. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-011-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7435 tokens in, 229 out, 4.696 s, cost $0.0145; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5340 tokens in, 485 out, 4.407 s, cost $0.0111; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system, which holds standing order records, for the next run date of your monthly household contribution standing order. The answer isn't back yet. I'll reply once it is, so you can plan your budget.
+> I've asked the recurring payments system for the next run date of the standing order. The case is now waiting on that answer, and the reply to the customer comes once it arrives.

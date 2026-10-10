@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira asked to raise her monthly standing order to Westmere Garden Cooperative from £42.00 to £68.00, but she had not yet authorised the change. Because a change must be confirmed by the customer in the secure portal and no confirmation existed, the desk sent it to her for confirmation and closed the case in that state. The standing order stays at £42.00 until Mira confirms the change herself in the portal.
+Mira asked to raise her monthly standing order to Westmere Garden Cooperative from £42.00 to £68.00. She had not yet authorised the change, and the desk found no confirmation on record, so it sent her a confirmation request instead of making the change. The change has not been made and waits on Mira confirming it in the secure portal; the record shows no other action taken and no errors.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,6 +42,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = none → true (confirmation=none)
+  - registration_asked absent → true (registration_asked=not known)
 - `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
   - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 
@@ -53,6 +54,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **change**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, writing over secure chat and not verified as the requester, said the acquiring report for 1–7 July 2025 wasn't showing as available and asked for the file request to be escalated. The desk checked the documents system, found the report was already placed in the secure portal, and replied that the document is available, without escalating. The reply also said this doesn't confirm the document was downloaded or that funds were credited, and that no email was sent. The case is closed with nothing left for a person.
+Mara Venn, writing on secure chat as the shop's authorised manager, said the acquiring report for 1–7 July 2025 wasn't showing as available and asked for the file request to be escalated. The desk checked the documents system, which showed the report had already been placed in the secure portal, and replied on secure chat that the document is available, noting this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. Mara was not verified on this chat, and the desk made no account changes; nothing is left for a person in the record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,8 +55,9 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
@@ -72,8 +73,10 @@ Facts established:
 - document_ready: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

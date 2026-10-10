@@ -33,37 +33,47 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 29. Rule `read-documents` fired: state = READING → true (state=READING).
 30. Called `check_documents` (attempt 1, key banking-001-at-01:read-documents:9).
 31. `check_documents` found {}.
-32. Rule `read-registration` fired: state = READING → true (state=READING).
-33. Called `check_registration` (attempt 1, key banking-001-at-01:read-registration:10).
-34. `check_registration` found {}.
-35. Rule `read-confirmation` fired: state = READING → true (state=READING).
-36. Called `check_confirmation` (attempt 1, key banking-001-at-01:read-confirmation:11).
-37. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): One-off transfer to Alder & Reed Workshop: debit shown in your account activity. [facts: confirmation='none', instructed_outside_portal=False]
-38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-39. `confirmation`: not known → none (by `read-confirmation`).
-40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-43. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-44. `request_type`: not known → status (by `triage`).
-45. `subject`: not known → transfer (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-48. `next_system`: not known → payment (by `route-payment`).
-49. The agent asked for `ask_system` {"system": "payment"}.
-50. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
-51. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-53. Called `ask_system` (attempt 1, key banking-001-at-01:do-ask:15).
-54. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
-55. `ask_system` found {}.
-56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-57. The case closed in `ASKED`: **ask_system**.
+32. Rule `read-tariff` fired: state = READING → true (state=READING).
+33. Called `check_tariff` (attempt 1, key banking-001-at-01:read-tariff:10).
+34. `check_tariff` found {}.
+35. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+36. Called `check_bank_actions` (attempt 1, key banking-001-at-01:read-bank-actions:11).
+37. `check_bank_actions` found {}.
+38. Rule `read-registration` fired: state = READING → true (state=READING).
+39. Called `check_registration` (attempt 1, key banking-001-at-01:read-registration:12).
+40. `check_registration` found {}.
+41. Rule `read-confirmation` fired: state = READING → true (state=READING).
+42. Called `check_confirmation` (attempt 1, key banking-001-at-01:read-confirmation:13).
+43. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): One-off transfer to Alder & Reed Workshop: debit shown in your account activity. [facts: confirmation='none', instructed_outside_portal=False]
+44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+45. `confirmation`: not known → none (by `read-confirmation`).
+46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+47. Rule `triage` fired: state = READING → true (state=READING).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `credentials_requested`: 0.03 → False.
+50. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+51. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+52. `request_type`: not known → question (by `triage`).
+53. `credentials_requested`: not known → False (by `triage`).
+54. `joint_holder_change`: not known → False (by `triage`).
+55. `subject`: not known → transfer (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+58. `next_system`: not known → payment (by `route-payment`).
+59. The agent asked for `ask_system` {"system": "payment"}.
+60. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+61. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+63. Called `ask_system` (attempt 1, key banking-001-at-01:do-ask:17).
+64. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
+65. `ask_system` found {}.
+66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+67. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 5120 tokens in, 225 out, 6.17 s, cost $0.0099; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5172 tokens in, 416 out, 4.868 s, cost $0.0101; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system whether H&V sent the £420.00 transfer to Alder & Reed Workshop. Nothing in the case yet confirms it was sent. The debit in your account activity doesn't establish that on its own. I'll reply once the payment system answers.
+> I've asked the payment system whether Harrow & Vale sent the £420 one-off transfer to Alder & Reed Workshop. The request was accepted. I don't have an answer yet, so I can't say whether the payment was sent. The only record so far is the debit in the account activity.

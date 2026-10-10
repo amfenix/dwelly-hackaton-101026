@@ -1,10 +1,10 @@
 # Case banking-034-at-03: Explaining a service fee
 
-**Decision: ask_system**  (final state `ASKED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Mara Ellery, who was not verified and wrote through secure chat, asked the desk to escalate a £3.20 fee on a withdrawal and to check which tariff entry applied and how it accounts for the amount. The desk classed this as a request to record a fact about a fee and sent a query about the £3.20 fee to the documents system, and the case closed in the asked state. The documents system's answer is not in the record, and the case was not escalated to a person.
+Mara Ellery, an unverified customer on secure chat, asked the desk to escalate and check which tariff entry produced the £3.20 fee on a withdrawal and how it accounts for the amount. The desk had already queried the tariff system, whose answer was not yet in, so it closed the case as "wait" in the WAITING state. The agent's later attempts to query the tariff system again and to escalate were both refused because the case was no longer in the TRIAGED state, so no escalation was made and no actions were taken. The tariff answer is still outstanding, and Mara's identity has not been verified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,7 +38,7 @@ Case reference: id banking-034-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `ask_system` (system: documents, about: fee, amount: 3.20), by rule `do-ask`
+- none
 
 ## Decision and why
 
@@ -46,15 +46,11 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `documents-ask` accepted it.
+- `TRIAGED` → `WAITING`: rule `tariff-waits` — The system was asked; its answer is not in yet.
   - state = TRIAGED → true (state=TRIAGED)
-  - args.system = documents → true (args.system=documents)
-  - next_system = documents → true (next_system=documents)
-  - next_system absent → false (next_system=documents)
-  - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
-- `ASK_PENDING` → `ASKED`: rule `do-ask`.
-  - state = ASK_PENDING → true (state=ASK_PENDING)
+  - next_system = tariff → true (next_system=tariff)
+  - tariff_asked → true (tariff_asked=True)
+  - tariff_status absent → true (tariff_status=not known)
 
 Facts established:
 
@@ -64,15 +60,19 @@ Facts established:
 - verified: **False**
 - subject: **fee**
 - amount: **3.20**
+- tariff_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
-- next_system: **documents**
+- request_type: **question**
+- next_system: **tariff**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: requester='Mara Ellery', role='customer', channel='secure_chat', verified=False]
 - event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: amount='3.20']
+- event 3 (H&V transaction records): I am starting the review by matching the recorded transaction type and processing date against the tariff in force on that date. Case HV-034; no refund or account change is authorised by this review. [facts: tariff_asked=True]
 - event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -83,6 +83,11 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=tariff); next_system = payment is false (next_system=tariff); next_system absent is false (next_system=tariff); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=tariff); next_system = incoming is false (next_system=tariff); next_system absent is false (next_system=tariff); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=tariff); next_system = recurring is false (next_system=tariff); next_system absent is false (next_system=tariff); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=tariff); next_system = card is false (next_system=tariff); next_system absent is false (next_system=tariff); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=tariff); next_system = access is false (next_system=tariff); next_system absent is false (next_system=tariff); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=tariff); next_system = business is false (next_system=tariff); next_system absent is false (next_system=tariff); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=tariff); next_system = documents is false (next_system=tariff); next_system absent is false (next_system=tariff); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=tariff); tariff_asked absent is false (tariff_asked=True)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
+
 ## Final result
 
-ask_system (ASKED)
+wait (WAITING)

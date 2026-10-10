@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren asked in secure chat which regular payments are still active on her account before she makes any closure plans. The desk asked the recurring payments system and is now waiting, because that system's answer hasn't come back, so no actions were taken and nothing was changed. What remains is for the reply to be written once the answer arrives, and the record still lists Elena as not verified even though she says she completed the account-holder checks.
+Elena Wren asked, over secure chat, which regular payments are still active before she makes any closure plans. The desk checked the recurring-payments system, found no answer back yet, and closed the case as "wait"; a second request to that system was refused because the case was already in a waiting state. Nothing has been answered or changed, and the record still shows her as not verified despite her saying she completed the account-holder checks, so a person needs to pick the case up once the recurring-payments answer arrives.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -62,8 +62,10 @@ Facts established:
 - recurring_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -78,6 +80,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring)
 
 ## Final result
 

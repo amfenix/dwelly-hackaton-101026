@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, who was not verified, asked through secure chat whether her Direct Debit mandate to Northmere Water Services is currently active, and said not to cancel it. The desk classified this as a request for a record fact and put the question to the recurring payments system, which returned nothing yet. Nothing was cancelled or changed, and the case closed in the asked state, so the answer from the recurring system is still outstanding.
+Mara Ellery asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, and said she did not want it cancelled. The desk classified this as a question about a direct debit and sent a query to the recurring payments system; nothing was cancelled or changed. No answer from that system is in the record, so the mandate's status is still unknown, and her identity remains unverified on this chat.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = recurring → true (next_system=recurring)
   - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -62,8 +62,10 @@ Facts established:
 - counterparty: **Northmere Water Services**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

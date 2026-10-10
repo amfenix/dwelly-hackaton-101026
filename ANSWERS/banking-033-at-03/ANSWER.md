@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked through secure chat for a CSV export of her transactions from 6 to 9 May 2025, to be made available in her secure portal. The desk classified it as a document request, asked the documents system for the export, and put the case in waiting because that system has not answered yet. No actions were taken beyond that, nothing confirms the file exists, and what is left is for the documents system's reply to arrive so she can be told whether it is available. The record also shows her requester identity as not verified.
+Mara Ellison, who is not yet verified, asked over secure chat for a CSV export of her transactions from 6 to 9 May 2025 and wanted to know when it would appear in her secure portal. The desk had already asked the documents system, but no answer has come back, so the case closed in WAITING with no reply sent to her. A second documents ask and an escalation to a person were both refused because the case was no longer in TRIAGED, so whether the export exists is still unknown and someone will need to check it and confirm her identity before telling her where to find it.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,8 +63,10 @@ Facts established:
 - documents_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -80,6 +82,11 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

@@ -218,7 +218,7 @@ the repository is fine: we train on them.
 To change:
 
 1. **Bring the attachments into the repository.** `cases.json` now points at files outside it
-   (`../HackatonPublicCases/Banking & Financial Services/031/attachments/statement-031.pdf`): the
+   (a relative path that climbs out of the repository to the cases folder): the
    path only works on the machine that ran the converter and shows its folder layout. Copy each
    attachment that is available at some point next to the generated cases, e.g.
    `track/attachments/<track slug>/<case>/<file>` (`track/attachments/banking/031/statement-031.pdf`),

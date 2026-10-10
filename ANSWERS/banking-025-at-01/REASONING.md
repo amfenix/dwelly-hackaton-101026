@@ -32,37 +32,47 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 28. Rule `read-documents` fired: state = READING → true (state=READING).
 29. Called `check_documents` (attempt 1, key banking-025-at-01:read-documents:9).
 30. `check_documents` found {}.
-31. Rule `read-registration` fired: state = READING → true (state=READING).
-32. Called `check_registration` (attempt 1, key banking-025-at-01:read-registration:10).
-33. `check_registration` found {}.
-34. Rule `read-confirmation` fired: state = READING → true (state=READING).
-35. Called `check_confirmation` (attempt 1, key banking-025-at-01:read-confirmation:11).
-36. Note from `read-confirmation`: event 1 (North Quay Books payment terminal): Payment not accepted. Please contact your bank. [facts: confirmation='none', instructed_outside_portal=False]
-37. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-38. `confirmation`: not known → none (by `read-confirmation`).
-39. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-40. Rule `triage` fired: state = READING → true (state=READING).
-41. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-42. Classifier (claude claude-haiku-5-5) on `subject`: card_payment → card_payment.
-43. `request_type`: not known → reason (by `triage`).
-44. `subject`: not known → card_payment (by `triage`).
-45. State `READING` → `TRIAGED` (by `triage`).
-46. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
-47. `next_system`: not known → card (by `route-card`).
-48. The agent asked for `ask_system` {"system": "card"}.
-49. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=reason).
-50. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-51. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-52. Called `ask_system` (attempt 1, key banking-025-at-01:do-ask:15).
-53. Action in the world: `ask_system` {"system": "card", "about": "card_payment", "amount": "18.40"}.
-54. `ask_system` found {}.
-55. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-56. The case closed in `ASKED`: **ask_system**.
+31. Rule `read-tariff` fired: state = READING → true (state=READING).
+32. Called `check_tariff` (attempt 1, key banking-025-at-01:read-tariff:10).
+33. `check_tariff` found {}.
+34. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+35. Called `check_bank_actions` (attempt 1, key banking-025-at-01:read-bank-actions:11).
+36. `check_bank_actions` found {}.
+37. Rule `read-registration` fired: state = READING → true (state=READING).
+38. Called `check_registration` (attempt 1, key banking-025-at-01:read-registration:12).
+39. `check_registration` found {}.
+40. Rule `read-confirmation` fired: state = READING → true (state=READING).
+41. Called `check_confirmation` (attempt 1, key banking-025-at-01:read-confirmation:13).
+42. Note from `read-confirmation`: event 1 (North Quay Books payment terminal): Payment not accepted. Please contact your bank. [facts: confirmation='none', instructed_outside_portal=False]
+43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+44. `confirmation`: not known → none (by `read-confirmation`).
+45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+46. Rule `triage` fired: state = READING → true (state=READING).
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+48. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+49. Classifier (jev jev-latest) on `joint_holder_change`: 0.1 → False.
+50. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+51. `request_type`: not known → question (by `triage`).
+52. `credentials_requested`: not known → False (by `triage`).
+53. `joint_holder_change`: not known → False (by `triage`).
+54. `subject`: not known → card_payment (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
+57. `next_system`: not known → card (by `route-card`).
+58. The agent asked for `ask_system` {"system": "card"}.
+59. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
+60. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+62. Called `ask_system` (attempt 1, key banking-025-at-01:do-ask:17).
+63. Action in the world: `ask_system` {"system": "card", "about": "card_payment", "amount": "18.40"}.
+64. `ask_system` found {}.
+65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+66. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4936 tokens in, 127 out, 3.501 s, cost $0.0085; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7222 tokens in, 449 out, 5.131 s, cost $0.0145; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the card system why the £18.40 payment at North Quay Books was declined. The answer isn't in yet. Once it comes back, we can tell Mara the reason.
+> I've asked the card system why the £18.40 payment at North Quay Books was declined. The case is now closed on that step. The card system hasn't returned a reason yet, so there's nothing to tell Mara.

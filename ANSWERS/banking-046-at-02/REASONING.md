@@ -35,31 +35,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-046-at-02:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-046-at-02:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-046-at-02:read-confirmation:11).
-39. Note from `read-confirmation`: event 2 (Mara Ellery): My identity and administrator mandate have been checked. I confirm that Owen Bell is a former employee and instruct H&V to revoke his Payroll Approver role; please keep the review of any earlier operations separate. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-45. Classifier (claude claude-haiku-5-5) on `subject`: role → role.
-46. `request_type`: not known → instruction (by `triage`).
-47. `subject`: not known → role (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. The agent asked for `submit_request` {}.
-50. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: next_system = business is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
-51. The agent asked for `ask_system` {"system": "business"}.
-52. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=business); next_system = payment is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: args.system = incoming is false (args.system=business); next_system = incoming is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: args.system = recurring is false (args.system=business); next_system = recurring is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: args.system = card is false (args.system=business); next_system = card is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: args.system = access is false (args.system=business); next_system = access is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: next_system = business is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: args.system = documents is false (args.system=business); next_system = documents is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction).
-53. The agent asked for `escalate` {"note": "Mara Ellery, verified business administrator of Larkmere Studio Ltd, confirmed on a verified call that Owen Bell is a former employee. She instructs H&V to revoke his Payroll Approver role, which the portal still shows as active. She wants the review of any operations he previously authorised handled separately. The desk could not submit the revocation or ask the business system. The submission was refused because no next system is established and no confirmation is recorded. Please action or route the role revocation and check the administrator's mandate. Nothing has been revoked yet."}.
-54. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
-55. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
-56. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
-57. The case closed in `ESCALATED`: **escalate**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-046-at-02:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-046-at-02:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-046-at-02:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-046-at-02:read-confirmation:13).
+45. Note from `read-confirmation`: event 2 (Mara Ellery): My identity and administrator mandate have been checked. I confirm that Owen Bell is a former employee and instruct H&V to revoke his Payroll Approver role; please keep the review of any earlier operations separate. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.23 → False.
+53. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
+54. `request_type`: not known → instruction (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → role (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
+60. `next_system`: not known → business (by `route-business`).
+61. The agent asked for `submit_request` {}.
+62. Rule `business-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked absent → true (business_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
+63. State `TRIAGED` → `REQUEST_PENDING` (by `business-instruction`).
+64. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+65. Called `register_request` (attempt 1, key banking-046-at-02:do-request:17).
+66. Action in the world: `register_request` {"team": "business", "about": "role"}.
+67. `register_request` found {}.
+68. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+69. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-5 calls, 12956 tokens in, 469 out, 7.965 s, cost $0.0279; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5509 tokens in, 496 out, 4.893 s, cost $0.0115; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I submitted the instruction to revoke Owen Bell's Payroll Approver role. The desk accepted it and the case is now at REQUESTED, so the revocation has been requested but isn't confirmed as done yet.
+> 
+> I treated it as a clear instruction from a verified administrator. The review of operations he authorised earlier was not part of this request, and I did not start one.

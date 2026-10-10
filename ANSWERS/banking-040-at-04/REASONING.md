@@ -43,39 +43,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. `check_documents` found {"documents_asked": true, "document_ready": true}.
 40. `documents_asked`: not known → True (by `read-documents`).
 41. `document_ready`: not known → True (by `read-documents`).
-42. Rule `read-registration` fired: state = READING → true (state=READING).
-43. Called `check_registration` (attempt 1, key banking-040-at-04:read-registration:10).
-44. `check_registration` found {}.
-45. Rule `read-confirmation` fired: state = READING → true (state=READING).
-46. Called `check_confirmation` (attempt 1, key banking-040-at-04:read-confirmation:11).
-47. Note from `read-confirmation`: event 2 (Mara Ellison): I need a record for this particular payment to give my repair contractor. I can see HV-040 in my history, but I need a document showing its stage; I understand that the contractor’s confirmation of receipt is separate. [facts: confirmation='none', instructed_outside_portal=False]
-48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-49. `confirmation`: not known → none (by `read-confirmation`).
-50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-53. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-54. `request_type`: not known → document (by `triage`).
-55. `subject`: not known → document (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-58. `next_system`: not known → documents (by `asked-documents`).
-59. The agent asked for `reply` {}.
-60. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready present → true (document_ready=True).
-61. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
-62. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-63. Called `reply_customer` (attempt 1, key banking-040-at-04:do-reply:15).
-64. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
-65. `reply_customer` found {}.
-66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-67. The case closed in `REPLIED`: **reply**.
+42. Rule `read-tariff` fired: state = READING → true (state=READING).
+43. Called `check_tariff` (attempt 1, key banking-040-at-04:read-tariff:10).
+44. `check_tariff` found {}.
+45. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+46. Called `check_bank_actions` (attempt 1, key banking-040-at-04:read-bank-actions:11).
+47. `check_bank_actions` found {}.
+48. Rule `read-registration` fired: state = READING → true (state=READING).
+49. Called `check_registration` (attempt 1, key banking-040-at-04:read-registration:12).
+50. `check_registration` found {}.
+51. Rule `read-confirmation` fired: state = READING → true (state=READING).
+52. Called `check_confirmation` (attempt 1, key banking-040-at-04:read-confirmation:13).
+53. Note from `read-confirmation`: event 2 (Mara Ellison): I need a record for this particular payment to give my repair contractor. I can see HV-040 in my history, but I need a document showing its stage; I understand that the contractor’s confirmation of receipt is separate. [facts: confirmation='none', instructed_outside_portal=False]
+54. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+55. `confirmation`: not known → none (by `read-confirmation`).
+56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+57. Rule `triage` fired: state = READING → true (state=READING).
+58. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+59. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+60. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+61. Classifier (jev jev-latest) on `subject`: document, confidence 0.89 → document.
+62. `request_type`: not known → question (by `triage`).
+63. `credentials_requested`: not known → False (by `triage`).
+64. `joint_holder_change`: not known → False (by `triage`).
+65. `subject`: not known → document (by `triage`).
+66. State `READING` → `TRIAGED` (by `triage`).
+67. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+68. `next_system`: not known → documents (by `asked-documents`).
+69. The agent asked for `reply` {}.
+70. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+71. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-040-at-04:do-reply:17).
+74. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
+75. `reply_customer` found {}.
+76. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+77. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7855 tokens in, 201 out, 6.191 s, cost $0.0151; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8412 tokens in, 597 out, 5.757 s, cost $0.0183; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to the customer. The documents system had already returned the record for payment HV-040, so no further step was needed.
+> I've sent the reply, and the case is closed. The documents check had already run, and the record for payment HV-040 (£74.00) was ready. The desk writes the reply text, so I haven't seen its exact wording.
 > 
-> The customer isn't verified in this chat. I replied from the ready document and didn't ask the system again or hand the case on. I haven't seen the text of the reply.
+> Mara Ellison isn't verified on this chat, and I didn't try to verify her before replying. The records show no confirmation from the contractor. That is separate from the bank's status of SENT, as she said herself.

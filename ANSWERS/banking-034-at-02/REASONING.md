@@ -37,37 +37,47 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-034-at-02:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-034-at-02:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-034-at-02:read-confirmation:11).
-41. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
-42. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-43. `confirmation`: not known → none (by `read-confirmation`).
-44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-47. Classifier (claude claude-haiku-5-5) on `subject`: fee → fee.
-48. `request_type`: not known → record_fact (by `triage`).
-49. `subject`: not known → fee (by `triage`).
-50. State `READING` → `TRIAGED` (by `triage`).
-51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=fee).
-52. `next_system`: not known → documents (by `route-documents`).
-53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
-55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-57. Called `ask_system` (attempt 1, key banking-034-at-02:do-ask:15).
-58. Action in the world: `ask_system` {"system": "documents", "about": "fee", "amount": "3.20"}.
-59. `ask_system` found {}.
-60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-61. The case closed in `ASKED`: **ask_system**.
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-034-at-02:read-tariff:10).
+38. `check_tariff` found {}.
+39. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+40. Called `check_bank_actions` (attempt 1, key banking-034-at-02:read-bank-actions:11).
+41. `check_bank_actions` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-034-at-02:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-034-at-02:read-confirmation:13).
+47. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.69 → question.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+55. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → fee (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject = fee → true (subject=fee).
+62. `next_system`: not known → tariff (by `route-tariff`).
+63. The agent asked for `ask_system` {"system": "tariff"}.
+64. Rule `tariff-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = tariff → true (args.system=tariff); next_system = tariff → true (next_system=tariff); next_system absent → false (next_system=tariff); tariff_asked absent → true (tariff_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+65. State `TRIAGED` → `ASK_PENDING` (by `tariff-ask`).
+66. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+67. Called `ask_system` (attempt 1, key banking-034-at-02:do-ask:17).
+68. Action in the world: `ask_system` {"system": "tariff", "about": "fee", "amount": "3.20"}.
+69. `ask_system` found {}.
+70. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+71. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 5462 tokens in, 375 out, 4.959 s, cost $0.0111; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5504 tokens in, 437 out, 3.296 s, cost $0.0109; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system which tariff entry applied to the £3.20 fee on your foreign-currency cash withdrawal. I've also asked how that entry accounts for the amount. I don't have its answer yet, so I can't tell you what the fee is for or how it was calculated. Once the answer comes back, we'll reply to you with what the record shows.
+> I've sent the question about the £3.20 fee to the tariff system. It should come back with the tariff entry that applied to your foreign-currency cash withdrawal and how that entry gives the £3.20 amount. We'll reply to you once it does.

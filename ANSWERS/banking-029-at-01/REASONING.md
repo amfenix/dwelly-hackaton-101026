@@ -35,37 +35,50 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-029-at-01:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-029-at-01:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-029-at-01:read-confirmation:11).
-39. Note from `read-confirmation`: event 1 (Mara Ellison): I started registering my new tablet in the H&V app while setting it up. I left the screen before I could tell whether registration had finished. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-45. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
-46. `request_type`: not known → status (by `triage`).
-47. `subject`: not known → access (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-50. `next_system`: not known → access (by `route-access`).
-51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
-53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-029-at-01:do-ask:15).
-56. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-029-at-01:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-029-at-01:read-bank-actions:11).
+39. `check_bank_actions` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-029-at-01:read-registration:12).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-029-at-01:read-confirmation:13).
+45. Note from `read-confirmation`: event 1 (Mara Ellison): I started registering my new tablet in the H&V app while setting it up. I left the screen before I could tell whether registration had finished. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.03 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+53. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → access (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+60. `next_system`: not known → access (by `route-access`).
+61. The agent asked for `ask_system` {"system": "access"}.
+62. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-029-at-01:do-ask:17).
+66. Action in the world: `ask_system` {"system": "access", "about": "access"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 5127 tokens in, 125 out, 4.26 s, cost $0.0089; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7567 tokens in, 506 out, 6.285 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the access system whether your tablet registration finished and whether the device can be used for banking. I'll reply when its answer comes back. I haven't changed anything on your device or your account.
+> The answer sits in the access system (device registration status), so I'll query it.
+> I asked the access system about the tablet registration. The case is now closed at that step, and the system's answer hasn't been added to the case. So I can't yet say whether the tablet is linked or whether it can be used for banking.
+> 
+> I won't guess at the status. If the registration didn't finish, Mara can restart it in the H&V app on the tablet. She'll have to complete it through the bank's secure sign-in process.

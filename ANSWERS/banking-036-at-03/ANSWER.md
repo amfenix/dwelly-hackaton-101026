@@ -1,10 +1,10 @@
 # Case banking-036-at-03: New correspondence address
 
-**Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Mara Ellison, a verified customer, asked to change her correspondence address on her profile. Because the request had no confirmation yet and a change has to be confirmed by the customer in the secure portal, the desk sent the change to her for confirmation and closed the case at that point. The address has not been changed; it will update only if she confirms it in the portal, and the record shows no further action for the desk.
+Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address. The desk found the protected profile-change process already running and asking her to confirm. It closed the case as waiting, with no confirmation recorded yet and nothing updated. The desk's later attempts to submit the request and to redirect her to the secure process were both refused because the case was already in the waiting state. What is left is for her to confirm in the profile process.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,7 +38,7 @@ Case reference: id banking-036-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `send_for_confirmation` (change: profile, to: Mara Ellison), by rule `do-confirm`
+- none
 
 ## Decision and why
 
@@ -46,12 +46,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `CONFIRM_PENDING`: rule `change-needs-confirmation` — A change is confirmed by the customer in the secure portal, not in chat or by email.
+- `TRIAGED` → `WAITING`: rule `profile-change-waits-for-the-process` — The protected change process is running; it asks the customer to confirm.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
-  - confirmation = none → true (confirmation=none)
-- `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
-  - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
+  - subject = profile → true (subject=profile)
+  - access_asked → true (access_asked=True)
+  - confirmation in [none, requested] → true (confirmation=none)
 
 Facts established:
 
@@ -60,14 +60,18 @@ Facts established:
 - channel: **secure_portal**
 - verified: **True**
 - subject: **profile**
+- access_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 2 (Mara Ellison): I’m escalating my request to change my correspondence address. I have completed the identity checks in this secure session and can confirm the change when the profile process asks me to. [facts: requester='Mara Ellison', role='customer', channel='secure_portal', verified=True]
+- event 3 (H&V profile change process): I have checked Mara’s identity and reviewed the workflow’s requirements. I’m opening the address-change process for case HV-036; no address is recorded in this note. [facts: access_asked=True]
 - event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: confirmation='none', instructed_outside_portal=True]
 
 ## Escalated
@@ -78,6 +82,11 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=change); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=WAITING); access_asked absent is false (access_asked=True); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change)
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=change); request_type = instruction is false (request_type=change); not verified is false (verified=True)
+
 ## Final result
 
-send_for_confirmation (CONFIRMATION_SENT)
+wait (WAITING)

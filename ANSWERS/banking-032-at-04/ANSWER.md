@@ -1,10 +1,10 @@
 # Case banking-032-at-04: Archived Statement Request
 
-**Decision: reply**  (final state `REPLIED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk checked the documents record, found the statement available, and replied in the chat saying so, with the caveat that this doesn't confirm a download or any credited funds, and that no email was sent. Her identity was not verified, and the record shows nothing further left for a person to do.
+Mara Ellison, writing over secure chat and not yet verified, asked whether an archived copy of her January 2024 statement is available. The desk had already asked the documents system, but its answer has not come back, so the case closed in a waiting state with no actions taken. A second request to the documents system was refused because the case was already waiting. The record does not say who will pick the case up or when; the statement has not been released to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,10 +42,7 @@ Case reference: id banking-032-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
-
-  > The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent.
-
+- none
 
 ## Decision and why
 
@@ -53,12 +50,11 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
+- `TRIAGED` → `WAITING`: rule `documents-waits` — The system was asked; its answer is not in yet.
   - state = TRIAGED → true (state=TRIAGED)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
-- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
-  - state = REPLY_PENDING → true (state=REPLY_PENDING)
+  - documents_asked → true (documents_asked=True)
+  - document_ready absent → true (document_ready=not known)
 
 Facts established:
 
@@ -68,17 +64,17 @@ Facts established:
 - verified: **False**
 - subject: **statement**
 - documents_asked: **True**
-- document_ready: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: requester='Mara Ellison', role='customer', channel='secure_chat', verified=False]
-- event 2 (H&V archive group): I’ve checked the account-holder mandate in this secure session. Please confirm whether the January 2024 statement is available and can be ordered; I haven’t promised availability or a fee. [facts: documents_asked=True]
-- event 3 (H&V archive group): The archive check confirms that the January 2024 statement is available to order. Any applicable charge is subject to the current tariff. [facts: document_ready=True]
+- event 4 (H&V statement service): I’m ordering the permitted January 2024 statement period for case HV-032, following the archive availability check and the account-holder’s request. [facts: documents_asked=True]
 - event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -89,6 +85,10 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents)
+
 ## Final result
 
-reply (REPLIED)
+wait (WAITING)

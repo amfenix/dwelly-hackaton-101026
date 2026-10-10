@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a customer on secure chat who has not been verified, asked for a document showing the current stage of her £74.00 payment HV-040, to give to her repair contractor. The desk classified it as a document request and sent a query to the documents system about HV-040, and the case closed in the asked state. No answer from the documents system is in the record, so nothing has yet been given to her.
+Mara Ellison, a customer on secure chat who is not marked as verified, asked for a document showing the stage of her £74.00 payment HV-040 so she could give it to her repair contractor. The desk classed this as a question about a document and sent a request to the documents system for that payment, then closed the case with that request as its only action. The documents system has not returned anything yet, so no document has been provided, and what happens next depends on its reply and on whether her unverified status affects release.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,8 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - document_ready = false → not known (document_ready=not known)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -63,8 +64,10 @@ Facts established:
 - reference: **HV-040**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

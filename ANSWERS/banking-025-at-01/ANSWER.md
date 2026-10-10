@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara wanted to know why her £18.40 card payment at North Quay Books was declined. The desk found no confirmation of the payment, only a terminal message saying it wasn't accepted, so it sent a question about the payment to the card system. The card system's answer isn't in the record yet, so the reason for the decline is still unknown and nothing has been passed back to Mara.
+Mara asked why her £18.40 card payment at North Quay Books was declined; the terminal only said the payment was not accepted and to contact her bank. The desk classed it as a card question and put the query to the card system about that payment and amount. The case closed at that step, and the card system's answer was empty, so no reason for the decline is known yet and Mara has not been given one.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=reason)
+  - request_type not in [register, change, authority, instruction] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -54,8 +54,10 @@ Facts established:
 - amount: **18.40**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

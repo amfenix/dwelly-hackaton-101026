@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nerys Wren, verified on a call, said a new-device notification looked unusual and asked for a list of the sign-in sessions on her profile. The desk classified it as a document request about access and sent a query to the access system. That system's answer isn't in the record yet, so she hasn't received the list, and what happens once the answer arrives is still open.
+Nerys Wren, verified on a call, said a new-device notification looked unusual and asked for a list of sign-in sessions on her profile. The desk classed it as an access question, not a change, and sent a query to the access system, then closed the case at that step. The access system's answer isn't in the case yet, so nothing has been reported back to her about her sessions, and that reply is still to be written.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = access → true (next_system=access)
   - next_system absent → false (next_system=access)
   - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **access**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

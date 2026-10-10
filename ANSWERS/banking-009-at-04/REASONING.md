@@ -41,39 +41,52 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 37. Rule `read-documents` fired: state = READING → true (state=READING).
 38. Called `check_documents` (attempt 1, key banking-009-at-04:read-documents:9).
 39. `check_documents` found {}.
-40. Rule `read-registration` fired: state = READING → true (state=READING).
-41. Called `check_registration` (attempt 1, key banking-009-at-04:read-registration:10).
-42. `check_registration` found {}.
-43. Rule `read-confirmation` fired: state = READING → true (state=READING).
-44. Called `check_confirmation` (attempt 1, key banking-009-at-04:read-confirmation:11).
-45. Note from `read-confirmation`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: confirmation='none', instructed_outside_portal=False]
-46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-47. `confirmation`: not known → none (by `read-confirmation`).
-48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-51. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-52. `request_type`: not known → record_fact (by `triage`).
-53. `subject`: not known → transfer (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-56. `next_system`: not known → payment (by `asked-payment`).
-57. The agent asked for `reply` {}.
-58. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
-59. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-60. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-61. Called `reply_customer` (attempt 1, key banking-009-at-04:do-reply:15).
-62. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "verified_call", "text": "The payment record shows your £648.20 transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
-63. `reply_customer` found {}.
-64. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-65. The case closed in `REPLIED`: **reply**.
+40. Rule `read-tariff` fired: state = READING → true (state=READING).
+41. Called `check_tariff` (attempt 1, key banking-009-at-04:read-tariff:10).
+42. `check_tariff` found {}.
+43. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+44. Called `check_bank_actions` (attempt 1, key banking-009-at-04:read-bank-actions:11).
+45. `check_bank_actions` found {}.
+46. Rule `read-registration` fired: state = READING → true (state=READING).
+47. Called `check_registration` (attempt 1, key banking-009-at-04:read-registration:12).
+48. `check_registration` found {}.
+49. Rule `read-confirmation` fired: state = READING → true (state=READING).
+50. Called `check_confirmation` (attempt 1, key banking-009-at-04:read-confirmation:13).
+51. Note from `read-confirmation`: event 2 (Mara Ellwood): You’ve completed your identification checks. I remember the transfer draft as £684.20, but the final line shows £648.20. Please check the amount in the completed instruction; I’m not asking you to rely on my memory of the draft. [facts: confirmation='none', instructed_outside_portal=False]
+52. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+53. `confirmation`: not known → none (by `read-confirmation`).
+54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+55. Rule `triage` fired: state = READING → true (state=READING).
+56. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+57. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+58. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+59. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.91 → transfer.
+60. `request_type`: not known → question (by `triage`).
+61. `credentials_requested`: not known → False (by `triage`).
+62. `joint_holder_change`: not known → False (by `triage`).
+63. `subject`: not known → transfer (by `triage`).
+64. State `READING` → `TRIAGED` (by `triage`).
+65. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+66. `next_system`: not known → payment (by `asked-payment`).
+67. The agent asked for `ask_system` {"system": "payment"}.
+68. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+69. The agent asked for `reply` {}.
+70. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+71. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-009-at-04:do-reply:17).
+74. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "verified_call", "text": "The payment record shows your £648.20 transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
+75. `reply_customer` found {}.
+76. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+77. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7770 tokens in, 359 out, 6.977 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8844 tokens in, 601 out, 5.583 s, cost $0.0193; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've replied to Mara. The payment record shows the transfer to her property manager as sent for £648.20, which matches the final payment line. I did not confirm what she entered in the draft, because the draft isn't part of the completed record.
+> Payment has already been asked, so the answer is in the case. I'll reply.
+> I sent the reply to Mara Ellwood. The payment record shows the transfer as SENT for £648.20, not the £684.20 she remembers entering in the draft.
 > 
-> I did not look into the £684.20 she remembers, and no dispute or review was opened. The case is closed on the reply.
+> My first attempt to query the payment system was refused because that check had already been done. The amount was already in the case, so I replied from it. The record shows no confirmation for the payment. The case is now closed with the reply.

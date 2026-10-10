@@ -39,39 +39,47 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-016-at-02:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-016-at-02:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-016-at-02:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Tamsin Rook): I passed your identification checks, and no secrets were transcribed. I dispute the amount debited: “I dispute the amount debited.” Please have the Direct Debit team investigate this £18.40 charge. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-49. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
-50. `request_type`: not known → register (by `triage`).
-51. `subject`: not known → direct_debit (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
-54. `next_system`: not known → recurring (by `route-recurring`).
-55. The agent asked for `submit_request` {}.
-56. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-57. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-58. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-59. Called `register_request` (attempt 1, key banking-016-at-02:do-request:15).
-60. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
-61. `register_request` found {}.
-62. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-63. The case closed in `REQUESTED`: **submit_request**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-016-at-02:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-016-at-02:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-016-at-02:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-016-at-02:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Tamsin Rook): I passed your identification checks, and no secrets were transcribed. I dispute the amount debited: “I dispute the amount debited.” Please have the Direct Debit team investigate this £18.40 charge. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+57. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+58. `request_type`: not known → register (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → direct_debit (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+64. `next_system`: not known → recurring (by `route-recurring`).
+65. The agent asked for `submit_request` {}.
+66. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+67. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+68. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+69. Called `register_request` (attempt 1, key banking-016-at-02:do-request:17).
+70. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
+71. `register_request` found {}.
+72. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+73. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 5476 tokens in, 332 out, 4.851 s, cost $0.0116; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5582 tokens in, 536 out, 4.331 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed your request to the team that handles Direct Debit disputes. It asks them to investigate the £18.40 Direct Debit to Northmere Water Services dated 9 July 2025, which you say is the wrong amount.
-> 
-> I haven't checked the Direct Debit record myself, and I can't say yet whether the amount was wrong. The team will decide that in their review.
+> I've passed your dispute of the £18.40 Direct Debit to Northmere Water Services, dated 9 July 2025, to the team that handles these cases. They will investigate the amount that was debited. The request has been accepted and is now with them.

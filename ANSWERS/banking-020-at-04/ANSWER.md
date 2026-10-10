@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren asked over secure chat which regular payments are still active before she plans any account closure. The desk checked the recurring-payments record, which showed the standing order as active, and replied on secure chat saying so, with a note that this doesn't guarantee a future payment will execute and that nothing was changed. The case is closed as replied; the record still lists her as not verified despite her saying she completed the account-holder checks, and no action was taken on the account or on closing it.
+Elena Wren asked over secure chat which regular payments are still active before she makes any closure plans. The desk checked the recurring-payments register, which showed her standing order as active, and replied saying so, adding that this does not guarantee a future payment will execute and that nothing was changed. The register also listed an active direct debit mandate for Northmere Energy, but the reply did not mention it. The desk's records still show her as not verified despite her saying she completed the checks, and the case is closed with nothing further left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-020-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Elena Wren, channel: secure_chat), by rule `do-reply`
 
-  > The standing-order record shows active. This does not guarantee that the future payment will execute. No additional instruction or change was made.
+  > The standing-order record shows the instruction as active. This does not guarantee that the future payment will execute. No additional instruction or change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `recurring-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = recurring → true (next_system=recurring)
   - recurring_status present → true (recurring_status=ACTIVE)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -71,8 +72,10 @@ Facts established:
 - recurring_status: **ACTIVE**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

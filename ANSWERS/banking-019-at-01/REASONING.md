@@ -33,34 +33,45 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 29. Rule `read-documents` fired: state = READING → true (state=READING).
 30. Called `check_documents` (attempt 1, key banking-019-at-01:read-documents:9).
 31. `check_documents` found {}.
-32. Rule `read-registration` fired: state = READING → true (state=READING).
-33. Called `check_registration` (attempt 1, key banking-019-at-01:read-registration:10).
-34. `check_registration` found {}.
-35. Rule `read-confirmation` fired: state = READING → true (state=READING).
-36. Called `check_confirmation` (attempt 1, key banking-019-at-01:read-confirmation:11).
-37. `check_confirmation` found {}.
-38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-40. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-41. `request_type`: not known → change (by `triage`).
-42. `subject`: not known → standing_order (by `triage`).
-43. State `READING` → `TRIAGED` (by `triage`).
-44. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-45. `next_system`: not known → recurring (by `route-recurring`).
-46. The agent asked for `ask_system` {"system": "recurring"}.
-47. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change).
-48. The agent asked for `submit_request` {}.
-49. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=change); payment-instruction: next_system = payment is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); incoming-instruction: next_system = incoming is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); recurring-instruction: verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); card-instruction: next_system = card is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); access-instruction: next_system = access is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); business-instruction: next_system = business is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); documents-instruction: next_system = documents is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known).
-50. The agent asked for `escalate` {"note": "Customer asks to move the date of their active monthly standing order to Willow Yard Studios from 18 Sep 2025 to 22 Sep 2025. They want us to check whether the next run can still be changed and to send the change to their secure portal for confirmation. The desk could not ask the recurring system, because ask_system refuses while request_type=change. It also could not submit the request, because the customer is not verified and has not confirmed. Still open: whether the 18 Sep run can still be amended (not checked), and sending the change to the secure portal for the customer's confirmation. Nothing has been changed."}.
-51. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
-52. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
-53. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
-54. The case closed in `ESCALATED`: **escalate**.
+32. Rule `read-tariff` fired: state = READING → true (state=READING).
+33. Called `check_tariff` (attempt 1, key banking-019-at-01:read-tariff:10).
+34. `check_tariff` found {}.
+35. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+36. Called `check_bank_actions` (attempt 1, key banking-019-at-01:read-bank-actions:11).
+37. `check_bank_actions` found {}.
+38. Rule `read-registration` fired: state = READING → true (state=READING).
+39. Called `check_registration` (attempt 1, key banking-019-at-01:read-registration:12).
+40. `check_registration` found {}.
+41. Rule `read-confirmation` fired: state = READING → true (state=READING).
+42. Called `check_confirmation` (attempt 1, key banking-019-at-01:read-confirmation:13).
+43. `check_confirmation` found {}.
+44. Rule `triage` fired: state = READING → true (state=READING).
+45. Classifier (jev jev-latest) on `request_type`: change, confidence 0.98 → change.
+46. Classifier (jev jev-latest) on `credentials_requested`: 0.05 → False.
+47. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+48. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+49. `request_type`: not known → change (by `triage`).
+50. `credentials_requested`: not known → False (by `triage`).
+51. `joint_holder_change`: not known → False (by `triage`).
+52. `subject`: not known → standing_order (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+55. `next_system`: not known → recurring (by `route-recurring`).
+56. The agent asked for `ask_system` {"system": "recurring"}.
+57. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
+58. The agent asked for `submit_request` {}.
+59. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=change); register-what-fits-no-type: request_type = other is false (request_type=change); payment-instruction: next_system = payment is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); recurring-instruction: verified is not known (verified=not known); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); access-instruction: next_system = access is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change).
+60. The agent asked for `redirect_secure` {}.
+61. Refused `redirect_secure` in `TRIAGED`: redirect-to-the-secure-process: request_type = access is false (request_type=change); request_type = instruction is false (request_type=change); not verified is not known (verified=not known).
+62. The agent stopped in `TRIAGED` (turn limit (4)); the policy's on_stall applies.
+63. `reason`: not known → NOT_HANDLED (by `on_stall`).
+64. State `TRIAGED` → `ESCALATED` (by `on_stall`).
+65. The case closed in `ESCALATED`: **escalate**.
 
 ## Model calls
 
-5 calls, 12699 tokens in, 554 out, 7.404 s, cost $0.0283; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 13339 tokens in, 716 out, 8.233 s, cost $0.0294; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> Asking is blocked for change requests, so I'll pass the request on.
+> Asking the system isn't allowed for a change request, so I'll submit the change instead.

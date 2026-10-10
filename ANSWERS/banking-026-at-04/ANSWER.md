@@ -1,10 +1,10 @@
 # Case banking-026-at-04: A Safe Route to a Forgotten PIN
 
-**Decision: reply**  (final state `REPLIED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Maren Ellwood wrote on secure chat that she had forgotten her debit card PIN and asked for the safe way to deal with it, saying she would not send the PIN in chat. The desk sent her one reply stating that the access record shows "other", that this does not establish a password, PIN or access change, and that no secret was handled and no access change was made. The record does not show the reply pointing her to the PIN procedure, although the access team notes say it was opened in the secure portal. It also still lists her as not verified, a mismatch with the access team's note that the check was complete, and nobody has resolved it.
+Maren Ellwood, a customer on secure chat whose identity was not verified, said she had forgotten her debit card PIN and asked for the safe way to handle it. The desk took no action and closed the case as waiting, because the access team had already escalated it and the bank had already opened the prescribed PIN procedure for her in the secure portal. What is left is for Maren to complete that procedure in the portal; no PIN was requested or recorded in chat.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,10 +42,7 @@ Case reference: id banking-026-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `reply` (to: Maren Ellwood, channel: secure_chat), by rule `do-reply`
-
-  > The access record shows other. This does not establish a password, PIN, or access change. No secret was handled and no additional access change was made.
-
+- none
 
 ## Decision and why
 
@@ -53,12 +50,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `access-reply` accepted it.
+- `TRIAGED` → `WAITING`: rule `already-redirected` — The customer was pointed to the secure process; nothing to do until they use it.
   - state = TRIAGED → true (state=TRIAGED)
-  - next_system = access → true (next_system=access)
-  - access_status present → true (access_status=OTHER)
-- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
-  - state = REPLY_PENDING → true (state=REPLY_PENDING)
+  - request_type = access → true (request_type=access)
+  - bank_redirected → true (bank_redirected=True)
 
 Facts established:
 
@@ -69,16 +64,20 @@ Facts established:
 - subject: **card**
 - access_asked: **True**
 - access_status: **OTHER**
+- bank_redirected: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **access**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: requester='Maren Ellwood', role='customer', channel='secure_chat', verified=False]
 - event 2 (Access team): I’m escalating HV-026 for the prescribed PIN route. The required customer check is complete in the secure portal; I have not asked for or recorded a PIN. [facts: access_asked=True]
 - event 3 (Access team): The prescribed PIN procedure is available for this case. Please open it for the checked customer in the secure portal; the PIN must not be sent in correspondence. [facts: access_status='OTHER']
+- event 4 (H&V agent): the bank already acted: I’ve opened the prescribed PIN procedure for you in the secure portal, following the completed check. Please continue through that procedure there; I cannot see your PIN.
 - event 4 (H&V agent): I’ve opened the prescribed PIN procedure for you in the secure portal, following the completed check. Please continue through that procedure there; I cannot see your PIN. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -91,4 +90,4 @@ No.
 
 ## Final result
 
-reply (REPLIED)
+wait (WAITING)

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The sender said they had sent a contribution for the kiln by bank transfer, and the desk treated this as a status question about an incoming payment. It found no confirmation and no sign the transfer was instructed outside the portal, then put the question to the incoming payments system. The case closed in the asked state with no result recorded about the payment, so nothing is yet known about whether it has arrived, and the answer from that system is still to come.
+The message was a question about an incoming payment: the sender said they had sent a bank transfer as a contribution for the kiln. The desk classified it as an incoming-payment question and put it to the incoming-payments system, then closed the case as asked. The system's answer isn't in the record, so whether the money has arrived is still unknown, and no reply to the sender is recorded.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = incoming → true (next_system=incoming)
   - next_system absent → false (next_system=incoming)
   - incoming_asked absent → true (incoming_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -53,8 +53,10 @@ Facts established:
 - subject: **incoming_payment**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

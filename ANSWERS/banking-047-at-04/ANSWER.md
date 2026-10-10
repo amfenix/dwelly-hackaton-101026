@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder, a viewer on secure chat, asked the desk to confirm the company's current payment limit. The desk checked the business limit register, which showed a maximum of £20,000.00 per outgoing payment, and replied to her on secure chat with that figure. The reply also said the record's status came back as "other", which does not establish a recognised business-record status, and that no approval or role change was made. She was not verified as a requester, and the case is closed as replied with nothing left for a person.
+Maeve Calder asked over secure chat to confirm the company's current payment limit, saying she is authorised to view limits. The desk checked the business record, which showed a maximum of £20,000.00 per outgoing payment but returned a status it did not recognise, and it replied to her on secure chat saying it could not confirm a clear status yet while giving the £20,000.00 figure. No approval or role change was made, and the case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-047-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Maeve Calder, channel: secure_chat), by rule `do-reply`
 
-  > The business record shows other; maximum £20000.00. The answer does not establish a recognized business-record status. No additional approval or role change was made.
+  > The business record answered, but not with a clear status, so we cannot confirm one yet; maximum £20000.00. The answer does not establish a recognized business-record status. No additional approval or role change was made.
 
 
 ## Decision and why
@@ -55,8 +55,10 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `business-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = business → true (next_system=business)
   - business_status present → true (business_status=OTHER)
+  - not (business_status = ROLE_REVOKED and subject != "role") → true (business_status=OTHER, subject=limit)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
@@ -72,8 +74,10 @@ Facts established:
 - business_limit: **20000.00**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

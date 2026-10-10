@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, who was not verified, asked through secure chat whether her £420 payment to Alder & Reed Workshop had actually been sent, since she could see the debit. The desk treated it as a status request about a transfer and asked the payment system about that £420 transfer. The case closed with that question sent, no answer is recorded yet, and nothing else is recorded as needed from a person.
+Mara Ellison, who was not verified, asked over secure chat whether H&V had sent her £420 payment to Alder & Reed Workshop, which she could see as a debit. The desk classed it as a question about a transfer and sent an ask to the payment system about the £420 transfer. That system's answer is not in the record, so whether the payment was sent is still unknown and nothing has been confirmed to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -63,8 +63,10 @@ Facts established:
 - counterparty: **Alder & Reed Workshop**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

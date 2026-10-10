@@ -37,7 +37,10 @@ NEW ──► READING ──► TRIAGED ──► <decision>_PENDING ──► f
 | `REPLIED` | `reply` | the answer is in: reply to the customer within it |
 | `REQUESTED` | `submit_request` | pass a request to a team or system: a review, or the customer's own verified instruction |
 | `CONFIRMATION_SENT` | `send_for_confirmation` | a change was asked for in chat, by email or by call: send it to the secure portal for the customer to confirm |
-| `ESCALATED` | `escalate` | no authority, a secret asked for, facts that conflict, a request the desk cannot place |
+| `CLARIFIED` | `clarify` | the case does not say which payment, card or instruction is meant: ask the customer (025) |
+| `REDIRECTED` | `redirect_secure` | signing in, recovery, a PIN or a password: point to the bank's secure process (026, 027) |
+| `FORWARDED` | `forward_to_authority` | the request needs someone else's approval: send it to that person (045) |
+| `ESCALATED` | `escalate` | facts that conflict, a request no other decision fits |
 
 ## Reading the history
 
@@ -77,10 +80,6 @@ to a state, so they run in order, and the last one moves the case on.
 ## Safety rules: first, before the agent
 
 ```yaml
-- name: no-authority           # 043, 045: nothing approved for a signatory or an administrator
-  when: "state = TRIAGED and request_type = authority and role != business_admin"
-  set: { reason: NO_AUTHORITY }
-  to: ESCALATED
 - name: secrets                # 026, 027: PIN and password only through the secure process
   when: "state = TRIAGED and request_type = access"
   set: { next_system: access }
@@ -164,13 +163,17 @@ the review succeeded or that the system carried it out, until a later point show
 ## The agent
 
 The agent gets the request and the `conversation` events (never the `system` events), the facts so
-far, and one tool per signal: `ask_system(system)`, `reply`, `submit_request`,
-`send_for_confirmation`, `escalate(note)`. It decides **from the facts** what the bank does next.
+far, and one tool per signal: `ask_system(system)`, `reply`, `submit_request`, `clarify(need)`,
+`redirect_secure`, `forward_to_authority`, `escalate(note)`. It decides **from the facts** what the
+bank does next. (`send_for_confirmation` and `wait` are decided by rules alone.)
 
-The system prompt describes the desk rather than commanding the agent: what each decision means,
-when the cases took it, and what the bank never does (act for a customer, approve for someone
-else, handle a secret, claim more than a record shows). A refused signal comes back with the facts
-that refused it; an agent that stops without a decision ends in `on_stall` (`ESCALATED`).
+The prompt is kept short, because every extra rule is one more the agent can misread: when each
+decision applies is said once, in its tool's description; the desk's description says what the
+bank never does (act or approve for someone else, handle a secret, claim more than a record
+shows); `agent.instructions` says only that the case stops at one moment and one tool decides it,
+that a fact not listed is not known, to check the records when it is unclear what is meant, and
+that an `OTHER` answer is still an answer. A refused signal comes back with the facts that refused
+it; an agent that stops without a decision ends in `on_stall` (`ESCALATED`).
 
 ## Fields the policy owns
 
@@ -180,7 +183,8 @@ On top of the functions' fields ([target-api.md](task/target-api.md)):
 |---|---|---|
 | `request_type` | enum (the triage options) | the classifier |
 | `next_system` | enum `payment, incoming, recurring, card, access, business, documents, registration` | the routing rules |
-| `reason` | enum `NO_AUTHORITY, CONFLICT, UNCLEAR, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED` | the rules that escalate |
+| `reason` | enum `UNVERIFIED, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED` | the rules that escalate |
+| `clarify_need` | enum `which_transaction, which_card, which_instruction, more_details` | the `clarify` rules |
 
 ## Testing it
 

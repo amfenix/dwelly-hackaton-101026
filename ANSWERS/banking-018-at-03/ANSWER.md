@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked the desk to check whether two future £34.80 payments to Northmere Heating are duplicates and to remove the duplicate. The desk treated it as a standing-order instruction, asked the payment system about it, and closed the case as waiting because that answer has not come back. A second ask to the payment system was refused, and nothing was cancelled or removed, so which line is the duplicate, if either, is still open until the payment system replies.
+Mara Ellison, a verified customer on a call, asked the desk to check two future £34.80 payments to Northmere Heating and remove the duplicate, though she doesn't know which line it is. The desk classed it as a standing-order instruction, found that a payment check was needed, and put the case into WAITING because the payment system's answer isn't in yet. Both later attempts, to ask the payment system and to escalate to a person, were refused because the case was no longer in the TRIAGED state, so nothing has been cancelled or removed and no one has yet been handed the case.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -66,6 +66,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -84,7 +86,8 @@ No.
 
 Requests the policy refused:
 
-- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction)
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

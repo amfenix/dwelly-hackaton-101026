@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, an unverified customer on secure chat, asked about the status of a transfer and whether she needed to authorise it. The desk checked the payment record, found it at "awaiting authorisation" with no confirmation sent, and replied on secure chat saying so, that the reply does not authorise the payment, and that no new transfer was made. The case is closed as replied, and the record shows nothing left for a person; the authorisation itself was not done by the desk.
+Elise Rowan, an unverified customer on secure chat, asked about the stage of her transfer and whether she needed to authorise it. The desk checked the payment record, found the transfer at "awaiting authorisation" with no confirmation sent, and replied with that status, saying the reply does not authorise the payment and that no new transfer was made. The case closed as replied, with nothing left for a person in the record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-003-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Elise Rowan, channel: secure_chat), by rule `do-reply`
 
-  > The payment record shows your transfer as awaiting_authorisation. This does not authorise the payment. No new transfer was made.
+  > The payment record shows your transfer as awaiting authorisation. This does not authorise the payment. No new transfer was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=AWAITING_AUTHORISATION)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -71,8 +72,10 @@ Facts established:
 - payment_status: **AWAITING_AUTHORISATION**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

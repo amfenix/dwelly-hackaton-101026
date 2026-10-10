@@ -39,37 +39,51 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-040-at-02:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-040-at-02:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-040-at-02:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Mara Ellison): I need a record for this particular payment to give my repair contractor. I can see HV-040 in my history, but I need a document showing its stage; I understand that the contractor’s confirmation of receipt is separate. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-49. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-50. `request_type`: not known → document (by `triage`).
-51. `subject`: not known → document (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
-54. `next_system`: not known → documents (by `route-documents`).
-55. The agent asked for `ask_system` {"system": "documents"}.
-56. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
-57. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-58. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-59. Called `ask_system` (attempt 1, key banking-040-at-02:do-ask:15).
-60. Action in the world: `ask_system` {"system": "documents", "about": "document", "reference": "HV-040", "amount": "74.00"}.
-61. `ask_system` found {}.
-62. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-63. The case closed in `ASKED`: **ask_system**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-040-at-02:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-040-at-02:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-040-at-02:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-040-at-02:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Mara Ellison): I need a record for this particular payment to give my repair contractor. I can see HV-040 in my history, but I need a document showing its stage; I understand that the contractor’s confirmation of receipt is separate. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+57. Classifier (jev jev-latest) on `subject`: document, confidence 0.95 → document.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → document (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+64. `next_system`: not known → documents (by `route-documents`).
+65. The agent asked for `ask_system` {"system": "documents"}.
+66. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
+67. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+68. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+69. Called `ask_system` (attempt 1, key banking-040-at-02:do-ask:17).
+70. Action in the world: `ask_system` {"system": "documents", "about": "document", "reference": "HV-040", "amount": "74.00"}.
+71. `ask_system` found {}.
+72. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+73. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7873 tokens in, 229 out, 5.388 s, cost $0.0154; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8091 tokens in, 564 out, 5.847 s, cost $0.0174; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system for the record of payment HV-040 (£74.00, 14 July 2025). The answer hasn't come back yet. I'll reply to you once it does, using only what the record shows.
+> I've sent your request for a record of payment HV-040 (£74.00, 14 July 2025) to our documents system. The case is now closed on our side, and the documents system hasn't sent anything back yet.
+> 
+> The system hasn't returned a document or any details about the payment's stage. Your identity also isn't marked as verified in this chat. That may affect whether a document can be released here.
+> 
+> I can only confirm what our records show, which is a bank status of SENT. As you said, that status doesn't confirm the contractor has received the money.

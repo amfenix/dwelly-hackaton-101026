@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder, writing over secure chat, asked for the current company payment limit, saying she is authorised to view limits and needs the figure for a large supplier payment. The desk classed it as a request for a recorded fact and asked the business system about the limit; that query was sent, and the case closed in the asked state with no answer recorded yet. Her identity is not verified and she is listed as a viewer, so a person or the business system's reply still has to supply the figure, and nothing was changed or submitted.
+Maeve Calder, a viewer whose identity was not verified, asked over secure chat for the company's current payment limit. The desk classified it as a question about the limit and asked the business system for that information, and the case closed in the asked state. No answer has been given to Maeve; the record does not show the business system's reply, and her identity is still unverified, so whether she may be told the limit remains to be checked by a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = business → true (next_system=business)
   - next_system absent → false (next_system=business)
   - business_asked absent → true (business_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **limit**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

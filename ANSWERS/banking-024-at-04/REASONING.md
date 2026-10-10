@@ -40,39 +40,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-documents` fired: state = READING → true (state=READING).
 37. Called `check_documents` (attempt 1, key banking-024-at-04:read-documents:9).
 38. `check_documents` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-024-at-04:read-registration:10).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-024-at-04:read-confirmation:11).
-44. Note from `read-confirmation`: event 2 (Rowan Ellery): I’m the cardholder and my card was declined while I was paying for groceries. Please tell me the category of the restriction and whether it has been lifted. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-50. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
-51. `request_type`: not known → reason (by `triage`).
-52. `subject`: not known → card (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-55. `next_system`: not known → card (by `asked-card`).
-56. The agent asked for `reply` {}.
-57. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_status present → true (card_status=RESTRICTED).
-58. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
-59. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-60. Called `reply_customer` (attempt 1, key banking-024-at-04:do-reply:15).
-61. Action in the world: `reply` {"to": "Rowan Ellery", "channel": "secure_chat", "text": "The card journal shows restricted (recorded reason: temporary security-related restriction.). This does not disclose the basis of the restriction. No additional card change was made."}.
-62. `reply_customer` found {}.
-63. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-64. The case closed in `REPLIED`: **reply**.
+39. Rule `read-tariff` fired: state = READING → true (state=READING).
+40. Called `check_tariff` (attempt 1, key banking-024-at-04:read-tariff:10).
+41. `check_tariff` found {}.
+42. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+43. Called `check_bank_actions` (attempt 1, key banking-024-at-04:read-bank-actions:11).
+44. `check_bank_actions` found {}.
+45. Rule `read-registration` fired: state = READING → true (state=READING).
+46. Called `check_registration` (attempt 1, key banking-024-at-04:read-registration:12).
+47. `check_registration` found {}.
+48. Rule `read-confirmation` fired: state = READING → true (state=READING).
+49. Called `check_confirmation` (attempt 1, key banking-024-at-04:read-confirmation:13).
+50. Note from `read-confirmation`: event 2 (Rowan Ellery): I’m the cardholder and my card was declined while I was paying for groceries. Please tell me the category of the restriction and whether it has been lifted. [facts: confirmation='none', instructed_outside_portal=False]
+51. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+52. `confirmation`: not known → none (by `read-confirmation`).
+53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+54. Rule `triage` fired: state = READING → true (state=READING).
+55. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+56. Classifier (jev jev-latest) on `credentials_requested`: 0.03 → False.
+57. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+58. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+59. `request_type`: not known → question (by `triage`).
+60. `credentials_requested`: not known → False (by `triage`).
+61. `joint_holder_change`: not known → False (by `triage`).
+62. `subject`: not known → card (by `triage`).
+63. State `READING` → `TRIAGED` (by `triage`).
+64. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+65. `next_system`: not known → card (by `asked-card`).
+66. The agent asked for `reply` {}.
+67. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=RESTRICTED).
+68. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
+69. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+70. Called `reply_customer` (attempt 1, key banking-024-at-04:do-reply:17).
+71. Action in the world: `reply` {"to": "Rowan Ellery", "channel": "secure_chat", "text": "The card journal shows a temporary restriction on your card (recorded reason: temporary security-related restriction.). This does not disclose the basis of the restriction. No additional card change was made."}.
+72. `reply_customer` found {}.
+73. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+74. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7730 tokens in, 308 out, 5.934 s, cost $0.0159; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8156 tokens in, 574 out, 5.888 s, cost $0.0176; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to Rowan, and the desk accepted the reply. The reply is limited to what the card record shows: the card is still restricted, and the category is a temporary security-related restriction. The record gives no more detail on the reason, and it does not show that the restriction has been lifted.
+> I've sent the reply to Rowan. It's based on what the card record shows: the card is currently restricted, and the reason is a temporary security-related restriction. The record gives no more detail on the category, so the reply doesn't claim any.
 > 
-> Rowan's identity is not verified on this chat, so the card record was the only source for the reply. The bank did not lift or change the restriction.
+> Rowan isn't verified in this chat, so the reply doesn't go beyond what the record says.

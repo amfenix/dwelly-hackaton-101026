@@ -39,42 +39,52 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-019-at-03:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-019-at-03:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-019-at-03:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Maeve Ellery): I’m escalating my request to move the next run of my standing order to Willow Yard Studios from 18 September to 22 September 2025. Please check its processing stage and send any eligible change to me for confirmation. [facts: confirmation='none', instructed_outside_portal=True]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → True (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-49. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-50. `request_type`: not known → change (by `triage`).
-51. `subject`: not known → standing_order (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-54. `next_system`: not known → recurring (by `route-recurring`).
-55. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
-56. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-57. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-58. Called `send_for_confirmation` (attempt 1, key banking-019-at-03:do-confirm:15).
-59. Action in the world: `send_for_confirmation` {"change": "standing_order, counterparty=Willow Yard Studios, date=2025-09-18", "to": "Maeve Ellery"}.
-60. `send_for_confirmation` found {}.
-61. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-62. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
-63. The agent asked for `ask_system` {"system": "recurring"}.
-64. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change).
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-019-at-03:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-019-at-03:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-019-at-03:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-019-at-03:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Maeve Ellery): I’m escalating my request to move the next run of my standing order to Willow Yard Studios from 18 September to 22 September 2025. Please check its processing stage and send any eligible change to me for confirmation. [facts: confirmation='none', instructed_outside_portal=True]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → True (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: change, confidence 0.97 → change.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.04 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+57. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+58. `request_type`: not known → change (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → standing_order (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+64. `next_system`: not known → recurring (by `route-recurring`).
+65. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
+66. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
+67. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
+68. Called `send_for_confirmation` (attempt 1, key banking-019-at-03:do-confirm:17).
+69. Action in the world: `send_for_confirmation` {"change": "standing_order, counterparty=Willow Yard Studios, date=2025-09-18", "to": "Maeve Ellery"}.
+70. `send_for_confirmation` found {}.
+71. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
+72. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+73. The agent asked for `ask_system` {"system": "recurring"}.
+74. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-4 calls, 9908 tokens in, 372 out, 6.276 s, cost $0.0209; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 10472 tokens in, 576 out, 5.724 s, cost $0.0222; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed with the outcome "send_for_confirmation", so I'm stopping here. I couldn't check the processing stage of the 18 September run.
+> The case is already closed with the outcome "send_for_confirmation", so I've stopped. I couldn't check whether the 18 September run can still be changed, because the desk refused my check of the recurring system.
 > 
-> My request to the recurring system (standing orders and Direct Debits) was refused because the case had already moved to CONFIRMATION_SENT. The case record shows no processing stage for the Willow Yard Studios standing order. I can't say whether the run can still be moved to 22 September 2025.
+> The case reached the confirmation-sent state before my check ran, and the desk accepts that check only at an earlier stage. The customer has not confirmed anything yet, so nothing has been changed. The desk has not established that the 18 September run is still open to change.
 > 
-> Nothing has been changed on the standing order. The change goes to you for confirmation in your secure portal. It only takes effect if it is eligible and you confirm it there. You haven't confirmed anything yet.
+> The customer, Maeve Ellery, is still unverified. She asked for the change in secure chat, and the desk lists her instruction as given outside the portal. I have taken no further action.

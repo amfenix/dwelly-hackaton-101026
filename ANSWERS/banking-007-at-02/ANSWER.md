@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, an unverified customer on secure chat, asked what stage her transfer had reached and whether the beneficiary's receipt was confirmed. The desk classified it as a status request about a transfer and sent a query to the payment system, which returned nothing yet. The check found no confirmation of receipt, so the question remains open until the payment system answers, and nothing in the record says who will follow up.
+Mara Ellwood, an unverified customer on secure chat, asked what stage her transfer had reached and whether the beneficiary had confirmed receipt. The desk classified it as a question about a transfer, found no confirmation on file, and sent a query to the payment system about the transfer, then closed the case at that step. The payment system returned no details, so the transfer's current stage and whether the beneficiary received it remain unknown, and the record names no further step.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

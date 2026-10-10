@@ -39,39 +39,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-026-at-03:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-026-at-03:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-026-at-03:read-confirmation:11).
-43. Note from `read-confirmation`: event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-49. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
-50. `request_type`: not known → access (by `triage`).
-51. `subject`: not known → card (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-54. `next_system`: not known → access (by `asked-access`).
-55. The agent asked for `reply` {}.
-56. Rule `access-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = access → true (next_system=access); access_status present → true (access_status=OTHER).
-57. State `TRIAGED` → `REPLY_PENDING` (by `access-reply`).
-58. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-59. Called `reply_customer` (attempt 1, key banking-026-at-03:do-reply:15).
-60. Action in the world: `reply` {"to": "Maren Ellwood", "channel": "secure_chat", "text": "The access record shows other. This does not establish a password, PIN, or access change. No secret was handled and no additional access change was made."}.
-61. `reply_customer` found {}.
-62. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-63. The case closed in `REPLIED`: **reply**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-026-at-03:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-026-at-03:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-026-at-03:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-026-at-03:read-confirmation:13).
+49. Note from `read-confirmation`: event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.17 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.09 → False.
+57. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
+58. `request_type`: not known → access (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → card (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+64. `next_system`: not known → access (by `asked-access`).
+65. The agent asked for `redirect_secure` {}.
+66. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); request_type = instruction → false (request_type=access); not verified → true (verified=False).
+67. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
+68. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
+69. Called `redirect_secure` (attempt 1, key banking-026-at-03:do-redirect:17).
+70. Action in the world: `redirect_secure` {"to": "Maren Ellwood", "channel": "secure_chat", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
+71. `redirect_secure` found {}.
+72. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
+73. The case closed in `REDIRECTED`: **redirect_secure**.
 
 ## Model calls
 
-5 calls, 8275 tokens in, 476 out, 8.526 s, cost $0.0158; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 5979 tokens in, 768 out, 6.341 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to Maren, and the case is now closed as replied.
+> I've pointed Maren to the bank's secure process for resetting a forgotten card PIN. The desk accepted the redirect and closed the case as redirected. Maren isn't verified, and the bank never handles a PIN in chat, so the reset has to go through that secure route.
 > 
-> The access system had already answered, so I didn't ask it again. Its answer came back as "other", with no specific PIN-reset route listed. The reply therefore sticks to what the record shows. It does not claim to have reset anything or to have started a PIN change. Maren is also not verified yet, so the bank has not acted on her behalf.
+> The access system's answer on the card came back marked OTHER. I redirected anyway because a forgotten PIN belongs in the secure process, and I didn't report that answer to her.

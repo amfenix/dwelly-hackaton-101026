@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat whether her new tablet was linked and ready to use for banking. The desk looked up the access record, which showed the device as awaiting confirmation, and replied in secure chat with that status, noting that no password or PIN was handled and no access change was made. The requester was not verified, and the record shows no confirmation received and nothing further left for a person to do.
+Mara Ellison asked over secure chat whether her new tablet is linked before she uses it for banking. The desk checked the access record, which shows the device as awaiting confirmation, and replied in secure chat with that status; no password or PIN was handled and no access change was made. The case is closed as replied, and nothing is left for a person, though the record shows she is still unverified and no confirmation has been received.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-029-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
 
-  > The access record shows awaiting_confirmation. This does not disclose or handle a password or PIN. No secret was handled and no additional access change was made.
+  > The access record shows the device link as awaiting your confirmation. This does not disclose or handle a password or PIN. No secret was handled and no additional access change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `access-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = access → true (next_system=access)
   - access_status present → true (access_status=AWAITING_CONFIRMATION)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -71,8 +72,10 @@ Facts established:
 - access_status: **AWAITING_CONFIRMATION**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

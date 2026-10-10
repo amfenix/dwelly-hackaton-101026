@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a customer verified on a call, said she still can't sign in to her profile and asked for help restoring access, without sharing any password or verification code. The desk classified this as an access request and put a question to the access system. That query was the only action taken, so nothing on her profile has been changed. The access system's answer had not come back when the case closed, so the next step is left for a person to pick up from that answer.
+Mara Ellison, a customer on a verified call, said she had passed the identification checks but still couldn't sign in to her profile, and asked for help restoring access; she did not share any password or verification code. The desk classified this as an access request and asked the access system about it. That was the only action taken, and the case closed as asked. What is left is the access system's answer, which has not come back yet, and the reply to Mara will be written from it.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = access → true (next_system=access)
   - next_system absent → false (next_system=access)
   - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=access)
+  - request_type not in [register, change, authority] → true (request_type=access)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **access**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

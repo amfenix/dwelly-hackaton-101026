@@ -1,10 +1,10 @@
 # Case banking-046-at-02: Revoke a former employee’s role
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: submit_request**  (final state `REQUESTED`)
 
 ## Summary
 
-Mara Ellery, verified on a call, asked H&V to revoke former employee Owen Bell's Payroll Approver role and to keep the review of his earlier operations separate. The desk could not submit the revocation or query the business system, because no next system was established and no confirmation was recorded, so it escalated the case and nothing has been revoked. A person still needs to action or route the role revocation and check her administrator mandate.
+Mara Ellery, verified on a call, instructed the desk to revoke former employee Owen Bell's Payroll Approver role and asked that any review of his earlier operations be kept separate. The desk classified it as a role instruction and registered a request with the business team, and the case closed in REQUESTED. The revocation has been requested but not confirmed as done, and no review of earlier operations was started.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -34,7 +34,7 @@ Case reference: id banking-046-at-02, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `register_request` (team: business, about: role), by rule `do-request`
 
 ## Decision and why
 
@@ -42,8 +42,14 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
+- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `business-instruction` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - next_system = business → true (next_system=business)
+  - business_asked absent → true (business_asked=not known)
+  - verified → true (verified=True)
+  - request_type = instruction → true (request_type=instruction)
+- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
+  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 
 Facts established:
 
@@ -55,7 +61,9 @@ Facts established:
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **instruction**
-- reason: **AGENT_ESCALATED**
+- next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -64,18 +72,12 @@ Where they came from:
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
 - nothing
 
-Requests the policy refused:
-
-- `submit_request`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: next_system = business is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
-- `ask_system`: payment-ask: args.system = payment is false (args.system=business); next_system = payment is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: args.system = incoming is false (args.system=business); next_system = incoming is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: args.system = recurring is false (args.system=business); next_system = recurring is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: args.system = card is false (args.system=business); next_system = card is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: args.system = access is false (args.system=business); next_system = access is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: next_system = business is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: args.system = documents is false (args.system=business); next_system = documents is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction)
-
 ## Final result
 
-escalate (ESCALATED)
+submit_request (REQUESTED)

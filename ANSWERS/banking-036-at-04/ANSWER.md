@@ -1,10 +1,10 @@
 # Case banking-036-at-04: New correspondence address
 
-**Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
+**Decision: submit_request**  (final state `REQUESTED`)
 
 ## Summary
 
-Mara Ellison, a verified customer, wrote asking the desk to update the address it uses for her correspondence. The desk classed it as a profile change, and because a change has to be confirmed by the customer in the secure portal rather than by email or chat, it sent her a confirmation request instead of changing anything. The profile is unchanged until she confirms in the portal, and nothing else is recorded as left for staff.
+Mara Ellison, a verified customer writing through the secure portal, asked the bank to update her correspondence address and confirmed the change herself. The desk registered a profile change request with the access team and closed the case as submit_request. The agent's later attempts to submit again, redirect to the secure process and escalate were all refused because the case was already closed in REQUESTED, and nothing in the record shows the address itself was changed, so any further processing is for the access team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,7 @@ Case reference: id banking-036-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `send_for_confirmation` (change: profile, to: Mara Ellison), by rule `do-confirm`
+- `register_request` (team: access, about: profile), by rule `do-request`
 
 ## Decision and why
 
@@ -50,12 +50,14 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `CONFIRM_PENDING`: rule `change-needs-confirmation` — A change is confirmed by the customer in the secure portal, not in chat or by email.
+- `TRIAGED` → `REQUEST_PENDING`: rule `unprompted-confirmation-is-passed-on` — The customer confirmed the change on their own; the bank passes the confirmed change on.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
-  - confirmation = none → true (confirmation=none)
-- `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
-  - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
+  - confirmation = unprompted → true (confirmation=unprompted)
+  - verified → true (verified=True)
+  - registration_asked absent → true (registration_asked=not known)
+- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
+  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 
 Facts established:
 
@@ -64,15 +66,20 @@ Facts established:
 - channel: **secure_portal**
 - verified: **True**
 - subject: **profile**
-- confirmation: **none**
+- access_asked: **True**
+- confirmation: **unprompted**
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: requester='Mara Ellison', role='customer', channel='secure_portal', verified=True]
-- event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: confirmation='none', instructed_outside_portal=True]
+- event 3 (H&V profile change process): I have checked Mara’s identity and reviewed the workflow’s requirements. I’m opening the address-change process for case HV-036; no address is recorded in this note. [facts: access_asked=True]
+- event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: confirmation='unprompted']
+- event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: instructed_outside_portal=True]
 
 ## Escalated
 
@@ -82,6 +89,12 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `submit_request`: register: state = TRIAGED is false (state=REQUESTED); request_type = register is false (request_type=change); register-what-fits-no-type: state = TRIAGED is false (state=REQUESTED); request_type = other is false (request_type=change); payment-instruction: state = TRIAGED is false (state=REQUESTED); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=REQUESTED); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=REQUESTED); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=REQUESTED); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=REQUESTED); access_asked absent is false (access_asked=True); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=REQUESTED); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=REQUESTED); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change)
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=REQUESTED); request_type = access is false (request_type=change); request_type = instruction is false (request_type=change); not verified is false (verified=True)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=REQUESTED)
+
 ## Final result
 
-send_for_confirmation (CONFIRMATION_SENT)
+submit_request (REQUESTED)

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, a viewer on secure chat, asked for the status of row SUP-17 in a batch that showed as processed. The desk checked the payment record and replied on secure chat that the row was rejected because the beneficiary details did not match the receiving institution's records, and that this does not authorise a retry; no new transfer was made. Nothing was changed on the payment, her identity was never verified (the desk treated this as acceptable for a read-only status question), and any correction of the beneficiary details is left for a person to handle.
+Leona Voss, a viewer on secure chat whose identity was not verified, asked the desk to check whether row SUP-17 in her studio's payout batch had been paid. The desk looked up the row, found it rejected because the beneficiary details did not match the receiving institution's records, and replied to her on secure chat with that status and reason, noting that no new transfer was made and a retry was not authorised. The case is closed as replied, and the record lists nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=REJECTED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -73,8 +74,10 @@ Facts established:
 - payment_reason: **Beneficiary details did not match the receiving institution’s records.**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

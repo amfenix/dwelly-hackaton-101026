@@ -39,39 +39,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-048-at-04:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-048-at-04:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-048-at-04:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Mara Ellison, Alder Quay Studio Ltd.): I'm the authorised accountant for our business. Our buyer says they sent payment for the workshop invoice, but I can't reconcile it in our incoming activity. Please check whether an identifiable credit has reached our account. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: incoming_payment → incoming_payment.
-50. `request_type`: not known → status (by `triage`).
-51. `subject`: not known → incoming_payment (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
-54. `next_system`: not known → incoming (by `asked-incoming`).
-55. The agent asked for `reply` {}.
-56. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=False).
-57. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
-58. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-59. Called `reply_customer` (attempt 1, key banking-048-at-04:do-reply:15).
-60. Action in the world: `reply` {"to": "Mara Ellison, Alder Quay Studio Ltd.", "channel": "secure_chat", "text": "The incoming-payment record shows no incoming payment found. This does not establish that the sender did not pay. No payment was made."}.
-61. `reply_customer` found {}.
-62. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-63. The case closed in `REPLIED`: **reply**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-048-at-04:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-048-at-04:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-048-at-04:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-048-at-04:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Mara Ellison, Alder Quay Studio Ltd.): I'm the authorised accountant for our business. Our buyer says they sent payment for the workshop invoice, but I can't reconcile it in our incoming activity. Please check whether an identifiable credit has reached our account. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.08 → False.
+57. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → incoming_payment (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
+64. `next_system`: not known → incoming (by `asked-incoming`).
+65. The agent asked for `reply` {}.
+66. Rule `incoming-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = incoming → true (next_system=incoming); incoming_found present → true (incoming_found=False).
+67. State `TRIAGED` → `REPLY_PENDING` (by `incoming-reply`).
+68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+69. Called `reply_customer` (attempt 1, key banking-048-at-04:do-reply:17).
+70. Action in the world: `reply` {"to": "Mara Ellison, Alder Quay Studio Ltd.", "channel": "secure_chat", "text": "The incoming-payment record shows no incoming payment found. This does not establish that the sender did not pay. No payment was made."}.
+71. `reply_customer` found {}.
+72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7669 tokens in, 224 out, 6.022 s, cost $0.0150; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8171 tokens in, 534 out, 5.493 s, cost $0.0173; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer, and the case is closed. The incoming-payments check found no credit on the account for this invoice.
+> I've sent the reply. The incoming-payments check found no credit on the account for this invoice, so the reply says that and no more. The case is closed.
 > 
-> The requester is still marked as unverified. The reply is therefore limited to what the record shows. It does not confirm that the buyer sent anything, and it does not say the payment is lost. I did not take any other action.
+> The requester isn't verified, and nothing in the records confirms the buyer sent a payment. The reply is built from what the incoming-payments check found.

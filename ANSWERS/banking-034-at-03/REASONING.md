@@ -37,39 +37,52 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-034-at-03:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-034-at-03:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-034-at-03:read-confirmation:11).
-41. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
-42. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-43. `confirmation`: not known → none (by `read-confirmation`).
-44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-47. Classifier (claude claude-haiku-5-5) on `subject`: fee → fee.
-48. `request_type`: not known → record_fact (by `triage`).
-49. `subject`: not known → fee (by `triage`).
-50. State `READING` → `TRIAGED` (by `triage`).
-51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=fee).
-52. `next_system`: not known → documents (by `route-documents`).
-53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
-55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-57. Called `ask_system` (attempt 1, key banking-034-at-03:do-ask:15).
-58. Action in the world: `ask_system` {"system": "documents", "about": "fee", "amount": "3.20"}.
-59. `ask_system` found {}.
-60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-61. The case closed in `ASKED`: **ask_system**.
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-034-at-03:read-tariff:10).
+38. Note from `read-tariff`: event 3 (H&V transaction records): I am starting the review by matching the recorded transaction type and processing date against the tariff in force on that date. Case HV-034; no refund or account change is authorised by this review. [facts: tariff_asked=True]
+39. `check_tariff` found {"tariff_asked": true}.
+40. `tariff_asked`: not known → True (by `read-tariff`).
+41. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+42. Called `check_bank_actions` (attempt 1, key banking-034-at-03:read-bank-actions:11).
+43. `check_bank_actions` found {}.
+44. Rule `read-registration` fired: state = READING → true (state=READING).
+45. Called `check_registration` (attempt 1, key banking-034-at-03:read-registration:12).
+46. `check_registration` found {}.
+47. Rule `read-confirmation` fired: state = READING → true (state=READING).
+48. Called `check_confirmation` (attempt 1, key banking-034-at-03:read-confirmation:13).
+49. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
+50. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+51. `confirmation`: not known → none (by `read-confirmation`).
+52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+53. Rule `triage` fired: state = READING → true (state=READING).
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.68 → question.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+57. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → fee (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); tariff_asked → true (tariff_asked=True).
+64. `next_system`: not known → tariff (by `asked-tariff`).
+65. Rule `tariff-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = tariff → true (next_system=tariff); tariff_asked → true (tariff_asked=True); tariff_status absent → true (tariff_status=not known). The system was asked; its answer is not in yet.
+66. State `TRIAGED` → `WAITING` (by `tariff-waits`).
+67. The case closed in `WAITING`: **wait**.
+68. The agent asked for `ask_system` {"system": "tariff"}.
+69. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=tariff); next_system = payment is false (next_system=tariff); next_system absent is false (next_system=tariff); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=tariff); next_system = incoming is false (next_system=tariff); next_system absent is false (next_system=tariff); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=tariff); next_system = recurring is false (next_system=tariff); next_system absent is false (next_system=tariff); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=tariff); next_system = card is false (next_system=tariff); next_system absent is false (next_system=tariff); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=tariff); next_system = access is false (next_system=tariff); next_system absent is false (next_system=tariff); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=tariff); next_system = business is false (next_system=tariff); next_system absent is false (next_system=tariff); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=tariff); next_system = documents is false (next_system=tariff); next_system absent is false (next_system=tariff); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=tariff); tariff_asked absent is false (tariff_asked=True).
+70. The agent asked for `escalate` {"note": "Customer Mara Ellery (unverified, secure chat) asks what a £3.20 service fee on a foreign-currency cash withdrawal is for, which tariff entry applied and how the amount was calculated. The tariff system was already queried (tariff_asked=True) but no tariff answer is recorded in the case, and the case is in WAITING so a new tariff query is refused. Please review the tariff entry applied to this transaction and reply to the customer. Verify identity before sharing account details."}.
+71. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-3 calls, 5468 tokens in, 390 out, 5.228 s, cost $0.0113; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 12235 tokens in, 944 out, 9.113 s, cost $0.0294; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system, which holds the fee and tariff records, to check the £3.20 fee on your foreign-currency cash withdrawal. I'll reply once it answers. That reply will say which tariff entry applied and how it produces £3.20.
+> The case is in WAITING and nothing more can be done from here. I made two attempts, and the desk refused both because the case isn't in the TRIAGED state.
 > 
-> I haven't escalated the case to a person yet. The tariff check comes first, and escalation is still open if the answer doesn't settle it.
+> - **Tariff check:** I tried to ask the tariff system about the £3.20 fee. It refused because the tariff system was already queried (`tariff_asked` is True). No tariff answer is recorded in the case, so I can't say which tariff entry applied or how the £3.20 was worked out.
+> - **Escalation:** I tried to escalate to a person with a note describing the problem. That was refused too, for the same state reason.
+> 
+> The case stays open and goes to a person, who will need to check the tariff entry for this withdrawal. The customer, Mara Ellery, is not verified, so her identity needs checking before any account details are shared with her.

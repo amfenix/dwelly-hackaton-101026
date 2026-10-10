@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat to be told when her CSV export of transactions for 6–9 May 2025 was available in her secure portal. The desk found that the documents system showed the export as created and ready, and it replied in the chat that the document is available, while noting this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. The record shows her as not verified on this chat, and nothing further is left for a person beyond that.
+Mara Ellison asked over secure chat to be told when her CSV export of transactions for 6–9 May 2025 is available in her secure portal. The desk found the export was created and replied in the same chat, saying the document record shows it is available, that this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied; the record shows she is not verified, and nothing further is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,8 +55,9 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
@@ -72,8 +73,10 @@ Facts established:
 - document_ready: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

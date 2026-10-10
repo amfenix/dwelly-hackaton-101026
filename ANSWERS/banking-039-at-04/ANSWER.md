@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nerys Wren, a verified customer using the secure portal, asked for the permitted session extract for her profile to be delivered through the portal, and the desk classified it as an access document request. The desk had already asked the access system for it and put the case into a waiting state, since that system's answer hasn't come back. No further action was taken, and the case stays open until the access system replies.
+Nerys Wren, a verified customer on the secure portal, asked for the permitted list of her sign-in sessions to be delivered through the portal. The desk classified it as an access question, noted that the access system had been asked and that no answer was recorded, and closed the case in WAITING with no actions taken. The agent's later attempts to query the access system again and to escalate to a person were both refused because the case was already in WAITING, so no extract has gone to her and the case still needs a person to pick it up once the access answer arrives.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,16 +64,18 @@ Facts established:
 - verified: **True**
 - subject: **access**
 - access_asked: **True**
-- confirmation: **none**
+- confirmation: **unprompted**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: requester='Nerys Wren', role='customer', channel='secure_portal', verified=True]
 - event 4 (H&V security team): I’m escalating case HV-039 and requesting the permitted session extract for Nerys Wren’s profile. Please determine the allowed scope and exclude internal detection details and anyone else’s data. [facts: access_asked=True]
-- event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='none', instructed_outside_portal=False]
+- event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='unprompted', instructed_outside_portal=False]
 
 ## Escalated
 
@@ -82,6 +84,11 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

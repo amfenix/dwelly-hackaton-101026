@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a status question about a transfer. The desk classified it as such, routed it to the payment system, and sent that system a query about the transfer; the case closed with that question asked and no answer recorded. The record also notes that H&V has recorded the international payment instruction as sent, and it shows no confirmation of receipt. Nothing is recorded as left for a person; the payment system's reply is still outstanding.
+The customer asked a question about an international transfer. The desk classified it as a transfer question, routed it to the payment system and asked that system about the transfer, which closed the case. The reply to the customer said H&V has recorded the transfer as sent, that nothing shows the beneficiary has received it, and that no further status came back, so the desk can't confirm arrival. The record lists nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -53,8 +53,10 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

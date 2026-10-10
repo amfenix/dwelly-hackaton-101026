@@ -4,7 +4,7 @@
 
 ## Summary
 
-The requester said a transfer to Northmere Housing Co-operative on 14 July 2025 showed as not completed in the secure portal, and asked for the reason. The desk classified it as a request for a reason about a transfer and sent a query to the payment system about that transfer, which closed the case as asked. The record shows no answer from the payment system yet, so the reason remains unexplained to the requester.
+The customer, who said they were the account holder, asked why their 14 July 2025 transfer to Northmere Housing Co-operative showed as not completed in the secure portal. The desk classed it as a question about a transfer and queried the payment system about it. That query returned nothing, so no reason for the failure was found, and none was given to the customer. The case closed on that step, so a person would have to follow up to find the reason.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=reason)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -53,8 +53,10 @@ Facts established:
 - subject: **transfer**
 - counterparty: **Northmere Housing Co-operative**
 - subject_date: **2025-07-14**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

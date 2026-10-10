@@ -41,41 +41,51 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 37. Rule `read-documents` fired: state = READING → true (state=READING).
 38. Called `check_documents` (attempt 1, key banking-022-at-04:read-documents:9).
 39. `check_documents` found {}.
-40. Rule `read-registration` fired: state = READING → true (state=READING).
-41. Called `check_registration` (attempt 1, key banking-022-at-04:read-registration:10).
-42. Note from `read-registration`: event 2 (H&V service agent): I have opened case HV-022 and escalated Mara Ellison's verified request for an immediate card block. Her instruction was confirmed during the checked call. [facts: registration_asked=True]
-43. `check_registration` found {"registration_asked": true}.
-44. `registration_asked`: not known → True (by `read-registration`).
-45. Rule `read-confirmation` fired: state = READING → true (state=READING).
-46. Called `check_confirmation` (attempt 1, key banking-022-at-04:read-confirmation:11).
-47. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]
-48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-49. `confirmation`: not known → none (by `read-confirmation`).
-50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-53. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
-54. `request_type`: not known → instruction (by `triage`).
-55. `subject`: not known → card (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-58. `next_system`: not known → card (by `asked-card`).
-59. The agent asked for `reply` {}.
-60. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_status present → true (card_status=BLOCKED).
-61. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
-62. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-63. Called `reply_customer` (attempt 1, key banking-022-at-04:do-reply:15).
-64. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made."}.
-65. `reply_customer` found {}.
-66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-67. The case closed in `REPLIED`: **reply**.
+40. Rule `read-tariff` fired: state = READING → true (state=READING).
+41. Called `check_tariff` (attempt 1, key banking-022-at-04:read-tariff:10).
+42. `check_tariff` found {}.
+43. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+44. Called `check_bank_actions` (attempt 1, key banking-022-at-04:read-bank-actions:11).
+45. `check_bank_actions` found {}.
+46. Rule `read-registration` fired: state = READING → true (state=READING).
+47. Called `check_registration` (attempt 1, key banking-022-at-04:read-registration:12).
+48. Note from `read-registration`: event 2 (H&V service agent): I have opened case HV-022 and escalated Mara Ellison's verified request for an immediate card block. Her instruction was confirmed during the checked call. [facts: registration_asked=True]
+49. `check_registration` found {"registration_asked": true}.
+50. `registration_asked`: not known → True (by `read-registration`).
+51. Rule `read-confirmation` fired: state = READING → true (state=READING).
+52. Called `check_confirmation` (attempt 1, key banking-022-at-04:read-confirmation:13).
+53. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]
+54. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+55. `confirmation`: not known → none (by `read-confirmation`).
+56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+57. Rule `triage` fired: state = READING → true (state=READING).
+58. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+59. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+60. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+61. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+62. `request_type`: not known → instruction (by `triage`).
+63. `credentials_requested`: not known → False (by `triage`).
+64. `joint_holder_change`: not known → False (by `triage`).
+65. `subject`: not known → card (by `triage`).
+66. State `READING` → `TRIAGED` (by `triage`).
+67. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+68. `next_system`: not known → card (by `asked-card`).
+69. The agent asked for `reply` {}.
+70. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=instruction); next_system = card → true (next_system=card); card_status present → true (card_status=BLOCKED).
+71. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-022-at-04:do-reply:17).
+74. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows your card as blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made."}.
+75. `reply_customer` found {}.
+76. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+77. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7783 tokens in, 367 out, 5.624 s, cost $0.0166; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8153 tokens in, 622 out, 6.601 s, cost $0.0181; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer. The card system already shows her debit card as blocked, so I didn't submit a new block request.
+> The card is already blocked on the bank's records, so I didn't submit a second block. I sent the customer a reply with that status instead. The case is now marked as replied and closed.
 > 
-> The reply goes no further than that record. The case doesn't show who blocked the card or when. I also didn't order a replacement card, and I didn't look at any transactions at Alder Quay Market.
+> The records show no confirmation reference for the block, so the reply can only say what the card status shows.

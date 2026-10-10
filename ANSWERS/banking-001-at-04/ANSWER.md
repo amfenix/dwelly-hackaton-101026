@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat whether her £420 payment to Alder & Reed Workshop had been sent, since she could see the debit. The desk checked the transfer journal, which showed the transfer as sent, and replied on secure chat saying so, noting that this does not confirm the recipient bank has received or credited it and that no new transfer was made. Her identity was not verified, and nothing in the record is left for a person to do.
+Mara Ellison, who was not verified, asked over secure chat whether H&V had sent her £420 payment to Alder & Reed Workshop, since she could see the debit. The desk checked the transfer journal, which shows the payment as sent, and replied to her saying so. The reply also said this does not confirm receipt or credit by the recipient bank and that no new transfer was made. The case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = payment → true (next_system=payment)
   - payment_status present → true (payment_status=SENT)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -73,8 +74,10 @@ Facts established:
 - payment_status: **SENT**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

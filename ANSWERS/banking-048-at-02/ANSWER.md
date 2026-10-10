@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison of Alder Quay Studio Ltd. asked, over secure chat, whether an identifiable credit for a workshop invoice had reached the business account. The requester was not verified, and the desk classed it as a status request about an incoming payment. It then put the question to the incoming payments system, which returned nothing in the record, so whether the payment has arrived is still unanswered. The record shows no further step for anyone to take.
+Mara Ellison, writing for Alder Quay Studio Ltd. over secure chat, asked the desk to check whether an identifiable credit for a buyer's workshop invoice payment had reached the account. The desk classified it as a question about an incoming payment, noted that her identity was not verified, and sent the query to the incoming payments system, then closed the case as asked. The record shows no result from that query, so the outcome of the check and any reply to her are left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = incoming → true (next_system=incoming)
   - next_system absent → false (next_system=incoming)
   - incoming_asked absent → true (incoming_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,8 +61,10 @@ Facts established:
 - subject: **incoming_payment**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

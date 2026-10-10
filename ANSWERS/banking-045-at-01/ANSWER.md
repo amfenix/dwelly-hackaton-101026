@@ -1,10 +1,10 @@
 # Case banking-045-at-01: New employee access request
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: forward_to_authority**  (final state `FORWARDED`)
 
 ## Summary
 
-Nadia Bell, an unverified requester at Merefield Design Studio Ltd, asked for secure-portal access for a new colleague to help with payment administration, and said she is not the company administrator and cannot approve or assign the role. The desk escalated the case because she has no authority to approve it, and no access was arranged or role assigned. The agent's separate escalate request with a handover note was refused because the case was already in the escalated state, so that note may not have been recorded; the company administrator still has to approve and assign the role through the proper route, and Nadia has not yet been told this.
+Nadia Bell, who works in finance operations at Merefield Design Studio Ltd and is not the company administrator, asked for secure-portal access for a new colleague who will help with payment administration. The desk could not verify her and she has no authority to assign roles, so it forwarded the request about the role to the verified company administrator and closed the case as forwarded. No access was granted, and approving the new colleague's role is left to the company administrator.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -30,7 +30,7 @@ Case reference: id banking-045-at-01, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `forward_to_authority` (to: the verified company administrator, about: role, requester: Nadia Bell), by rule `do-forward`
 
 ## Decision and why
 
@@ -38,10 +38,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: rule `no-authority` — Only the person with the authority may approve this; the desk does not act for them.
+- `TRIAGED` → `FORWARD_PENDING`: the agent asked for `forward_to_authority`, rule `forward-to-the-authority` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = authority → true (request_type=authority)
   - role != business_admin → true (role=customer)
+- `FORWARD_PENDING` → `FORWARDED`: rule `do-forward`.
+  - state = FORWARD_PENDING → true (state=FORWARD_PENDING)
 
 Facts established:
 
@@ -53,7 +55,9 @@ Facts established:
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **authority**
-- reason: **NO_AUTHORITY**
+- next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -62,17 +66,12 @@ Where they came from:
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
 - nothing
 
-Requests the policy refused:
-
-- `escalate`: agent-escalates: state = TRIAGED is false (state=ESCALATED)
-
 ## Final result
 
-escalate (ESCALATED)
+forward_to_authority (FORWARDED)

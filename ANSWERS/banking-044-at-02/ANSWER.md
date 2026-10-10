@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, a viewer on secure chat who has not been verified, asked whether row SUP-17 in the payout batch was paid, since the batch showed as processed. The desk classified this as a status request about the batch and sent a query to the payment system about SUP-17, then closed the case in the asked state. The payment system's reply was empty, so whether the row was paid is still unknown, and nothing in the record shows who will follow up once an answer comes back.
+Leona Voss, an unverified viewer writing over secure chat, asked the desk to check whether row SUP-17 in a payout batch (for her studio materials supplier) had actually been paid, since the batch only showed "processed". The desk classed it as a question about a batch, routed it to the payment system, and sent a query about SUP-17 there, with no errors. The payment system's reply is still to come, and nothing in the record says what the row's status is or that an answer has gone back to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -62,8 +62,10 @@ Facts established:
 - reference: **SUP-17**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

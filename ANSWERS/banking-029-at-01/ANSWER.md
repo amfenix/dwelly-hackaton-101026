@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer on the secure portal, said she started registering her new tablet in the H&V app and left the screen before she could tell whether it had finished. The desk classified this as a status question about access and sent a query to the access system. The query returned nothing, and the desk has recorded no answer or further step, so the outcome of the registration is still unknown.
+Mara Ellison, a verified customer writing through the secure portal, asked whether registering her new tablet in the H&V app had finished, since she left the screen before she could tell. The desk classed it as a question about access and sent a query to the access system, which returned nothing, and the case closed at that step. Whether the tablet is registered is still unanswered and is left for a person; the agent's note says she could restart registration in the app if it didn't finish, but that is not a decision the record shows the desk making.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = access → true (next_system=access)
   - next_system absent → false (next_system=access)
   - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -57,8 +57,10 @@ Facts established:
 - subject: **access**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

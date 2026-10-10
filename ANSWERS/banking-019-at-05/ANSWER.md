@@ -1,10 +1,10 @@
 # Case banking-019-at-05: Standing order date change
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Maeve Ellery, a verified customer on the secure portal, asked to move the next run of her Willow Yard Studios standing order from 18 September to 22 September 2025, and she confirmed that change. The desk registered a change request with the recurring team; it has not been applied, and the record does not show the processing stage of the 18 September run or whether it can still be moved. Her message also noted she had instructed the change outside the portal, and the recurring team still has to process the request.
+Maeve Ellery, a verified customer, asked through the secure portal to move the next run of her standing order to Willow Yard Studios from 18 September to 22 September 2025, and she confirmed the change there. The desk decided to wait, because the rules say the system applies a change the customer has confirmed in the portal, and it took no actions itself. The agent's later attempts to query the recurring system, submit the request and escalate were all refused because the case was already in WAITING, so nothing is left for a person to do on the record beyond the system applying the change.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -46,7 +46,7 @@ Case reference: id banking-019-at-05, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: recurring, about: standing_order), by rule `do-request`
+- none
 
 ## Decision and why
 
@@ -54,16 +54,11 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `recurring-instruction` accepted it.
+- `TRIAGED` → `WAITING`: rule `change-applied-by-the-system` — The customer confirmed the change in the secure portal; the system applies it.
   - state = TRIAGED → true (state=TRIAGED)
-  - next_system = recurring → true (next_system=recurring)
-  - recurring_asked absent → true (recurring_asked=not known)
-  - verified → true (verified=True)
-  - request_type = instruction → false (request_type=change)
   - request_type = change → true (request_type=change)
   - confirmation = given → true (confirmation=given)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+  - registration_asked absent → true (registration_asked=not known)
 
 Facts established:
 
@@ -78,6 +73,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -95,6 +92,12 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change)
+- `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=change); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); request_type = instruction is false (request_type=change)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
+
 ## Final result
 
-submit_request (REQUESTED)
+wait (WAITING)

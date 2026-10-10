@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, writing over secure chat and not verified as the requester, said she was the authorised manager and asked for the file request to be escalated because the acquiring report for 1–7 July 2025 was not showing as available. The desk treated it as a document request and asked the documents system about the report, which was the only action taken. Nothing has been sent to her and the case has not been escalated; the record shows no response from the documents system, so what happens next is still open.
+Mara Venn, writing on secure chat and not verified, said she is the authorised manager for North Quay Printworks and asked for the acquiring report for 1–7 July 2025 to be escalated because it wasn't showing as available. The desk classed it as a question about a document and asked the documents system about it; that request went through but returned no details, so it is not known whether the report is available. The desk did not escalate the file request or send her any report details, and her authority over the account has not been confirmed, so that is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,8 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - document_ready = false → not known (document_ready=not known)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -62,8 +63,10 @@ Facts established:
 - subject_date: **2025-07-07**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -35,38 +35,49 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-027-at-03:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-027-at-03:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-027-at-03:read-confirmation:11).
-39. Note from `read-confirmation`: event 3 (H&V service agent): I’m directing you to the recovery option in H&V’s secure portal. Complete the checks there; I won’t ask you to tell me your password or a verification code. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-45. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
-46. `request_type`: not known → access (by `triage`).
-47. `subject`: not known → access (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-50. `next_system`: not known → access (by `route-access`).
-51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=access).
-53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-027-at-03:do-ask:15).
-56. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-027-at-03:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+38. Called `check_bank_actions` (attempt 1, key banking-027-at-03:read-bank-actions:11).
+39. Note from `read-bank-actions`: event 3 (H&V service agent): the bank already acted: I’m directing you to the recovery option in H&V’s secure portal. Complete the checks there; I won’t ask you to tell me your password or a verification code.
+40. `check_bank_actions` found {"bank_redirected": true}.
+41. `bank_redirected`: not known → True (by `read-bank-actions`).
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-027-at-03:read-registration:12).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-027-at-03:read-confirmation:13).
+47. Note from `read-confirmation`: event 3 (H&V service agent): I’m directing you to the recovery option in H&V’s secure portal. Complete the checks there; I won’t ask you to tell me your password or a verification code. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.11 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+55. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+56. `request_type`: not known → access (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → access (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+62. `next_system`: not known → access (by `route-access`).
+63. Rule `already-redirected` fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); bank_redirected → true (bank_redirected=True). The customer was pointed to the secure process; nothing to do until they use it.
+64. State `TRIAGED` → `WAITING` (by `already-redirected`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `redirect_secure` {}.
+67. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=access); not verified is false (verified=True).
 
 ## Model calls
 
-4 calls, 7640 tokens in, 232 out, 4.934 s, cost $0.0150; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8541 tokens in, 754 out, 7.198 s, cost $0.0202; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The access system holds the answer on sign-in and recovery routes, and it isn't in the case yet, so I'll ask it.
-> I've sent the question to the access system, which holds the sign-in and recovery details for Mara's profile. Its answer hasn't come back yet, so I can't say what is blocking her sign-in or which recovery route applies. Nothing has been changed on her profile. I'm waiting for the answer before replying to her.
+> I've done nothing further on this case, and it is now waiting on Mara Ellison.
+> 
+> The bank has already sent her to the secure recovery process in the portal. When I tried to redirect her a second time, the desk refused, because the case is already in a waiting state and the redirect is recorded as done. The case status shows the same: waiting, and final.
+> 
+> Mara needs to complete the recovery checks in the secure portal. She hasn't asked for, and the bank hasn't handled, any password or verification code. If recovery in the portal fails for her, she can contact the bank again and the case can be reopened.

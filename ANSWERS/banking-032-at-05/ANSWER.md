@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the document record, which showed the statement is available to order, and replied in the chat saying so, adding that this doesn't confirm a download or any credit and that no email was sent. Her identity was not verified, and nothing further is recorded as left for a person.
+Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the document record, found the statement ready for secure-portal access, and replied on secure chat that the document is available, noting that this doesn't confirm it was downloaded or that any funds were credited, and that no email was sent. Her identity was not verified, and the record shows nothing further for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -59,8 +59,9 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
+  - document_ready → true (document_ready=True)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
   - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
@@ -75,14 +76,16 @@ Facts established:
 - document_ready: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: requester='Mara Ellison', role='customer', channel='secure_chat', verified=False]
-- event 2 (H&V archive group): I’ve checked the account-holder mandate in this secure session. Please confirm whether the January 2024 statement is available and can be ordered; I haven’t promised availability or a fee. [facts: documents_asked=True]
-- event 3 (H&V archive group): The archive check confirms that the January 2024 statement is available to order. Any applicable charge is subject to the current tariff. [facts: document_ready=True]
+- event 4 (H&V statement service): I’m ordering the permitted January 2024 statement period for case HV-032, following the archive availability check and the account-holder’s request. [facts: documents_asked=True]
+- event 5 (H&V statement service): Statement HV-032 | January 2024 | status: ready for secure-portal access. [facts: document_ready=True]
 - event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated

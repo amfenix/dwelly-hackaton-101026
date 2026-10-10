@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk checked the card journal, which shows the card as dispatched with no record of receipt, and replied on secure chat with that status, noting it does not confirm she has received the card and that no card change was made. The record lists her as not verified, and nothing further is left for a person.
+Mara Ellison, writing over secure chat, asked whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk checked the card journal, which shows the card as dispatched with no record of receipt, and replied to her on secure chat saying so and that no further card change was made. The case is closed as replied, and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ Case reference: id banking-021-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
 
-  > The card journal shows dispatched. This does not confirm that the customer has received the card. No additional card change was made.
+  > The card journal shows your card as dispatched. This does not confirm that the customer has received the card. No additional card change was made.
 
 
 ## Decision and why
@@ -55,6 +55,7 @@ How the case moved:
   - state = READING → true (state=READING)
 - `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - request_type != other → true (request_type=question)
   - next_system = card → true (next_system=card)
   - card_status present → true (card_status=DISPATCHED)
 - `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
@@ -71,8 +72,10 @@ Facts established:
 - card_status: **DISPATCHED**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

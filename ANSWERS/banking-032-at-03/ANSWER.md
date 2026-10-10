@@ -1,10 +1,10 @@
 # Case banking-032-at-03: Archived Statement Request
 
-**Decision: reply**  (final state `REPLIED`)
+**Decision: ask_system**  (final state `ASKED`)
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the document record, found the statement available to order, and replied on secure chat saying so, with a note that this doesn't confirm any download or credit and that no email was sent. Her identity was not verified and the statement itself was not released; the record shows nothing further left for a person, and the case closed as replied.
+Mara Ellison, writing over secure chat as an account holder whose identity was not verified, asked whether an archived copy of her January 2024 statement is available. The desk classified this as a question about a statement and sent a query about it to the documents system, and the case closed as asked. The record shows an archive note saying the statement is available to order, subject to the current tariff, but the document is not marked ready, so what remains is the documents system's answer and a reply to Mara.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,10 +38,7 @@ Case reference: id banking-032-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `reply` (to: Mara Ellison, channel: secure_chat), by rule `do-reply`
-
-  > The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent.
-
+- `ask_system` (system: documents, about: statement), by rule `do-ask`
 
 ## Decision and why
 
@@ -49,12 +46,16 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `documents-reply` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `documents-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - args.system = documents → true (args.system=documents)
   - next_system = documents → true (next_system=documents)
-  - document_ready present → true (document_ready=True)
-- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
-  - state = REPLY_PENDING → true (state=REPLY_PENDING)
+  - next_system absent → false (next_system=documents)
+  - documents_asked absent → false (documents_asked=True)
+  - document_ready = false → true (document_ready=False)
+  - request_type not in [register, change, authority] → true (request_type=question)
+- `ASK_PENDING` → `ASKED`: rule `do-ask`.
+  - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
@@ -64,17 +65,19 @@ Facts established:
 - verified: **False**
 - subject: **statement**
 - documents_asked: **True**
-- document_ready: **True**
+- document_ready: **False**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
 - event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: requester='Mara Ellison', role='customer', channel='secure_chat', verified=False]
 - event 2 (H&V archive group): I’ve checked the account-holder mandate in this secure session. Please confirm whether the January 2024 statement is available and can be ordered; I haven’t promised availability or a fee. [facts: documents_asked=True]
-- event 3 (H&V archive group): The archive check confirms that the January 2024 statement is available to order. Any applicable charge is subject to the current tariff. [facts: document_ready=True]
+- event 3 (H&V archive group): The archive check confirms that the January 2024 statement is available to order. Any applicable charge is subject to the current tariff. [facts: document_ready=False]
 - event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -87,4 +90,4 @@ No.
 
 ## Final result
 
-reply (REPLIED)
+ask_system (ASKED)

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer remembered entering £684.20 in the transfer draft but saw £648.20 on the final payment line, and asked which amount was actually sent. The desk found the bank's record showing £648.20 sent to the property manager, with no separate confirmation on file, and put a question to the payment system about the transfer and that amount. The case closed with that question asked; the record shows no answer yet, so the amount sent is not confirmed.
+The customer asked the desk to confirm the amount actually sent, because they remembered entering £684.20 in the transfer draft while the final payment line showed £648.20. The desk read the case as a question about a transfer and put a query to the payment system about the £648.20 transfer; the case closed at that point with no amount confirmed. The record shows nothing further for a person to do, and the payment system's answer had not yet come back.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -54,8 +54,10 @@ Facts established:
 - amount: **648.20**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -40,31 +40,43 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-documents` fired: state = READING → true (state=READING).
 37. Called `check_documents` (attempt 1, key banking-015-at-04:read-documents:9).
 38. `check_documents` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-015-at-04:read-registration:10).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-015-at-04:read-confirmation:11).
-44. Note from `read-confirmation`: event 2 (Mara Ellison): I’ve completed your identification checks. Please cancel my Northmere Fitness Direct Debit mandate; I understand this is an instruction to my bank, not a cancellation of my agreement with the recipient. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-50. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
-51. `request_type`: not known → instruction (by `triage`).
-52. `subject`: not known → direct_debit (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
-55. `next_system`: not known → recurring (by `asked-recurring`).
-56. Rule `recurring-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked → true (recurring_asked=True); recurring_status absent → true (recurring_status=not known). The system was asked; its answer is not in yet.
-57. State `TRIAGED` → `WAITING` (by `recurring-waits`).
-58. The case closed in `WAITING`: **wait**.
+39. Rule `read-tariff` fired: state = READING → true (state=READING).
+40. Called `check_tariff` (attempt 1, key banking-015-at-04:read-tariff:10).
+41. `check_tariff` found {}.
+42. Rule `read-bank-actions` fired: state = READING → true (state=READING).
+43. Called `check_bank_actions` (attempt 1, key banking-015-at-04:read-bank-actions:11).
+44. `check_bank_actions` found {}.
+45. Rule `read-registration` fired: state = READING → true (state=READING).
+46. Called `check_registration` (attempt 1, key banking-015-at-04:read-registration:12).
+47. `check_registration` found {}.
+48. Rule `read-confirmation` fired: state = READING → true (state=READING).
+49. Called `check_confirmation` (attempt 1, key banking-015-at-04:read-confirmation:13).
+50. Note from `read-confirmation`: event 2 (Mara Ellison): I’ve completed your identification checks. Please cancel my Northmere Fitness Direct Debit mandate; I understand this is an instruction to my bank, not a cancellation of my agreement with the recipient. [facts: confirmation='none', instructed_outside_portal=False]
+51. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+52. `confirmation`: not known → none (by `read-confirmation`).
+53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+54. Rule `triage` fired: state = READING → true (state=READING).
+55. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+56. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+57. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+58. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+59. `request_type`: not known → instruction (by `triage`).
+60. `credentials_requested`: not known → False (by `triage`).
+61. `joint_holder_change`: not known → False (by `triage`).
+62. `subject`: not known → direct_debit (by `triage`).
+63. State `READING` → `TRIAGED` (by `triage`).
+64. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
+65. `next_system`: not known → recurring (by `asked-recurring`).
+66. Rule `recurring-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked → true (recurring_asked=True); recurring_status absent → true (recurring_status=not known). The system was asked; its answer is not in yet.
+67. State `TRIAGED` → `WAITING` (by `recurring-waits`).
+68. The case closed in `WAITING`: **wait**.
+69. The agent asked for `submit_request` {}.
+70. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); recurring-instruction: state = TRIAGED is false (state=WAITING); recurring_asked absent is false (recurring_asked=True); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring).
+71. The agent asked for `reply` {}.
+72. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=direct_debit); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=recurring); tariff_status present is false (tariff_status=not known).
+73. The agent asked for `ask_system` {"system": "recurring"}.
+74. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring).
 
 ## Model calls
 
-3 calls, 5419 tokens in, 246 out, 4.074 s, cost $0.0106; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> The recurring system has already been asked about this Direct Debit, and the case is waiting on its answer. I'm taking no further step now. Once the answer arrives, the verified cancellation instruction can go to the team that handles it.
+5 calls, 13646 tokens in, 944 out, 8.644 s, cost $0.0323; models: claude-sonnet-5-5, jev-1.13.0.

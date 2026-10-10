@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk recorded this as a card instruction and registered a request with the card team, and the case closed in the requested state. The desk did not block the card itself, and the record shows no confirmation that the block has happened, so that remains with the card team.
+Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk registered a request with the card team about the card, and the case closed as requested. The record does not show the block itself being carried out or confirmed, so that remains with the card team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,8 +44,6 @@ How the case moved:
   - card_asked absent → true (card_asked=not known)
   - verified → true (verified=True)
   - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
 - `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
   - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 
@@ -61,6 +59,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
