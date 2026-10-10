@@ -29,9 +29,11 @@ The next event does not always say plainly what the bank decided.
 | 027@3, 027@4 | the recovery system and the app message the customer by themselves | a system acting on its own is labelled "reply"; the desk's step there is to wait |
 | 012@5, 019@5 | the customer confirmed; the desk passes the confirmed change on; the system then applies it and tells the customer | arguably right; the history shows no step by the bank in between |
 
-**Needs:** the scoring (the label taken from the next event) to get these right (a system talking to the customer is not the
-bank replying; "register" inside a system's name is not a registration) before the numbers guide
-any tuning.
+**Done:** `evals/score_points.py` now labels a system or an app messaging the customer as `wait`,
+reads a registration only in "register … request/review/case", and catches "for your
+confirmation". The same run scores **113 / 149 (76%)**; the remaining 042@3, 044@3 (an answer that
+reaches the customer as the bank's own portal record) and 012@5 (a system applying a confirmed
+change) are left as they are: the next event alone cannot tell them apart.
 
 ## 2. A routing bug: an enum value read as a field (046)
 

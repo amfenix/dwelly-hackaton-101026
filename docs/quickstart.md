@@ -47,7 +47,14 @@ uv run desk run --no-resume --out runs/try/ANSWERS --traces runs/try/traces --re
                             # a real run into runs/ (ignored by git); read REASONING.md
 uv run desk eval evals/triage.yaml --models claude-haiku-5-5,jev-latest --runs 3
                             # tune the classifier's questions
+uv run python evals/score_points.py --results runs/try/results.jsonl --show
+                            # how many next steps match what the bank did; lists every one that differs
 ```
+
+`evals/score_points.py` reads the bank's next step from the next event of each case
+(`track/expected.json`) and compares it with the desk's decision; without `--results` it scores the
+run at the root. [mismatch-analysis.md](mismatch-analysis.md) explains the differences of the last
+committed run and what needs attention.
 
 ## The cases
 
