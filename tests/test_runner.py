@@ -243,6 +243,12 @@ def test_a_batch_writes_answers_traces_and_results(tmp_path: Path, mini: Policy)
     answer = (tmp_path / "ANSWERS" / "1" / "ANSWER.md").read_text(encoding="utf-8")
     assert "**Decision: escalate**" in answer and "reason: **DENIED**" in answer
     assert (tmp_path / "ANSWERS" / "2" / "REASONING.md").exists()
+    written = [
+        tmp_path / "ANSWERS" / "1" / "ANSWER.md",
+        tmp_path / "traces" / "1.json",
+        tmp_path / "out" / "results.jsonl",
+    ]
+    assert all(b"\r\n" not in path.read_bytes() for path in written)  # the same bytes on every platform
     trace = json.loads((tmp_path / "traces" / "1.json").read_text(encoding="utf-8"))
     assert trace["outcome"] == "escalate" and trace["journal"][0]["kind"] == "start"
     results = [json.loads(line) for line in (tmp_path / "out" / "results.jsonl").read_text().splitlines()]

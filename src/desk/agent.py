@@ -17,7 +17,7 @@ from functools import partial
 from typing import Any
 
 from desk.calls import Recorder, Usage
-from desk.classifier import claude_invoke
+from desk.classifier import CLAUDE_TIMEOUT, claude_invoke
 from desk.machine import Case
 from desk.policy import STRICT_TOOL_LIMIT, Arg, Policy
 
@@ -100,7 +100,7 @@ class Agent:
         if self._client is None:  # pragma: no cover - needs the real SDK and a key
             import anthropic
 
-            self._client = anthropic.Anthropic()
+            self._client = anthropic.Anthropic(timeout=CLAUDE_TIMEOUT)
         return self._client
 
     def system(self) -> str:

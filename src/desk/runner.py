@@ -219,12 +219,12 @@ class Batch:
             folder = self.out / name
             folder.mkdir(parents=True, exist_ok=True)
             self.traces.mkdir(parents=True, exist_ok=True)
-            (folder / "REASONING.md").write_text(reasoning_md(result), encoding="utf-8")
-            (self.traces / f"{name}.json").write_text(trace, encoding="utf-8")
-            with self.results.open("a", encoding="utf-8") as handle:
+            (folder / "REASONING.md").write_text(reasoning_md(result), encoding="utf-8", newline="\n")
+            (self.traces / f"{name}.json").write_text(trace, encoding="utf-8", newline="\n")
+            with self.results.open("a", encoding="utf-8", newline="\n") as handle:
                 handle.write(line + "\n")
             # Last: its presence is what marks the case as answered for a resumed run.
-            (folder / "ANSWER.md").write_text(answer_md(result), encoding="utf-8")
+            (folder / "ANSWER.md").write_text(answer_md(result), encoding="utf-8", newline="\n")
 
 
 def run_batch(

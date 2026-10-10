@@ -220,19 +220,33 @@ def test_whole_gives_every_event_and_attachment(track: Path) -> None:
     assert ids == ["1", "S48"]
 
 
-def test_a_malformed_case_is_reported_and_skipped(track: Path) -> None:
+def test_an_odd_case_is_converted_with_a_warning_and_only_an_empty_one_skipped(track: Path) -> None:
     make_case(track, "001")
-    no_sender = [("Secure chat", "", "H&V service agent", "Hello")]
-    make_case(track, "002", events=no_sender)
+    make_case(track, "002", events=[("Secure chat", "", "H&V service agent", "Hello")])  # no From
     make_case(track, "003", index=INDEX.format(n="003").replace("## Initial request", "## Something else"))
-    make_case(track, "004", total=9)
+    make_case(track, "004", total=9)  # "Total events" does not match
+    make_case(track, "005", index="no title, no sections")
+    renumbered = track / "006"
+    make_case(track, "006")
+    history = (renumbered / "history.md").read_text(encoding="utf-8").replace("event 002", "event 007")
+    (renumbered / "history.md").write_text(history, encoding="utf-8")
+    empty = track / "007"
+    make_case(track, "007")
+    (empty / "history.md").write_text("# Case history\n\nNo events.\n", encoding="utf-8")
     report = convert.Report()
-    cases, _ = convert.convert(track, report=report)
-    assert {c["case"] for c in cases} == {"001"}
-    assert len(report.skipped) == 3
-    assert "002" in report.skipped[0] and "no From" in report.skipped[0]
-    assert "003" in report.skipped[1] and "Initial request" in report.skipped[1]
-    assert "004" in report.skipped[2] and "Total events" in report.skipped[2]
+    cases, _ = convert.convert(track, report=report, whole_cases=True)
+    by_case = {c["case"]: c for c in cases}
+    assert set(by_case) == {"001", "002", "003", "004", "005", "006"}  # every case with events is answered
+    assert len(report.skipped) == 1 and "007" in report.skipped[0] and "no events" in report.skipped[0]
+    warned = "\n".join(report.warnings)
+    assert "002: event 001 has no From" in warned and by_case["002"]["events"][0]["from"] == "unknown"
+    assert "003: index.md has no 'Initial request'" in warned
+    assert by_case["003"]["request"] == by_case["003"]["events"][1]["text"]  # the customer's first words
+    assert "004: 'Total events: 9'" in warned
+    assert "005: index.md has no '# Case" in warned and by_case["005"]["title"] == "005"
+    assert "005: index.md has no 'Case details'" in warned and by_case["005"]["details"] == {}
+    assert "006: events are not numbered" in warned
+    assert [e["seq"] for e in by_case["006"]["events"]] == list(range(1, len(by_case["006"]["events"]) + 1))
 
 
 @pytest.mark.parametrize(
@@ -302,6 +316,10 @@ def test_command_line(track: Path, tmp_path: Path, capsys: pytest.CaptureFixture
     printed = capsys.readouterr().out
     assert "4 desk cases from 1 case folders" in printed and printed.isascii()  # a cp1252 console prints it
     make_case(track, "002", events=[("Secure chat", "", "x", "y")])
+    assert convert.main([str(track), "--whole", "--out", str(out)]) == 0  # converted, with a warning
+    assert "converted with warnings: 1" in capsys.readouterr().err
+    (track / "003").mkdir()
+    (track / "003" / "history.md").write_text("no events", encoding="utf-8")
     assert convert.main([str(track), "--whole", "--out", str(out)]) == 1
     assert "skipped: 1" in capsys.readouterr().err
     assert convert.main([str(tmp_path / "missing"), "--out", str(out)]) == 2

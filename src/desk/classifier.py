@@ -199,7 +199,7 @@ class ClaudeClassifier:
         if self._client is None:  # pragma: no cover - needs the real SDK and a key
             import anthropic
 
-            self._client = anthropic.Anthropic()
+            self._client = anthropic.Anthropic(timeout=CLAUDE_TIMEOUT)
         return self._client
 
     def schema(self, questions: Mapping[str, Question]) -> dict[str, Any]:
@@ -268,6 +268,10 @@ class ClaudeClassifier:
                     raise ModelError("malformed", f"{name}: {value!r} is not one of {allowed}")
                 out[name] = Answer(match, None, {"raw": value})
         return out
+
+
+CLAUDE_TIMEOUT = 60.0
+"""Seconds per Claude request (the SDK's own default is ten minutes); it retries twice after that."""
 
 
 def claude_invoke(client: Any, request: dict[str, Any]) -> tuple[dict[str, Any], Usage, str]:
