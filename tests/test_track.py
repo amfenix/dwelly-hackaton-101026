@@ -19,13 +19,26 @@ TO_JOURNAL = ("Internal note", "H&V service agent", "H&V transfer journal", "Ple
 FROM_JOURNAL = ("Internal note", "H&V transfer journal", "H&V service agent", "Transfer status: SENT.")
 
 
+class Triage(FakeClassifier):
+    """Answers the triage; any other question (a reader's fallback) is not known."""
+
+    def classify(self, text: str, questions: Any) -> Any:
+        self.answers = {name: self.answers.get(name, "unknown") for name in {*self.answers, *questions}}
+        return super().classify(text, questions)
+
+
 def event(seq: int, channel: str, sender: str, recipient: str, text: str) -> dict[str, Any]:
     kind = "system" if channel == "Internal note" else "conversation"
     return {"seq": seq, "at": "2025-07-19T09:00:00Z", "channel": channel, "kind": kind,
             "from": sender, "to": recipient, "extra": {}, "text": text}  # fmt: skip
 
 
-def started(*events: tuple[str, str, str, str], request_type: str = "status", role: str = "Bank customer") -> Case:
+def started(
+    *events: tuple[str, str, str, str],
+    request_type: str = "status",
+    subject: str = "transfer",
+    role: str = "Bank customer",
+) -> Case:
     case_input = {
         "id": "t",
         "title": "A question",
@@ -34,7 +47,9 @@ def started(*events: tuple[str, str, str, str], request_type: str = "status", ro
         "events": [event(i, *e) for i, e in enumerate(events, 1)],
         "attachments": [],
     }
-    machine = Case(POLICY, FUNCTIONS, case_input, None, Services(FakeClassifier({"request_type": request_type})))
+    machine = Case(
+        POLICY, FUNCTIONS, case_input, None, Services(Triage({"request_type": request_type, "subject": subject}))
+    )
     machine.start()
     return machine
 
@@ -72,7 +87,7 @@ def test_no_reply_before_the_answer_is_in() -> None:
 
 
 def test_with_no_subject_the_agent_names_the_system() -> None:
-    case = started(("Secure chat", CUSTOMER, "H&V service agent", "Is my new tablet linked yet?"))
+    case = started(("Secure chat", CUSTOMER, "H&V service agent", "Is my new tablet linked yet?"), subject="unknown")
     assert "next_system" not in {k for k, v in case.fields.items() if v is not None}
     assert case.send("ask_system", {"system": "access"}).accepted
     assert case.fields["next_system"] == "access" and case.state == "ASKED"
@@ -98,7 +113,7 @@ def test_an_unverified_instruction_goes_to_a_person() -> None:
 
 def test_a_change_asked_in_chat_is_sent_for_confirmation() -> None:
     change = ("Secure chat", CUSTOMER, "H&V service agent", "Please change my standing order to £68.00.")
-    case = started(change, request_type="change")
+    case = started(change, request_type="change", subject="standing_order")
     assert case.state == "CONFIRMATION_SENT" and acts(case) == ["send_for_confirmation"]
 
 
