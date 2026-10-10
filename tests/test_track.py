@@ -100,6 +100,20 @@ def test_a_role_goes_to_the_business_system() -> None:
     assert case.send("submit_request").accepted and case.state == "REQUESTED"
 
 
+def test_what_the_bank_already_did_outranks_triage() -> None:
+    correct = ("Verified call", CUSTOMER, "H&V service agent", "Please correct the spelling of my name.")
+    referred = ("Internal note", "H&V service agent", "H&V data team", "I have opened a review of the name correction.")
+    case = started(correct, referred, request_type="change", subject="profile")
+    assert case.fields["registration_asked"] is True
+    assert case.state == "WAITING"  # the review is with the data team: not sent for confirmation as a change
+
+
+def test_the_bank_may_check_before_an_instruction() -> None:
+    duplicate = ("Verified call", CUSTOMER, "H&V service agent", "Remove the duplicate of my £34.80 transfer.")
+    case = started(duplicate, request_type="instruction")
+    assert case.send("ask_system", {"system": "payment"}).accepted and case.state == "ASKED"
+
+
 def test_a_review_is_registered_not_asked() -> None:
     case = started(ASK, request_type="register")
     assert not case.send("ask_system", {"system": "payment"}).accepted

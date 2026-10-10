@@ -183,18 +183,20 @@ triggers:
     to: ESCALATED
 
   - name: change-needs-confirmation   # 012, 019, 028: a chat or an email is not an authorisation
-    when: "state = TRIAGED and request_type = change and confirmation = none"
+    when: "state = TRIAGED and request_type = change and confirmation = none and registration_asked absent"
     note: A change is confirmed by the customer in the secure portal, not in chat or by email.
     to: CONFIRM_PENDING
 
   - name: change-waits-for-the-customer
-    when: "state = TRIAGED and request_type = change and confirmation = requested"
+    when: "state = TRIAGED and request_type = change and confirmation = requested and registration_asked absent"
     note: The change was sent to the portal; the customer has not confirmed it yet.
     to: WAITING
 
   # ------------------------------------------------------------------ a review or a return: register it
+  # What the bank already did outranks triage: once a team was asked to register or review (037: a
+  # name correction triaged as a change), the case follows these rules.
   - name: registration-waits
-    when: "state = TRIAGED and request_type = register and registration_asked and registered absent"
+    when: "state = TRIAGED and registration_asked and registered absent"
     note: The team was asked; its answer is not in yet.
     to: WAITING
 
@@ -205,7 +207,7 @@ triggers:
 
   - name: registration-reply
     on: reply
-    when: "state = TRIAGED and request_type = register and registered present"
+    when: "state = TRIAGED and registration_asked and registered present"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ payment
@@ -216,7 +218,7 @@ triggers:
 
   - name: payment-ask
     on: ask_system
-    when: "state = TRIAGED and args.system = payment and (next_system = payment or next_system absent) and payment_asked absent and request_type not in [register, change, instruction, authority]"
+    when: "state = TRIAGED and args.system = payment and (next_system = payment or next_system absent) and payment_asked absent and request_type not in [register, change, authority]"
     set: { next_system: payment }
     to: ASK_PENDING
 
@@ -238,7 +240,7 @@ triggers:
 
   - name: incoming-ask
     on: ask_system
-    when: "state = TRIAGED and args.system = incoming and (next_system = incoming or next_system absent) and incoming_asked absent and request_type not in [register, change, instruction, authority]"
+    when: "state = TRIAGED and args.system = incoming and (next_system = incoming or next_system absent) and incoming_asked absent and request_type not in [register, change, authority]"
     set: { next_system: incoming }
     to: ASK_PENDING
 
@@ -260,7 +262,7 @@ triggers:
 
   - name: recurring-ask
     on: ask_system
-    when: "state = TRIAGED and args.system = recurring and (next_system = recurring or next_system absent) and recurring_asked absent and request_type not in [register, change, instruction, authority]"
+    when: "state = TRIAGED and args.system = recurring and (next_system = recurring or next_system absent) and recurring_asked absent and request_type not in [register, change, authority]"
     set: { next_system: recurring }
     to: ASK_PENDING
 
@@ -282,7 +284,7 @@ triggers:
 
   - name: card-ask
     on: ask_system
-    when: "state = TRIAGED and args.system = card and (next_system = card or next_system absent) and card_asked absent and request_type not in [register, change, instruction, authority]"
+    when: "state = TRIAGED and args.system = card and (next_system = card or next_system absent) and card_asked absent and request_type not in [register, change, authority]"
     set: { next_system: card }
     to: ASK_PENDING
 
@@ -304,7 +306,7 @@ triggers:
 
   - name: access-ask
     on: ask_system
-    when: "state = TRIAGED and args.system = access and (next_system = access or next_system absent) and access_asked absent and request_type not in [register, change, instruction, authority]"
+    when: "state = TRIAGED and args.system = access and (next_system = access or next_system absent) and access_asked absent and request_type not in [register, change, authority]"
     set: { next_system: access }
     to: ASK_PENDING
 
@@ -326,7 +328,7 @@ triggers:
 
   - name: business-ask
     on: ask_system
-    when: "state = TRIAGED and args.system = business and (next_system = business or next_system absent) and business_asked absent and request_type not in [register, change, instruction, authority]"
+    when: "state = TRIAGED and args.system = business and (next_system = business or next_system absent) and business_asked absent and request_type not in [register, change, authority]"
     set: { next_system: business }
     to: ASK_PENDING
 
@@ -348,7 +350,7 @@ triggers:
 
   - name: documents-ask
     on: ask_system
-    when: "state = TRIAGED and args.system = documents and (next_system = documents or next_system absent) and documents_asked absent and request_type not in [register, change, instruction, authority]"
+    when: "state = TRIAGED and args.system = documents and (next_system = documents or next_system absent) and documents_asked absent and request_type not in [register, change, authority]"
     set: { next_system: documents }
     to: ASK_PENDING
 

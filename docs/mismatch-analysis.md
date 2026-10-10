@@ -76,16 +76,20 @@ authority, approve nothing.
 bank starts the protected change process, which sends the confirmation itself; the desk's own
 `send_for_confirmation` is the same step under another name (028@2, 036@2 are close to right). 037
 is a name **correction**: the bank opens a review with the data team, but triage said `change`.
-**Needs:** once the history shows a registration (`registration_asked`), follow the registration
-rules whatever the triage said — what the bank already did outranks the classifier.
+**Done:** once the history shows a registration (`registration_asked`), the registration rules
+apply whatever the triage said, and the change rules do not — what the bank already did outranks
+the classifier. Live: 037@3 now waits for the data team. 037@2 (before any registration) is still
+triaged as a change: see 5.
 
 **d. No system for fees and tariffs (034).** `fee` is routed to `documents`, which does not hold
 tariffs. Add a `tariff` check (a reader and a route) or route `fee` to `payment` with a tariff
-reader.
+reader. **Waiting for** the reader `check_tariff` (asked of the track functions' owner); the route
+follows once its fields are fixed.
 
 **e. Asking before changing is refused for instructions (018@2, 006@2).** The rule `<system>-ask`
 excludes `request_type = instruction`, but the cases check first ("compare the instructions before
-any change"). Allow `ask_system` for `instruction` while the system has not been asked.
+any change"). **Done:** `ask_system` is allowed for `instruction` while the system has not been
+asked. Live: 018@2 now asks the payment system instead of escalating.
 
 ## 5. Triage (the classifier's questions in `triage`)
 
