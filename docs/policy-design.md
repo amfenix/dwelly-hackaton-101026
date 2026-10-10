@@ -95,7 +95,10 @@ to a state, so they run in order, and the last one moves the case on.
 
 ## Routing: which system holds the answer
 
-The subject decides the system. `set:` takes constants, so one rule per family:
+A system the bank already asked (`<check>_asked`) is the one that holds the answer; otherwise the
+subject decides; with neither, the agent names the system in `ask_system` and that rule sets
+`next_system`. Each routing rule applies only while `next_system` is absent. `set:` takes
+constants, so one rule per family:
 
 ```yaml
 - { name: route-payment,   when: "state = TRIAGED and subject in [transfer, batch, payment_package]", set: { next_system: payment } }

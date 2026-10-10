@@ -1,107 +1,361 @@
-# The track: a starting point for a payments desk. Replace and extend it for the event's track.
+# The banking track's policy: what the bank does next at one decision point of a case.
+# Design: docs/policy-design.md. Facts come from track/functions.py, which reads the case's
+# history (docs/task/target-api.md); the agent reads the conversation and the facts and sends the
+# decision as a signal; a rule accepts it only when the facts support it.
 #
-# How to read it: a case starts in NEW. Rules with no `on:` run by themselves, top to bottom,
-# the first true one each time. Rules with `on:` answer the agent's signals (its tools). The
-# agent never writes a field: functions and the classifier do. A case ends in a `final:` state,
-# and that state is the answer.
-#
-# Convention: a rule with `on:` only moves the case (`set:`, `to:`); code runs in rules with no
-# `on:`, fired by the state. A signal never calls a function directly, and a rule with no `on:`
-# fires once per visit to a state, so the agent cannot make a payment twice.
+# Convention: a rule with `on:` only moves the case (`set:`, `to:`); the work is done by a rule
+# with no `on:`, fired by the state, once. Every final state is a decision.
 
-policy: payments-desk
+policy: banking-desk
 version: 1
 description: >
-  A bank's operations inbox. Customers ask for payments to be made; the desk pays a payee the
-  customer already has, within the customer's limit, and hands everything else to a person with
-  the facts attached.
+  A bank's service desk (Harrow & Vale Bank, fictional). A case is a customer's request and what
+  happened since, up to now. The desk decides the bank's next step: ask the internal system that
+  holds the answer, wait for an answer already asked for, reply within what a record shows, pass
+  a request or a verified instruction to the team or system that handles it, send a change to the
+  customer's secure portal to confirm, or hand the case to a person. The bank never acts for a
+  customer, never approves for someone else, never handles a PIN or a password, and never claims
+  more than a record shows.
 
 fields:
-  customer: { type: text,  description: the customer the sender is }
-  limit:    { type: money, description: what the desk may pay for this customer without asking }
-  amount:   { type: money, description: "the amount asked for, from the request's data" }
-  payee:    { type: text,  description: "a payee the customer already has, from the request's data" }
-  category: enum [payment, question, complaint, other]
-  paid:     bool
-  reason:   enum [UNKNOWN_CUSTOMER, UNKNOWN_PAYEE, OVER_LIMIT, ACTION_FAILED, AGENT_ESCALATED, NOT_HANDLED]
+  # --- who is asking (identify_requester)
+  requester: { type: text, description: the customer's name as written }
+  role:      enum [customer, business_admin, signatory, uploader, viewer, employee, third_party]
+  channel:   enum [secure_portal, secure_chat, verified_call, business_portal, external_message]
+  verified:  { type: bool, description: the request came through a verified channel or after identity checks }
+  # --- what it is about (find_subject)
+  subject:      enum [transfer, incoming_payment, standing_order, direct_debit, card, card_payment, batch, payment_package, profile, access, statement, document, fee, limit, role]
+  amount:       money
+  counterparty: text
+  reference:    text
+  subject_date: date
+  # --- what the systems answered (check_*)
+  payment_asked:      bool
+  payment_status:     enum [SENT, PENDING, AWAITING_AUTHORISATION, COMPLETED, DECLINED, NOT_EXECUTED, REJECTED, CANCELLED, OTHER]
+  payment_reason:     text
+  payment_count:      number
+  incoming_asked:     bool
+  incoming_found:     bool
+  incoming_amount:    money
+  recurring_asked:    bool
+  recurring_status:   enum [ACTIVE, CANCELLED, NOT_EXECUTED, AMENDED, OTHER]
+  next_run:           date
+  card_asked:         bool
+  card_status:        enum [REQUESTED, IN_MANUFACTURE, DISPATCHED, BLOCKED, RESTRICTED, DECLINED, OTHER]
+  card_reason:        text
+  access_asked:       bool
+  access_status:      enum [RESTORED, AWAITING_CONFIRMATION, LINKED, PROCEDURE_STARTED, EXTRACT_PROVIDED, OTHER]
+  business_asked:     bool
+  business_status:    enum [RECEIVED, VALIDATION_FAILED, AWAITING_SECOND_SIGNATORY, PENDING_APPROVAL, ROLE_REVOKED, OTHER]
+  business_limit:     money
+  documents_asked:    bool
+  document_ready:     bool
+  document_name:      text
+  registration_asked: bool
+  registered:         bool
+  registration_ref:   text
+  # --- has the customer confirmed a change (check_confirmation)
+  confirmation:              enum [none, requested, given]
+  instructed_outside_portal: bool
+  # --- the policy's own
+  request_type: enum [status, reason, record_fact, register, change, instruction, document, access, authority]
+  next_system:  { type: enum, values: [payment, incoming, recurring, card, access, business, documents], description: the system that holds the answer }
+  reason:       enum [NO_AUTHORITY, UNVERIFIED, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED]
 
-states: [NEW, IDENTIFIED, TRIAGED, PAYING, DONE, ESCALATED]
-initial: NEW
+states: [READING, TRIAGED, ASK_PENDING, REPLY_PENDING, REQUEST_PENDING, CONFIRM_PENDING,
+         ASKED, WAITING, REPLIED, REQUESTED, CONFIRMATION_SENT, ESCALATED]
+initial: READING
 final:
-  DONE: act
+  ASKED: ask_system
+  WAITING: wait
+  REPLIED: reply
+  REQUESTED: submit_request
+  CONFIRMATION_SENT: send_for_confirmation
   ESCALATED: escalate
 
 signals:
-  pay:
+  ask_system:
     description: >
-      Make the payment the customer asked for. The desk pays the amount and the payee from the
-      request's data, never from your words, and only to a payee the customer already has within
-      their limit. Use it once, for a payment request only.
+      Ask the internal system that holds the answer the customer needs, when that answer is not in
+      the case yet. Name the system. The desk asks it about the case's subject; the answer comes
+      later. Not for registering a review or passing on an instruction.
+    args:
+      system: { type: enum, values: [payment, incoming, recurring, card, access, business, documents], description: "payment: transfers, payments, batches; incoming: credits to the account; recurring: standing orders and Direct Debits; card: cards and card payments; access: sign-in, devices, PIN and password routes; business: company limits, roles, signing, imports; documents: statements, exports, reports, fees" }
+  reply:
+    description: >
+      Reply to the customer now, from what the system's answer in the case shows. The desk writes
+      the reply from the facts: what the record shows, what it does not establish, what was not
+      done. Only when the answer is already in the case.
+  submit_request:
+    description: >
+      Pass the customer's request to the team or system that handles it: a review, a dispute or a
+      return to be looked into, or the customer's own verified instruction (block a card, cancel a
+      future payment, revoke a role). The bank records and forwards it; it does not decide the
+      review or act on its own authority.
   escalate:
     description: >
-      Hand the case to a person now. Use it when the case is outside what the other tools do,
-      when facts conflict, or when you are not sure. Say what a person needs to know.
+      Hand the case to a person now: when the request needs someone else's authority, asks for a
+      secret, conflicts with the facts, or fits none of the other tools. Say what a person needs
+      to know.
     args:
       note: { type: text, description: "what happened and what is still open, for the person" }
 
 triggers:
-  # --- who wrote? Facts come from the records, not from the message.
-  - name: identify
-    when: "state = NEW"
-    call: find_customer
-    to: IDENTIFIED
+  # ------------------------------------------------------------------ read the history into facts
+  - { name: read-requester,    when: "state = READING", call: identify_requester }
+  - { name: read-subject,      when: "state = READING", call: find_subject }
+  - { name: read-payment,      when: "state = READING", call: check_payment }
+  - { name: read-incoming,     when: "state = READING", call: check_incoming }
+  - { name: read-recurring,    when: "state = READING", call: check_recurring }
+  - { name: read-card,         when: "state = READING", call: check_card }
+  - { name: read-access,       when: "state = READING", call: check_access }
+  - { name: read-business,     when: "state = READING", call: check_business }
+  - { name: read-documents,    when: "state = READING", call: check_documents }
+  - { name: read-registration, when: "state = READING", call: check_registration }
+  - { name: read-confirmation, when: "state = READING", call: check_confirmation }
 
-  - name: unknown-customer
-    when: "state = IDENTIFIED and customer absent"
-    set: { reason: UNKNOWN_CUSTOMER }
-    to: ESCALATED
-
-  # --- what is it about?
   - name: triage
-    when: "state = IDENTIFIED and customer present"
+    when: "state = READING"
+    input: "{case.title}\n\n{case.request}"
     ask:
-      category:
-        choice: "What is the message mainly about?"
+      request_type:
+        choice: "What does the customer want from the bank now?"
         options:
-          payment: a request to pay someone or move money
-          question: a question about an account or a payment
-          complaint: a complaint or a dispute
-          other: anything else
+          status: the stage or status of a payment, card, file, device or request
+          reason: why something was declined, restricted or did not run
+          record_fact: a detail from a record (a date, a purpose, an amount, a limit, a fee, a mandate, active instructions)
+          register: a dispute, a review, a correction or a return to be looked into by a team
+          change: a change to a payment instruction, a mandate, an amount, a date or the profile (phone, address)
+          instruction: an instruction to act now (block a card, cancel a payment or a mandate, revoke a role)
+          document: a statement, an export, a report or a confirmation made available in the portal
+          access: signing in, a PIN, a password, recovery of access
+          authority: something only another person may approve or give (a second signatory, an administrator, a new user's access)
     retry: 1
     to: TRIAGED
 
-  - name: unknown-payee
-    when: "state = TRIAGED and category = payment and payee absent"
-    note: The payee is not one the customer already has, so a person checks it.
-    set: { reason: UNKNOWN_PAYEE }
+  # ------------------------------------------------------------------ which system holds the answer
+  # a system the bank already asked is the one that holds the answer
+  - { name: asked-payment, when: "state = TRIAGED and next_system absent and payment_asked", set: { next_system: payment } }
+  - { name: asked-incoming, when: "state = TRIAGED and next_system absent and incoming_asked", set: { next_system: incoming } }
+  - { name: asked-recurring, when: "state = TRIAGED and next_system absent and recurring_asked", set: { next_system: recurring } }
+  - { name: asked-card, when: "state = TRIAGED and next_system absent and card_asked", set: { next_system: card } }
+  - { name: asked-access, when: "state = TRIAGED and next_system absent and access_asked", set: { next_system: access } }
+  - { name: asked-business, when: "state = TRIAGED and next_system absent and business_asked", set: { next_system: business } }
+  - { name: asked-documents, when: "state = TRIAGED and next_system absent and documents_asked", set: { next_system: documents } }
+  # otherwise the subject decides; with no subject, the agent names the system
+  - { name: route-payment, when: "state = TRIAGED and next_system absent and subject in [transfer, batch, payment_package]", set: { next_system: payment } }
+  - { name: route-incoming, when: "state = TRIAGED and next_system absent and subject in [incoming_payment]", set: { next_system: incoming } }
+  - { name: route-recurring, when: "state = TRIAGED and next_system absent and subject in [standing_order, direct_debit]", set: { next_system: recurring } }
+  - { name: route-card, when: "state = TRIAGED and next_system absent and subject in [card, card_payment]", set: { next_system: card } }
+  - { name: route-access, when: "state = TRIAGED and next_system absent and subject in [access, profile]", set: { next_system: access } }
+  - { name: route-business, when: "state = TRIAGED and next_system absent and subject in [limit, role]", set: { next_system: business } }
+  - { name: route-documents, when: "state = TRIAGED and next_system absent and subject in [statement, document, fee]", set: { next_system: documents } }
+
+  # ------------------------------------------------------------------ safety first, before the agent
+  - name: no-authority           # 043, 045: nothing approved for a signatory or an administrator
+    when: "state = TRIAGED and request_type = authority and role != business_admin"
+    note: Only the person with the authority may approve this; the desk does not act for them.
+    set: { reason: NO_AUTHORITY }
     to: ESCALATED
 
-  - name: over-limit
-    when: "state = TRIAGED and category = payment and amount > limit"
-    note: Over the customer's limit, so a person decides.
-    set: { reason: OVER_LIMIT }
+  - name: unverified-instruction
+    when: "state = TRIAGED and request_type = instruction and not verified"
+    note: An instruction to act needs a verified customer.
+    set: { reason: UNVERIFIED }
     to: ESCALATED
 
-  # --- the agent asks to pay: the signal only moves the case on.
-  - name: pay-requested
-    on: pay
-    when: "state = TRIAGED and category = payment and payee present and amount <= limit"
-    to: PAYING
+  - name: change-needs-confirmation   # 012, 019, 028: a chat or an email is not an authorisation
+    when: "state = TRIAGED and request_type = change and confirmation = none"
+    note: A change is confirmed by the customer in the secure portal, not in chat or by email.
+    to: CONFIRM_PENDING
 
-  # --- the payment itself: fired by the state, once.
-  - name: pay
-    when: "state = PAYING"
-    call: make_payment
-    retry: 2
-    on_error: { set: { reason: ACTION_FAILED }, to: ESCALATED }
-    to: DONE
+  - name: change-waits-for-the-customer
+    when: "state = TRIAGED and request_type = change and confirmation = requested"
+    note: The change was sent to the portal; the customer has not confirmed it yet.
+    to: WAITING
 
-  # --- the agent hands over.
+  # ------------------------------------------------------------------ a review or a return: register it
+  - name: registration-waits
+    when: "state = TRIAGED and request_type = register and registration_asked and registered absent"
+    note: The team was asked; its answer is not in yet.
+    to: WAITING
+
+  - name: register
+    on: submit_request
+    when: "state = TRIAGED and request_type = register and registration_asked absent"
+    to: REQUEST_PENDING
+
+  - name: registration-reply
+    on: reply
+    when: "state = TRIAGED and request_type = register and registered present"
+    to: REPLY_PENDING
+
+  # ------------------------------------------------------------------ payment
+  - name: payment-waits
+    when: "state = TRIAGED and next_system = payment and payment_asked and payment_status absent"
+    note: The system was asked; its answer is not in yet.
+    to: WAITING
+
+  - name: payment-ask
+    on: ask_system
+    when: "state = TRIAGED and args.system = payment and (next_system = payment or next_system absent) and payment_asked absent and request_type not in [register, change, instruction, authority]"
+    set: { next_system: payment }
+    to: ASK_PENDING
+
+  - name: payment-instruction
+    on: submit_request
+    when: "state = TRIAGED and next_system = payment and payment_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    to: REQUEST_PENDING
+
+  - name: payment-reply
+    on: reply
+    when: "state = TRIAGED and next_system = payment and payment_status present"
+    to: REPLY_PENDING
+
+  # ------------------------------------------------------------------ incoming
+  - name: incoming-waits
+    when: "state = TRIAGED and next_system = incoming and incoming_asked and incoming_found absent"
+    note: The system was asked; its answer is not in yet.
+    to: WAITING
+
+  - name: incoming-ask
+    on: ask_system
+    when: "state = TRIAGED and args.system = incoming and (next_system = incoming or next_system absent) and incoming_asked absent and request_type not in [register, change, instruction, authority]"
+    set: { next_system: incoming }
+    to: ASK_PENDING
+
+  - name: incoming-instruction
+    on: submit_request
+    when: "state = TRIAGED and next_system = incoming and incoming_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    to: REQUEST_PENDING
+
+  - name: incoming-reply
+    on: reply
+    when: "state = TRIAGED and next_system = incoming and incoming_found present"
+    to: REPLY_PENDING
+
+  # ------------------------------------------------------------------ recurring
+  - name: recurring-waits
+    when: "state = TRIAGED and next_system = recurring and recurring_asked and recurring_status absent"
+    note: The system was asked; its answer is not in yet.
+    to: WAITING
+
+  - name: recurring-ask
+    on: ask_system
+    when: "state = TRIAGED and args.system = recurring and (next_system = recurring or next_system absent) and recurring_asked absent and request_type not in [register, change, instruction, authority]"
+    set: { next_system: recurring }
+    to: ASK_PENDING
+
+  - name: recurring-instruction
+    on: submit_request
+    when: "state = TRIAGED and next_system = recurring and recurring_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    to: REQUEST_PENDING
+
+  - name: recurring-reply
+    on: reply
+    when: "state = TRIAGED and next_system = recurring and recurring_status present"
+    to: REPLY_PENDING
+
+  # ------------------------------------------------------------------ card
+  - name: card-waits
+    when: "state = TRIAGED and next_system = card and card_asked and card_status absent"
+    note: The system was asked; its answer is not in yet.
+    to: WAITING
+
+  - name: card-ask
+    on: ask_system
+    when: "state = TRIAGED and args.system = card and (next_system = card or next_system absent) and card_asked absent and request_type not in [register, change, instruction, authority]"
+    set: { next_system: card }
+    to: ASK_PENDING
+
+  - name: card-instruction
+    on: submit_request
+    when: "state = TRIAGED and next_system = card and card_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    to: REQUEST_PENDING
+
+  - name: card-reply
+    on: reply
+    when: "state = TRIAGED and next_system = card and card_status present"
+    to: REPLY_PENDING
+
+  # ------------------------------------------------------------------ access
+  - name: access-waits
+    when: "state = TRIAGED and next_system = access and access_asked and access_status absent"
+    note: The system was asked; its answer is not in yet.
+    to: WAITING
+
+  - name: access-ask
+    on: ask_system
+    when: "state = TRIAGED and args.system = access and (next_system = access or next_system absent) and access_asked absent and request_type not in [register, change, instruction, authority]"
+    set: { next_system: access }
+    to: ASK_PENDING
+
+  - name: access-instruction
+    on: submit_request
+    when: "state = TRIAGED and next_system = access and access_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    to: REQUEST_PENDING
+
+  - name: access-reply
+    on: reply
+    when: "state = TRIAGED and next_system = access and access_status present"
+    to: REPLY_PENDING
+
+  # ------------------------------------------------------------------ business
+  - name: business-waits
+    when: "state = TRIAGED and next_system = business and business_asked and business_status absent"
+    note: The system was asked; its answer is not in yet.
+    to: WAITING
+
+  - name: business-ask
+    on: ask_system
+    when: "state = TRIAGED and args.system = business and (next_system = business or next_system absent) and business_asked absent and request_type not in [register, change, instruction, authority]"
+    set: { next_system: business }
+    to: ASK_PENDING
+
+  - name: business-instruction
+    on: submit_request
+    when: "state = TRIAGED and next_system = business and business_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    to: REQUEST_PENDING
+
+  - name: business-reply
+    on: reply
+    when: "state = TRIAGED and next_system = business and business_status present"
+    to: REPLY_PENDING
+
+  # ------------------------------------------------------------------ documents
+  - name: documents-waits
+    when: "state = TRIAGED and next_system = documents and documents_asked and document_ready absent"
+    note: The system was asked; its answer is not in yet.
+    to: WAITING
+
+  - name: documents-ask
+    on: ask_system
+    when: "state = TRIAGED and args.system = documents and (next_system = documents or next_system absent) and documents_asked absent and request_type not in [register, change, instruction, authority]"
+    set: { next_system: documents }
+    to: ASK_PENDING
+
+  - name: documents-instruction
+    on: submit_request
+    when: "state = TRIAGED and next_system = documents and documents_asked absent and verified and (request_type = instruction or (request_type = change and confirmation = given))"
+    to: REQUEST_PENDING
+
+  - name: documents-reply
+    on: reply
+    when: "state = TRIAGED and next_system = documents and document_ready present"
+    to: REPLY_PENDING
+
+  # ------------------------------------------------------------------ the agent hands over
   - name: agent-escalates
     on: escalate
-    when: "state != ESCALATED"
+    when: "state = TRIAGED"
     set: { reason: AGENT_ESCALATED }
     to: ESCALATED
+
+  # ------------------------------------------------------------------ the work, once, by state
+  - { name: do-ask,     when: "state = ASK_PENDING",     call: ask_system,            to: ASKED }
+  - { name: do-reply,   when: "state = REPLY_PENDING",   call: reply_customer,        to: REPLIED }
+  - { name: do-request, when: "state = REQUEST_PENDING", call: register_request,      to: REQUESTED }
+  - { name: do-confirm, when: "state = CONFIRM_PENDING", call: send_for_confirmation, to: CONFIRMATION_SENT }
 
 on_error:
   set: { reason: ACTION_FAILED }
@@ -115,4 +369,14 @@ briefing: brief
 
 agent:
   model: claude-sonnet-5-5
-  max_turns: 6
+  max_turns: 4
+  instructions: >
+    The case is cut at one moment: decide only the bank's next step from here. The facts list
+    what the desk has read from the bank's own records so far; the conversation is what the
+    customer and the bank said. A fact that is not listed is not known yet. The cases this desk
+    learned from took these steps: when the customer asks something a system holds and its answer
+    is not among the facts, the bank asks that system; when the answer is among the facts, the bank
+    replies within it; a review, a dispute or a return goes to the team that handles it, and so
+    does a verified customer's own instruction; anything that needs another person's authority, a
+    secret, or a step none of the tools offers goes to a person. One decision is enough: after a
+    tool accepts it, stop.
