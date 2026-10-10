@@ -2001,26 +2001,72 @@ def check_bank_actions(ctx: Context) -> dict[str, Any]:
     return out
 
 
-_REFUSALS = {
-    "someone_elses_account": "We can't say whether anyone holds an account with us, or share anything about one. "
-    "The account holder can contact us directly through their own secure portal.",
-    "credentials": "We never use another person's login, and we never ask for or read out a one-time code, a PIN or a "
-    "password. Anyone who needs to act signs in themselves, through their own secure portal.",
-    "no_authority": "We can't share this or act on it for your role. The company's administrator or an authorised "
-    "signatory can make it through the business portal.",
-    "needs_all_holders": "A change to the holders of a joint account needs every holder to agree. Each holder can "
-    "confirm it through their own secure portal.",
-    "other": "We can't do this on this request. A colleague can explain the options available to you.",
-}
-"""What the bank says when it refuses: the reason and the permitted route, never the agent's words."""
+def _refusal_details(ctx: Context, reason: str) -> tuple[dict[str, Any], str, str]:
+    """Keep a refusal's policy basis distinct from proof supplied by a bank record.
+
+    Sources refer to the existing reader/classifier trace, not a guessed matching
+    event. The classifier's input and reader evidence are already saved there.
+    """
+    if reason == "someone_elses_account":
+        evidence = {
+            "kind": "parsed_context_and_classifier_inference",
+            "facts": {"role": _field(ctx, "role"),
+                      "private_account_disclosure": _field(ctx, "private_account_disclosure")},
+            "sources": ["read-requester journal notes", "triage input: case.title and case.request"],
+        }
+        alternative = (
+            "The account holder can contact the bank through an authenticated channel. "
+            "If you act for them, ask the bank to check your authority before any disclosure."
+        )
+        text = "We cannot confirm or disclose another person's account or payment from this request."
+    elif reason == "credentials":
+        evidence = {
+            "kind": "classifier_inference",
+            "facts": {"credentials_requested": _field(ctx, "credentials_requested")},
+            "sources": ["triage input: case.title and case.request"],
+        }
+        alternative = (
+            "Each person must use their own authenticated access. "
+            "The bank can help identify the permitted recovery or approval route without sharing secrets."
+        )
+        text = "We never use another person's login, or ask for or read out a one-time code, PIN or password."
+    elif reason == "no_authority":
+        revoked = _field(ctx, "business_status") == "ROLE_REVOKED"
+        evidence = {
+            "kind": "recorded_fact" if revoked else "parsed_context",
+            "facts": ({"business_status": "ROLE_REVOKED"} if revoked else {"role": _field(ctx, "role")}),
+            "sources": ["read-business journal notes" if revoked else "read-requester journal notes"],
+        }
+        alternative = (
+            "Ask the bank to check who is authorised and what verification or approval is required. "
+            "No approval route is assumed from this request alone."
+        )
+        text = "We cannot disclose this information or carry out this operation on the authority currently recorded."
+    elif reason == "needs_all_holders":
+        evidence = {
+            "kind": "classifier_inference",
+            "facts": {"joint_holder_change": _field(ctx, "joint_holder_change")},
+            "sources": ["triage input: case.title and case.request"],
+        }
+        alternative = (
+            "Ask the bank to review the holders' authority and the applicable consent requirements. "
+            "This request alone does not authorise removal of another holder."
+        )
+        text = "We cannot change another joint holder's rights solely on your instruction."
+    else:
+        raise CaseError("a refusal needs an accepted policy reason")
+    return evidence, alternative, f"{text} {alternative}"
 
 
 @function
 def refuse_customer(ctx: Context) -> dict[str, Any]:
-    """Refuse with the reason the policy accepted, and say what the customer can do instead."""
-    reason = str(_field(ctx, "refusal_reason") or "other")
-    to = _field(ctx, "requester") or "the requester"
-    ctx.act("refuse", to=to, channel=_field(ctx, "channel"), reason=reason, text=_REFUSALS[reason])
+    """Record the immediate refusal, its evidence and a route that does not claim execution."""
+    reason = str(_field(ctx, "refusal_reason") or "")
+    evidence, alternative, text = _refusal_details(ctx, reason)
+    ctx.act(
+        "refuse", to=_field(ctx, "requester") or "the requester", channel=_field(ctx, "channel"),
+        reason=reason, evidence=evidence, alternative=alternative, text=text,
+    )
     return {}
 
 

@@ -298,21 +298,86 @@ def test_a_refusal_is_accepted_only_on_the_fact_that_makes_the_request_impossibl
     case = started(code, credentials_requested=0.95)
     assert case.send("refuse", {"reason": "credentials"}).accepted and case.state == "REFUSED"
     args = refused(case)
-    assert args["reason"] == "credentials" and "never ask for or read out" in args["text"] and "portal" in args["text"]
+    assert args["reason"] == "credentials" and "read out" in args["text"]
+    assert "own authenticated access" in args["alternative"]
+    assert args["evidence"]["kind"] == "classifier_inference"
+    assert args["evidence"]["facts"] == {"credentials_requested": True}
+    assert args["evidence"]["sources"] == ["triage input: case.title and case.request"]
 
 
 def test_someone_elses_account_is_refused_only_to_a_third_party() -> None:
     landlord = ("External message", "Landlord", "Harrow & Vale Bank plc", "Has my tenant paid the rent?")
     assert not started(landlord).send("refuse", {"reason": "someone_elses_account"}).accepted
-    case = started(landlord, role="Third party")
+    case = started(landlord, role="Third party", private_account_disclosure=0.95)
     assert case.send("refuse", {"reason": "someone_elses_account"}).accepted and case.outcome == "refuse"
 
 
-def test_the_other_reasons_need_their_facts() -> None:
+def test_refusal_reasons_need_their_facts_and_unknown_type_is_not_a_refusal() -> None:
     joint = ("Secure chat", CUSTOMER, "H&V service agent", "Remove my ex from our joint account.")
     assert not started(joint, request_type="instruction").send("refuse", {"reason": "needs_all_holders"}).accepted
     case = started(joint, request_type="instruction", joint_holder_change=0.9)
     assert case.send("refuse", {"reason": "needs_all_holders"}).accepted
     assert not started(ASK).send("refuse", {"reason": "other"}).accepted  # only a request of no known type
-    assert started(ASK, request_type="other").send("refuse", {"reason": "other"}).accepted
+    assert not started(ASK, request_type="other").send("refuse", {"reason": "other"}).accepted
     assert not started(ASK).send("refuse", {"reason": "no_authority"}).accepted
+
+
+def test_missing_authority_offers_review_without_claiming_a_fixed_route() -> None:
+    request = ("Secure chat", "Graham", "H&V service agent", "Approve this company payment package.")
+    case = started(request, request_type="authority", subject="payment_package", role="Viewer")
+    assert case.send("refuse", {"reason": "no_authority"}).accepted
+    args = refused(case)
+    assert "check who is authorised" in args["alternative"]
+    assert "administrator" not in args["text"] and "portal" not in args["text"]
+    assert args["evidence"]["kind"] == "parsed_context"
+
+
+def test_third_party_process_question_is_not_itself_a_disclosure_request() -> None:
+    process = ("External message", "Representative", "H&V agent", "How can I establish authority to help a relative?")
+    case = started(process, role="Third party")
+    assert not case.send("refuse", {"reason": "someone_elses_account"}).accepted
+    assert case.send("escalate", {"note": "Determine the authority verification requirements."}).accepted
+
+
+def test_mixed_representation_request_can_go_for_review_without_disclosure() -> None:
+    request = ("External message", "Relative", "H&V agent",
+               "My relative died. How do I stop payments and see a balance?")
+    case = started(request, role="Third party", request_type="other", private_account_disclosure=0.95)
+    assert not case.send("refuse", {"reason": "someone_elses_account"}).accepted
+    assert not case.send("reply").accepted
+    assert case.send("escalate", {"note": "Review representation; do not disclose account details."}).accepted
+
+
+def test_refusing_credentials_still_offers_a_permitted_way_to_act() -> None:
+    request = ("Secure chat", CUSTOMER, "H&V agent", "Use my colleague's password to approve, or help them sign in.")
+    case = started(request, request_type="authority", credentials_requested=0.95)
+    assert case.send("refuse", {"reason": "credentials"}).accepted
+    args = refused(case)
+    assert "own authenticated access" in args["text"] and "recovery or approval route" in args["text"]
+    assert "completed" not in args["text"]
+
+
+def test_verified_approval_request_can_check_an_identifiable_record_first() -> None:
+    request = ("Verified call", CUSTOMER, "H&V agent", "Can you approve my saved £420 instruction?")
+    for subject, system in (("payment_package", "payment"), ("limit", "business")):
+        case = started(request, request_type="authority", subject=subject, role="Signatory")
+        assert not case.send("submit_request").accepted
+        assert case.send("ask_system", {"system": system}).accepted
+        assert acts(case) == ["ask_system"]
+
+
+def test_a_recorded_revocation_blocks_the_new_authority_lookup_route() -> None:
+    request = ("Verified call", CUSTOMER, "H&V agent", "Can you approve my saved £420 instruction?")
+    for subject, system in (("payment_package", "payment"), ("limit", "business")):
+        case = started(request, request_type="authority", subject=subject, role="Signatory")
+        case.fields["business_status"] = "ROLE_REVOKED"
+        assert not case.send("ask_system", {"system": system}).accepted
+        assert case.send("refuse", {"reason": "no_authority"}).accepted
+        assert refused(case)["evidence"]["kind"] == "recorded_fact"
+
+
+def test_unverified_approval_request_cannot_use_the_new_lookup_route() -> None:
+    request = ("External message", CUSTOMER, "H&V agent", "Can you approve my saved £420 payment package?")
+    case = started(request, request_type="authority", subject="payment_package", role="Signatory")
+    assert not case.send("ask_system", {"system": "payment"}).accepted
+    assert not case.send("submit_request").accepted
