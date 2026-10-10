@@ -23,16 +23,98 @@ def _show(value: Any) -> str:
     return "not known" if value is None else str(value)
 
 
+_TEXT_KEYS = ("text", "message", "body", "content")
+_CASE_KEYS = ("title", "details", "request", "events", "attachments")
+"""A case given as a history (a request and events up to now) is shown as one, not as JSON."""
+
+
+def _quote(text: Any) -> list[str]:
+    return ["> " + line for line in str(text).splitlines() or [""]]
+
+
 def _received(case_input: dict[str, Any]) -> str:
-    key = next((k for k in ("text", "message", "body", "content") if isinstance(case_input.get(k), str)), None)
+    if isinstance(case_input.get("events"), list):
+        return _received_history(case_input)
+    key = next((k for k in _TEXT_KEYS if isinstance(case_input.get(k), str)), None)
     rest = {k: v for k, v in case_input.items() if k != key}
     lines = []
     if key is not None:
-        lines += ["> " + line for line in str(case_input[key]).splitlines() or [""]]
-        lines.append("")
+        lines += [*_quote(case_input[key]), ""]
     if rest:
         lines += ["```json", json.dumps(rest, ensure_ascii=False, indent=2, default=str), "```"]
     return "\n".join(lines)
+
+
+def _received_history(case_input: dict[str, Any]) -> str:
+    lines: list[str] = []
+    details = case_input.get("details")
+    if isinstance(details, dict) and details:
+        lines += [f"- {k}: {_show(v)}" for k, v in details.items()] + [""]
+    if case_input.get("request"):
+        lines += ["The request:", "", *_quote(case_input["request"]), ""]
+    lines += ["What happened up to now:", ""]
+    for number, event in enumerate(case_input["events"], 1):
+        head = " · ".join(str(event[k]) for k in ("at", "channel") if event.get(k))
+        route = f"{event.get('from', '?')} → {event.get('to', '?')}"
+        line = f"{event.get('seq', number)}. " + (f"{head} — " if head else "") + route
+        lines += [line, "", *_quote(event.get("text", "")), ""]
+    attachments = case_input.get("attachments") or []
+    names = [a.get("name", _show(a)) if isinstance(a, dict) else _show(a) for a in attachments]
+    lines.append("Attachments: " + (", ".join(f"`{n}`" for n in names) if names else "none") + ".")
+    rest = {k: v for k, v in case_input.items() if k not in _CASE_KEYS}
+    if rest:
+        lines += ["", "Case reference: " + ", ".join(f"{k} {_show(v)}" for k, v in rest.items()) + "."]
+    return "\n".join(lines)
+
+
+def _action(entry: Entry) -> list[str]:
+    args = dict(entry.data["args"])
+    text = args.pop("text", None)
+    shown = ", ".join(f"{k}: {_show(v)}" for k, v in args.items())
+    lines = [f"- `{entry.data['type']}`" + (f" ({shown})" if shown else "") + f", by rule `{entry.data['by']}`"]
+    if isinstance(text, str):
+        lines += ["", *("  " + line for line in _quote(text)), ""]
+    return lines
+
+
+def _path(entries: list[Entry]) -> list[str]:
+    """Every move of the case, with the rule that made it and the tests that rule passed."""
+    lines: list[str] = []
+    for index, moved in enumerate(entries):
+        if moved.kind != "state":
+            continue
+        rule = next(
+            (e for e in reversed(entries[:index]) if e.kind == "trigger" and e.data["name"] == moved.data["by"]),
+            None,
+        )
+        step = f"`{moved.data['frm']}` → `{moved.data['to']}`"
+        if rule is None:
+            lines.append(f"- {step} by `{moved.data['by']}`.")
+            continue
+        on = rule.data.get("on")
+        by = (
+            f"the agent asked for `{on}`, rule `{rule.data['name']}` accepted it"
+            if on
+            else f"rule `{rule.data['name']}`"
+        )
+        lines.append(f"- {step}: {by}" + (f" — {rule.data['note']}" if rule.data.get("note") else "."))
+        lines += [f"  - {a['test']} → {_verdict(a['result'])}{_values(a['values'])}" for a in rule.data["why"]]
+    return lines
+
+
+def _why(result: RunResult) -> list[str]:
+    entries = result.journal
+    path = _path(entries)
+    lines: list[str] = []
+    if path:
+        lines += ["How the case moved:", "", *path, ""]
+    facts = {k: v for k, v in result.plain_fields().items() if v is not None}
+    lines += ["Facts established:", ""]
+    lines += [f"- {name}: **{_show(value)}**" for name, value in facts.items()] or ["- none"]
+    evidence = [e.data["text"] for e in entries if e.kind == "note"]
+    if evidence:
+        lines += ["", "Where they came from:", ""] + [f"- {text}" for text in evidence]
+    return lines
 
 
 def answer_md(result: RunResult) -> str:
@@ -40,21 +122,20 @@ def answer_md(result: RunResult) -> str:
     actions = [e for e in entries if e.kind == "action"]
     failures = [e for e in entries if e.kind in ("failed", "gave_up", "error")]
     refused = [e for e in entries if e.kind == "refused"]
-    facts = {k: v for k, v in result.plain_fields().items() if v is not None}
     where = (
         f"final state `{result.state}`"
         if result.final
         else f"the run stopped in `{result.state}`, which is not a final state"
     )
-    lines = [f"# Case {result.id}", "", f"**Outcome: {result.outcome}**  ({where})", ""]
+    title = result.input.get("title")
+    head = f"# Case {result.id}" + (f": {title}" if isinstance(title, str) and title else "")
+    lines = [head, "", f"**Decision: {result.outcome}**  ({where})", ""]
     if result.failure:
         lines += [f"**The run failed:** {result.failure}", ""]
     lines += _summary(result)
-    lines += ["## What we received", "", _received(result.input), "", "## Actions taken", ""]
-    lines += [f"- `{a.data['type']}` {_show(a.data['args'])} (rule `{a.data['by']}`)" for a in actions] or ["- none"]
-    lines += ["", "## Decision", ""]
-    lines += [f"- {name}: **{_show(value)}**" for name, value in facts.items()] or ["- no facts were established"]
-    lines += ["", "## Escalated", ""]
+    lines += ["## What the system received", "", _received(result.input), "", "## Actions taken", ""]
+    lines += [line for a in actions for line in _action(a)] or ["- none"]
+    lines += ["", "## Decision and why", "", *_why(result), "", "## Escalated", ""]
     if result.escalated:
         lines.append(f"Yes: the case ended as **{result.outcome}** in `{result.state}`.")
         lines.append(
@@ -68,7 +149,7 @@ def answer_md(result: RunResult) -> str:
     if refused:
         lines += ["", "Requests the policy refused:", ""]
         lines += [f"- `{e.data['signal']}`: {e.data['reason']}" for e in refused]
-    lines += ["", "## Result", "", f"{result.outcome} ({result.state})", ""]
+    lines += ["", "## Final result", "", f"{result.outcome} ({result.state})", ""]
     return "\n".join(lines)
 
 

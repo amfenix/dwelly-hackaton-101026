@@ -282,12 +282,17 @@ def _case_dir(number: str) -> str:
     return re.sub(r"[^A-Za-z0-9]+", "-", number)
 
 
+def _answer_id(number: str) -> str:
+    """A whole case's id is its folder under ANSWERS/, as the submission names it: `001` → `1`."""
+    return str(int(number)) if number.isdigit() else _case_dir(number)
+
+
 def _desk_case(case: Case, point: int, whole: bool, placed: Mapping[Path, str] | None = None) -> dict[str, Any]:
     org = [case.details[k] for k in ORG_DETAILS if case.details.get(k)]
     events = case.events[:point]
     available = [a for a in case.attachments if whole or (_named(a, events) is not None)]
     entry: dict[str, Any] = {
-        "id": f"{track_slug(case.track)}-{_case_dir(case.number)}-at-{point:02d}",
+        "id": _answer_id(case.number) if whole else f"{track_slug(case.track)}-{_case_dir(case.number)}-at-{point:02d}",
         "track": case.track,
         "case": case.number,
         "point": point,

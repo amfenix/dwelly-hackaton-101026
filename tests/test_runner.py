@@ -241,7 +241,7 @@ def test_a_batch_writes_answers_traces_and_results(tmp_path: Path, mini: Policy)
     assert counts == {"cases": 2, "skipped": 0, "worked": 2, "deadline": 0, "errors": 0, "unwritten": 0}
     assert lines == ["1: escalate (ESCALATED)", "2: escalate (ESCALATED)"]
     answer = (tmp_path / "ANSWERS" / "1" / "ANSWER.md").read_text(encoding="utf-8")
-    assert "**Outcome: escalate**" in answer and "reason: **DENIED**" in answer
+    assert "**Decision: escalate**" in answer and "reason: **DENIED**" in answer
     assert (tmp_path / "ANSWERS" / "2" / "REASONING.md").exists()
     trace = json.loads((tmp_path / "traces" / "1.json").read_text(encoding="utf-8"))
     assert trace["outcome"] == "escalate" and trace["journal"][0]["kind"] == "start"
@@ -456,11 +456,13 @@ def test_answer_md_has_every_part() -> None:
     text = answer_md(full_result())
     for part in (
         "# Case 7",
-        "**Outcome: act**",
+        "**Decision: act**",
         "> line one",
         '"from": "a@b"',
-        '`book` {"c": 1} (rule `go`)',
+        "- `book` (c: 1), by rule `go`",
+        "- `WAIT` → `DONE`: the agent asked for `pay`, rule `go` accepted it.",
         "- note: **x**",
+        "Where they came from:\n\n- paid",
         "- list: **[1]**",
         "No.",
         "- gave_up: slow",
@@ -476,14 +478,15 @@ def test_answer_md_has_every_part() -> None:
 def test_answer_md_for_an_escalated_case_with_nothing_done() -> None:
     text = answer_md(full_result(outcome="escalate", journal=[], fields={}, input={"id": "7"}))
     assert "Yes: the case ended as **escalate**" in text and "- none" in text
-    assert "- no facts were established" in text and "- nothing" in text and "escalate (DONE)" in text
+    assert "Facts established:\n\n- none" in text and "- nothing" in text and "escalate (DONE)" in text
+    assert "How the case moved" not in text and "Where they came from" not in text
     assert "> " not in text and "## Summary" not in text
 
 
 def test_answer_md_labels_the_summary_as_a_retelling() -> None:
     text = answer_md(full_result(summary="Handed over."))
     assert "## Summary\n\nHanded over.\n\n_Written by a model from the record below" in text
-    assert text.index("## Summary") < text.index("## What we received")
+    assert text.index("## Summary") < text.index("## What the system received")
     missing = answer_md(full_result(summary_error="timeout: slow"))
     assert "## Summary\n\n_No summary: timeout: slow._" in missing
 
@@ -527,3 +530,55 @@ def test_reasoning_md_without_calls_or_price() -> None:
 def test_a_text_only_input_shows_no_json() -> None:
     text = answer_md(full_result(input={"text": ""}))
     assert "> \n" in text and "```json" not in text
+
+
+def test_a_case_given_as_a_history_reads_as_one() -> None:
+    case = {
+        "id": "banking-001-at-02",
+        "title": "Was it sent?",
+        "details": {"Source role": "Bank customer"},
+        "request": "Did you send my £420?",
+        "events": [
+            {
+                "seq": 1,
+                "at": "2025-07-19T09:00:00Z",
+                "channel": "Secure chat",
+                "from": "Mara",
+                "to": "H&V agent",
+                "text": "Has it gone?",
+            },
+            {"text": "A bare event."},
+        ],
+        "attachments": [{"name": "statement.pdf", "path": "x"}, "note.txt"],
+        "point": 2,
+    }
+    journal = [
+        entry(1, "trigger", name="ask", on=None, when="", why=[], note="Ask the journal first."),
+        entry(2, "state", frm="TRIAGED", to="ASKED", by="ask"),
+        entry(3, "action", type="reply", args={"to": "Mara", "text": "It was sent.\nNothing else."}, by="ask", key="k"),
+    ]
+    text = answer_md(full_result(input=case, journal=journal, state="ASKED", outcome="ask_system"))
+    for part in (
+        "# Case 7: Was it sent?",
+        "- Source role: Bank customer",
+        "The request:\n\n> Did you send my £420?",
+        "1. 2025-07-19T09:00:00Z · Secure chat — Mara → H&V agent\n\n> Has it gone?",
+        "2. ? → ?\n\n> A bare event.",
+        "Attachments: `statement.pdf`, `note.txt`.",
+        "Case reference: id banking-001-at-02, point 2.",
+        "- `reply` (to: Mara), by rule `ask`\n\n  > It was sent.\n  > Nothing else.",
+        "- `TRIAGED` → `ASKED`: rule `ask` — Ask the journal first.",
+    ):
+        assert part in text, part
+    assert "```json" not in text
+
+
+def test_a_history_with_no_details_request_or_attachments() -> None:
+    text = answer_md(full_result(input={"events": [], "title": ""}, journal=[]))
+    assert "What happened up to now:" in text and "Attachments: none." in text
+    assert "The request:" not in text and "Case reference" not in text and text.startswith("# Case 7\n")
+
+
+def test_a_move_made_outside_a_rule_names_what_made_it() -> None:
+    moved_by_on_stall = [entry(1, "state", frm="A", to="DONE", by="on_stall")]
+    assert "- `A` → `DONE` by `on_stall`." in answer_md(full_result(journal=moved_by_on_stall))

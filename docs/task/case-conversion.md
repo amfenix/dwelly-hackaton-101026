@@ -165,7 +165,9 @@ An object keyed by the same `id`:
   process or a system), otherwise `other`. We will usually run only `bank` points; keep the rule in
   one small function so it is easy to change.
 - An option `--whole` makes one case per folder with **all** events and no `expected.json`
-  (`point = N`): this is how the challenge cases, which have no ending to hide, are run.
+  (`point = N`): this is how the challenge cases, which have no ending to hide, are run. A whole
+  case's `id` is its case number without leading zeros (`001` → `1`), so its answer is written
+  to `ANSWERS/1/` as the submission asks.
 
 ## Attachments: when one is available
 
