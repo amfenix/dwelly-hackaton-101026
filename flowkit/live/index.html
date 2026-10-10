@@ -7,143 +7,164 @@
 <link rel="stylesheet" href="/report/assets/kit-light.css">
 <link rel="stylesheet" href="/report/assets/report.css">
 <style>
-  :root { --ok: var(--success, #486440); --bad: var(--danger, #c25252); --lime: #d7e86a; --ink: #1d3b2f; }
+  :root {
+    --ink: #1f3a2e; --ink-2: #2a4c3c; --lime: #d7e86a; --on-ink: #f5f1e6; --on-ink-muted: #b9c4b3;
+    --ok: var(--success, #486440); --bad: var(--danger, #c25252); --line: color-mix(in srgb, var(--border) 75%, transparent);
+    --r: 12px;
+  }
   body { background: var(--bg); }
-  .live { max-width: 1320px; padding: 32px 32px 64px; }
-  .live__eyebrow { font: 600 12px/1 var(--font-mono); letter-spacing: .12em; color: var(--accent); text-transform: uppercase; }
-  .live h1 { font: 400 clamp(30px, 4vw, 46px)/1.08 var(--font-editorial); color: var(--text); margin: 10px 0 10px; }
-  .live__lede { color: var(--text-muted); max-width: 720px; margin: 0 0 18px; line-height: 1.6; }
-  .live__status { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 26px; }
-  .pill { display: inline-flex; align-items: center; gap: 6px; border: 1px solid var(--border); background: var(--surface);
-          border-radius: 999px; padding: 4px 11px; font: 12px/1.4 var(--font-mono); color: var(--text-muted); }
-  .pill--ok { color: var(--ok); border-color: color-mix(in srgb, var(--ok) 40%, var(--border)); }
-  .pill--warn { color: var(--warning); }
-  .dot { width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+  .live { padding: 0 0 72px; }
+  .muted { color: var(--text-muted); }
 
-  .grid { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 24px; align-items: start; }
-  @media (max-width: 1100px) { .grid { grid-template-columns: minmax(0, 1fr); } }
-  @media (max-width: 700px) { .live { padding: 20px 16px 48px; } }
-  .panel { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; box-shadow: var(--shadow); }
-  .panel__head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 18px 20px 12px;
-                 border-bottom: 1px solid var(--border); }
-  .panel__head h2 { font: 400 22px/1.2 var(--font-editorial); margin: 0; }
-  .panel__head small { font: 11px/1 var(--font-mono); color: var(--text-muted); letter-spacing: .08em; text-transform: uppercase; }
-  .panel__body { padding: 16px 20px 20px; }
-  .left { position: sticky; top: 16px; max-height: calc(100vh - 32px); overflow: auto; }
-  @media (max-width: 1100px) { .left { position: static; max-height: none; } }
+  /* ------------------------------------------------------------ title */
+  .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; flex-wrap: wrap; margin: 8px 0 22px; }
+  .kicker { font: 600 11px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent); }
+  .top h1 { font: 400 clamp(30px, 3.6vw, 44px)/1.05 var(--font-editorial); margin: 10px 0 0; color: var(--text); }
+  .top h1 em { color: var(--ok); }
+  .health { display: flex; gap: 18px; flex-wrap: wrap; font-size: 13px; color: var(--text-muted); }
+  .health span { display: inline-flex; align-items: center; gap: 7px; }
+  .led { width: 8px; height: 8px; border-radius: 50%; background: #9fb36a; box-shadow: 0 0 0 3px color-mix(in srgb, #9fb36a 25%, transparent); }
+  .led--off { background: #d79b72; box-shadow: 0 0 0 3px color-mix(in srgb, #d79b72 25%, transparent); }
 
-  label.f { display: block; font: 600 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase;
-            color: var(--text-muted); margin: 14px 0 6px; }
+  /* ------------------------------------------------------------ composer */
+  .composer { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--shadow); padding: 14px; }
+  .composer__row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+  .composer__grow { flex: 1 1 220px; min-width: 0; display: flex; gap: 8px; }
+  .composer__hint { margin: 10px 2px 0; font-size: 13px; color: var(--text-muted); min-height: 1.2em; }
+  .composer__hint b { color: var(--text); font-weight: 600; }
+  .sep { width: 1px; align-self: stretch; background: var(--border); margin: 2px; }
+  @media (max-width: 900px) { .sep { display: none; } }
   select, input[type=text], textarea { width: 100%; box-sizing: border-box; font: 14px/1.45 var(--font-sans); color: var(--text);
-            background: var(--bg); border: 1px solid var(--border); border-radius: 6px; padding: 8px 10px; }
-  textarea { resize: vertical; min-height: 54px; }
-  select:focus, input:focus, textarea:focus { outline: 2px solid color-mix(in srgb, var(--accent) 45%, transparent); outline-offset: 1px; }
-  .quick { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .btn { font: 600 13px/1 var(--font-sans); border-radius: 6px; padding: 9px 12px; border: 1px solid var(--border);
-         background: var(--surface); color: var(--text); cursor: pointer; }
-  .btn:hover { border-color: var(--text-muted); }
-  .btn--chip { font: 12px/1 var(--font-mono); padding: 7px 10px; border-radius: 999px; }
-  .btn--run { width: 100%; margin-top: 18px; padding: 15px; font-size: 16px; background: var(--ink); color: #fffcf6; border-color: var(--ink);
-              display: flex; justify-content: center; align-items: center; gap: 10px; }
-  .btn--run:hover { background: #24493a; }
-  .btn--run[disabled] { opacity: .55; cursor: progress; }
+    background: var(--bg); border: 1px solid var(--border); border-radius: 9px; padding: 10px 12px; min-width: 0; }
+  textarea { resize: vertical; }
+  select:focus, input:focus, textarea:focus, button:focus-visible { outline: 2px solid color-mix(in srgb, var(--ok) 45%, transparent); outline-offset: 1px; }
+  .btn { font: 600 14px/1 var(--font-sans); border-radius: 9px; padding: 11px 15px; border: 1px solid var(--border); background: var(--surface);
+         color: var(--text); cursor: pointer; white-space: nowrap; display: inline-flex; align-items: center; gap: 8px; transition: background .15s, border-color .15s, transform .1s; }
+  .btn:hover:not(:disabled) { border-color: var(--text-muted); }
+  .btn:active:not(:disabled) { transform: translateY(1px); }
   .btn:disabled { opacity: .45; cursor: not-allowed; }
+  .btn--ink { background: var(--ink); border-color: var(--ink); color: var(--on-ink); }
+  .btn--ink:hover:not(:disabled) { background: var(--ink-2); border-color: var(--ink-2); }
+  .btn--run { background: var(--lime); border-color: var(--lime); color: var(--ink); padding: 11px 20px; }
+  .btn--run:hover:not(:disabled) { background: #cbdc5c; border-color: #cbdc5c; }
+  .btn--rec { background: var(--bad); border-color: var(--bad); color: #fff; animation: pulse 1.2s ease-in-out infinite; }
+  @keyframes pulse { 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--bad) 22%, transparent); } }
+  .btn--ghost { background: transparent; border-color: transparent; color: var(--text-muted); padding: 8px 10px; font-weight: 500; }
+  .btn--ghost:hover:not(:disabled) { border-color: var(--border); color: var(--text); }
+  .seg { display: inline-grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-radius: 9px; overflow: hidden; background: var(--bg); }
+  .seg button { border: 0; background: transparent; padding: 11px 13px; font: 600 13px/1 var(--font-sans); color: var(--text-muted); cursor: pointer; white-space: nowrap; }
+  .seg button[aria-pressed=true] { background: var(--ink); color: var(--on-ink); }
+  .seg button:disabled { opacity: .45; cursor: not-allowed; }
 
-  .ev { border: 1px solid var(--border); border-radius: 8px; padding: 10px 10px 8px; margin-bottom: 8px; background: var(--bg); position: relative; }
-  .ev--system { background: color-mix(in srgb, var(--surface-2) 70%, var(--bg)); border-style: dashed; }
-  .ev__top { display: flex; gap: 6px; align-items: center; margin-bottom: 6px; flex-wrap: wrap; }
-  .ev__n { font: 600 11px/1 var(--font-mono); color: var(--text-muted); }
-  .ev__route { display: grid; grid-template-columns: 1fr auto 1fr; gap: 6px; align-items: center; margin-bottom: 6px; }
-  .ev__route input, .ev__top select { font-size: 12px; padding: 5px 7px; }
-  .ev__top select { width: auto; }
-  .ev textarea { font-size: 13px; min-height: 44px; background: var(--surface); }
-  .ev__x { margin-left: auto; border: 0; background: none; color: var(--text-muted); cursor: pointer; font-size: 16px; line-height: 1; padding: 2px 4px; }
-  .ev__x:hover { color: var(--bad); }
-  .tag { font: 600 10px/1 var(--font-mono); letter-spacing: .06em; text-transform: uppercase; border-radius: 999px; padding: 4px 7px; }
-  .tag--conversation { background: var(--accent-soft); color: var(--accent); }
-  .tag--system { background: var(--success-soft); color: var(--ok); }
-  .hint { font-size: 12.5px; color: var(--text-muted); line-height: 1.5; margin: 6px 0 0; }
-  .seg { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--border); border-radius: 8px; overflow: hidden; }
-  .seg button { border: 0; background: var(--surface); padding: 10px 8px; font: 600 13px/1.2 var(--font-sans); color: var(--text-muted); cursor: pointer; }
-  .seg button + button { border-left: 1px solid var(--border); }
-  .seg button[aria-pressed=true] { background: var(--ink); color: #fffcf6; }
-  .seg button:disabled { cursor: not-allowed; opacity: .5; }
+  /* ------------------------------------------------------------ the two columns */
+  .cols { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 6fr); gap: 20px; margin-top: 20px; align-items: start; }
+  @media (max-width: 1000px) { .cols { grid-template-columns: minmax(0, 1fr); } }
+  .pane { background: var(--surface); border: 1px solid var(--border); border-radius: var(--r); box-shadow: var(--shadow); min-width: 0; }
+  .pane__head { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 16px 22px 14px; border-bottom: 1px solid var(--line); min-height: 34px; }
+  .pane__head h2 { margin: 0; font: 400 22px/1.2 var(--font-editorial); }
+  .pane__head span { font-size: 13px; color: var(--text-muted); font-variant-numeric: tabular-nums; }
+  .pane__body { padding: 20px 22px 22px; }
 
-  .pipe { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 6px; padding: 16px 20px; border-bottom: 1px solid var(--border); }
-  @media (max-width: 700px) { .pipe { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
-  .stage { border: 1px solid var(--border); border-radius: 8px; padding: 9px 8px; text-align: center; background: var(--bg); transition: all .3s; }
-  .stage b { display: block; font: 600 12.5px/1.2 var(--font-sans); color: var(--text-muted); }
-  .stage small { display: block; font: 10px/1.3 var(--font-mono); color: var(--text-muted); margin-top: 3px; }
-  .stage--on { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); }
-  .stage--on b { color: var(--accent); }
-  .stage--done { background: var(--success-soft); border-color: color-mix(in srgb, var(--ok) 35%, var(--border)); }
-  .stage--done b { color: var(--ok); }
+  /* the conversation */
+  .request { margin: 0 0 18px; padding: 12px 14px; border-radius: 10px; background: var(--bg); font-size: 14px; line-height: 1.5; }
+  .request small { display: block; margin-bottom: 4px; font-size: 12px; color: var(--text-muted); }
+  .request[hidden] { display: none; }
+  .chat { display: flex; flex-direction: column; gap: 12px; }
+  .msg { max-width: 84%; animation: pop .3s ease; }
+  .msg__who { font-size: 12px; color: var(--text-muted); margin: 0 4px 4px; }
+  .msg__bubble { padding: 11px 14px; border-radius: 14px; font-size: 14.5px; line-height: 1.5; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .msg--them { align-self: flex-start; }
+  .msg--them .msg__bubble { background: var(--bg); border: 1px solid var(--line); border-bottom-left-radius: 4px; }
+  .msg--bank { align-self: flex-end; }
+  .msg--bank .msg__who { text-align: right; }
+  .msg--bank .msg__bubble { background: var(--ink); color: var(--on-ink); border-bottom-right-radius: 4px; }
+  .msg--answer .msg__bubble { background: var(--lime); color: var(--ink); }
+  .msg--answer .msg__who { color: var(--ok); font-weight: 600; }
+  .record { align-self: center; width: min(94%, 540px); display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 10px; padding: 9px 12px;
+            border-radius: 10px; border: 1px dashed var(--border-strong); background: color-mix(in srgb, var(--surface-2) 45%, transparent);
+            font-size: 12.5px; line-height: 1.45; color: var(--text-muted); animation: pop .3s ease; }
+  .record b { color: var(--text); font-weight: 600; }
+  .record svg { margin-top: 2px; }
+  .chat__empty { padding: 30px 10px; text-align: center; color: var(--text-muted); font-size: 14px; }
+  .edit { margin-top: 18px; padding-top: 14px; border-top: 1px solid var(--line); }
+  .edit[hidden] { display: none; }
+  .ev { border: 1px solid var(--line); border-radius: 10px; padding: 10px; margin-bottom: 8px; background: var(--bg); }
+  .ev__top { display: flex; gap: 8px; align-items: center; margin-bottom: 7px; }
+  .ev__top select { width: auto; padding: 6px 8px; font-size: 12.5px; background: var(--surface); }
+  .ev__n { font: 600 11px/1 var(--font-mono); color: var(--text-muted); width: 16px; }
+  .ev__route { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); gap: 6px; align-items: center; margin-bottom: 7px; }
+  .ev__route input { padding: 6px 8px; font-size: 12.5px; background: var(--surface); }
+  .ev textarea { font-size: 13px; min-height: 44px; background: var(--surface); padding: 8px 10px; }
+  .ev__x { margin-left: auto; border: 0; background: none; color: var(--text-muted); cursor: pointer; font-size: 18px; line-height: 1; padding: 2px 6px; border-radius: 6px; }
+  .ev__x:hover { color: var(--bad); background: color-mix(in srgb, var(--bad) 10%, transparent); }
+  .kind { font-size: 11.5px; color: var(--text-muted); }
+  .adds { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 4px; }
+  .adds .btn { padding: 8px 11px; font-size: 13px; font-weight: 500; }
 
-  .facts { padding: 14px 20px; border-bottom: 1px solid var(--border); min-height: 34px; }
-  .facts__title { font: 600 11px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted); margin-bottom: 8px; }
-  .facts__list { display: flex; flex-wrap: wrap; gap: 6px; }
-  .fact { font: 12px/1 var(--font-mono); border: 1px solid var(--border); border-radius: 6px; padding: 6px 8px; background: var(--bg); animation: pop .35s ease; }
-  .fact b { color: var(--text); font-weight: 600; }
-  .fact em { font-style: normal; color: var(--text-muted); margin-left: 6px; font-size: 10px; }
-  .fact--classifier { border-color: color-mix(in srgb, var(--accent) 40%, var(--border)); }
-  .fact--policy { border-color: color-mix(in srgb, var(--ok) 40%, var(--border)); }
-  .empty { color: var(--text-muted); font-size: 13px; }
-
-  .feed { padding: 16px 20px 22px; display: flex; flex-direction: column; gap: 10px; }
-  .card { border: 1px solid var(--border); border-left: 4px solid var(--border-strong); border-radius: 8px; padding: 11px 14px;
-          background: var(--surface); animation: pop .35s ease; }
-  .card__k { font: 600 10.5px/1 var(--font-mono); letter-spacing: .08em; text-transform: uppercase; color: var(--text-muted);
-             display: flex; justify-content: space-between; gap: 8px; }
-  .card__t { font: 600 15px/1.35 var(--font-sans); margin: 6px 0 2px; color: var(--text); }
-  .card__d { font-size: 13.5px; color: var(--text-muted); line-height: 1.5; }
-  .card--facts { border-left-color: #8aa07c; }
-  .card--triage { border-left-color: var(--accent); }
-  .card--rule { border-left-color: var(--ok); }
-  .card--agent { border-left-color: var(--ink); background: color-mix(in srgb, var(--lime) 14%, var(--surface)); }
-  .card--ok { border-left-color: var(--ok); background: var(--success-soft); }
-  .card--no { border-left-color: var(--bad); background: color-mix(in srgb, var(--bad) 8%, var(--surface)); }
-  .card--action { border-left-color: var(--warning); }
-  .card--err { border-left-color: var(--bad); }
-  .rows { list-style: none; margin: 8px 0 0; padding: 0; font: 12.5px/1.55 var(--font-mono); }
-  .rows li { display: flex; gap: 8px; padding: 2px 0; }
-  .rows li span:first-child { min-width: 1.2em; text-align: center; }
+  /* the desk at work: six rows */
+  .steps { list-style: none; margin: 0; padding: 0; position: relative; }
+  .steps::before { content: ""; position: absolute; left: 13px; top: 24px; bottom: 24px; width: 2px; background: var(--line); }
+  .st { position: relative; }
+  .st__head { width: 100%; display: grid; grid-template-columns: 28px 78px minmax(0, 1fr) 16px; gap: 14px; align-items: center; padding: 11px 0;
+              background: none; border: 0; text-align: left; cursor: pointer; font: inherit; color: inherit; }
+  .st__head:disabled { cursor: default; }
+  .dot { position: relative; z-index: 1; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--surface);
+         border: 2px solid var(--border); color: var(--text-muted); font: 600 11px/1 var(--font-mono); transition: all .25s; }
+  .st__name { font-weight: 600; font-size: 14.5px; color: var(--text-muted); }
+  .st__sum { font-size: 14px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .st__sum code, .sub code { font: 600 12.5px/1 var(--font-mono); color: var(--text); background: var(--bg); padding: 3px 7px; border-radius: 6px; }
+  .chev { color: var(--text-muted); transition: transform .2s; opacity: 0; }
+  .st--has .chev { opacity: 1; }
+  .st--open .chev { transform: rotate(90deg); }
+  .st--on .dot { background: var(--ink); border-color: var(--ink); color: var(--lime); box-shadow: 0 0 0 5px color-mix(in srgb, var(--lime) 45%, transparent); }
+  .st--on .st__name, .st--done .st__name { color: var(--text); }
+  .st--done .dot { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .st--done .st__sum { color: var(--text); }
+  .st--bad .dot { background: var(--bad); border-color: var(--bad); color: #fff; }
+  .st__body { display: none; margin: 0 0 12px 42px; padding: 12px 14px; border-radius: 10px; background: var(--bg); font-size: 13.5px; line-height: 1.5; }
+  .st--open .st__body { display: block; animation: pop .2s ease; }
+  .st__body > p:first-child { margin: 0 0 4px; color: var(--text-muted); }
+  .rows { list-style: none; margin: 6px 0 0; padding: 0; font: 12.5px/1.55 var(--font-mono); }
+  .rows li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 6px; padding: 2px 0; }
+  .rows li > span:first-child { text-align: center; }
+  .rows li > span:last-child { overflow-wrap: anywhere; }
+  .sub { margin: 12px 0 2px; font-size: 12.5px; font-weight: 600; color: var(--text); }
   .y { color: var(--ok); } .n { color: var(--bad); } .u { color: var(--warning); } .dim { color: var(--text-muted); }
-  .quote { margin: 8px 0 0; padding: 8px 12px; border-left: 3px solid var(--border-strong); background: var(--bg);
-           font: italic 14px/1.5 var(--font-editorial); color: var(--text); border-radius: 0 6px 6px 0; white-space: pre-wrap; }
-  .tool { display: inline-block; margin-top: 8px; font: 600 13px/1.4 var(--font-mono); background: var(--ink); color: #fffcf6;
-          border-radius: 6px; padding: 6px 10px; }
-  .move { font: 12px/1 var(--font-mono); color: var(--text-muted); padding-left: 6px; }
+  .facts { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 0 18px; margin-top: 4px; }
+  .fact { display: grid; grid-template-columns: 8px minmax(0, 1fr) auto; gap: 8px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--line); font: 12.5px/1.3 var(--font-mono); }
+  .fact span:nth-child(2) { color: var(--text-muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .fact span:last-child { font-weight: 600; max-width: 150px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .src { width: 8px; height: 8px; border-radius: 50%; display: inline-block; }
+  .src--function { background: #8aa07c; } .src--classifier { background: var(--accent); } .src--policy { background: var(--ink); }
+  .legend { display: flex; flex-wrap: wrap; gap: 14px; font-size: 12px; color: var(--text-muted); margin-top: 10px; }
+  .legend span { display: inline-flex; align-items: center; gap: 6px; }
+  .quote { margin: 8px 0 0; padding: 9px 12px; border-left: 3px solid var(--lime); background: var(--surface); border-radius: 0 8px 8px 0;
+           font: italic 14px/1.55 var(--font-editorial); color: var(--text); white-space: pre-wrap; }
+  .tool { display: inline-block; font: 600 12.5px/1.4 var(--font-mono); background: var(--ink); color: var(--lime); border-radius: 6px; padding: 4px 9px; margin: 6px 0 0; overflow-wrap: anywhere; }
+  .move { display: block; margin-top: 6px; font: 12px/1 var(--font-mono); color: var(--text-muted); }
   .move b { color: var(--text); }
-  .spin { display: inline-block; width: 12px; height: 12px; border: 2px solid currentColor; border-right-color: transparent;
-          border-radius: 50%; animation: spin .8s linear infinite; vertical-align: -2px; }
+  .spin { display: inline-block; width: 12px; height: 12px; border: 2px solid currentColor; border-right-color: transparent; border-radius: 50%; animation: spin .8s linear infinite; vertical-align: -1px; }
   @keyframes spin { to { transform: rotate(360deg); } }
-  @keyframes pop { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @keyframes pop { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: none; } }
 
-  .decision { margin: 4px 0 0; border-radius: 10px; padding: 18px 20px; background: var(--ink); color: #fffcf6; animation: pop .45s ease; }
-  .decision small { font: 600 11px/1 var(--font-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--lime); }
-  .decision h3 { font: 400 32px/1.1 var(--font-editorial); margin: 8px 0 4px; }
-  .decision p { margin: 6px 0 0; color: #dfe6dc; font-size: 14px; line-height: 1.55; }
-  .decision .quote { background: rgba(255,255,255,.07); color: #fffcf6; border-left-color: var(--lime); }
-  .verdict { display: inline-block; margin-top: 12px; padding: 6px 10px; border-radius: 6px; font: 600 13px/1.3 var(--font-sans); }
+  .decision { margin-top: 18px; border-radius: var(--r); padding: 22px 24px; background: var(--ink); color: var(--on-ink); animation: pop .4s ease; }
+  .decision small { font: 600 11px/1 var(--font-mono); letter-spacing: .12em; text-transform: uppercase; color: var(--lime); }
+  .decision h3 { font: 400 clamp(26px, 3vw, 36px)/1.1 var(--font-editorial); margin: 8px 0 0; }
+  .decision__row { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; margin-top: 16px; }
+  .verdict { padding: 8px 12px; border-radius: 8px; font: 600 13.5px/1.3 var(--font-sans); }
   .verdict--y { background: var(--lime); color: var(--ink); }
   .verdict--n { background: #f4d6cf; color: #7a2b1b; }
-  .verdict--x { background: rgba(255,255,255,.12); color: #fffcf6; }
-  .voice { border: 1px solid var(--border); border-radius: 10px; padding: 14px; background: color-mix(in srgb, var(--lime) 16%, var(--surface)); }
-  .voice__row { display: flex; gap: 12px; align-items: center; }
-  .mic { flex: none; width: 58px; height: 58px; border-radius: 50%; border: 0; background: var(--ink); color: #fffcf6; cursor: pointer;
-         display: grid; place-items: center; transition: transform .15s; }
-  .mic:hover { transform: scale(1.05); }
-  .mic:disabled { opacity: .45; cursor: not-allowed; transform: none; }
-  .mic--rec { background: var(--bad); animation: pulse 1.2s ease-in-out infinite; }
-  @keyframes pulse { 50% { box-shadow: 0 0 0 10px color-mix(in srgb, var(--bad) 22%, transparent); } }
-  .voice__text b { display: block; font: 600 14px/1.3 var(--font-sans); }
-  .voice__text span { font-size: 12.5px; color: var(--text-muted); }
-  .voice__opts { display: flex; flex-wrap: wrap; gap: 10px 16px; margin-top: 10px; font-size: 12.5px; color: var(--text-muted); align-items: center; }
-  .voice__opts input[type=text] { width: 150px; padding: 5px 7px; font-size: 12.5px; }
-  .tag--voice { background: var(--ink); color: var(--lime); }
-  .listen { margin-top: 12px; background: var(--lime); color: var(--ink); border: 0; }
-  .idle { padding: 34px 20px; text-align: center; color: var(--text-muted); }
-  .idle b { display: block; font: 400 22px/1.3 var(--font-editorial); color: var(--text); margin-bottom: 6px; }
+  .verdict--x { background: rgba(255,255,255,.1); color: var(--on-ink); }
+  .decision .btn { background: rgba(255,255,255,.1); border-color: transparent; color: var(--on-ink); padding: 8px 12px; font-size: 13px; }
+  .decision__meta { margin-top: 14px; font-size: 12.5px; color: var(--on-ink-muted); }
+  .decision__note { margin-top: 10px; font-size: 13px; color: var(--on-ink-muted); line-height: 1.5; }
+  .waiting { padding: 22px 8px 6px; text-align: center; color: var(--text-muted); font-size: 14px; }
+  .err { margin-top: 14px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--bad) 9%, var(--surface)); color: #7a2b1b; font-size: 13.5px; }
+  @media (max-width: 600px) {
+    .st__head { grid-template-columns: 28px minmax(0, 1fr) 16px; row-gap: 2px; }
+    .st__name { grid-column: 2; } .st__sum { grid-column: 2; grid-row: 2; white-space: normal; } .chev { grid-column: 3; grid-row: 1; }
+    .msg { max-width: 94%; }
+  }
 </style>
 </head>
 <body data-df-viewport="desktop">
@@ -162,68 +183,64 @@
 
   <main class="desk-shell__main">
     <div class="live">
-      <div class="live__eyebrow">05 / The live desk</div>
-      <h1>Run a case. Watch it decide.</h1>
-      <p class="live__lede">The real desk on a case you choose: the functions read the records into facts, Claude classifies the
-        request, the policy routes it, Claude proposes the next step, and a rule accepts it only when the facts allow. Every step
-        streams in as it happens.</p>
-      <div class="live__status" id="status"><span class="pill">connecting…</span></div>
+      <div class="top">
+        <div>
+          <div class="kicker">05 / The live desk</div>
+          <h1>Run a case. <em>Watch it decide.</em></h1>
+        </div>
+        <div class="health" id="health"></div>
+      </div>
 
-      <div class="grid">
-        <section class="panel left" aria-label="The case">
-          <div class="panel__head"><h2>The case</h2><small>1 · input</small></div>
-          <div class="panel__body">
-            <div class="voice" id="voice">
-              <div class="voice__row">
-                <button class="mic" id="mic" aria-label="Speak as the customer" title="Speak as the customer">
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
-                </button>
-                <div class="voice__text"><b id="mic-title">Speak as the customer</b><span id="mic-sub">Tap, talk, tap again. Your words become one message on an unverified call, and the desk runs live.</span></div>
+      <section class="composer" aria-label="Choose a case">
+        <div class="composer__row">
+          <button class="btn btn--ink" id="mic" title="Speak as the caller">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="9" y="3" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0M12 18v3"/></svg>
+            <span id="mic-label">Speak</span>
+          </button>
+          <div class="composer__grow">
+            <select id="calls" aria-label="Simulate a call from the voice dataset"></select>
+            <button class="btn" id="simulate" title="Play the caller, run the desk, speak the answer">▶ Simulate</button>
+          </div>
+          <span class="sep" aria-hidden="true"></span>
+          <div class="composer__grow">
+            <select id="picker" aria-label="A written case from the public set"></select>
+          </div>
+          <span class="sep" aria-hidden="true"></span>
+          <div class="seg" role="group" aria-label="How Claude answers">
+            <button id="mode-replay" aria-pressed="true" title="Claude's recorded answers: no key, no cost">Replay</button>
+            <button id="mode-live" aria-pressed="false" title="Claude answers now">Live</button>
+          </div>
+          <button class="btn btn--run" id="run"><span>Run</span><span aria-hidden="true">→</span></button>
+        </div>
+        <p class="composer__hint" id="hint"></p>
+      </section>
+
+      <div class="cols">
+        <section class="pane" aria-label="The conversation">
+          <div class="pane__head"><h2>The conversation</h2><button class="btn btn--ghost" id="edit-toggle">✎ Edit case</button></div>
+          <div class="pane__body">
+            <div class="request" id="request-view"></div>
+            <div class="chat" id="chat"></div>
+            <div class="edit" id="edit" hidden>
+              <label class="sub" for="request" style="display:block;margin-top:0">The customer's request</label>
+              <textarea id="request" rows="2"></textarea>
+              <div class="sub">Events, in order</div>
+              <div id="events"></div>
+              <div class="adds">
+                <button class="btn" data-add="customer">+ Customer writes</button>
+                <button class="btn" data-add="ask">+ Bank asks a system</button>
+                <button class="btn" data-add="answer">+ System answers</button>
               </div>
-              <div class="voice__opts">
-                <label>Caller <input type="text" id="caller" value="Mara Ellison" aria-label="Caller name"></label>
-                <label><input type="checkbox" id="autospeak" checked> speak the answer</label>
-              </div>
-              <label class="f" for="calls">Or a call from the voice dataset</label>
-              <div class="voice__row" style="gap:8px">
-                <select id="calls" aria-label="Voice call scenario"></select>
-                <button class="btn" id="simulate" style="white-space:nowrap">▶ Simulate</button>
-              </div>
-              <p class="hint">Every call is on an unverified line and stands alone: one thing the caller says, nothing before it.</p>
             </div>
-
-            <label class="f" for="picker">Or a written case from the public set (not for voice)</label>
-            <select id="picker"></select>
-            <div class="quick" id="quick"></div>
-
-            <label class="f" for="request">The customer's request</label>
-            <textarea id="request" rows="2"></textarea>
-
-            <label class="f">What happened up to now <span id="count" class="dim"></span></label>
-            <div id="events"></div>
-            <div class="quick">
-              <button class="btn btn--chip" data-add="customer">+ Customer writes</button>
-              <button class="btn btn--chip" data-add="ask">+ Bank asks a system</button>
-              <button class="btn btn--chip" data-add="answer">+ System answers</button>
-            </div>
-            <p class="hint">Conversation events go to the agent. System events (journals, teams, services) are read only by the functions, which turn them into facts.</p>
-
-            <label class="f">How Claude answers</label>
-            <div class="seg" role="group" aria-label="Mode">
-              <button id="mode-replay" aria-pressed="true">Replay the recorded run</button>
-              <button id="mode-live" aria-pressed="false">Live with Claude</button>
-            </div>
-            <p class="hint" id="mode-hint"></p>
-
-            <button class="btn btn--run" id="run"><span>Run the desk</span><span aria-hidden="true">→</span></button>
           </div>
         </section>
 
-        <section class="panel" aria-label="The desk at work">
-          <div class="panel__head"><h2>The desk at work</h2><small id="clock">2 · decision</small></div>
-          <div class="pipe" id="pipe"></div>
-          <div class="facts"><div class="facts__title">Facts — from the records, never from the agent</div><div class="facts__list" id="facts"><span class="empty">None yet.</span></div></div>
-          <div class="feed" id="feed"><div class="idle"><b>Pick a case and run the desk.</b>Try case 001 at points 02, 03 and 04: the same request, three moments, three different decisions.</div></div>
+        <section class="pane" aria-label="The desk at work">
+          <div class="pane__head"><h2>The desk at work</h2><span id="clock"></span></div>
+          <div class="pane__body">
+            <ol class="steps" id="steps"></ol>
+            <div id="outcome"></div>
+          </div>
         </section>
       </div>
     </div>
@@ -232,37 +249,45 @@
 
 <script>
 const STAGES = [
-  ["facts", "Facts", "functions"], ["triage", "Triage", "classifier"], ["policy", "Policy", "safety · routing"],
-  ["agent", "Agent", "Claude decides"], ["check", "Check", "rule accepts?"], ["decision", "Decision", "final state"],
+  ["facts", "Facts", "The functions read the bank's records into facts."],
+  ["triage", "Triage", "The classifier labels what the customer wants."],
+  ["policy", "Policy", "Safety and routing rules pick the system, or a person."],
+  ["agent", "Claude", "Reads the conversation and facts, proposes a step."],
+  ["check", "Check", "A rule accepts the step only if the facts allow it."],
+  ["decision", "Decision", "The accepted step is done once; the case is closed."],
 ];
 const GROUPS = { G: "General", A: "Account requests", S: "Secrets & attacks", U: "Urgent / vulnerable", R: "Registration" };
 const VOICE_WORDS = { reply: "Reply", ask_system: "Ask a system", register_request: "Register a request", redirect_secure: "Redirect to the secure route",
   refuse: "Refuse", escalate_human: "Hand to a person", wait: "Wait", send_for_confirmation: "Send for confirmation", submit_protected: "Submit through the protected process" };
-const OUTCOMES = { ask_system: "Ask a system", wait: "Wait for an answer", reply: "Reply to the customer",
-  submit_request: "Submit a request", send_for_confirmation: "Send for confirmation", escalate: "Hand to a person" };
+const OUTCOMES = { ask_system: "Ask a system", wait: "Wait for an answer", reply: "Reply to the customer", submit_request: "Submit a request",
+  send_for_confirmation: "Send for confirmation", escalate: "Hand to a person", clarify: "Ask the customer to clarify",
+  redirect_secure: "Redirect to the secure route", forward_to_authority: "Forward to the person with authority" };
 const CHANNELS = ["Unverified call", "Secure chat", "Secure portal", "Verified call", "Business portal", "External message", "Internal note"];
-const QUICK = [["banking-001-at-02", "001 · asked"], ["banking-001-at-03", "001 · waiting"], ["banking-001-at-04", "001 · answered"], ["banking-042-at-01", "042"]];
+const LOCK = '<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+const CHEV = '<svg class="chev" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+const READY = '<div class="waiting">Choose a case above and press <b>Run</b>.</div>';
 
 const $ = (s) => document.querySelector(s);
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
 const show = (v) => (v === null || v === undefined ? "not known" : typeof v === "object" ? JSON.stringify(v) : String(v));
 
-let status = { live: false };
+let status = { live: false, voice: false };
 let cases = [];
-let current = null;      // the case being edited
-let original = null;     // as loaded, to tell an edit from a recorded point
+let current = null;   // the case on screen
+let original = null;  // as loaded, to tell an edit from a recorded point
 let mode = "replay";
 let running = false;
 
-// ------------------------------------------------------------------------------- the case panel
+// ------------------------------------------------------------------------------- the case
 
 function kindOf(ev) {
   if ((ev.channel || "").toLowerCase() === "internal note") return "system";
   const sys = /\b(journal|log|register|team|service|process|system|record|records|group)\b/i;
-  const bank = (n) => /h&v|harrow|agent|support/i.test(n) || (sys.test(n) && !/agent/i.test(n));
   const isSys = (n) => sys.test(n) && !/agent/i.test(n);
+  const bank = (n) => /h&v|harrow|agent|support/i.test(n) || isSys(n);
   return bank(ev.from || "") && bank(ev.to || "") && (isSys(ev.from || "") || isSys(ev.to || "")) ? "system" : "conversation";
 }
+const isBank = (name) => /h&v|harrow|bank\b|agent|support|team|service|system|process|portal|app\b/i.test(name || "");
 
 function edited() {
   if (!original) return true;
@@ -271,35 +296,52 @@ function edited() {
 }
 
 function customerName() {
-  const ev = (current.events || []).find((e) => kindOf(e) === "conversation" && !/h&v|harrow|bank/i.test(e.from));
+  const ev = (current.events || []).find((e) => kindOf(e) === "conversation" && !isBank(e.from));
   return ev ? ev.from : "Mara Ellison";
+}
+
+function renderChat(answer) {
+  const req = $("#request-view");
+  req.innerHTML = current.request ? `<small>The request</small>${esc(current.request)}` : "";
+  req.hidden = !current.request;
+  const chat = $("#chat");
+  if (!current.events.length) {
+    chat.innerHTML = '<div class="chat__empty">No messages yet. Speak, simulate a call, pick a case, or ✎ edit to write one.</div>';
+    return;
+  }
+  chat.innerHTML = current.events.map((ev) => {
+    if (kindOf(ev) === "system") {
+      return `<div class="record">${LOCK}<div><b>${esc(ev.from)} → ${esc(ev.to)}</b> · for the functions, not shown to Claude<br>${esc(ev.text)}</div></div>`;
+    }
+    const side = isBank(ev.from) ? "bank" : "them";
+    const via = ev.extra && ev.extra.via === "voice" ? " · 🎙 voice" : "";
+    return `<div class="msg msg--${side}"><div class="msg__who">${esc(ev.from)} · ${esc(ev.channel)}${via}</div><div class="msg__bubble">${esc(ev.text)}</div></div>`;
+  }).join("") + (answer ? `<div class="msg msg--bank msg--answer"><div class="msg__who">The desk's answer</div><div class="msg__bubble">${esc(answer)}</div></div>` : "");
 }
 
 function renderEvents() {
   const box = $("#events");
-  box.innerHTML = current.events.length ? "" : '<p class="hint" style="margin:0 0 8px">No events yet — add what the customer wrote.</p>';
+  box.innerHTML = current.events.length ? "" : '<p class="muted" style="margin:0 0 10px;font-size:13px">No events yet.</p>';
   current.events.forEach((ev, i) => {
-    const kind = kindOf(ev);
     const el = document.createElement("div");
-    el.className = `ev ev--${kind}`;
+    el.className = "ev";
     el.innerHTML = `
       <div class="ev__top"><span class="ev__n">${i + 1}</span>
         <select data-f="channel" aria-label="Channel">${CHANNELS.map((c) => `<option${c === ev.channel ? " selected" : ""}>${esc(c)}</option>`).join("")}</select>
-        <span class="tag tag--${kind}">${kind}</span>${ev.extra && ev.extra.via ? `<span class="tag tag--voice">${ev.extra.via === "voice" ? "voice" : "spoken"}</span>` : ""}
-        <button class="ev__x" title="Remove this event" aria-label="Remove event ${i + 1}">×</button></div>
-      <div class="ev__route"><input type="text" data-f="from" value="${esc(ev.from)}" aria-label="From"><span class="dim">→</span>
+        <span class="kind">${kindOf(ev) === "system" ? "system record" : "conversation"}</span>
+        <button class="ev__x" title="Remove" aria-label="Remove event ${i + 1}">×</button></div>
+      <div class="ev__route"><input type="text" data-f="from" value="${esc(ev.from)}" aria-label="From"><span class="muted">→</span>
         <input type="text" data-f="to" value="${esc(ev.to)}" aria-label="To"></div>
       <textarea data-f="text" rows="2" aria-label="Text">${esc(ev.text)}</textarea>`;
     el.querySelectorAll("[data-f]").forEach((input) =>
       input.addEventListener(input.tagName === "SELECT" ? "change" : "input", () => {
         ev[input.dataset.f] = input.value;
         if (input.dataset.f !== "text") renderEvents();
-        syncMode();
+        renderChat(); syncMode();
       }));
-    el.querySelector(".ev__x").addEventListener("click", () => { current.events.splice(i, 1); renderEvents(); syncMode(); });
+    el.querySelector(".ev__x").addEventListener("click", () => { current.events.splice(i, 1); renderEvents(); renderChat(); syncMode(); });
     box.appendChild(el);
   });
-  $("#count").textContent = `· ${current.events.length} event${current.events.length === 1 ? "" : "s"}`;
 }
 
 function addEvent(kind) {
@@ -312,11 +354,13 @@ function addEvent(kind) {
     answer: { channel: "Internal note", from: system, to: "H&V service agent", text: "Transfer status: SENT." },
   }[kind];
   current.events.push({ ...preset, extra: {} });
-  renderEvents();
-  syncMode();
+  renderEvents(); renderChat(); syncMode();
   const areas = document.querySelectorAll("#events textarea");
   areas[areas.length - 1]?.focus();
 }
+
+function hint(text) { $("#hint").innerHTML = text; }
+function stickyHint(text) { $("#hint").dataset.sticky = "1"; hint(text); }
 
 function syncMode() {
   const point = cases.find((c) => c.id === current.id);
@@ -327,96 +371,100 @@ function syncMode() {
   if (!status.live && mode === "live") mode = "replay";
   $("#mode-replay").setAttribute("aria-pressed", String(mode === "replay"));
   $("#mode-live").setAttribute("aria-pressed", String(mode === "live"));
-  let hint;
-  if (mode === "replay" && canReplay) hint = "Claude's answers come from the recorded run of this point (traces/): same engine, same policy, no key, no cost.";
-  else if (mode === "live") hint = `Claude answers now: ${status.classifier_model} classifies, ${status.agent_model} decides. Takes a few seconds and costs a few cents.`;
-  else if ((current.id || "").startsWith("voice")) hint = "A voice call always runs live: there is no recording to replay.";
-  else if (!point) hint = "A case of your own needs live mode: add ANTHROPIC_API_KEY to .env and restart the server.";
-  else if (edited()) hint = "You changed this point, so its recording no longer fits: live mode runs it (needs ANTHROPIC_API_KEY in .env).";
-  else hint = "This point was recorded with an earlier policy, so it runs live only (needs ANTHROPIC_API_KEY in .env).";
-  $("#mode-hint").textContent = hint;
   const empty = !current.events.some((e) => (e.text || "").trim());
-  if (empty) hint = "Add at least one message (or speak one) before running.";
-  $("#mode-hint").textContent = hint;
+  let text;
+  if (empty) text = "Add a message first: speak, simulate a call, or ✎ edit the case.";
+  else if (mode === "replay") text = "<b>Replay</b> — Claude's recorded answers for this point: same engine and policy, no cost.";
+  else if ((current.id || "").startsWith("voice")) text = "<b>Live</b> — a call always runs live, on an unverified line.";
+  else text = `<b>Live</b> — ${esc(status.classifier_model || "the classifier")} classifies and ${esc(status.agent_model || "Claude")} decides, now.`;
+  if (!running && !$("#hint").dataset.sticky) hint(text);
   $("#run").disabled = running || empty || (mode === "replay" ? !canReplay : !status.live);
+  $("#simulate").disabled = running || !status.live || !$("#calls").value;
+  $("#mic").disabled = running || !status.voice || !status.live;
 }
 
 async function loadCase(id) {
   if (id === "__new__") {
     original = null;
     current = { id: "live-custom", track: "Banking & Financial Services", case: "custom", title: "A case of your own",
-      details: { "Source role": "Bank customer", "Bank": "Harrow & Vale Bank plc (fictional)", "Created": new Date().toISOString().slice(0, 16).replace("T", " ") + " UTC" },
-      request: "", events: [], attachments: [] };
+      details: { "Source role": "Bank customer", "Bank": "Harrow & Vale Bank plc (fictional)" }, request: "", events: [], attachments: [] };
+    $("#edit").hidden = false;
   } else {
-    const res = await fetch(`/api/case?id=${encodeURIComponent(id)}`);
-    original = await res.json();
+    original = await fetch(`/api/case?id=${encodeURIComponent(id)}`).then((r) => r.json());
     current = JSON.parse(JSON.stringify(original));
-    if (cases.find((c) => c.id === id)?.replay) mode = "replay";
-    else mode = "live";
+    mode = cases.find((c) => c.id === id)?.replay ? "replay" : "live";
   }
   if (!id.startsWith("voice-")) $("#calls").value = "";
-  $("#picker").value = id.startsWith("voice-") ? "__new__" : id;
+  $("#picker").value = id.startsWith("voice-") ? "" : id;
   $("#request").value = current.request || "";
-  renderEvents();
-  syncMode();
+  delete $("#hint").dataset.sticky;
+  renderEvents(); renderChat(); resetRun(); syncMode();
 }
 
-// ------------------------------------------------------------------------------- the run panel
+// ------------------------------------------------------------------------------- the desk at work
 
 let ui;
 function resetRun() {
-  ui = { stage: -1, factsCard: null, rules: {}, agentCard: null, check: null, facts: {}, started: performance.now() };
-  $("#pipe").innerHTML = STAGES.map(([id, b, s]) => `<div class="stage" id="st-${id}"><b>${b}</b><small>${s}</small></div>`).join("");
-  $("#facts").innerHTML = '<span class="empty">None yet.</span>';
-  $("#feed").innerHTML = "";
+  ui = { stage: -1, nothing: [], evidence: [], facts: {}, triage: {}, rules: {}, started: performance.now() };
+  $("#steps").innerHTML = STAGES.map(([id, name, about], i) => `
+    <li class="st" id="st-${id}">
+      <button class="st__head" disabled><span class="dot">${i + 1}</span><span class="st__name">${name}</span><span class="st__sum">${esc(about)}</span>${CHEV}</button>
+      <div class="st__body"></div>
+    </li>`).join("");
+  document.querySelectorAll(".st__head").forEach((b) => b.addEventListener("click", () => b.parentElement.classList.toggle("st--open")));
+  $("#outcome").innerHTML = READY;
+  $("#clock").textContent = "";
+}
+
+const st = (id) => $(`#st-${id}`);
+const body = (id) => st(id).querySelector(".st__body");
+function sum(id, html) {
+  const el = st(id);
+  el.querySelector(".st__sum").innerHTML = html;
+  el.classList.add("st--has");
+  el.querySelector(".st__head").disabled = false;
 }
 
 function stage(id) {
   const i = STAGES.findIndex(([s]) => s === id);
   if (i < 0) return;
   STAGES.forEach(([s], j) => {
-    const el = $(`#st-${s}`);
-    el.classList.toggle("stage--on", j === i);
-    if (j < i || (j <= ui.stage && j !== i)) el.classList.add("stage--done");
+    const el = st(s);
+    el.classList.toggle("st--on", j === i);
+    if (j < i && !el.classList.contains("st--done")) {
+      el.classList.add("st--done");
+      if (!el.classList.contains("st--has")) el.querySelector(".st__sum").textContent = "nothing to do here";
+    }
   });
   ui.stage = Math.max(ui.stage, i);
+  $("#clock").textContent = `${((performance.now() - ui.started) / 1000).toFixed(1)} s`;
 }
 
-function card(cls, k, t, d = "") {
-  const el = document.createElement("div");
-  el.className = `card card--${cls}`;
-  el.innerHTML = `<div class="card__k"><span>${k}</span><span class="dim">${((performance.now() - ui.started) / 1000).toFixed(1)}s</span></div>
-    <div class="card__t">${t}</div>${d ? `<div class="card__d">${d}</div>` : ""}`;
-  $("#feed").appendChild(el);
-  el.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  return el;
-}
+function list(el) { const ul = document.createElement("ul"); ul.className = "rows"; el.appendChild(ul); return ul; }
+function heading(el, html) { el.insertAdjacentHTML("beforeend", `<div class="sub">${html}</div>`); return list(el); }
+function add(ul, mark, cls, html) { const li = document.createElement("li"); li.innerHTML = `<span class="${cls}">${mark}</span><span>${html}</span>`; ul.appendChild(li); return li; }
 
-function rows(el, items) {
-  let ul = el.querySelector(".rows");
-  if (!ul) { ul = document.createElement("ul"); ul.className = "rows"; el.appendChild(ul); }
-  for (const [mark, cls, html] of items) {
-    const li = document.createElement("li");
-    li.innerHTML = `<span class="${cls}">${mark}</span><span>${html}</span>`;
-    ul.appendChild(li);
+function why(ul, atoms) {
+  // In a rule that fired, a test that is not true sat on the other side of an "or": shown muted, not as a failure.
+  for (const a of atoms || []) {
+    if (a.result !== true) { add(ul, "·", "dim", `<span class="dim">${esc(a.test)} (other branch)</span>`); continue; }
+    add(ul, "✓", "y", `${esc(a.test)} <span class="dim">${esc(Object.entries(a.values || {}).map(([k, v]) => `${k}=${show(v)}`).join(", "))}</span>`);
   }
 }
 
 function fact(name, value, source) {
   if (value === null || value === undefined) return;
-  ui.facts[name] = value;
-  const list = $("#facts");
-  list.querySelector(".empty")?.remove();
-  let el = list.querySelector(`[data-fact="${CSS.escape(name)}"]`);
-  if (!el) { el = document.createElement("span"); el.dataset.fact = name; list.appendChild(el); }
-  el.className = `fact fact--${source}`;
-  el.innerHTML = `${esc(name)} = <b>${esc(show(value))}</b><em>${source}</em>`;
-}
-
-function why(atoms, accepted = false) {
-  // In a rule that fired, a test that is not true sat on the other side of an "or": shown muted, not as a failure.
-  return (atoms || []).map((a) => accepted && a.result !== true ? ["·", "dim", `<span class="dim">${esc(a.test)} (other branch)</span>`] : [a.result === true ? "✓" : a.result === false ? "✗" : "?", a.result === true ? "y" : a.result === false ? "n" : "u",
-    `${esc(a.test)} <span class="dim">${esc(Object.entries(a.values || {}).map(([k, v]) => `${k}=${show(v)}`).join(", "))}</span>`]);
+  ui.facts[name] = [value, source];
+  const n = Object.keys(ui.facts).length;
+  sum("facts", `<b>${n}</b> fact${n === 1 ? "" : "s"} established`);
+  const b = body("facts");
+  let grid = b.querySelector(".facts");
+  if (!grid) {
+    b.insertAdjacentHTML("afterbegin", '<div class="facts"></div><div class="legend"><span><i class="src src--function"></i>from a function</span><span><i class="src src--classifier"></i>from the classifier</span><span><i class="src src--policy"></i>set by the policy</span></div>');
+    grid = b.querySelector(".facts");
+  }
+  grid.innerHTML = Object.entries(ui.facts).map(([k, [v, s]]) =>
+    `<div class="fact" title="${esc(k)} = ${esc(show(v))}"><i class="src src--${s}"></i><span>${esc(k)}</span><span>${esc(show(v))}</span></div>`).join("");
 }
 
 const isRead = (n) => /^read-/.test(n || "");
@@ -425,125 +473,126 @@ const isDo = (n) => /^do-/.test(n || "");
 function on(msg) {
   switch (msg.event) {
     case "fatal":
-      card("err", "Cannot run", esc(msg.error)); break;
-    case "case":
-      card("facts", "Case opened", esc(msg.case.title), `${esc(msg.case.id)} · ${msg.case.events.length} events up to now · ${msg.mode === "replay" ? "recorded Claude answers" : "Claude live"}`);
-      break;
+      $("#outcome").innerHTML = `<div class="err">${esc(msg.error)}</div>`; break;
     case "trigger": {
       const name = msg.name;
       ui.lastRule = name;
       if (isRead(name)) {
         stage("facts");
-        if (!ui.factsCard) {
-          ui.factsCard = card("facts", "Functions · track/functions.py", "Reading the records into facts",
-            "Each function reads the case's system events (journals, teams, services) and returns only what they show.");
-        }
-        ui.rules[name] = ui.factsCard;
+        if (!ui.readers) ui.readers = heading(body("facts"), "What each function found");
       } else if (name === "triage") {
         stage("triage");
-        ui.rules[name] = card("triage", `Rule ${esc(name)}`, "What does the customer want?", "The classifier picks one label from a fixed list.");
       } else if (msg.on) {
         stage("check");
-        const el = ui.check || card("ok", "Policy check", "");
-        el.className = "card card--ok";
-        el.querySelector(".card__t").innerHTML = `✓ Accepted <span class="dim">by rule</span> ${esc(name)}`;
-        rows(el, why(msg.why, true));
-        ui.rules[name] = el;
-        ui.check = null;
+        why(heading(body("check"), `✓ Accepted by rule <code>${esc(name)}</code>`), msg.why);
+        ui.rules[name] = "check";
+        sum("check", `<span class="y">✓</span> accepted by <code>${esc(name)}</code>`);
+        st("check").classList.remove("st--bad");
       } else if (isDo(name)) {
         stage("decision");
-        ui.rules[name] = card("action", `Rule ${esc(name)} · fired by the state, once`, "Doing the work");
+        ui.rules[name] = "decision";
       } else {
         stage("policy");
-        const el = card("rule", `Policy rule ${esc(name)}`, esc(msg.note || "A rule's conditions hold"));
-        rows(el, why(msg.why, true));
-        ui.rules[name] = el;
+        ui.policyList = heading(body("policy"), `Rule <code>${esc(name)}</code>${msg.note ? ` — ${esc(msg.note)}` : ""}`);
+        why(ui.policyList, msg.why);
+        ui.rules[name] = "policy";
+        sum("policy", `rule <code>${esc(name)}</code>`);
       }
       break;
     }
     case "returned": {
-      if (!isRead(ui.lastRule)) break;  // an action's function: shown on its own card, not as a fact reader
-      const el = ui.factsCard;
+      if (!isRead(ui.lastRule) || !ui.readers) break;
       const vals = Object.entries(msg.values || {});
-      if (el && vals.length) rows(el, [["→", "y", `<b>${esc(msg.function)}</b> ${vals.map(([k, v]) => `${esc(k)}=${esc(show(v))}`).join(", ")}`]]);
-      else if (el) rows(el, [["·", "dim", `<span class="dim">${esc(msg.function)}: nothing in the records</span>`]]);
+      const nothing = ui.readers.querySelector("[data-nothing]");
+      if (vals.length) {
+        const li = add(ui.readers, "→", "y", `<b>${esc(msg.function)}</b> ${vals.map(([k, v]) => `${esc(k)}=${esc(show(v))}`).join(", ")}`);
+        if (nothing) ui.readers.appendChild(nothing);  // keep "nothing found" last
+        void li;
+      } else {
+        ui.nothing.push(msg.function);
+        const li = nothing || add(ui.readers, "·", "dim", "");
+        li.dataset.nothing = "1";
+        li.lastElementChild.innerHTML = `<span class="dim">nothing in the records: ${esc(ui.nothing.join(", "))}</span>`;
+      }
       vals.forEach(([k, v]) => fact(k, v, "function"));
       break;
     }
     case "note":
-      if (isRead(msg.by) && ui.factsCard) {
+      if (isRead(msg.by)) {
         const line = String(msg.text || "").replace(/\s*\[facts:.*$/s, "");
-        rows(ui.factsCard, [["", "dim", `<span class="dim">evidence · ${esc(line.length > 140 ? line.slice(0, 140) + "…" : line)}</span>`]]);
-      }
-      break;
-    case "set":
-      fact(msg.field, msg.new, msg.by === "triage" ? "classifier" : isRead(msg.by) ? "function" : "policy");
-      if (ui.rules[msg.by] && !isRead(msg.by) && msg.by !== "triage")
-        rows(ui.rules[msg.by], [["=", "y", `sets <b>${esc(msg.field)}</b> = ${esc(show(msg.new))}`]]);
-      break;
-    case "model_start":
-      if (msg.call === "classify") {
-        stage("triage");
-        const el = ui.rules.triage || card("triage", "Classifier", "");
-        rows(el, [["", "", `<span class="spin" data-wait></span> <span class="dim">Claude · ${esc(msg.model)} is reading the request…</span>`]]);
-      } else if (msg.call === "agent") {
-        stage("agent");
-        ui.agentCard = card("agent", `Agent · ${esc(msg.model)}`, `<span class="spin"></span> Reading the conversation and the facts…`,
-          "It sees the customer's messages and the facts, never the system events, and proposes the next step as a tool call.");
-      }
-      break;
-    case "model_end":
-      document.querySelectorAll("[data-wait]").forEach((s) => s.closest("li")?.remove());
-      if (msg.call === "agent" && ui.agentCard) {
-        const el = ui.agentCard;
-        const took = msg.ms > 50 ? `${(msg.ms / 1000).toFixed(1)}s` : "recorded answer";
-        el.querySelector(".card__t").innerHTML = `${(msg.tools || []).length ? "Claude decided" : "Claude is done"} <span class="dim">· ${took}</span>`;
-        for (const text of msg.text || []) el.insertAdjacentHTML("beforeend", `<div class="quote">${esc(text)}</div>`);
-        for (const tool of msg.tools || []) {
-          const args = Object.entries(tool.input || {}).map(([k, v]) => `${k}: ${show(v)}`).join(", ");
-          el.insertAdjacentHTML("beforeend", `<div><span class="tool">${esc(tool.name)}(${esc(args)})</span>${tool.name === "case_status" ? ' <span class="dim">reads where the case is</span>' : ""}</div>`);
+        if (!ui.evidence.includes(line)) {
+          ui.evidence.push(line);
+          if (!ui.evList) ui.evList = heading(body("facts"), "Evidence from the history");
+          add(ui.evList, "“", "dim", `<span class="dim">${esc(line)}</span>`);
         }
-        if (!(msg.tools || []).length) el.insertAdjacentHTML("beforeend", '<div class="card__d">No further tool call: the case stays where the policy put it.</div>');
       }
       break;
-    case "answer": {
-      const el = ui.rules.triage;
-      if (el) rows(el, [["→", "y", `<b>${esc(msg.field)}</b> = ${esc(show(msg.value))} <span class="dim">· ${esc(msg.model)}${msg.confidence != null ? ` · confidence ${(+msg.confidence).toFixed(2)}` : ""}</span>`]]);
-      fact(msg.field, msg.value, "classifier");
+    case "set": {
+      const source = msg.by === "triage" ? "classifier" : isRead(msg.by) ? "function" : "policy";
+      fact(msg.field, msg.new, source);
+      if (source === "policy" && ui.rules[msg.by] === "policy" && ui.policyList) {
+        add(ui.policyList, "=", "y", `sets <b>${esc(msg.field)}</b> = ${esc(show(msg.new))}`);
+        sum("policy", `<code>${esc(msg.by)}</code> → ${esc(msg.field)} = <b>${esc(show(msg.new))}</b>`);
+      }
       break;
     }
+    case "model_start":
+      if (msg.call === "classify") { stage("triage"); sum("triage", `<span class="spin"></span>&nbsp; ${esc(msg.model)} is reading the request…`); }
+      else if (msg.call === "agent") { stage("agent"); ui.turn = (ui.turn || 0) + 1; sum("agent", `<span class="spin"></span>&nbsp; ${esc(msg.model)} is thinking…`); }
+      break;
+    case "model_end":
+      if (msg.call === "agent") {
+        const b = body("agent");
+        b.insertAdjacentHTML("beforeend", `<div class="sub">Turn ${ui.turn} · ${msg.ms > 50 ? `${(msg.ms / 1000).toFixed(1)} s` : "recorded answer"}</div>`);
+        for (const text of msg.text || []) b.insertAdjacentHTML("beforeend", `<div class="quote">${esc(text)}</div>`);
+        for (const tool of msg.tools || []) {
+          const args = Object.entries(tool.input || {}).map(([k, v]) => `${k}: ${show(v)}`).join(", ");
+          b.insertAdjacentHTML("beforeend", `<div><span class="tool">${esc(tool.name)}(${esc(args)})</span></div>`);
+        }
+        const tools = (msg.tools || []).filter((t) => t.name !== "case_status");
+        if (tools.length) {
+          const t = tools[tools.length - 1];
+          const args = Object.entries(t.input || {}).filter(([k]) => k !== "note").map(([, v]) => show(v)).join(", ");
+          ui.agentSum = `proposes <code>${esc(t.name)}${args ? `(${esc(args)})` : ""}</code>`;
+        }
+        sum("agent", ui.agentSum || "no proposal: the case stays where the policy put it");
+      }
+      break;
+    case "answer":
+      add(list(body("triage")), "→", "y", `<b>${esc(msg.field)}</b> = ${esc(show(msg.value))} <span class="dim">· ${esc(msg.model)}${msg.confidence != null ? ` · confidence ${(+msg.confidence).toFixed(2)}` : ""}</span>`);
+      fact(msg.field, msg.value, "classifier");
+      ui.triage[msg.field] = msg.value;
+      sum("triage", Object.entries(ui.triage).map(([k, v]) => `${esc(k)} <code>${esc(show(v))}</code>`).join("&nbsp; "));
+      break;
     case "signal":
       stage("check");
-      ui.check = card("rule", "Signal → policy", `The agent asks for <span class="tool" style="margin:0">${esc(msg.signal)}</span>`, "A rule must accept it against the facts.");
       break;
     case "refused": {
-      const el = ui.check || card("no", "Policy check", "");
-      el.className = "card card--no";
-      el.querySelector(".card__t").innerHTML = `✗ Refused <span class="dim">·</span> ${esc(msg.signal)}`;
-      rows(el, String(msg.reason || "").split("; ").map((r) => ["✗", "n", esc(r)]));
-      el.insertAdjacentHTML("beforeend", '<div class="card__d" style="margin-top:6px">The reason goes back to the agent; nothing was done.</div>');
-      ui.check = null;
+      const ul = heading(body("check"), `✗ Refused <code>${esc(msg.signal)}</code> — the reason goes back to Claude; nothing was done`);
+      for (const r of String(msg.reason || "").split("; ")) add(ul, "✗", "n", esc(r));
+      sum("check", `<span class="n">✗</span> refused <code>${esc(msg.signal)}</code>`);
+      st("check").classList.add("st--bad");
       break;
     }
     case "state": {
-      const el = ui.rules[msg.by];
-      if (el && !isRead(msg.by)) el.insertAdjacentHTML("beforeend", `<div class="move" style="margin-top:6px">${esc(msg.frm)} → <b>${esc(msg.to)}</b></div>`);
+      const where = ui.rules[msg.by];
+      if (where && !isRead(msg.by)) body(where).insertAdjacentHTML("beforeend", `<span class="move">${esc(msg.frm)} → <b>${esc(msg.to)}</b></span>`);
       break;
     }
     case "action": {
       stage("decision");
-      const el = ui.rules[msg.by] || card("action", "Action", "");
       const a = msg.args || {};
-      el.querySelector(".card__t").innerHTML = `Action recorded: <span class="tool" style="margin:0">${esc(msg.type)}</span>`;
       const shown = Object.entries(a).filter(([k]) => k !== "text").map(([k, v]) => `${k}=${show(v)}`).join(", ");
-      if (shown) rows(el, [["·", "dim", esc(shown)]]);
-      if (a.text) el.insertAdjacentHTML("beforeend", `<div class="quote">${esc(a.text)}</div><div class="card__d" style="margin-top:6px">Written by a function from the facts — not by Claude.</div>`);
+      const b = body("decision");
+      add(heading(b, `Action recorded by <code>${esc(msg.by)}</code>`), "→", "y", `<b>${esc(msg.type)}</b> ${esc(shown)}`);
+      if (a.text) b.insertAdjacentHTML("beforeend", `<div class="quote">${esc(a.text)}</div><p class="dim" style="margin:6px 0 0">Written by a function from the facts — not by Claude.</p>`);
+      sum("decision", `<code>${esc(msg.type)}</code> recorded`);
       break;
     }
     case "stalled":
-      card("err", "No decision", "The agent stopped before a final state", `on_stall decides: ${esc(msg.why)}`); break;
+      $("#outcome").insertAdjacentHTML("beforeend", `<div class="err">The agent stopped before a final state; on_stall decides (${esc(msg.why)}).</div>`); break;
     case "failed": case "error": case "model_error":
-      card("err", "Something broke", esc(msg.error || msg.trigger), "The policy's on_error decides where the case ends."); break;
+      $("#outcome").insertAdjacentHTML("beforeend", `<div class="err">${esc(msg.error || msg.trigger)} — the policy's on_error decides where the case ends.</div>`); break;
     case "done": finish(msg); break;
     case "audio": gotAudio(msg); break;
     case "voice_error": ui.decision?.querySelector(".hear")?.replaceChildren(document.createTextNode(`Voice failed: ${msg.error}`)); break;
@@ -551,42 +600,38 @@ function on(msg) {
 }
 
 function finish(r) {
-  STAGES.forEach(([s]) => { const el = $(`#st-${s}`); el.classList.remove("stage--on"); });
-  STAGES.slice(0, ui.stage + 1).forEach(([s]) => $(`#st-${s}`).classList.add("stage--done"));
-  const reply = (r.actions || []).find((a) => a.type === "reply");
-  let verdict = "";
+  STAGES.forEach(([s], j) => {
+    const el = st(s);
+    el.classList.remove("st--on");
+    if (j <= ui.stage) el.classList.add("st--done");
+    if (!el.classList.contains("st--has") && j <= ui.stage) el.querySelector(".st__sum").textContent = "nothing to do here";
+  });
+  let verdict;
   if (r.voice) {
     const want = VOICE_WORDS[r.voice.expected_next_action] || r.voice.expected_next_action;
-    verdict = r.voice.match ? `<span class="verdict verdict--y">✓ Matches the dataset: ${esc(want)}</span>`
-      : `<span class="verdict verdict--n">✗ The dataset expects: ${esc(want)}</span>`;
-    verdict += `<p>Must not: ${esc((r.voice.must_not || []).join("; "))}.</p><p class="dim" style="color:#c9d3c5">Why: ${esc(r.voice.why || "")}</p>`;
+    verdict = r.voice.match ? '<span class="verdict verdict--y">✓ Matches the dataset</span>' : `<span class="verdict verdict--n">✗ Dataset expects: ${esc(want)}</span>`;
   } else if (r.bank) {
-    if (r.bank.match === true) verdict = `<span class="verdict verdict--y">✓ Matches what the bank did next: ${esc(OUTCOMES[r.bank.next_step] || r.bank.next_step)}</span>`;
-    else if (r.bank.match === false) verdict = `<span class="verdict verdict--n">✗ The bank did: ${esc(OUTCOMES[r.bank.next_step] || r.bank.next_step)}</span>`;
-    else verdict = '<span class="verdict verdict--x">Next event is not a bank decision · not scored</span>';
-  } else verdict = '<span class="verdict verdict--x">A case of your own · nothing to compare with</span>';
+    const did = OUTCOMES[r.bank.next_step] || r.bank.next_step;
+    verdict = r.bank.match === true ? '<span class="verdict verdict--y">✓ Matches what the bank did next</span>'
+      : r.bank.match === false ? `<span class="verdict verdict--n">✗ The bank did: ${esc(did)}</span>` : '<span class="verdict verdict--x">Not scored at this point</span>';
+  } else verdict = '<span class="verdict verdict--x">Your own case · nothing to compare</span>';
   const secs = ((performance.now() - ui.started) / 1000).toFixed(1);
-  const cost = r.calls && r.calls.cost_usd != null ? ` · $${(+r.calls.cost_usd).toFixed(4)}` : "";
-  const el = document.createElement("div");
-  el.className = "decision";
-  el.innerHTML = `<small>Decision · final state ${esc(r.state)}</small><h3>${esc(OUTCOMES[r.outcome] || r.outcome || "No outcome")}</h3>
-    ${reply ? `<div class="quote">${esc(reply.args.text)}</div>` : ""}
-    <div class="hear"></div>
-    <p>${esc(Object.keys(r.fields || {}).length)} facts · ${esc((r.actions || []).length)} action(s) · ${secs}s${cost}${r.diverged ? " · the recording did not fully match" : ""}</p>${verdict}`;
-  $("#feed").appendChild(el);
-  el.scrollIntoView({ block: "nearest", behavior: "smooth" });
-  ui.decision = el;
-  if (ui.speakAfter) el.querySelector(".hear").innerHTML = '<p><span class="spin"></span> Speaking the answer…</p>';
+  const cost = r.calls && r.calls.cost_usd != null ? ` · $${(+r.calls.cost_usd).toFixed(3)}` : "";
+  const note = r.voice ? `<div class="decision__note">Must not: ${esc((r.voice.must_not || []).join("; "))}.</div>` : "";
+  $("#outcome").innerHTML = `<div class="decision"><small>Decision</small><h3>${esc(OUTCOMES[r.outcome] || r.outcome || "No outcome")}</h3>
+    <div class="decision__row">${verdict}<span class="hear"></span></div>${note}
+    <div class="decision__meta">Final state ${esc(r.state)} · ${Object.keys(r.fields || {}).length} facts · ${secs} s${cost}${r.diverged ? " · recording did not fully match" : ""}</div></div>`;
+  ui.decision = $("#outcome .decision");
+  if (ui.speakAfter) ui.decision.querySelector(".hear").innerHTML = '<span style="color:var(--on-ink-muted)"><span class="spin"></span>&nbsp; speaking…</span>';
+  renderChat(r.spoken);  // what the customer would hear: the accepted reply, or the outcome's fixed line
+  $("#clock").textContent = `${secs} s`;
 }
 
 function gotAudio(msg) {
   const bytes = Uint8Array.from(atob(msg.data), (c) => c.charCodeAt(0));
   const url = URL.createObjectURL(new Blob([bytes], { type: msg.mime }));
   const box = ui.decision?.querySelector(".hear");
-  if (box) {
-    box.innerHTML = '<button class="btn listen">🔊 Hear the answer again</button>';
-    box.querySelector("button").addEventListener("click", () => play(url));
-  }
+  if (box) { box.innerHTML = '<button class="btn">🔊 Hear it again</button>'; box.querySelector("button").addEventListener("click", () => play(url)); }
   play(url);
 }
 
@@ -602,8 +647,7 @@ function play(url) {
     const done = () => { clearTimeout(timer); resolve(); };
     let timer = setTimeout(done, 25000);
     audio.onloadedmetadata = () => { if (isFinite(audio.duration)) { clearTimeout(timer); timer = setTimeout(done, audio.duration * 1000 + 800); } };
-    audio.onended = done;
-    audio.onerror = done;
+    audio.onended = done; audio.onerror = done;
     audio.play().catch(done);
   });
 }
@@ -619,22 +663,19 @@ async function simulate() {
   const id = $("#calls").value;
   if (!id || running) return;
   await loadCase(id);
-  micState("busy", "The caller is speaking…");
+  stickyHint("🎧 The caller is speaking…");
   try {
     const res = await fetch(`/api/caller-audio?id=${encodeURIComponent(id)}`);
     if (!res.ok) throw new Error((await res.json()).error || res.statusText);
     await play(URL.createObjectURL(await res.blob()));
-  } catch (error) {
-    micState("idle", `Could not play the caller: ${error.message}`);
-  }
-  runDesk({ speak: $("#autospeak").checked });
+  } catch (error) { stickyHint(`Could not play the caller: ${esc(error.message)}`); }
+  runDesk({ speak: true });
 }
 
-function micState(state, sub) {
-  $("#mic").classList.toggle("mic--rec", state === "rec");
-  $("#mic").disabled = state === "busy" || !status.voice || !status.live || running;
-  $("#mic-title").textContent = { idle: "Speak as the customer", rec: "Listening… tap to stop", busy: "Transcribing…" }[state];
-  if (sub) $("#mic-sub").textContent = sub;
+function micState(state) {
+  $("#mic").classList.toggle("btn--rec", state === "rec");
+  $("#mic").classList.toggle("btn--ink", state !== "rec");
+  $("#mic-label").textContent = { idle: "Speak", rec: "Stop", busy: "Listening…" }[state];
 }
 
 async function toggleMic() {
@@ -647,55 +688,54 @@ async function toggleMic() {
     recorder.ondataavailable = (e) => e.data.size && chunks.push(e.data);
     recorder.onstop = async () => {
       stream.getTracks().forEach((t) => t.stop());
-      micState("busy");
+      micState("busy"); stickyHint("Transcribing…");
       try {
         const blob = new Blob(chunks, { type: recorder.mimeType || "audio/webm" });
         const res = await fetch("/api/stt", { method: "POST", headers: { "Content-Type": blob.type }, body: blob });
         const data = await res.json();
         if (!res.ok) throw new Error(data.error || res.statusText);
         if (!data.text) throw new Error("I didn't catch anything — try again a little closer to the mic.");
+        micState("idle");
         heard(data.text);
-        micState("idle", `Heard: “${data.text}”`);
-      } catch (error) {
-        micState("idle", `Voice failed: ${error.message}`);
-      }
+      } catch (error) { micState("idle"); stickyHint(`Voice failed: ${esc(error.message)}`); }
     };
     recorder.start();
     if (audio) audio.pause();
-    micState("rec", "Speak as the customer would on a call…");
-  } catch (error) {
-    micState("idle", `No microphone: ${error.message}`);
-  }
+    micState("rec"); stickyHint("🎙 Listening — speak as a caller would, then press <b>Stop</b>.");
+    $("#mic").disabled = false;
+  } catch (error) { stickyHint(`No microphone: ${esc(error.message)}`); }
 }
 
 function heard(text) {
-  const caller = $("#caller").value.trim() || "Caller";
   original = null;
-  current = voiceCase("voice-live", "A call, just now", caller, text);
-  $("#picker").value = "__new__";
-  $("#calls").value = "";
+  current = voiceCase("voice-live", "A call, just now", "Caller", text);
+  $("#picker").value = ""; $("#calls").value = "";
   $("#request").value = text;
-  renderEvents();
-  mode = "live";
-  syncMode();
-  if (status.live) runDesk({ speak: $("#autospeak").checked });
+  delete $("#hint").dataset.sticky;
+  renderEvents(); renderChat(); resetRun();
+  mode = "live"; syncMode();
+  if (status.live) runDesk({ speak: true });
 }
+
+// ------------------------------------------------------------------------------- running
 
 async function runDesk(options = {}) {
   if (running) return;
-  running = true; syncMode();
-  $("#run").firstElementChild.textContent = "Running…";
   current.request = $("#request").value.trim();
   if (!current.request) {  // the classifier reads the request: default to the customer's first message
-    const first = current.events.find((e) => kindOf(e) === "conversation" && !/h&v|harrow|bank/i.test(e.from) && (e.text || "").trim());
+    const first = current.events.find((e) => kindOf(e) === "conversation" && !isBank(e.from) && (e.text || "").trim());
     current.request = first ? first.text.trim() : "";
     $("#request").value = current.request;
   }
-  resetRun();
-  ui.speakAfter = !!options.speak;
-  micState("idle");
+  running = true;
+  resetRun(); renderChat();
+  ui.speakAfter = !!options.speak && status.voice;
+  $("#outcome").innerHTML = '<div class="waiting"><span class="spin"></span>&nbsp; The desk is working…</div>';
+  delete $("#hint").dataset.sticky;
+  syncMode();
+  hint(mode === "replay" ? "<b>Replay</b> — running with Claude's recorded answers…" : "<b>Live</b> — Claude is answering now…");
   try {
-    const res = await fetch("/api/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ case: current, mode, speak: !!options.speak && status.voice }) });
+    const res = await fetch("/api/run", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ case: current, mode, speak: ui.speakAfter }) });
     const reader = res.body.getReader();
     const decoder = new TextDecoder();
     let buffer = "";
@@ -710,11 +750,9 @@ async function runDesk(options = {}) {
       }
     }
   } catch (error) {
-    card("err", "Connection", esc(error.message), "Is the live server still running?");
+    $("#outcome").innerHTML = `<div class="err">Connection lost: ${esc(error.message)}. Is the live server still running?</div>`;
   } finally {
-    running = false; syncMode();
-    micState("idle", "Tap, talk, tap again. Your words become one message on an unverified call, and the desk runs live.");
-    $("#run").firstElementChild.textContent = "Run the desk";
+    running = false; micState("idle"); syncMode();
   }
 }
 
@@ -722,37 +760,33 @@ async function runDesk(options = {}) {
 
 async function start() {
   [status, cases] = await Promise.all([fetch("/api/status").then((r) => r.json()), fetch("/api/cases").then((r) => r.json())]);
+  const calls = await fetch("/api/calls").then((r) => r.json());
   const replays = cases.filter((c) => c.replay).length;
-  $("#status").innerHTML = `<span class="pill">${esc(status.policy)}</span>
-    <span class="pill">${replays} of ${cases.length} points replay with no key</span>
-    ${status.live ? `<span class="pill pill--ok"><span class="dot"></span>Claude live · ${esc(status.agent_model)}</span>`
-                  : '<span class="pill pill--warn"><span class="dot"></span>No ANTHROPIC_API_KEY · replay only</span>'}
-    ${status.voice ? '<span class="pill pill--ok"><span class="dot"></span>Voice · ElevenLabs</span>' : '<span class="pill pill--warn"><span class="dot"></span>No ELEVENLABS_API_KEY · no voice</span>'}`;
+  const led = (on) => `<i class="led${on ? "" : " led--off"}"></i>`;
+  $("#health").innerHTML = `<span>${esc(status.policy)}</span><span>${replays}/${cases.length} replayable</span>
+    <span>${led(status.live)}Claude ${status.live ? "live" : "replay only"}</span><span>${led(status.voice)}Voice ${status.voice ? "on" : "off"}</span>`;
+
+  const byGroup = {};
+  for (const c of calls) (byGroup[c.group] ||= []).push(c);
+  $("#calls").innerHTML = '<option value="">Simulate a call…</option>' + Object.entries(byGroup).map(([g, cs]) =>
+    `<optgroup label="${esc(GROUPS[g] || g)}">${cs.map((c) => `<option value="${esc(c.id)}">${esc(c.case)} · ${esc(c.title)}</option>`).join("")}</optgroup>`).join("");
+
   const byCase = {};
   for (const c of cases) (byCase[c.case] ||= []).push(c);
-  $("#picker").innerHTML = '<option value="__new__">✎ A case of your own…</option>' + Object.entries(byCase).map(([n, pts]) =>
+  $("#picker").innerHTML = '<option value="">A written case…</option><option value="__new__">✎ Write your own</option>' + Object.entries(byCase).map(([n, pts]) =>
     `<optgroup label="${esc(n)} · ${esc(pts[0].title)}">${pts.map((p) =>
       `<option value="${esc(p.id)}">${esc(n)} at ${String(p.point).padStart(2, "0")} · ${p.actor_next === "bank" ? "bank acts next" : "customer acts next"}${p.replay ? "" : " · live only"}</option>`).join("")}</optgroup>`).join("");
-  $("#quick").innerHTML = QUICK.filter(([id]) => cases.some((c) => c.id === id)).map(([id, l]) => `<button class="btn btn--chip" data-case="${id}">${esc(l)}</button>`).join("");
-  $("#quick").addEventListener("click", (e) => { const id = e.target.dataset?.case; if (id) loadCase(id); });
-  $("#picker").addEventListener("change", (e) => loadCase(e.target.value));
-  $("#request").addEventListener("input", () => { current.request = $("#request").value; syncMode(); });
+
+  $("#picker").addEventListener("change", (e) => e.target.value && loadCase(e.target.value));
+  $("#calls").addEventListener("change", (e) => { if (e.target.value) loadCase(e.target.value); else syncMode(); });
+  $("#request").addEventListener("input", () => { current.request = $("#request").value; renderChat(); syncMode(); });
   document.querySelectorAll("[data-add]").forEach((b) => b.addEventListener("click", () => addEvent(b.dataset.add)));
+  $("#edit-toggle").addEventListener("click", () => { $("#edit").hidden = !$("#edit").hidden; });
   $("#mode-replay").addEventListener("click", () => { mode = "replay"; syncMode(); });
   $("#mode-live").addEventListener("click", () => { mode = "live"; syncMode(); });
   $("#run").addEventListener("click", () => runDesk({ speak: false }));
   $("#mic").addEventListener("click", toggleMic);
   $("#simulate").addEventListener("click", simulate);
-  const calls = await fetch("/api/calls").then((r) => r.json());
-  const byGroup = {};
-  for (const c of calls) (byGroup[c.group] ||= []).push(c);
-  $("#calls").innerHTML = '<option value="">Choose a call…</option>' + Object.entries(byGroup).map(([g, cs]) =>
-    `<optgroup label="${esc(GROUPS[g] || g)}">${cs.map((c) => `<option value="${esc(c.id)}">${esc(c.case)} · ${esc(c.title)}</option>`).join("")}</optgroup>`).join("");
-  $("#calls").addEventListener("change", (e) => e.target.value && loadCase(e.target.value));
-  $("#simulate").disabled = !status.live;
-  micState("idle", status.voice ? (status.live ? undefined : "Voice runs the desk live: add ANTHROPIC_API_KEY to .env.") : "Voice needs ELEVENLABS_API_KEY in .env.");
-  resetRun();
-  $("#feed").innerHTML = '<div class="idle"><b>Pick a case and run the desk.</b>Try case 001 at its three moments — asked, waiting, answered: the same request, three different decisions.</div>';
   await loadCase("banking-001-at-02");
 }
 start();
