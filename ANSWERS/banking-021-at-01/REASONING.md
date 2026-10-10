@@ -30,39 +30,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 26. Rule `read-documents` fired: state = READING → true (state=READING).
 27. Called `check_documents` (attempt 1, key banking-021-at-01:read-documents:9).
 28. `check_documents` found {}.
-29. Rule `read-registration` fired: state = READING → true (state=READING).
-30. Called `check_registration` (attempt 1, key banking-021-at-01:read-registration:10).
-31. `check_registration` found {}.
-32. Rule `read-confirmation` fired: state = READING → true (state=READING).
-33. Called `check_confirmation` (attempt 1, key banking-021-at-01:read-confirmation:11).
-34. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Your replacement card request has been accepted. This confirms the request was received; it does not confirm dispatch or delivery. [facts: confirmation='none', instructed_outside_portal=False]
-35. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-36. `confirmation`: not known → none (by `read-confirmation`).
-37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-40. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-41. `request_type`: not known → question (by `triage`).
-42. `subject`: not known → card (by `triage`).
-43. State `READING` → `TRIAGED` (by `triage`).
-44. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-45. `next_system`: not known → card (by `route-card`).
-46. The agent asked for `ask_system` {"system": "card"}.
-47. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-48. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-50. Called `ask_system` (attempt 1, key banking-021-at-01:do-ask:15).
-51. Action in the world: `ask_system` {"system": "card", "about": "card"}.
-52. `ask_system` found {}.
-53. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-54. The case closed in `ASKED`: **ask_system**.
+29. Rule `read-tariff` fired: state = READING → true (state=READING).
+30. Called `check_tariff` (attempt 1, key banking-021-at-01:read-tariff:10).
+31. `check_tariff` found {}.
+32. Rule `read-registration` fired: state = READING → true (state=READING).
+33. Called `check_registration` (attempt 1, key banking-021-at-01:read-registration:11).
+34. `check_registration` found {}.
+35. Rule `read-confirmation` fired: state = READING → true (state=READING).
+36. Called `check_confirmation` (attempt 1, key banking-021-at-01:read-confirmation:12).
+37. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): Your replacement card request has been accepted. This confirms the request was received; it does not confirm dispatch or delivery. [facts: confirmation='none', instructed_outside_portal=False]
+38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+39. `confirmation`: not known → none (by `read-confirmation`).
+40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+41. Rule `triage` fired: state = READING → true (state=READING).
+42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+43. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+44. `request_type`: not known → question (by `triage`).
+45. `subject`: not known → card (by `triage`).
+46. State `READING` → `TRIAGED` (by `triage`).
+47. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+48. `next_system`: not known → card (by `route-card`).
+49. The agent asked for `ask_system` {"system": "card"}.
+50. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+51. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+53. Called `ask_system` (attempt 1, key banking-021-at-01:do-ask:16).
+54. Action in the world: `ask_system` {"system": "card", "about": "card"}.
+55. `ask_system` found {}.
+56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+57. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6449 tokens in, 406 out, 3.974 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6494 tokens in, 393 out, 3.976 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the card system whether the replacement card has been dispatched. The request was accepted, and the case is now marked as asked. It is closed on that step.
+> I asked the card system whether the replacement card has been dispatched. The query went through and the case is now closed at that step, but the system returned no dispatch or delivery information. So I can't yet tell you whether the card has been sent.
 > 
-> The card system's answer is not in the case yet. The facts still show no confirmation of dispatch or delivery. The only confirmation on record is the portal's message that the request was received, and that message does not say the card has been sent. I can't tell the customer the card has been dispatched.
+> The portal's message only confirms that your request was received. The case records show no confirmation of dispatch or delivery. I'm not assuming the card has shipped.

@@ -1,6 +1,12 @@
 # Case banking-037-at-02: Profile Name Typo
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
+
+## Summary
+
+Elowen Marr, verified on a call, asked for the name on her profile to be corrected from "Elowen Mar" to "Elowen Marr". Because this is a change and had no confirmation yet, the desk sent her a confirmation request for the profile change, and the case closed in the confirmation-sent state. The record says a change is confirmed by the customer in the secure portal, so the correction depends on her confirming it there; nothing else is recorded as pending.
+
+_Written by a model from the record below; the sections below are the record._
 
 ## What the system received
 
@@ -28,7 +34,7 @@ Case reference: id banking-037-at-02, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: access, about: profile), by rule `do-request`
+- `send_for_confirmation` (change: profile, to: Elowen Marr), by rule `do-confirm`
 
 ## Decision and why
 
@@ -36,12 +42,13 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `register` accepted it.
+- `TRIAGED` → `CONFIRM_PENDING`: rule `change-needs-confirmation` — A change is confirmed by the customer in the secure portal, not in chat or by email.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type = register → true (request_type=register)
+  - request_type = change → true (request_type=change)
+  - confirmation = none → true (confirmation=none)
   - registration_asked absent → true (registration_asked=not known)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+- `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
+  - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 
 Facts established:
 
@@ -52,7 +59,7 @@ Facts established:
 - subject: **profile**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **register**
+- request_type: **change**
 - next_system: **access**
 
 Where they came from:
@@ -70,4 +77,4 @@ No.
 
 ## Final result
 
-submit_request (REQUESTED)
+send_for_confirmation (CONFIRMATION_SENT)

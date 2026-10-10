@@ -2,6 +2,12 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
+## Summary
+
+Mara Ellison, verified on a call, asked the bank to cancel her Northmere Fitness Direct Debit mandate, and said she understood this doesn't end her agreement with the recipient. The desk classified it as a Direct Debit instruction and registered a request with the recurring team, which is where the case closed. The record shows only that the request was registered, not that the mandate is cancelled, and a note from the service agent says a collection already being processed can't be ruled out and needs separate reconciliation. The agent's message to her says the cancellation was "accepted" and that only one active mandate showed in the portal, but the record doesn't support either claim.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

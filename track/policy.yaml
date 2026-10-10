@@ -46,6 +46,8 @@ fields:
   documents_asked:    bool
   document_ready:     bool
   document_name:      text
+  tariff_asked:       bool
+  tariff_status:      enum [MATCHES, MISMATCH, OTHER]
   registration_asked: bool
   registered:         bool
   registration_ref:   text
@@ -54,7 +56,7 @@ fields:
   instructed_outside_portal: bool
   # --- the policy's own
   request_type: enum [question, register, change, instruction, access, authority]
-  next_system:  { type: enum, values: [payment, incoming, recurring, card, access, business, documents], description: the system that holds the answer }
+  next_system:  { type: enum, values: [payment, incoming, recurring, card, access, business, documents, tariff], description: the system that holds the answer }
   reason:       enum [UNVERIFIED, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED]
   clarify_need: { type: enum, values: [which_transaction, which_card, which_instruction, more_details], description: what the customer is asked for }
 
@@ -78,7 +80,7 @@ signals:
   ask_system:
     description: "The answer the customer needs is not in the case yet: ask the system that holds it."
     args:
-      system: { type: enum, values: [payment, incoming, recurring, card, access, business, documents], description: "payment: transfers, payments, batches; incoming: money into the account; recurring: standing orders, Direct Debits; card: cards, card payments; access: sign-in, devices; business: company limits, roles, signing, imports; documents: statements, exports, reports" }
+      system: { type: enum, values: [payment, incoming, recurring, card, access, business, documents, tariff], description: "payment: transfers, payments, batches; incoming: money into the account; recurring: standing orders, Direct Debits; card: cards, card payments; access: sign-in, devices; business: company limits, roles, signing, imports; documents: statements, exports, reports; tariff: fees and charges" }
   reply:
     description: "A system's answer is in the case: reply to the customer within it. The desk writes the reply."
   submit_request:
@@ -109,6 +111,7 @@ triggers:
   - { name: read-access,       when: "state = READING", call: check_access }
   - { name: read-business,     when: "state = READING", call: check_business }
   - { name: read-documents,    when: "state = READING", call: check_documents }
+  - { name: read-tariff,       when: "state = READING", call: check_tariff }
   - { name: read-registration, when: "state = READING", call: check_registration }
   - { name: read-confirmation, when: "state = READING", call: check_confirmation }
 
@@ -155,6 +158,7 @@ triggers:
   - { name: asked-access, when: "state = TRIAGED and next_system absent and access_asked", set: { next_system: access } }
   - { name: asked-business, when: "state = TRIAGED and next_system absent and business_asked", set: { next_system: business } }
   - { name: asked-documents, when: "state = TRIAGED and next_system absent and documents_asked", set: { next_system: documents } }
+  - { name: asked-tariff, when: "state = TRIAGED and next_system absent and tariff_asked", set: { next_system: tariff } }
   # otherwise the subject decides; with no subject, the agent names the system
   - { name: route-payment, when: "state = TRIAGED and next_system absent and subject in [transfer, batch, payment_package]", set: { next_system: payment } }
   - { name: route-incoming, when: "state = TRIAGED and next_system absent and subject in [incoming_payment]", set: { next_system: incoming } }
@@ -162,7 +166,8 @@ triggers:
   - { name: route-card, when: "state = TRIAGED and next_system absent and subject in [card, card_payment]", set: { next_system: card } }
   - { name: route-access, when: "state = TRIAGED and next_system absent and subject in [access, profile]", set: { next_system: access } }
   - { name: route-business, when: "state = TRIAGED and next_system absent and subject in [limit, 'role']", set: { next_system: business } }
-  - { name: route-documents, when: "state = TRIAGED and next_system absent and subject in [statement, document, fee]", set: { next_system: documents } }
+  - { name: route-documents, when: "state = TRIAGED and next_system absent and subject in [statement, document]", set: { next_system: documents } }
+  - { name: route-tariff, when: "state = TRIAGED and next_system absent and subject = fee", set: { next_system: tariff } }
 
   # ------------------------------------------------------------------ safety first, before the agent
   - name: unverified-instruction
@@ -351,6 +356,23 @@ triggers:
   - name: documents-reply
     on: reply
     when: "state = TRIAGED and next_system = documents and document_ready present"
+    to: REPLY_PENDING
+
+  # ------------------------------------------------------------------ tariff
+  - name: tariff-waits
+    when: "state = TRIAGED and next_system = tariff and tariff_asked and tariff_status absent"
+    note: The system was asked; its answer is not in yet.
+    to: WAITING
+
+  - name: tariff-ask
+    on: ask_system
+    when: "state = TRIAGED and args.system = tariff and (next_system = tariff or next_system absent) and tariff_asked absent and request_type not in [register, change, authority]"
+    set: { next_system: tariff }
+    to: ASK_PENDING
+
+  - name: tariff-reply
+    on: reply
+    when: "state = TRIAGED and next_system = tariff and tariff_status present"
     to: REPLY_PENDING
 
   # ------------------------------------------------------------------ before any system answers

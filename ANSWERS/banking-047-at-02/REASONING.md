@@ -35,43 +35,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-047-at-02:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-047-at-02:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-047-at-02:read-confirmation:11).
-39. Note from `read-confirmation`: event 2 (Maeve Calder): Please confirm our current company payment limit. I’m authorised to view limits, and I need the setting for a substantial supplier payment. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-45. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
-46. `request_type`: not known → question (by `triage`).
-47. `subject`: not known → limit (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=limit).
-50. `next_system`: not known → business (by `route-business`).
-51. The agent asked for `ask_system` {"system": "business"}.
-52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-53. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-047-at-02:do-ask:15).
-56. Action in the world: `ask_system` {"system": "business", "about": "limit"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
-60. The agent asked for `reply` {}.
-61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=business); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=business); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=business); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=business); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=business); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=business); document_ready present is false (document_ready=not known).
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-047-at-02:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-registration` fired: state = READING → true (state=READING).
+38. Called `check_registration` (attempt 1, key banking-047-at-02:read-registration:11).
+39. `check_registration` found {}.
+40. Rule `read-confirmation` fired: state = READING → true (state=READING).
+41. Called `check_confirmation` (attempt 1, key banking-047-at-02:read-confirmation:12).
+42. Note from `read-confirmation`: event 2 (Maeve Calder): Please confirm our current company payment limit. I’m authorised to view limits, and I need the setting for a substantial supplier payment. [facts: confirmation='none', instructed_outside_portal=False]
+43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+44. `confirmation`: not known → none (by `read-confirmation`).
+45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+46. Rule `triage` fired: state = READING → true (state=READING).
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+48. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
+49. `request_type`: not known → question (by `triage`).
+50. `subject`: not known → limit (by `triage`).
+51. State `READING` → `TRIAGED` (by `triage`).
+52. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=limit).
+53. `next_system`: not known → business (by `route-business`).
+54. The agent asked for `ask_system` {"system": "business"}.
+55. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+56. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
+57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+58. Called `ask_system` (attempt 1, key banking-047-at-02:do-ask:16).
+59. Action in the world: `ask_system` {"system": "business", "about": "limit"}.
+60. `ask_system` found {}.
+61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+62. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 10401 tokens in, 603 out, 6.074 s, cost $0.0231; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4798 tokens in, 476 out, 3.919 s, cost $0.0106; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the business system for Maeve's company payment limit. The case is now closed at that step, and I haven't been able to give her the limit.
+> I've asked the business system for the current outgoing-payment limit on Maeve's company profile. Its answer isn't in the case yet. The next step is to reply to her once it is.
 > 
-> The business system's answer isn't in the case, and a reply to Maeve was refused because of that. The desk only allows a reply once the case has moved on from the "asked" step and the business answer is on record. Neither had happened, and the case is closed (final), so I can't try again.
-> 
-> Maeve's identity is also not verified (verified is false). Her role is viewer, which matches what she says about being allowed to view limits. A person should pick this up, confirm who she is, and then give her the limit.
+> Her identity is not verified, and the records list her role as viewer. So the reply should say only what the record shows, and the desk's policy will decide whether the limit can be shared with her.

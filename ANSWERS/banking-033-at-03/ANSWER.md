@@ -2,6 +2,12 @@
 
 **Decision: wait**  (final state `WAITING`)
 
+## Summary
+
+Mara Ellison asked, over secure chat, for a CSV export of her transactions from 6 to 9 May 2025 to be made available in her secure portal, and said she wasn't sure how to tell when it was created. The desk classed this as a document question, found that the documents system had already been asked to create the export, and put the case in a final waiting state, taking no actions of its own. Her requester record shows as not verified, and the documents system has not yet answered, so nothing confirms the file exists and nobody has told her it is ready.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

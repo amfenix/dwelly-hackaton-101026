@@ -37,35 +37,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-033-at-01:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-033-at-01:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-033-at-01:read-confirmation:11).
-41. Note from `read-confirmation`: event 1 (Mara Ellison): I’m requesting a CSV export of my transactions from 6 May through 9 May 2025 for my own budgeting. I’m not sure how to tell whether the export has been created. [facts: confirmation='none', instructed_outside_portal=False]
-42. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-43. `confirmation`: not known → none (by `read-confirmation`).
-44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (jev jev-latest) on `request_type`: question, confidence 0.93 → question.
-47. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-48. `request_type`: not known → question (by `triage`).
-49. `subject`: not known → document (by `triage`).
-50. State `READING` → `TRIAGED` (by `triage`).
-51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
-52. `next_system`: not known → documents (by `route-documents`).
-53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-57. Called `ask_system` (attempt 1, key banking-033-at-01:do-ask:15).
-58. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
-59. `ask_system` found {}.
-60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-61. The case closed in `ASKED`: **ask_system**.
-62. The agent asked for `reply` {}.
-63. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready present is false (document_ready=not known).
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-033-at-01:read-tariff:10).
+38. `check_tariff` found {}.
+39. Rule `read-registration` fired: state = READING → true (state=READING).
+40. Called `check_registration` (attempt 1, key banking-033-at-01:read-registration:11).
+41. `check_registration` found {}.
+42. Rule `read-confirmation` fired: state = READING → true (state=READING).
+43. Called `check_confirmation` (attempt 1, key banking-033-at-01:read-confirmation:12).
+44. Note from `read-confirmation`: event 1 (Mara Ellison): I’m requesting a CSV export of my transactions from 6 May through 9 May 2025 for my own budgeting. I’m not sure how to tell whether the export has been created. [facts: confirmation='none', instructed_outside_portal=False]
+45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+46. `confirmation`: not known → none (by `read-confirmation`).
+47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+48. Rule `triage` fired: state = READING → true (state=READING).
+49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.91 → question.
+50. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+51. `request_type`: not known → question (by `triage`).
+52. `subject`: not known → document (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+55. `next_system`: not known → documents (by `route-documents`).
+56. The agent asked for `ask_system` {"system": "documents"}.
+57. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+58. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-033-at-01:do-ask:16).
+61. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 9379 tokens in, 325 out, 3.714 s, cost $0.0182; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6857 tokens in, 400 out, 5.037 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I asked the documents system about Mara Ellison's CSV export request, and the case is now closed with that step. The system's answer isn't in the case record yet. That means I can't tell her whether the export exists or when it will be in her secure portal. I didn't send her a reply.

@@ -35,36 +35,39 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-028-at-04:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-028-at-04:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-028-at-04:read-confirmation:11).
-39. Note from `read-confirmation`: event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: confirmation='none', instructed_outside_portal=True]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → True (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
-45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-46. `request_type`: not known → change (by `triage`).
-47. `subject`: not known → profile (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
-50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-54. Called `send_for_confirmation` (attempt 1, key banking-028-at-04:do-confirm:15).
-55. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Elowen Mercer"}.
-56. `send_for_confirmation` found {}.
-57. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-58. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-028-at-04:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-registration` fired: state = READING → true (state=READING).
+38. Called `check_registration` (attempt 1, key banking-028-at-04:read-registration:11).
+39. `check_registration` found {}.
+40. Rule `read-confirmation` fired: state = READING → true (state=READING).
+41. Called `check_confirmation` (attempt 1, key banking-028-at-04:read-confirmation:12).
+42. Note from `read-confirmation`: event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: confirmation='none', instructed_outside_portal=True]
+43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
+44. `confirmation`: not known → none (by `read-confirmation`).
+45. `instructed_outside_portal`: not known → True (by `read-confirmation`).
+46. Rule `triage` fired: state = READING → true (state=READING).
+47. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+48. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+49. `request_type`: not known → change (by `triage`).
+50. `subject`: not known → profile (by `triage`).
+51. State `READING` → `TRIAGED` (by `triage`).
+52. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
+53. `next_system`: not known → access (by `route-access`).
+54. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
+55. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
+56. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
+57. Called `send_for_confirmation` (attempt 1, key banking-028-at-04:do-confirm:16).
+58. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Elowen Mercer"}.
+59. `send_for_confirmation` found {}.
+60. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
+61. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
 
 ## Model calls
 
-3 calls, 5023 tokens in, 475 out, 4.337 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5026 tokens in, 376 out, 3.874 s, cost $0.0100; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed. The replacement phone number has been sent to Elowen Mercer for confirmation in the secure portal, and nothing has been changed on her profile yet. The portal says the change will only be applied once she confirms it there. Her instruction came by call and email, not through the portal, so it can't count as that confirmation. No further action is needed from the desk.
+> The case is already in its final state. The bank sent a confirmation request to the customer through the secure portal, and nothing changes on the profile until Elowen Mercer confirms the new number there. I'm not taking any further action.

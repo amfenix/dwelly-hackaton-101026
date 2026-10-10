@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Elowen Marr, a customer writing over secure chat, said she still can't find her June statement in the portal and wanted it made available there, not sent by email. The desk classed this as a question about a statement and asked the documents system about it, and the case closed at that step. The documents system's answer is not in the record, so it is still unconfirmed whether the statement exists or why it isn't showing. Elowen is unverified, nothing was released or changed, and no reply has gone to her, so a person still has to follow up.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

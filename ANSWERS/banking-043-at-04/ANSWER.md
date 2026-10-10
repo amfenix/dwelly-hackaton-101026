@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting on the second signatory. The desk checked the business record, which showed the package as awaiting the second signatory with no second consent yet, and replied to her with that status. The reply said that it approved nothing and made no role change, and the case closed as replied with nothing left for a person; her identity was not verified on this chat.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

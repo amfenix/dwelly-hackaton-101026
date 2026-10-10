@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+The message was a question about a standing order. The desk classified it that way and sent a query to the recurring payments system about that standing order, then closed the case at that step. No answer from that system is in the record yet, so nothing has been confirmed to the requester, and any follow-up once a reply arrives is left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

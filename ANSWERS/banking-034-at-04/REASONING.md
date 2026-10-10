@@ -37,35 +37,46 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-034-at-04:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-034-at-04:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-034-at-04:read-confirmation:11).
-41. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
-42. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-43. `confirmation`: not known → none (by `read-confirmation`).
-44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (jev jev-latest) on `request_type`: question, confidence 0.67 → question.
-47. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
-48. `request_type`: not known → question (by `triage`).
-49. `subject`: not known → fee (by `triage`).
-50. State `READING` → `TRIAGED` (by `triage`).
-51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=fee).
-52. `next_system`: not known → documents (by `route-documents`).
-53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-57. Called `ask_system` (attempt 1, key banking-034-at-04:do-ask:15).
-58. Action in the world: `ask_system` {"system": "documents", "about": "fee", "amount": "3.20"}.
-59. `ask_system` found {}.
-60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-61. The case closed in `ASKED`: **ask_system**.
-62. The agent asked for `reply` {}.
-63. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready present is false (document_ready=not known).
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-034-at-04:read-tariff:10).
+38. Note from `read-tariff`: event 3 (H&V service agent): I am starting the review by matching the recorded transaction type and processing date against the tariff in force on that date. Case HV-034; no refund or account change is authorised by this review. [facts: tariff_asked=True]
+39. Note from `read-tariff`: event 4 (H&V service agent): I checked the transaction record against the applicable tariff entry. The record identifies a foreign-currency cash withdrawal, and the £3.20 fee matches the entry applicable to that transaction on its processing date. [facts: tariff_status='MATCHES']
+40. `check_tariff` found {"tariff_asked": true, "tariff_status": "MATCHES"}.
+41. `tariff_asked`: not known → True (by `read-tariff`).
+42. `tariff_status`: not known → MATCHES (by `read-tariff`).
+43. Rule `read-registration` fired: state = READING → true (state=READING).
+44. Called `check_registration` (attempt 1, key banking-034-at-04:read-registration:11).
+45. `check_registration` found {}.
+46. Rule `read-confirmation` fired: state = READING → true (state=READING).
+47. Called `check_confirmation` (attempt 1, key banking-034-at-04:read-confirmation:12).
+48. Note from `read-confirmation`: event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
+49. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+50. `confirmation`: not known → none (by `read-confirmation`).
+51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+52. Rule `triage` fired: state = READING → true (state=READING).
+53. Classifier (jev jev-latest) on `request_type`: question, confidence 0.73 → question.
+54. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
+55. `request_type`: not known → question (by `triage`).
+56. `subject`: not known → fee (by `triage`).
+57. State `READING` → `TRIAGED` (by `triage`).
+58. Rule `asked-tariff` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); tariff_asked → true (tariff_asked=True).
+59. `next_system`: not known → tariff (by `asked-tariff`).
+60. The agent asked for `reply` {}.
+61. Rule `tariff-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = tariff → true (next_system=tariff); tariff_status present → true (tariff_status=MATCHES).
+62. State `TRIAGED` → `REPLY_PENDING` (by `tariff-reply`).
+63. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+64. Called `reply_customer` (attempt 1, key banking-034-at-04:do-reply:16).
+65. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The tariff review shows matches. This confirms the recorded fee matches the applicable tariff; it does not authorise a refund or account change. No fee or account change was made."}.
+66. `reply_customer` found {}.
+67. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+68. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 9885 tokens in, 406 out, 5.273 s, cost $0.0200; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7367 tokens in, 522 out, 4.945 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I've sent the reply on this case, and it's now closed. The tariff check had already been run, and it found that the £3.20 fee matches the tariff entry that applied to the withdrawal. The reply is based on that result.
+> 
+> Mara hasn't been verified, so the reply covers only what the tariff check showed. I didn't escalate the case, because the fee matched the tariff and there was no conflict for a person to resolve.

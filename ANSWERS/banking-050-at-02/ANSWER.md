@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, writing over secure chat as the company signatory (her identity is not verified), asked the desk to check the stage of a transfer, since Alder Quay Supplies says it hasn't received the funds. The desk classified it as a question about a transfer and queried the payment system about it. That query returned nothing in the record, so no stage or answer is shown, and a reply to Mara is still left to be made.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

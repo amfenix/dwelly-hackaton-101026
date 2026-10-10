@@ -30,37 +30,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 26. Rule `read-documents` fired: state = READING → true (state=READING).
 27. Called `check_documents` (attempt 1, key banking-017-at-01:read-documents:9).
 28. `check_documents` found {}.
-29. Rule `read-registration` fired: state = READING → true (state=READING).
-30. Called `check_registration` (attempt 1, key banking-017-at-01:read-registration:10).
-31. `check_registration` found {}.
-32. Rule `read-confirmation` fired: state = READING → true (state=READING).
-33. Called `check_confirmation` (attempt 1, key banking-017-at-01:read-confirmation:11).
-34. Note from `read-confirmation`: event 1 (Elm Quay Property Services): I can’t see your monthly rent payment for this cycle. Please check with your bank whether it was sent. [facts: confirmation='none', instructed_outside_portal=False]
-35. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-36. `confirmation`: not known → none (by `read-confirmation`).
-37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-40. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-41. `request_type`: not known → question (by `triage`).
-42. `subject`: not known → standing_order (by `triage`).
-43. State `READING` → `TRIAGED` (by `triage`).
-44. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-45. `next_system`: not known → recurring (by `route-recurring`).
-46. The agent asked for `ask_system` {"system": "recurring"}.
-47. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-48. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-50. Called `ask_system` (attempt 1, key banking-017-at-01:do-ask:15).
-51. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
-52. `ask_system` found {}.
-53. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-54. The case closed in `ASKED`: **ask_system**.
+29. Rule `read-tariff` fired: state = READING → true (state=READING).
+30. Called `check_tariff` (attempt 1, key banking-017-at-01:read-tariff:10).
+31. `check_tariff` found {}.
+32. Rule `read-registration` fired: state = READING → true (state=READING).
+33. Called `check_registration` (attempt 1, key banking-017-at-01:read-registration:11).
+34. `check_registration` found {}.
+35. Rule `read-confirmation` fired: state = READING → true (state=READING).
+36. Called `check_confirmation` (attempt 1, key banking-017-at-01:read-confirmation:12).
+37. Note from `read-confirmation`: event 1 (Elm Quay Property Services): I can’t see your monthly rent payment for this cycle. Please check with your bank whether it was sent. [facts: confirmation='none', instructed_outside_portal=False]
+38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+39. `confirmation`: not known → none (by `read-confirmation`).
+40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+41. Rule `triage` fired: state = READING → true (state=READING).
+42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+43. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+44. `request_type`: not known → question (by `triage`).
+45. `subject`: not known → standing_order (by `triage`).
+46. State `READING` → `TRIAGED` (by `triage`).
+47. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+48. `next_system`: not known → recurring (by `route-recurring`).
+49. The agent asked for `ask_system` {"system": "recurring"}.
+50. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+51. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+53. Called `ask_system` (attempt 1, key banking-017-at-01:do-ask:16).
+54. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+55. `ask_system` found {}.
+56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+57. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6362 tokens in, 371 out, 3.586 s, cost $0.0126; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6407 tokens in, 417 out, 4.073 s, cost $0.0132; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the recurring payments system about your rent standing order. The case is now marked as asked and closed, but the system has not given back any details yet. The case shows no confirmation that this month's payment was sent, and no reason if it wasn't. I can't yet tell you whether it went out or why it might not have.
+> I've asked the recurring payments system about the standing order. That was the one step for this case. The system's answer isn't in the case facts yet, so I can't say whether the rent payment was sent or why it wasn't. The next step is to write the customer's reply once that answer is in.

@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mira Ellison, writing over secure chat as an unverified customer, said she meant to make only one transfer and asked whether there were separate instructions and whether the pending one had been stopped or returned. The desk classified this as a question about a transfer and sent a query to the payment system, which was its only action. The record shows no answer from the payment system and no stop or return of any transfer, so her question remains unanswered and is left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

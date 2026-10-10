@@ -39,39 +39,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-016-at-02:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-016-at-02:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-016-at-02:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Tamsin Rook): I passed your identification checks, and no secrets were transcribed. I dispute the amount debited: “I dispute the amount debited.” Please have the Direct Debit team investigate this £18.40 charge. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
-49. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
-50. `request_type`: not known → register (by `triage`).
-51. `subject`: not known → direct_debit (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
-54. `next_system`: not known → recurring (by `route-recurring`).
-55. The agent asked for `submit_request` {}.
-56. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-57. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-58. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-59. Called `register_request` (attempt 1, key banking-016-at-02:do-request:15).
-60. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
-61. `register_request` found {}.
-62. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-63. The case closed in `REQUESTED`: **submit_request**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-016-at-02:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-016-at-02:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-016-at-02:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Tamsin Rook): I passed your identification checks, and no secrets were transcribed. I dispute the amount debited: “I dispute the amount debited.” Please have the Direct Debit team investigate this £18.40 charge. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+52. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+53. `request_type`: not known → register (by `triage`).
+54. `subject`: not known → direct_debit (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+57. `next_system`: not known → recurring (by `route-recurring`).
+58. The agent asked for `ask_system` {"system": "recurring"}.
+59. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register).
+60. The agent asked for `submit_request` {}.
+61. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+62. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+63. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+64. Called `register_request` (attempt 1, key banking-016-at-02:do-request:16).
+65. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
+66. `register_request` found {}.
+67. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+68. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 7407 tokens in, 606 out, 5.287 s, cost $0.0170; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8489 tokens in, 667 out, 5.648 s, cost $0.0198; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the dispute over the £18.40 Direct Debit to Northmere Water Services (9 July 2025) for investigation. The desk accepted it and the case is now in the REQUESTED state.
+> I've sent the dispute over the £18.40 Direct Debit to Northmere Water Services (9 July 2025) to the team that handles these. The case is now marked as requested.
 > 
-> Tamsin Rook passed identification on the call and asked for the amount to be investigated. The statement entry also identifies the payment. I didn't check the Direct Debit records first, because nothing was unclear about which payment she meant.
+> I first tried to look up the Direct Debit in the recurring payments system, but the desk refused that lookup. Its refusal said this request type is a register request, so it goes straight to the dispute team. I haven't checked the Direct Debit record myself, and nothing has been decided about the amount yet.

@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Elena Wren asked over secure chat which regular payments are still active before she makes any closure plans. The desk checked the recurring-payments register, which showed the standing order as active, and replied on secure chat saying so, that this doesn't guarantee a future payment will execute, and that nothing was changed. The case is closed as replied; the record still shows her as not verified despite her saying she completed the checks, and the desk did not change that, so it is left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

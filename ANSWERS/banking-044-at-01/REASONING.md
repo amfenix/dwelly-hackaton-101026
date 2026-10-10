@@ -32,34 +32,35 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 28. Rule `read-documents` fired: state = READING → true (state=READING).
 29. Called `check_documents` (attempt 1, key banking-044-at-01:read-documents:9).
 30. `check_documents` found {}.
-31. Rule `read-registration` fired: state = READING → true (state=READING).
-32. Called `check_registration` (attempt 1, key banking-044-at-01:read-registration:10).
-33. `check_registration` found {}.
-34. Rule `read-confirmation` fired: state = READING → true (state=READING).
-35. Called `check_confirmation` (attempt 1, key banking-044-at-01:read-confirmation:11).
-36. `check_confirmation` found {}.
-37. Rule `triage` fired: state = READING → true (state=READING).
-38. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-39. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
-40. `request_type`: not known → question (by `triage`).
-41. `subject`: not known → batch (by `triage`).
-42. State `READING` → `TRIAGED` (by `triage`).
-43. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
-44. `next_system`: not known → payment (by `route-payment`).
-45. The agent asked for `ask_system` {"system": "payment"}.
-46. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-47. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-48. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-49. Called `ask_system` (attempt 1, key banking-044-at-01:do-ask:15).
-50. Action in the world: `ask_system` {"system": "payment", "about": "batch", "reference": "SUP-17"}.
-51. `ask_system` found {}.
-52. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-53. The case closed in `ASKED`: **ask_system**.
+31. Rule `read-tariff` fired: state = READING → true (state=READING).
+32. Called `check_tariff` (attempt 1, key banking-044-at-01:read-tariff:10).
+33. `check_tariff` found {}.
+34. Rule `read-registration` fired: state = READING → true (state=READING).
+35. Called `check_registration` (attempt 1, key banking-044-at-01:read-registration:11).
+36. `check_registration` found {}.
+37. Rule `read-confirmation` fired: state = READING → true (state=READING).
+38. Called `check_confirmation` (attempt 1, key banking-044-at-01:read-confirmation:12).
+39. `check_confirmation` found {}.
+40. Rule `triage` fired: state = READING → true (state=READING).
+41. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+42. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
+43. `request_type`: not known → question (by `triage`).
+44. `subject`: not known → batch (by `triage`).
+45. State `READING` → `TRIAGED` (by `triage`).
+46. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
+47. `next_system`: not known → payment (by `route-payment`).
+48. The agent asked for `ask_system` {"system": "payment"}.
+49. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+50. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+51. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+52. Called `ask_system` (attempt 1, key banking-044-at-01:do-ask:16).
+53. Action in the world: `ask_system` {"system": "payment", "about": "batch", "reference": "SUP-17"}.
+54. `ask_system` found {}.
+55. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+56. The case closed in `ASKED`: **ask_system**.
+57. The agent asked for `reply` {}.
+58. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-4 calls, 6176 tokens in, 359 out, 3.778 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I asked the payment system about row SUP-17. The request was accepted and the case is now in the "asked" state. The answer isn't in the case yet, so I can't say whether SUP-17 was paid or rejected. The case is final, so I haven't taken any further step.
+5 calls, 8661 tokens in, 325 out, 3.838 s, cost $0.0168; models: claude-sonnet-5-5, jev-1.13.0.

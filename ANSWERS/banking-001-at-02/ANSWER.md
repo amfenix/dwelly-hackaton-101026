@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, whose identity is not verified on secure chat, asked whether H&V had sent her £420 payment to Alder & Reed Workshop. The desk treated it as a question about a transfer and asked the payment system about it, and the case closed in the asked state. The payment system's answer is not in the record, so whether the payment was sent is still unknown and she has not yet been given an answer.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

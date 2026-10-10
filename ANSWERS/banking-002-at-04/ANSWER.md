@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Elowen Marsh, who was not verified, asked over secure chat whether H&V had received a transfer from the sender for her pottery studio's kiln contribution. The desk checked the incoming-payment record, found no incoming payment, and replied on secure chat saying exactly that. The reply added that this does not establish that the sender did not pay, and that no payment was made. The case is closed as replied, and the record lists nothing further for a person to do.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

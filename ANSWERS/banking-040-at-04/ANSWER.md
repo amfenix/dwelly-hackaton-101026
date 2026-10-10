@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellison asked, over secure chat, for a document showing the stage of her £74.00 payment HV-040 to give to her repair contractor. The desk found the record had been generated and replied in secure chat that the document is available, while saying this does not confirm it was downloaded or that funds were credited, and that no email was sent. The case is closed as replied; the record shows she was not verified on this channel and that there is no confirmation of receipt from the contractor, and it lists nothing further for a person to do.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

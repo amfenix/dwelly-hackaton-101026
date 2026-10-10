@@ -39,37 +39,34 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Note from `read-documents`: event 3 (Data service): I’ve confirmed the authenticated profile and the customer’s secure-portal request. Please create the permitted CSV export for the verified account holder’s secure portal, covering 6–9 May 2025 only; do not send the data to a third party. [facts: documents_asked=True]
 36. `check_documents` found {"documents_asked": true}.
 37. `documents_asked`: not known → True (by `read-documents`).
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-033-at-03:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-033-at-03:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Mara Ellison): I’m escalating this because the export process is unclear to me. Please let me know when the file for that period is available in my secure portal. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
-49. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → document (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-54. `next_system`: not known → documents (by `asked-documents`).
-55. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
-56. State `TRIAGED` → `WAITING` (by `documents-waits`).
-57. The case closed in `WAITING`: **wait**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-033-at-03:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-033-at-03:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-033-at-03:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Mara Ellison): I’m escalating this because the export process is unclear to me. Please let me know when the file for that period is available in my secure portal. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
+52. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → document (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+57. `next_system`: not known → documents (by `asked-documents`).
+58. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
+59. State `TRIAGED` → `WAITING` (by `documents-waits`).
+60. The case closed in `WAITING`: **wait**.
 
 ## Model calls
 
-3 calls, 4968 tokens in, 657 out, 5.171 s, cost $0.0127; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4950 tokens in, 573 out, 5.108 s, cost $0.0118; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I'm leaving this case in its current waiting state and taking no further action.
-> 
-> - **Records check:** The documents system has already been checked. It shows no confirmation that a CSV export for 6–9 May 2025 has been created.
-> - **Reply:** I can't tell Mara the file is ready, because the record doesn't show that.
-> - **Verification:** Mara isn't verified on this channel. I'm not sending any account-specific information or taking any action on her behalf.
-> 
-> The case is final with the outcome "wait". It will move again when the documents system shows the export exists.
+> I'm not taking any further action on this case. It is already in a final waiting state, and the documents system has already been asked about the export. The case has no confirmation that the CSV for 6–9 May 2025 has been created, so I can't tell Mara it is ready in her portal. Nothing in the case lets me say more than that.

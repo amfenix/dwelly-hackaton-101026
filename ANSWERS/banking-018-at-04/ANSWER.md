@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellison, verified by call, asked the desk to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate. The desk looked up the payments and found two separate instruction records, one standing order and one direct debit mandate. It replied by call that there are two separate instructions, that this does not establish execution or the recipient's outcome, and that no new transfer was made. Neither instruction was cancelled, and the record shows nothing further for a person to do, though the question of which payment, if either, is a duplicate was not settled.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer
@@ -38,7 +44,7 @@ Case reference: id banking-018-at-04, track Banking & Financial Services, case 0
 
 - `reply` (to: Mara Ellison, channel: verified_call), by rule `do-reply`
 
-  > The payment record shows your an answer without a recognized payment status. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made.
+  > The payment record shows 2 separate payment instructions. Their individual status is recorded without a single combined outcome. This does not establish execution or the recipient's outcome. No new transfer was made.
 
 
 ## Decision and why
@@ -65,6 +71,7 @@ Facts established:
 - counterparty: **Northmere Heating**
 - payment_asked: **True**
 - payment_status: **OTHER**
+- payment_count: **2**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **instruction**
@@ -75,7 +82,7 @@ Where they came from:
 - event 2 (Mara Ellison): After completing H&V's identity checks, I asked you to escalate this and remove the duplicate. I do not know which line is the duplicate. [facts: requester='Mara Ellison', role='customer', channel='verified_call', verified=True]
 - initial request (system): I can see two future payments of £34.80 to Northmere Heating. Please check whether they are duplicates and remove the duplicate. [facts: amount='34.80', counterparty='Northmere Heating']
 - event 3 (H&V instruction journal): I am checking the type and internal reference of each instruction behind the two future lines. I have not cancelled either instruction. [facts: payment_asked=True]
-- event 4 (H&V instruction journal): The entries match separate instruction records: one customer standing order and one direct debit mandate. Their types and internal references are distinct. [facts: payment_status='OTHER']
+- event 4 (H&V instruction journal): The entries match separate instruction records: one customer standing order and one direct debit mandate. Their types and internal references are distinct. [facts: payment_status='OTHER', payment_count=2]
 - event 2 (Mara Ellison): After completing H&V's identity checks, I asked you to escalate this and remove the duplicate. I do not know which line is the duplicate. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated

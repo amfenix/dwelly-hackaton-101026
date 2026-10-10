@@ -37,41 +37,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-024-at-03:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-024-at-03:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-024-at-03:read-confirmation:11).
-41. Note from `read-confirmation`: event 2 (Rowan Ellery): I’m the cardholder and my card was declined while I was paying for groceries. Please tell me the category of the restriction and whether it has been lifted. [facts: confirmation='none', instructed_outside_portal=False]
-42. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-43. `confirmation`: not known → none (by `read-confirmation`).
-44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-47. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-48. `request_type`: not known → question (by `triage`).
-49. `subject`: not known → card (by `triage`).
-50. State `READING` → `TRIAGED` (by `triage`).
-51. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-52. `next_system`: not known → card (by `asked-card`).
-53. Rule `card-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked → true (card_asked=True); card_status absent → true (card_status=not known). The system was asked; its answer is not in yet.
-54. State `TRIAGED` → `WAITING` (by `card-waits`).
-55. The case closed in `WAITING`: **wait**.
-56. The agent asked for `ask_system` {"system": "card"}.
-57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card).
-58. The agent asked for `escalate` {"note": "Rowan Ellery asks via secure chat why their card was declined and restricted at a grocery purchase, and whether the restriction has been lifted. The requester is not verified. The card system was already queried (card_asked=True), but no restriction category or status is in the case. A new card ask was refused because the case is in WAITING. Please verify the customer's identity, then read the card restriction record and reply with the category and current status. Do not disclose card details before verification."}.
-59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-024-at-03:read-tariff:10).
+38. `check_tariff` found {}.
+39. Rule `read-registration` fired: state = READING → true (state=READING).
+40. Called `check_registration` (attempt 1, key banking-024-at-03:read-registration:11).
+41. `check_registration` found {}.
+42. Rule `read-confirmation` fired: state = READING → true (state=READING).
+43. Called `check_confirmation` (attempt 1, key banking-024-at-03:read-confirmation:12).
+44. Note from `read-confirmation`: event 2 (Rowan Ellery): I’m the cardholder and my card was declined while I was paying for groceries. Please tell me the category of the restriction and whether it has been lifted. [facts: confirmation='none', instructed_outside_portal=False]
+45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+46. `confirmation`: not known → none (by `read-confirmation`).
+47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+48. Rule `triage` fired: state = READING → true (state=READING).
+49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+50. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+51. `request_type`: not known → question (by `triage`).
+52. `subject`: not known → card (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+55. `next_system`: not known → card (by `asked-card`).
+56. Rule `card-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked → true (card_asked=True); card_status absent → true (card_status=not known). The system was asked; its answer is not in yet.
+57. State `TRIAGED` → `WAITING` (by `card-waits`).
+58. The case closed in `WAITING`: **wait**.
+59. The agent asked for `ask_system` {"system": "card"}.
+60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
 
 ## Model calls
 
-5 calls, 11783 tokens in, 1004 out, 9.724 s, cost $0.0298; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8496 tokens in, 765 out, 6.981 s, cost $0.0208; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't answered Rowan's question, and no restriction details have been shared. The case is in a WAITING state that the desk treats as final, so it stays open and goes to a person.
+> I haven't answered Rowan yet, and I've stopped because the desk won't take any further step on this case.
 > 
-> - **Card check refused:** The desk wouldn't let me query the card system, because the case isn't in the TRIAGED state it requires. The facts show a card check was already made. However, the case holds no restriction category or status from it.
-> - **Escalation refused:** The same state rule blocked my escalation.
-> - **Not verified:** Rowan hasn't been verified, so card details shouldn't be disclosed yet either way.
+> - **Card system:** My request to it was refused. The case is in WAITING, not TRIAGED, and the desk records the card system as already asked (`card_asked = True`).
+> - **No card record in the case:** The case holds no restriction category and no status for the card, so I can't say why it was declined or whether the restriction has been lifted without making it up.
+> - **Not verified:** Rowan is not verified (`verified = False`). The desk shouldn't give out card-restriction details until identity is confirmed.
 > 
-> Once Rowan's identity is verified, someone needs to read the card restriction record. They can then tell Rowan the category and whether it has been lifted.
+> The case is final with outcome "wait", so it stays open and goes to a person. Any reply to Rowan should first have them verify through the bank's secure process.

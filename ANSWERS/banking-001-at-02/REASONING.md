@@ -39,37 +39,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-001-at-02:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-001-at-02:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-001-at-02:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Mara Ellison): I arranged this £420 payment for a bookcase and can see the debit. Has H&V sent it? Please check the transfer status. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → transfer (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-54. `next_system`: not known → payment (by `route-payment`).
-55. The agent asked for `ask_system` {"system": "payment"}.
-56. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-57. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-58. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-59. Called `ask_system` (attempt 1, key banking-001-at-02:do-ask:15).
-60. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
-61. `ask_system` found {}.
-62. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-63. The case closed in `ASKED`: **ask_system**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-001-at-02:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-001-at-02:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-001-at-02:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Mara Ellison): I arranged this £420 payment for a bookcase and can see the debit. Has H&V sent it? Please check the transfer status. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → transfer (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+57. `next_system`: not known → payment (by `route-payment`).
+58. The agent asked for `ask_system` {"system": "payment"}.
+59. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+60. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+62. Called `ask_system` (attempt 1, key banking-001-at-02:do-ask:16).
+63. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
+64. `ask_system` found {}.
+65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+66. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4826 tokens in, 415 out, 5.942 s, cost $0.0100; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7003 tokens in, 492 out, 11.318 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The payment system has accepted the status check. The answer will come back into the case, and the desk writes the reply to the customer from it.
+> I asked the payment system about the £420 transfer to Alder & Reed Workshop. The case is now marked as asked, and the payment system's answer hasn't come back into it yet. So I can't say whether H&V sent the payment.
+> 
+> The case record doesn't show a confirmation for this transfer. Mara Ellison's identity is also still unverified on this chat. Once the payment system's answer is in the case, the next step is to reply to her with exactly what it shows.

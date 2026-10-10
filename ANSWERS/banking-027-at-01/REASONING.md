@@ -30,37 +30,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 26. Rule `read-documents` fired: state = READING → true (state=READING).
 27. Called `check_documents` (attempt 1, key banking-027-at-01:read-documents:9).
 28. `check_documents` found {}.
-29. Rule `read-registration` fired: state = READING → true (state=READING).
-30. Called `check_registration` (attempt 1, key banking-027-at-01:read-registration:10).
-31. `check_registration` found {}.
-32. Rule `read-confirmation` fired: state = READING → true (state=READING).
-33. Called `check_confirmation` (attempt 1, key banking-027-at-01:read-confirmation:11).
-34. Note from `read-confirmation`: event 1 (H&V app): Sign-in declined. Use H&V’s secure recovery process to restore access. [facts: confirmation='none', instructed_outside_portal=False]
-35. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-36. `confirmation`: not known → none (by `read-confirmation`).
-37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-40. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-41. `request_type`: not known → access (by `triage`).
-42. `subject`: not known → access (by `triage`).
-43. State `READING` → `TRIAGED` (by `triage`).
-44. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
-45. `next_system`: not known → access (by `route-access`).
-46. The agent asked for `redirect_secure` {}.
-47. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
-48. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
-49. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
-50. Called `redirect_secure` (attempt 1, key banking-027-at-01:do-redirect:15).
-51. Action in the world: `redirect_secure` {"to": "the customer", "channel": null, "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
-52. `redirect_secure` found {}.
-53. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
-54. The case closed in `REDIRECTED`: **redirect_secure**.
+29. Rule `read-tariff` fired: state = READING → true (state=READING).
+30. Called `check_tariff` (attempt 1, key banking-027-at-01:read-tariff:10).
+31. `check_tariff` found {}.
+32. Rule `read-registration` fired: state = READING → true (state=READING).
+33. Called `check_registration` (attempt 1, key banking-027-at-01:read-registration:11).
+34. `check_registration` found {}.
+35. Rule `read-confirmation` fired: state = READING → true (state=READING).
+36. Called `check_confirmation` (attempt 1, key banking-027-at-01:read-confirmation:12).
+37. Note from `read-confirmation`: event 1 (H&V app): Sign-in declined. Use H&V’s secure recovery process to restore access. [facts: confirmation='none', instructed_outside_portal=False]
+38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+39. `confirmation`: not known → none (by `read-confirmation`).
+40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+41. Rule `triage` fired: state = READING → true (state=READING).
+42. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+43. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+44. `request_type`: not known → access (by `triage`).
+45. `subject`: not known → access (by `triage`).
+46. State `READING` → `TRIAGED` (by `triage`).
+47. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
+48. `next_system`: not known → access (by `route-access`).
+49. The agent asked for `redirect_secure` {}.
+50. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
+51. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
+52. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
+53. Called `redirect_secure` (attempt 1, key banking-027-at-01:do-redirect:16).
+54. Action in the world: `redirect_secure` {"to": "the customer", "channel": null, "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
+55. `redirect_secure` found {}.
+56. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
+57. The case closed in `REDIRECTED`: **redirect_secure**.
 
 ## Model calls
 
-3 calls, 4602 tokens in, 533 out, 4.007 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4586 tokens in, 465 out, 3.825 s, cost $0.0100; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed the customer to H&V's secure recovery process to restore their sign-in. The desk accepted the redirect and closed the case. I didn't look at their access records first, because the portal had already declined the sign-in and told them to use recovery. The bank doesn't handle passwords or PINs, so the customer completes the recovery themselves.
+> I've pointed you to H&V's secure recovery process, which is how you get back into your profile. The bank doesn't handle passwords or PINs here, so you'll need to complete the recovery steps yourself in that process. Once you're back in, you can review your household spending as planned.

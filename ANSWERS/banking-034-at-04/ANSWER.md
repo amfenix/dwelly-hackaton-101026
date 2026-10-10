@@ -1,6 +1,12 @@
 # Case banking-034-at-04: Explaining a service fee
 
-**Decision: ask_system**  (final state `ASKED`)
+**Decision: reply**  (final state `REPLIED`)
+
+## Summary
+
+Mara Ellery asked over secure chat for an escalation and a check of which tariff entry applied to the £3.20 fee on a withdrawal. The desk ran the tariff review, which found the fee matches the entry applicable to that foreign-currency cash withdrawal on its processing date, and it sent her a reply saying so. The reply states that no refund or account change was authorised or made, and the case is closed as replied; she was not verified, and the record shows no escalation to a person.
+
+_Written by a model from the record below; the sections below are the record._
 
 ## What the system received
 
@@ -36,7 +42,10 @@ Case reference: id banking-034-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `ask_system` (system: documents, about: fee, amount: 3.20), by rule `do-ask`
+- `reply` (to: Mara Ellery, channel: secure_chat), by rule `do-reply`
+
+  > The tariff review shows matches. This confirms the recorded fee matches the applicable tariff; it does not authorise a refund or account change. No fee or account change was made.
+
 
 ## Decision and why
 
@@ -44,15 +53,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `documents-ask` accepted it.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `tariff-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - args.system = documents → true (args.system=documents)
-  - next_system = documents → true (next_system=documents)
-  - next_system absent → false (next_system=documents)
-  - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=question)
-- `ASK_PENDING` → `ASKED`: rule `do-ask`.
-  - state = ASK_PENDING → true (state=ASK_PENDING)
+  - next_system = tariff → true (next_system=tariff)
+  - tariff_status present → true (tariff_status=MATCHES)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -62,15 +68,19 @@ Facts established:
 - verified: **False**
 - subject: **fee**
 - amount: **3.20**
+- tariff_asked: **True**
+- tariff_status: **MATCHES**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **question**
-- next_system: **documents**
+- next_system: **tariff**
 
 Where they came from:
 
 - event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: requester='Mara Ellery', role='customer', channel='secure_chat', verified=False]
 - event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: amount='3.20']
+- event 3 (H&V service agent): I am starting the review by matching the recorded transaction type and processing date against the tariff in force on that date. Case HV-034; no refund or account change is authorised by this review. [facts: tariff_asked=True]
+- event 4 (H&V service agent): I checked the transaction record against the applicable tariff entry. The record identifies a foreign-currency cash withdrawal, and the £3.20 fee matches the entry applicable to that transaction on its processing date. [facts: tariff_status='MATCHES']
 - event 2 (Mara Ellery): I don't understand the £3.20 fee shown against this withdrawal. Please escalate this and check which tariff entry applied and how it accounts for the amount. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -81,10 +91,6 @@ No.
 
 - nothing
 
-Requests the policy refused:
-
-- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready present is false (document_ready=not known)
-
 ## Final result
 
-ask_system (ASKED)
+reply (REPLIED)

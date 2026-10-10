@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+The customer asked whether their Direct Debit mandate with Northmere Water Services is currently active, after seeing one collection on their March statement. They did not ask for it to be cancelled or for any assessment of what they owe. The desk identified this as a Direct Debit question and put it to the recurring system, and the request went through. No answer has come back, so the mandate's status is still unknown, and the only evidence so far is the historic March statement entry. Nothing was cancelled or changed.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

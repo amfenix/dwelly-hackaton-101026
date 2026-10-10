@@ -2,6 +2,12 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
+## Summary
+
+Mira Ellery, a verified customer on the secure portal, asked to raise her monthly standing order to Westmere Garden Cooperative to £68.00, and she confirmed the change. The desk registered the request with the recurring team and the case closed as REQUESTED. The record does not show the standing order itself being changed, so carrying out the change is left to the recurring team. The record also notes that the confirmation was flagged as instructed outside the portal, though the desk still accepted it.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

@@ -2,6 +2,12 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
+## Summary
+
+Mara Ellison, verified on a call, asked the desk to cancel her Northmere Fitness Direct Debit mandate. The desk classified it as an instruction about a direct debit and registered a request with the recurring team, and the case closed as requested. The record shows no further steps for a person on the desk; the cancellation itself is now with the recurring team and is not recorded as completed.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

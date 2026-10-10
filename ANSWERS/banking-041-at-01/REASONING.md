@@ -38,41 +38,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 34. Rule `read-documents` fired: state = READING → true (state=READING).
 35. Called `check_documents` (attempt 1, key banking-041-at-01:read-documents:9).
 36. `check_documents` found {}.
-37. Rule `read-registration` fired: state = READING → true (state=READING).
-38. Called `check_registration` (attempt 1, key banking-041-at-01:read-registration:10).
-39. `check_registration` found {}.
-40. Rule `read-confirmation` fired: state = READING → true (state=READING).
-41. Called `check_confirmation` (attempt 1, key banking-041-at-01:read-confirmation:11).
-42. Note from `read-confirmation`: event 1 (Mara Ellison, authorised file uploader): I uploaded batch-041.csv for Northmere Studio Ltd.'s June 2025 payroll under reference HV-041. It lists Staff A at £420.00 and Staff B at £385.00; please confirm whether the file was received. [facts: confirmation='none', instructed_outside_portal=False]
-43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-44. `confirmation`: not known → none (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-48. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → batch (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
-53. `next_system`: not known → payment (by `route-payment`).
-54. The agent asked for `ask_system` {"system": "payment"}.
-55. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-041-at-01:do-ask:15).
-59. Action in the world: `ask_system` {"system": "payment", "about": "batch", "reference": "HV-041", "amount": "420.00"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+37. Rule `read-tariff` fired: state = READING → true (state=READING).
+38. Called `check_tariff` (attempt 1, key banking-041-at-01:read-tariff:10).
+39. `check_tariff` found {}.
+40. Rule `read-registration` fired: state = READING → true (state=READING).
+41. Called `check_registration` (attempt 1, key banking-041-at-01:read-registration:11).
+42. `check_registration` found {}.
+43. Rule `read-confirmation` fired: state = READING → true (state=READING).
+44. Called `check_confirmation` (attempt 1, key banking-041-at-01:read-confirmation:12).
+45. Note from `read-confirmation`: event 1 (Mara Ellison, authorised file uploader): I uploaded batch-041.csv for Northmere Studio Ltd.'s June 2025 payroll under reference HV-041. It lists Staff A at £420.00 and Staff B at £385.00; please confirm whether the file was received. [facts: confirmation='none', instructed_outside_portal=False]
+46. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+47. `confirmation`: not known → none (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+51. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
+52. `request_type`: not known → question (by `triage`).
+53. `subject`: not known → batch (by `triage`).
+54. State `READING` → `TRIAGED` (by `triage`).
+55. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
+56. `next_system`: not known → payment (by `route-payment`).
+57. The agent asked for `ask_system` {"system": "payment"}.
+58. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+59. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+61. Called `ask_system` (attempt 1, key banking-041-at-01:do-ask:16).
+62. Action in the world: `ask_system` {"system": "payment", "about": "batch", "reference": "HV-041", "amount": "420.00"}.
+63. `ask_system` found {}.
+64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+65. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6936 tokens in, 476 out, 4.227 s, cost $0.0148; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4815 tokens in, 351 out, 2.884 s, cost $0.0093; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system about the receipt status of batch-041.csv (reference HV-041). The case is now in the ASKED state, and the desk's reply to Mara Ellison will need to wait for that answer.
-> 
-> The case doesn't yet hold any record showing the file was received. Its confirmation field still reads "none", so the desk can't say either way yet.
-> 
-> Mara is a verified, authorised file uploader, and she is only asking for the receipt status. She isn't asking the bank to authorise or approve any payments for the company.
+> The payment system has been asked about the receipt status of batch-041.csv (reference HV-041). Its answer will go into the case, and the reply to the customer can be written from that.

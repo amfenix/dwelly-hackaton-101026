@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+The request was a question about a replacement card, and the desk decided to put it to the card system, which it did. The query went through, but the system returned nothing about dispatch or delivery. The bank's message only confirmed that the replacement request was received, so the record does not show whether the card has been sent. The case closed at that step, and nothing in the record assigns a further action to a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

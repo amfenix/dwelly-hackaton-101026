@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellison asked over secure chat whether dispatch of her replacement card had been registered, saying the portal only showed the request as accepted. The desk checked the card journal, which shows the card as dispatched with no record of receipt, and replied to her with that status, stating that it does not confirm she has received the card and that no card change was made. The case is closed as replied, and nothing is left for a person; she was not verified, and no changes were made to her account.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

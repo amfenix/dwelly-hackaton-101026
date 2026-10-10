@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellwood, a verified caller, asked about a transfer, and the amount on the final line of the instruction is £648.20. She had mentioned remembering the draft as £684.20, but only £648.20 appears in the case. The desk classified it as a question, routed it to the payment system and sent that system a query about the £648.20 transfer. The payment system's reply is empty, so nothing yet confirms the amount, and a person still needs to review it.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

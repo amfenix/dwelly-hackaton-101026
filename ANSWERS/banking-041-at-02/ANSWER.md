@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, writing as the company's authorised file uploader over secure chat (not verified), asked only whether H&V had received batch-041.csv (reference HV-041, £420.00 for Staff A), and said she was not asking for any payment to be approved or released. The desk classed it as a question about a batch and put a receipt query to the payment system, which accepted it. No answer has come back yet, so the receipt status is still unknown and no reply on it has been sent to her.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

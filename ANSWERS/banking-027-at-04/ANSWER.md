@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, a customer on a verified call, said she can't sign in to her profile and asked for help restoring access. The desk classified this as an access request and put a question about it to the access system, which returned nothing, and the case closed in the "asked" state. The record shows no answer from the access system and no further step, so whatever happens next on her sign-in is not recorded.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

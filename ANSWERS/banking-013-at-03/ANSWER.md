@@ -1,6 +1,12 @@
 # Case banking-013-at-03: Cancellation of a Future Payment Instruction
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: ask_system**  (final state `ASKED`)
+
+## Summary
+
+Elodie Mercer, a verified customer on the secure portal, asked to cancel the future run of her recurring studio-rent payment instruction. The desk classed it as an instruction about a standing order and asked the recurring-payments system about it; that query returned nothing new, and the case closed at that step. Nothing has been cancelled, and the desk's check still shows her confirmation as "none", so the cancellation remains to be handled by a person.
+
+_Written by a model from the record below; the sections below are the record._
 
 ## What the system received
 
@@ -32,7 +38,7 @@ Case reference: id banking-013-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: recurring, about: standing_order), by rule `do-request`
+- `ask_system` (system: recurring, about: standing_order), by rule `do-ask`
 
 ## Decision and why
 
@@ -40,16 +46,15 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `recurring-instruction` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `recurring-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - args.system = recurring → true (args.system=recurring)
   - next_system = recurring → true (next_system=recurring)
+  - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - verified → true (verified=True)
-  - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+  - request_type not in [register, change, authority] → true (request_type=instruction)
+- `ASK_PENDING` → `ASKED`: rule `do-ask`.
+  - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
@@ -78,4 +83,4 @@ No.
 
 ## Final result
 
-submit_request (REQUESTED)
+ask_system (ASKED)

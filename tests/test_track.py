@@ -114,6 +114,21 @@ def test_the_bank_may_check_before_an_instruction() -> None:
     assert case.send("ask_system", {"system": "payment"}).accepted and case.state == "ASKED"
 
 
+def test_a_fee_is_checked_against_the_tariff() -> None:
+    fee = ("Secure chat", CUSTOMER, "H&V service agent", "What is the £3.20 fee on my withdrawal?")
+    asked = ("Internal note", "H&V service agent", "H&V transaction records", "Check the fee against the tariff.")
+    answered = (
+        "Internal note",
+        "H&V transaction records",
+        "H&V service agent",
+        "The £3.20 fee matches the applicable tariff entry.",
+    )
+    case = started(fee, subject="fee")
+    assert case.fields["next_system"] == "tariff" and case.send("ask_system", {"system": "tariff"}).accepted
+    case = started(fee, asked, answered, subject="fee")
+    assert case.fields["tariff_status"] == "MATCHES" and case.send("reply").accepted and case.state == "REPLIED"
+
+
 def test_a_review_is_registered_not_asked() -> None:
     case = started(ASK, request_type="register")
     assert not case.send("ask_system", {"system": "payment"}).accepted

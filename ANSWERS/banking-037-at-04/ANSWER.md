@@ -1,6 +1,12 @@
 # Case banking-037-at-04: Profile Name Typo
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: reply**  (final state `REPLIED`)
+
+## Summary
+
+Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk found the request already registered for data-team review as HV-037, so it submitted nothing new (its attempt to submit was refused) and sent the customer a reply. The profile name has not been changed: the data team has not yet validated the basis for the correction, and what supporting information is needed is still for them to determine.
+
+_Written by a model from the record below; the sections below are the record._
 
 ## What the system received
 
@@ -44,8 +50,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `registration-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - registration_asked → true (registration_asked=True)
+  - registered present → true (registered=True)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -61,7 +71,6 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **change**
 - next_system: **access**
-- reason: **AGENT_ESCALATED**
 
 Where they came from:
 
@@ -72,8 +81,7 @@ Where they came from:
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
@@ -85,4 +93,4 @@ Requests the policy refused:
 
 ## Final result
 
-escalate (ESCALATED)
+reply (REPLIED)

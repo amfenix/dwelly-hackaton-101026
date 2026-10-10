@@ -37,39 +37,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-033-at-02:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-033-at-02:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-033-at-02:read-confirmation:11).
-41. Note from `read-confirmation`: event 2 (Mara Ellison): I’m escalating this because the export process is unclear to me. Please let me know when the file for that period is available in my secure portal. [facts: confirmation='none', instructed_outside_portal=False]
-42. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-43. `confirmation`: not known → none (by `read-confirmation`).
-44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (jev jev-latest) on `request_type`: question, confidence 0.93 → question.
-47. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-48. `request_type`: not known → question (by `triage`).
-49. `subject`: not known → document (by `triage`).
-50. State `READING` → `TRIAGED` (by `triage`).
-51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
-52. `next_system`: not known → documents (by `route-documents`).
-53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-57. Called `ask_system` (attempt 1, key banking-033-at-02:do-ask:15).
-58. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
-59. `ask_system` found {}.
-60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-61. The case closed in `ASKED`: **ask_system**.
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-033-at-02:read-tariff:10).
+38. `check_tariff` found {}.
+39. Rule `read-registration` fired: state = READING → true (state=READING).
+40. Called `check_registration` (attempt 1, key banking-033-at-02:read-registration:11).
+41. `check_registration` found {}.
+42. Rule `read-confirmation` fired: state = READING → true (state=READING).
+43. Called `check_confirmation` (attempt 1, key banking-033-at-02:read-confirmation:12).
+44. Note from `read-confirmation`: event 2 (Mara Ellison): I’m escalating this because the export process is unclear to me. Please let me know when the file for that period is available in my secure portal. [facts: confirmation='none', instructed_outside_portal=False]
+45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+46. `confirmation`: not known → none (by `read-confirmation`).
+47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+48. Rule `triage` fired: state = READING → true (state=READING).
+49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
+50. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+51. `request_type`: not known → question (by `triage`).
+52. `subject`: not known → document (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+55. `next_system`: not known → documents (by `route-documents`).
+56. The agent asked for `ask_system` {"system": "documents"}.
+57. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+58. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-033-at-02:do-ask:16).
+61. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7034 tokens in, 460 out, 4.091 s, cost $0.0148; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4883 tokens in, 430 out, 3.738 s, cost $0.0102; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the documents system about the CSV export for 6–9 May 2025. The request was accepted and the case is closed at this step.
-> 
-> The documents system has not told us yet whether the file exists. We can't tell Mara when it will be in her secure portal until it does. The case still shows her as not verified, so nothing has been changed or sent on her behalf.
+> I've asked the documents system whether the CSV export for 6–9 May 2025 has been created. Its answer isn't in the case yet, so I can't tell Mara whether the file is available in her portal. The next step is to reply to her with whatever the documents system returns.

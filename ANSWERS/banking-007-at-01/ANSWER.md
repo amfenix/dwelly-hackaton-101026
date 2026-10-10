@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+The customer's message was classified as a question about a transfer, and the desk sent that question to the payment system. The case is closed as "asked", but the record holds no answer from the payment system. The only related note is that H&V recorded the international payment instruction as sent, with no confirmation of receipt. What stage the transfer has reached, and whether the beneficiary has received it, is still unknown.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

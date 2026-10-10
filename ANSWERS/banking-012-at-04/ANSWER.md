@@ -2,6 +2,12 @@
 
 **Decision: wait**  (final state `WAITING`)
 
+## Summary
+
+Mira Ellery asked over secure chat to raise her standing order from £42.00 to £68.00 a month. The desk sent the change to her in the portal for confirmation and made no change itself, so the order still stands at £42.00, and the case closed as waiting. What is left is for Mira to confirm the change in her portal session; she is also not verified, and she gave the instruction outside the portal.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

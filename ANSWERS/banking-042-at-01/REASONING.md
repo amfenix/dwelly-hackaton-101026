@@ -30,32 +30,37 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 26. Rule `read-documents` fired: state = READING → true (state=READING).
 27. Called `check_documents` (attempt 1, key banking-042-at-01:read-documents:9).
 28. `check_documents` found {}.
-29. Rule `read-registration` fired: state = READING → true (state=READING).
-30. Called `check_registration` (attempt 1, key banking-042-at-01:read-registration:10).
-31. `check_registration` found {}.
-32. Rule `read-confirmation` fired: state = READING → true (state=READING).
-33. Called `check_confirmation` (attempt 1, key banking-042-at-01:read-confirmation:11).
-34. `check_confirmation` found {}.
-35. Rule `triage` fired: state = READING → true (state=READING).
-36. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-37. Classifier (jev jev-latest) on `subject`: batch, confidence 0.95 → batch.
-38. `request_type`: not known → question (by `triage`).
-39. `subject`: not known → batch (by `triage`).
-40. State `READING` → `TRIAGED` (by `triage`).
-41. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
-42. `next_system`: not known → payment (by `route-payment`).
-43. The agent asked for `ask_system` {"system": "payment"}.
-44. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-45. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-46. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-47. Called `ask_system` (attempt 1, key banking-042-at-01:do-ask:15).
-48. Action in the world: `ask_system` {"system": "payment", "about": "batch"}.
-49. `ask_system` found {}.
-50. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-51. The case closed in `ASKED`: **ask_system**.
-52. The agent asked for `reply` {}.
-53. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known).
+29. Rule `read-tariff` fired: state = READING → true (state=READING).
+30. Called `check_tariff` (attempt 1, key banking-042-at-01:read-tariff:10).
+31. `check_tariff` found {}.
+32. Rule `read-registration` fired: state = READING → true (state=READING).
+33. Called `check_registration` (attempt 1, key banking-042-at-01:read-registration:11).
+34. `check_registration` found {}.
+35. Rule `read-confirmation` fired: state = READING → true (state=READING).
+36. Called `check_confirmation` (attempt 1, key banking-042-at-01:read-confirmation:12).
+37. `check_confirmation` found {}.
+38. Rule `triage` fired: state = READING → true (state=READING).
+39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+40. Classifier (jev jev-latest) on `subject`: batch, confidence 0.97 → batch.
+41. `request_type`: not known → question (by `triage`).
+42. `subject`: not known → batch (by `triage`).
+43. State `READING` → `TRIAGED` (by `triage`).
+44. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
+45. `next_system`: not known → payment (by `route-payment`).
+46. The agent asked for `ask_system` {"system": "payment"}.
+47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+48. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+50. Called `ask_system` (attempt 1, key banking-042-at-01:do-ask:16).
+51. Action in the world: `ask_system` {"system": "payment", "about": "batch"}.
+52. `ask_system` found {}.
+53. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+54. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 8516 tokens in, 325 out, 4.641 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8177 tokens in, 382 out, 5.258 s, cost $0.0164; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I asked the payment system about the Fenwick Workshop batch. The case is now closed on that step, and the system's answer hasn't been added to the case yet. So I can't yet tell you what the row-level error report shows, and I haven't made the report available to you.

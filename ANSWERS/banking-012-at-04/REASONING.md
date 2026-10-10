@@ -37,32 +37,39 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-012-at-04:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-012-at-04:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-012-at-04:read-confirmation:11).
-41. Note from `read-confirmation`: event 4 (H&V agent): I’ve sent the change from £42.00 to £68.00 per month for your confirmation in this session. I have not changed the standing order. [facts: confirmation='requested']
-42. Note from `read-confirmation`: event 2 (Mira Ellery): I want to increase this standing order to £68.00 a month. The portal still shows £42.00, and I haven’t confirmed a change yet. [facts: instructed_outside_portal=True]
-43. `check_confirmation` found {"confirmation": "requested", "instructed_outside_portal": true}.
-44. `confirmation`: not known → requested (by `read-confirmation`).
-45. `instructed_outside_portal`: not known → True (by `read-confirmation`).
-46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
-48. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-49. `request_type`: not known → change (by `triage`).
-50. `subject`: not known → standing_order (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-53. `next_system`: not known → recurring (by `route-recurring`).
-54. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested); registration_asked absent → true (registration_asked=not known). The change was sent to the portal; the customer has not confirmed it yet.
-55. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
-56. The case closed in `WAITING`: **wait**.
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-012-at-04:read-tariff:10).
+38. `check_tariff` found {}.
+39. Rule `read-registration` fired: state = READING → true (state=READING).
+40. Called `check_registration` (attempt 1, key banking-012-at-04:read-registration:11).
+41. `check_registration` found {}.
+42. Rule `read-confirmation` fired: state = READING → true (state=READING).
+43. Called `check_confirmation` (attempt 1, key banking-012-at-04:read-confirmation:12).
+44. Note from `read-confirmation`: event 4 (H&V agent): I’ve sent the change from £42.00 to £68.00 per month for your confirmation in this session. I have not changed the standing order. [facts: confirmation='requested']
+45. Note from `read-confirmation`: event 2 (Mira Ellery): I want to increase this standing order to £68.00 a month. The portal still shows £42.00, and I haven’t confirmed a change yet. [facts: instructed_outside_portal=True]
+46. `check_confirmation` found {"confirmation": "requested", "instructed_outside_portal": true}.
+47. `confirmation`: not known → requested (by `read-confirmation`).
+48. `instructed_outside_portal`: not known → True (by `read-confirmation`).
+49. Rule `triage` fired: state = READING → true (state=READING).
+50. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+52. `request_type`: not known → change (by `triage`).
+53. `subject`: not known → standing_order (by `triage`).
+54. State `READING` → `TRIAGED` (by `triage`).
+55. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+56. `next_system`: not known → recurring (by `route-recurring`).
+57. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested); registration_asked absent → true (registration_asked=not known). The change was sent to the portal; the customer has not confirmed it yet.
+58. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
+59. The case closed in `WAITING`: **wait**.
 
 ## Model calls
 
-3 calls, 5030 tokens in, 583 out, 4.406 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4984 tokens in, 482 out, 3.913 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't taken any action, and the case stays open, waiting for Mira. Her change from £42.00 to £68.00 a month has been sent to her for confirmation in the secure portal. She hasn't confirmed it, and she isn't verified yet. The bank can't change the standing order for her or on her behalf. The case status is WAITING and final until she confirms the change herself in her portal session.
+> The case is waiting on Mira to confirm the change in her secure portal session, so I've taken no further action.
+> 
+> - **What has happened:** the change from £42.00 to £68.00 a month has been sent to her for confirmation. The standing order itself is still £42.00.
+> - **Why I'm not submitting it:** she hasn't confirmed, and she isn't verified. She also gave the instruction in chat rather than in the portal. The bank can't make the change for her or approve it on her behalf.
+> - **What happens next:** once she confirms in the portal, the case can move on.

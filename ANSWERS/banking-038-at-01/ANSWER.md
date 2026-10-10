@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, a verified customer using the secure portal, asked for a bank document confirming her account relationship to be made available to her there, and said she was not asking for a transfer. The desk classified this as a question about a document and sent an inquiry to the documents system, and the case closed in the "asked" state. The record shows no answer back from the documents system (it returned nothing), so whether and how the document gets provided is not yet settled.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

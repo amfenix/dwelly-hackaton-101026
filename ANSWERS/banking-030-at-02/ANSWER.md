@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Maren Ellery, an unverified customer on secure chat, asked whether her replacement card was being made and whether it had been sent. The desk classified this as a card question and sent a query to the card system, which returned nothing yet. No answer has gone back to Maren, and what remains is to wait for the card system's reply before responding to her.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

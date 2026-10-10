@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Elowen Marr wrote on secure chat to say she still couldn't find her June statement in the portal and wanted it made available there, not sent by email. The desk checked the documents record, found statement-031.pdf ready, and replied on secure chat that the document is available, while noting this doesn't confirm it was downloaded and that no email was sent. The case is closed as replied; the record shows Elowen is not verified and nothing else is left open for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

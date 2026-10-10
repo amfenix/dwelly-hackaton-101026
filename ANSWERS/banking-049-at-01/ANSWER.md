@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Venn, a verified customer using the business portal, asked for the acquiring report for North Quay Printworks covering 1–7 July 2025, so she could review card sales and adjustments. The desk classified it as a question about a document and sent an inquiry to the documents system, which accepted it and closed the case as asked. The documents system has returned no report or file details, so whether the report exists is still unknown, and no reply to Mara Venn has been recorded.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

@@ -32,37 +32,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 28. Rule `read-documents` fired: state = READING → true (state=READING).
 29. Called `check_documents` (attempt 1, key banking-012-at-01:read-documents:9).
 30. `check_documents` found {}.
-31. Rule `read-registration` fired: state = READING → true (state=READING).
-32. Called `check_registration` (attempt 1, key banking-012-at-01:read-registration:10).
-33. `check_registration` found {}.
-34. Rule `read-confirmation` fired: state = READING → true (state=READING).
-35. Called `check_confirmation` (attempt 1, key banking-012-at-01:read-confirmation:11).
-36. Note from `read-confirmation`: event 1 (H&V system): Standing order to Westmere Garden Cooperative: £42.00 per month. [facts: confirmation='none', instructed_outside_portal=False]
-37. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-38. `confirmation`: not known → none (by `read-confirmation`).
-39. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-40. Rule `triage` fired: state = READING → true (state=READING).
-41. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
-42. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-43. `request_type`: not known → change (by `triage`).
-44. `subject`: not known → standing_order (by `triage`).
-45. State `READING` → `TRIAGED` (by `triage`).
-46. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-47. `next_system`: not known → recurring (by `route-recurring`).
-48. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-49. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-50. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-51. Called `send_for_confirmation` (attempt 1, key banking-012-at-01:do-confirm:15).
-52. `send_for_confirmation` found {}.
-53. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-54. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+31. Rule `read-tariff` fired: state = READING → true (state=READING).
+32. Called `check_tariff` (attempt 1, key banking-012-at-01:read-tariff:10).
+33. `check_tariff` found {}.
+34. Rule `read-registration` fired: state = READING → true (state=READING).
+35. Called `check_registration` (attempt 1, key banking-012-at-01:read-registration:11).
+36. `check_registration` found {}.
+37. Rule `read-confirmation` fired: state = READING → true (state=READING).
+38. Called `check_confirmation` (attempt 1, key banking-012-at-01:read-confirmation:12).
+39. Note from `read-confirmation`: event 1 (H&V system): Standing order to Westmere Garden Cooperative: £42.00 per month. [facts: confirmation='none', instructed_outside_portal=False]
+40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+41. `confirmation`: not known → none (by `read-confirmation`).
+42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+43. Rule `triage` fired: state = READING → true (state=READING).
+44. Classifier (jev jev-latest) on `request_type`: change, confidence 0.98 → change.
+45. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+46. `request_type`: not known → change (by `triage`).
+47. `subject`: not known → standing_order (by `triage`).
+48. State `READING` → `TRIAGED` (by `triage`).
+49. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+50. `next_system`: not known → recurring (by `route-recurring`).
+51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
+52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
+53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
+54. Called `send_for_confirmation` (attempt 1, key banking-012-at-01:do-confirm:16).
+55. `send_for_confirmation` found {}.
+56. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
+57. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+58. The agent asked for `ask_system` {"system": "recurring"}.
+59. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-3 calls, 4652 tokens in, 454 out, 3.522 s, cost $0.0100; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5483 tokens in, 574 out, 4.507 s, cost $0.0129; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is closed. The desk has sent Mira a confirmation request for the standing order change from £42.00 to £68.00 to Westmere Garden Cooperative.
+> The change from £42.00 to £68.00 is not made yet. The case is at CONFIRMATION_SENT, which means a confirmation request has already gone to Mira. The desk refused my check of the standing order records because it only allows that check before a confirmation is sent.
 > 
-> The change has not been made. Mira has not authorised it yet, and the desk does not act for her without that. Nothing further is needed from the desk now.
+> The bank can't approve the change for her. The next step is hers: she has to confirm it, and the case stays open until she does. I'm taking no further action now.

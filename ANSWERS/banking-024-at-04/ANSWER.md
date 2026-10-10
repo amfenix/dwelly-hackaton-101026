@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Rowan Ellery, writing over secure chat and not verified, said they were the cardholder and asked what category of restriction applied to their declined card and whether it had been lifted. The desk checked the card journal and replied on the same channel that the card is restricted, with the recorded reason being a temporary security-related restriction. The reply did not disclose the basis of the restriction, and no card change was made. The case is closed with nothing left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

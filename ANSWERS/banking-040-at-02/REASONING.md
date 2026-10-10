@@ -39,43 +39,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-040-at-02:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-040-at-02:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-040-at-02:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Mara Ellison): I need a record for this particular payment to give my repair contractor. I can see HV-040 in my history, but I need a document showing its stage; I understand that the contractor’s confirmation of receipt is separate. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: document, confidence 0.95 → document.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → document (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
-54. `next_system`: not known → documents (by `route-documents`).
-55. The agent asked for `ask_system` {"system": "documents"}.
-56. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-57. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-58. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-59. Called `ask_system` (attempt 1, key banking-040-at-02:do-ask:15).
-60. Action in the world: `ask_system` {"system": "documents", "about": "document", "reference": "HV-040", "amount": "74.00"}.
-61. `ask_system` found {}.
-62. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-63. The case closed in `ASKED`: **ask_system**.
-64. The agent asked for `reply` {}.
-65. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready present is false (document_ready=not known).
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-040-at-02:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-040-at-02:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-040-at-02:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Mara Ellison): I need a record for this particular payment to give my repair contractor. I can see HV-040 in my history, but I need a document showing its stage; I understand that the contractor’s confirmation of receipt is separate. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: document, confidence 0.93 → document.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → document (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+57. `next_system`: not known → documents (by `route-documents`).
+58. The agent asked for `ask_system` {"system": "documents"}.
+59. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+60. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+62. Called `ask_system` (attempt 1, key banking-040-at-02:do-ask:16).
+63. Action in the world: `ask_system` {"system": "documents", "about": "document", "reference": "HV-040", "amount": "74.00"}.
+64. `ask_system` found {}.
+65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+66. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 10819 tokens in, 633 out, 6.313 s, cost $0.0241; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7239 tokens in, 492 out, 4.673 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the documents system for the record of payment HV-040, and the case is now closed at that step. The system hasn't returned an answer yet, so I can't tell you whether a document is ready.
+> I asked the documents system about the payment record for HV-040 (£74.00, 14 July 2025). The request was accepted and the case is closed at this step. The documents system hasn't returned an answer yet, so I can't say what the record shows or whether a document can be produced.
 > 
-> I tried to reply to the customer straight away, but the desk refused. A reply needs the documents answer to be in the case first, and it isn't. The case also shows Mara Ellison as not verified, which may limit what the desk can release.
-> 
-> I haven't told her anything about the payment beyond what she already sees in her portal: £74.00, dated 14 July 2025, status SENT. The next step is for whoever picks the case up to read the documents answer, then reply.
+> One thing to know: the case shows Mara Ellison is not verified. That may limit what the bank can release.

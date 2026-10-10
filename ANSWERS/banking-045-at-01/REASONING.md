@@ -35,39 +35,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-045-at-01:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-045-at-01:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-045-at-01:read-confirmation:11).
-39. Note from `read-confirmation`: event 1 (Nadia Bell): I work in finance operations at Merefield Design Studio Ltd. Please arrange secure-portal access for our new colleague, who will help with payment administration. I’m not the company administrator, so I can’t approve or assign their role. [facts: confirmation='none', instructed_outside_portal=False]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.98 → authority.
-45. Classifier (jev jev-latest) on `subject`: role, confidence 0.78 → role.
-46. `request_type`: not known → authority (by `triage`).
-47. `subject`: not known → role (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
-50. `next_system`: not known → business (by `route-business`).
-51. The agent asked for `forward_to_authority` {}.
-52. Rule `forward-to-the-authority` (on `forward_to_authority`) fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); role != business_admin → true (role=customer).
-53. State `TRIAGED` → `FORWARD_PENDING` (by `forward-to-the-authority`).
-54. Rule `do-forward` fired: state = FORWARD_PENDING → true (state=FORWARD_PENDING).
-55. Called `forward_to_authority` (attempt 1, key banking-045-at-01:do-forward:15).
-56. Action in the world: `forward_to_authority` {"to": "the verified company administrator", "about": "role", "requester": "Nadia Bell"}.
-57. `forward_to_authority` found {}.
-58. State `FORWARD_PENDING` → `FORWARDED` (by `do-forward`).
-59. The case closed in `FORWARDED`: **forward_to_authority**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-045-at-01:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-registration` fired: state = READING → true (state=READING).
+38. Called `check_registration` (attempt 1, key banking-045-at-01:read-registration:11).
+39. `check_registration` found {}.
+40. Rule `read-confirmation` fired: state = READING → true (state=READING).
+41. Called `check_confirmation` (attempt 1, key banking-045-at-01:read-confirmation:12).
+42. Note from `read-confirmation`: event 1 (Nadia Bell): I work in finance operations at Merefield Design Studio Ltd. Please arrange secure-portal access for our new colleague, who will help with payment administration. I’m not the company administrator, so I can’t approve or assign their role. [facts: confirmation='none', instructed_outside_portal=False]
+43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+44. `confirmation`: not known → none (by `read-confirmation`).
+45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+46. Rule `triage` fired: state = READING → true (state=READING).
+47. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.98 → authority.
+48. Classifier (jev jev-latest) on `subject`: role, confidence 0.79 → role.
+49. `request_type`: not known → authority (by `triage`).
+50. `subject`: not known → role (by `triage`).
+51. State `READING` → `TRIAGED` (by `triage`).
+52. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
+53. `next_system`: not known → business (by `route-business`).
+54. The agent asked for `forward_to_authority` {}.
+55. Rule `forward-to-the-authority` (on `forward_to_authority`) fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); role != business_admin → true (role=customer).
+56. State `TRIAGED` → `FORWARD_PENDING` (by `forward-to-the-authority`).
+57. Rule `do-forward` fired: state = FORWARD_PENDING → true (state=FORWARD_PENDING).
+58. Called `forward_to_authority` (attempt 1, key banking-045-at-01:do-forward:16).
+59. Action in the world: `forward_to_authority` {"to": "the verified company administrator", "about": "role", "requester": "Nadia Bell"}.
+60. `forward_to_authority` found {}.
+61. State `FORWARD_PENDING` → `FORWARDED` (by `do-forward`).
+62. The case closed in `FORWARDED`: **forward_to_authority**.
 
 ## Model calls
 
-3 calls, 4824 tokens in, 499 out, 4.953 s, cost $0.0108; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4817 tokens in, 475 out, 4.103 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I forwarded the request to the company administrator. Nadia isn't the administrator and said she can't approve or assign roles, so the administrator has to approve the new colleague's portal access. The desk accepted the forward and the case is closed on our side.
+> I forwarded the request to the company administrator for approval, and the desk accepted it. The case is now closed on our side.
 > 
-> No access has been set up yet. It depends on the administrator's approval.
+> Nadia told us she can't approve or assign roles. The bank doesn't act or approve on someone else's behalf, so access for the new colleague can't be arranged until the administrator approves it. Nadia's identity is also still unverified.

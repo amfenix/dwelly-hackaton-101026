@@ -2,6 +2,12 @@
 
 **Decision: redirect_secure**  (final state `REDIRECTED`)
 
+## Summary
+
+Mara Ellison, verified on a call, said she can't sign in to her profile and asked for help restoring access. The desk classified it as an access request and redirected her to the secure process in her portal, telling her it checks her identity there and that the bank never asks for passwords, PINs or verification codes; nothing on her profile was changed. The case is closed, and what remains is for her to complete the recovery checks in the secure portal herself.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

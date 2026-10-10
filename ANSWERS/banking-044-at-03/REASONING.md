@@ -39,42 +39,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-044-at-03:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-044-at-03:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-044-at-03:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Leona Voss): I’m authorised to view our payouts. The batch shows processed, but I can’t tell whether row SUP-17, for our studio materials supplier, was paid. Please check that row’s status. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → batch (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-54. `next_system`: not known → payment (by `asked-payment`).
-55. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
-56. State `TRIAGED` → `WAITING` (by `payment-waits`).
-57. The case closed in `WAITING`: **wait**.
-58. The agent asked for `ask_system` {"system": "payment"}.
-59. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
-60. The agent asked for `escalate` {"note": "Leona Voss (role: viewer, secure chat, identity NOT verified) asks whether row SUP-17 in a supplier batch marked processed was paid or rejected. The payment system lookup was refused because the case is in WAITING state, not TRIAGED. No payment status has been read, so none can be stated. A person needs to verify her identity and viewer entitlement, then check the SUP-17 row status."}.
-61. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-044-at-03:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-044-at-03:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-044-at-03:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Leona Voss): I’m authorised to view our payouts. The batch shows processed, but I can’t tell whether row SUP-17, for our studio materials supplier, was paid. Please check that row’s status. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → batch (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+57. `next_system`: not known → payment (by `asked-payment`).
+58. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
+59. State `TRIAGED` → `WAITING` (by `payment-waits`).
+60. The case closed in `WAITING`: **wait**.
+61. The agent asked for `ask_system` {"system": "payment"}.
+62. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
 
 ## Model calls
 
-5 calls, 10374 tokens in, 816 out, 7.719 s, cost $0.0251; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8754 tokens in, 747 out, 6.508 s, cost $0.0212; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't move this case forward, and it is still open for a person to pick up.
+> I haven't looked up row SUP-17 yet, and I'm stopping here. The desk refused my payment lookup because the case is in a WAITING state, not TRIAGED. The case status shows that state as final with the outcome "wait".
 > 
-> - **Payment lookup:** the payment system refused my request to check row SUP-17. The case is in a WAITING state, and the lookup only works once the case is triaged.
-> - **Escalation:** the handover to a person was refused for the same reason.
-> - **Status of SUP-17:** I haven't read it, so I can't say whether it was paid or rejected.
-> - **Identity:** Leona Voss's identity is not verified. She is a viewer, and that would need to be checked before any payment detail is shared.
+> Leona Voss is also not verified on this chat, so nothing about the payment should be shared until the desk verifies her. I can't change that fact myself.
 > 
-> I haven't tried any other tool, because none of the others fits this request.
+> I've left the case open, so it goes to a person. They can verify her and then check the SUP-17 status in the payment records.

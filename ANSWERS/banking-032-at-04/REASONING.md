@@ -35,43 +35,50 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-032-at-04:read-documents:9).
 33. Note from `read-documents`: event 2 (H&V archive group): I’ve checked the account-holder mandate in this secure session. Please confirm whether the January 2024 statement is available and can be ordered; I haven’t promised availability or a fee. [facts: documents_asked=True]
-34. Note from `read-documents`: event 3 (H&V archive group): The archive check confirms that the January 2024 statement is available to order. Any applicable charge is subject to the current tariff. [facts: document_ready=True]
-35. `check_documents` found {"documents_asked": true, "document_ready": true}.
+34. Note from `read-documents`: event 3 (H&V archive group): The archive check confirms that the January 2024 statement is available to order. Any applicable charge is subject to the current tariff. [facts: document_ready=False]
+35. `check_documents` found {"documents_asked": true, "document_ready": false}.
 36. `documents_asked`: not known → True (by `read-documents`).
-37. `document_ready`: not known → True (by `read-documents`).
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-032-at-04:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-032-at-04:read-confirmation:11).
-43. Note from `read-confirmation`: event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → statement (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-54. `next_system`: not known → documents (by `asked-documents`).
-55. The agent asked for `reply` {}.
-56. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready present → true (document_ready=True).
-57. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
-58. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-59. Called `reply_customer` (attempt 1, key banking-032-at-04:do-reply:15).
-60. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
-61. `reply_customer` found {}.
-62. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-63. The case closed in `REPLIED`: **reply**.
+37. `document_ready`: not known → False (by `read-documents`).
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-032-at-04:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-032-at-04:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-032-at-04:read-confirmation:12).
+46. Note from `read-confirmation`: event 1 (Mara Ellison): I’m the account holder and need my January 2024 statement for my household records. Could you check whether an archived copy is available? [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → statement (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+57. `next_system`: not known → documents (by `asked-documents`).
+58. The agent asked for `ask_system` {"system": "documents"}.
+59. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); tariff-ask: args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
+60. The agent asked for `reply` {}.
+61. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready present → true (document_ready=False).
+62. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
+63. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+64. Called `reply_customer` (attempt 1, key banking-032-at-04:do-reply:16).
+65. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The document record shows that the document is not ready. This does not establish that the document is available. No email was sent."}.
+66. `reply_customer` found {}.
+67. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+68. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 6910 tokens in, 485 out, 4.68 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10069 tokens in, 683 out, 6.582 s, cost $0.0232; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer. The documents system had already been checked and shows the January 2024 statement is ready. The desk accepted the reply and closed the case.
+> I used `reply` to answer Mara Ellison, and the case is now closed as replied.
 > 
-> The requester, Mara Ellison, is not verified. The reply only says the statement is available and does not claim anything beyond what the record shows.
+> The documents system had already been checked for this case, so a second request to it was refused. That earlier check shows the January 2024 statement is not ready. The reply is limited to that. I did not say anything beyond what the record shows.
+> 
+> Mara is not verified yet. I did not call `redirect_secure` to send her to the secure verification process.

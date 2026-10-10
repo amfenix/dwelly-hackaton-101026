@@ -39,37 +39,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-039-at-05:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-039-at-05:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-039-at-05:read-confirmation:11).
-43. Note from `read-confirmation`: event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-49. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → access (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-54. `next_system`: not known → access (by `asked-access`).
-55. The agent asked for `reply` {}.
-56. Rule `access-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = access → true (next_system=access); access_status present → true (access_status=EXTRACT_PROVIDED).
-57. State `TRIAGED` → `REPLY_PENDING` (by `access-reply`).
-58. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-59. Called `reply_customer` (attempt 1, key banking-039-at-05:do-reply:15).
-60. Action in the world: `reply` {"to": "Nerys Wren", "channel": "secure_portal", "text": "The access record shows extract_provided. This does not disclose or handle a password or PIN. No secret was handled and no additional access change was made."}.
-61. `reply_customer` found {}.
-62. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-63. The case closed in `REPLIED`: **reply**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-039-at-05:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-039-at-05:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-039-at-05:read-confirmation:12).
+46. Note from `read-confirmation`: event 3 (Nerys Wren): I confirm that I want the permitted session extract for my profile delivered through this secure portal. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+52. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → access (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+57. `next_system`: not known → access (by `asked-access`).
+58. The agent asked for `reply` {}.
+59. Rule `access-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = access → true (next_system=access); access_status present → true (access_status=EXTRACT_PROVIDED).
+60. State `TRIAGED` → `REPLY_PENDING` (by `access-reply`).
+61. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+62. Called `reply_customer` (attempt 1, key banking-039-at-05:do-reply:16).
+63. Action in the world: `reply` {"to": "Nerys Wren", "channel": "secure_portal", "text": "The access record shows extract_provided. This does not disclose or handle a password or PIN. No secret was handled and no additional access change was made."}.
+64. `reply_customer` found {}.
+65. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+66. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 5312 tokens in, 438 out, 3.459 s, cost $0.0094; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 5334 tokens in, 501 out, 4.735 s, cost $0.0101; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply to Nerys Wren. The access system had already returned the permitted session extract for her profile, so no further lookup was needed. The case is now closed with that reply.
+> I used the reply tool, and the desk accepted it and closed the case. The access system had already returned the permitted session extract (status EXTRACT_PROVIDED), and Nerys Wren is verified and asked for delivery through the secure portal. That meant nothing further needed to be asked or changed.
+> 
+> I did not read the extract itself, and I haven't seen the wording of the reply the desk wrote.

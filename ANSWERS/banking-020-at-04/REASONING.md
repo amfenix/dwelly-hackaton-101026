@@ -39,41 +39,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-020-at-04:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-020-at-04:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-020-at-04:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Elena Wren): I’ve signed in and completed the account-holder checks. I want to know which regular payments are still active before I make any closure plans. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-49. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.69 → standing_order.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → standing_order (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
-54. `next_system`: not known → recurring (by `asked-recurring`).
-55. The agent asked for `reply` {}.
-56. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
-57. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
-58. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-59. Called `reply_customer` (attempt 1, key banking-020-at-04:do-reply:15).
-60. Action in the world: `reply` {"to": "Elena Wren", "channel": "secure_chat", "text": "The standing-order record shows active. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
-61. `reply_customer` found {}.
-62. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-63. The case closed in `REPLIED`: **reply**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-020-at-04:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-020-at-04:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-020-at-04:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Elena Wren): I’ve signed in and completed the account-holder checks. I want to know which regular payments are still active before I make any closure plans. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+52. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.64 → standing_order.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → standing_order (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
+57. `next_system`: not known → recurring (by `asked-recurring`).
+58. The agent asked for `reply` {}.
+59. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
+60. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
+61. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+62. Called `reply_customer` (attempt 1, key banking-020-at-04:do-reply:16).
+63. Action in the world: `reply` {"to": "Elena Wren", "channel": "secure_chat", "text": "The standing-order record shows active. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
+64. `reply_customer` found {}.
+65. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+66. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7366 tokens in, 715 out, 7.289 s, cost $0.0181; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7156 tokens in, 462 out, 4.932 s, cost $0.0151; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply, and the desk accepted it and closed the case.
+> I've sent the reply to Elena. It is based on what the recurring-payments check returned: the account has an active standing order. The case is now marked as replied.
 > 
-> The recurring-payments check had already run. It showed the standing order as ACTIVE, so I replied from that result instead of asking the system again.
-> 
-> The case facts still list the customer as not verified, even though she says she signed in and passed the account-holder checks. I didn't resolve that mismatch before replying. I chose to reply anyway because the question is only informational and came in over secure chat.
+> The account holder's verified flag still reads false in the records, even though the customer says she completed the checks in secure chat. I did not change or work around that.

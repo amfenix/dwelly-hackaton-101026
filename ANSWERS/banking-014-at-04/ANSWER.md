@@ -2,6 +2,14 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellery asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, and said she did not want it cancelled. The desk checked the mandate record, which shows Active, and replied on secure chat that the record shows active, that this does not guarantee a future payment will execute, and that no instruction or change was made. She was not verified, but she only asked for a status and no change was made; the case closed as replied with nothing left for a person.
+
+One thing to note: the reply text calls it a "standing-order record" although the request and the record concern a Direct Debit mandate.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

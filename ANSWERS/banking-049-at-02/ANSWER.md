@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Venn, who is not verified and says she is the authorised manager for the shop, asked the desk to escalate a file request because the acquiring report for 1–7 July 2025 was not showing as available. The desk classified this as a question about a document and asked the documents system about it, and that system returned no new information. The desk did not escalate anything, and it is still unknown whether the report is available, with Mara's identity unverified and no confirmation on file.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

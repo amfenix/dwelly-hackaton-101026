@@ -30,34 +30,37 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 26. Rule `read-documents` fired: state = READING → true (state=READING).
 27. Called `check_documents` (attempt 1, key banking-011-at-01:read-documents:9).
 28. `check_documents` found {}.
-29. Rule `read-registration` fired: state = READING → true (state=READING).
-30. Called `check_registration` (attempt 1, key banking-011-at-01:read-registration:10).
-31. `check_registration` found {}.
-32. Rule `read-confirmation` fired: state = READING → true (state=READING).
-33. Called `check_confirmation` (attempt 1, key banking-011-at-01:read-confirmation:11).
-34. `check_confirmation` found {}.
-35. Rule `triage` fired: state = READING → true (state=READING).
-36. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-37. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-38. `request_type`: not known → question (by `triage`).
-39. `subject`: not known → standing_order (by `triage`).
-40. State `READING` → `TRIAGED` (by `triage`).
-41. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-42. `next_system`: not known → recurring (by `route-recurring`).
-43. The agent asked for `ask_system` {"system": "recurring"}.
-44. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-45. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-46. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-47. Called `ask_system` (attempt 1, key banking-011-at-01:do-ask:15).
-48. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
-49. `ask_system` found {}.
-50. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-51. The case closed in `ASKED`: **ask_system**.
+29. Rule `read-tariff` fired: state = READING → true (state=READING).
+30. Called `check_tariff` (attempt 1, key banking-011-at-01:read-tariff:10).
+31. `check_tariff` found {}.
+32. Rule `read-registration` fired: state = READING → true (state=READING).
+33. Called `check_registration` (attempt 1, key banking-011-at-01:read-registration:11).
+34. `check_registration` found {}.
+35. Rule `read-confirmation` fired: state = READING → true (state=READING).
+36. Called `check_confirmation` (attempt 1, key banking-011-at-01:read-confirmation:12).
+37. `check_confirmation` found {}.
+38. Rule `triage` fired: state = READING → true (state=READING).
+39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+40. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+41. `request_type`: not known → question (by `triage`).
+42. `subject`: not known → standing_order (by `triage`).
+43. State `READING` → `TRIAGED` (by `triage`).
+44. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+45. `next_system`: not known → recurring (by `route-recurring`).
+46. The agent asked for `ask_system` {"system": "recurring"}.
+47. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+48. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+50. Called `ask_system` (attempt 1, key banking-011-at-01:do-ask:16).
+51. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+52. `ask_system` found {}.
+53. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+54. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6135 tokens in, 336 out, 3.175 s, cost $0.0118; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6180 tokens in, 331 out, 3.452 s, cost $0.0119; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the recurring payments system about the standing order. The case is now closed at this step. The system's answer hasn't come back into the case yet, so I don't have the next due date to give the customer.
+> I've asked the recurring payments system about your standing order. The case is now closed at that step. No answer from the system has been added to the case yet, so I can't give you the next due date.

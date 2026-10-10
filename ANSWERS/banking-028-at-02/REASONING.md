@@ -35,38 +35,43 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-028-at-02:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-028-at-02:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-028-at-02:read-confirmation:11).
-39. Note from `read-confirmation`: event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: confirmation='none', instructed_outside_portal=True]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → True (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
-45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-46. `request_type`: not known → change (by `triage`).
-47. `subject`: not known → profile (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
-50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-54. Called `send_for_confirmation` (attempt 1, key banking-028-at-02:do-confirm:15).
-55. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Elowen Mercer"}.
-56. `send_for_confirmation` found {}.
-57. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-58. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-028-at-02:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-registration` fired: state = READING → true (state=READING).
+38. Called `check_registration` (attempt 1, key banking-028-at-02:read-registration:11).
+39. `check_registration` found {}.
+40. Rule `read-confirmation` fired: state = READING → true (state=READING).
+41. Called `check_confirmation` (attempt 1, key banking-028-at-02:read-confirmation:12).
+42. Note from `read-confirmation`: event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: confirmation='none', instructed_outside_portal=True]
+43. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
+44. `confirmation`: not known → none (by `read-confirmation`).
+45. `instructed_outside_portal`: not known → True (by `read-confirmation`).
+46. Rule `triage` fired: state = READING → true (state=READING).
+47. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+48. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+49. `request_type`: not known → change (by `triage`).
+50. `subject`: not known → profile (by `triage`).
+51. State `READING` → `TRIAGED` (by `triage`).
+52. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
+53. `next_system`: not known → access (by `route-access`).
+54. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
+55. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
+56. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
+57. Called `send_for_confirmation` (attempt 1, key banking-028-at-02:do-confirm:16).
+58. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Elowen Mercer"}.
+59. `send_for_confirmation` found {}.
+60. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
+61. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+62. The agent asked for `ask_system` {"system": "access"}.
+63. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-3 calls, 4987 tokens in, 614 out, 5.586 s, cost $0.0123; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9528 tokens in, 588 out, 6.212 s, cost $0.0211; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed, so I took no further action. The status shows `CONFIRMATION_SENT` with the outcome `send_for_confirmation`. The desk has already sent the phone-number change for confirmation through the bank's secure process. There are no refusals on record.
+> The case is closed. A confirmation request for the phone number change has been sent to Elowen Mercer through the bank's secure confirmation process. The bank has not changed the number and won't until she completes that confirmation.
 > 
-> Elowen Mercer was verified on the call. Her email said it was a request and not her authorisation. The change therefore takes effect only once she completes the confirmation herself. The bank has not changed the number on her behalf.
+> My one tool call, an `ask_system` query to the access system, was refused because the case had already moved to its final state, `CONFIRMATION_SENT`, with the outcome `send_for_confirmation`. Nothing is left for me to do.

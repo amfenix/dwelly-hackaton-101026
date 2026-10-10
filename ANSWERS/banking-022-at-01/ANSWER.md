@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk classified this as a card instruction and sent a query to the card system, then closed the case as "ask_system". No block was submitted, and the card check returned no card details, so the case does not show which card is meant; that question, and the block itself, remain for a person to handle.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

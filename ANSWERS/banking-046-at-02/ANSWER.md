@@ -2,6 +2,12 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
+## Summary
+
+Mara Ellery, verified on a call, instructed the desk to revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The desk classified this as a role instruction, routed it to the business team, and registered a request there, so the case closed as REQUESTED. The revocation has only been requested, not confirmed as done, and the record shows nothing further for a person to do beyond the business team handling it.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

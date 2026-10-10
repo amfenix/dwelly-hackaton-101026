@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk checked the card authorisation journal, which showed the attempt was declined because her available balance was insufficient, and told her so on the call, adding that this doesn't establish a different cause or authorise a retry. No card change was made, and the case is closed with nothing left for a person; the recorded reason text was cut off after "£18.", so nothing beyond the insufficient balance could be confirmed.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

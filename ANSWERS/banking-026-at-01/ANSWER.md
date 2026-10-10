@@ -2,6 +2,12 @@
 
 **Decision: redirect_secure**  (final state `REDIRECTED`)
 
+## Summary
+
+Maren Ellwood, writing over secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to handle it. She was not verified in the chat, so the desk did not act on her profile and sent her a message pointing her to the secure process in her portal, where her identity is checked. The message also said the bank never asks for a password, PIN or verification code and that nothing on her profile was changed. The case is closed as redirected, and the PIN recovery itself is left for her to complete in the secure portal.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Venn wrote on secure chat, saying she was the authorised manager and asking the desk to escalate her request for the acquiring report covering 1–7 July 2025, which wasn't showing as available to her. The desk checked the documents system, found the report placed in the secure portal, and replied in secure chat that the document is available, without confirming any download or credit, and the case closed with no escalation. Her identity was never verified, so only the availability notice was sent and no file was provided; the record lists nothing further for a person to do.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

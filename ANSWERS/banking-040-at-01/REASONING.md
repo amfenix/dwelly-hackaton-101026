@@ -32,35 +32,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 28. Rule `read-documents` fired: state = READING → true (state=READING).
 29. Called `check_documents` (attempt 1, key banking-040-at-01:read-documents:9).
 30. `check_documents` found {}.
-31. Rule `read-registration` fired: state = READING → true (state=READING).
-32. Called `check_registration` (attempt 1, key banking-040-at-01:read-registration:10).
-33. `check_registration` found {}.
-34. Rule `read-confirmation` fired: state = READING → true (state=READING).
-35. Called `check_confirmation` (attempt 1, key banking-040-at-01:read-confirmation:11).
-36. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): I show an outgoing payment of £74.00 dated 14 July 2025 in your transaction history. Its reference is HV-040 and its bank status is SENT. [facts: confirmation='none', instructed_outside_portal=False]
-37. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-38. `confirmation`: not known → none (by `read-confirmation`).
-39. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-40. Rule `triage` fired: state = READING → true (state=READING).
-41. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-42. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.
-43. `request_type`: not known → question (by `triage`).
-44. `subject`: not known → document (by `triage`).
-45. State `READING` → `TRIAGED` (by `triage`).
-46. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
-47. `next_system`: not known → documents (by `route-documents`).
-48. The agent asked for `ask_system` {"system": "documents"}.
-49. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-50. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-51. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-52. Called `ask_system` (attempt 1, key banking-040-at-01:do-ask:15).
-53. Action in the world: `ask_system` {"system": "documents", "about": "document", "amount": "74.00"}.
-54. `ask_system` found {}.
-55. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-56. The case closed in `ASKED`: **ask_system**.
-57. The agent asked for `reply` {}.
-58. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready present is false (document_ready=not known).
+31. Rule `read-tariff` fired: state = READING → true (state=READING).
+32. Called `check_tariff` (attempt 1, key banking-040-at-01:read-tariff:10).
+33. `check_tariff` found {}.
+34. Rule `read-registration` fired: state = READING → true (state=READING).
+35. Called `check_registration` (attempt 1, key banking-040-at-01:read-registration:11).
+36. `check_registration` found {}.
+37. Rule `read-confirmation` fired: state = READING → true (state=READING).
+38. Called `check_confirmation` (attempt 1, key banking-040-at-01:read-confirmation:12).
+39. Note from `read-confirmation`: event 1 (Harrow & Vale Bank plc): I show an outgoing payment of £74.00 dated 14 July 2025 in your transaction history. Its reference is HV-040 and its bank status is SENT. [facts: confirmation='none', instructed_outside_portal=False]
+40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+41. `confirmation`: not known → none (by `read-confirmation`).
+42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+43. Rule `triage` fired: state = READING → true (state=READING).
+44. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+45. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.
+46. `request_type`: not known → question (by `triage`).
+47. `subject`: not known → document (by `triage`).
+48. State `READING` → `TRIAGED` (by `triage`).
+49. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+50. `next_system`: not known → documents (by `route-documents`).
+51. The agent asked for `ask_system` {"system": "documents"}.
+52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+53. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+55. Called `ask_system` (attempt 1, key banking-040-at-01:do-ask:16).
+56. Action in the world: `ask_system` {"system": "documents", "about": "document", "amount": "74.00"}.
+57. `ask_system` found {}.
+58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+59. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 9063 tokens in, 325 out, 3.686 s, cost $0.0175; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 4623 tokens in, 358 out, 3.236 s, cost $0.0090; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I've asked the documents system for a record of the £74.00 payment (reference HV-040, status SENT). Nothing has come back yet, so no document or reply is ready for the customer. The next step is to read the system's answer when it arrives and reply from it.

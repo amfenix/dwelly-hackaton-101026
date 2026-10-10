@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Elodie Mercer, verified on the secure portal, confirmed she wanted to cancel the future run of her recurring studio-rent payment instruction. The desk checked the standing-order record, which shows instruction HV-013 as cancelled, and replied on the portal saying so, adding that this does not establish a refund or a future payment outcome and that no further change was made. The case is closed with the reply sent, and nothing is left for a person in the record.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer
@@ -67,7 +73,7 @@ Facts established:
 - subject: **standing_order**
 - recurring_asked: **True**
 - recurring_status: **CANCELLED**
-- confirmation: **none**
+- confirmation: **given**
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
@@ -77,7 +83,7 @@ Where they came from:
 - event 3 (Elodie Mercer): I confirm that I want to cancel the future run of my recurring studio-rent payment instruction. [facts: requester='Elodie Mercer', role='customer', channel='secure_portal', verified=True]
 - event 4 (H&V instruction log): I checked that Elodie Mercer has authority over this instruction and that its next run has not started. I am submitting her secure-portal cancellation confirmation for instruction HV-013. [facts: recurring_asked=True]
 - event 5 (H&V instruction log): HV-013 — Future run cancelled. No payment was in progress when the cancellation was recorded. [facts: recurring_status='CANCELLED']
-- event 3 (Elodie Mercer): I confirm that I want to cancel the future run of my recurring studio-rent payment instruction. [facts: confirmation='none', instructed_outside_portal=False]
+- event 3 (Elodie Mercer): I confirm that I want to cancel the future run of my recurring studio-rent payment instruction. [facts: confirmation='given', instructed_outside_portal=False]
 
 ## Escalated
 

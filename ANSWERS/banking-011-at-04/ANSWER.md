@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellison, who was not verified, asked over secure chat when her monthly household standing order is next due. The desk checked the standing-order record, found it active with a next run of 3 September 2025, and replied on secure chat with that date. The reply also said this does not guarantee the future payment will execute and that no instruction or change was made. The case is closed, and nothing is left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

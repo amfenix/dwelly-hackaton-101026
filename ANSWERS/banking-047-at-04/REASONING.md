@@ -40,43 +40,46 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-documents` fired: state = READING → true (state=READING).
 37. Called `check_documents` (attempt 1, key banking-047-at-04:read-documents:9).
 38. `check_documents` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-047-at-04:read-registration:10).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-047-at-04:read-confirmation:11).
-44. Note from `read-confirmation`: event 2 (Maeve Calder): Please confirm our current company payment limit. I’m authorised to view limits, and I need the setting for a substantial supplier payment. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-50. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → limit (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
-55. `next_system`: not known → business (by `asked-business`).
-56. The agent asked for `reply` {}.
-57. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_status present → true (business_status=OTHER).
-58. State `TRIAGED` → `REPLY_PENDING` (by `business-reply`).
-59. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-60. Called `reply_customer` (attempt 1, key banking-047-at-04:do-reply:15).
-61. Action in the world: `reply` {"to": "Maeve Calder", "channel": "secure_chat", "text": "The business record shows other; maximum £20000.00. The answer does not establish a recognized business-record status. No additional approval or role change was made."}.
-62. `reply_customer` found {}.
-63. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-64. The case closed in `REPLIED`: **reply**.
+39. Rule `read-tariff` fired: state = READING → true (state=READING).
+40. Called `check_tariff` (attempt 1, key banking-047-at-04:read-tariff:10).
+41. `check_tariff` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-047-at-04:read-registration:11).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-047-at-04:read-confirmation:12).
+47. Note from `read-confirmation`: event 2 (Maeve Calder): Please confirm our current company payment limit. I’m authorised to view limits, and I need the setting for a substantial supplier payment. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → limit (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
+58. `next_system`: not known → business (by `asked-business`).
+59. The agent asked for `reply` {}.
+60. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_status present → true (business_status=OTHER).
+61. State `TRIAGED` → `REPLY_PENDING` (by `business-reply`).
+62. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+63. Called `reply_customer` (attempt 1, key banking-047-at-04:do-reply:16).
+64. Action in the world: `reply` {"to": "Maeve Calder", "channel": "secure_chat", "text": "The business record shows other; maximum £20000.00. The answer does not establish a recognized business-record status. No additional approval or role change was made."}.
+65. `reply_customer` found {}.
+66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+67. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 7665 tokens in, 671 out, 5.905 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 7763 tokens in, 659 out, 6.127 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent Maeve a reply with the limit from the business records. The current outgoing-payment limit on her company profile is 20,000.00. The desk accepted the reply and the case is closed.
+> I've sent the reply. The business system's record shows the company's outgoing-payment limit as 20,000.00, and the reply reports that figure to Maeve.
 > 
-> Two things about the case:
-> - **Verification:** Maeve is not verified on secure chat. Her role is viewer, which can see limits, and the desk accepted the reply on that basis.
-> - **Business system status:** The business system returned a status of OTHER. I treated it as a valid answer and reported the limit it gave.
+> Two things in the case are worth knowing:
+> - **Verification:** Maeve is not marked as verified.
+> - **Role:** Her role is viewer, which fits her saying she is authorised to view limits.
 > 
-> Nothing was changed. The planned supplier payout she mentioned has not been submitted, and the reply doesn't act on it.
+> The desk accepted the reply and closed the case. Nothing else is open.

@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, a verified caller, asked the desk to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate, though she doesn't know which line it is. The desk classed this as a standing order question and sent an ask to the recurring payments system about the £34.80 standing order; that ask returned no result, and the case closed at that step. Nothing was removed or changed, so a person still needs to establish whether the two payments are duplicates and which one, if any, should go.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

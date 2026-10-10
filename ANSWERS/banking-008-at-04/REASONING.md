@@ -39,43 +39,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-008-at-04:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-008-at-04:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-008-at-04:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Elena Marlow): I’ve completed the identity checks in this secure chat. I paid Mallow Pottery Works for a kiln repair, but I can’t remember the purpose text I entered; please look up what my instruction recorded. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → transfer (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-54. `next_system`: not known → payment (by `asked-payment`).
-55. The agent asked for `ask_system` {"system": "payment"}.
-56. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
-57. The agent asked for `reply` {}.
-58. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
-59. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-60. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-61. Called `reply_customer` (attempt 1, key banking-008-at-04:do-reply:15).
-62. Action in the world: `reply` {"to": "Elena Marlow", "channel": "secure_chat", "text": "The payment record shows your an answer without a recognized payment status. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made."}.
-63. `reply_customer` found {}.
-64. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-65. The case closed in `REPLIED`: **reply**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-008-at-04:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-008-at-04:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-008-at-04:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Elena Marlow): I’ve completed the identity checks in this secure chat. I paid Mallow Pottery Works for a kiln repair, but I can’t remember the purpose text I entered; please look up what my instruction recorded. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → transfer (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+57. `next_system`: not known → payment (by `asked-payment`).
+58. The agent asked for `reply` {}.
+59. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
+60. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+61. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+62. Called `reply_customer` (attempt 1, key banking-008-at-04:do-reply:16).
+63. Action in the world: `reply` {"to": "Elena Marlow", "channel": "secure_chat", "text": "The payment record shows your an answer without a recognized payment status. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made."}.
+64. `reply_customer` found {}.
+65. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+66. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-6 calls, 10989 tokens in, 769 out, 7.649 s, cost $0.0237; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 7908 tokens in, 763 out, 7.013 s, cost $0.0175; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer, and the case is now closed as REPLIED.
+> I've sent the reply, and the case is closed. I didn't write the reply text myself, because the desk composes it.
 > 
-> The payment system had already been asked, so a second lookup was refused. Its answer came back as OTHER, which the desk says still counts as an answer to report. I didn't write the reply text. The desk writes it from what the case holds.
+> The payment system had already been checked, and its answer came back with status "OTHER". I treated that as an answer to report, so I replied instead of querying again. I didn't look at the reply text, so I can't confirm it includes the purpose text of your transfer.
 > 
-> The case facts still show the customer as not verified, even though she says she passed the identity checks in the secure chat. I didn't resolve that before replying.
+> The desk's facts also still show you as not verified, even though you said you'd completed the identity checks in the chat. I didn't resolve that.

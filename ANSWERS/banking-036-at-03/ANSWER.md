@@ -2,6 +2,12 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
+## Summary
+
+Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address on her profile. Her email alone can't make that change, so the desk sent the change to her for confirmation and closed the case at "confirmation sent". Nothing is left for the desk; the change takes effect only once Mara confirms it herself in the secure portal.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

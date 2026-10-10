@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Leona Voss, a viewer who was not verified, asked over secure chat whether row SUP-17 in her batch had actually been paid, since the batch showed as processed. The desk checked the payment record, found the row rejected because the beneficiary details did not match the receiving institution's records, and replied on secure chat with that status and reason. The reply also said this does not establish a different cause or authorise a retry, and that no new transfer was made; the case is closed with nothing left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

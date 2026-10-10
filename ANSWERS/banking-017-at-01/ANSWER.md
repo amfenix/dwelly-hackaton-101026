@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+The request was a question about a standing order, apparently the monthly rent payment, since the note said no payment for this cycle was visible and the customer should check with their bank. The desk classified it as a standing-order question, found no confirmation and no instruction given outside the portal, and asked the recurring payments system about the standing order. That was the only action taken, and the case closed there with no answer recorded yet, so whether the payment was sent or why it wasn't is still unknown and the customer has not been replied to.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

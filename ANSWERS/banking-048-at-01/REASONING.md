@@ -30,43 +30,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 26. Rule `read-documents` fired: state = READING → true (state=READING).
 27. Called `check_documents` (attempt 1, key banking-048-at-01:read-documents:9).
 28. `check_documents` found {}.
-29. Rule `read-registration` fired: state = READING → true (state=READING).
-30. Called `check_registration` (attempt 1, key banking-048-at-01:read-registration:10).
-31. `check_registration` found {}.
-32. Rule `read-confirmation` fired: state = READING → true (state=READING).
-33. Called `check_confirmation` (attempt 1, key banking-048-at-01:read-confirmation:11).
-34. Note from `read-confirmation`: event 1 (Buyer): I've sent payment for the workshop invoice. Please let me know when it reaches you. [facts: confirmation='none', instructed_outside_portal=False]
-35. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-36. `confirmation`: not known → none (by `read-confirmation`).
-37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-40. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-41. `request_type`: not known → question (by `triage`).
-42. `subject`: not known → incoming_payment (by `triage`).
-43. State `READING` → `TRIAGED` (by `triage`).
-44. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-45. `next_system`: not known → incoming (by `route-incoming`).
-46. The agent asked for `ask_system` {"system": "incoming"}.
-47. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-48. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-50. Called `ask_system` (attempt 1, key banking-048-at-01:do-ask:15).
-51. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
-52. `ask_system` found {}.
-53. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-54. The case closed in `ASKED`: **ask_system**.
-55. The agent asked for `reply` {}.
-56. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=incoming); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=incoming); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=incoming); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=incoming); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=incoming); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=incoming); document_ready present is false (document_ready=not known).
+29. Rule `read-tariff` fired: state = READING → true (state=READING).
+30. Called `check_tariff` (attempt 1, key banking-048-at-01:read-tariff:10).
+31. `check_tariff` found {}.
+32. Rule `read-registration` fired: state = READING → true (state=READING).
+33. Called `check_registration` (attempt 1, key banking-048-at-01:read-registration:11).
+34. `check_registration` found {}.
+35. Rule `read-confirmation` fired: state = READING → true (state=READING).
+36. Called `check_confirmation` (attempt 1, key banking-048-at-01:read-confirmation:12).
+37. Note from `read-confirmation`: event 1 (Buyer): I've sent payment for the workshop invoice. Please let me know when it reaches you. [facts: confirmation='none', instructed_outside_portal=False]
+38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+39. `confirmation`: not known → none (by `read-confirmation`).
+40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+41. Rule `triage` fired: state = READING → true (state=READING).
+42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+43. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+44. `request_type`: not known → question (by `triage`).
+45. `subject`: not known → incoming_payment (by `triage`).
+46. State `READING` → `TRIAGED` (by `triage`).
+47. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+48. `next_system`: not known → incoming (by `route-incoming`).
+49. The agent asked for `ask_system` {"system": "incoming"}.
+50. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+51. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+53. Called `ask_system` (attempt 1, key banking-048-at-01:do-ask:16).
+54. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
+55. `ask_system` found {}.
+56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+57. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 9580 tokens in, 515 out, 5.373 s, cost $0.0205; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 6373 tokens in, 375 out, 3.577 s, cost $0.0127; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the incoming-payments system whether the buyer's payment has arrived, but I can't reply to the customer yet.
-> 
-> The check returned no result: the case has no incoming-payment finding. My reply attempt was refused for that reason, and the case is now closed at this step. So I can't say whether the payment has reached the H&V business account. The only evidence of a payment is the buyer's own message, which isn't confirmation.
-> 
-> A person will need to pick this up, either to re-run the incoming-payment check or to tell the customer that nothing is confirmed yet.
+> I've asked the incoming-payments system whether the buyer's payment has arrived. The check was accepted, but it returned no result. The case record shows no confirmation of a payment and no other new facts, so I can't say whether the payment has reached your H&V business account. The case is closed at this step with nothing further to do.

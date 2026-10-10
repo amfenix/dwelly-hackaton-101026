@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk classified this as a question about a statement and sent an inquiry to the documents system, then closed the case at that step. The record shows no answer from the documents system, so whether the statement exists is still unknown. Mara's identity is marked unverified, and the record shows nothing was sent to her from her account.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

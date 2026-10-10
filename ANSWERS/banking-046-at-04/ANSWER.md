@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellery, verified by call, asked H&V to revoke former employee Owen Bell's Payroll Approver role and to keep any review of earlier operations separate. The desk passed the instruction to the business side, whose record came back as role revoked, and it replied to her on the verified call saying so, with no other role or permission change established or made. The case is closed as replied, and the record shows nothing left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

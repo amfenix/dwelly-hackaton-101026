@@ -1,6 +1,12 @@
 # Case banking-036-at-05: New correspondence address
 
-**Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
+**Decision: submit_request**  (final state `REQUESTED`)
+
+## Summary
+
+Mara Ellison, a verified customer writing through the secure portal, asked to change the correspondence address on her profile and confirmed she wanted the new address used. The desk accepted this as a change request and registered it with the access team about her profile, and the case closed in the REQUESTED state. The record does not show the change being applied to her profile, so that remains with the access team.
+
+_Written by a model from the record below; the sections below are the record._
 
 ## What the system received
 
@@ -40,7 +46,7 @@ Case reference: id banking-036-at-05, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `send_for_confirmation` (change: profile, to: Mara Ellison), by rule `do-confirm`
+- `register_request` (team: access, about: profile), by rule `do-request`
 
 ## Decision and why
 
@@ -48,13 +54,16 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `CONFIRM_PENDING`: rule `change-needs-confirmation` — A change is confirmed by the customer in the secure portal, not in chat or by email.
+- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `access-instruction` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - next_system = access → true (next_system=access)
+  - access_asked absent → true (access_asked=not known)
+  - verified → true (verified=True)
+  - request_type = instruction → false (request_type=change)
   - request_type = change → true (request_type=change)
-  - confirmation = none → true (confirmation=none)
-  - registration_asked absent → true (registration_asked=not known)
-- `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
-  - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
+  - confirmation = given → true (confirmation=given)
+- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
+  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 
 Facts established:
 
@@ -63,7 +72,7 @@ Facts established:
 - channel: **secure_portal**
 - verified: **True**
 - subject: **profile**
-- confirmation: **none**
+- confirmation: **given**
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
@@ -71,7 +80,8 @@ Facts established:
 Where they came from:
 
 - event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: requester='Mara Ellison', role='customer', channel='secure_portal', verified=True]
-- event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: confirmation='none', instructed_outside_portal=True]
+- event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: confirmation='given']
+- event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: instructed_outside_portal=True]
 
 ## Escalated
 
@@ -83,4 +93,4 @@ No.
 
 ## Final result
 
-send_for_confirmation (CONFIRMATION_SENT)
+submit_request (REQUESTED)

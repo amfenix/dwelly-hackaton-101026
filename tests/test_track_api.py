@@ -16,7 +16,7 @@ from tests.conftest import FakeAnthropic, FakeTypeSafe, text_reply
 
 TRACK = Path(__file__).resolve().parents[1] / "track"
 FUNCTIONS, _ = load_functions(TRACK / "functions.py")
-BANKING_CASES = json.loads((TRACK / "cases.json").read_text())
+BANKING_CASES = json.loads((TRACK / "cases.json").read_text(encoding="utf-8"))
 
 
 class Probe:

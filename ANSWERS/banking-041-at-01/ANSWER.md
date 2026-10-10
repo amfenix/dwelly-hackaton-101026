@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, a verified authorised file uploader using the business portal, asked whether batch-041.csv (reference HV-041, payroll listing Staff A at £420.00 and Staff B at £385.00) had been received. The desk classified it as a question about a batch and put it to the payment system, citing reference HV-041 and amount 420.00. That question was sent and the case closed as asked; no answer from the payment system is in the record, so the customer has not yet been told whether the file arrived.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

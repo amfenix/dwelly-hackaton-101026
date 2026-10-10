@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+The customer asked the bank to cancel their active Direct Debit mandate to Northmere Fitness so it could not be used for future collections. The desk classified this as a direct debit instruction, refused to submit it directly (the requester was not verified and no confirmation had been given), and instead asked the recurring-payments system about the direct debit. The case closed at that point; the record shows no cancellation carried out and no answer back from that system.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellwood, a customer on secure chat who has not been verified, asked what stage her transfer has reached and whether the beneficiary has received it. The desk classified this as a question about a transfer, routed it to the payment system and sent that system an inquiry, which completed with no answer returned. The record shows no receipt confirmation for the transfer, so the stage and beneficiary receipt are still unknown and the payment system's reply remains to be read by a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

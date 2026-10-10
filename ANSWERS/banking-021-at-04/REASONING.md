@@ -39,39 +39,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-021-at-04:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-021-at-04:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-021-at-04:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Mara Ellison): I’m following up because the portal only says my replacement card request was accepted. Please check whether dispatch has been registered; I don’t have confirmation that the card has arrived. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → card (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-54. `next_system`: not known → card (by `asked-card`).
-55. The agent asked for `reply` {}.
-56. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_status present → true (card_status=DISPATCHED).
-57. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
-58. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-59. Called `reply_customer` (attempt 1, key banking-021-at-04:do-reply:15).
-60. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The card journal shows dispatched. This does not confirm that the customer has received the card. No additional card change was made."}.
-61. `reply_customer` found {}.
-62. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-63. The case closed in `REPLIED`: **reply**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-021-at-04:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-021-at-04:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-021-at-04:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Mara Ellison): I’m following up because the portal only says my replacement card request was accepted. Please check whether dispatch has been registered; I don’t have confirmation that the card has arrived. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → card (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+57. `next_system`: not known → card (by `asked-card`).
+58. The agent asked for `reply` {}.
+59. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_status present → true (card_status=DISPATCHED).
+60. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
+61. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+62. Called `reply_customer` (attempt 1, key banking-021-at-04:do-reply:16).
+63. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The card journal shows dispatched. This does not confirm that the customer has received the card. No additional card change was made."}.
+64. `reply_customer` found {}.
+65. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+66. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7243 tokens in, 543 out, 5.098 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7301 tokens in, 540 out, 5.122 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The card system's record shows the replacement card as DISPATCHED, so I sent the customer a reply based on that. The record only shows dispatch. It has no delivery confirmation, so the reply doesn't say the card has arrived. The case is now closed as replied.
+> I sent the reply. The card record already showed the replacement card as DISPATCHED, so I didn't need to query the card system again. The desk writes the wording, so I haven't seen the exact text.
 > 
-> The customer's identity is not verified on this chat. I still sent the status, because it is a read-only answer to a question and the policy accepted the reply.
+> The record shows dispatch only. It doesn't confirm that the card has been delivered. Nothing in the case marks Mara Ellison as verified, so I made no changes to her account.

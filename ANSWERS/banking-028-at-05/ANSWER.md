@@ -1,6 +1,12 @@
 # Case banking-028-at-05: New phone number in profile
 
-**Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
+**Decision: submit_request**  (final state `REQUESTED`)
+
+## Summary
+
+Elowen Mercer, a verified customer, asked by email to change the phone number on her profile because she no longer has her old phone, and she said the email was a request rather than her authorisation. The desk found she had confirmed the replacement number through the secure portal, so it registered a change request with the access team about her profile and closed the case as requested. The record does not show whether the change has actually been applied, so that remains with the access team.
+
+_Written by a model from the record below; the sections below are the record._
 
 ## What the system received
 
@@ -40,7 +46,7 @@ Case reference: id banking-028-at-05, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `send_for_confirmation` (change: profile, to: Elowen Mercer), by rule `do-confirm`
+- `register_request` (team: access, about: profile), by rule `do-request`
 
 ## Decision and why
 
@@ -48,13 +54,16 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `CONFIRM_PENDING`: rule `change-needs-confirmation` — A change is confirmed by the customer in the secure portal, not in chat or by email.
+- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `access-instruction` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - next_system = access → true (next_system=access)
+  - access_asked absent → true (access_asked=not known)
+  - verified → true (verified=True)
+  - request_type = instruction → false (request_type=change)
   - request_type = change → true (request_type=change)
-  - confirmation = none → true (confirmation=none)
-  - registration_asked absent → true (registration_asked=not known)
-- `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
-  - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
+  - confirmation = given → true (confirmation=given)
+- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
+  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 
 Facts established:
 
@@ -63,7 +72,7 @@ Facts established:
 - channel: **secure_portal**
 - verified: **True**
 - subject: **profile**
-- confirmation: **none**
+- confirmation: **given**
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
@@ -71,7 +80,8 @@ Facts established:
 Where they came from:
 
 - event 5 (Elowen Mercer): I have reviewed the replacement number in the secure process and confirm that I want it applied to my profile. [facts: requester='Elowen Mercer', role='customer', channel='secure_portal', verified=True]
-- event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: confirmation='none', instructed_outside_portal=True]
+- event 5 (Elowen Mercer): I have reviewed the replacement number in the secure process and confirm that I want it applied to my profile. [facts: confirmation='given']
+- event 1 (Elowen Mercer): I need to change the phone number on my profile because I no longer have access to my old phone. Please tell me the approved way to confirm a replacement; this email is a request, not my authorisation to make the change. [facts: instructed_outside_portal=True]
 
 ## Escalated
 
@@ -83,4 +93,4 @@ No.
 
 ## Final result
 
-send_for_confirmation (CONFIRMATION_SENT)
+submit_request (REQUESTED)

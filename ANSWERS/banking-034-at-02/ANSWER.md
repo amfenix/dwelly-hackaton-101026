@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellery, who was not verified, asked over secure chat why a £3.20 fee appeared against a withdrawal and asked for the tariff entry that applied to be checked. The desk classed it as a fee question and sent a query about the £3.20 fee to the tariff system, then closed the case at that step. The tariff system's answer is not in the record, so the question of which entry applied and how it accounts for the amount is still open for a person to follow up and reply to her.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer
@@ -28,7 +34,7 @@ Case reference: id banking-034-at-02, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `ask_system` (system: documents, about: fee, amount: 3.20), by rule `do-ask`
+- `ask_system` (system: tariff, about: fee, amount: 3.20), by rule `do-ask`
 
 ## Decision and why
 
@@ -36,12 +42,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `documents-ask` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `tariff-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - args.system = documents → true (args.system=documents)
-  - next_system = documents → true (next_system=documents)
-  - next_system absent → false (next_system=documents)
-  - documents_asked absent → true (documents_asked=not known)
+  - args.system = tariff → true (args.system=tariff)
+  - next_system = tariff → true (next_system=tariff)
+  - next_system absent → false (next_system=tariff)
+  - tariff_asked absent → true (tariff_asked=not known)
   - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
@@ -57,7 +63,7 @@ Facts established:
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **question**
-- next_system: **documents**
+- next_system: **tariff**
 
 Where they came from:
 

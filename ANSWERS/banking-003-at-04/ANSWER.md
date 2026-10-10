@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Elise Rowan, writing over secure chat, asked about the stage of her transfer and whether she needed to authorise it. The desk checked the payment record, which shows the transfer as awaiting authorisation, and replied in the same chat saying exactly that, that the reply does not authorise the payment, and that no new transfer was made. Her identity was not verified, and nothing else is recorded as left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

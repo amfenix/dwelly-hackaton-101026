@@ -2,6 +2,12 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
+## Summary
+
+Elodie Mercer, verified on a call, asked to cancel the next run of her studio-rent standing order, to escalate it, and to be told how to confirm it securely. The desk registered a request with the recurring team about the standing order, and the case closed as requested. No confirmation had been given, and the record does not show that the cancellation has taken effect or that she was told how to confirm it securely, so those remain open.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

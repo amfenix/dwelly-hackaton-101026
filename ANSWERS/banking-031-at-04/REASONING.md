@@ -40,39 +40,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. `documents_asked`: not known → True (by `read-documents`).
 37. `document_ready`: not known → True (by `read-documents`).
 38. `document_name`: not known → statement-031.pdf (by `read-documents`).
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-031-at-04:read-registration:10).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-031-at-04:read-confirmation:11).
-44. Note from `read-confirmation`: event 2 (Elowen Marr): I’m escalating this because I still can’t find my June statement in the portal. I need the statement itself made available there; I’m not asking for it by email. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.51 → question.
-50. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → statement (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-55. `next_system`: not known → documents (by `asked-documents`).
-56. The agent asked for `reply` {}.
-57. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready present → true (document_ready=True).
-58. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
-59. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-60. Called `reply_customer` (attempt 1, key banking-031-at-04:do-reply:15).
-61. Action in the world: `reply` {"to": "Elowen Marr", "channel": "secure_chat", "text": "The document record shows that the document (statement-031.pdf) is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
-62. `reply_customer` found {}.
-63. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-64. The case closed in `REPLIED`: **reply**.
+39. Rule `read-tariff` fired: state = READING → true (state=READING).
+40. Called `check_tariff` (attempt 1, key banking-031-at-04:read-tariff:10).
+41. `check_tariff` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-031-at-04:read-registration:11).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-031-at-04:read-confirmation:12).
+47. Note from `read-confirmation`: event 2 (Elowen Marr): I’m escalating this because I still can’t find my June statement in the portal. I need the statement itself made available there; I’m not asking for it by email. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.52 → question.
+53. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → statement (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+58. `next_system`: not known → documents (by `asked-documents`).
+59. The agent asked for `reply` {}.
+60. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); document_ready present → true (document_ready=True).
+61. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
+62. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+63. Called `reply_customer` (attempt 1, key banking-031-at-04:do-reply:16).
+64. Action in the world: `reply` {"to": "Elowen Marr", "channel": "secure_chat", "text": "The document record shows that the document (statement-031.pdf) is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
+65. `reply_customer` found {}.
+66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+67. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7252 tokens in, 523 out, 5.138 s, cost $0.0159; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7312 tokens in, 546 out, 5.053 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the customer a reply, and the case is now closed as replied. The documents system had already confirmed that the June 2025 statement (`statement-031.pdf`) is ready, so no further lookup was needed.
+> I replied to the customer, and the case is now closed as replied. The documents system had already confirmed that the June 2025 statement is ready, as `statement-031.pdf`, so no further lookup was needed.
 > 
-> The customer is not verified, so I did not take any action on the account. The reply was written by the desk, and I haven't seen its wording.
+> The customer is not verified yet, and the case shows no confirmation that the statement is visible in her portal. The reply therefore has to stay within what the records show.

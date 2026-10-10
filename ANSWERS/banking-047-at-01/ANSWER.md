@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Maeve Calder, a verified customer using the business portal, asked what the current outgoing-payment limit is for her company profile before she arranges a supplier payout she hasn't submitted. The desk classified this as a question about the limit and sent that question to the business system, and the case closed in the asked state. The business system's answer hasn't come back, so Maeve still needs to be told the limit once it does; nothing was submitted or changed.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

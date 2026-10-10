@@ -35,38 +35,41 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 31. Rule `read-documents` fired: state = READING → true (state=READING).
 32. Called `check_documents` (attempt 1, key banking-036-at-05:read-documents:9).
 33. `check_documents` found {}.
-34. Rule `read-registration` fired: state = READING → true (state=READING).
-35. Called `check_registration` (attempt 1, key banking-036-at-05:read-registration:10).
-36. `check_registration` found {}.
-37. Rule `read-confirmation` fired: state = READING → true (state=READING).
-38. Called `check_confirmation` (attempt 1, key banking-036-at-05:read-confirmation:11).
-39. Note from `read-confirmation`: event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: confirmation='none', instructed_outside_portal=True]
-40. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": true}.
-41. `confirmation`: not known → none (by `read-confirmation`).
-42. `instructed_outside_portal`: not known → True (by `read-confirmation`).
-43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
-45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-46. `request_type`: not known → change (by `triage`).
-47. `subject`: not known → profile (by `triage`).
-48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
-50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-54. Called `send_for_confirmation` (attempt 1, key banking-036-at-05:do-confirm:15).
-55. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Mara Ellison"}.
-56. `send_for_confirmation` found {}.
-57. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-58. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+34. Rule `read-tariff` fired: state = READING → true (state=READING).
+35. Called `check_tariff` (attempt 1, key banking-036-at-05:read-tariff:10).
+36. `check_tariff` found {}.
+37. Rule `read-registration` fired: state = READING → true (state=READING).
+38. Called `check_registration` (attempt 1, key banking-036-at-05:read-registration:11).
+39. `check_registration` found {}.
+40. Rule `read-confirmation` fired: state = READING → true (state=READING).
+41. Called `check_confirmation` (attempt 1, key banking-036-at-05:read-confirmation:12).
+42. Note from `read-confirmation`: event 4 (Mara Ellison): I confirm that I want H&V to use the new address I provided through the secure profile process for future correspondence. [facts: confirmation='given']
+43. Note from `read-confirmation`: event 1 (Mara Ellison): I have moved within the UK and am writing to let you know. Please update the address you use for my correspondence; I understand this email alone does not change my profile. [facts: instructed_outside_portal=True]
+44. `check_confirmation` found {"confirmation": "given", "instructed_outside_portal": true}.
+45. `confirmation`: not known → given (by `read-confirmation`).
+46. `instructed_outside_portal`: not known → True (by `read-confirmation`).
+47. Rule `triage` fired: state = READING → true (state=READING).
+48. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+49. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+50. `request_type`: not known → change (by `triage`).
+51. `subject`: not known → profile (by `triage`).
+52. State `READING` → `TRIAGED` (by `triage`).
+53. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
+54. `next_system`: not known → access (by `route-access`).
+55. The agent asked for `submit_request` {}.
+56. Rule `access-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = access → true (next_system=access); access_asked absent → true (access_asked=not known); verified → true (verified=True); request_type = instruction → false (request_type=change); request_type = change → true (request_type=change); confirmation = given → true (confirmation=given).
+57. State `TRIAGED` → `REQUEST_PENDING` (by `access-instruction`).
+58. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+59. Called `register_request` (attempt 1, key banking-036-at-05:do-request:16).
+60. Action in the world: `register_request` {"team": "access", "about": "profile"}.
+61. `register_request` found {}.
+62. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+63. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 4869 tokens in, 465 out, 4.098 s, cost $0.0106; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 7541 tokens in, 529 out, 5.71 s, cost $0.0153; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is closed at the confirmation step, so I'm taking no further action.
-> 
-> The state is CONFIRMATION_SENT and the outcome is send_for_confirmation. Mara Ellison is verified in the secure portal. The desk has recorded no confirmation yet, so the address change will go through the bank's secure profile process. I haven't changed her address, and no tool calls were refused.
+> I've submitted Mara Ellison's correspondence address change for processing, and the desk accepted it. She was verified in the secure portal and confirmed the change there. The case is now in the REQUESTED state and closed on my side. I haven't seen the change applied to her profile yet.

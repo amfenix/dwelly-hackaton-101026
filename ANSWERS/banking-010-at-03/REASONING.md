@@ -40,42 +40,40 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Rule `read-documents` fired: state = READING → true (state=READING).
 37. Called `check_documents` (attempt 1, key banking-010-at-03:read-documents:9).
 38. `check_documents` found {}.
-39. Rule `read-registration` fired: state = READING → true (state=READING).
-40. Called `check_registration` (attempt 1, key banking-010-at-03:read-registration:10).
-41. `check_registration` found {}.
-42. Rule `read-confirmation` fired: state = READING → true (state=READING).
-43. Called `check_confirmation` (attempt 1, key banking-010-at-03:read-confirmation:11).
-44. Note from `read-confirmation`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: confirmation='none', instructed_outside_portal=False]
-45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-46. `confirmation`: not known → none (by `read-confirmation`).
-47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-50. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-51. `request_type`: not known → question (by `triage`).
-52. `subject`: not known → incoming_payment (by `triage`).
-53. State `READING` → `TRIAGED` (by `triage`).
-54. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
-55. `next_system`: not known → incoming (by `asked-incoming`).
-56. Rule `incoming-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_asked → true (incoming_asked=True); incoming_found absent → true (incoming_found=not known). The system was asked; its answer is not in yet.
-57. State `TRIAGED` → `WAITING` (by `incoming-waits`).
-58. The case closed in `WAITING`: **wait**.
-59. The agent asked for `ask_system` {"system": "incoming"}.
-60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming).
-61. The agent asked for `escalate` {"note": "Customer Elowen Marr (secure chat, not verified) asks whether a £42.80 refund from Northmere Home Supplies has arrived, tied to her outgoing £42.80 transfer. The incoming system was already queried, but the case holds no result or matching entry (confirmation: none). The case is in WAITING, so a second incoming query was refused. I can't confirm any refund. Please check incoming entries against that specific transfer, complete identity verification, and reply to the customer. Do not confuse it with other payments."}.
-62. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+39. Rule `read-tariff` fired: state = READING → true (state=READING).
+40. Called `check_tariff` (attempt 1, key banking-010-at-03:read-tariff:10).
+41. `check_tariff` found {}.
+42. Rule `read-registration` fired: state = READING → true (state=READING).
+43. Called `check_registration` (attempt 1, key banking-010-at-03:read-registration:11).
+44. `check_registration` found {}.
+45. Rule `read-confirmation` fired: state = READING → true (state=READING).
+46. Called `check_confirmation` (attempt 1, key banking-010-at-03:read-confirmation:12).
+47. Note from `read-confirmation`: event 2 (Elowen Marr): I am escalating this because Northmere Home Supplies said the £42.80 might be returned. Please check whether the incoming entry is for that specific transfer; I do not want it confused with another payment. [facts: confirmation='none', instructed_outside_portal=False]
+48. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+49. `confirmation`: not known → none (by `read-confirmation`).
+50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+51. Rule `triage` fired: state = READING → true (state=READING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+54. `request_type`: not known → question (by `triage`).
+55. `subject`: not known → incoming_payment (by `triage`).
+56. State `READING` → `TRIAGED` (by `triage`).
+57. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
+58. `next_system`: not known → incoming (by `asked-incoming`).
+59. Rule `incoming-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_asked → true (incoming_asked=True); incoming_found absent → true (incoming_found=not known). The system was asked; its answer is not in yet.
+60. State `TRIAGED` → `WAITING` (by `incoming-waits`).
+61. The case closed in `WAITING`: **wait**.
+62. The agent asked for `ask_system` {"system": "incoming"}.
+63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=incoming); next_system = tariff is false (next_system=incoming); next_system absent is false (next_system=incoming).
 
 ## Model calls
 
-5 calls, 11206 tokens in, 1088 out, 12.489 s, cost $0.0294; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7952 tokens in, 786 out, 7.197 s, cost $0.0199; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't confirm whether the £42.80 refund from Northmere Home Supplies has reached the account, and nothing more can be done on this case right now.
+> The incoming-payments check for the £42.80 from Northmere Home Supplies has already been requested, and the case is now waiting on that result. I can't confirm anything about the refund yet. I tried to ask the incoming system again and the desk refused, because that check is already on record and the case is in a waiting state.
 > 
-> - **No result in the case:** The incoming-payments check was already run, but the case holds no result or matching entry. The confirmation field says "none", so I can't say a refund has arrived.
-> - **Second check refused:** The desk wouldn't run the incoming check again, because the case is in a waiting state and that check had already been asked.
-> - **Escalation refused:** My escalation to a person was also refused for the same reason. The case is still open, and I've left it waiting.
-> - **Identity not verified:** The customer, Elowen Marr, is also not yet verified.
+> So far nothing shows that a refund has arrived, and the case doesn't say which entry would match your original transfer. I won't tie any incoming entry to that transfer until the record shows it. Your identity also isn't verified on this chat yet, which may limit what can be shared once the result is in.
 > 
-> Someone will need to match any incoming entry to the specific £42.80 transfer to Northmere Home Supplies. She asked that it not be confused with another payment.
+> I'm taking no further action now. The case stays open until the incoming result comes back or a person picks it up.

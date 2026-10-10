@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Elowen Marr, writing over secure chat and not verified, asked the desk to check whether an incoming £42.80 entry was for the specific Northmere Home Supplies transfer, as Northmere had said it might be returned. The desk found an incoming entry of 42.80 and replied that the incoming-payment record shows it, that this does not establish the sender's payment status, and that no payment was changed. The case is closed as replied; the reply does not confirm that the entry is the refund for that specific transfer, and nothing further is recorded for a person to do.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

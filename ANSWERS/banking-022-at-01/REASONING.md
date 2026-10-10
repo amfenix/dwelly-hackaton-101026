@@ -37,37 +37,42 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Rule `read-documents` fired: state = READING → true (state=READING).
 34. Called `check_documents` (attempt 1, key banking-022-at-01:read-documents:9).
 35. `check_documents` found {}.
-36. Rule `read-registration` fired: state = READING → true (state=READING).
-37. Called `check_registration` (attempt 1, key banking-022-at-01:read-registration:10).
-38. `check_registration` found {}.
-39. Rule `read-confirmation` fired: state = READING → true (state=READING).
-40. Called `check_confirmation` (attempt 1, key banking-022-at-01:read-confirmation:11).
-41. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]
-42. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-43. `confirmation`: not known → none (by `read-confirmation`).
-44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-47. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-48. `request_type`: not known → instruction (by `triage`).
-49. `subject`: not known → card (by `triage`).
-50. State `READING` → `TRIAGED` (by `triage`).
-51. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-52. `next_system`: not known → card (by `route-card`).
-53. The agent asked for `ask_system` {"system": "card"}.
-54. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
-55. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-57. Called `ask_system` (attempt 1, key banking-022-at-01:do-ask:15).
-58. Action in the world: `ask_system` {"system": "card", "about": "card"}.
-59. `ask_system` found {}.
-60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-61. The case closed in `ASKED`: **ask_system**.
+36. Rule `read-tariff` fired: state = READING → true (state=READING).
+37. Called `check_tariff` (attempt 1, key banking-022-at-01:read-tariff:10).
+38. `check_tariff` found {}.
+39. Rule `read-registration` fired: state = READING → true (state=READING).
+40. Called `check_registration` (attempt 1, key banking-022-at-01:read-registration:11).
+41. `check_registration` found {}.
+42. Rule `read-confirmation` fired: state = READING → true (state=READING).
+43. Called `check_confirmation` (attempt 1, key banking-022-at-01:read-confirmation:12).
+44. Note from `read-confirmation`: event 1 (Mara Ellison): After H&V completed its identification checks, I reported that my debit card was missing after a visit to Alder Quay Market. I asked you to block it immediately; no security details were recorded in the call note. [facts: confirmation='none', instructed_outside_portal=False]
+45. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+46. `confirmation`: not known → none (by `read-confirmation`).
+47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+48. Rule `triage` fired: state = READING → true (state=READING).
+49. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+50. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+51. `request_type`: not known → instruction (by `triage`).
+52. `subject`: not known → card (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+55. `next_system`: not known → card (by `route-card`).
+56. The agent asked for `ask_system` {"system": "card"}.
+57. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+58. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-022-at-01:do-ask:16).
+61. Action in the world: `ask_system` {"system": "card", "about": "card"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6889 tokens in, 466 out, 4.304 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7080 tokens in, 582 out, 5.017 s, cost $0.0162; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've queried the card system to find out which debit card Mara Ellison holds, so the right one gets blocked. That answer isn't in the case yet. The block itself hasn't been submitted, and the case now needs the card records read before the next step.
+> I checked the card system for this case. The case is now closed with the outcome "ask_system".
+> 
+> The block has not been submitted. The card check did not add any card details to the case, so I still can't confirm which card is on the record. Mara Ellison is verified and gave a clear instruction on a verified call, but nothing in the case says which card is meant. I haven't asked her which card she means either.

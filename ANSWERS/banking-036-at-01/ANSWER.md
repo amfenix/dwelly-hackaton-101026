@@ -2,6 +2,12 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
+## Summary
+
+Mara Ellison, writing by external email, asked the desk to update the correspondence address on her profile after a move within the UK. She was not verified and had sent the request outside the portal, so the desk did not change anything and instead sent her a confirmation request for the profile change. Her profile stays as it is until she confirms through the secure portal, and nothing failed or was refused.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

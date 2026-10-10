@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+The request was an instruction about a role, and the desk classified it as such and routed it to the business system. The agent's attempt to submit it directly was refused because no verification or confirmation was on record (confirmation was "none"), so the desk instead asked the business system about the role, and the case closed there. Nothing further is recorded as pending for a person, and the business system's answer is not in the record.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

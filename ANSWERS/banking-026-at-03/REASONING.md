@@ -39,41 +39,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-026-at-03:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-026-at-03:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-026-at-03:read-confirmation:11).
-43. Note from `read-confirmation`: event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-49. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
-50. `request_type`: not known → access (by `triage`).
-51. `subject`: not known → card (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-54. `next_system`: not known → access (by `asked-access`).
-55. The agent asked for `redirect_secure` {}.
-56. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
-57. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
-58. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
-59. Called `redirect_secure` (attempt 1, key banking-026-at-03:do-redirect:15).
-60. Action in the world: `redirect_secure` {"to": "Maren Ellwood", "channel": "secure_chat", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
-61. `redirect_secure` found {}.
-62. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
-63. The case closed in `REDIRECTED`: **redirect_secure**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-026-at-03:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-026-at-03:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-026-at-03:read-confirmation:12).
+46. Note from `read-confirmation`: event 1 (Maren Ellwood): I’ve forgotten the PIN for my H&V debit card and need to use it again. Please tell me the safe way to deal with this; I won’t send my PIN in chat. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+52. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
+53. `request_type`: not known → access (by `triage`).
+54. `subject`: not known → card (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+57. `next_system`: not known → access (by `asked-access`).
+58. The agent asked for `redirect_secure` {}.
+59. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
+60. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
+61. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
+62. Called `redirect_secure` (attempt 1, key banking-026-at-03:do-redirect:16).
+63. Action in the world: `redirect_secure` {"to": "Maren Ellwood", "channel": "secure_chat", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
+64. `redirect_secure` found {}.
+65. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
+66. The case closed in `REDIRECTED`: **redirect_secure**.
 
 ## Model calls
 
-5 calls, 7707 tokens in, 831 out, 6.779 s, cost $0.0182; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 7752 tokens in, 700 out, 5.541 s, cost $0.0170; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent Maren to the bank's secure process for resetting a forgotten card PIN. The desk accepted the redirect and closed the case, so nothing further is needed here.
+> I've pointed Maren to the bank's secure process for getting her card PIN back. The desk accepted the redirect and closed the case.
 > 
-> The bank never handles a PIN, and she hasn't been verified in this chat. The reply points her to the secure route and doesn't involve her sending or receiving a PIN in chat.
+> She is not verified, and a PIN is never handled in chat. The bank doesn't act on a PIN here, so the secure process was the right route.
 > 
-> The access system had already answered with a status of OTHER. I did not report that answer to her. I chose the redirect because her request was specifically about a forgotten PIN.
+> The access check on the case had come back as OTHER. I treated that as a general answer and not as a reason to do anything further.

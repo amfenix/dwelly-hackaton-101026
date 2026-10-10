@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Nerys Wren, a verified customer on the secure portal, asked for the permitted session extract for her profile. The desk saw the access record showing the extract as provided and replied on the portal with that status, noting that no password or PIN was handled and no further access change was made. The case closed as replied. The record says the origin of the new session was not determined, and the reply does not mention this. Nothing else is recorded as left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Nerys Wren, a verified customer using the secure portal, asked for the permitted session extract for her profile to be delivered through the portal. The desk classified this as an access question and sent a query to the access system, which returned nothing yet, and the case closed in the "asked" state. Nothing has been delivered to her so far; the record lists no further steps beyond the query itself.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

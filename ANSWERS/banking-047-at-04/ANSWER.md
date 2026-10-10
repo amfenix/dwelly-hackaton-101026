@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Maeve Calder asked over secure chat for the company's current payment limit. The desk checked the business limit register, which showed a maximum of £20,000 per outgoing payment and confirmed she may view limits, though her identity was not marked as verified and the record's status came back as "other", which the reply said does not establish a recognised business-record status. The desk sent her a reply with the £20,000.00 figure, made no approval or role change, and closed the case with nothing left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

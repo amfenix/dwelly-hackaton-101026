@@ -2,6 +2,12 @@
 
 **Decision: forward_to_authority**  (final state `FORWARDED`)
 
+## Summary
+
+Nadia Bell, writing from outside the portal and not verified, asked the desk to arrange secure-portal access for a new colleague who would help with payment administration, and she said she isn't the company administrator and can't approve or assign roles. The desk classed it as a request needing authority and forwarded it to the verified company administrator about the role, then closed the case as forwarded. Access for the new colleague has not been arranged, and the record does not show any approval from the administrator yet.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

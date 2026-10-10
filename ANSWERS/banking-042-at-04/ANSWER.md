@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Nadia Fenwick, a viewer on secure chat, asked for help seeing which rows of batch HV-042 need attention. The desk checked with the bank, which showed the batch as validation failed, and replied on secure chat that this doesn't establish a corrected file was received or any payment made, and that no approval or role change was made. The case is closed with that reply; the reply did not give her the row-level detail, and her identity was not verified.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

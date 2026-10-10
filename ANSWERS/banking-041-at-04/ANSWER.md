@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellison, the company's file uploader, asked over secure chat whether H&V had received batch-041.csv (reference HV-041), and said she was not asking for any payment to be approved or released. The desk checked the business system, which showed the file as received, and replied to her on secure chat saying so, adding that this does not establish that every row was paid or processed and that no approval or role change was made. The requester was not verified, and the case is closed with nothing left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

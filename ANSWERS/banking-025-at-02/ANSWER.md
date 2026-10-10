@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara asked why her £18.40 card payment at North Quay Books was declined. The desk classed it as a card-payment question and sent a query about that payment to the card system, with no other action taken. The case is closed at that point, and the card system's answer is still awaited, so the reply to Mara has not been written yet.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

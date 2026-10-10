@@ -39,35 +39,43 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Note from `read-documents`: event 3 (H&V acquiring service): I checked the manager’s authority for this business. Please prepare and place the acquiring report for 1–7 July 2025 in the secure portal for the authorised user. [facts: documents_asked=True]
 36. `check_documents` found {"documents_asked": true}.
 37. `documents_asked`: not known → True (by `read-documents`).
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-049-at-03:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-049-at-03:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Mara Venn): I’m the authorised manager for the shop. The report for the period I selected is not showing as available, so I’m asking you to escalate the file request. [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → document (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-54. `next_system`: not known → documents (by `asked-documents`).
-55. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
-56. State `TRIAGED` → `WAITING` (by `documents-waits`).
-57. The case closed in `WAITING`: **wait**.
-58. The agent asked for `ask_system` {"system": "documents"}.
-59. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True).
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-049-at-03:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-049-at-03:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-049-at-03:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Mara Venn): I’m the authorised manager for the shop. The report for the period I selected is not showing as available, so I’m asking you to escalate the file request. [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → document (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+57. `next_system`: not known → documents (by `asked-documents`).
+58. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
+59. State `TRIAGED` → `WAITING` (by `documents-waits`).
+60. The case closed in `WAITING`: **wait**.
+61. The agent asked for `ask_system` {"system": "documents"}.
+62. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
+63. The agent asked for `escalate` {"note": "Mara Venn, claiming to be authorised manager for North Quay Printworks, requests the acquiring report for 1–7 July 2025 (card sales and adjustments). Report is not showing as available in the portal. The requester is not verified (secure chat), and the documents system has already been queried with no answer recorded in the case. Please check report availability and verify her authority before releasing anything."}.
+64. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 7696 tokens in, 669 out, 6.433 s, cost $0.0183; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10942 tokens in, 929 out, 9.353 s, cost $0.0274; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't taken any further action on this case. It is waiting and closed to further steps.
+> The case is still open and waiting. Both of my attempts were refused, so nothing has moved on Mara Venn's request for the 1–7 July 2025 acquiring report.
 > 
-> The documents system had already been asked about the 1–7 July 2025 acquiring report, and the desk refused a second request. No answer from that check is in the case. Mara Venn is also not verified, so the desk can't escalate the file request on her say-so. The case stays in the waiting state until the documents check returns a result.
+> - **Documents check:** the desk had already queried the documents system for this case, and no answer is recorded. A second query was refused because the case is in WAITING, not TRIAGED.
+> - **Escalation:** I tried to hand it to a person with a note, but that was also refused for the same reason, because the case is not TRIAGED.
+> 
+> The requester is also still unverified. She says she is the authorised manager, but the desk has not confirmed that. Nothing has been released, and I'm making no further attempts. The case stays open for a person to pick up.

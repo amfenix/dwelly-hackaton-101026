@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellison asked, over secure chat, for an account confirmation document to be made available in her own secure portal only. The desk found that account-confirmation-038.pdf was ready and replied in secure chat that the document record shows it as available, without confirming it was downloaded or that funds were credited, and noting that no email was sent. Mara Ellison is recorded as not verified, and nothing further is left for a person in the record.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

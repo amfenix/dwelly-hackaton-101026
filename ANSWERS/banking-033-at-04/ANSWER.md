@@ -2,6 +2,12 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
+## Summary
+
+Mara Ellison, a customer on secure chat, asked to be told when her CSV export of transactions for 6–9 May 2025 is available in her secure portal. The desk checked the documents system, which showed the export was created and ready, and replied in secure chat that the document is available, while noting this does not confirm it was downloaded and that no email was sent. The case is closed as replied, nothing is left for a person, and her identity was recorded as not verified.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

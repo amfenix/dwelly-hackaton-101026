@@ -39,42 +39,45 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-007-at-04:read-documents:9).
 37. `check_documents` found {}.
-38. Rule `read-registration` fired: state = READING → true (state=READING).
-39. Called `check_registration` (attempt 1, key banking-007-at-04:read-registration:10).
-40. `check_registration` found {}.
-41. Rule `read-confirmation` fired: state = READING → true (state=READING).
-42. Called `check_confirmation` (attempt 1, key banking-007-at-04:read-confirmation:11).
-43. Note from `read-confirmation`: event 2 (Mara Ellwood): I can see the sent status, but I need to know what stage the transfer has reached. Can you check whether there is confirmation that the beneficiary received it? [facts: confirmation='none', instructed_outside_portal=False]
-44. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-45. `confirmation`: not known → none (by `read-confirmation`).
-46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-49. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-50. `request_type`: not known → question (by `triage`).
-51. `subject`: not known → transfer (by `triage`).
-52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-54. `next_system`: not known → payment (by `asked-payment`).
-55. The agent asked for `ask_system` {"system": "payment"}.
-56. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
-57. The agent asked for `reply` {}.
-58. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
-59. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-60. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-61. Called `reply_customer` (attempt 1, key banking-007-at-04:do-reply:15).
-62. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "secure_chat", "text": "The payment record shows your transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
-63. `reply_customer` found {}.
-64. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-65. The case closed in `REPLIED`: **reply**.
+38. Rule `read-tariff` fired: state = READING → true (state=READING).
+39. Called `check_tariff` (attempt 1, key banking-007-at-04:read-tariff:10).
+40. `check_tariff` found {}.
+41. Rule `read-registration` fired: state = READING → true (state=READING).
+42. Called `check_registration` (attempt 1, key banking-007-at-04:read-registration:11).
+43. `check_registration` found {}.
+44. Rule `read-confirmation` fired: state = READING → true (state=READING).
+45. Called `check_confirmation` (attempt 1, key banking-007-at-04:read-confirmation:12).
+46. Note from `read-confirmation`: event 2 (Mara Ellwood): I can see the sent status, but I need to know what stage the transfer has reached. Can you check whether there is confirmation that the beneficiary received it? [facts: confirmation='none', instructed_outside_portal=False]
+47. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+48. `confirmation`: not known → none (by `read-confirmation`).
+49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+50. Rule `triage` fired: state = READING → true (state=READING).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+53. `request_type`: not known → question (by `triage`).
+54. `subject`: not known → transfer (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+57. `next_system`: not known → payment (by `asked-payment`).
+58. The agent asked for `ask_system` {"system": "payment"}.
+59. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+60. The agent asked for `reply` {}.
+61. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+62. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+63. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+64. Called `reply_customer` (attempt 1, key banking-007-at-04:do-reply:16).
+65. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "secure_chat", "text": "The payment record shows your transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
+66. `reply_customer` found {}.
+67. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+68. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 10127 tokens in, 523 out, 5.838 s, cost $0.0217; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10356 tokens in, 543 out, 5.61 s, cost $0.0223; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The payment system has already been asked, so the answer is in the case. Next is the reply.
-> I've sent the reply to Mara Ellwood. The payment record shows the transfer as SENT, and there is no confirmation yet that the beneficiary received it. The desk wrote the reply from those facts, and the case is now closed.
+> The payment system has already been asked, so the answer is in the case. I'll reply with it.
+> I sent the reply to Mara. It reports what the payment records show: the transfer is recorded as sent, and there is no confirmation that the beneficiary has received it.
 > 
-> I asked the payment system again first, but the desk refused because that check had already been done.
+> The payment system had already been checked, so asking it again was refused. The case is closed as replied.

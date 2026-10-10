@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Elena Marlow asked, in a secure chat, for the desk to look up the purpose text her instruction recorded for a payment to Mallow Pottery Works for a kiln repair. The desk classified this as a question about a transfer and sent a query to the payment system, which returned nothing in the record. Her identity is still marked as not verified despite her saying she completed the checks, and the reply to her with what the instruction recorded is left for a person.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer

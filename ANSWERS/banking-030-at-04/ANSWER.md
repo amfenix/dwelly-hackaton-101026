@@ -1,6 +1,12 @@
 # Case banking-030-at-04: Replacement card request
 
-**Decision: wait**  (final state `WAITING`)
+**Decision: reply**  (final state `REPLIED`)
+
+## Summary
+
+Maren Ellery, a verified customer on secure chat, asked whether her replacement card was being made and whether it had been sent. The desk checked the card journal, which shows the card as in manufacture with no confirmation of dispatch or delivery, and replied on secure chat saying exactly that and that no card change was made. The case is closed as replied, and nothing is left for a person.
+
+_Written by a model from the record below; the sections below are the record._
 
 ## What the system received
 
@@ -36,7 +42,10 @@ Case reference: id banking-030-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `reply` (to: Maren Ellery, channel: secure_chat), by rule `do-reply`
+
+  > The card journal shows in_manufacture. This does not establish dispatch or receipt. No additional card change was made.
+
 
 ## Decision and why
 
@@ -44,11 +53,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `WAITING`: rule `card-waits` — The system was asked; its answer is not in yet.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
   - next_system = card → true (next_system=card)
-  - card_asked → true (card_asked=True)
-  - card_status absent → true (card_status=not known)
+  - card_status present → true (card_status=IN_MANUFACTURE)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -58,6 +68,7 @@ Facts established:
 - verified: **True**
 - subject: **card**
 - card_asked: **True**
+- card_status: **IN_MANUFACTURE**
 - confirmation: **none**
 - instructed_outside_portal: **False**
 - request_type: **question**
@@ -68,6 +79,7 @@ Where they came from:
 - event 2 (Maren Ellery): I submitted a replacement request because my card has become unreliable. Could you check whether it is being made and whether it has been sent? [facts: requester='Maren Ellery', role='customer', channel='secure_chat']
 - event 3 (H&V agent): I’ve completed H&V’s identity checks in this secure chat. I’ll check the existing replacement record and won’t make any changes to your account. [facts: verified=True]
 - event 4 (H&V card journal): I checked the card journal for reference HV-030. The record shows the replacement is in manufacture; it does not confirm dispatch or delivery. [facts: card_asked=True]
+- event 4 (H&V agent): I checked the card journal for reference HV-030. The record shows the replacement is in manufacture; it does not confirm dispatch or delivery. [facts: card_status='IN_MANUFACTURE']
 - event 3 (H&V agent): I’ve completed H&V’s identity checks in this secure chat. I’ll check the existing replacement record and won’t make any changes to your account. [facts: confirmation='none', instructed_outside_portal=False]
 
 ## Escalated
@@ -78,10 +90,6 @@ No.
 
 - nothing
 
-Requests the policy refused:
-
-- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card)
-
 ## Final result
 
-wait (WAITING)
+reply (REPLIED)

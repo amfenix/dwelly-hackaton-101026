@@ -33,41 +33,44 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 29. Rule `read-documents` fired: state = READING → true (state=READING).
 30. Called `check_documents` (attempt 1, key banking-016-at-01:read-documents:9).
 31. `check_documents` found {}.
-32. Rule `read-registration` fired: state = READING → true (state=READING).
-33. Called `check_registration` (attempt 1, key banking-016-at-01:read-registration:10).
-34. `check_registration` found {}.
-35. Rule `read-confirmation` fired: state = READING → true (state=READING).
-36. Called `check_confirmation` (attempt 1, key banking-016-at-01:read-confirmation:11).
-37. Note from `read-confirmation`: event 1 (H&V secure portal): Statement activity: Direct Debit to Northmere Water Services — £18.40, dated 9 July 2025. [facts: confirmation='none', instructed_outside_portal=False]
-38. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
-39. `confirmation`: not known → none (by `read-confirmation`).
-40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
-41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
-43. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
-44. `request_type`: not known → register (by `triage`).
-45. `subject`: not known → direct_debit (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
-48. `next_system`: not known → recurring (by `route-recurring`).
-49. The agent asked for `ask_system` {"system": "recurring"}.
-50. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register).
-51. The agent asked for `submit_request` {}.
-52. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-53. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-54. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-55. Called `register_request` (attempt 1, key banking-016-at-01:do-request:15).
-56. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
-57. `register_request` found {}.
-58. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-59. The case closed in `REQUESTED`: **submit_request**.
+32. Rule `read-tariff` fired: state = READING → true (state=READING).
+33. Called `check_tariff` (attempt 1, key banking-016-at-01:read-tariff:10).
+34. `check_tariff` found {}.
+35. Rule `read-registration` fired: state = READING → true (state=READING).
+36. Called `check_registration` (attempt 1, key banking-016-at-01:read-registration:11).
+37. `check_registration` found {}.
+38. Rule `read-confirmation` fired: state = READING → true (state=READING).
+39. Called `check_confirmation` (attempt 1, key banking-016-at-01:read-confirmation:12).
+40. Note from `read-confirmation`: event 1 (H&V secure portal): Statement activity: Direct Debit to Northmere Water Services — £18.40, dated 9 July 2025. [facts: confirmation='none', instructed_outside_portal=False]
+41. `check_confirmation` found {"confirmation": "none", "instructed_outside_portal": false}.
+42. `confirmation`: not known → none (by `read-confirmation`).
+43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
+44. Rule `triage` fired: state = READING → true (state=READING).
+45. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+46. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+47. `request_type`: not known → register (by `triage`).
+48. `subject`: not known → direct_debit (by `triage`).
+49. State `READING` → `TRIAGED` (by `triage`).
+50. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+51. `next_system`: not known → recurring (by `route-recurring`).
+52. The agent asked for `ask_system` {"system": "recurring"}.
+53. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=recurring); next_system = tariff is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=register).
+54. The agent asked for `submit_request` {}.
+55. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+56. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+57. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+58. Called `register_request` (attempt 1, key banking-016-at-01:do-request:16).
+59. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
+60. `register_request` found {}.
+61. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+62. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-5 calls, 10144 tokens in, 597 out, 5.513 s, cost $0.0224; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7990 tokens in, 584 out, 5.079 s, cost $0.0180; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed the customer's dispute of the £18.40 Direct Debit to Northmere Water Services (9 July 2025) to the team that handles disputes. The case is now in the REQUESTED state.
+> I've submitted your dispute about the £18.40 Direct Debit to Northmere Water Services, dated 9 July 2025, to the team that handles disputes. The case is now marked as requested.
 > 
-> I first tried to look the Direct Debit up in the recurring payments system. The desk refused that, because the request is a dispute to register, not a question to research. Submitting the request was accepted.
+> I tried to look up the Direct Debit in the recurring payments records first, but the desk refused that check for a dispute request. So the team will be working from the statement entry you raised, not from a check of the Direct Debit record.

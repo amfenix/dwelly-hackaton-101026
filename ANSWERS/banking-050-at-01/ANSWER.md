@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+The request was a question about a transfer, apparently the payment for the Alder Quay Supplies materials invoice. The desk classified it as a question about a transfer and routed it to the payment system, then sent that system a query about the transfer and closed the case as asked. The payment system's answer has not come back into the case, and the record shows only that the portal recorded the payment authorisation and that there is no confirmation of the payment. So whether the payment has been sent, is pending or has been held is still unknown and is left for a person to find out.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Authorised business user

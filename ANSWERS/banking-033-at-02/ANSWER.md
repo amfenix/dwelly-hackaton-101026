@@ -2,6 +2,12 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
+## Summary
+
+Mara Ellison, an unverified customer on secure chat, asked whether her CSV export of transactions from 6 to 9 May 2025 had been created and asked to be told when it is in her secure portal. The desk classified this as a question about a document and sent an inquiry to the documents system about it. That system's answer is not in the case yet, so Mara has not been told whether the file is available, and a reply to her is still needed once the documents system responds.
+
+_Written by a model from the record below; the sections below are the record._
+
 ## What the system received
 
 - Source role: Bank customer
