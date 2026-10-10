@@ -44,24 +44,28 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 40. `check_confirmation` found {}.
 41. Rule `triage` fired: state = READING → true (state=READING).
 42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-43. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-44. `request_type`: not known → question (by `triage`).
-45. `subject`: not known → card (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-48. `next_system`: not known → card (by `route-card`).
-49. The agent asked for `ask_system` {"system": "card"}.
-50. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
-51. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-53. Called `ask_system` (attempt 1, key banking-024-at-01:do-ask:17).
-54. Action in the world: `ask_system` {"system": "card", "about": "card"}.
-55. `ask_system` found {}.
-56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-57. The case closed in `ASKED`: **ask_system**.
-58. The agent asked for `reply` {}.
-59. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=card); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known).
+43. Classifier (jev jev-latest) on `credentials_requested`: 0.03 → False.
+44. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+45. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+46. `request_type`: not known → question (by `triage`).
+47. `credentials_requested`: not known → False (by `triage`).
+48. `joint_holder_change`: not known → False (by `triage`).
+49. `subject`: not known → card (by `triage`).
+50. State `READING` → `TRIAGED` (by `triage`).
+51. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+52. `next_system`: not known → card (by `route-card`).
+53. The agent asked for `ask_system` {"system": "card"}.
+54. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
+55. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+57. Called `ask_system` (attempt 1, key banking-024-at-01:do-ask:17).
+58. Action in the world: `ask_system` {"system": "card", "about": "card"}.
+59. `ask_system` found {}.
+60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+61. The case closed in `ASKED`: **ask_system**.
+62. The agent asked for `reply` {}.
+63. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=card); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known).
 
 ## Model calls
 
-5 calls, 8668 tokens in, 331 out, 3.83 s, cost $0.0167; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 9803 tokens in, 366 out, 5.549 s, cost $0.0188; models: claude-sonnet-5-5, jev-1.13.0.

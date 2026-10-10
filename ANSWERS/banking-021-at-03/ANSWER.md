@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a customer on secure chat whose identity is not verified, asked the desk to check whether dispatch of her replacement card had been registered. The desk classified this as a card question and marked the card system as asked, but no answer from it is in the record. The case closed in a waiting state, and a second attempt to ask the card system was refused because the case was already waiting. No dispatch status was found, so nothing can be said about whether the card has been sent; a person is left to pick the case up.
+Mara Ellison, writing over secure chat and not verified as the account holder, asked whether dispatch of her replacement card had been registered, since the portal only says the request was accepted. The desk classified it as a card question, asked the card system, and closed the case as waiting because that system's answer had not come in. No reply was sent, and later attempts to ask the card system again and to reply were refused because the case was already in the waiting state with no card status to report. What is left is for a person to pick the case up once the card system's answer arrives and to deal with the unverified identity before any card details are shared.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -82,6 +84,7 @@ No.
 Requests the policy refused:
 
 - `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card)
+- `reply`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=card); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=card); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

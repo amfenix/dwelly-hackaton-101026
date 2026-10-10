@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing over secure chat, asked what category of restriction caused a card decline at a grocery payment and whether it has been lifted. The desk classified this as a card question, asked the card system, and closed the case as waiting because that system's answer is not in yet; a second request to the card system was refused because the case was already in WAITING. Rowan is not verified, and no reply has been given to Rowan; the record does not say who picks the case up next.
+Rowan Ellery, writing over secure chat and not verified, asked which category of restriction caused a card decline at a grocery payment and whether it has been lifted. The desk classed it as a card question, noted that the card system had been asked, and left the case waiting because no answer from that system is in yet. A second request to ask the card system was refused because the case was already in the waiting state, so nothing was answered or disclosed to Rowan, and what remains for a person is the card system's reply on the restriction category and whether it has been lifted.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

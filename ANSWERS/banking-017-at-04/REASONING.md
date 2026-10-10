@@ -56,28 +56,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-56. `request_type`: not known → question (by `triage`).
-57. `subject`: not known → standing_order (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
-60. `next_system`: not known → recurring (by `asked-recurring`).
-61. The agent asked for `reply` {}.
-62. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=NOT_EXECUTED).
-63. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
-64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-65. Called `reply_customer` (attempt 1, key banking-017-at-04:do-reply:17).
-66. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The standing-order record shows that the scheduled run was not executed. This does not establish whether a later run will execute. No additional instruction or change was made."}.
-67. `reply_customer` found {}.
-68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-69. The case closed in `REPLIED`: **reply**.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+57. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → standing_order (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
+64. `next_system`: not known → recurring (by `asked-recurring`).
+65. The agent asked for `reply` {}.
+66. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=NOT_EXECUTED).
+67. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
+68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+69. Called `reply_customer` (attempt 1, key banking-017-at-04:do-reply:17).
+70. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_chat", "text": "The standing-order record shows that the scheduled run was not executed. This does not establish whether a later run will execute. No additional instruction or change was made."}.
+71. `reply_customer` found {}.
+72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7180 tokens in, 486 out, 5.433 s, cost $0.0153; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5583 tokens in, 612 out, 6.076 s, cost $0.0129; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Mara Ellery. It reports what the bank's records show: the monthly rent standing order has the status NOT_EXECUTED, so it wasn't sent this cycle. The records don't give a reason, so the reply doesn't offer one.
+> I sent the reply. The recurring-payments record shows this month's rent standing order as not executed. It shows no confirmation of any payment going out. I didn't state a reason for the failure, because the record doesn't give one.
 > 
-> The case is now marked as replied. Mara's identity is still unverified, so I didn't take any other action on the standing order.
+> The case still shows Mara Ellery as not verified. The reply therefore sticks to what the record shows.

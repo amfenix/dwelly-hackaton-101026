@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Ellery, who is not yet verified, asked the desk to check whether her standing order to Willow Yard Studios could move from 18 September to 22 September 2025, and to send any eligible change to her for confirmation. The desk sent her a confirmation request for the change, and the case closed in the confirmation-sent state. The follow-up check on the recurring system's processing stage was refused because the case had already closed, so nobody has established whether the 18 September run can still be changed, and nothing has been confirmed. The change goes ahead only if she confirms it securely.
+Maeve Ellery, an unverified customer on secure chat, asked to move the next run of her standing order to Willow Yard Studios from 18 September to 22 September 2025 and to have any eligible change sent to her for confirmation. The desk treated it as a change needing her confirmation, sent it to her for confirmation, and closed the case in that state. The desk's later request to check the recurring system's processing stage was refused because the case had already closed, so whether the run can still be moved is not established, and the standing order has not been changed. What remains is her confirmation, which the record shows had not yet been given.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

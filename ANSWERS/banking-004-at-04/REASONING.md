@@ -60,26 +60,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 57. Rule `triage` fired: state = READING → true (state=READING).
 58. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-59. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-60. `request_type`: not known → question (by `triage`).
-61. `subject`: not known → transfer (by `triage`).
-62. State `READING` → `TRIAGED` (by `triage`).
-63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-64. `next_system`: not known → payment (by `asked-payment`).
-65. The agent asked for `reply` {}.
-66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=DECLINED).
-67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-69. Called `reply_customer` (attempt 1, key banking-004-at-04:do-reply:17).
-70. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_portal", "text": "The payment record shows your transfer to Northmere Housing Co-operative as declined (recorded reason: : “The receiving bank declined the transfer.). This does not establish a different cause or authorise a retry. No new transfer was made."}.
-71. `reply_customer` found {}.
-72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-73. The case closed in `REPLIED`: **reply**.
+59. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+60. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+61. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+62. `request_type`: not known → question (by `triage`).
+63. `credentials_requested`: not known → False (by `triage`).
+64. `joint_holder_change`: not known → False (by `triage`).
+65. `subject`: not known → transfer (by `triage`).
+66. State `READING` → `TRIAGED` (by `triage`).
+67. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+68. `next_system`: not known → payment (by `asked-payment`).
+69. The agent asked for `reply` {}.
+70. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=DECLINED).
+71. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-004-at-04:do-reply:17).
+74. Action in the world: `reply` {"to": "Mara Ellery", "channel": "secure_portal", "text": "The payment record shows your transfer to Northmere Housing Co-operative as declined (recorded reason: : “The receiving bank declined the transfer.). This does not establish a different cause or authorise a retry. No new transfer was made."}.
+75. `reply_customer` found {}.
+76. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+77. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-3 calls, 4924 tokens in, 431 out, 3.657 s, cost $0.0102; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5434 tokens in, 400 out, 3.716 s, cost $0.0104; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Mara Ellery. The payment record shows the 14 July 2025 transfer to Northmere Housing Co-operative as declined, with the reason "The receiving bank declined the transfer." The record gives no further detail, so the reply says no more than that. The case is now closed.
+> I've sent the reply to the customer. The payment record shows the transfer to Northmere Housing Co-operative on 14 July 2025 was declined, with the reason "The receiving bank declined the transfer." The reply is limited to what that record shows. The case is now closed.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The requester asked whether the payment on row SUP-17 in their supplier batch was paid or rejected, since the batch only showed as processed. The desk classified this as a question about a batch, routed it to the payment system, and sent that system a query about SUP-17, then closed the case in the "asked" state. No answer has come back yet, and the desk's attempt to send a reply was refused because no payment status was available, so the requester has not yet been told whether the payment went through.
+The request was a question about whether the payment on row SUP-17 in the supplier batch, which shows as processed, was paid or rejected. The desk classified it as a batch question and routed it to the payment system, where it sent a query about SUP-17, and the case closed in the "asked" state. The payment system's answer is not in the record, so whether the payment was paid or rejected is still unknown and no reply has been given to the requester.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -54,6 +54,8 @@ Facts established:
 - reference: **SUP-17**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -66,10 +68,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=batch); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=ASKED); next_system = tariff is false (next_system=payment); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

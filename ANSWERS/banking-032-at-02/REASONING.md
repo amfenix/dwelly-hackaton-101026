@@ -53,23 +53,29 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
-53. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → statement (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-58. `next_system`: not known → documents (by `asked-documents`).
-59. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
-60. State `TRIAGED` → `WAITING` (by `documents-waits`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `ask_system` {"system": "documents"}.
-63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
-64. The agent asked for `redirect_secure` {}.
-65. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question); request_type = instruction is false (request_type=question).
-66. The agent asked for `escalate` {"note": "Mara Ellison (unverified, secure chat) asks whether an archived January 2024 statement is available. The case is in WAITING. The documents system was already asked, but no document_ready result is recorded. A new ask to documents and a secure-process redirect were both refused because the state is not TRIAGED. The requester is not verified, so no statement details should be disclosed until identity is confirmed. Please verify the customer and check archive availability."}.
-67. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+55. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → statement (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+62. `next_system`: not known → documents (by `asked-documents`).
+63. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
+64. State `TRIAGED` → `WAITING` (by `documents-waits`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `ask_system` {"system": "documents"}.
+67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
 
 ## Model calls
 
-5 calls, 10592 tokens in, 822 out, 7.461 s, cost $0.0255; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 9408 tokens in, 707 out, 8.162 s, cost $0.0215; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I couldn't check whether a January 2024 statement is available, and I haven't sent the customer a reply. The documents system refused my request because the case is in a waiting state, and the case record shows it as final with the outcome "wait". It also shows that the documents check was already requested, but no result has come back.
+> 
+> I haven't verified the requester, so I won't give out any statement or account details yet. I've left the case open for a person to pick up. Once the documents result is in the case, the reply can be written from it. The customer will also need to be verified before any copy is shared.

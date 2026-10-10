@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement is available. The desk classified this as a question about a statement and sent a query to the documents system, then closed the case in the asked state. Nothing is recorded as sent back to her. Her identity is still unverified, and the statement is not yet marked ready, so a person needs to pick up the documents system's answer and reply to her.
+Mara Ellison, writing over secure chat as an account holder whose identity was not verified, asked whether an archived copy of her January 2024 statement is available. The desk classified this as a question about a statement and sent a query about it to the documents system, and the case closed as asked. The record shows an archive note saying the statement is available to order, subject to the current tariff, but the document is not marked ready, so what remains is the documents system's answer and a reply to Mara.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -70,6 +70,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

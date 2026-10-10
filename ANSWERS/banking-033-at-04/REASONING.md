@@ -57,30 +57,33 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. `confirmation`: not known → none (by `read-confirmation`).
 54. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 55. Rule `triage` fired: state = READING → true (state=READING).
-56. Classifier (jev jev-latest) on `request_type`: question, confidence 0.85 → question.
-57. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-58. `request_type`: not known → question (by `triage`).
-59. `subject`: not known → document (by `triage`).
-60. State `READING` → `TRIAGED` (by `triage`).
-61. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-62. `next_system`: not known → documents (by `asked-documents`).
-63. The agent asked for `reply` {}.
-64. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
-65. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
-66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-67. Called `reply_customer` (attempt 1, key banking-033-at-04:do-reply:17).
-68. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
-69. `reply_customer` found {}.
-70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-71. The case closed in `REPLIED`: **reply**.
+56. Classifier (jev jev-latest) on `request_type`: question, confidence 0.83 → question.
+57. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+58. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+59. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+60. `request_type`: not known → question (by `triage`).
+61. `credentials_requested`: not known → False (by `triage`).
+62. `joint_holder_change`: not known → False (by `triage`).
+63. `subject`: not known → document (by `triage`).
+64. State `READING` → `TRIAGED` (by `triage`).
+65. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+66. `next_system`: not known → documents (by `asked-documents`).
+67. The agent asked for `reply` {}.
+68. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+69. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
+70. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+71. Called `reply_customer` (attempt 1, key banking-033-at-04:do-reply:17).
+72. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
+73. `reply_customer` found {}.
+74. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+75. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7264 tokens in, 463 out, 5.39 s, cost $0.0152; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5559 tokens in, 501 out, 4.833 s, cost $0.0117; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The documents system has already answered, so I'll reply to the customer.
-> I sent the customer a reply, and the case is closed. The documents system had already confirmed the CSV export for 6–9 May 2025 is ready, so the next step was to tell her. The reply is written by the desk, so I can't show you its exact wording.
+> I've sent the reply to the customer. The records show the CSV export for 6–9 May 2025 is ready, and the reply tells Mara Ellison that. The case is closed.
 > 
-> The case facts show the customer as not verified. I didn't treat that as blocking, since the reply only said the file is ready in her secure portal.
+> The customer is not verified. The reply only confirms the file is ready and doesn't include any account details.

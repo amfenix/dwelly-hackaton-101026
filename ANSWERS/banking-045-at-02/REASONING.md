@@ -52,28 +52,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
-51. Classifier (jev jev-latest) on `subject`: role, confidence 0.72 → role.
-52. `request_type`: not known → authority (by `triage`).
-53. `subject`: not known → role (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
-56. `next_system`: not known → business (by `route-business`).
-57. The agent asked for `forward_to_authority` {}.
-58. Rule `forward-to-the-authority` (on `forward_to_authority`) fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); role != business_admin → true (role=customer).
-59. State `TRIAGED` → `FORWARD_PENDING` (by `forward-to-the-authority`).
-60. Rule `do-forward` fired: state = FORWARD_PENDING → true (state=FORWARD_PENDING).
-61. Called `forward_to_authority` (attempt 1, key banking-045-at-02:do-forward:17).
-62. Action in the world: `forward_to_authority` {"to": "the verified company administrator", "about": "role", "requester": "Nadia Bell"}.
-63. `forward_to_authority` found {}.
-64. State `FORWARD_PENDING` → `FORWARDED` (by `do-forward`).
-65. The case closed in `FORWARDED`: **forward_to_authority**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.05 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+53. Classifier (jev jev-latest) on `subject`: role, confidence 0.75 → role.
+54. `request_type`: not known → authority (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → role (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
+60. `next_system`: not known → business (by `route-business`).
+61. The agent asked for `forward_to_authority` {}.
+62. Rule `forward-to-the-authority` (on `forward_to_authority`) fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); role != business_admin → true (role=customer).
+63. State `TRIAGED` → `FORWARD_PENDING` (by `forward-to-the-authority`).
+64. Rule `do-forward` fired: state = FORWARD_PENDING → true (state=FORWARD_PENDING).
+65. Called `forward_to_authority` (attempt 1, key banking-045-at-02:do-forward:17).
+66. Action in the world: `forward_to_authority` {"to": "the verified company administrator", "about": "role", "requester": "Nadia Bell"}.
+67. `forward_to_authority` found {}.
+68. State `FORWARD_PENDING` → `FORWARDED` (by `do-forward`).
+69. The case closed in `FORWARDED`: **forward_to_authority**.
 
 ## Model calls
 
-3 calls, 5154 tokens in, 699 out, 6.095 s, cost $0.0133; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5460 tokens in, 427 out, 3.252 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I forwarded Nadia's request to the company administrator for approval, and the desk accepted it. The case is now marked as forwarded.
-> 
-> Nadia can't approve or assign the new colleague's role herself, so access depends on the administrator's decision. I didn't check the business records first. The case doesn't say who the administrator is, so I haven't confirmed who the request went to.
+> I've sent the access request to Merefield Design Studio's company administrator for approval, and the desk accepted it. Nadia can't approve or assign roles herself. The new colleague gets no portal access until the administrator approves.

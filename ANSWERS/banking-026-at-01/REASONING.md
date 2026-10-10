@@ -52,26 +52,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-51. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
-52. `request_type`: not known → access (by `triage`).
-53. `subject`: not known → card (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-56. `next_system`: not known → card (by `route-card`).
-57. The agent asked for `redirect_secure` {}.
-58. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); request_type = instruction → false (request_type=access); not verified → true (verified=False).
-59. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
-60. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
-61. Called `redirect_secure` (attempt 1, key banking-026-at-01:do-redirect:17).
-62. Action in the world: `redirect_secure` {"to": "Maren Ellwood", "channel": "secure_chat", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
-63. `redirect_secure` found {}.
-64. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
-65. The case closed in `REDIRECTED`: **redirect_secure**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.18 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.09 → False.
+53. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
+54. `request_type`: not known → access (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → card (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+60. `next_system`: not known → card (by `route-card`).
+61. The agent asked for `redirect_secure` {}.
+62. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); request_type = instruction → false (request_type=access); not verified → true (verified=False).
+63. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
+64. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
+65. Called `redirect_secure` (attempt 1, key banking-026-at-01:do-redirect:17).
+66. Action in the world: `redirect_secure` {"to": "Maren Ellwood", "channel": "secure_chat", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
+67. `redirect_secure` found {}.
+68. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
+69. The case closed in `REDIRECTED`: **redirect_secure**.
 
 ## Model calls
 
-3 calls, 4719 tokens in, 388 out, 3.092 s, cost $0.0094; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5244 tokens in, 379 out, 4.096 s, cost $0.0099; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed Maren to the bank's secure process for a forgotten card PIN. The desk accepted the redirect and closed the case. Nothing else is needed from the desk, and no PIN was requested or handled in the chat.
+> The customer forgot their PIN and wants the safe process. The right tool for PIN matters is redirect_secure.
+> I've pointed Maren to the bank's secure process for getting her debit card PIN back. She doesn't need to send the PIN in chat, and the bank never handles a PIN in a message. The case is now closed as redirected.

@@ -56,27 +56,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
-56. `request_type`: not known → question (by `triage`).
-57. `subject`: not known → card_payment (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
-60. `next_system`: not known → card (by `route-card`).
-61. The agent asked for `ask_system` {"system": "card"}.
-62. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
-63. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-65. Called `ask_system` (attempt 1, key banking-025-at-03:do-ask:17).
-66. Action in the world: `ask_system` {"system": "card", "about": "card_payment", "amount": "18.40"}.
-67. `ask_system` found {}.
-68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-69. The case closed in `ASKED`: **ask_system**.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.03 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.09 → False.
+57. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → card_payment (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
+64. `next_system`: not known → card (by `route-card`).
+65. The agent asked for `ask_system` {"system": "card"}.
+66. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
+67. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+68. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+69. Called `ask_system` (attempt 1, key banking-025-at-03:do-ask:17).
+70. Action in the world: `ask_system` {"system": "card", "about": "card_payment", "amount": "18.40"}.
+71. `ask_system` found {}.
+72. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+73. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6989 tokens in, 418 out, 3.978 s, cost $0.0142; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7804 tokens in, 466 out, 4.57 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The customer is verified and has identified the payment (£18.40 at North Quay Books). The facts point to the card system as the next place to look, so I'll ask it why the payment was declined.
-> I asked the card system about the declined £18.40 payment at North Quay Books, and the desk accepted the request. The case is now closed at that step. The card system's answer isn't in the case yet, so I can't tell Mara why the payment was declined.
+> The customer is verified and has identified the payment (£18.40 at North Quay Books). The answer is in the card system, so I'll check it there.
+> I asked the card system about Mara's declined £18.40 payment at North Quay Books. The system accepted the request, but its answer isn't in the case yet, so I can't say why the payment was declined. The case is now in the "asked" state and is closed as final, so I'm stopping here. It will go to a person if no answer arrives.

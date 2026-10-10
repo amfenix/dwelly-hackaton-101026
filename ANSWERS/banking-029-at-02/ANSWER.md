@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an unverified customer on secure chat, asked whether her tablet is linked before she tries to use it for banking, and asked for its current status. The desk classified this as an access question and passed it to the access system with an ask, which completed and closed the case. The desk's attempt to send a reply was refused because no access status had come back, so no answer about the tablet's status has been given to her.
+Mara Ellison, writing over secure chat and not verified, asked whether her tablet is linked before she uses it for banking. The desk classified this as an access question and sent a query to the access system. That query returned nothing, and the case closed in the asked state. A reply to her was refused because no access status is in the record, so she has not been told whether the tablet is linked. The record does not say who follows up or why no status came back.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

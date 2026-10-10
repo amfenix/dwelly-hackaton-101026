@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether her scheduled rent standing-order run was executed and what status the bank recorded. The desk checked the standing-order journal, found the run recorded as not executed, and replied on secure chat saying so, noting that this doesn't show whether a later run will execute and that no change or instruction was made. Mara's identity was not verified and nothing else was done on the standing order; the journal's reason (insufficient cleared funds) was not included in the reply, and nothing further is left open in the record.
+Mara Ellery asked over secure chat whether her scheduled rent standing-order run was executed and what status the bank recorded. The desk checked the standing-order record, found the run marked as not executed, and replied with that, adding that this does not show whether a later run will execute and that no instruction or change was made. The requester was not verified, and the reply gave no reason for the failure; nothing further is recorded as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -74,6 +74,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

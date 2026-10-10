@@ -57,31 +57,26 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
 55. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-56. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-57. `request_type`: not known → question (by `triage`).
-58. `subject`: not known → incoming_payment (by `triage`).
-59. State `READING` → `TRIAGED` (by `triage`).
-60. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
-61. `next_system`: not known → incoming (by `asked-incoming`).
-62. Rule `incoming-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_asked → true (incoming_asked=True); incoming_found absent → true (incoming_found=not known). The system was asked; its answer is not in yet.
-63. State `TRIAGED` → `WAITING` (by `incoming-waits`).
-64. The case closed in `WAITING`: **wait**.
-65. The agent asked for `ask_system` {"system": "incoming"}.
-66. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=incoming); next_system = tariff is false (next_system=incoming); next_system absent is false (next_system=incoming).
-67. The agent asked for `escalate` {"note": "Customer Elowen Marr (not verified, secure chat) asks whether a £42.80 refund from Northmere Home Supplies has arrived, and wants it matched to that specific transfer. The incoming system is marked as already asked, but the case holds no incoming result. A new ask to the incoming system was refused because the case is in WAITING state. Please check the incoming entries against the original £42.80 transfer, and verify the customer before sharing account details. Do not confirm a refund until a record shows it."}.
-68. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+56. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+57. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+58. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+59. `request_type`: not known → question (by `triage`).
+60. `credentials_requested`: not known → False (by `triage`).
+61. `joint_holder_change`: not known → False (by `triage`).
+62. `subject`: not known → incoming_payment (by `triage`).
+63. State `READING` → `TRIAGED` (by `triage`).
+64. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
+65. `next_system`: not known → incoming (by `asked-incoming`).
+66. Rule `incoming-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_asked → true (incoming_asked=True); incoming_found absent → true (incoming_found=not known). The system was asked; its answer is not in yet.
+67. State `TRIAGED` → `WAITING` (by `incoming-waits`).
+68. The case closed in `WAITING`: **wait**.
+69. The agent asked for `ask_system` {"system": "incoming"}.
+70. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=incoming); next_system = tariff is false (next_system=incoming); next_system absent is false (next_system=incoming).
+71. The agent asked for `reply` {}.
+72. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=incoming); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=incoming); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=incoming); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=incoming); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=incoming); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=incoming_payment); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=incoming); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=incoming); tariff_status present is false (tariff_status=not known).
+73. The agent asked for `escalate` {"note": "Customer Elowen Marr (unverified, secure chat) asks whether a £42.80 refund from Northmere Home Supplies has arrived and whether it matches her outgoing £42.80 transfer. The incoming lookup is flagged as already asked, but no incoming result (incoming_found) is in the case. Case is WAITING and both a new incoming ask and a reply were refused. Please check incoming entries against that specific transfer and confirm the status to the customer. Identity verification is outstanding."}.
+74. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11503 tokens in, 995 out, 10.053 s, cost $0.0289; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I couldn't confirm whether the £42.80 refund from Northmere Home Supplies has arrived, and the case is still open and waiting.
-> 
-> - **No incoming result:** The case marks the incoming entries as already asked, but it contains no answer. When I asked the incoming system again, the desk refused because the case is in a waiting state.
-> - **Escalation refused:** My attempt to hand the case to a person was also refused for the same reason.
-> - **Verification:** Elowen Marr is not yet verified on this chat.
-> - **Matching the refund:** Nothing in the records links any incoming entry to the original £42.80 transfer. I can't say a refund has arrived, and I can't say it hasn't.
-> 
-> No further step is open to me from here, so the case stays with the desk until a person picks it up.
+5 calls, 12799 tokens in, 821 out, 8.033 s, cost $0.0293; models: claude-sonnet-5-5, jev-1.13.0.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified by call, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputing how the tariff was applied. The desk classed it as a fee registration request and found that the team had already been asked to register it but had not yet answered, so it closed the case as waiting. Its later attempts to query the tariff system and to submit the request were both refused because the case was already in WAITING, so nothing was submitted or changed and the fee has not been reviewed; the case is left for a person to pick up once the registration answer comes in.
+Mara Ellison, verified on a call, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputes how the tariff was applied. The desk read the case, found a registration request had already been made, and put the case into a waiting state because the team's answer on that registration has not come in yet. No actions were taken: the later attempts to ask the tariff system and to submit the request were both refused because the case was already waiting. Nothing says whether the fee was correct, so the case stays open until the registration answer arrives.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -66,6 +66,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **tariff**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

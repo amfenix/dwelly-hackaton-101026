@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, an unverified customer on secure chat, asked what stage her transfer had reached and whether the beneficiary had confirmed receiving it. The desk classified it as a transfer question, found no confirmation of receipt, and closed the case in a waiting state because the payment system had been asked but its answer was not in. The later attempts to ask the payment system again, to reply, and to escalate to a person were all refused because the case was already in WAITING, so nothing was sent to the customer and no one has been handed the case; the payment status is still unknown.
+Mara Ellwood, an unverified customer on secure chat, asked what stage her transfer had reached and whether the beneficiary's receipt was confirmed. The desk found no confirmation on record, classified it as a question about a transfer, and closed the case in a waiting state because the payment system had been asked and its answer had not come in. The agent's later attempts to ask the payment system again, send a reply, and escalate to a person were all refused because the case was already in WAITING, so no reply went to the customer and no one was handed the case. The transfer's status is still unanswered, and the customer has not been verified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -57,28 +57,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
 55. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-56. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-57. `request_type`: not known → question (by `triage`).
-58. `subject`: not known → standing_order (by `triage`).
-59. State `READING` → `TRIAGED` (by `triage`).
-60. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
-61. `next_system`: not known → recurring (by `asked-recurring`).
-62. The agent asked for `reply` {}.
-63. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
-64. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
-65. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-66. Called `reply_customer` (attempt 1, key banking-011-at-04:do-reply:17).
-67. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The standing-order record shows the instruction as active; next run 2025-09-03. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
-68. `reply_customer` found {}.
-69. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-70. The case closed in `REPLIED`: **reply**.
+56. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+57. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+58. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+59. `request_type`: not known → question (by `triage`).
+60. `credentials_requested`: not known → False (by `triage`).
+61. `joint_holder_change`: not known → False (by `triage`).
+62. `subject`: not known → standing_order (by `triage`).
+63. State `READING` → `TRIAGED` (by `triage`).
+64. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
+65. `next_system`: not known → recurring (by `asked-recurring`).
+66. The agent asked for `reply` {}.
+67. Rule `recurring-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = recurring → true (next_system=recurring); recurring_status present → true (recurring_status=ACTIVE).
+68. State `TRIAGED` → `REPLY_PENDING` (by `recurring-reply`).
+69. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+70. Called `reply_customer` (attempt 1, key banking-011-at-04:do-reply:17).
+71. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The standing-order record shows the instruction as active; next run 2025-09-03. This does not guarantee that the future payment will execute. No additional instruction or change was made."}.
+72. `reply_customer` found {}.
+73. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+74. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7380 tokens in, 549 out, 6.409 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5358 tokens in, 440 out, 4.088 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The standing order is active and its next run date is 3 September 2025.
+> The standing order's record is in the case. It shows the order as active and next due to run on 3 September 2025. I've sent the reply, and the case is closed.
 > 
-> The case shows the customer as not verified. The reply was still accepted, and it only gives a read-only date.
+> The customer isn't verified in this chat. The desk accepted the reply anyway.

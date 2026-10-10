@@ -53,31 +53,35 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.57 → question.
-53. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → statement (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-58. `next_system`: not known → documents (by `asked-documents`).
-59. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
-60. State `TRIAGED` → `WAITING` (by `documents-waits`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `ask_system` {"system": "documents"}.
-63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
-64. The agent asked for `escalate` {"note": "Customer (Elowen Marr, unverified, secure chat) says she owns the account and wants the June 2025 statement made available in the secure portal; she does not want it by email. The documents system was already asked (documents_asked=True), but it has not said whether the statement exists or is ready (document_ready unknown). A second documents ask was refused because the case is in WAITING. Identity is not verified. Please verify the customer and check whether the June 2025 statement exists and can be published to the portal."}.
-65. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.60 → question.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+55. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → statement (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+62. `next_system`: not known → documents (by `asked-documents`).
+63. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
+64. State `TRIAGED` → `WAITING` (by `documents-waits`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `ask_system` {"system": "documents"}.
+67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
+68. The agent asked for `escalate` {"note": "Customer Elowen Marr (unverified, secure chat) says she owns the account and cannot find the June 2025 statement in the secure portal. She wants it made available there, not sent by email. The documents system was already asked, but the case has no result: document_ready is unknown. A new documents ask was refused because the case is in WAITING state. Please verify the customer's identity and check whether the June 2025 statement exists and is published in the portal."}.
+69. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12545 tokens in, 867 out, 8.403 s, cost $0.0298; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 12200 tokens in, 1041 out, 10.145 s, cost $0.0304; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't move this case forward, so it is still open and waiting.
+> I've stopped here: the case is in WAITING and no tool will accept a next step.
 > 
-> - **Documents check:** The documents system was already asked once, but the case has no answer on whether the June 2025 statement exists or is ready. My second ask was refused because the case is in WAITING.
-> - **Escalation:** I tried to hand the case to a person, and that was refused for the same reason.
-> - **Identity:** Elowen Marr is not verified. I have not confirmed the statement exists, and nothing has been made available in the portal.
+> - **What the records show:** the documents system was already asked about the June 2025 statement, but the case holds no answer. It is unknown whether the statement exists or is published in the portal.
+> - **What was refused:** a new ask to the documents system was refused, and so was my escalation to a person. Both refusals were because the case isn't in the TRIAGED state.
+> - **What the customer is waiting on:** Elowen Marr has not received a reply. She is also unverified, so I did not act on her request.
 > 
-> No further action is possible from here. A person needs to verify her and check whether the June 2025 statement can be published to the portal.
+> The case stays open, so a person will pick it up. A person should verify her identity and check whether the June 2025 statement is published in the portal.

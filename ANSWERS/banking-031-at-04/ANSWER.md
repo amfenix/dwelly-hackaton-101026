@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr wrote over secure chat that she couldn't find her June statement in the portal and wanted it made available there, not sent by email. The desk checked the documents system, which showed the June 2025 statement (statement-031.pdf) as ready, and replied in secure chat that the document is available, noting this doesn't confirm it was downloaded and that no email was sent. The case is closed as replied; the requester was not verified, and the record shows nothing further left for a person.
+Elowen Marr wrote on secure chat saying she still couldn't find her June statement in the portal and wanted it made available there, not sent by email. The desk checked with the statements service, which had placed it in her portal as statement-031.pdf, and replied on secure chat that the document is available, noting that this doesn't confirm it was downloaded and that no email was sent. The case is closed as replied; the requester was recorded as not verified, and nothing further is listed for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -75,6 +75,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

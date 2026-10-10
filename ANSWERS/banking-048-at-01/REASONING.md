@@ -47,26 +47,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 44. Rule `triage` fired: state = READING → true (state=READING).
 45. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-46. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-47. `request_type`: not known → question (by `triage`).
-48. `subject`: not known → incoming_payment (by `triage`).
-49. State `READING` → `TRIAGED` (by `triage`).
-50. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-51. `next_system`: not known → incoming (by `route-incoming`).
-52. The agent asked for `ask_system` {"system": "incoming"}.
-53. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-54. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-55. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-56. Called `ask_system` (attempt 1, key banking-048-at-01:do-ask:17).
-57. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
-58. `ask_system` found {}.
-59. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-60. The case closed in `ASKED`: **ask_system**.
+46. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+47. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+48. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+49. `request_type`: not known → question (by `triage`).
+50. `credentials_requested`: not known → False (by `triage`).
+51. `joint_holder_change`: not known → False (by `triage`).
+52. `subject`: not known → incoming_payment (by `triage`).
+53. State `READING` → `TRIAGED` (by `triage`).
+54. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+55. `next_system`: not known → incoming (by `route-incoming`).
+56. The agent asked for `ask_system` {"system": "incoming"}.
+57. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+58. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+60. Called `ask_system` (attempt 1, key banking-048-at-01:do-ask:17).
+61. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
+62. `ask_system` found {}.
+63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+64. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6412 tokens in, 394 out, 3.936 s, cost $0.0128; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7253 tokens in, 454 out, 4.859 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the incoming-payments system whether the buyer's payment has arrived. The case is now closed at that step. The case record has no result from that system, so I can't yet say whether the payment has reached your H&V business account. The only confirmation on file is "none".
+> I asked the incoming-payments system whether the buyer's payment has arrived. The case is now closed at that step. The system's answer didn't come back into the case, so I don't know yet whether the payment has reached the business account. I haven't told the customer anything about it.

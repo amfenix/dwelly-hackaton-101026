@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk found the matching attempt in the card journal, which shows it declined because her available balance was insufficient (the recorded reason is cut off at "£18."). It replied to her on the verified call with that reason, said this does not establish a different cause or authorise a retry, and made no card changes; the case is closed with nothing left for a person.
+Mara Ellison, verified on a call, asked why her £18.40 payment at North Quay Books was declined. The desk checked the card authorisation journal, found the matching attempt declined because her available balance was insufficient, and replied to her on the call saying so, with no card change made and no retry authorised. The recorded reason text is cut off after "£18.", so the reply rests only on what the record shows, and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -80,6 +80,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

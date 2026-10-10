@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Mercer, a verified customer on a verified call, asked H&V to register a request to seek the return of a £286.40 transfer sent to the wrong saved recipient. The desk found the payment team had already registered the return request under reference HV-005, so it refused further system and submission steps and sent Leona a reply, closing the case as replied. The record notes that registration does not confirm the money will be returned, and nothing is left for a person in the record.
+Leona Mercer, a verified caller, said she sent a £286.40 pottery-studio bill transfer to the wrong saved recipient and asked H&V to register a request to seek its return. The desk found the payment team had already registered the return request under reference HV-005, so it refused the further ask to the payment system and the extra submission as unnecessary, then replied to her and closed the case. Registration does not confirm the money will be returned, and the record lists nothing further left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -73,6 +73,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

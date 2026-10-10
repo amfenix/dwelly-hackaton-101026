@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified by call, asked the desk to have H&V revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The business record showed the role as revoked, so the desk replied to her on the call saying that and noting that no other role or permission change was established or made. The case is closed with nothing left for a person, and the review of earlier operations was not part of this reply.
+Mara Ellery, on a verified call, confirmed that Owen Bell is a former employee and instructed the bank to revoke his Payroll Approver role. The desk passed the instruction to the business administration process, which reported the role as revoked, and the desk replied to her by verified call saying the business record shows the role as revoked and that no other role or permission change was made or established. The case is closed with nothing left for a person, and the reply did not address her request to keep the review of earlier operations separate.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -75,6 +75,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

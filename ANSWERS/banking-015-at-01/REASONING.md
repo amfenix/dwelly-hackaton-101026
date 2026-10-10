@@ -49,24 +49,28 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
 47. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-48. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
-49. `request_type`: not known → instruction (by `triage`).
-50. `subject`: not known → direct_debit (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
-53. `next_system`: not known → recurring (by `route-recurring`).
-54. The agent asked for `submit_request` {}.
-55. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); register-what-fits-no-type: request_type = other is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); verified is not known (verified=not known); incoming-instruction: next_system = incoming is false (next_system=recurring); verified is not known (verified=not known); recurring-instruction: verified is not known (verified=not known); card-instruction: next_system = card is false (next_system=recurring); verified is not known (verified=not known); access-instruction: next_system = access is false (next_system=recurring); verified is not known (verified=not known); business-instruction: next_system = business is false (next_system=recurring); verified is not known (verified=not known); documents-instruction: next_system = documents is false (next_system=recurring); verified is not known (verified=not known).
-56. The agent asked for `ask_system` {"system": "recurring"}.
-57. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
-58. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-59. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-60. Called `ask_system` (attempt 1, key banking-015-at-01:do-ask:17).
-61. Action in the world: `ask_system` {"system": "recurring", "about": "direct_debit"}.
-62. `ask_system` found {}.
-63. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-64. The case closed in `ASKED`: **ask_system**.
+48. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+49. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+50. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+51. `request_type`: not known → instruction (by `triage`).
+52. `credentials_requested`: not known → False (by `triage`).
+53. `joint_holder_change`: not known → False (by `triage`).
+54. `subject`: not known → direct_debit (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+57. `next_system`: not known → recurring (by `route-recurring`).
+58. The agent asked for `submit_request` {}.
+59. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); register-what-fits-no-type: request_type = other is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); verified is not known (verified=not known); incoming-instruction: next_system = incoming is false (next_system=recurring); verified is not known (verified=not known); recurring-instruction: verified is not known (verified=not known); card-instruction: next_system = card is false (next_system=recurring); verified is not known (verified=not known); access-instruction: next_system = access is false (next_system=recurring); verified is not known (verified=not known); business-instruction: next_system = business is false (next_system=recurring); verified is not known (verified=not known); documents-instruction: next_system = documents is false (next_system=recurring); verified is not known (verified=not known).
+60. The agent asked for `ask_system` {"system": "recurring"}.
+61. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+62. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+63. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+64. Called `ask_system` (attempt 1, key banking-015-at-01:do-ask:17).
+65. Action in the world: `ask_system` {"system": "recurring", "about": "direct_debit"}.
+66. `ask_system` found {}.
+67. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+68. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 9766 tokens in, 617 out, 5.615 s, cost $0.0217; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 10573 tokens in, 514 out, 5.321 s, cost $0.0219; models: claude-sonnet-5-5, jev-1.13.0.

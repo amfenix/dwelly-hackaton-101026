@@ -51,29 +51,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
-51. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → document (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
-56. `next_system`: not known → documents (by `route-documents`).
-57. The agent asked for `ask_system` {"system": "documents"}.
-58. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-038-at-02:do-ask:17).
-62. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.93 → question.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+53. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → document (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document] → true (subject=document).
+60. `next_system`: not known → documents (by `route-documents`).
+61. The agent asked for `ask_system` {"system": "documents"}.
+62. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); document_ready = false → not known (document_ready=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-038-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "documents", "about": "document"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6971 tokens in, 472 out, 4.218 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7889 tokens in, 491 out, 5.291 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the documents system about Mara Ellison's request for an account confirmation document, and the desk accepted the query. The case is now marked final with the outcome "ask_system".
-> 
-> The documents system has not returned an answer yet, so there is nothing to tell her about the document. Mara is also still not verified, and nothing has been made available in her portal.
+> I've checked the documents system about Mara Ellison's request for an account confirmation in her secure portal. The system accepted the query, and the case is now marked as asked. The next step is to reply to her once the documents system's answer is in the case. She is not yet verified, so the reply should only say what the record shows.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer's question was about two similar outgoing transfers of £84.20 to North Quay Utilities, one marked Completed and the other Pending. The desk classified it as a transfer question and sent a query to the payment system about the transfer. Nothing has been stopped or changed, and the case is closed pending the payment system's answer, after which a person can tell the customer whether the second entry can be stopped or returned.
+The request was a question about a transfer, and the payment activity showed two similar £84.20 entries to North Quay Utilities, one Completed and one Pending. The desk classified it as a transfer question and sent a query to the payment system about it; that query is the only action taken. Nothing has been changed, and the case closed with the payment system's answer still outstanding, so whether the two entries are one instruction or two is not yet known.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

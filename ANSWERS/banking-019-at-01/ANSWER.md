@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked to move the date of their monthly standing order to Willow Yard Studios from 18 September 2025 to 22 September 2025, and to have the change sent to them for secure confirmation. The desk classified it as a change to a standing order and routed it to the recurring system, but its attempts to query that system, submit the request and redirect to secure confirmation were all refused. The agent then hit its turn limit and the case was escalated as not handled, so no change was made or sent and a person needs to pick it up.
+The customer asked to move their monthly standing order to Willow Yard Studios from 18 September 2025 to 22 September 2025, and to have the change sent for secure confirmation. The desk classed it as a change to a standing order, but every action the agent tried (asking the recurring system, submitting the request, redirecting to the secure process) was refused. The agent ran out of turns, so the case was escalated as not handled; no change was made or sent, and a person needs to pick it up.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,6 +48,8 @@ Facts established:
 - request_type: **change**
 - next_system: **recurring**
 - reason: **NOT_HANDLED**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

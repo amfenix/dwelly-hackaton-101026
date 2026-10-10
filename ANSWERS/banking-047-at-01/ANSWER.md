@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder, a verified customer using the business portal, asked what the current outgoing-payment limit is for her company profile, before she arranges a planned supplier payout that she has not submitted. The desk classified this as a question about limits, routed it to the business system, and asked that system for the limit, and the case closed at that step. The system's answer has not come back into the case, so no limit figure has been given to Maeve, and the payout was left untouched.
+Maeve Calder, a verified customer using the business portal, asked what the current outgoing-payment limit is for her company profile before she arranges a planned supplier payout. The desk classified this as a question about limits and sent an ask to the business system about the limit; the ask went through but returned no information, so no limit figure is in the record. Nothing else was submitted or changed, and she still has no figure for the limit, so someone will need to get it to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -59,6 +59,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

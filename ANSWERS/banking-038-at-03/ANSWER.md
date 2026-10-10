@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing on secure chat and not verified, asked for an account confirmation document to be made available in her own secure portal only. The desk classified it as a question about a document, asked the documents system, and closed the case as waiting because that system's answer (whether the document is ready) has not come back. A second ask to the documents system and an escalation to a person were both refused because the case was already in WAITING, so no document has been released or confirmed, and her identity still needs verifying and a person still needs to check whether the document can be issued.
+Mara Ellison, who is not verified, asked over secure chat for an account confirmation document to be placed only in her own secure portal. The desk classified it as a question about a document, asked the documents system, and closed the case in WAITING because that system's answer had not come in. A second request to the documents system and an attempt to escalate to a person were both refused because the case was no longer in the TRIAGED state, so nothing has been issued or sent to her, and the case holds no result for a person to act on beyond checking her identity and whether the document can be released.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

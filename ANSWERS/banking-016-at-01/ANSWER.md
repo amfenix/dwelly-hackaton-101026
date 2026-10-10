@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked for H&V to investigate an £18.40 Direct Debit to Northmere Water Services, which they dispute. The desk classified it as a request to register about a direct debit, refused an attempt to query the recurring-payments system directly, and instead registered the request with the recurring team, so the case closed as requested. The record shows no further steps and nothing left for a person.
+The customer asked for the £18.40 Direct Debit to Northmere Water Services to be investigated because they dispute the amount debited. The desk classed it as a request to register, refused the agent's attempt to query the recurring-payments system first, and then registered the dispute with the recurring team. Nothing has been checked against the Direct Debit record, and the investigation itself is left to that team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -54,6 +54,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

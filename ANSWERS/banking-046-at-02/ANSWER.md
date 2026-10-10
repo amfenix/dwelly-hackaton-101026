@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified on a call, asked the desk to revoke former employee Owen Bell's Payroll Approver role and to keep any review of his earlier operations separate. The desk classified this as a role instruction and registered a request to the business team, and the case closed as REQUESTED. The record does not show that the role has actually been removed, so that still needs to be confirmed, and no review of his earlier operations was started.
+Mara Ellery, verified on a call, instructed the desk to revoke former employee Owen Bell's Payroll Approver role and asked that any review of his earlier operations be kept separate. The desk classified it as a role instruction and registered a request with the business team, and the case closed in REQUESTED. The revocation has been requested but not confirmed as done, and no review of earlier operations was started.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -62,6 +62,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

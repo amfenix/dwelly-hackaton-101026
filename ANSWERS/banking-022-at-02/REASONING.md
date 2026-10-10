@@ -56,30 +56,34 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-55. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-56. `request_type`: not known → instruction (by `triage`).
-57. `subject`: not known → card (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-60. `next_system`: not known → card (by `route-card`).
-61. The agent asked for `ask_system` {"system": "card"}.
-62. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
-63. The agent asked for `submit_request` {}.
-64. Rule `card-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked absent → true (card_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
-65. State `TRIAGED` → `REQUEST_PENDING` (by `card-instruction`).
-66. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-67. Called `register_request` (attempt 1, key banking-022-at-02:do-request:17).
-68. Action in the world: `register_request` {"team": "card", "about": "card"}.
-69. `register_request` found {}.
-70. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-71. The case closed in `REQUESTED`: **submit_request**.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+57. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+58. `request_type`: not known → instruction (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → card (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+64. `next_system`: not known → card (by `route-card`).
+65. The agent asked for `ask_system` {"system": "card"}.
+66. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: next_system absent is false (next_system=card); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=card); next_system = tariff is false (next_system=card); next_system absent is false (next_system=card).
+67. The agent asked for `submit_request` {}.
+68. Rule `card-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked absent → true (card_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
+69. State `TRIAGED` → `REQUEST_PENDING` (by `card-instruction`).
+70. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+71. Called `register_request` (attempt 1, key banking-022-at-02:do-request:17).
+72. Action in the world: `register_request` {"team": "card", "about": "card"}.
+73. `register_request` found {}.
+74. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+75. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 7829 tokens in, 553 out, 6.387 s, cost $0.0173; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8610 tokens in, 603 out, 5.532 s, cost $0.0188; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the request to block your missing debit card. The desk accepted it, and the case is now in the REQUESTED state.
+> I've submitted the request to block your missing debit card. It was accepted, and the case now shows as requested. I haven't seen confirmation that the block is active, so please don't treat the card as blocked until you get it.
 > 
-> I didn't check which card is on your account first. The desk wouldn't let me query the card system for an instruction like this one. Your request named one debit card, so I sent it as given.
+> I first tried to look up your cards in the card system, but the desk refused because this case is already a clear instruction. I didn't confirm which card is meant, so the request relies on you having one H&V debit card.

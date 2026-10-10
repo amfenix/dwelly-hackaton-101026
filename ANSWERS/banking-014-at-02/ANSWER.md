@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, and said she did not want it cancelled. The desk classed this as a question about a direct debit, routed it to the recurring payments system and asked that system about the mandate. Nothing was cancelled or changed, and the record shows no answer from the recurring system yet, so the mandate's status has not been reported back to her. Her identity is also marked as unverified.
+Mara Ellery asked over secure chat whether her Direct Debit mandate to Northmere Water Services is still active, and said she did not want it cancelled. The desk classified this as a question about a direct debit and sent a query to the recurring payments system; nothing was cancelled or changed. No answer from that system is in the record, so the mandate's status is still unknown, and her identity remains unverified on this chat.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

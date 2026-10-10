@@ -54,30 +54,35 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
-53. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-54. `request_type`: not known → change (by `triage`).
-55. `subject`: not known → profile (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-58. `next_system`: not known → access (by `asked-access`).
-59. Rule `profile-change-waits-for-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked → true (access_asked=True); confirmation in [none, requested] → true (confirmation=none). The protected change process is running; it asks the customer to confirm.
-60. State `TRIAGED` → `WAITING` (by `profile-change-waits-for-the-process`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `submit_request` {}.
-63. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=change); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=WAITING); access_asked absent is false (access_asked=True); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change).
-64. The agent asked for `redirect_secure` {}.
-65. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=change); request_type = instruction is false (request_type=change); not verified is false (verified=True).
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+55. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+56. `request_type`: not known → change (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → profile (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+62. `next_system`: not known → access (by `asked-access`).
+63. Rule `profile-change-waits-for-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked → true (access_asked=True); confirmation in [none, requested] → true (confirmation=none). The protected change process is running; it asks the customer to confirm.
+64. State `TRIAGED` → `WAITING` (by `profile-change-waits-for-the-process`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `submit_request` {}.
+67. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); register-what-fits-no-type: state = TRIAGED is false (state=WAITING); request_type = other is false (request_type=change); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=WAITING); access_asked absent is false (access_asked=True); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change).
+68. The agent asked for `redirect_secure` {}.
+69. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=change); request_type = instruction is false (request_type=change); not verified is false (verified=True).
 
 ## Model calls
 
-5 calls, 10695 tokens in, 873 out, 8.691 s, cost $0.0262; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 11855 tokens in, 928 out, 8.611 s, cost $0.0286; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't changed Mara Ellison's correspondence address. The case is on hold, waiting for her to confirm the change.
+> The address change hasn't gone through, and the case is now waiting on Mara Ellison. I made two attempts, and the desk refused both.
 > 
-> She is verified in the secure portal and has asked for the change. The desk has no confirmation from her yet, because she said she will confirm when the profile process asks. The case is in a waiting state.
+> - **Submitting the change:** the desk refused it because the case is in a waiting state, not triaged. The request is also typed as a profile change, not an instruction the desk can carry out directly.
+> - **Pointing her to the secure process:** this was refused for the same state reason. The case also isn't an access or sign-in request, and she is already verified.
 > 
-> I tried two next steps and the desk refused both. `submit_request` was refused because the case isn't triaged and the request type is "change", not an instruction the desk can carry out. `redirect_secure` was refused for the same reasons, and because she is already verified.
+> Her identity is verified, and she has said she will confirm the change when the profile process asks. The desk has no confirmation recorded yet. Her email alone doesn't change her profile, so nothing has been updated.
 > 
-> Nothing else is available to do, so I'm leaving the case as it is.
+> The case is left open and waiting. The next step is for her to confirm in the secure portal's profile process, or for a person to pick it up.

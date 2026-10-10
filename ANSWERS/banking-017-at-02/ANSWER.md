@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether her rent standing order was executed by H&V and what status the bank has recorded. The desk classified it as a question about a standing order and passed it to the recurring payments system, which accepted the query, and the case closed at that step. The system's answer is not in the record, so whether the payment was sent and its recorded status remain unknown, and Mara is still marked as not verified.
+Mara Ellery, writing over secure chat, asked the desk to check her rent standing-order run and say whether H&V executed it and what status the bank recorded. The desk classified this as a question about a standing order and sent an inquiry to the recurring payments system, then closed the case at that step. The system's reply isn't in the record, so whether the order ran and its status are still unanswered, and Mara's identity is also still unverified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

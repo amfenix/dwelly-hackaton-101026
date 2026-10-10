@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a question about a card, apparently the status of a replacement card. The desk classified it as a card question and sent a query to the card system, then closed the case at that point. The card system's answer is not in the record, so whether the card is being made or has been sent is unknown. The only confirmed fact is that the secure portal accepted the replacement request under reference HV-030.
+The requester asked a question about their replacement card, and the desk classified it as a card question. It did not answer it directly but sent a query to the card system. The record shows no reply yet, so whether the card is being made or has been sent is still unknown, and a person still needs to read the card system's answer when it arrives and pass it on.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

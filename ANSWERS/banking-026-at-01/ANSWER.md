@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellwood, an unverified customer on secure chat, said she had forgotten the PIN for her debit card and asked for the safe way to deal with it. The desk classified this as a card access request and redirected her to the secure process in her secure portal, where her identity is checked. The message told her the bank never asks for a password, PIN or verification code, and that nothing on her profile was changed. The case is closed as redirected, and the record lists nothing left for a person to do.
+Maren Ellwood asked, over secure chat, for the safe way to deal with a forgotten PIN on her debit card. The desk could not verify her identity there, so it did not handle the PIN itself. It sent her a message pointing her to the secure process in her portal, which checks identity, and told her the bank never asks for a password, PIN or verification code. Nothing on her profile was changed, the case is closed as redirected, and the record shows nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -60,6 +60,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **access**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -52,28 +52,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-51. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → incoming_payment (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
-56. `next_system`: not known → incoming (by `route-incoming`).
-57. The agent asked for `ask_system` {"system": "incoming"}.
-58. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-002-at-02:do-ask:17).
-62. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+53. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → incoming_payment (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
+60. `next_system`: not known → incoming (by `route-incoming`).
+61. The agent asked for `ask_system` {"system": "incoming"}.
+62. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-002-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "incoming", "about": "incoming_payment"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7115 tokens in, 502 out, 7.154 s, cost $0.0153; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7920 tokens in, 505 out, 7.722 s, cost $0.0164; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the incoming-payments system whether the kiln contribution has arrived. The case is now closed at that step.
+> I checked the incoming payments system for the kiln contribution. The case is now closed at this step, and the system has not returned any details yet. I can't yet say whether the payment has arrived.
 > 
-> The system's answer isn't in the case yet. The facts show no result for the payment, so I can't say whether it has arrived. The only facts on record are that Elowen Marsh is not verified and that the sender's transfer is unconfirmed.
+> Elowen Marsh is also not verified on this channel. Any reply should therefore not disclose account details until verification is complete.

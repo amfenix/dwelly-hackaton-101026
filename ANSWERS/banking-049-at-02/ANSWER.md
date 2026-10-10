@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, who is not verified and says she is the shop's authorised manager, asked through secure chat for the acquiring report for 1–7 July 2025 to be escalated because it wasn't showing as available. The desk classed it as a question about a document and asked the documents system about it; that check returned nothing, so it is still unknown whether the report exists or why it isn't showing. The desk did not escalate the file request or release anything, and her identity and authority remain unconfirmed.
+Mara Venn, writing on secure chat and not verified, said she is the authorised manager for North Quay Printworks and asked for the acquiring report for 1–7 July 2025 to be escalated because it wasn't showing as available. The desk classed it as a question about a document and asked the documents system about it; that request went through but returned no details, so it is not known whether the report is available. The desk did not escalate the file request or send her any report details, and her authority over the account has not been confirmed, so that is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

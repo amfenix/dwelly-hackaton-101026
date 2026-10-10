@@ -4,7 +4,7 @@
 
 ## Summary
 
-A verified customer, Elowen Marr, asked the desk to correct her profile name from "Elowen Mar" to "Elowen Marr". The desk classified it as a profile change and found the registration team had already been asked, with no answer yet, so it closed the case in a waiting state and made no profile change. The agent's later attempts to submit the request, escalate it to the data team and query the access system were all refused because the case was already in the waiting state, so the decision now rests on the team's reply about what supporting information is needed.
+Elowen Marr, a verified caller, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk classified this as a profile change, and since the protected name review had already been opened with the team and its answer on what supporting information is needed was not yet in, it put the case in waiting and made no profile change. The agent's later attempts to submit the request, escalate, and ask the access system were all refused because the case was no longer in the state those actions require, so what remains is for the team's answer to come back.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

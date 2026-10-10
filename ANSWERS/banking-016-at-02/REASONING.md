@@ -56,28 +56,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
-55. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
-56. `request_type`: not known → register (by `triage`).
-57. `subject`: not known → direct_debit (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
-60. `next_system`: not known → recurring (by `route-recurring`).
-61. The agent asked for `submit_request` {}.
-62. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-63. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-64. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-65. Called `register_request` (attempt 1, key banking-016-at-02:do-request:17).
-66. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
-67. `register_request` found {}.
-68. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-69. The case closed in `REQUESTED`: **submit_request**.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+57. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+58. `request_type`: not known → register (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → direct_debit (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+64. `next_system`: not known → recurring (by `route-recurring`).
+65. The agent asked for `submit_request` {}.
+66. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+67. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+68. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+69. Called `register_request` (attempt 1, key banking-016-at-02:do-request:17).
+70. Action in the world: `register_request` {"team": "recurring", "about": "direct_debit"}.
+71. `register_request` found {}.
+72. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+73. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 5107 tokens in, 649 out, 5.159 s, cost $0.0127; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5582 tokens in, 536 out, 4.331 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed Tamsin Rook's dispute of the £18.40 Direct Debit to Northmere Water Services (9 July 2025) to the team that handles Direct Debit disputes. The desk accepted it and the case is closed on our side.
-> 
-> I didn't check the Direct Debit records first, because the customer had already identified the payment. That means I haven't confirmed the amount or the mandate details against the bank's records.
+> I've passed your dispute of the £18.40 Direct Debit to Northmere Water Services, dated 9 July 2025, to the team that handles these cases. They will investigate the amount that was debited. The request has been accepted and is now with them.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a customer on secure chat, asked for an account confirmation document to be made available in her own secure portal only. The desk classified this as a question about a document and sent a query to the documents system, then closed the case as final with nothing further done. The documents system returned no answer, Mara is still unverified, and nothing has been made available in her portal, so a person would need to follow up on the document.
+Mara Ellison, writing through secure chat, asked for an account confirmation document to be made available in her own secure portal and not sent to anyone else. She is not verified. The desk classified this as a question about a document and sent a query to the documents system, which accepted it and returned nothing further, so the case closed in the asked state. The record shows no answer from the documents system yet, and no document has been provided to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

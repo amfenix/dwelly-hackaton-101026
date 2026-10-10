@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Mercer, a verified customer on a verified call, said she sent a £286.40 transfer to the wrong saved recipient and asked H&V to register a request to seek its return. The desk classified it as a transfer registration request, routed it to payment, and closed the case in WAITING because the team had been asked to register it and its answer is not yet in. The agent's later attempts to query the payment system, submit the request and escalate were all refused because the case was no longer in the triaged state, so nothing was registered or sent and the transfer record was never checked. What remains is for the team's answer on the registration to come in, and for a person to follow up on it.
+Leona Mercer, a verified customer on a verified call, asked the desk to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient. The desk routed the case to the payment team and put it in a waiting state, since the team had been asked and its answer was not yet in. The agent's later attempts to query the payment system, submit the registration and escalate were all refused because the case was already in WAITING, so nothing was registered, and the case still awaits the team's answer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -65,6 +65,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -52,27 +52,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
-51. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
-52. `request_type`: not known → change (by `triage`).
-53. `subject`: not known → profile (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
-56. `next_system`: not known → access (by `route-access`).
-57. Rule `profile-change-to-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked absent → true (access_asked=not known); verified → true (verified=True); registration_asked absent → true (registration_asked=not known). A verified customer's profile change is started in the protected change process.
-58. State `TRIAGED` → `REQUEST_PENDING` (by `profile-change-to-the-process`).
-59. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-60. Called `register_request` (attempt 1, key banking-028-at-02:do-request:17).
-61. Action in the world: `register_request` {"team": "access", "about": "profile"}.
-62. `register_request` found {}.
-63. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-64. The case closed in `REQUESTED`: **submit_request**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.09 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+53. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+54. `request_type`: not known → change (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → profile (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
+60. `next_system`: not known → access (by `route-access`).
+61. Rule `profile-change-to-the-process` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); subject = profile → true (subject=profile); access_asked absent → true (access_asked=not known); verified → true (verified=True); registration_asked absent → true (registration_asked=not known). A verified customer's profile change is started in the protected change process.
+62. State `TRIAGED` → `REQUEST_PENDING` (by `profile-change-to-the-process`).
+63. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+64. Called `register_request` (attempt 1, key banking-028-at-02:do-request:17).
+65. Action in the world: `register_request` {"team": "access", "about": "profile"}.
+66. `register_request` found {}.
+67. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+68. The case closed in `REQUESTED`: **submit_request**.
+69. The agent asked for `ask_system` {"system": "access"}.
+70. Refused `ask_system` in `REQUESTED`: payment-ask: state = TRIAGED is false (state=REQUESTED); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=REQUESTED); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=REQUESTED); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=REQUESTED); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=REQUESTED); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=REQUESTED); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=REQUESTED); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=REQUESTED); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
+71. The agent asked for `submit_request` {}.
+72. Refused `submit_request` in `REQUESTED`: register: state = TRIAGED is false (state=REQUESTED); request_type = register is false (request_type=change); register-what-fits-no-type: state = TRIAGED is false (state=REQUESTED); request_type = other is false (request_type=change); payment-instruction: state = TRIAGED is false (state=REQUESTED); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=REQUESTED); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=REQUESTED); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=REQUESTED); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=REQUESTED); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=REQUESTED); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=REQUESTED); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change).
+73. The agent asked for `redirect_secure` {}.
+74. Refused `redirect_secure` in `REQUESTED`: redirect-to-the-secure-process: state = TRIAGED is false (state=REQUESTED); request_type = access is false (request_type=change); request_type = instruction is false (request_type=change); not verified is false (verified=True).
 
 ## Model calls
 
-3 calls, 4986 tokens in, 495 out, 3.965 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> This case is already closed. The desk shows it as requested, with the outcome "submit_request", and no refusals are recorded. So I'm not taking any further action.
-> 
-> The customer, Elowen Mercer, is verified from the call. She wants her profile phone number replaced because she can no longer use the old phone. Her request has been passed on.
+5 calls, 15042 tokens in, 692 out, 8.48 s, cost $0.0326; models: claude-sonnet-5-5, jev-1.13.0.

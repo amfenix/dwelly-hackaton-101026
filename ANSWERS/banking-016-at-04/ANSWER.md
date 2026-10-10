@@ -4,7 +4,7 @@
 
 ## Summary
 
-Tamsin Rook, verified on a call, disputed an £18.40 Direct Debit charge to Northmere Water Services and asked for it to be investigated. The desk registered the review under reference HV-016 and sent her a reply confirming this; the case is closed as replied. Its attempts to submit the request on to the recurring payments system and to ask that system were refused, and the record shows no investigation outcome or further step for a person.
+Tamsin Rook, a verified customer on a call, asked for the Direct Debit team to investigate an £18.40 charge to Northmere Water Services that she disputes. The desk found the review had been registered under reference HV-016, refused the attempts to submit the request or ask another system as unnecessary, and sent her a reply confirming the registration. The record shows nothing further left for the desk to do, and it does not say what the review's outcome will be.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -74,6 +74,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

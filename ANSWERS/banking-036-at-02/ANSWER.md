@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer in the secure portal, asked for her correspondence address to be changed on her profile. The desk treated it as a profile change and registered a request with the access team, so the case closed as submitted with no errors or refusals. Her confirmation was recorded as "none" and her email said it alone does not change her profile, so the record shows no confirmation yet and nothing further assigned to a person.
+Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address. The desk classed it as a profile change and registered a request with the access team, so the case closed as submitted (REQUESTED); the address itself has not been changed. Later attempts to submit again and to ask the access system were refused because the case was no longer in the triaged state, and no confirmation from Mara is recorded yet, so that is what remains for a person (she said she would confirm when the profile process asks).
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -76,6 +78,11 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `submit_request`: register: state = TRIAGED is false (state=REQUESTED); request_type = register is false (request_type=change); register-what-fits-no-type: state = TRIAGED is false (state=REQUESTED); request_type = other is false (request_type=change); payment-instruction: state = TRIAGED is false (state=REQUESTED); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); incoming-instruction: state = TRIAGED is false (state=REQUESTED); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); recurring-instruction: state = TRIAGED is false (state=REQUESTED); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); card-instruction: state = TRIAGED is false (state=REQUESTED); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); access-instruction: state = TRIAGED is false (state=REQUESTED); request_type = instruction is false (request_type=change); business-instruction: state = TRIAGED is false (state=REQUESTED); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); documents-instruction: state = TRIAGED is false (state=REQUESTED); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change)
+- `ask_system`: payment-ask: state = TRIAGED is false (state=REQUESTED); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=REQUESTED); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=REQUESTED); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=REQUESTED); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: state = TRIAGED is false (state=REQUESTED); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=REQUESTED); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=REQUESTED); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: state = TRIAGED is false (state=REQUESTED); args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change)
 
 ## Final result
 

@@ -52,28 +52,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-52. `request_type`: not known → instruction (by `triage`).
-53. `subject`: not known → standing_order (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-56. `next_system`: not known → recurring (by `route-recurring`).
-57. The agent asked for `submit_request` {}.
-58. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
-59. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
-60. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-61. Called `register_request` (attempt 1, key banking-013-at-03:do-request:17).
-62. Action in the world: `register_request` {"team": "recurring", "about": "standing_order"}.
-63. `register_request` found {}.
-64. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-65. The case closed in `REQUESTED`: **submit_request**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+53. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+54. `request_type`: not known → instruction (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → standing_order (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+60. `next_system`: not known → recurring (by `route-recurring`).
+61. The agent asked for `submit_request` {}.
+62. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
+63. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
+64. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+65. Called `register_request` (attempt 1, key banking-013-at-03:do-request:17).
+66. Action in the world: `register_request` {"team": "recurring", "about": "standing_order"}.
+67. `register_request` found {}.
+68. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+69. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 5021 tokens in, 577 out, 4.076 s, cost $0.0118; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5556 tokens in, 562 out, 4.506 s, cost $0.0123; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted your request to cancel the next scheduled run of your studio-rent recurring payment. The desk accepted it, but the cancellation isn't confirmed yet. The request has gone to the recurring payments system to carry out.
+> I've submitted your request to cancel the next scheduled run of your studio-rent standing order. The desk accepted it, and the case is now marked as requested.
 > 
-> I can't yet say the future instruction is cancelled. I'll only confirm that once the system's record shows it. Until then, the portal's last status is that the instruction is active and the next run hasn't started.
+> I can't confirm yet that the cancellation has gone through. The records so far only show that your instruction was active and the next run hadn't started. Please check your secure portal to confirm that the next run no longer appears as scheduled.

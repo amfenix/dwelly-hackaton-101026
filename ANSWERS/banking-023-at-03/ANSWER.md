@@ -4,7 +4,7 @@
 
 ## Summary
 
-Verified customer Mara Ellery called to say she doesn't recognise a £38.40 card purchase at Fern & Finch Books on 14 July 2025, and asked for it to be raised with the card team and for advice on protecting her card. The desk registered the request, routed it to the card system, and closed the case as waiting, because the team had been asked and its answer was not yet in. The agent's later attempts to submit the request, ask the card system, and escalate were all refused because the case was already in the waiting state, so nothing further was sent and no card-protection advice was given. What is left is the card team's reply to the registration, and the dispute and card-protection guidance Mara asked for are still outstanding.
+Mara Ellery, a verified caller, asked for the unrecognised £38.40 Fern & Finch Books card purchase of 14 July 2025 to be raised with the card team, and for advice on protecting her card safely. The desk classed it as a card-payment registration, and the case closed in a waiting state because the team had been asked to register it and its answer wasn't in yet. The agent's later attempts to submit the request, ask the card system and escalate were all refused because the case was no longer in the triaged state, and no actions were taken, so the dispute registration and her card-protection advice are still waiting on a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -66,6 +66,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

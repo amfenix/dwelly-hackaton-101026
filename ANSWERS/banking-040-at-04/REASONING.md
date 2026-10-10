@@ -59,29 +59,33 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. `confirmation`: not known → none (by `read-confirmation`).
 56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 57. Rule `triage` fired: state = READING → true (state=READING).
-58. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-59. Classifier (jev jev-latest) on `subject`: document, confidence 0.93 → document.
-60. `request_type`: not known → question (by `triage`).
-61. `subject`: not known → document (by `triage`).
-62. State `READING` → `TRIAGED` (by `triage`).
-63. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-64. `next_system`: not known → documents (by `asked-documents`).
-65. The agent asked for `reply` {}.
-66. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
-67. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
-68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-69. Called `reply_customer` (attempt 1, key banking-040-at-04:do-reply:17).
-70. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
-71. `reply_customer` found {}.
-72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-73. The case closed in `REPLIED`: **reply**.
+58. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+59. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+60. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+61. Classifier (jev jev-latest) on `subject`: document, confidence 0.89 → document.
+62. `request_type`: not known → question (by `triage`).
+63. `credentials_requested`: not known → False (by `triage`).
+64. `joint_holder_change`: not known → False (by `triage`).
+65. `subject`: not known → document (by `triage`).
+66. State `READING` → `TRIAGED` (by `triage`).
+67. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+68. `next_system`: not known → documents (by `asked-documents`).
+69. The agent asked for `reply` {}.
+70. Rule `documents-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = documents → true (next_system=documents); document_ready → true (document_ready=True).
+71. State `TRIAGED` → `REPLY_PENDING` (by `documents-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-040-at-04:do-reply:17).
+74. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The document record shows that the document is available. This does not confirm that the document was downloaded or that funds were credited. No email was sent."}.
+75. `reply_customer` found {}.
+76. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+77. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7467 tokens in, 512 out, 4.984 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8412 tokens in, 597 out, 5.757 s, cost $0.0183; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The desk accepted the reply, and the case is now closed as replied. The documents check had already found the record for payment HV-040 (£74.00) ready. The desk writes the reply text, so I haven't seen its exact wording.
+> I've sent the reply, and the case is closed. The documents check had already run, and the record for payment HV-040 (£74.00) was ready. The desk writes the reply text, so I haven't seen its exact wording.
 > 
-> The customer isn't verified, and no confirmation from the contractor is on record. The bank record shows only the bank's side of the payment, with status SENT.
+> Mara Ellison isn't verified on this chat, and I didn't try to verify her before replying. The records show no confirmation from the contractor. That is separate from the bank's status of SENT, as she said herself.

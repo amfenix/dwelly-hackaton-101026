@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, writing on secure chat, asked for her June statement to be made available in the portal rather than sent by email. The desk asked the documents system about it and closed the case as waiting, because that system has not yet said whether the statement exists or is ready. A second ask to documents and an attempt to escalate to a person were both refused because the case was already in the waiting state, so nothing has been published and no person has been alerted. She is not verified, and someone still needs to verify her and check whether the June 2025 statement can be published to the portal.
+Elowen Marr, writing over secure chat and not verified, said she still couldn't find her June statement in the portal and wanted it made available there rather than emailed. The desk asked the documents system about the June 2025 statement and put the case in WAITING, because no answer has come back yet. A further documents request and the agent's attempt to escalate to a person were both refused because the case was already in WAITING, so nothing has been delivered to her and no person has been brought in. The record does not show any follow-up queued, so verifying her identity and checking whether the statement is published still has no one assigned.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

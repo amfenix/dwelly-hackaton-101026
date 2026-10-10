@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira asked to raise her monthly standing order to Westmere Garden Cooperative from £42.00 to £68.00, but she had not yet authorised the change. The desk found no existing confirmation, since a change has to be confirmed by the customer in the secure portal, so it sent her a confirmation request and closed the case. The standing order itself is unchanged, and the change goes ahead only if Mira confirms it.
+Mira asked to raise her monthly standing order to Westmere Garden Cooperative from £42.00 to £68.00. She had not yet authorised the change, and the desk found no confirmation on record, so it sent her a confirmation request instead of making the change. The change has not been made and waits on Mira confirming it in the secure portal; the record shows no other action taken and no errors.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -54,6 +54,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **change**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

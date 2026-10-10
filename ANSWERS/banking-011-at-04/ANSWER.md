@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat when her active monthly household contribution standing order is next due. The desk checked the standing-order record, found it active with the next run on 2025-09-03, and replied with that date, noting that this does not guarantee the future payment will execute and that no change or instruction was made. Her identity was not verified, but the reply only gave a read-only date, and the case is closed with nothing left for a person.
+Mara Ellison asked over secure chat when her active monthly household standing order is next due. The desk checked the standing-order record and replied in the same chat that the order is active with its next run on 2025-09-03, noting that this does not guarantee the future payment will execute and that no change or additional instruction was made. The case is closed with nothing left for a person, though the record shows she was not verified in this chat.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -75,6 +75,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

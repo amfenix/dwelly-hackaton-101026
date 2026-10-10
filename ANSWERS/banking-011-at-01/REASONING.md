@@ -44,26 +44,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 40. `check_confirmation` found {}.
 41. Rule `triage` fired: state = READING → true (state=READING).
 42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-43. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-44. `request_type`: not known → question (by `triage`).
-45. `subject`: not known → standing_order (by `triage`).
-46. State `READING` → `TRIAGED` (by `triage`).
-47. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-48. `next_system`: not known → recurring (by `route-recurring`).
-49. The agent asked for `ask_system` {"system": "recurring"}.
-50. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-51. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-53. Called `ask_system` (attempt 1, key banking-011-at-01:do-ask:17).
-54. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
-55. `ask_system` found {}.
-56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-57. The case closed in `ASKED`: **ask_system**.
+43. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+44. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+45. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+46. `request_type`: not known → question (by `triage`).
+47. `credentials_requested`: not known → False (by `triage`).
+48. `joint_holder_change`: not known → False (by `triage`).
+49. `subject`: not known → standing_order (by `triage`).
+50. State `READING` → `TRIAGED` (by `triage`).
+51. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+52. `next_system`: not known → recurring (by `route-recurring`).
+53. The agent asked for `ask_system` {"system": "recurring"}.
+54. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+55. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+57. Called `ask_system` (attempt 1, key banking-011-at-01:do-ask:17).
+58. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+59. `ask_system` found {}.
+60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+61. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6219 tokens in, 361 out, 3.619 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7060 tokens in, 424 out, 4.483 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the recurring payments system about your standing order. The case is now marked as asked, and it's final. The system's answer hasn't come back into the case yet. The case record still lists only the original facts, so I don't have your next due date and can't give you one.
+> I asked the recurring payments system about your standing order. It accepted the request, and the case is now closed at that step.
+> 
+> The case record doesn't show a next run date yet, so I can't tell you one. I haven't guessed at a date.

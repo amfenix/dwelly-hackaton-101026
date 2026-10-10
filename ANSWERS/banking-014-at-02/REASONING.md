@@ -54,26 +54,34 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-53. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → direct_debit (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
-58. `next_system`: not known → recurring (by `route-recurring`).
-59. The agent asked for `ask_system` {"system": "recurring"}.
-60. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-61. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-62. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-63. Called `ask_system` (attempt 1, key banking-014-at-02:do-ask:17).
-64. Action in the world: `ask_system` {"system": "recurring", "about": "direct_debit"}.
-65. `ask_system` found {}.
-66. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-67. The case closed in `ASKED`: **ask_system**.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+55. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → direct_debit (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+62. `next_system`: not known → recurring (by `route-recurring`).
+63. The agent asked for `ask_system` {"system": "recurring"}.
+64. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+65. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+66. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+67. Called `ask_system` (attempt 1, key banking-014-at-02:do-ask:17).
+68. Action in the world: `ask_system` {"system": "recurring", "about": "direct_debit"}.
+69. `ask_system` found {}.
+70. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+71. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 5011 tokens in, 452 out, 3.867 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8076 tokens in, 534 out, 5.815 s, cost $0.0170; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system for the status of the Northmere Water Services Direct Debit mandate. I haven't cancelled or changed anything, as you asked. The next step is to report what the system returns.
+> I've asked the recurring payments system to look up the status of the Northmere Water Services Direct Debit mandate. The query is submitted, but the case doesn't show an answer yet, so I can't say whether the mandate is active.
+> 
+> I'm not cancelling anything. You asked only for the status.
+> 
+> Your identity is also still unverified on this chat. Whether the status can be shared with you may depend on that check.

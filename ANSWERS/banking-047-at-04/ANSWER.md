@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder asked over secure chat for the company's current payment limit, and the desk replied on that channel. The reply gave the maximum as £20,000.00 and said the business record returned no recognised status, so no status could be confirmed; it also said no approval or role change was made. Her identity was still marked unverified in the record, and nothing is left open for a person.
+Maeve Calder asked over secure chat to confirm the company's current payment limit, saying she is authorised to view limits. The desk checked the business record, which showed a maximum of £20,000.00 per outgoing payment but returned a status it did not recognise, and it replied to her on secure chat saying it could not confirm a clear status yet while giving the £20,000.00 figure. No approval or role change was made, and the case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -76,6 +76,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

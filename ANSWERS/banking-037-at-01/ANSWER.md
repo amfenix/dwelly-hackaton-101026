@@ -1,10 +1,10 @@
 # Case banking-037-at-01: Profile Name Typo
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: escalate**  (final state `ESCALATED`)
 
 ## Summary
 
-The request was treated as a registration about the customer's profile, which the message described as a name correction ("Elowen Mar" to "Elowen Marr"). The desk routed it to the access team and registered the request there; it changed nothing in the profile itself. An attempt to ask the access system a question first was refused, and the case then closed as submitted. Whether the team will need anything more from the customer is not known from the record.
+The customer asked to correct the name on their profile from "Elowen Mar" to "Elowen Marr". The desk classified it as a profile change, not a credentials request or joint-holder change, but policy refused both the query to the access system and the submission of the request, and the customer's identity was not verified. The case was escalated with no actions taken, so a person still needs to verify the customer and handle the legal-name correction, which the agent's note says usually needs supporting ID.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -30,7 +30,7 @@ Case reference: id banking-037-at-01, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: access, about: profile), by rule `do-request`
+- none
 
 ## Decision and why
 
@@ -38,22 +38,22 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `register` accepted it.
+- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type = register → true (request_type=register)
-  - registration_asked absent → true (registration_asked=not known)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
 
 Facts established:
 
 - subject: **profile**
-- request_type: **register**
+- request_type: **change**
 - next_system: **access**
+- reason: **AGENT_ESCALATED**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 ## Escalated
 
-No.
+Yes: the case ended as **escalate** in `ESCALATED`.
+A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
 
 ## What failed
 
@@ -61,8 +61,9 @@ No.
 
 Requests the policy refused:
 
-- `ask_system`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=register)
+- `ask_system`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority, instruction] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=change); tariff-ask: args.system = tariff is false (args.system=access); next_system = tariff is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change)
+- `submit_request`: register: request_type = register is false (request_type=change); register-what-fits-no-type: request_type = other is false (request_type=change); payment-instruction: next_system = payment is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); incoming-instruction: next_system = incoming is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); recurring-instruction: next_system = recurring is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); card-instruction: next_system = card is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); access-instruction: verified is not known (verified=not known); request_type = instruction is false (request_type=change); business-instruction: next_system = business is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change); documents-instruction: next_system = documents is false (next_system=access); verified is not known (verified=not known); request_type = instruction is false (request_type=change)
 
 ## Final result
 
-submit_request (REQUESTED)
+escalate (ESCALATED)

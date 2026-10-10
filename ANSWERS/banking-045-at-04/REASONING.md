@@ -54,22 +54,24 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
-53. Classifier (jev jev-latest) on `subject`: role, confidence 0.73 → role.
-54. `request_type`: not known → authority (by `triage`).
-55. `subject`: not known → role (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
-58. `next_system`: not known → business (by `route-business`).
-59. Rule `already-forwarded` fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); bank_forwarded → true (bank_forwarded=True). The request is with the person whose approval it needs.
-60. State `TRIAGED` → `WAITING` (by `already-forwarded`).
-61. The case closed in `WAITING`: **wait**.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.05 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+55. Classifier (jev jev-latest) on `subject`: role, confidence 0.77 → role.
+56. `request_type`: not known → authority (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → role (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
+62. `next_system`: not known → business (by `route-business`).
+63. Rule `already-forwarded` fired: state = TRIAGED → true (state=TRIAGED); request_type = authority → true (request_type=authority); bank_forwarded → true (bank_forwarded=True). The request is with the person whose approval it needs.
+64. State `TRIAGED` → `WAITING` (by `already-forwarded`).
+65. The case closed in `WAITING`: **wait**.
 
 ## Model calls
 
-3 calls, 5243 tokens in, 417 out, 3.532 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5875 tokens in, 437 out, 4.294 s, cost $0.0117; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The request is already with the company administrator, so there's nothing more for the desk to do. The case is waiting on their decision.
-> 
-> The access request for Nadia's new colleague was sent through the secure portal for approval. No access has been granted. Nadia can't approve it herself, and the bank can't approve it for the administrator. I took no further action.
+> The request is already with the company administrator for approval, and no access has been granted. The case is in a waiting state, and I'm not taking any further action.

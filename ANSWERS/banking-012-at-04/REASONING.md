@@ -55,20 +55,26 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
 53. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
-54. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-55. `request_type`: not known → change (by `triage`).
-56. `subject`: not known → standing_order (by `triage`).
-57. State `READING` → `TRIAGED` (by `triage`).
-58. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-59. `next_system`: not known → recurring (by `route-recurring`).
-60. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested); registration_asked absent → true (registration_asked=not known). The change was sent to the portal; the customer has not confirmed it yet.
-61. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
-62. The case closed in `WAITING`: **wait**.
+54. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+55. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+56. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+57. `request_type`: not known → change (by `triage`).
+58. `credentials_requested`: not known → False (by `triage`).
+59. `joint_holder_change`: not known → False (by `triage`).
+60. `subject`: not known → standing_order (by `triage`).
+61. State `READING` → `TRIAGED` (by `triage`).
+62. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+63. `next_system`: not known → recurring (by `route-recurring`).
+64. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested); registration_asked absent → true (registration_asked=not known). The change was sent to the portal; the customer has not confirmed it yet.
+65. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
+66. The case closed in `WAITING`: **wait**.
 
 ## Model calls
 
-3 calls, 5073 tokens in, 512 out, 3.684 s, cost $0.0113; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5666 tokens in, 636 out, 5.571 s, cost $0.0132; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is waiting on Mira, so I'm taking no further action. I sent the change from £42.00 to £68.00 a month for her confirmation in the secure portal. She hasn't confirmed it, so the standing order still shows £42.00. The bank can't approve or confirm the change for her. The case is in a final waiting state, and it will move on only once she confirms the change herself in the portal.
+> I'm not calling any further tool. The case is in a final WAITING state because Mira hasn't confirmed the change yet.
+> 
+> The confirmation request for £42.00 to £68.00 went to her in the secure portal, and the standing order is unchanged. She isn't verified, so I can't submit the change for her. It can go to the recurring system only after she confirms it in her own portal session. If she confirms, the case will move on from there.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing over secure chat and not verified, asked for the category of the restriction on their card and whether it had been lifted. The desk replied in the same chat that the card journal shows a temporary restriction, recorded as a temporary security-related restriction, and that the basis is not disclosed. It made no change to the card, and the reply did not say whether the restriction has been lifted. The case is closed with nothing left for a person.
+Rowan Ellery, writing on secure chat as the cardholder, asked what category of restriction applied to their declined card and whether it had been lifted. The desk replied on the same chat that the card journal shows a temporary restriction, recorded as a temporary security-related restriction, without disclosing its basis, and that no card change was made. The reply did not say whether the restriction has been lifted or will be, and Rowan was not verified in this chat; the case is closed with nothing further assigned to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -75,6 +75,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

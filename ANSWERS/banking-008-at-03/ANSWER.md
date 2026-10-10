@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Marlow asked, through secure chat, what purpose text her transfer instruction to Mallow Pottery Works for a kiln repair had recorded. The desk read the case as a payment question, found her not verified in its record, and closed it as "wait" because the payment system had been asked but its answer was not yet in. The agent's later attempts to query the payment system again and to escalate to a person were both refused because the case was already in the WAITING state, so no payment details were looked up or shared, and a person still needs to confirm her identity and then check the payment record.
+Elena Marlow asked in secure chat what purpose text her transfer to Mallow Pottery Works for a kiln repair recorded. The desk closed the case as "wait": the record shows her as not verified despite her saying she completed identity checks, and the payment system's answer was not in. Nothing was looked up or sent to her, and both the later payment request and the escalation to a person were refused because the case was already in WAITING, so no one has yet been handed the case and her identity still needs confirming before the transfer record can be checked.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

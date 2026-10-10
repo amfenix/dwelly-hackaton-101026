@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood asked over secure chat what stage her transfer had reached and whether the beneficiary had confirmed receipt. The desk replied that the payment record shows the transfer as sent, that this does not confirm receipt or credit by the recipient bank, and that no new transfer was made. A second request to the payment system was refused because it had already been checked, and the case closed as replied with nothing left for a person. Her identity was not verified.
+Mara Ellwood, a customer on secure chat who had not been verified, asked what stage her transfer had reached and whether the beneficiary had confirmed receipt. The desk replied that the payment record shows the transfer as sent, that this does not confirm receipt or credit by the recipient bank, and that no new transfer was made. A second payment-system check was refused because the status was already in the case, and the case closed as replied, with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -74,6 +74,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

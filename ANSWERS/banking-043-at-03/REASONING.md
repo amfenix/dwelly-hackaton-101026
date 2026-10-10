@@ -55,25 +55,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. `confirmation`: not known → none (by `read-confirmation`).
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
-54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
-55. Classifier (jev jev-latest) on `subject`: payment_package, confidence 1.00 → payment_package.
-56. `request_type`: not known → question (by `triage`).
-57. `subject`: not known → payment_package (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
-60. `next_system`: not known → business (by `asked-business`).
-61. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
-62. State `TRIAGED` → `WAITING` (by `business-waits`).
-63. The case closed in `WAITING`: **wait**.
+54. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.08 → False.
+57. Classifier (jev jev-latest) on `subject`: payment_package, confidence 1.00 → payment_package.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → payment_package (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
+64. `next_system`: not known → business (by `asked-business`).
+65. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
+66. State `TRIAGED` → `WAITING` (by `business-waits`).
+67. The case closed in `WAITING`: **wait**.
+68. The agent asked for `ask_system` {"system": "business"}.
+69. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
 
 ## Model calls
 
-3 calls, 5069 tokens in, 500 out, 4.835 s, cost $0.0111; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8849 tokens in, 729 out, 8.112 s, cost $0.0205; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the case record and the business system has already been asked about this package. It has not given a package status or signing state. The case is now in a final waiting state. The record doesn't show whether the package is waiting for your co-signer or has moved on, so I'm not going to guess.
+> The case is waiting, and I can't do anything more with it at the moment.
 > 
-> Mara Ellery is also not verified on this chat channel. I haven't made any change or sent anything on her behalf.
+> The business system has already been asked about Northmere Studio Ltd's payroll payment package, and a second request was refused. The case is closed in a waiting state, and no package status has come back. So I can't tell you whether the package is waiting for your co-signer or has moved on. I also can't confirm whether the second signatory still needs to act. Your session is not verified either, which would limit what I could share.
 > 
-> The case stays open and goes to a person to follow up.
+> I haven't submitted, forwarded or changed anything on the package. When the business system's answer arrives, the case can be answered from that.

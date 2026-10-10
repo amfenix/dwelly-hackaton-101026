@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer on a call, asked why her £18.40 payment at North Quay Books was declined. The desk classified it as a card payment question and sent a query about that payment to the card system, then closed the case at that step. The card system's answer isn't in the record, so the reason for the decline hasn't been given to her and is still open.
+Mara Ellison, a verified caller, asked why her £18.40 card payment at North Quay Books was declined. The desk confirmed her identity, classified this as a card question, and asked the card system about that payment; the request was accepted but returned no answer, so the reason for the decline is not known. The case closed in the "asked" state, and the record does not say who, if anyone, follows up on the missing answer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -68,6 +68,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

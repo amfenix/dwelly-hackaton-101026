@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the document record, found the statement ready for secure-portal access, and replied in the chat that the document is available, without confirming any download or crediting of funds, and noting that no email was sent. The case is closed as replied; the record shows she is not verified, and nothing else is left open for a person.
+Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the document record, found the statement ready for secure-portal access, and replied on secure chat that the document is available, noting that this doesn't confirm it was downloaded or that any funds were credited, and that no email was sent. Her identity was not verified, and the record shows nothing further for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -78,6 +78,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

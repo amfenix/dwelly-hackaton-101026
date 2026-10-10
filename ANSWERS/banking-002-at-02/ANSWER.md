@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marsh, an unverified customer writing over secure chat, asked the desk to check whether H&V had received the pottery studio kiln contribution that the sender says they transferred. The desk classified it as a question about an incoming payment and sent that question to the incoming-payments system, then closed the case at that step. The system's answer is not in the record and the sender's transfer is unconfirmed, so whether the payment has arrived is still open for a person to follow up.
+Elowen Marsh, writing over secure chat, asked the desk to check whether H&V had received a transfer for her pottery studio's kiln contribution, which wasn't showing in her account. The desk classed it as a question about an incoming payment and sent an inquiry to the incoming payments system, and the case closed at that step. That system returned no details, so the record doesn't show whether the payment has arrived, and her identity on this channel is still unverified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

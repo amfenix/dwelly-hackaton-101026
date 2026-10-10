@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Bell, writing from outside the portal and not verified, asked for secure-portal access for a new colleague who would help with payment administration, and said she is not the company administrator and can't approve or assign their role. The desk treated it as a role request that needs an authority's approval and forwarded it to the verified company administrator, and the case is closed as forwarded. No access has been set up, so approving the new colleague's role is left to the company administrator.
+Nadia Bell, who works in finance operations at Merefield Design Studio Ltd and is not the company administrator, asked for secure-portal access for a new colleague who will help with payment administration. The desk could not verify her and she has no authority to assign roles, so it forwarded the request about the role to the verified company administrator and closed the case as forwarded. No access was granted, and approving the new colleague's role is left to the company administrator.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,6 +56,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **authority**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked Harrow & Vale to cancel their active Direct Debit mandate to Northmere Fitness so it can't be used for future collections. The desk classed it as a direct debit instruction and found no confirmation on record. It refused to submit the request, since the requester's verification was not established, and instead sent a query about the direct debit to the recurring payments system, which closed the case as asked. The mandate was not cancelled, and the record shows no reply from the recurring system and no next step.
+The request was for Harrow & Vale to cancel an active Direct Debit mandate to Northmere Fitness so it couldn't be used for future collections. The desk classed it as a Direct Debit instruction and tried to submit it directly, but that was refused because the requester's identity was not verified. It instead put a question to the recurring payments system about the Direct Debit and closed the case there. The mandate has not been cancelled, and the record shows no result from that system, so the outcome of the cancellation is still open.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,6 +56,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

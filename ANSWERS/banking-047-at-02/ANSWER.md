@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Calder, a viewer whose identity was not verified, asked over secure chat for the company's current payment limit. The desk classified this as a question about the limit and asked the business system about it, then closed the case as final. The limit has not come back in the record, so nothing has been given to Maeve, and no further step is recorded.
+Maeve Calder, a viewer whose identity was not verified, asked over secure chat for the company's current payment limit. The desk classified it as a question about the limit and asked the business system for that information, and the case closed in the asked state. No answer has been given to Maeve; the record does not show the business system's reply, and her identity is still unverified, so whether she may be told the limit remains to be checked by a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

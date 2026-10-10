@@ -54,26 +54,26 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-53. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → limit (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
-58. `next_system`: not known → business (by `asked-business`).
-59. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
-60. State `TRIAGED` → `WAITING` (by `business-waits`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `ask_system` {"system": "business"}.
-63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.08 → False.
+55. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → limit (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
+62. `next_system`: not known → business (by `asked-business`).
+63. Rule `business-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked → true (business_asked=True); business_status absent → true (business_status=not known). The system was asked; its answer is not in yet.
+64. State `TRIAGED` → `WAITING` (by `business-waits`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `ask_system` {"system": "business"}.
+67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=business); next_system = tariff is false (next_system=business); next_system absent is false (next_system=business).
+68. The agent asked for `reply` {}.
+69. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=limit); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=business); tariff_status present is false (tariff_status=not known).
+70. The agent asked for `escalate` {"note": "Maeve Calder (role: viewer, unverified, secure chat) asks for the current outgoing-payment limit on the company profile. The business system was already queried, but no business_status or limit value is in the case. The case is stuck in WAITING, and further ask/reply calls are refused. A person needs to verify her identity and viewing authority, then confirm the limit. She has not submitted any payment."}.
+71. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 7865 tokens in, 903 out, 7.657 s, cost $0.0208; models: claude-sonnet-5-5, jev-1.13.0.
-
-## What the agent said
-
-> I haven't answered Maeve's question, and I've left the case open for a person to pick up.
-> 
-> - **Where it stands:** The business system was already asked about the company payment limit. The case still holds no limit value, and a second ask was refused because the case is in WAITING.
-> - **Why I didn't reply:** Maeve is not verified and has a viewer role, and the case holds no limit to report. Replying would mean stating a figure the records don't give us.
-> - **What's next:** The case stays in WAITING until the business system's answer or Maeve's verification comes in. Nothing has been submitted or changed.
+5 calls, 12573 tokens in, 913 out, 9.526 s, cost $0.0299; models: claude-sonnet-5-5, jev-1.13.0.

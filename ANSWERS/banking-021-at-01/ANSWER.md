@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer's message was treated as a question about a replacement card, and the desk asked the card system about it. The case closed as asked, with no answer from the card system recorded yet. The only confirmation on record is the bank's notice that the replacement card request was accepted, which says it was received but not that the card was dispatched or delivered. Whether the card has been sent is still unknown, and nothing in the record says who will follow up once the card system replies.
+The customer asked a question about a replacement card, and the desk handled it by asking the card system about it. That query returned nothing, so the case closed at that step with no dispatch or delivery details. The only confirmation on record is the bank's message that the replacement request was accepted, which says it does not confirm dispatch or delivery, so whether the card has been sent is still unknown and nothing further is recorded as planned.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

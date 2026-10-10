@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, who said she was the authorised manager, asked over secure chat for her file request to be escalated because the acquiring report for 1–7 July 2025 was not showing as available. The desk checked the documents system, found the report had been placed in the secure portal, and replied in secure chat that the document is available, that this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. The case closed as replied with no escalation; Mara Venn's identity was not verified, and nothing further is recorded as left for a person.
+Mara Venn, writing on secure chat as the shop's authorised manager, said the acquiring report for 1–7 July 2025 wasn't showing as available and asked for the file request to be escalated. The desk checked the documents system, which showed the report had already been placed in the secure portal, and replied on secure chat that the document is available, noting this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. Mara was not verified on this chat, and the desk made no account changes; nothing is left for a person in the record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -75,6 +75,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

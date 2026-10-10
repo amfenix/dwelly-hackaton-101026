@@ -56,28 +56,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-56. `request_type`: not known → question (by `triage`).
-57. `subject`: not known → transfer (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-60. `next_system`: not known → payment (by `route-payment`).
-61. The agent asked for `ask_system` {"system": "payment"}.
-62. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-63. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-65. Called `ask_system` (attempt 1, key banking-001-at-02:do-ask:17).
-66. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
-67. `ask_system` found {}.
-68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-69. The case closed in `ASKED`: **ask_system**.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.03 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+57. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → transfer (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+64. `next_system`: not known → payment (by `route-payment`).
+65. The agent asked for `ask_system` {"system": "payment"}.
+66. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+67. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+68. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+69. Called `ask_system` (attempt 1, key banking-001-at-02:do-ask:17).
+70. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "amount": "420.00"}.
+71. `ask_system` found {}.
+72. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+73. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6902 tokens in, 406 out, 6.418 s, cost $0.0139; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7851 tokens in, 452 out, 7.487 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the payment system about the £420 transfer to Alder & Reed Workshop, and the desk accepted the request. The case status shows no answer yet on whether H&V sent it. Nothing in the case says whether the transfer was sent, so I can't tell Mara either way.
-> 
-> The case is now closed at this step. Mara is not verified on this chat, which may limit what can be shared with her.
+> I've asked the payment system to check the status of the £420 transfer to Alder & Reed Workshop. Its answer isn't in the case yet, so I can't say whether H&V sent the payment. The case is now closed on this step, with the payment check requested.

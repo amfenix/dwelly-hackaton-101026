@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren, an unverified customer writing through an external message, asked which active instructions are linked to her account and what she should consider before closing it. The desk classified this as a question about a standing order and asked the recurring-payments system about it; that was the only action taken, and the case closed in the asked state. No answer to Elena is recorded, and the record does not show what the recurring system returned.
+Elena Wren, an unverified customer writing by external message, asked what active instructions are linked to her account and what to consider before closing it after she moves her regular payments. The desk classified this as a question about standing orders and asked the recurring payments system about them; no answer has come back in the record. Nothing else was done, and the record does not say whether anyone will reply to Elena, so that is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -59,6 +59,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

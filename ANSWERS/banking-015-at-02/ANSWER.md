@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked the desk to cancel her Northmere Fitness Direct Debit mandate, and the desk registered that as an instruction request to the recurring payments team. The case closed in the REQUESTED state, so the request has been submitted but the record does not show the mandate itself being cancelled. The record shows nothing left for a person to do, and no errors or refusals.
+Mara Ellison, verified on a call, asked the desk to cancel her Northmere Fitness Direct Debit mandate, and she acknowledged this is an instruction to her bank, not a cancellation of her agreement with the recipient. The desk classed it as a Direct Debit instruction, routed it to the recurring team, and registered the request with them, so the case closed as requested. The record does not show the mandate itself being cancelled, so that rests with the recurring team, and the record doesn't say whether the mandate was active in the portal, as the agent's reply claimed.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

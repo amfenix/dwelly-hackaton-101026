@@ -54,32 +54,34 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
 52. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
-53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-54. `request_type`: not known → register (by `triage`).
-55. `subject`: not known → transfer (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-58. `next_system`: not known → payment (by `route-payment`).
-59. The agent asked for `ask_system` {"system": "payment"}.
-60. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register).
-61. The agent asked for `submit_request` {}.
-62. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-63. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-64. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-65. Called `register_request` (attempt 1, key banking-005-at-02:do-request:17).
-66. Action in the world: `register_request` {"team": "payment", "about": "transfer"}.
-67. `register_request` found {}.
-68. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-69. The case closed in `REQUESTED`: **submit_request**.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+55. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+56. `request_type`: not known → register (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → transfer (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+62. `next_system`: not known → payment (by `route-payment`).
+63. The agent asked for `ask_system` {"system": "payment"}.
+64. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); request_type not in [register, change, authority] is false (request_type=register); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register).
+65. The agent asked for `submit_request` {}.
+66. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+67. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+68. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+69. Called `register_request` (attempt 1, key banking-005-at-02:do-request:17).
+70. Action in the world: `register_request` {"team": "payment", "about": "transfer"}.
+71. `register_request` found {}.
+72. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+73. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 8057 tokens in, 529 out, 5.591 s, cost $0.0174; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8844 tokens in, 568 out, 6.724 s, cost $0.0189; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've registered Leona Mercer's request to seek the return of the £286.40 transfer. The case is now in the REQUESTED state and with the team that handles returns.
+> I've registered the request to seek the return of the £286.40 transfer, which you sent to the wrong saved recipient. It has gone to the team that handles returns. Your identity was already verified on the call. I did not look up the transfer in the payment records first. The records check was refused, and the request was accepted without it.
 > 
-> I didn't look up the payment first. The payment system refused the lookup because this is a register-type request, so I submitted the request directly.
-> 
-> Nothing is left for the desk to do.
+> I can't confirm yet whether the money will come back. Recovery depends on the recipient's bank and on the recipient.

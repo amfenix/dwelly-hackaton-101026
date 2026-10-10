@@ -56,30 +56,34 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-55. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
-56. `request_type`: not known → question (by `triage`).
-57. `subject`: not known → transfer (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-60. `next_system`: not known → payment (by `asked-payment`).
-61. The agent asked for `ask_system` {"system": "payment"}.
-62. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-63. The agent asked for `reply` {}.
-64. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
-65. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-66. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-67. Called `reply_customer` (attempt 1, key banking-008-at-04:do-reply:17).
-68. Action in the world: `reply` {"to": "Elena Marlow", "channel": "secure_chat", "text": "The payment record answered, but not with a clear status, so we cannot confirm one yet. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made."}.
-69. `reply_customer` found {}.
-70. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-71. The case closed in `REPLIED`: **reply**.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.07 → False.
+57. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+58. `request_type`: not known → question (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → transfer (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+64. `next_system`: not known → payment (by `asked-payment`).
+65. The agent asked for `reply` {}.
+66. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
+67. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+69. Called `reply_customer` (attempt 1, key banking-008-at-04:do-reply:17).
+70. Action in the world: `reply` {"to": "Elena Marlow", "channel": "secure_chat", "text": "The payment record answered, but not with a clear status, so we cannot confirm one yet. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made."}.
+71. `reply_customer` found {}.
+72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+73. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-6 calls, 11164 tokens in, 760 out, 8.055 s, cost $0.0239; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 8715 tokens in, 715 out, 6.309 s, cost $0.0180; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the customer a reply. The payment system had already been checked, and its answer was in the case, so a second lookup was refused as redundant. That answer was marked OTHER, and I reported it as it stands. The case is now closed as replied.
+> I sent the reply to the customer, and the desk accepted it and closed the case.
 > 
-> The desk's records still show Elena Marlow as not verified, even though she says she completed the identity checks in the secure chat. I'm also not sure the purpose text she entered is in the record I had. The reply is therefore limited to what the payment record shows.
+> The payment system had already been checked. Its answer was marked OTHER, and the desk treats that as a real answer to report. I didn't look up the purpose text myself. The reply is written by the desk from what the case holds.
+> 
+> One thing to be aware of: the case still shows the customer as not verified, even though she says she completed the identity checks in the secure chat. I replied anyway because the payment lookup was already done.

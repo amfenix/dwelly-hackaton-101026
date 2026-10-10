@@ -4,7 +4,7 @@
 
 ## Summary
 
-Tamsin Rook, verified on a call, disputed an £18.40 Direct Debit charge to Northmere Water Services and asked for it to be investigated. The desk registered the request with the recurring payments team under direct debit, and the case closed as requested. The checks run on the payment and recurring records returned nothing, so the amount and mandate details were not confirmed against bank records, and the investigation itself is left to the recurring team.
+Tamsin Rook, verified on a call, disputed an £18.40 Direct Debit to Northmere Water Services and asked for it to be investigated. The desk registered a request with the recurring payments team about the direct debit, and the case closed as requested. The record shows no further steps for a person. Note that the agent's reply to her mentions a date of 9 July 2025, which does not appear anywhere in the record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -62,6 +62,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

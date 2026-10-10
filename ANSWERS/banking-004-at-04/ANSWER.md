@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a verified customer on the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk checked the payment record, which shows the transfer as declined with the permitted wording "The receiving bank declined the transfer," and sent that reply through the portal. It also said the record doesn't establish a different cause or authorise a retry, and that no new transfer was made. The case is closed with nothing left for a person.
+Mara Ellery, a verified customer on the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk checked the payment record, which shows the transfer as declined with the permitted wording "The receiving bank declined the transfer," and replied to her on the portal with that. The reply says it does not establish a different cause or authorise a retry, and that no new transfer was made. The case is closed and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -77,6 +77,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

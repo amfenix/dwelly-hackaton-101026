@@ -56,23 +56,36 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `confirmation`: not known → none (by `read-confirmation`).
 53. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 54. Rule `triage` fired: state = READING → true (state=READING).
-55. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.93 → instruction.
-56. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.64 → standing_order.
-57. `request_type`: not known → instruction (by `triage`).
-58. `subject`: not known → standing_order (by `triage`).
-59. State `READING` → `TRIAGED` (by `triage`).
-60. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
-61. `next_system`: not known → payment (by `asked-payment`).
-62. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
-63. State `TRIAGED` → `WAITING` (by `payment-waits`).
-64. The case closed in `WAITING`: **wait**.
-65. The agent asked for `ask_system` {"system": "payment"}.
-66. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
-67. The agent asked for `escalate` {"note": "Verified customer Mara Ellison (verified call) sees two future £34.80 payments to Northmere Heating and asks to check whether they are duplicates and remove the duplicate. She cannot say which line is the duplicate. Their relationship (two standing orders vs. one-off payments, schedules, references) is not established, and the payment system check was refused because the case is not in a triaged state. Please review the records, confirm whether they are duplicates, and only then remove one with the customer's confirmation. Nothing has been changed."}.
-68. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
-69. The agent asked for `clarify` {"need": "which_transaction"}.
-70. Refused `clarify` in `WAITING`: clarify-transaction: state = TRIAGED is false (state=WAITING); amount absent is false (amount=34.80); counterparty absent is false (counterparty=Northmere Heating); clarify-card: state = TRIAGED is false (state=WAITING); args.need = which_card is false (args.need=which_transaction); amount absent is false (amount=34.80); counterparty absent is false (counterparty=Northmere Heating); clarify-instruction: state = TRIAGED is false (state=WAITING); args.need = which_instruction is false (args.need=which_transaction); amount absent is false (amount=34.80); counterparty absent is false (counterparty=Northmere Heating); clarify-details: state = TRIAGED is false (state=WAITING); args.need = more_details is false (args.need=which_transaction); amount absent is false (amount=34.80); counterparty absent is false (counterparty=Northmere Heating).
+55. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.92 → instruction.
+56. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+57. Classifier (jev jev-latest) on `joint_holder_change`: 0.06 → False.
+58. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.65 → standing_order.
+59. `request_type`: not known → instruction (by `triage`).
+60. `credentials_requested`: not known → False (by `triage`).
+61. `joint_holder_change`: not known → False (by `triage`).
+62. `subject`: not known → standing_order (by `triage`).
+63. State `READING` → `TRIAGED` (by `triage`).
+64. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
+65. `next_system`: not known → payment (by `asked-payment`).
+66. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
+67. State `TRIAGED` → `WAITING` (by `payment-waits`).
+68. The case closed in `WAITING`: **wait**.
+69. The agent asked for `ask_system` {"system": "payment"}.
+70. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority, instruction] is false (request_type=instruction); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=payment); next_system = tariff is false (next_system=payment); next_system absent is false (next_system=payment).
+71. The agent asked for `escalate` {"note": "Verified customer Mara Ellison sees two future £34.80 payments to Northmere Heating (likely standing orders) and asks to remove the duplicate. She can't say which line is the duplicate, and nothing links the two lines. The payment system check was refused because the case is in WAITING state, not TRIAGED. Please check the records to see whether the two lines are true duplicates, and confirm with the customer before removing either one. No change has been made."}.
+72. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11175 tokens in, 1043 out, 9.171 s, cost $0.0288; models: claude-sonnet-5-5, jev-1.13.0.
+5 calls, 13826 tokens in, 975 out, 9.762 s, cost $0.0330; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I haven't checked or changed either payment line, and the case is still open. I made two requests and the desk refused both.
+> 
+> - **Payment check:** I tried to look up the two £34.80 Northmere Heating lines. The desk refused because the case is in WAITING state, and it only allows system checks once the case is TRIAGED.
+> - **Escalation:** I tried to hand the case to a person with a note explaining the situation. That was refused for the same reason.
+> 
+> Because the case is in WAITING state, I can't establish whether the two lines are duplicates. I also can't remove either one, and Mara doesn't know which line is the duplicate. Nothing should be removed until the records show how the two lines relate.
+> 
+> The case is now left for a person to pick up. When it is triaged, the next step is to check the payment records for the two lines. After that, the customer should confirm which line to remove.

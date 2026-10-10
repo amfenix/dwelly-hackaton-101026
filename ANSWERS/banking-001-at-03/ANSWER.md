@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an unverified customer on secure chat, asked whether H&V had sent her £420 one-off payment to Alder & Reed Workshop, since she can see the debit. The desk checked the payment system, got no transfer status back, and closed the case as waiting. A further payment query and an escalation were both refused because the case was already in the waiting state. Nobody has replied to her yet, and a person still needs to check the transfer status and verify her identity before sharing details.
+Mara Ellison, an unverified customer on secure chat, asked whether her £420 one-off payment to Alder & Reed Workshop had been sent, since she can see the debit. The desk classed it as a question about a transfer and put the case in WAITING because the payment system's answer was not yet in. The agent's later request to ask the payment system, and its attempt to escalate to a person, were both refused because the case was no longer in the TRIAGED state, so the transfer status was never read and nothing was told to the customer about it. What is left is for a person to verify Mara Ellison and check the transfer status.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -66,6 +66,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

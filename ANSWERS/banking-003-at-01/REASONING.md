@@ -52,27 +52,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-51. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → transfer (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
-56. `next_system`: not known → payment (by `route-payment`).
-57. The agent asked for `ask_system` {"system": "payment"}.
-58. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-003-at-01:do-ask:17).
-62. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.04 → False.
+53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → transfer (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+60. `next_system`: not known → payment (by `route-payment`).
+61. The agent asked for `ask_system` {"system": "payment"}.
+62. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-003-at-01:do-ask:17).
+66. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6744 tokens in, 455 out, 4.127 s, cost $0.0141; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7535 tokens in, 550 out, 5.716 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The facts point to the payment system as the next place to check, so I'll ask it.
-> I asked the payment system about the saved transfer instruction. It accepted the request, but its answer hasn't come back into the case yet. So I can't tell Elise Rowan whether the transfer was submitted or what stage it is at. The case shows no confirmation, and the transfer wasn't instructed outside the portal. I'm stopping here, and the case now goes to a person.
+> I asked the payment system about your saved transfer. The case now shows that query as made and the case is closed on the desk's side. The payment system's answer hasn't appeared in the case record, so I can't yet say whether the transfer was submitted or what stage it's at. I'm not going to guess.
+> 
+> Nothing has been sent or changed on your instruction. You can keep checking the transfer's status in your secure portal. If it still shows no confirmation, contact us again and we'll look at it further.

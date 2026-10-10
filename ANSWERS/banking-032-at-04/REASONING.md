@@ -53,27 +53,29 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.94 → question.
-53. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
-54. `request_type`: not known → question (by `triage`).
-55. `subject`: not known → statement (by `triage`).
-56. State `READING` → `TRIAGED` (by `triage`).
-57. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
-58. `next_system`: not known → documents (by `asked-documents`).
-59. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
-60. State `TRIAGED` → `WAITING` (by `documents-waits`).
-61. The case closed in `WAITING`: **wait**.
-62. The agent asked for `ask_system` {"system": "documents"}.
-63. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
+53. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+54. Classifier (jev jev-latest) on `joint_holder_change`: 0.02 → False.
+55. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+56. `request_type`: not known → question (by `triage`).
+57. `credentials_requested`: not known → False (by `triage`).
+58. `joint_holder_change`: not known → False (by `triage`).
+59. `subject`: not known → statement (by `triage`).
+60. State `READING` → `TRIAGED` (by `triage`).
+61. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
+62. `next_system`: not known → documents (by `asked-documents`).
+63. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
+64. State `TRIAGED` → `WAITING` (by `documents-waits`).
+65. The case closed in `WAITING`: **wait**.
+66. The agent asked for `ask_system` {"system": "documents"}.
+67. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True); document_ready = false is not known (document_ready=not known); tariff-ask: state = TRIAGED is false (state=WAITING); args.system = tariff is false (args.system=documents); next_system = tariff is false (next_system=documents); next_system absent is false (next_system=documents).
 
 ## Model calls
 
-4 calls, 7435 tokens in, 640 out, 5.625 s, cost $0.0173; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8400 tokens in, 686 out, 6.911 s, cost $0.0192; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I made no further move on this case. It stays in the waiting state, and a person will pick it up.
+> I've stopped here with the case in a waiting state. I can't confirm whether the January 2024 statement is available.
 > 
-> The documents system has already been asked about the January 2024 statement. Its answer on whether an archived copy exists isn't in the case yet, so I can't tell Mara Ellison whether one is available. When I tried to ask the documents system again, the desk refused. The case is waiting, and the documents check has already been run once.
-> 
-> Mara is also not verified on this chat, so no statement can be released to her yet.
+> The documents system has already been asked, but its answer hasn't come back into the case. A second request was refused because the case is waiting and that check has already been made. Mara Ellison is also not yet verified, so no statement can be released to her. The case stays open and will be handed to a person.

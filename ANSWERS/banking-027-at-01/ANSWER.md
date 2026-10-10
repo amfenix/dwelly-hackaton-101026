@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer's request was about regaining access to their account, and the desk classified it as an access matter. Because the customer's identity was not confirmed, it did not act on the profile and instead sent the customer a message to use the secure process in their secure portal, which checks identity there. The message also said the bank never asks for a password, PIN or verification code, and that nothing on the profile was changed; the case is closed as redirected, with nothing left for a person.
+The customer's request was about regaining access to their profile, after the H&V app declined a sign-in. The desk classified it as an access request and sent the customer a message pointing them to the secure process in their secure portal, which checks identity there. The message also said the bank never asks for a password, PIN or verification code, and that nothing on the profile was changed. The case is closed as redirected, and nothing further is left for the desk beyond the customer completing the secure process.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,6 +56,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **access**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

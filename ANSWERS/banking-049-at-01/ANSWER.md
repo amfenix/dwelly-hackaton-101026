@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, a verified customer using the business portal, asked for the acquiring report covering 1–7 July 2025 for North Quay Printworks so she could review card sales and adjustments. The desk treated it as a question about a document and sent an inquiry to the documents system, which accepted it, and the case closed at that step. No answer or report file has come back and nothing has been sent to Mara, so a person still needs to follow up once the documents system responds.
+Mara Venn, a verified customer on the business portal, asked for the acquiring report for North Quay Printworks covering 1–7 July 2025, so she could review card sales and adjustments. The desk classified it as a question about a document and sent an ask to the documents system, and the case closed at that step. The documents system's answer is not in the record, so it is unknown whether the report is available, and Mara Venn has not been sent a reply.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -61,6 +61,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

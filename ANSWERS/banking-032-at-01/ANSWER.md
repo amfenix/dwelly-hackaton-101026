@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing through secure chat as a customer who was not verified, asked whether an archived copy of her January 2024 statement is available. The desk classified this as a question about a statement and asked the documents system about it, then closed the case at that step. The record shows no answer from the documents system on whether a copy exists, so availability is still unknown, and her identity remains unverified for a person to deal with if needed.
+Mara Ellison, writing over secure chat as the account holder, asked whether an archived copy of her January 2024 statement is available. The desk classified this as a question about a statement and sent an inquiry to the documents system, which accepted it but has not yet returned an answer. Her identity is still marked unverified and no statement has been released, so what remains is waiting for the documents system's reply and then answering her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -60,6 +60,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

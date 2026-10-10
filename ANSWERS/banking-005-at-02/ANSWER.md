@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Mercer, a verified customer on a verified call, asked the desk to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient. The desk registered the request with the payment team about the transfer, and the case closed as REQUESTED. The desk's attempt to query the payment system first was refused by its rules because this is a register-type request, so it submitted the request directly; the record shows nothing left for a person to do.
+Leona Mercer, verified on a call, asked the desk to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient. The desk registered that request with the payment team and closed the case as requested. Its attempt to ask the payment system first was refused, so the transfer was not looked up in the payment records before the request went in, and the record does not say whether the money will be returned.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -61,6 +61,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

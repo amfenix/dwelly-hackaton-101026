@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a question about a standing order. The desk classified it that way, routed it to the recurring payments system, and sent that system a query about the standing order. The case closed in the asked state, and the system's answer is not in the record, so nothing has been reported back about the order. Whatever the recurring system returns is left for a person to follow up.
+The customer asked a question about a standing order. The desk classified it as a question with no credential request or joint-holder change, routed it to the recurring payments system, and sent that system an ask about the standing order, which it accepted. The case closed at that step; the record shows no answer or next run date yet, and nothing is listed as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -53,6 +53,8 @@ Facts established:
 - subject: **standing_order**
 - request_type: **question**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 ## Escalated
 

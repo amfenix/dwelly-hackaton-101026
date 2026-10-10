@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison emailed to say she had moved within the UK and asked the bank to update her correspondence address. Because the request came by email from an unverified sender, the desk did not change her profile and instead replied telling her to use the secure process in her portal, where her identity is checked. The case is closed as redirected, and nothing is left for a person unless she makes the change herself through the portal.
+Mara Ellison, an unverified customer, emailed to ask that the address used for her correspondence be updated after a move within the UK. The desk did not change her profile; it replied to her by message, pointing her to the secure portal process, where her identity is checked, and saying nothing was changed. The case is closed as redirected, and a second redirect attempt was refused because the case was already in that state. Making the address change in the secure portal is left to Mara.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -60,6 +60,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -73,6 +75,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=REDIRECTED); request_type = access is false (request_type=change); request_type = instruction is false (request_type=change)
 
 ## Final result
 

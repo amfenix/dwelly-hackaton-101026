@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara asked the desk to have a £4.50 paper statement fee, dated 18 June 2025, reviewed because she says she had chosen electronic statements. The desk refused the agent's attempt to query the tariff system directly, since this was a request to register, and instead registered a request with the tariff team about the fee, which closed the case as requested. The desk did not check her statement preference or decide whether the fee was correct, and the bank's notification does not say whether it will be changed, so the outcome is left to the tariff team.
+Mara asked the desk to have the £4.50 paper statement fee of 18 June 2025 reviewed, saying she had chosen electronic statements. The desk registered a request to the tariff team about the fee, and the case closed as requested. The attempt to look the tariff up directly was refused, so nobody has confirmed whether she was on electronic statements or whether the fee was correctly applied, and the bank's notification did not say whether the fee will change. That review is left to the tariff team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -54,6 +54,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **register**
 - next_system: **tariff**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

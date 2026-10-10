@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat whether her new tablet is linked before she uses it for banking. The desk checked the access record, which shows the device as awaiting confirmation with no confirmation recorded, and replied on secure chat with only that status. No access change was made, and the record shows she is not verified on this chat; nothing is left for a person.
+Mara Ellison asked over secure chat whether her new tablet is linked before she uses it for banking. The desk checked the access record, which shows the device as awaiting confirmation, and replied in secure chat with that status; no password or PIN was handled and no access change was made. The case is closed as replied, and nothing is left for a person, though the record shows she is still unverified and no confirmation has been received.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -74,6 +74,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

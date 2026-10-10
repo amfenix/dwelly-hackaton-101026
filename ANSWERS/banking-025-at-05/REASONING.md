@@ -61,26 +61,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 58. Rule `triage` fired: state = READING → true (state=READING).
 59. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-60. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
-61. `request_type`: not known → question (by `triage`).
-62. `subject`: not known → card_payment (by `triage`).
-63. State `READING` → `TRIAGED` (by `triage`).
-64. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-65. `next_system`: not known → card (by `asked-card`).
-66. The agent asked for `reply` {}.
-67. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=DECLINED).
-68. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
-69. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-70. Called `reply_customer` (attempt 1, key banking-025-at-05:do-reply:17).
-71. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows the card attempt as declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made."}.
-72. `reply_customer` found {}.
-73. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-74. The case closed in `REPLIED`: **reply**.
+60. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+61. Classifier (jev jev-latest) on `joint_holder_change`: 0.1 → False.
+62. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+63. `request_type`: not known → question (by `triage`).
+64. `credentials_requested`: not known → False (by `triage`).
+65. `joint_holder_change`: not known → False (by `triage`).
+66. `subject`: not known → card_payment (by `triage`).
+67. State `READING` → `TRIAGED` (by `triage`).
+68. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+69. `next_system`: not known → card (by `asked-card`).
+70. The agent asked for `reply` {}.
+71. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=question); next_system = card → true (next_system=card); card_status present → true (card_status=DECLINED).
+72. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
+73. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+74. Called `reply_customer` (attempt 1, key banking-025-at-05:do-reply:17).
+75. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows the card attempt as declined (recorded reason: available balance was insufficient to cover the £18.). This does not establish a different cause or authorise a retry. No additional card change was made."}.
+76. `reply_customer` found {}.
+77. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+78. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-3 calls, 4921 tokens in, 387 out, 3.603 s, cost $0.0098; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5460 tokens in, 410 out, 4.073 s, cost $0.0106; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Mara, and the case is closed. The card records show the £18.40 payment at North Quay Books was declined because her available balance wasn't enough to cover it. The reply was written from that record only.
+> I've sent the reply to Mara. The card system's record shows the £18.40 payment at North Quay Books was declined because her available balance wasn't enough to cover it. The reason text in the record is cut off after "£18.", so the reply rests on what the record does show.

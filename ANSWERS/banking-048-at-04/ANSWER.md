@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison of Alder Quay Studio Ltd. asked over secure chat whether an identifiable credit for a buyer's workshop invoice payment had reached the account. The desk checked incoming account activity, found no matching credit, and replied in the chat that no incoming payment was found, that this does not establish the sender didn't pay, and that no payment was made. The requester was not verified, the case is closed as replied, and the record lists nothing left for a person.
+Mara Ellison of Alder Quay Studio Ltd., writing over secure chat, asked the desk to check whether an identifiable credit for a buyer's workshop invoice payment had reached the account. The desk checked the incoming account activity, found no matching credit, and replied in the chat that none was found, that this does not establish the sender didn't pay, and that no payment was made. The case is closed as replied; the requester was not verified, and nothing in the record confirms the buyer actually sent a payment, with no further step recorded for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -74,6 +74,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -89,10 +91,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `ask_system`: payment-ask: args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming); document_ready = false is not known (document_ready=not known); tariff-ask: args.system = tariff is false (args.system=incoming); next_system = tariff is false (next_system=incoming); next_system absent is false (next_system=incoming)
 
 ## Final result
 

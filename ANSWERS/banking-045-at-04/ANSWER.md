@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Bell, an unverified customer writing over secure chat, asked what happens next with her access request, noting that the company administrator still has to approve it. The desk found the bank had already sent the new-user access request to the administrator through the secure portal, so it took no action and closed the case as waiting. No access has been granted, and the request now rests with the administrator's decision.
+Nadia Bell, an unverified customer writing over secure chat, asked what happens next with her access request, which still needs the company administrator's approval. The desk found that the bank had already sent the request to the administrator through the secure portal and that no access has been granted, so it took no action and closed the case as waiting. Nothing is left for the desk to do; the request now depends on the administrator's decision.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -67,6 +67,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **authority**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

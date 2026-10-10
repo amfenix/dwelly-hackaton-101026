@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, writing by secure chat, said she still can't find her June statement in the portal and asked for it to be made available there rather than sent by email. The desk classed this as a question about a statement and asked the documents system about it, then closed the case at that step. The documents system's answer isn't in the record, so it's unknown whether the statement exists or why it isn't showing, and Elowen Marr is still marked as not verified.
+Elowen Marr, writing over secure chat, said she still couldn't find her June statement in the portal and wanted it made available there rather than sent by email. The desk classified this as a question about a statement and asked the documents system about it; that is the only action taken. The documents system's answer isn't in the record, and Elowen was not verified, so nothing has been released and it is unknown whether or when the statement will appear in the portal.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **documents**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

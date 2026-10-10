@@ -56,28 +56,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 53. Rule `triage` fired: state = READING → true (state=READING).
 54. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
-55. Classifier (jev jev-latest) on `subject`: card, confidence 0.98 → card.
-56. `request_type`: not known → access (by `triage`).
-57. `subject`: not known → card (by `triage`).
-58. State `READING` → `TRIAGED` (by `triage`).
-59. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
-60. `next_system`: not known → access (by `asked-access`).
-61. The agent asked for `redirect_secure` {}.
-62. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); request_type = instruction → false (request_type=access); not verified → true (verified=False).
-63. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
-64. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
-65. Called `redirect_secure` (attempt 1, key banking-026-at-03:do-redirect:17).
-66. Action in the world: `redirect_secure` {"to": "Maren Ellwood", "channel": "secure_chat", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
-67. `redirect_secure` found {}.
-68. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
-69. The case closed in `REDIRECTED`: **redirect_secure**.
+55. Classifier (jev jev-latest) on `credentials_requested`: 0.17 → False.
+56. Classifier (jev jev-latest) on `joint_holder_change`: 0.09 → False.
+57. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
+58. `request_type`: not known → access (by `triage`).
+59. `credentials_requested`: not known → False (by `triage`).
+60. `joint_holder_change`: not known → False (by `triage`).
+61. `subject`: not known → card (by `triage`).
+62. State `READING` → `TRIAGED` (by `triage`).
+63. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
+64. `next_system`: not known → access (by `asked-access`).
+65. The agent asked for `redirect_secure` {}.
+66. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access); request_type = instruction → false (request_type=access); not verified → true (verified=False).
+67. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
+68. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
+69. Called `redirect_secure` (attempt 1, key banking-026-at-03:do-redirect:17).
+70. Action in the world: `redirect_secure` {"to": "Maren Ellwood", "channel": "secure_chat", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
+71. `redirect_secure` found {}.
+72. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
+73. The case closed in `REDIRECTED`: **redirect_secure**.
 
 ## Model calls
 
-5 calls, 7919 tokens in, 921 out, 7.439 s, cost $0.0194; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 5979 tokens in, 768 out, 6.341 s, cost $0.0135; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed Maren to the bank's secure process for resetting her card PIN. The desk accepted the redirect and closed the case. She hasn't been verified. Nothing was changed, and no PIN was handled or shared in chat.
+> I've pointed Maren to the bank's secure process for resetting a forgotten card PIN. The desk accepted the redirect and closed the case as redirected. Maren isn't verified, and the bank never handles a PIN in chat, so the reset has to go through that secure route.
 > 
-> The access check came back with the status "OTHER", so I had no specific result to report. I chose the secure-process redirect over a written reply because it is the tool for PIN requests.
+> The access system's answer on the card came back marked OTHER. I redirected anyway because a forgotten PIN belongs in the secure process, and I didn't report that answer to her.

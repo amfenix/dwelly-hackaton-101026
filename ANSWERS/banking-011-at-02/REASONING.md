@@ -52,28 +52,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-51. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
-52. `request_type`: not known → question (by `triage`).
-53. `subject`: not known → standing_order (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
-56. `next_system`: not known → recurring (by `route-recurring`).
-57. The agent asked for `ask_system` {"system": "recurring"}.
-58. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-59. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-60. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-61. Called `ask_system` (attempt 1, key banking-011-at-02:do-ask:17).
-62. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
-63. `ask_system` found {}.
-64. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-65. The case closed in `ASKED`: **ask_system**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+53. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+54. `request_type`: not known → question (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → standing_order (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
+60. `next_system`: not known → recurring (by `route-recurring`).
+61. The agent asked for `ask_system` {"system": "recurring"}.
+62. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+63. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+64. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+65. Called `ask_system` (attempt 1, key banking-011-at-02:do-ask:17).
+66. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+67. `ask_system` found {}.
+68. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+69. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4762 tokens in, 498 out, 4.043 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5340 tokens in, 485 out, 4.407 s, cost $0.0111; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the recurring payments system for the next run date of Mara Ellison's standing order. The request was accepted, and the case is now waiting on that system's answer. Once it arrives, the next step is to reply to her with what the record shows.
-> 
-> One thing to check at that point: the case lists her as not verified. I'll look at that before any account details go back to her.
+> I've asked the recurring payments system for the next run date of the standing order. The case is now waiting on that answer, and the reply to the customer comes once it arrives.

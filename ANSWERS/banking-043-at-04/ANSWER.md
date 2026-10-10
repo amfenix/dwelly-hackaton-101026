@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting on the second signatory after she gave her first consent. The desk checked the business record, which shows the package as awaiting the second signatory, and replied to her on secure chat saying so and that no approval or role change was made. She is not verified, but this was a status question only, and nothing is left for a person.
+Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting on her co-signer after she gave her first consent. The desk checked the business record, which shows the package as awaiting the second signatory with no second consent yet, and replied on secure chat to say so. The reply also said that no approval or role change was made on anyone's behalf. The case is closed as replied, nothing is left for a person in the record, and her identity was not verified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -76,6 +76,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

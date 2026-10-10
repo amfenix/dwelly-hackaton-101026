@@ -49,27 +49,33 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
 47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-48. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
-49. `request_type`: not known → question (by `triage`).
-50. `subject`: not known → direct_debit (by `triage`).
-51. State `READING` → `TRIAGED` (by `triage`).
-52. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
-53. `next_system`: not known → recurring (by `route-recurring`).
-54. The agent asked for `ask_system` {"system": "recurring"}.
-55. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
-56. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
-57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-58. Called `ask_system` (attempt 1, key banking-014-at-01:do-ask:17).
-59. Action in the world: `ask_system` {"system": "recurring", "about": "direct_debit"}.
-60. `ask_system` found {}.
-61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-62. The case closed in `ASKED`: **ask_system**.
+48. Classifier (jev jev-latest) on `credentials_requested`: 0.01 → False.
+49. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+50. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+51. `request_type`: not known → question (by `triage`).
+52. `credentials_requested`: not known → False (by `triage`).
+53. `joint_holder_change`: not known → False (by `triage`).
+54. `subject`: not known → direct_debit (by `triage`).
+55. State `READING` → `TRIAGED` (by `triage`).
+56. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
+57. `next_system`: not known → recurring (by `route-recurring`).
+58. The agent asked for `ask_system` {"system": "recurring"}.
+59. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+60. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+62. Called `ask_system` (attempt 1, key banking-014-at-01:do-ask:17).
+63. Action in the world: `ask_system` {"system": "recurring", "about": "direct_debit"}.
+64. `ask_system` found {}.
+65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+66. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 4705 tokens in, 355 out, 2.974 s, cost $0.0089; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7608 tokens in, 494 out, 5.039 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case doesn't yet include the mandate's status, and the recurring system holds it. I'll ask that system.
-> The recurring system has been asked about the Northmere Water Services mandate, and the case is now closed on that step. I haven't seen the answer yet, so I can't say whether the mandate is active.
+> The answer is in the recurring system, which holds Direct Debit mandates, so I'll ask it.
+> I asked the recurring system, which holds Direct Debit mandates, whether the Northmere Water Services mandate is active. The desk accepted the request and closed the case at that step. No answer on the mandate's status has come back yet, so I can't tell you whether it is active.
+> 
+> The only record in the case is the March statement entry, which shows a past collection and says nothing about the mandate's current state. I haven't cancelled anything or looked at what you owe.

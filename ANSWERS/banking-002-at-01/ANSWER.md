@@ -4,7 +4,7 @@
 
 ## Summary
 
-The sender asked about a bank transfer they said they had made for the kiln contribution, and the desk classified it as a question about an incoming payment. It asked the incoming-payments system about it and closed the case at that step. The system's answer is not in the record, so whether the payment has arrived is still unknown. The only support so far is the sender's own message, and the desk's checks found no confirmation. Anything further depends on the incoming-payments system's reply.
+The message was a question about an incoming payment: the sender said they had sent a bank transfer as a contribution for the kiln. The desk classified it as an incoming-payment question and put it to the incoming-payments system, then closed the case as asked. The system's answer isn't in the record, so whether the money has arrived is still unknown, and no reply to the sender is recorded.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -55,6 +55,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **incoming**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

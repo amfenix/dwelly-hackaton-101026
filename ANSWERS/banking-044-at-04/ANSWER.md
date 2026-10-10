@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, a viewer who was not verified, asked over secure chat whether row SUP-17 in her batch had actually been paid, since the batch showed as processed. The desk checked the payment record, found SUP-17 rejected because the beneficiary details did not match the receiving institution's records, and replied in secure chat with that status and reason. The reply also said it does not establish a different cause or authorise a retry, and that no new transfer was made. The case is closed and the record lists nothing left for a person.
+Leona Voss, a viewer on secure chat whose identity was not verified, asked the desk to check whether row SUP-17 in her studio's payout batch had been paid. The desk looked up the row, found it rejected because the beneficiary details did not match the receiving institution's records, and replied to her on secure chat with that status and reason, noting that no new transfer was made and a retry was not authorised. The case is closed as replied, and the record lists nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -76,6 +76,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

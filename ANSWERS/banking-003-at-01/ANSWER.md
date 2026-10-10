@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elise Rowan, a verified customer using the secure portal, asked whether a transfer instruction she saved for an invoice had been sent, since she had seen no confirmation. The desk classified it as a question about a transfer and asked the payment system about it. The request was accepted, but no answer has come back into the case, so it is still unknown whether the transfer was submitted or what stage it is at, and a person needs to pick it up from here.
+Elise Rowan, a verified customer writing through the secure portal, said she saved a transfer instruction for an invoice and had not seen a confirmation that it was sent. The desk classified this as a question about a transfer and put a query to the payment system about it, and the case closed in that asked state. The record contains no answer from the payment system, so whether the transfer was submitted or what stage it is at is still unknown, and nothing else was sent or changed.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -59,6 +59,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

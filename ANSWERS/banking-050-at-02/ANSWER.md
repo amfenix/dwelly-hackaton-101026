@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing as company signatory over secure chat, asked the desk to check the stage of a payment that Alder Quay Supplies says it has not received. The desk classified this as a question about a transfer and queried the payment system about it. The payment system's answer is not in the record, so the payment's stage is still unknown, and Mara Ellison is recorded as not verified, which is left for a person to deal with.
+Mara Ellison, writing over secure chat as the company signatory, asked the desk to check what stage a transfer to Alder Quay Supplies had reached, since the supplier says it hasn't received the funds. The desk classed this as a question about a transfer and sent a query to the payment system, then closed the case. The payment system's answer is not in the record, so she has not been told the payment's stage, and her identity is still unverified, which a person would need to settle before anything is shared with her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

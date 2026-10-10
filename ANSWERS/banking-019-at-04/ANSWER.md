@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Ellery asked the desk to check whether the next run of her standing order to Willow Yard Studios could be moved from 18 September to 22 September 2025, and to send any eligible change to her for confirmation. The desk found the run was not yet being processed and sent the change to her for secure confirmation. It did not alter the instruction itself, and the case closed as waiting on her. A further reply was refused because the case was already in the waiting state, so the earlier portal message is the only update, and nothing is left for the desk until she confirms.
+Maeve Ellery asked the desk to check whether the next run of her Willow Yard Studios standing order could still be moved from 18 September to 22 September 2025, and to send any eligible change to her for confirmation. The desk found the change had been sent to her for secure confirmation, changed nothing on the instruction itself, and closed the case as waiting. What is left is for Maeve to confirm the change in the secure portal; she had been identified but not verified, and her message was sent outside the portal.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -69,6 +69,8 @@ Facts established:
 - instructed_outside_portal: **True**
 - request_type: **change**
 - next_system: **recurring**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 
@@ -85,10 +87,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `reply`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); not (business_status = ROLE_REVOKED and subject != "role") is not known (business_status=not known, subject=standing_order); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); document_ready is not known (document_ready=not known); tariff-reply: state = TRIAGED is false (state=WAITING); next_system = tariff is false (next_system=recurring); tariff_status present is false (tariff_status=not known)
 
 ## Final result
 

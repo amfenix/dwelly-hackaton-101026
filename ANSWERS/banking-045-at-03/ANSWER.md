@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Bell, a customer writing over secure chat whose identity was not verified, followed up on an access request that still needed the company administrator's approval. The desk forwarded the request about her role to the verified company administrator and closed the case as forwarded. The desk refused its check of the company-administrator record in the business system, so the administrator's identity was not confirmed against that record. Nothing further is recorded for the desk to do, and the approval decision rests with the administrator.
+Nadia Bell, writing from an unverified customer account over secure chat, asked about the next step for an access request that still needs the company administrator's approval. The desk refused its first attempt to query the business system, then forwarded the request about her role to the verified company administrator, and the case closed as forwarded. No access has been granted, and what happens next depends on the administrator's approval.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -64,6 +64,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **authority**
 - next_system: **business**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

@@ -52,30 +52,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
 50. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-51. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
-52. `request_type`: not known → instruction (by `triage`).
-53. `subject`: not known → role (by `triage`).
-54. State `READING` → `TRIAGED` (by `triage`).
-55. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
-56. `next_system`: not known → business (by `route-business`).
-57. The agent asked for `submit_request` {}.
-58. Rule `business-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked absent → true (business_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
-59. State `TRIAGED` → `REQUEST_PENDING` (by `business-instruction`).
-60. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-61. Called `register_request` (attempt 1, key banking-046-at-02:do-request:17).
-62. Action in the world: `register_request` {"team": "business", "about": "role"}.
-63. `register_request` found {}.
-64. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-65. The case closed in `REQUESTED`: **submit_request**.
+51. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+52. Classifier (jev jev-latest) on `joint_holder_change`: 0.23 → False.
+53. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
+54. `request_type`: not known → instruction (by `triage`).
+55. `credentials_requested`: not known → False (by `triage`).
+56. `joint_holder_change`: not known → False (by `triage`).
+57. `subject`: not known → role (by `triage`).
+58. State `READING` → `TRIAGED` (by `triage`).
+59. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
+60. `next_system`: not known → business (by `route-business`).
+61. The agent asked for `submit_request` {}.
+62. Rule `business-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked absent → true (business_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction).
+63. State `TRIAGED` → `REQUEST_PENDING` (by `business-instruction`).
+64. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+65. Called `register_request` (attempt 1, key banking-046-at-02:do-request:17).
+66. Action in the world: `register_request` {"team": "business", "about": "role"}.
+67. `register_request` found {}.
+68. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+69. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 7356 tokens in, 592 out, 5.885 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.
+3 calls, 5509 tokens in, 496 out, 4.893 s, cost $0.0115; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I submitted the request to revoke Owen Bell's Payroll Approver role, and the desk accepted it. The case is now in the REQUESTED state and closed on my side.
+> I submitted the instruction to revoke Owen Bell's Payroll Approver role. The desk accepted it and the case is now at REQUESTED, so the revocation has been requested but isn't confirmed as done yet.
 > 
-> Mara Ellery's identity and administrator mandate were verified on the call. She gave a clear instruction to revoke the role. I did not read any confirmation that the role has actually been removed. The portal should be checked to see that it no longer shows him as active.
-> 
-> I did not start any review of operations Owen Bell authorised earlier, as she asked for that to be kept separate.
+> I treated it as a clear instruction from a verified administrator. The review of operations he authorised earlier was not part of this request, and I did not start one.

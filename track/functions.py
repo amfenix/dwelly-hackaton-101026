@@ -2001,6 +2001,29 @@ def check_bank_actions(ctx: Context) -> dict[str, Any]:
     return out
 
 
+_REFUSALS = {
+    "someone_elses_account": "We can't say whether anyone holds an account with us, or share anything about one. "
+    "The account holder can contact us directly through their own secure portal.",
+    "credentials": "We never use another person's login, and we never ask for or read out a one-time code, a PIN or a "
+    "password. Anyone who needs to act signs in themselves, through their own secure portal.",
+    "no_authority": "We can't share this or act on it for your role. The company's administrator or an authorised "
+    "signatory can make it through the business portal.",
+    "needs_all_holders": "A change to the holders of a joint account needs every holder to agree. Each holder can "
+    "confirm it through their own secure portal.",
+    "other": "We can't do this on this request. A colleague can explain the options available to you.",
+}
+"""What the bank says when it refuses: the reason and the permitted route, never the agent's words."""
+
+
+@function
+def refuse_customer(ctx: Context) -> dict[str, Any]:
+    """Refuse with the reason the policy accepted, and say what the customer can do instead."""
+    reason = str(_field(ctx, "refusal_reason") or "other")
+    to = _field(ctx, "requester") or "the requester"
+    ctx.act("refuse", to=to, channel=_field(ctx, "channel"), reason=reason, text=_REFUSALS[reason])
+    return {}
+
+
 # ------------------------------ compatibility with the original payments example
 
 _PAID: set[str] = set()

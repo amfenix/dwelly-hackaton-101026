@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked the desk to check a £3.20 fee beside a foreign-currency cash withdrawal against the tariff that applied, because they didn't understand what it was for or how it was calculated. The desk classified this as a question about a fee and sent a query to the tariff system about the £3.20 amount. The case closed at that step with no tariff answer recorded, so what the charge is for and how it was worked out is still unexplained and is left for a person to follow up.
+The customer asked what a £3.20 fee beside a foreign-currency cash withdrawal in their portal is for and how it was calculated, and asked for it to be checked against the applicable tariff. The desk classed it as a fee question, sent a query about the £3.20 fee to the tariff system, and closed the case in the asked state. No tariff answer is in the record, so the reason for the charge and how it was calculated remain unexplained. The agent's message says it will write once the tariff details arrive, but the record shows no such step.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,6 +56,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **tariff**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

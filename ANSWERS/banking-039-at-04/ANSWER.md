@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nerys Wren, a verified customer on the secure portal, asked for the permitted list of sign-in sessions on her profile to be delivered through the portal. The desk marked the access system as asked and closed the case in WAITING, since no answer from it is in yet. A second access query and an escalation to a person were both refused because the case was no longer in TRIAGED, so no session data has been retrieved or sent, no reply has gone to her, and nobody has yet reviewed the new-device sign-in she reported.
+Nerys Wren, a verified customer on the secure portal, asked for the permitted list of her sign-in sessions to be delivered through the portal. The desk classified it as an access question, noted that the access system had been asked and that no answer was recorded, and closed the case in WAITING with no actions taken. The agent's later attempts to query the access system again and to escalate to a person were both refused because the case was already in WAITING, so no extract has gone to her and the case still needs a person to pick it up once the access answer arrives.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -68,6 +68,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **access**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

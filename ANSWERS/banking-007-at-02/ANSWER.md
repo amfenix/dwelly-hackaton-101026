@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, an unverified customer on secure chat, asked whether there is confirmation that the beneficiary received her transfer, since she could only see a "sent" status. The desk checked the case and queried the payment system about the transfer, and that query returned no further information. No confirmation of receipt is on record, so the desk could not say the beneficiary has received the money, and nothing in the record shows a follow-up step for a person.
+Mara Ellwood, an unverified customer on secure chat, asked what stage her transfer had reached and whether the beneficiary had confirmed receipt. The desk classified it as a question about a transfer, found no confirmation on file, and sent a query to the payment system about the transfer, then closed the case at that step. The payment system returned no details, so the transfer's current stage and whether the beneficiary received it remain unknown, and the record names no further step.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **payment**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

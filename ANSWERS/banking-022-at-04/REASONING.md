@@ -60,26 +60,32 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 57. Rule `triage` fired: state = READING → true (state=READING).
 58. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
-59. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-60. `request_type`: not known → instruction (by `triage`).
-61. `subject`: not known → card (by `triage`).
-62. State `READING` → `TRIAGED` (by `triage`).
-63. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
-64. `next_system`: not known → card (by `asked-card`).
-65. The agent asked for `reply` {}.
-66. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=instruction); next_system = card → true (next_system=card); card_status present → true (card_status=BLOCKED).
-67. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
-68. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-69. Called `reply_customer` (attempt 1, key banking-022-at-04:do-reply:17).
-70. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows your card as blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made."}.
-71. `reply_customer` found {}.
-72. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-73. The case closed in `REPLIED`: **reply**.
+59. Classifier (jev jev-latest) on `credentials_requested`: 0.02 → False.
+60. Classifier (jev jev-latest) on `joint_holder_change`: 0.03 → False.
+61. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+62. `request_type`: not known → instruction (by `triage`).
+63. `credentials_requested`: not known → False (by `triage`).
+64. `joint_holder_change`: not known → False (by `triage`).
+65. `subject`: not known → card (by `triage`).
+66. State `READING` → `TRIAGED` (by `triage`).
+67. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
+68. `next_system`: not known → card (by `asked-card`).
+69. The agent asked for `reply` {}.
+70. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); request_type != other → true (request_type=instruction); next_system = card → true (next_system=card); card_status present → true (card_status=BLOCKED).
+71. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
+72. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+73. Called `reply_customer` (attempt 1, key banking-022-at-04:do-reply:17).
+74. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows your card as blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made."}.
+75. `reply_customer` found {}.
+76. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+77. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7252 tokens in, 551 out, 5.287 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 8153 tokens in, 622 out, 6.601 s, cost $0.0181; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to Mara Ellison, and the case is closed. The bank's records already show her debit card as BLOCKED, so I submitted no new block request. The reply is based on that record. The case has no block confirmation, so the reply shouldn't claim the bank blocked the card during this call.
+> The card is already blocked on the bank's records, so I didn't submit a second block. I sent the customer a reply with that status instead. The case is now marked as replied and closed.
+> 
+> The records show no confirmation reference for the block, so the reply can only say what the card status shows.

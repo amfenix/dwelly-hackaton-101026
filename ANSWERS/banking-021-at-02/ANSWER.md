@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a customer on secure chat, asked the desk to check whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk classified this as a question about a card and asked the card system about it. That query returned nothing, so the case closed with no answer on dispatch or delivery. Her identity was not verified in this chat, and a person would need to follow up on whether the card was dispatched.
+Mara Ellison, writing over secure chat and not verified, asked the desk to check whether dispatch had been registered for her replacement card, since the portal only said the request was accepted. The desk classed this as a question about her card and sent a query to the card system, and the case closed in the asked state. The record contains no answer from the card system yet, so nobody has replied to Mara and the dispatch status is still unknown.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -63,6 +63,8 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **question**
 - next_system: **card**
+- credentials_requested: **False**
+- joint_holder_change: **False**
 
 Where they came from:
 

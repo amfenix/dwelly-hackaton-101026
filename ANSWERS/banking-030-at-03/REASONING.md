@@ -53,26 +53,30 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 50. Rule `triage` fired: state = READING → true (state=READING).
 51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
-52. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
-53. `request_type`: not known → question (by `triage`).
-54. `subject`: not known → card (by `triage`).
-55. State `READING` → `TRIAGED` (by `triage`).
-56. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
-57. `next_system`: not known → card (by `route-card`).
-58. The agent asked for `ask_system` {"system": "card"}.
-59. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
-60. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
-61. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-62. Called `ask_system` (attempt 1, key banking-030-at-03:do-ask:17).
-63. Action in the world: `ask_system` {"system": "card", "about": "card"}.
-64. `ask_system` found {}.
-65. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-66. The case closed in `ASKED`: **ask_system**.
+52. Classifier (jev jev-latest) on `credentials_requested`: 0.03 → False.
+53. Classifier (jev jev-latest) on `joint_holder_change`: 0.05 → False.
+54. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+55. `request_type`: not known → question (by `triage`).
+56. `credentials_requested`: not known → False (by `triage`).
+57. `joint_holder_change`: not known → False (by `triage`).
+58. `subject`: not known → card (by `triage`).
+59. State `READING` → `TRIAGED` (by `triage`).
+60. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
+61. `next_system`: not known → card (by `route-card`).
+62. The agent asked for `ask_system` {"system": "card"}.
+63. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority, instruction] → true (request_type=question).
+64. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+65. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+66. Called `ask_system` (attempt 1, key banking-030-at-03:do-ask:17).
+67. Action in the world: `ask_system` {"system": "card", "about": "card"}.
+68. `ask_system` found {}.
+69. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+70. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 6926 tokens in, 422 out, 3.776 s, cost $0.0141; models: claude-sonnet-5-5, jev-1.13.0.
+4 calls, 7767 tokens in, 480 out, 5.451 s, cost $0.0159; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the card system for the status of Maren's replacement request (HV-030). I have not yet sent her a reply. The card system's answer hasn't appeared in the case facts, so I can't say yet whether the card is being made or has been sent. The case is now closed at this step.
+> I've queried the card system about Maren's replacement request (HV-030). The case is now closed at that step. The case record doesn't show the card system's answer yet, so I can't say whether the card is being made or has been sent. I haven't sent Maren a reply.
