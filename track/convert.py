@@ -3,6 +3,9 @@
     uv run python track/convert.py "<track folder>" --out track/cases.json --expected track/expected.json
     uv run python track/convert.py "<track folder>" --whole --out track/cases.json
 
+Every attachment available at some point is copied to track/attachments/<track slug>/<case>/<file>
+(`--attachments DIR`), and cases.json gives that path relative to the repository.
+
 A case folder holds `index.md`, `history.md` and optionally `attachments/`. A desk case at point k
 holds the case's details, its request, events 1 … k and the attachments named by then; nothing
 that reveals the ending (the overview, the next action, the outcome, later events). What happened
@@ -15,10 +18,15 @@ import argparse
 import json
 import os
 import re
+import shutil
 import sys
+from collections.abc import Mapping
 from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
+
+REPO = Path(__file__).resolve().parents[1]
+ATTACHMENTS = REPO / "track" / "attachments"
 
 TRACK_SLUGS = {"banking": "banking", "delivery": "delivery", "insurance": "insurance", "property": "property"}
 """Track slug by the first word of the track folder's name."""
@@ -163,7 +171,7 @@ def read_case(folder: Path) -> Case:
     if not events:
         raise CaseError(f"{folder}: history.md has no events")
     if [e.seq for e in events] != list(range(1, len(events) + 1)):
-        raise CaseError(f"{folder}: events are not numbered 1 … {len(events)}")
+        raise CaseError(f"{folder}: events are not numbered 1 to {len(events)}")
     total = re.search(r"^Total events:\s*(\d+)", history, re.MULTILINE)
     if total and int(total.group(1)) != len(events):
         raise CaseError(f"{folder}: 'Total events: {total.group(1)}' but {len(events)} events found")
@@ -252,12 +260,16 @@ def _path(path: Path) -> str:
         return str(path.resolve())
 
 
-def _desk_case(case: Case, point: int, whole: bool) -> dict[str, Any]:
+def _case_dir(number: str) -> str:
+    return re.sub(r"[^A-Za-z0-9]+", "-", number)
+
+
+def _desk_case(case: Case, point: int, whole: bool, placed: Mapping[Path, str] | None = None) -> dict[str, Any]:
     org = [case.details[k] for k in ORG_DETAILS if case.details.get(k)]
     events = case.events[:point]
     available = [a for a in case.attachments if whole or (_named(a, events) is not None)]
     entry: dict[str, Any] = {
-        "id": f"{track_slug(case.track)}-{re.sub(r'[^A-Za-z0-9]+', '-', case.number)}-at-{point:02d}",
+        "id": f"{track_slug(case.track)}-{_case_dir(case.number)}-at-{point:02d}",
         "track": case.track,
         "case": case.number,
         "point": point,
@@ -265,18 +277,19 @@ def _desk_case(case: Case, point: int, whole: bool) -> dict[str, Any]:
         "details": {k: v for k, v in case.details.items() if k not in HIDDEN_DETAILS},
         "request": case.sections["Initial request"],
         "events": [_event_dict(e) for e in events],
-        "attachments": [{"name": a.name, "path": _path(a)} for a in available],
+        "attachments": [{"name": a.name, "path": (placed or {}).get(a) or _path(a)} for a in available],
     }
     if not whole:
         entry["actor_next"] = actor_next(case.events[point], org)
     return entry
 
 
-def points(case: Case) -> list[tuple[dict[str, Any], dict[str, Any]]]:
-    """The desk case and its expected entry, after every event 1 … N-1."""
+def points(case: Case, placed: Mapping[Path, str] | None = None) -> list[tuple[dict[str, Any], dict[str, Any]]]:
+    """The desk case and its expected entry, after every event 1 … N-1. `placed` maps an
+    attachment to the path written for it (its copy in the repository); by default, its source."""
     result = []
     for point in range(1, len(case.events)):
-        desk_case = _desk_case(case, point, whole=False)
+        desk_case = _desk_case(case, point, whole=False, placed=placed)
         expected = {
             "next_event": _event_dict(case.events[point]),
             "next_action": case.sections.get("Next action at escalation"),
@@ -287,9 +300,28 @@ def points(case: Case) -> list[tuple[dict[str, Any], dict[str, Any]]]:
     return result
 
 
-def whole(case: Case) -> dict[str, Any]:
+def whole(case: Case, placed: Mapping[Path, str] | None = None) -> dict[str, Any]:
     """One desk case with every event and every attachment: for cases with no ending to hide."""
-    return _desk_case(case, len(case.events), whole=True)
+    return _desk_case(case, len(case.events), whole=True, placed=placed)
+
+
+def available_attachments(case: Case, whole_case: bool) -> list[Path]:
+    """The attachments available at some point: named by an event before the last, or all with --whole."""
+    if whole_case:
+        return list(case.attachments)
+    return [a for a in case.attachments if (seq := _named(a, case.events)) is not None and seq < len(case.events)]
+
+
+def place_attachments(case: Case, files: list[Path], attachments: Path, root: Path) -> dict[Path, str]:
+    """Copies the files to <attachments>/<track slug>/<case>/ and gives each one's path from `root`."""
+    target = attachments / track_slug(case.track) / _case_dir(case.number)
+    placed = {}
+    for source in files:
+        target.mkdir(parents=True, exist_ok=True)
+        copy = target / source.name
+        shutil.copyfile(source, copy)
+        placed[source] = copy.resolve().relative_to(root.resolve()).as_posix()
+    return placed
 
 
 def _case_folders(track_folder: Path) -> list[Path]:
@@ -297,10 +329,24 @@ def _case_folders(track_folder: Path) -> list[Path]:
 
 
 def convert(
-    track_folder: Path, *, whole_cases: bool = False, report: Report | None = None
+    track_folder: Path,
+    *,
+    whole_cases: bool = False,
+    report: Report | None = None,
+    attachments: Path | None = None,
+    root: Path | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, dict[str, Any]]]:
-    """Every case folder of a track → the desk cases and, unless whole, the expected entries."""
+    """Every case folder of a track → the desk cases and, unless whole, the expected entries.
+
+    The attachments available at some point are copied under `attachments` (default ATTACHMENTS),
+    which must lie inside `root` (default REPO, the repository). The track's earlier copies there
+    are removed first, so the folder holds exactly what the cases name."""
+    attachments = attachments if attachments is not None else ATTACHMENTS
+    root = root if root is not None else REPO
+    if not attachments.resolve().is_relative_to(root.resolve()):
+        raise ValueError(f"the attachments folder {attachments} is not inside {root}")
     report = report if report is not None else Report()
+    shutil.rmtree(attachments / track_slug(track_folder.resolve().name), ignore_errors=True)
     cases: list[dict[str, Any]] = []
     expected: dict[str, dict[str, Any]] = {}
     for folder in _case_folders(track_folder):
@@ -316,14 +362,15 @@ def convert(
                     f"{folder.name} event {event.seq}: {event.channel} | {event.sender} -> {event.recipient}"
                     f" (taken as {event.kind})"
                 )
+        files = available_attachments(case, whole_cases)
+        placed = place_attachments(case, files, attachments, root)
         if whole_cases:
-            cases.append(whole(case))
+            cases.append(whole(case, placed))
             continue
         for attachment in case.attachments:
-            seq = _named(attachment, case.events)
-            if seq is None or seq >= len(case.events):
+            if attachment not in files:
                 report.unavailable_attachments.append(f"{folder.name}/{attachment.name}")
-        for desk_case, entry in points(case):
+        for desk_case, entry in points(case, placed):
             cases.append(desk_case)
             expected[desk_case["id"]] = entry
     return cases, expected
@@ -343,20 +390,32 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--out", type=Path, default=Path("track/cases.json"))
     parser.add_argument("--expected", type=Path, default=None, help="where to write what happened next")
     parser.add_argument("--whole", action="store_true", help="one case per folder with all its events")
+    parser.add_argument(
+        "--attachments", type=Path, default=None, help="where attachments are copied (track/attachments)"
+    )
     args = parser.parse_args(argv)
+    for stream in (sys.stdout, sys.stderr):  # a case's names must not crash a cp1252 console
+        if hasattr(stream, "reconfigure"):
+            stream.reconfigure(errors="backslashreplace")
     if not args.track_folder.is_dir():
         print(f"not a folder: {args.track_folder}", file=sys.stderr)
         return 2
 
     report = Report()
-    cases, expected = convert(args.track_folder, whole_cases=args.whole, report=report)
+    try:
+        cases, expected = convert(
+            args.track_folder, whole_cases=args.whole, report=report, attachments=args.attachments
+        )
+    except ValueError as error:
+        print(error, file=sys.stderr)
+        return 2
     _write(args.out, cases)
     if args.expected is not None and not args.whole:
         _write(args.expected, expected)
 
     folders = len({c["case"] for c in cases})
     bank = sum(1 for c in cases if c.get("actor_next") == "bank")
-    print(f"{len(cases)} desk cases from {folders} case folders ({bank} with the bank acting next) → {args.out}")
+    print(f"{len(cases)} desk cases from {folders} case folders ({bank} with the bank acting next) -> {args.out}")
     for title, lines in (
         ("skipped", report.skipped),
         ("events placed by default", report.unplaced_events),

@@ -110,6 +110,16 @@ def make_case(
     return folder
 
 
+@pytest.fixture(autouse=True)
+def repo(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> Path:
+    """A stand-in repository: no test copies into, or clears, the real track/attachments."""
+    root = tmp_path / "repo"
+    (root / "track").mkdir(parents=True)
+    monkeypatch.setattr(convert, "REPO", root)
+    monkeypatch.setattr(convert, "ATTACHMENTS", root / "track" / "attachments")
+    return root
+
+
 @pytest.fixture
 def track(tmp_path: Path) -> Path:
     root = tmp_path / "Banking & Financial Services"
@@ -156,7 +166,41 @@ def test_an_attachment_is_available_once_linked_or_named(track: Path) -> None:
         4: ["log.txt", "statement.pdf"],
     }
     assert report.unavailable_attachments == ["001/unnamed.csv"]
-    assert all(Path(a["path"]).is_file() for c in cases for a in c["attachments"])
+
+
+@pytest.mark.parametrize("whole_cases", [False, True])
+def test_every_attachment_path_exists_inside_the_repository(track: Path, repo: Path, whole_cases: bool) -> None:
+    make_case(track)
+    cases, _ = convert.convert(track, whole_cases=whole_cases)
+    paths = [a["path"] for c in cases for a in c["attachments"]]
+    assert paths
+    for path in paths:
+        assert not Path(path).is_absolute() and ".." not in Path(path).parts and "\\" not in path
+        assert (repo / path).is_file() and (repo / path).resolve().is_relative_to(repo.resolve())
+        assert path.startswith("track/attachments/banking/001/")
+    copied = sorted(p.name for p in (repo / "track" / "attachments" / "banking" / "001").iterdir())
+    assert copied == (["log.txt", "statement.pdf", "unnamed.csv"] if whole_cases else ["log.txt", "statement.pdf"])
+
+
+def test_a_rerun_leaves_only_the_attachments_its_cases_name(track: Path, repo: Path) -> None:
+    stale = repo / "track" / "attachments" / "banking" / "999" / "old.pdf"
+    stale.parent.mkdir(parents=True)
+    stale.write_text("x", encoding="utf-8")
+    other_track = repo / "track" / "attachments" / "insurance" / "001" / "keep.pdf"
+    other_track.parent.mkdir(parents=True)
+    other_track.write_text("x", encoding="utf-8")
+    make_case(track)
+    convert.convert(track)
+    assert not stale.exists() and other_track.exists()
+
+
+def test_attachments_outside_the_repository_are_refused(track: Path, tmp_path: Path) -> None:
+    make_case(track)
+    with pytest.raises(ValueError, match="not inside"):
+        convert.convert(track, attachments=tmp_path / "elsewhere")
+    assert (
+        convert.main([str(track), "--attachments", str(tmp_path / "elsewhere"), "--out", str(tmp_path / "o.json")]) == 2
+    )
 
 
 def test_whole_gives_every_event_and_attachment(track: Path) -> None:
@@ -206,7 +250,8 @@ def test_command_line(track: Path, tmp_path: Path, capsys: pytest.CaptureFixture
     assert (
         len(json.loads(out.read_text(encoding="utf-8"))) == 4 and len(json.loads(exp.read_text(encoding="utf-8"))) == 4
     )
-    assert "4 desk cases from 1 case folders" in capsys.readouterr().out
+    printed = capsys.readouterr().out
+    assert "4 desk cases from 1 case folders" in printed and printed.isascii()  # a cp1252 console prints it
     make_case(track, "002", events=[("Secure chat", "", "x", "y")])
     assert convert.main([str(track), "--whole", "--out", str(out)]) == 1
     assert "skipped: 1" in capsys.readouterr().err
