@@ -1,10 +1,10 @@
 # Case banking-006-at-04: Two Similar Transfers
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: reply**  (final state `REPLIED`)
 
 ## Summary
 
-Mira Ellison, writing over secure chat, asked the desk to check whether her two transfers were separate instructions and whether the pending one had been stopped or returned. The desk's journal check found two distinct instruction references for the same payee and amount, one Completed and one Pending. The desk refused to query the payment system directly and instead registered a request with the payment team about the transfer, and the case closed there. Nothing was stopped, cancelled or returned, her identity is unverified, and the payment team decides what happens next.
+Mira Ellison, an unverified customer on secure chat, asked whether her two payment instructions were separate and whether the pending one had been stopped or returned. The desk checked the payment records, which showed two instructions but a status it could not recognise, and it replied saying exactly that and that no new transfer was made. It did not stop or return anything, and the reply does not say whether the pending payment has been stopped or returned, so that question is still open for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,10 @@ Case reference: id banking-006-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: payment, about: transfer), by rule `do-request`
+- `reply` (to: Mira Ellison, channel: secure_chat), by rule `do-reply`
+
+  > The payment record shows your an answer without a recognized payment status; 2 separate payment instructions. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made.
+
 
 ## Decision and why
 
@@ -50,12 +53,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `register` accepted it.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type = register → true (request_type=register)
-  - registration_asked absent → true (registration_asked=not known)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+  - next_system = payment → true (next_system=payment)
+  - payment_status present → true (payment_status=OTHER)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -89,8 +92,8 @@ No.
 
 Requests the policy refused:
 
-- `ask_system`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); request_type not in [register, change, instruction, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register)
+- `ask_system`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register)
 
 ## Final result
 
-submit_request (REQUESTED)
+reply (REPLIED)

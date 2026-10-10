@@ -56,20 +56,16 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 54. `next_system`: not known → card (by `route-card`).
-55. The agent asked for `submit_request` {}.
-56. Rule `card-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked absent → true (card_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction); request_type = change → false (request_type=instruction); confirmation = given → false (confirmation=none).
-57. State `TRIAGED` → `REQUEST_PENDING` (by `card-instruction`).
-58. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-59. Called `register_request` (attempt 1, key banking-022-at-02:do-request:15).
-60. Action in the world: `register_request` {"team": "card", "about": "card"}.
-61. `register_request` found {}.
-62. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-63. The case closed in `REQUESTED`: **submit_request**.
+55. Rule `registration-waits` fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered absent → true (registered=not known). The team was asked; its answer is not in yet.
+56. State `TRIAGED` → `WAITING` (by `registration-waits`).
+57. The case closed in `WAITING`: **wait**.
+58. The agent asked for `ask_system` {"system": "card"}.
+59. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card).
+60. The agent asked for `submit_request` {}.
+61. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
+62. The agent asked for `escalate` {"note": "Verified caller Mara Ellison reports her H&V debit card missing after a visit to Alder Quay Market and asks for an immediate block. The case is in WAITING and the desk refused both a card lookup and the block instruction: state is not TRIAGED, request_type is \"instruction\" rather than \"change\", and confirmation is \"none\". The card has not been checked or blocked. Please contact the customer urgently, confirm which card she means if she holds more than one, and block it."}.
+63. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-3 calls, 5242 tokens in, 212 out, 4.906 s, cost $0.0100; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've passed your request to block your missing debit card to the team that handles card blocks. The system accepted it, but the block isn't confirmed yet. I haven't seen the card's status change, so please treat it as pending until the team confirms it.
+5 calls, 12513 tokens in, 561 out, 10.558 s, cost $0.0280; models: claude-haiku-5-5, claude-sonnet-5-5.

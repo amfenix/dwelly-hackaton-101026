@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marsh, writing over secure chat and not verified, asked the desk to check whether H&V had received a transfer for her pottery studio's kiln contribution that the sender said they had made. The desk checked the incoming-payment records, found no incoming payment for the account, and replied on secure chat saying so, adding that this does not establish the sender didn't pay and that no payment was made. The case closed with that reply, and the record lists nothing further left for a person.
+Elowen Marsh, a customer on secure chat whose identity was not verified, asked the desk to check whether H&V had received a contribution for her pottery studio kiln that the sender said they had transferred. The desk checked the incoming-payment records, found no incoming payment for her account, and replied in secure chat saying so. The reply added that this does not establish that the sender did not pay, and that no payment was made. The case is closed as replied, and the record lists nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 

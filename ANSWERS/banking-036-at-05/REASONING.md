@@ -52,7 +52,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
+51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
 52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
 53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
 54. Called `send_for_confirmation` (attempt 1, key banking-036-at-05:do-confirm:15).
@@ -63,10 +63,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5333 tokens in, 285 out, 5.553 s, cost $0.0110; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5223 tokens in, 280 out, 5.743 s, cost $0.0107; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The change has already been sent to the customer's secure portal for confirmation, and the case is marked final. The bank doesn't change the correspondence address itself, so there's nothing further for me to do and I'm taking no more action.
-> 
-> The case facts still show confirmation as "none". Mara Ellison's portal message (event 4) says she confirms the new address, but the confirmation has to be completed in the secure profile process. Until she does that, the address on file stays as it is.
+> The case is already closed at CONFIRMATION_SENT, so I'm not calling another tool. The desk has sent the address change for confirmation through the secure profile process. The request came in outside the portal, and the portal still records no confirmation. The customer's message in event 4 doesn't change that. Mara needs to confirm the change in the profile process itself, and the bank hasn't changed the address yet.

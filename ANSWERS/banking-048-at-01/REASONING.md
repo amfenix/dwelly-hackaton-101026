@@ -48,7 +48,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
 45. `next_system`: not known → incoming (by `route-incoming`).
 46. The agent asked for `ask_system` {"system": "incoming"}.
-47. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+47. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 48. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-048-at-01:do-ask:15).
@@ -59,8 +59,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4960 tokens in, 150 out, 3.956 s, cost $0.0088; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6693 tokens in, 196 out, 5.245 s, cost $0.0127; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the incoming payments system whether the buyer's payment for the workshop invoice has reached your H&V business account. The answer will come back to the case later. I haven't told you anything about the payment yet, because the case doesn't show a result.
+> I checked the incoming payments system for the buyer's payment for the workshop invoice. The check found no confirmation that it has reached your H&V business account, and I can't say it has arrived. I haven't received any further detail from the system.
+> 
+> Nothing else is needed from our side for now. The case is closed on this check.

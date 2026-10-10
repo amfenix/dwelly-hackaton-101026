@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk checked the card journal, which shows the card as dispatched with no record of receipt, and replied on secure chat with that status, noting it does not confirm she has received the card and that no card change was made. The record lists her as not verified, and nothing further is left for a person.
+Mara Ellison asked over secure chat whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk checked the card journal, which shows the card as dispatched with no record of receipt, and replied to her on secure chat saying so and that no card change was made. Her identity was not verified on this chat, but the desk replied anyway because it was only a status check; the case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

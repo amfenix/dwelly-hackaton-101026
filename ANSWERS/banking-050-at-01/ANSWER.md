@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a status question about a transfer, specifically the Alder Quay Supplies materials payment. The desk's checks of the requester, payment and other records found nothing, so it routed the case to the payment system and sent that system a query about the transfer. The case is closed as asked, with no answer yet, and the payment system's reply will come back to the case later; nothing else is recorded as needed from a person.
+The request was a status question about a transfer. The desk classified it as a transfer status request and sent a query to the payment system about it, and the case closed in the "asked" state. No reply from the payment system is in the record, so the stage of the payment is not known. The only related finding is a note that the business portal recorded a payment authorisation for the Alder Quay Supplies materials invoice; whether the payment was sent, is pending or is held is left for a person to find out from the payment system's answer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

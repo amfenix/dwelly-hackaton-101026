@@ -61,13 +61,13 @@ load a bare word that is both a field and a value of what it is compared with, a
 
 ## 4. Decisions and rules the policy lacks (track/policy.yaml)
 
-**a. The bank speaks to the customer before any system answers (025@1, 030@2, 027@2).** It asks
+**a. Done: `clarify` and `redirect_secure`.** The bank speaks to the customer before any system answers (025@1, 030@2, 027@2). It asks
 which attempt to investigate, acknowledges and says what it will check, or directs the customer to
 the secure recovery route. The policy can only reply from a system's answer. Add a decision for
 this, e.g. `clarify` (ask the customer for what the check needs) and `redirect_secure` (point to the
 secure process; never handle a secret) — the extreme cases expect `redirect_secure` too.
 
-**b. Passing a request to the person with the authority (045@2–4).** A new user's access needs the
+**b. Done: `forward_to_authority`, which replaces the automatic `NO_AUTHORITY` escalation.** Passing a request to the person with the authority (045@2–4). A new user's access needs the
 company administrator; the bank sends the request to the administrator for approval. The policy
 escalates (`NO_AUTHORITY`). Add `forward_to_authority`: send to the verified holder of the
 authority, approve nothing.
@@ -113,6 +113,20 @@ override triage (4c).
 **Needs:** the instructions should say that a system's answer of `OTHER` is still an answer to
 report narrowly, and that a viewer may view; and a reply template for each of these answers, so
 the reply tool is safe to use.
+
+## Progress
+
+| Step | Score (same 149 points) |
+|---|---|
+| analysed run | 112 (75%) |
+| 1. labels fixed | 113 (76%) |
+| 2. routing bug, 4c, 4e, 5 (`clarify`, `redirect_secure`, `forward_to_authority`) | 119 (80%) |
+| the agent's prompt halved (446 → 200 words; tools 465 → 329), one contradiction removed | 118 (79%) |
+
+A difference of one or two points between runs is the agent's own variation. Still open: 3 (the
+functions' owner), 4d (waits for `check_tariff`), 5 (triage wording), and two new findings: 045@4
+forwards again a request already forwarded (no fact says it was), and the agent still checks
+first on a clear card block (022@1).
 
 ## Order of work
 

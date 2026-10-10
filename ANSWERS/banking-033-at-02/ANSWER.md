@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, an unverified customer on secure chat, asked for a CSV export of her transactions from 6 to 9 May 2025 and asked to be told when the file is available in her secure portal. The desk classified this as a document request and sent a query to the documents system about it. That query returned nothing, so the record does not show whether the export exists, and the case closed in the asked state. Nothing further is recorded as left for a person, though the answer from the documents system is still outstanding.
+Mara Ellison asked, over secure chat, for a CSV export of her transactions from 6 to 9 May 2025 and to be told when the file is available in her secure portal. The desk classified it as a document request and sent a query to the documents system, which returned nothing, so there is no confirmation that the export exists. Her identity is still marked unverified, and the record shows no further step, so whether the file is ready is still unanswered.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=document)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

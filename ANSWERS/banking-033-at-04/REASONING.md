@@ -70,10 +70,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5416 tokens in, 223 out, 4.776 s, cost $0.0104; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7631 tokens in, 253 out, 5.278 s, cost $0.0152; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I replied to the customer. The documents system had already confirmed that the CSV export for 6–9 May 2025 is ready, so there was nothing more to ask any system.
-> 
-> The customer isn't verified on this chat. I did not check what the reply said, and I did not call case_status to confirm.
+> The documents system shows your CSV export for 6–9 May 2025 is ready. I've sent you a reply saying so. The file is in your secure portal, so you'll need to sign in there to download it. The case is closed.

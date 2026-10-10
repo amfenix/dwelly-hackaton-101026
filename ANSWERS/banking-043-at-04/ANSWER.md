@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting for the second signatory after she gave her first consent. The desk checked the business record, which shows the package as awaiting the second signatory, and replied to her in secure chat with that status, stating that no approval or role change was made. Her identity was not verified, though the request was only a status check, and nothing is left for a person in the record.
+Mara Ellery asked over secure chat whether Northmere Studio Ltd's payroll payment package was still waiting for her co-signer after she gave her first consent. The desk checked the business record, which shows the package as awaiting the second signatory, and replied to her in secure chat with that status. The reply also said no approval or role change was made on the second signatory's behalf. The case is closed as replied, with nothing left for a person, though the record lists Mara Ellery as not verified.
 
 _Written by a model from the record below; the sections below are the record._
 

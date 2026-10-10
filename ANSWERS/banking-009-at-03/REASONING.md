@@ -59,15 +59,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. Rule `payment-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_asked → true (payment_asked=True); payment_status absent → true (payment_status=not known). The system was asked; its answer is not in yet.
 56. State `TRIAGED` → `WAITING` (by `payment-waits`).
 57. The case closed in `WAITING`: **wait**.
+58. The agent asked for `ask_system` {"system": "payment"}.
+59. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
+60. The agent asked for `escalate` {"note": "Verified customer Mara Ellwood asks to confirm the amount actually sent. She remembers £684.20 in the draft, but the final payment line shows £648.20 (a possible digit transposition). The payment system check was refused because the case is in WAITING and not TRIAGED, so the payment record hasn't been read. Please check the completed payment instruction and confirm the sent amount to the customer. Don't rely on the portal line or the customer's memory of the draft."}.
+61. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-3 calls, 5420 tokens in, 358 out, 5.837 s, cost $0.0118; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 12303 tokens in, 683 out, 10.26 s, cost $0.0288; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payment system to confirm the amount of the completed transfer, and the case is now waiting for its answer. I haven't replied to Ms Ellwood yet, because the case holds no confirmation from the payment system.
+> I haven't confirmed the amount that was sent, and I couldn't move the case forward.
 > 
-> The only figure in the case is the £648.20 on the final payment line in the portal. That is not confirmation of what was actually sent, and the case doesn't show the £684.20 draft at all. So I can't yet tell her whether the amount sent was £648.20 or £684.20.
+> - **What the case shows:** the portal's final payment line says £648.20. Mara remembers entering £684.20. The two figures differ by a possible digit swap.
+> - **What was refused:** my request to the payment system was refused because the case is in a WAITING state, not TRIAGED. My escalation to a person was refused for the same reason.
+> - **What's missing:** nobody has read the completed payment record. £648.20 is only what the portal line shows, so I can't tell Mara that it is the amount H&V actually sent.
 > 
-> Once the payment system answers, the reply to her should state the amount from that record and nothing more.
+> The case is closed as "wait" and is left open for a person to pick up. That person should check the payment record, confirm the sent amount to Mara, and look into why the draft and final figures differ.

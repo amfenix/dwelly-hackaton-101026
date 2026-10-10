@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing on secure chat and not identity-verified, said their card was declined and asked what category of restriction applied and whether it had been lifted. The desk checked the card journal and replied that the card shows as restricted, with the recorded reason being a temporary security-related restriction, that the basis is not disclosed, and that no card change was made. The record shows no further action and nothing left for a person.
+Rowan Ellery, writing over secure chat and not verified, said their card was declined at a grocery payment and asked for the category of the restriction and whether it had been lifted. The desk checked the card journal and replied in the chat that the card shows as restricted, with the recorded reason "temporary security-related restriction", that this does not disclose the basis of the restriction, and that no further card change was made. The reply did not say whether the restriction would be lifted, and the case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

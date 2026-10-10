@@ -50,10 +50,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `request_type`: not known → record_fact (by `triage`).
 47. `subject`: not known → limit (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, role] → true (subject=limit, role=customer).
+49. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=limit).
 50. `next_system`: not known → business (by `route-business`).
 51. The agent asked for `ask_system` {"system": "business"}.
-52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
+52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
 53. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-047-at-01:do-ask:15).
@@ -64,8 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5106 tokens in, 172 out, 3.812 s, cost $0.0093; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6943 tokens in, 190 out, 4.85 s, cost $0.0132; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the business system for the current outgoing-payment limit on Maeve's company profile. The answer will come back later, so nothing more is needed from me now. Once it arrives, we can reply to her with the figure. The planned supplier payout she can see in the portal hasn't been submitted, and I haven't touched it.
+> I've asked the business system for the current outgoing-payment limit on Maeve's company profile. The request was accepted. The case now shows as final with the outcome "ask_system".
+> 
+> The limit itself isn't in the case yet, so I can't give Maeve a figure. The case status lists no refusals.

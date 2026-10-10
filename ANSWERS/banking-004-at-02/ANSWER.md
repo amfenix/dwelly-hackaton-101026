@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a verified customer writing through the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed, since the portal showed the status but no reason. The desk classified this as a request for a reason about a transfer and sent a query to the payment system about that transfer; the system's response was empty and no reason is in the record yet. Nothing has been sent back to Mara, so someone still needs to reply to her once the payment system supplies the reason.
+Mara Ellery, a verified customer on the secure portal, asked why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk classified it as a request for a reason and sent a query about the transfer to the payment system. That query returned nothing, so no reason has been found and none has been given to her; the record shows no further step after the question was asked.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=reason)
+  - request_type not in [register, change, authority] → true (request_type=reason)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marsh, writing over secure chat as an unverified customer, asked the desk to check whether H&V had received a transfer for a pottery studio kiln contribution that wasn't showing in her account. The desk classed it as a status request about an incoming payment and sent a query to the incoming payments system, and nothing about the payment has been confirmed yet. What is left is the system's answer, which has not come back, so the case is closed as asked and the payment's status is still unknown.
+Elowen Marsh, writing over secure chat, asked the desk to check whether a transfer for her pottery studio's kiln contribution had reached her account. The desk classed it as a status request about an incoming payment and put a question to the incoming-payments system, which accepted it. The answer from that system is still outstanding, and Elowen's identity remains unverified; the desk has not told her anything about the payment or the account.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = incoming → true (next_system=incoming)
   - next_system absent → false (next_system=incoming)
   - incoming_asked absent → true (incoming_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, the company's file uploader, asked over secure chat whether H&V had received batch-041.csv (reference HV-041), and said she wanted receipt checked only, not any payment approved or released. The desk checked the business import journal, which showed the file as received, and replied on secure chat that the record shows received, that this does not establish every row was paid or processed, and that no approval or role change was made. Her identity was not verified, and the reply covered receipt status only. The case is closed with nothing left for a person.
+Mara Ellison, the uploader for batch-041.csv (reference HV-041), asked over secure chat whether H&V had received the file, and said she was not asking for any approval or payment. The desk checked the business record, which shows the file as received, and replied to her on secure chat saying so, adding that this does not establish that every row was paid or processed and that no approval or role change was made. The case is closed with that reply; she was not verified on the chat, and the record lists nothing left for a person to do.
 
 _Written by a model from the record below; the sections below are the record._
 

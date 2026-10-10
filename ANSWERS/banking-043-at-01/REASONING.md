@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=payment_package).
 52. `next_system`: not known → payment (by `route-payment`).
 53. The agent asked for `ask_system` {"system": "payment"}.
-54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 55. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-043-at-01:do-ask:15).
@@ -66,8 +66,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7656 tokens in, 238 out, 5.622 s, cost $0.0150; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5182 tokens in, 231 out, 4.882 s, cost $0.0100; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payment system for the status of Northmere Studio Ltd's payroll payment package. That covers whether it is still waiting for your co-signer or has moved on. The answer hasn't come back yet. Once it does, we'll reply with what the record shows.
+> I've asked the payment system for the status of the Northmere Studio Ltd payroll payment package. Its answer is now in the case, so the next step is to reply to Mara with what it shows about whether the package is waiting for her co-signer or has moved on.

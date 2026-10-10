@@ -56,27 +56,22 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
 54. `next_system`: not known → business (by `asked-business`).
-55. The agent asked for `submit_request` {}.
-56. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: business_asked absent is false (business_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
-57. The agent asked for `escalate` {"note": "Verified call: Mara Ellery, confirmed Larkmere Studio Ltd administrator, instructs revocation of former employee Owen Bell's Payroll Approver role and wants review of earlier operations kept separate. Business system was already asked and returned status OTHER (not a clear answer). submit_request was refused, so the revocation has not been passed on or done. Please review the business record and handle the role revocation."}.
-58. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
-59. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
-60. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
-61. The case closed in `ESCALATED`: **escalate**.
+55. The agent asked for `reply` {}.
+56. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_status present → true (business_status=OTHER).
+57. State `TRIAGED` → `REPLY_PENDING` (by `business-reply`).
+58. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+59. Called `reply_customer` (attempt 1, key banking-046-at-04:do-reply:15).
+60. Action in the world: `reply` {"to": "Mara Ellery", "channel": "verified_call", "text": "The business record shows other. The answer does not establish a recognized business-record status. No additional approval or role change was made."}.
+61. `reply_customer` found {}.
+62. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+63. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-6 calls, 12038 tokens in, 904 out, 11.768 s, cost $0.0264; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 8391 tokens in, 758 out, 10.199 s, cost $0.0169; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I couldn't pass the revocation on, so I've handed the case to a person. Owen Bell's Payroll Approver role has not been revoked yet.
+> I replied to the customer, and the case is closed. I didn't submit the revocation of Owen Bell's Payroll Approver role.
 > 
-> The request was refused because the business system had already been asked about this role. Its answer came back as "OTHER", which isn't a clear status the desk can act on.
-> 
-> The note to the person covers three points:
-> - The call was verified, and Mara Ellery confirmed she is the administrator for Larkmere Studio Ltd.
-> - She instructed us to revoke the role.
-> - She wants the review of earlier operations kept separate.
-> 
-> The person needs to check the business record and complete the revocation.
+> The business system's answer was marked OTHER, and the case doesn't show what it said. I treated it as an answer to report rather than a go-ahead to change the role. The desk writes the reply text, so I haven't seen what it told Mara Ellery.

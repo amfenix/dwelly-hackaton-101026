@@ -4,7 +4,7 @@
 
 ## Summary
 
-The requester asked whether the payment on row SUP-17 of their supplier batch was paid or rejected, since the batch itself is only marked processed. The desk treated it as a status request about a batch and sent a query to the payment system about SUP-17. The record shows no answer from the payment system yet, so the paid-or-rejected result is still outstanding.
+The requester wanted to know whether the payment on row SUP-17 of their supplier batch was paid or rejected, since the batch itself shows as processed. The desk classified this as a status request about a batch, routed it to the payment system, and sent a query about SUP-17, after which the case closed as asked. The payment system's answer is not in the record, so whether the payment was paid or rejected is still unknown.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

@@ -1,10 +1,10 @@
 # Case banking-026-at-03: A Safe Route to a Forgotten PIN
 
-**Decision: reply**  (final state `REPLIED`)
+**Decision: redirect_secure**  (final state `REDIRECTED`)
 
 ## Summary
 
-Maren Ellwood wrote in secure chat that she had forgotten her debit card PIN and asked for the safe way to deal with it, saying she would not send the PIN in chat. The desk replied in the chat that the access record shows "other", which does not establish a password, PIN or access change, and that no secret was handled and no access change was made. She was not verified, and the access team's notes say the prescribed PIN procedure must be opened for the checked customer in the secure portal, which the reply did not tell her, so the PIN issue itself is still unresolved and left for a person.
+Maren Ellwood wrote in secure chat that she had forgotten the PIN for her debit card and asked for the safe way to deal with it. The desk did not handle the PIN itself. It sent her a message pointing her to the secure process in her portal, which checks identity there, and said that nothing on her profile was changed, then closed the case as redirected. Nothing is left for a person in the record, though Maren still has to complete the PIN procedure herself in the secure portal.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,9 +38,9 @@ Case reference: id banking-026-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `reply` (to: Maren Ellwood, channel: secure_chat), by rule `do-reply`
+- `redirect_secure` (to: Maren Ellwood, channel: secure_chat), by rule `do-redirect`
 
-  > The access record shows other. This does not establish a password, PIN, or access change. No secret was handled and no additional access change was made.
+  > Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed.
 
 
 ## Decision and why
@@ -49,12 +49,11 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `access-reply` accepted it.
+- `TRIAGED` → `REDIRECT_PENDING`: the agent asked for `redirect_secure`, rule `redirect-to-the-secure-process` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - next_system = access → true (next_system=access)
-  - access_status present → true (access_status=OTHER)
-- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
-  - state = REPLY_PENDING → true (state=REPLY_PENDING)
+  - request_type = access → true (request_type=access)
+- `REDIRECT_PENDING` → `REDIRECTED`: rule `do-redirect`.
+  - state = REDIRECT_PENDING → true (state=REDIRECT_PENDING)
 
 Facts established:
 
@@ -87,4 +86,4 @@ No.
 
 ## Final result
 
-reply (REPLIED)
+redirect_secure (REDIRECTED)

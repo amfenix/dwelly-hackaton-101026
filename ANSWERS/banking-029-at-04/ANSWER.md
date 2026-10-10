@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked over secure chat whether her new tablet was linked and ready to use for banking. The desk looked up the access record, which showed the device as awaiting confirmation, and replied in secure chat with that status, noting that no password or PIN was handled and no access change was made. The requester was not verified, and the record shows no confirmation received and nothing further left for a person to do.
+Mara Ellison, who was not verified, asked over secure chat whether her new tablet is linked before she uses it for banking. The desk checked the access record, which shows the device as awaiting confirmation, and replied in secure chat with that status, noting that no password or PIN was handled and no access change was made. The case closed as replied; no confirmation has been recorded, and the record shows nothing further left for a person. The agent's own note says the reply tells her not to rely on the tablet for banking yet, but the reply text actually sent does not say that.
 
 _Written by a model from the record below; the sections below are the record._
 

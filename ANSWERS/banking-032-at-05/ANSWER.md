@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the document record, which showed the statement is available to order, and replied in the chat saying so, adding that this doesn't confirm a download or any credit and that no email was sent. Her identity was not verified, and nothing further is recorded as left for a person.
+Mara Ellison, writing over secure chat, asked whether an archived copy of her January 2024 statement was available. The desk checked the documents system, which showed the statement is available to order, and replied in the chat saying the document is available. The reply also said it does not confirm any download or credit and that no email was sent. She is not verified, and the case is closed as replied with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -1,10 +1,10 @@
 # Case banking-022-at-01: Lost card blocked
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: ask_system**  (final state `ASKED`)
 
 ## Summary
 
-Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk recorded this as a card instruction and registered a request with the card team, and the case closed in the requested state. The desk did not block the card itself, and the record shows no confirmation that the block has happened, so that remains with the card team.
+Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk did not block it; it sent a query to the card system about the card and closed the case at that point. The block has not been submitted, so someone still needs to act on it once the card records come back.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -30,7 +30,7 @@ Case reference: id banking-022-at-01, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: card, about: card), by rule `do-request`
+- `ask_system` (system: card, about: card), by rule `do-ask`
 
 ## Decision and why
 
@@ -38,16 +38,15 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `card-instruction` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `card-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - args.system = card → true (args.system=card)
   - next_system = card → true (next_system=card)
+  - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - verified → true (verified=True)
-  - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+  - request_type not in [register, change, authority] → true (request_type=instruction)
+- `ASK_PENDING` → `ASKED`: rule `do-ask`.
+  - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
@@ -78,4 +77,4 @@ No.
 
 ## Final result
 
-submit_request (REQUESTED)
+ask_system (ASKED)

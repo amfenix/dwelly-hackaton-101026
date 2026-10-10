@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a status question about a replacement card. The desk found that the bank's portal message only confirmed the request was received, not dispatch or delivery, so it sent a query to the card system and closed the case in the asked state. The record doesn't show an answer from the card system yet, so the dispatch status is still unknown.
+The request was a status query about a replacement card. The desk identified it as a card matter and put a query to the card system, and the case closed at that step. The only confirmation on record is the bank's notice that the replacement request was received, which does not confirm dispatch or delivery. The card system returned no details, so nothing in the record shows whether the card has been sent, and no further step is recorded for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

@@ -72,10 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5370 tokens in, 206 out, 4.152 s, cost $0.0102; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5224 tokens in, 239 out, 5.069 s, cost $0.0102; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to Mara. The card record shows the £18.40 payment at North Quay Books was declined because her available balance wasn't enough to cover it. The case is now closed.
+> I've sent the reply to Mara. The card records show the £18.40 payment at North Quay Books was declined because her available balance was too low to cover it. The case is now closed.
 > 
-> The stored reason text is cut off after "£18.", so the reply relies on the status and the insufficient-balance wording. I didn't ask any other system.
+> The reason text in the record was cut off after "£18.", so I didn't check the full wording. I didn't look at the case status before replying.

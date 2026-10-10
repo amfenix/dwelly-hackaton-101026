@@ -48,7 +48,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 45. `next_system`: not known → payment (by `route-payment`).
 46. The agent asked for `ask_system` {"system": "payment"}.
-47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
+47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
 48. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-008-at-01:do-ask:15).
@@ -59,8 +59,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7176 tokens in, 158 out, 4.401 s, cost $0.0132; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6864 tokens in, 197 out, 5.468 s, cost $0.0130; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payment system for the purpose text recorded on your transfer to Mallow Pottery Works. Its answer will come back to this case. I can't tell you what the text says yet.
+> I've asked the payment system for the record of the transfer to Mallow Pottery Works. Its answer isn't in the case yet, so I can't tell you what purpose text you entered. Nothing has been changed or sent to Mallow Pottery Works. The next step is to reply to you once the payment record is available.

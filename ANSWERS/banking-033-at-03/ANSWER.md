@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked through secure chat for a CSV export of her transactions from 6 to 9 May 2025, to be made available in her secure portal. The desk classified it as a document request, asked the documents system for the export, and put the case in waiting because that system has not answered yet. No actions were taken beyond that, nothing confirms the file exists, and what is left is for the documents system's reply to arrive so she can be told whether it is available. The record also shows her requester identity as not verified.
+Mara Ellison asked over secure chat for a CSV export of her transactions from 6 to 9 May 2025 and wanted to know when the file would be available in her secure portal. The desk passed the request to the documents system and closed the case as waiting, since that system's answer is not in yet; no actions were taken and nothing failed. Still open: the record does not show the file has been created, so someone needs to confirm it with the documents system, and the requester is marked as not verified.
 
 _Written by a model from the record below; the sections below are the record._
 

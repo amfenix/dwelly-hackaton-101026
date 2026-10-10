@@ -9,13 +9,8 @@
 policy: banking-desk
 version: 1
 description: >
-  A bank's service desk (Harrow & Vale Bank, fictional). A case is a customer's request and what
-  happened since, up to now. The desk decides the bank's next step: ask the internal system that
-  holds the answer, wait for an answer already asked for, reply within what a record shows, pass
-  a request or a verified instruction to the team or system that handles it, send a change to the
-  customer's secure portal to confirm, or hand the case to a person. The bank never acts for a
-  customer, never approves for someone else, never handles a PIN or a password, and never claims
-  more than a record shows.
+  A bank's service desk (Harrow & Vale Bank, fictional). The bank never acts or approves for
+  someone else, never handles a PIN or a password, and never claims more than a record shows.
 
 fields:
   # --- who is asking (identify_requester)
@@ -60,10 +55,13 @@ fields:
   # --- the policy's own
   request_type: enum [status, reason, record_fact, register, change, instruction, document, access, authority]
   next_system:  { type: enum, values: [payment, incoming, recurring, card, access, business, documents], description: the system that holds the answer }
-  reason:       enum [NO_AUTHORITY, UNVERIFIED, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED]
+  reason:       enum [UNVERIFIED, AGENT_ESCALATED, ACTION_FAILED, NOT_HANDLED]
+  clarify_need: { type: enum, values: [which_transaction, which_card, which_instruction, more_details], description: what the customer is asked for }
 
 states: [READING, TRIAGED, ASK_PENDING, REPLY_PENDING, REQUEST_PENDING, CONFIRM_PENDING,
-         ASKED, WAITING, REPLIED, REQUESTED, CONFIRMATION_SENT, ESCALATED]
+         CLARIFY_PENDING, REDIRECT_PENDING, FORWARD_PENDING,
+         ASKED, WAITING, REPLIED, REQUESTED, CONFIRMATION_SENT, CLARIFIED, REDIRECTED, FORWARDED,
+         ESCALATED]
 initial: READING
 final:
   ASKED: ask_system
@@ -71,34 +69,34 @@ final:
   REPLIED: reply
   REQUESTED: submit_request
   CONFIRMATION_SENT: send_for_confirmation
+  CLARIFIED: clarify
+  REDIRECTED: redirect_secure
+  FORWARDED: forward_to_authority
   ESCALATED: escalate
 
 signals:
   ask_system:
-    description: >
-      Ask the internal system that holds the answer the customer needs, when that answer is not in
-      the case yet. Name the system. The desk asks it about the case's subject; the answer comes
-      later. Not for registering a review or passing on an instruction.
+    description: "The answer the customer needs is not in the case yet: ask the system that holds it."
     args:
-      system: { type: enum, values: [payment, incoming, recurring, card, access, business, documents], description: "payment: transfers, payments, batches; incoming: credits to the account; recurring: standing orders and Direct Debits; card: cards and card payments; access: sign-in, devices, PIN and password routes; business: company limits, roles, signing, imports; documents: statements, exports, reports, fees" }
+      system: { type: enum, values: [payment, incoming, recurring, card, access, business, documents], description: "payment: transfers, payments, batches; incoming: money into the account; recurring: standing orders, Direct Debits; card: cards, card payments; access: sign-in, devices; business: company limits, roles, signing, imports; documents: statements, exports, reports" }
   reply:
-    description: >
-      Reply to the customer now, from what the system's answer in the case shows. The desk writes
-      the reply from the facts: what the record shows, what it does not establish, what was not
-      done. Only when the answer is already in the case.
+    description: "A system's answer is in the case: reply to the customer within it. The desk writes the reply."
   submit_request:
     description: >
-      Pass the customer's request to the team or system that handles it: a review, a dispute or a
-      return to be looked into, or the customer's own verified instruction (block a card, cancel a
-      future payment, revoke a role). The bank records and forwards it; it does not decide the
-      review or act on its own authority.
-  escalate:
-    description: >
-      Hand the case to a person now: when the request needs someone else's authority, asks for a
-      secret, conflicts with the facts, or fits none of the other tools. Say what a person needs
-      to know.
+      Pass a dispute, a review or a return to the team that handles it, or a verified customer's
+      clear instruction (block a card, cancel a mandate) to the system that carries it out.
+  clarify:
+    description: "The case does not say which payment, card or instruction is meant: ask the customer. The desk writes the question."
     args:
-      note: { type: text, description: "what happened and what is still open, for the person" }
+      need: { type: enum, values: [which_transaction, which_card, which_instruction, more_details], description: what is missing }
+  redirect_secure:
+    description: "Signing in, recovery, a PIN or a password: point the customer to the bank's secure process."
+  forward_to_authority:
+    description: "The request needs someone else's approval (a company administrator, a second signatory): send it to that person."
+  escalate:
+    description: "Nothing above fits, or the facts conflict: hand the case to a person."
+    args:
+      note: { type: text, description: "what a person needs to know" }
 
 triggers:
   # ------------------------------------------------------------------ read the history into facts
@@ -170,12 +168,6 @@ triggers:
   - { name: route-documents, when: "state = TRIAGED and next_system absent and subject in [statement, document, fee]", set: { next_system: documents } }
 
   # ------------------------------------------------------------------ safety first, before the agent
-  - name: no-authority           # 043, 045: nothing approved for a signatory or an administrator
-    when: "state = TRIAGED and request_type = authority and role != business_admin"
-    note: Only the person with the authority may approve this; the desk does not act for them.
-    set: { reason: NO_AUTHORITY }
-    to: ESCALATED
-
   - name: unverified-instruction
     when: "state = TRIAGED and request_type = instruction and not verified"
     note: An instruction to act needs a verified customer.
@@ -364,6 +356,25 @@ triggers:
     when: "state = TRIAGED and next_system = documents and document_ready present"
     to: REPLY_PENDING
 
+  # ------------------------------------------------------------------ before any system answers
+  # 025: ask which payment; only while the case names no amount, reference, payee or date
+  - { name: clarify-transaction, on: clarify, when: "state = TRIAGED and args.need = which_transaction and amount absent and reference absent and counterparty absent and subject_date absent", set: { clarify_need: which_transaction }, to: CLARIFY_PENDING }
+  - { name: clarify-card,        on: clarify, when: "state = TRIAGED and args.need = which_card and amount absent and reference absent and counterparty absent and subject_date absent", set: { clarify_need: which_card }, to: CLARIFY_PENDING }
+  - { name: clarify-instruction, on: clarify, when: "state = TRIAGED and args.need = which_instruction and amount absent and reference absent and counterparty absent and subject_date absent", set: { clarify_need: which_instruction }, to: CLARIFY_PENDING }
+  - { name: clarify-details,     on: clarify, when: "state = TRIAGED and args.need = more_details and amount absent and reference absent and counterparty absent and subject_date absent", set: { clarify_need: more_details }, to: CLARIFY_PENDING }
+
+  # 026, 027: sign-in, recovery, PIN: the bank's secure process, never the secret
+  - name: redirect-to-the-secure-process
+    on: redirect_secure
+    when: "state = TRIAGED and request_type = access"
+    to: REDIRECT_PENDING
+
+  # 043, 045: what needs another person's approval goes to that person; the desk approves nothing
+  - name: forward-to-the-authority
+    on: forward_to_authority
+    when: "state = TRIAGED and request_type = authority and role != business_admin"
+    to: FORWARD_PENDING
+
   # ------------------------------------------------------------------ the agent hands over
   - name: agent-escalates
     on: escalate
@@ -376,6 +387,9 @@ triggers:
   - { name: do-reply,   when: "state = REPLY_PENDING",   call: reply_customer,        to: REPLIED }
   - { name: do-request, when: "state = REQUEST_PENDING", call: register_request,      to: REQUESTED }
   - { name: do-confirm, when: "state = CONFIRM_PENDING", call: send_for_confirmation, to: CONFIRMATION_SENT }
+  - { name: do-clarify,  when: "state = CLARIFY_PENDING",  call: clarify_customer,     to: CLARIFIED }
+  - { name: do-redirect, when: "state = REDIRECT_PENDING", call: redirect_secure,      to: REDIRECTED }
+  - { name: do-forward,  when: "state = FORWARD_PENDING",  call: forward_to_authority, to: FORWARDED }
 
 on_error:
   set: { reason: ACTION_FAILED }
@@ -391,12 +405,7 @@ agent:
   model: claude-sonnet-5-5
   max_turns: 4
   instructions: >
-    The case is cut at one moment: decide only the bank's next step from here. The facts list
-    what the desk has read from the bank's own records so far; the conversation is what the
-    customer and the bank said. A fact that is not listed is not known yet. The cases this desk
-    learned from took these steps: when the customer asks something a system holds and its answer
-    is not among the facts, the bank asks that system; when the answer is among the facts, the bank
-    replies within it; a review, a dispute or a return goes to the team that handles it, and so
-    does a verified customer's own instruction; anything that needs another person's authority, a
-    secret, or a step none of the tools offers goes to a person. One decision is enough: after a
-    tool accepts it, stop.
+    The case stops at one moment: choose the bank's next step from here with one tool, then stop.
+    The facts are what the desk read from the bank's records; a fact not listed is not known yet.
+    When it is unclear which payment or instruction the customer means, check the records before
+    any change. A system's answer marked OTHER is still an answer to report.

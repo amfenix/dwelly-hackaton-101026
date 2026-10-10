@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 53. `next_system`: not known → payment (by `route-payment`).
 54. The agent asked for `ask_system` {"system": "payment"}.
-55. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=reason).
+55. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=reason).
 56. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 58. Called `ask_system` (attempt 1, key banking-004-at-02:do-ask:15).
@@ -67,8 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5230 tokens in, 131 out, 3.607 s, cost $0.0091; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7152 tokens in, 184 out, 4.658 s, cost $0.0135; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payment system why the 14 July transfer to Northmere Housing Co-operative wasn't completed. The answer will come back to this case, and we can reply to you once we have it.
+> I checked the payment system for the transfer to Northmere Housing Co-operative on 14 July 2025. The check went through, but it hasn't given me a reason yet for the transfer not completing. I haven't told the customer anything about the cause, because the record doesn't state one.

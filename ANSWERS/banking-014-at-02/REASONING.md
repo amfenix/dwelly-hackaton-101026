@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
 52. `next_system`: not known → recurring (by `route-recurring`).
 53. The agent asked for `ask_system` {"system": "recurring"}.
-54. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
+54. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
 55. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-014-at-02:do-ask:15).
@@ -66,8 +66,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5475 tokens in, 253 out, 4.647 s, cost $0.0108; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7585 tokens in, 306 out, 5.688 s, cost $0.0155; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the recurring payments system whether the Northmere Water Services Direct Debit mandate is currently active. The answer hasn't come back yet. I haven't cancelled or changed anything, and I haven't looked at what you owe. I'll reply once the system answers.
+> I've sent your question to our recurring payments records, which hold Direct Debit mandates. That check is made, but I don't have an answer for you yet. I haven't cancelled or changed anything, and I'm not looking at what you owe Northmere Water Services. You asked only for the mandate's status.

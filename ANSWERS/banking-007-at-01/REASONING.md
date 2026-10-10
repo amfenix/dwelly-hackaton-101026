@@ -48,7 +48,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 45. `next_system`: not known → payment (by `route-payment`).
 46. The agent asked for `ask_system` {"system": "payment"}.
-47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 48. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-007-at-01:do-ask:15).
@@ -56,11 +56,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `ask_system` found {}.
 53. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 54. The case closed in `ASKED`: **ask_system**.
+55. The agent asked for `reply` {}.
+56. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 5023 tokens in, 161 out, 3.556 s, cost $0.0090; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've asked the payment system for the current status of your international transfer, and I'm waiting for its answer. The only thing we know now is that H&V recorded the instruction as sent. Nothing we have yet shows that the beneficiary has received the money. I'll tell you once the payment system replies.
+5 calls, 9225 tokens in, 146 out, 4.689 s, cost $0.0173; models: claude-haiku-5-5, claude-sonnet-5-5.

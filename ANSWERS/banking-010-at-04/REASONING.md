@@ -72,10 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8011 tokens in, 249 out, 6.171 s, cost $0.0158; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7914 tokens in, 310 out, 7.433 s, cost $0.0162; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've sent the reply to the customer. The incoming-payments check found a credit of £42.80. The record doesn't confirm that this credit is the refund of the Northmere Home Supplies transfer, and the reply says so. I didn't take any other action.
+> I've sent the reply, and the case is now closed as replied.
 > 
-> The customer isn't verified, so I kept the reply to what the record shows.
+> The incoming records show an entry of £42.80, which matches the amount of your transfer to Northmere Home Supplies. The records don't confirm that this entry is the refund for that specific transfer. The reply therefore reports the matching amount and doesn't say the refund has arrived.

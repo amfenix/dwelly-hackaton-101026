@@ -68,8 +68,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7384 tokens in, 226 out, 5.461 s, cost $0.0145; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7170 tokens in, 234 out, 4.921 s, cost $0.0141; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to the customer. The documents system shows the January 2024 statement is ready. The customer isn't verified yet, so the statement itself wasn't released in this step.
+> I sent the customer a reply, and the case is now closed as replied. The documents system showed that an archived copy of the January 2024 statement is ready. The requester isn't verified yet, so the reply could only report what the record shows. It didn't act on the account.

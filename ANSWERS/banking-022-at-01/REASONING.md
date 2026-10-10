@@ -54,20 +54,22 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 52. `next_system`: not known → card (by `route-card`).
-53. The agent asked for `submit_request` {}.
-54. Rule `card-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_asked absent → true (card_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction); request_type = change → false (request_type=instruction); confirmation = given → false (confirmation=none).
-55. State `TRIAGED` → `REQUEST_PENDING` (by `card-instruction`).
-56. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-57. Called `register_request` (attempt 1, key banking-022-at-01:do-request:15).
-58. Action in the world: `register_request` {"team": "card", "about": "card"}.
-59. `register_request` found {}.
-60. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-61. The case closed in `REQUESTED`: **submit_request**.
+53. The agent asked for `ask_system` {"system": "card"}.
+54. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+55. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
+56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+57. Called `ask_system` (attempt 1, key banking-022-at-01:do-ask:15).
+58. Action in the world: `ask_system` {"system": "card", "about": "card"}.
+59. `ask_system` found {}.
+60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+61. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-3 calls, 5182 tokens in, 175 out, 3.786 s, cost $0.0095; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7210 tokens in, 317 out, 6.15 s, cost $0.0150; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've passed your request to block the missing debit card to the team that handles card blocks. The bank records and forwards this instruction. It doesn't carry out the block itself, and I haven't yet seen confirmation that the card is blocked.
+> I asked the card system for the customer's card records before making any change. That was the step I chose, and the case is now closed at that state. The block itself has not been submitted.
+> 
+> The customer is verified and the instruction is clear. The case doesn't say which card is meant, though. Checking the records first avoids blocking the wrong one.

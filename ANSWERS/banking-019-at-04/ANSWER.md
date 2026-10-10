@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maeve Ellery asked the desk to check whether the next run of her standing order to Willow Yard Studios could be moved from 18 September to 22 September 2025, and to send any eligible change to her for confirmation. The desk found that the next run was not yet being processed, and the change had been sent to her secure portal; the case closed as "wait" with no changes made to the standing order. What remains is for Maeve to confirm the change herself, and note that she was not verified in this chat and had raised the request outside the portal.
+Maeve Ellery asked the desk to check whether the next run of her standing order to Willow Yard Studios could still move from 18 September to 22 September 2025, and to send any eligible change to her for confirmation. The desk found the run is not yet being processed and had the change sent to her for secure confirmation. It made no change to the instruction itself and closed the case as waiting. What is left is for Maeve to confirm the change in the secure portal; until she does, the standing order stays as it is. The record also shows she was not verified and had made her request outside the portal, but it records no action taken on either point.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -54,6 +54,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = requested → true (confirmation=requested)
+  - registration_asked absent → true (registration_asked=not known)
 
 Facts established:
 

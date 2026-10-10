@@ -45,7 +45,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 42. `next_system`: not known → recurring (by `route-recurring`).
 43. The agent asked for `ask_system` {"system": "recurring"}.
-44. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
+44. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
 45. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
 46. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 47. Called `ask_system` (attempt 1, key banking-011-at-01:do-ask:15).
@@ -53,11 +53,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `ask_system` found {}.
 50. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 51. The case closed in `ASKED`: **ask_system**.
+52. The agent asked for `reply` {}.
+53. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=recurring); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 4852 tokens in, 137 out, 3.28 s, cost $0.0084; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've asked the recurring payments system, which holds standing orders, for the next due date of your monthly standing order. The answer hasn't come back yet. Once it does, we can reply to you with the date.
+5 calls, 8859 tokens in, 151 out, 4.977 s, cost $0.0166; models: claude-haiku-5-5, claude-sonnet-5-5.

@@ -1,10 +1,10 @@
 # Case banking-013-at-03: Cancellation of a Future Payment Instruction
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: ask_system**  (final state `ASKED`)
 
 ## Summary
 
-Elodie Mercer, a verified customer writing through the secure portal, asked to cancel the next run of her recurring studio-rent payment. The desk identified her, classed the message as an instruction about a standing order, and registered a request with the recurring team. The cancellation has not been carried out by the desk, so whether the run is actually stopped is left for the recurring team and for her to check in the portal. One discrepancy: the record's confirmation check returned "none", although the agent's reply says she confirmed the cancellation in the portal.
+Elodie Mercer, a verified customer on the secure portal, asked to cancel the future run of her recurring studio-rent payment instruction. The desk classified it as an instruction about a standing order and asked the recurring-payments system about it, then closed the case at that step. No cancellation was made, the system's answer isn't in the record, and the recorded confirmation is still "none", so whether the run gets cancelled is left for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,7 +38,7 @@ Case reference: id banking-013-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: recurring, about: standing_order), by rule `do-request`
+- `ask_system` (system: recurring, about: standing_order), by rule `do-ask`
 
 ## Decision and why
 
@@ -46,16 +46,15 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `recurring-instruction` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `recurring-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - args.system = recurring → true (args.system=recurring)
   - next_system = recurring → true (next_system=recurring)
+  - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - verified → true (verified=True)
-  - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+  - request_type not in [register, change, authority] → true (request_type=instruction)
+- `ASK_PENDING` → `ASKED`: rule `do-ask`.
+  - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
@@ -84,4 +83,4 @@ No.
 
 ## Final result
 
-submit_request (REQUESTED)
+ask_system (ASKED)

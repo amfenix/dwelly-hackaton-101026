@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
 50. `next_system`: not known → incoming (by `route-incoming`).
 51. The agent asked for `ask_system` {"system": "incoming"}.
-52. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+52. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 53. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-048-at-02:do-ask:15).
@@ -61,11 +61,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. `ask_system` found {}.
 58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 59. The case closed in `ASKED`: **ask_system**.
+60. The agent asked for `reply` {}.
+61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=incoming); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=incoming); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=incoming); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=incoming); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=incoming); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=incoming); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 5330 tokens in, 244 out, 5.023 s, cost $0.0105; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10208 tokens in, 366 out, 6.889 s, cost $0.0215; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the incoming payments system whether an identifiable credit for the workshop invoice has reached the business account. The answer isn't back yet, so I can't tell you whether the payment has arrived. Once the system replies, the next step is to answer you from what it shows.
+> I asked the incoming-payments system whether the credit has arrived. The system accepted the request, but no answer is in the case yet. A reply was refused because `incoming_found` isn't known, so I haven't written to the customer.
+> 
+> The requester is still unverified. No account details should go back to her until the desk's checks confirm who she is.

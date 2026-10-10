@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
 52. `next_system`: not known → documents (by `route-documents`).
 53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
+54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
 55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-033-at-02:do-ask:15).
@@ -66,8 +66,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7604 tokens in, 186 out, 5.57 s, cost $0.0145; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7412 tokens in, 323 out, 5.968 s, cost $0.0154; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the documents system whether your CSV export for 6–9 May 2025 has been created and is available in your secure portal. Nothing has come back yet, so I can't say whether the file exists. I haven't created the export myself. Once the documents system answers, we'll tell you what it shows.
+> I've checked the documents system for your export request. The case is now closed at that step, and I have no result to give you yet.
+> 
+> The check didn't add any new information. The case record shows nothing yet on whether a CSV export for 6–9 May 2025 has been created, so I can't tell you if the file is available in your secure portal.
+> 
+> Your identity is also still marked as unverified on this chat. The desk can't act on your behalf until that's done, and it can't confirm an export before then either.

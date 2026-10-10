@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 50. `next_system`: not known → card (by `route-card`).
 51. The agent asked for `ask_system` {"system": "card"}.
-52. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+52. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 53. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-021-at-02:do-ask:15).
@@ -64,8 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5375 tokens in, 239 out, 4.565 s, cost $0.0105; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7456 tokens in, 310 out, 5.841 s, cost $0.0154; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the card system whether the replacement card has been dispatched. The answer will come back to the case later, and I'll reply to you once it does. So far, the only thing confirmed is the portal's message that your request was accepted. Nothing has confirmed dispatch or delivery yet.
+> I've asked the card system whether the replacement card has been dispatched. The case is now in the "asked" state. The next step is to reply to Mara with whatever the card system's answer says. I haven't seen that answer yet, so I can't tell her anything about dispatch.
+> 
+> Mara is not verified on this chat. Because of that, the reply should stick to what the record shows and should not go beyond it.

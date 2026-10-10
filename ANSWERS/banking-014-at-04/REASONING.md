@@ -70,10 +70,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7968 tokens in, 248 out, 5.781 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7720 tokens in, 255 out, 5.081 s, cost $0.0153; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've sent the reply. The recurring-payments record shows the Direct Debit mandate to Northmere Water Services as ACTIVE. I did not cancel or change it, and the reply makes no assessment of what you owe.
+> The recurring system has already answered: the mandate is ACTIVE. I'll reply with that.
+> I sent the reply. The recurring system shows the Direct Debit mandate to Northmere Water Services as active. I did not cancel or change anything, and I did not assess what you owe.
 > 
-> The customer isn't marked as verified in the case facts. The tool accepted the reply anyway, so I went ahead.
+> The desk could not mark you as verified, but it accepted the reply and closed the case.

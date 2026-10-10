@@ -60,22 +60,27 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. State `READING` → `TRIAGED` (by `triage`).
 57. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 58. `next_system`: not known → payment (by `asked-payment`).
-59. The agent asked for `reply` {}.
-60. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
-61. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-62. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-63. Called `reply_customer` (attempt 1, key banking-001-at-04:do-reply:15).
-64. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The payment record shows your £420.00 transfer to Alder & Reed Workshop as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
-65. `reply_customer` found {}.
-66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-67. The case closed in `REPLIED`: **reply**.
+59. The agent asked for `ask_system` {"system": "payment"}.
+60. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
+61. The agent asked for `reply` {}.
+62. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+63. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+64. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+65. Called `reply_customer` (attempt 1, key banking-001-at-04:do-reply:15).
+66. Action in the world: `reply` {"to": "Mara Ellison", "channel": "secure_chat", "text": "The payment record shows your £420.00 transfer to Alder & Reed Workshop as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
+67. `reply_customer` found {}.
+68. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+69. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7879 tokens in, 304 out, 7.691 s, cost $0.0162; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10854 tokens in, 497 out, 10.175 s, cost $0.0241; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to the customer. The payment system's record shows the £420.00 transfer to Alder & Reed Workshop with a status of SENT, so the reply said that H&V has sent it.
+> The payment system has already been asked, and its answer is in the case: the status is SENT. I'll reply now.
+> I replied to the customer. The payment record shows the £420 transfer to Alder & Reed Workshop with status SENT, so H&V has sent it.
 > 
-> The record has no confirmation from the recipient's side, so the reply doesn't say the money has arrived. I didn't need to ask the payment system again because the status was already in the case.
+> My first attempt to ask the payment system again was refused, because the case already held its answer. The reply was accepted and the case is now closed as replied.
+> 
+> The record shows no confirmation for the transfer, so the reply should not claim one. The customer is also not verified, but this was a status question only and I made no changes.

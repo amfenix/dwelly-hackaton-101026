@@ -4,7 +4,7 @@
 
 ## Summary
 
-Tamsin Rook, a verified customer on a call, disputed an £18.40 Direct Debit charge to Northmere Water Services and asked for it to be investigated. The desk registered a request with the recurring payments team about the Direct Debit, and the case closed as requested. The desk did not check the Direct Debit itself, so whether the amount was wrong is left for that team to decide.
+Tamsin Rook, verified on a call, disputed an £18.40 Direct Debit to Northmere Water Services and asked for it to be investigated. The desk registered a request with the recurring payments team about the direct debit, and the case closed as requested. Nothing further is recorded as left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

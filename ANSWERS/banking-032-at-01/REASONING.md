@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=statement).
 50. `next_system`: not known → documents (by `route-documents`).
 51. The agent asked for `ask_system` {"system": "documents"}.
-52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
+52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
 53. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-032-at-01:do-ask:15).
@@ -64,8 +64,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5144 tokens in, 224 out, 4.166 s, cost $0.0100; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5015 tokens in, 281 out, 4.665 s, cost $0.0103; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the documents system whether an archived copy of your January 2024 statement is available. The answer isn't back yet, so I can't confirm anything. I'll reply once it comes in.
+> I've asked the documents system whether an archived copy of the January 2024 statement exists. The answer will come back into the case. The reply to Mara Ellison will be based on what that record shows.

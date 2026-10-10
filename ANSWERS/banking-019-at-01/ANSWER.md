@@ -4,7 +4,7 @@
 
 ## Summary
 
-The customer asked to move the date of their monthly standing order to Willow Yard Studios from 18 September 2025 to 22 September 2025, and to have the change sent to them for secure confirmation. The desk could not ask the recurring system because that step is refused for change requests, and it could not submit the request because the customer was not verified and had not confirmed, so it escalated the case and changed nothing. A person still needs to check whether the 18 September run can still be amended and to send the change to the customer for secure confirmation.
+The customer asked to move the date of their monthly standing order to Willow Yard Studios from 18 September 2025 to 22 September 2025, and to have the change checked and sent back for secure confirmation. The desk classified it as a change to a standing order and routed it to the recurring system, but its requests to ask that system, submit the request and redirect to secure confirmation were all refused by the rules. The agent then hit its turn limit and the case was escalated as not handled, with no actions taken, so a person needs to pick it up from here.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,8 +38,7 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
-  - state = TRIAGED → true (state=TRIAGED)
+- `TRIAGED` → `ESCALATED` by `on_stall`.
 
 Facts established:
 
@@ -48,7 +47,7 @@ Facts established:
 - subject_date: **2025-09-18**
 - request_type: **change**
 - next_system: **recurring**
-- reason: **AGENT_ESCALATED**
+- reason: **NOT_HANDLED**
 
 Where they came from:
 
@@ -65,8 +64,9 @@ A person picking this up has the facts above, the actions already taken, and the
 
 Requests the policy refused:
 
-- `ask_system`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=change)
+- `ask_system`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change)
 - `submit_request`: register: request_type = register is false (request_type=change); payment-instruction: next_system = payment is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); incoming-instruction: next_system = incoming is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); recurring-instruction: verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); card-instruction: next_system = card is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); access-instruction: next_system = access is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); business-instruction: next_system = business is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known); documents-instruction: next_system = documents is false (next_system=recurring); verified is not known (verified=not known); request_type = instruction is false (request_type=change); confirmation = given is not known (confirmation=not known)
+- `redirect_secure`: redirect-to-the-secure-process: request_type = access is false (request_type=change)
 
 ## Final result
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren asked over secure chat which regular payments are still active before she plans any account closure. The desk checked the recurring-payments record, which showed the standing order as active, and replied on secure chat saying so, with a note that this doesn't guarantee a future payment will execute and that nothing was changed. The case is closed as replied; the record still lists her as not verified despite her saying she completed the account-holder checks, and no action was taken on the account or on closing it.
+Elena Wren asked over secure chat which regular payments are still active before she plans any account closure. The desk checked the recurring-payments register, which showed the standing order as active, and replied on secure chat that the record shows active, that this does not guarantee a future payment will execute, and that nothing was changed. Her identity is still recorded as not verified, despite her saying she completed the account-holder checks, and the record lists no further steps for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

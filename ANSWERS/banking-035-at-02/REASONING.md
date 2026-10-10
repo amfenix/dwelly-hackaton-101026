@@ -55,22 +55,24 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. State `READING` → `TRIAGED` (by `triage`).
 52. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=fee).
 53. `next_system`: not known → documents (by `route-documents`).
-54. The agent asked for `submit_request` {}.
-55. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-56. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-57. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-58. Called `register_request` (attempt 1, key banking-035-at-02:do-request:15).
-59. Action in the world: `register_request` {"team": "documents", "about": "fee"}.
-60. `register_request` found {}.
-61. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-62. The case closed in `REQUESTED`: **submit_request**.
+54. The agent asked for `ask_system` {"system": "documents"}.
+55. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); documents-ask: next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register).
+56. The agent asked for `submit_request` {}.
+57. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+58. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+59. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+60. Called `register_request` (attempt 1, key banking-035-at-02:do-request:15).
+61. Action in the world: `register_request` {"team": "documents", "about": "fee"}.
+62. `register_request` found {}.
+63. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+64. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 8061 tokens in, 388 out, 5.936 s, cost $0.0174; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8613 tokens in, 449 out, 7.714 s, cost $0.0191; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've passed Mara's request to the team that handles fee reviews. It asks them to check whether the £4.50 paper statement fee dated 18 June 2025 was correctly applied, given that she says she had chosen electronic statements. She was verified on the call, and the request was accepted.
+> I've registered Mara's request for H&V to review the £4.50 paper statement fee dated 18 June 2025. The case is now with the team that handles fee disputes.
 > 
-> I haven't checked the fee against her statement settings, and nothing has been decided about refunding or changing the fee. The review team will make that decision.
+> I didn't check her statement-delivery preference. The documents lookup was refused because this request is registered as a review, not a records query. So nobody has yet confirmed whether she had chosen electronic statements. The review team will need to check that, and the fee hasn't been changed or refunded.

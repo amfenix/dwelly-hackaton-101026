@@ -60,13 +60,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. Rule `incoming-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = incoming → true (next_system=incoming); incoming_asked → true (incoming_asked=True); incoming_found absent → true (incoming_found=not known). The system was asked; its answer is not in yet.
 57. State `TRIAGED` → `WAITING` (by `incoming-waits`).
 58. The case closed in `WAITING`: **wait**.
+59. The agent asked for `ask_system` {"system": "incoming"}.
+60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming).
 
 ## Model calls
 
-3 calls, 5545 tokens in, 137 out, 3.349 s, cost $0.0098; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8299 tokens in, 586 out, 8.225 s, cost $0.0198; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The incoming system has already been asked, and its answer hasn't come back yet. The case is waiting on that answer, so there is nothing more for me to do now.
+> I haven't confirmed whether the £42.80 refund from Northmere Home Supplies has arrived, and I've taken no further action on this case.
 > 
-> I haven't replied to the customer or escalated. Once the incoming system answers, the reply can be written from what it shows.
+> The incoming-payments check has already been run, but the case holds no answer from it yet. The case is in a waiting state, and a second request to the incoming system was refused for that reason. The customer is also not verified, and the case has no confirmation that any matching incoming entry exists.
+> 
+> I haven't replied to the customer, because there is no record to base a reply on. Once the incoming system's answer is in the case, the desk can reply about that specific transfer.

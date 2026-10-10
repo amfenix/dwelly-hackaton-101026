@@ -62,11 +62,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 58. The case closed in `WAITING`: **wait**.
 59. The agent asked for `ask_system` {"system": "payment"}.
 60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
+61. The agent asked for `escalate` {"note": "Verified customer Mara Ellery asks why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The portal shows the status but no reason. The payment system lookup was refused because the case state is WAITING, not TRIAGED, so the reason has not been established. Please check the payment record and reply to the customer."}.
+62. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8987 tokens in, 197 out, 4.597 s, cost $0.0173; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 12227 tokens in, 628 out, 9.138 s, cost $0.0281; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The payment system has already been asked about this transfer, so the case is waiting for its answer. I can't ask again, and there's no reason on file yet to reply with. Nothing more needs doing until the answer arrives.
+> The facts point to the payment system as the next place to look, so I'll check there for the reason the transfer wasn't completed.
+> I couldn't find out why the transfer wasn't completed, and the case is now waiting.
+> 
+> - **Payment lookup:** I asked the payment system about the 14 July 2025 transfer to Northmere Housing Co-operative. The desk refused the request because the case is in the WAITING state, and the lookup only runs when it is TRIAGED.
+> - **Escalation:** I tried to escalate to a person with a note. The desk refused that too, for the same reason.
+> 
+> Mara Ellery is verified, and her request is clear. The case record doesn't yet contain the reason the transfer failed, so I haven't told her one.
+> 
+> The case is closed with the outcome "wait", and I have no other action that would change that. A person will need to pick it up or move it out of WAITING.

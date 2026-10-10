@@ -4,7 +4,7 @@
 
 ## Summary
 
-Rowan Ellery, writing over secure chat and not verified, asked why their card was declined at a grocery payment and whether the restriction has been lifted. The desk classified it as a request for a reason about the card and sent a question to the card system. That system has not answered in the record, so Rowan has not yet been told the restriction category or its status, and that reply remains to be given.
+Rowan Ellery, writing over secure chat as the cardholder, asked what category of restriction caused a grocery payment to be declined and whether it has been lifted. The desk classified this as a card question and sent it to the card system, and the case closed as asked with no answer back yet. Rowan's identity is still unverified, so that remains open, and no card details have been shared with Rowan.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=reason)
+  - request_type not in [register, change, authority] → true (request_type=reason)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

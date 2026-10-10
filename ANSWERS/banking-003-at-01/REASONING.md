@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 50. `next_system`: not known → payment (by `route-payment`).
 51. The agent asked for `ask_system` {"system": "payment"}.
-52. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+52. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 53. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-003-at-01:do-ask:15).
@@ -61,11 +61,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. `ask_system` found {}.
 58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 59. The case closed in `ASKED`: **ask_system**.
+60. The agent asked for `reply` {}.
+61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 5142 tokens in, 134 out, 4.212 s, cost $0.0090; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10301 tokens in, 374 out, 6.92 s, cost $0.0217; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payment system whether your saved transfer instruction has been submitted and what stage it's at. The answer hasn't come back yet. Once it does, we'll reply to you with what the record shows.
+> I asked the payment system about Elise's saved transfer, and the case is now closed at that step. The system's answer has not come back into the case: `payment_status` is still not known. When I tried to reply, the desk refused, because a reply needs the case to be triaged with a payment status on record.
+> 
+> So I can't yet tell Elise whether the transfer was submitted or what stage it is at. The only confirmed facts are that she is verified, that no confirmation exists, and that she did not instruct the bank outside the portal. I have not guessed a status. A person will need to pick the case up and read the payment record.

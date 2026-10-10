@@ -50,26 +50,26 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
 48. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-49. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
+49. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
 50. `request_type`: not known → document (by `triage`).
-51. `subject`: not known → document (by `triage`).
+51. `subject`: not known → transfer (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
-53. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
-54. `next_system`: not known → documents (by `route-documents`).
-55. The agent asked for `ask_system` {"system": "documents"}.
-56. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
-57. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
+53. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
+54. `next_system`: not known → payment (by `route-payment`).
+55. The agent asked for `ask_system` {"system": "payment"}.
+56. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
+57. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 58. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 59. Called `ask_system` (attempt 1, key banking-040-at-02:do-ask:15).
-60. Action in the world: `ask_system` {"system": "documents", "about": "document", "reference": "HV-040", "amount": "74.00"}.
+60. Action in the world: `ask_system` {"system": "payment", "about": "transfer", "reference": "HV-040", "amount": "74.00"}.
 61. `ask_system` found {}.
 62. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 63. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7873 tokens in, 229 out, 5.388 s, cost $0.0154; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7742 tokens in, 449 out, 6.117 s, cost $0.0158; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the documents system for the record of payment HV-040 (£74.00, 14 July 2025). The answer hasn't come back yet. I'll reply to you once it does, using only what the record shows.
+> I've checked the payment system for the current stage of payment HV-040 (£74.00). The case is now at ASKED. The next step is to reply to the customer using what the payment record shows.

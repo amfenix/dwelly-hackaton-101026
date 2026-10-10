@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk found that the card system had already been asked, and that a case had been opened and escalated, but the card system's answer has not come in, so the case closed in a waiting state with no action taken. The agent's attempt to submit the request was refused because the case was no longer in the triaged state, so the card has not been blocked by this desk, and the case stays on hold until the card system replies.
+Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk found that the card system and the service team had already been asked and that a case (HV-022) was open, so it closed the case as waiting, since the team's answer isn't in yet. The agent's later attempts to ask the card system again, submit a request and ask which card were all refused because the case was already in the waiting state; nothing was changed, and what remains is the team's answer on the block.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -46,11 +46,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `WAITING`: rule `card-waits` — The system was asked; its answer is not in yet.
+- `TRIAGED` → `WAITING`: rule `registration-waits` — The team was asked; its answer is not in yet.
   - state = TRIAGED → true (state=TRIAGED)
-  - next_system = card → true (next_system=card)
-  - card_asked → true (card_asked=True)
-  - card_status absent → true (card_status=not known)
+  - registration_asked → true (registration_asked=True)
+  - registered absent → true (registered=not known)
 
 Facts established:
 
@@ -85,7 +84,9 @@ No.
 
 Requests the policy refused:
 
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card)
 - `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); card_asked absent is false (card_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
+- `clarify`: clarify-transaction: state = TRIAGED is false (state=WAITING); args.need = which_transaction is false (args.need=which_card); counterparty absent is false (counterparty=Alder Quay Market); clarify-card: state = TRIAGED is false (state=WAITING); counterparty absent is false (counterparty=Alder Quay Market); clarify-instruction: state = TRIAGED is false (state=WAITING); args.need = which_instruction is false (args.need=which_card); counterparty absent is false (counterparty=Alder Quay Market); clarify-details: state = TRIAGED is false (state=WAITING); args.need = more_details is false (args.need=which_card); counterparty absent is false (counterparty=Alder Quay Market)
 
 ## Final result
 

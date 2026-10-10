@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, an unverified viewer writing over secure chat, asked the desk to check whether row SUP-17 in a payout batch marked processed was actually paid. The desk classed it as a status request, put the case in a waiting state because the payment system's answer has not come back, and closed it there. A second attempt to ask the payment system was refused because the case was already waiting, and nothing has been said to her about whether the row was paid, so someone still needs to reply once the payment system answers.
+Leona Voss, an unverified viewer on secure chat, asked the desk to check whether row SUP-17 in a batch marked processed was actually paid. The desk read the request, classified it as a status question, and put the case in a waiting state because the payment system had been asked but its answer was not in. No payment record was read, so no status was given, and both later attempts, a repeat payment lookup and an escalation to a person, were refused because the case was already in WAITING. The case is closed in that waiting state with nothing done; the row's status and Leona Voss's identity are still unchecked, and no person has been handed the case.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -84,6 +84,7 @@ No.
 Requests the policy refused:
 
 - `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

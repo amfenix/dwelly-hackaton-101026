@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, verified on a call, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputing how the tariff was applied. The desk registered a request about the fee with the documents team, and the case closed as requested. It did not check the fee against her statement settings, and nothing has been decided about a refund or change to the fee, which is left to the documents team.
+Mara Ellison, a verified caller, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputes how the tariff was applied. The desk registered the request with the documents team, and the case closed as requested. A separate documents lookup was refused, so her statement-delivery preference was not checked, and the record shows no change or refund of the fee, so the review and any check of her preference are left for the team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -76,6 +76,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register); documents-ask: next_system absent is false (next_system=documents); request_type not in [register, change, authority] is false (request_type=register)
 
 ## Final result
 

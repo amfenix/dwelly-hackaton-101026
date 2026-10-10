@@ -56,22 +56,27 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 54. `next_system`: not known → payment (by `asked-payment`).
-55. The agent asked for `reply` {}.
-56. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
-57. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-58. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-59. Called `reply_customer` (attempt 1, key banking-007-at-04:do-reply:15).
-60. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "secure_chat", "text": "The payment record shows your transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
-61. `reply_customer` found {}.
-62. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-63. The case closed in `REPLIED`: **reply**.
+55. The agent asked for `ask_system` {"system": "payment"}.
+56. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
+57. The agent asked for `reply` {}.
+58. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+59. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+60. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+61. Called `reply_customer` (attempt 1, key banking-007-at-04:do-reply:15).
+62. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "secure_chat", "text": "The payment record shows your transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
+63. `reply_customer` found {}.
+64. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+65. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-3 calls, 5352 tokens in, 258 out, 4.909 s, cost $0.0106; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10789 tokens in, 467 out, 7.829 s, cost $0.0236; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I replied to Mara Ellwood. The payment record shows her international transfer as sent, with no confirmation that the beneficiary has received it. I didn't check the reply wording after it was sent.
+> Payment was already asked, so the answer is in the case. Reply.
+> I checked the payment record and replied to Mara Ellwood. The record shows the international transfer as sent. It shows no confirmation that the beneficiary has received it.
 > 
-> Her identity is not verified in this case. I answered anyway because the status was already in the record from the payment system, so I didn't need to ask any other system. The case is closed with that reply.
+> I asked the payment system for the status, but the desk refused because that check had already been run. The status was already in the case, so I used it for the reply.
+> 
+> The desk has not verified Mara's identity. The case is closed on the reply.

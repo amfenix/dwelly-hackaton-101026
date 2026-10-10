@@ -50,7 +50,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=fee).
 47. `next_system`: not known → documents (by `route-documents`).
 48. The agent asked for `ask_system` {"system": "documents"}.
-49. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
+49. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
 50. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 51. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 52. Called `ask_system` (attempt 1, key banking-034-at-01:do-ask:15).
@@ -58,11 +58,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. `ask_system` found {}.
 55. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 56. The case closed in `ASKED`: **ask_system**.
+57. The agent asked for `reply` {}.
+58. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 5149 tokens in, 248 out, 4.778 s, cost $0.0093; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've asked our documents system about the £3.20 fee on your foreign-currency cash withdrawal. It holds the fees and tariff information. I'll reply once it answers, and the reply will say what the fee is for and how the amount was worked out against the tariff that applied. I haven't changed anything on your account.
+5 calls, 9494 tokens in, 243 out, 6.253 s, cost $0.0178; models: claude-haiku-5-5, claude-sonnet-5-5.

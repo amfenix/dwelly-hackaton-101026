@@ -56,7 +56,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
 53. `next_system`: not known → card (by `route-card`).
 54. The agent asked for `ask_system` {"system": "card"}.
-55. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=reason).
+55. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=reason).
 56. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 58. Called `ask_system` (attempt 1, key banking-025-at-03:do-ask:15).
@@ -67,8 +67,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5240 tokens in, 145 out, 3.736 s, cost $0.0093; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7255 tokens in, 257 out, 4.885 s, cost $0.0145; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the card system why the £18.40 payment at North Quay Books was declined. The answer hasn't come back yet, so I can't tell Mara the reason. Once it arrives, I'll reply to her with what the record shows.
+> The customer is verified and has named the payment (£18.40 at North Quay Books). The next system is card, so I'll check the card records for the reason it was declined.
+> I asked the card system why the £18.40 payment at North Quay Books was declined. The request was accepted and the case is now in the ASKED state. The case status doesn't show an answer yet, so I don't know the decline reason. The status marks this as final, so I'm stopping here. The case is with the card system, and a person will pick it up if it stays open.

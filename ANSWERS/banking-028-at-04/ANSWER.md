@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Mercer, a verified customer, asked on a call and by email to change the phone number on her profile because she no longer has her old phone. She also asked for the approved way to confirm a replacement. The desk decided a change must be confirmed by the customer in the secure portal, not by chat or email, so it sent her a confirmation request for the profile change and closed the case. The record does not show the change being made, so it stays unmade until she confirms through the portal, and nothing else is left for the desk.
+Elowen Mercer, a verified customer, asked to change the phone number on her profile because she no longer has her old phone, and she asked for the approved way to confirm a replacement. The desk did not make the change: her email and her call don't count as authorisation, so it sent a confirmation request to her for the profile change and closed the case. What is left is for her to confirm the change in the secure portal, and the profile stays unchanged until she does.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -54,6 +54,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = none → true (confirmation=none)
+  - registration_asked absent → true (registration_asked=not known)
 - `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
   - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 

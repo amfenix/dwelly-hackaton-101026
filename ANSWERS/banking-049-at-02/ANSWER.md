@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Venn, writing over secure chat and not verified as the requester, said she was the authorised manager and asked for the file request to be escalated because the acquiring report for 1–7 July 2025 was not showing as available. The desk treated it as a document request and asked the documents system about the report, which was the only action taken. Nothing has been sent to her and the case has not been escalated; the record shows no response from the documents system, so what happens next is still open.
+Mara Venn, writing over secure chat and not verified, asked the desk to escalate a request for the acquiring report covering 1–7 July 2025, saying it was not showing as available. The desk classified it as a document request and queried the documents system about it, and that query returned nothing new, so it is not known whether the report exists or is ready. The desk did not escalate the request or send anything to her, and her claim to be the shop's authorised manager remains unconfirmed.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=document)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

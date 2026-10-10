@@ -4,7 +4,7 @@
 
 ## Summary
 
-Nadia Fenwick, a viewer who was not verified and wrote over secure chat, said she uploaded batch HV-042 for Fenwick Workshop, couldn't see which rows need attention, and asked for help accessing the report. The desk classified this as a document request about a batch and sent a query about HV-042 to the payment system; that was the only action taken. No report has been sent to her and nothing on the batch was changed, so the case is waiting on the payment system's answer.
+Nadia Fenwick, a viewer whose identity is not verified, wrote over secure chat that she uploaded batch HV-042 and can't see which rows need attention, and asked for help accessing the report. The desk classified it as a document request about a batch and sent a query to the payment system about HV-042, which was accepted and closed the case at "asked". The payment system's answer is not in the record, so nothing has been shared with Nadia and any reply to her is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=document)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

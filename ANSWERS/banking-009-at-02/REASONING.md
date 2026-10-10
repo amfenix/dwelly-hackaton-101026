@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 52. `next_system`: not known → payment (by `route-payment`).
 53. The agent asked for `ask_system` {"system": "payment"}.
-54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
+54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
 55. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-009-at-02:do-ask:15).
@@ -66,8 +66,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5369 tokens in, 404 out, 5.444 s, cost $0.0111; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7259 tokens in, 390 out, 6.32 s, cost $0.0147; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payment system to confirm the amount in the completed transfer instruction. The portal's final payment line shows £648.20, but that line isn't the payment record itself. I'm waiting for the payment system's answer. Until it replies, I can't confirm what H&V actually sent. I'm not relying on the draft figure of £684.20.
+> The facts say the next system is payment, and the customer wants the amount from the completed instruction. I'll check the payment records.
+> I've asked the payment system to check the amount on your completed transfer. The case is now marked as asked, and I have no answer to report yet.
+> 
+> The only amount on record so far is the £648.20 on the final payment line, which was sent to your property manager. No confirmation of that payment is on file yet. I can't verify the £684.20 you remember from the draft, because the desk only has the completed instruction to go on. We'll confirm the sent amount once the payment system replies.

@@ -52,7 +52,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
+51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
 52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
 53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
 54. Called `send_for_confirmation` (attempt 1, key banking-037-at-02:do-confirm:15).
@@ -63,8 +63,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5484 tokens in, 403 out, 6.331 s, cost $0.0124; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5226 tokens in, 428 out, 6.2 s, cost $0.0121; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The case is already closed. A confirmation of the name correction, "Elowen Mar" to "Elowen Marr", has been sent to Elowen's secure portal, so I'm taking no further action. The correction only takes effect once Elowen confirms it there. The data team may still ask for supporting information.
+> The case is already closed, so I'm not taking another action. Its state is CONFIRMATION_SENT, the outcome is "send_for_confirmation", and no requests have been refused.
+> 
+> The customer was verified on the call. She asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". A confirmation has gone out for that change, and nothing else is outstanding on the desk's side.

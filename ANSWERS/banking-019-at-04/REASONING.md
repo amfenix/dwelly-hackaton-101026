@@ -57,16 +57,14 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. State `READING` → `TRIAGED` (by `triage`).
 54. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 55. `next_system`: not known → recurring (by `route-recurring`).
-56. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested). The change was sent to the portal; the customer has not confirmed it yet.
+56. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested); registration_asked absent → true (registration_asked=not known). The change was sent to the portal; the customer has not confirmed it yet.
 57. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
 58. The case closed in `WAITING`: **wait**.
 
 ## Model calls
 
-3 calls, 5559 tokens in, 125 out, 4.009 s, cost $0.0097; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5385 tokens in, 236 out, 5.276 s, cost $0.0105; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The case is in a waiting state. The change has already been sent to the customer's secure portal for confirmation, and nothing more is needed from the bank until she confirms it.
-> 
-> I'm taking no further action. The standing order has not been changed on her behalf.
+> Nothing further is needed from the bank at this point. The change from 18 September to 22 September 2025 has already been sent to Maeve for secure confirmation, and the case is waiting on her. The next run isn't yet being processed, so it can still be changed. The standing order has not been altered, and it will stay as it is until she confirms through the secure portal.

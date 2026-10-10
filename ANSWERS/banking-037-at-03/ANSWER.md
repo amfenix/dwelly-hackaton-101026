@@ -1,10 +1,10 @@
 # Case banking-037-at-03: Profile Name Typo
 
-**Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk classified this as a profile change and sent it to her for confirmation in the secure portal, since a change has to be confirmed there. No profile change has been made yet, so it is left to her to confirm in the portal, and the record notes the data team may ask for supporting information.
+Elowen Marr, a verified customer on a verified call, asked for the name on their profile to be corrected from "Elowen Mar" to "Elowen Marr". The desk placed the case in WAITING because the name review had already been opened and referred to the team, whose answer is not yet in, so no profile change has been made. The agent's attempts to submit the request and to escalate were both refused because the case was in WAITING, so a person will need to pick it up once the team responds.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -38,7 +38,7 @@ Case reference: id banking-037-at-03, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `send_for_confirmation` (change: profile, to: Elowen Marr), by rule `do-confirm`
+- none
 
 ## Decision and why
 
@@ -46,12 +46,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `CONFIRM_PENDING`: rule `change-needs-confirmation` — A change is confirmed by the customer in the secure portal, not in chat or by email.
+- `TRIAGED` → `WAITING`: rule `registration-waits` — The team was asked; its answer is not in yet.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type = change → true (request_type=change)
-  - confirmation = none → true (confirmation=none)
-- `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
-  - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
+  - registration_asked → true (registration_asked=True)
+  - registered absent → true (registered=not known)
 
 Facts established:
 
@@ -80,6 +78,11 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
+
 ## Final result
 
-send_for_confirmation (CONFIRMATION_SENT)
+wait (WAITING)

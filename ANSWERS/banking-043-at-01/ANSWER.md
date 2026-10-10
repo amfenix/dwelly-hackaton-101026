@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, a verified customer on the business portal, asked whether Northmere Studio Ltd's payroll payment package is waiting for her co-signer or has moved on. The desk classified this as a status request and sent a query about the package to the payment system. The record shows no answer from the payment system yet, so nothing has been reported back to her, and the case closed at that point.
+Mara Ellery, a verified customer on the business portal, asked whether Northmere Studio Ltd's payroll payment package was waiting for her co-signer or had moved on. The desk classified it as a status request and asked the payment system about the package, and the case closed with that question sent. The record shows the ask returned nothing, so the status is not yet known and Mara has not been given an answer.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

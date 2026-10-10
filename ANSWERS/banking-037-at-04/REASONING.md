@@ -57,19 +57,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. State `READING` → `TRIAGED` (by `triage`).
 54. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 55. `next_system`: not known → access (by `route-access`).
-56. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
-57. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-58. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-59. Called `send_for_confirmation` (attempt 1, key banking-037-at-04:do-confirm:15).
-60. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Elowen Marr"}.
-61. `send_for_confirmation` found {}.
-62. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-63. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+56. The agent asked for `submit_request` {}.
+57. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); access-instruction: request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); business-instruction: next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none).
+58. The agent asked for `ask_system` {"system": "access"}.
+59. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
+60. The agent asked for `reply` {}.
+61. Rule `registration-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered present → true (registered=True).
+62. State `TRIAGED` → `REPLY_PENDING` (by `registration-reply`).
+63. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+64. Called `reply_customer` (attempt 1, key banking-037-at-04:do-reply:15).
+65. `reply_customer` found {}.
+66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+67. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-3 calls, 5430 tokens in, 177 out, 4.304 s, cost $0.0100; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> The case is already final: the correction request was registered as HV-037 and sent to the customer's secure portal for confirmation. Nothing is left for me to do.
+5 calls, 10897 tokens in, 398 out, 7.786 s, cost $0.0232; models: claude-haiku-5-5, claude-sonnet-5-5.

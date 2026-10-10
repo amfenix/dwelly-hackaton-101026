@@ -48,7 +48,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 45. `next_system`: not known → card (by `route-card`).
 46. The agent asked for `ask_system` {"system": "card"}.
-47. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+47. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 48. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-021-at-01:do-ask:15).
@@ -59,8 +59,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5071 tokens in, 127 out, 3.459 s, cost $0.0088; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6833 tokens in, 200 out, 4.734 s, cost $0.0130; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the card system whether your replacement card has been dispatched. The portal message only confirmed that your request was received, so the answer has to come from the card system. I'll reply once it comes back.
+> I checked the card system for the status of your replacement card. The query was accepted, but the system returned no dispatch or delivery details, and nothing new has been recorded on the case.
+> 
+> So far, the only confirmation is the portal's: your request was received. I can't confirm dispatch or delivery, because no record shows either. The case is now closed on this step.

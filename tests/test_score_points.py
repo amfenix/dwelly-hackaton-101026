@@ -39,6 +39,12 @@ def ev(sender: str, recipient: str, text: str = "x") -> dict[str, Any]:
         ),
         (ev("H&V agent", "Nadia", "I can confirm that the report is available in your secure portal."), "reply"),
         (ev("H&V recovery system", "Mara Ellison", "Recovery checks completed."), "wait"),
+        (
+            ev("H&V support agent", "Verified company administrator for X Ltd", "Sent for approval."),
+            "forward_to_authority",
+        ),
+        (ev("H&V agent", "Mara", "I'm directing you to the recovery option in the secure portal."), "redirect_secure"),
+        (ev("H&V agent", "Mara", "Please tell me which declined attempt you want me to investigate."), "clarify"),
     ],
 )
 def test_the_label_reads_the_next_event(event: dict[str, Any], want: str) -> None:

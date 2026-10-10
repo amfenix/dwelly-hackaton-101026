@@ -55,16 +55,16 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. State `READING` → `TRIAGED` (by `triage`).
 52. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 53. `next_system`: not known → recurring (by `route-recurring`).
-54. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested). The change was sent to the portal; the customer has not confirmed it yet.
+54. Rule `change-waits-for-the-customer` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = requested → true (confirmation=requested); registration_asked absent → true (registration_asked=not known). The change was sent to the portal; the customer has not confirmed it yet.
 55. State `TRIAGED` → `WAITING` (by `change-waits-for-the-customer`).
 56. The case closed in `WAITING`: **wait**.
 
 ## Model calls
 
-3 calls, 5434 tokens in, 249 out, 4.926 s, cost $0.0107; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5323 tokens in, 244 out, 4.602 s, cost $0.0104; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I'm taking no further action on this case. It is waiting for Mira to confirm the change in her secure portal.
+> The case is in the WAITING state and is final. Mira hasn't confirmed the change, and she isn't verified. The change request has gone to her for confirmation in the secure portal. Nothing else is due from the bank now. Submitting the change would act on an instruction she hasn't confirmed.
 > 
-> The bank has sent the change from £42.00 to £68.00 a month to the portal for her confirmation. The standing order to Westmere Garden Cooperative has not been changed and is still £42.00. The change only goes ahead if Mira confirms it herself in the portal. We can't approve it for her or act on a chat instruction.
+> I'm stopping here and leaving the standing order at £42.00 until she confirms.

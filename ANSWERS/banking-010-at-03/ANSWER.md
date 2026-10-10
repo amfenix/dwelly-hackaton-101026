@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, who was not verified and wrote over secure chat, asked the desk to check whether an incoming £42.80 entry matches the specific transfer from Northmere Home Supplies that might be returned, and not some other payment. The desk asked the incoming-payments system about this and has not yet received its answer, so the case closed as waiting with no actions taken. Nothing has been sent to the customer or escalated, and the reply can only be written once the incoming system answers.
+Elowen Marr, an unverified customer on secure chat, asked the desk to check whether an incoming £42.80 entry matches the transfer Northmere Home Supplies said might be returned. The desk asked the incoming-payments system, but its answer is not yet in the case, so the case closed in a waiting state with no actions taken. A second request to the incoming system was refused because the case was already waiting, and nothing has been confirmed or sent to the customer, so the desk still has to act once that answer arrives.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -81,6 +81,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=incoming); next_system = payment is false (next_system=incoming); next_system absent is false (next_system=incoming); incoming-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=incoming); incoming_asked absent is false (incoming_asked=True); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=incoming); next_system = recurring is false (next_system=incoming); next_system absent is false (next_system=incoming); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=incoming); next_system = card is false (next_system=incoming); next_system absent is false (next_system=incoming); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=incoming); next_system = access is false (next_system=incoming); next_system absent is false (next_system=incoming); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=incoming); next_system = business is false (next_system=incoming); next_system absent is false (next_system=incoming); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=incoming); next_system = documents is false (next_system=incoming); next_system absent is false (next_system=incoming)
 
 ## Final result
 

@@ -45,7 +45,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 42. `next_system`: not known → card (by `route-card`).
 43. The agent asked for `ask_system` {"system": "card"}.
-44. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=reason).
+44. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=reason).
 45. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 46. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 47. Called `ask_system` (attempt 1, key banking-024-at-01:do-ask:15).
@@ -53,11 +53,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `ask_system` found {}.
 50. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 51. The case closed in `ASKED`: **ask_system**.
+52. The agent asked for `reply` {}.
+53. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=card); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 4869 tokens in, 137 out, 3.043 s, cost $0.0085; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've asked the card system why Rowan's card became temporarily unavailable and whether the restriction has been lifted. The answer will come back to the case later. Once it does, we can reply to Rowan from what the record shows.
+5 calls, 8849 tokens in, 144 out, 4.694 s, cost $0.0165; models: claude-haiku-5-5, claude-sonnet-5-5.

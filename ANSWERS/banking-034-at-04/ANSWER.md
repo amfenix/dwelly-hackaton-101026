@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, writing over secure chat without being verified, asked the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal, and how it accounts for the amount. The desk classed it as a request for a record fact about a fee and sent a query about the £3.20 fee to the documents system, and the case closed with that question asked. No answer from the documents system is in the record, so the explanation of the fee is still outstanding.
+Mara Ellery, an unverified customer on secure chat, asked the desk to escalate and check which tariff entry applied to a £3.20 fee on a withdrawal and how it accounts for the amount. The desk classified this as a request about a fee and asked the documents system about the £3.20 fee, then closed the case at that step. The documents system's answer is not in the record, so what the fee is for and how it was worked out remain unknown, and nothing has been told to Mara about the fee or tariff.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -56,7 +56,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=record_fact)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

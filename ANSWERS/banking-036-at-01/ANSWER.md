@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing by email, asked the desk to update the correspondence address on her profile after a move within the UK. The desk treated this as a profile change that needs her confirmation in the secure portal, and it sent her that confirmation request. Her profile has not been changed, and the record shows nothing further for a person to do beyond her confirming it herself.
+Mara Ellison, an unverified customer, emailed to say she had moved within the UK and asked the desk to update her correspondence address. The desk treated it as a profile change, and because a change has to be confirmed by the customer in the secure portal rather than by email, it sent her a confirmation request instead of changing anything. The profile is unchanged and the case is closed; the record shows nothing further for a person to do beyond her confirming the change.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,6 +42,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = none → true (confirmation=none)
+  - registration_asked absent → true (registration_asked=not known)
 - `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
   - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 

@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 48. `next_system`: not known → payment (by `route-payment`).
 49. The agent asked for `ask_system` {"system": "payment"}.
-50. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+50. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 51. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 53. Called `ask_system` (attempt 1, key banking-001-at-01:do-ask:15).
@@ -59,11 +59,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. `ask_system` found {}.
 56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 57. The case closed in `ASKED`: **ask_system**.
+58. The agent asked for `reply` {}.
+59. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 5120 tokens in, 225 out, 6.17 s, cost $0.0099; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've asked the payment system whether H&V sent the £420.00 transfer to Alder & Reed Workshop. Nothing in the case yet confirms it was sent. The debit in your account activity doesn't establish that on its own. I'll reply once the payment system answers.
+5 calls, 9382 tokens in, 146 out, 7.407 s, cost $0.0176; models: claude-haiku-5-5, claude-sonnet-5-5.

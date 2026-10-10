@@ -56,21 +56,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 53. `next_system`: not known → recurring (by `route-recurring`).
 54. The agent asked for `ask_system` {"system": "recurring"}.
-55. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction).
-56. The agent asked for `escalate` {"note": "Verified customer Mara Ellison (verified call) sees two future payments of £34.80 to Northmere Heating (standing order). She asks us to check whether they are duplicates and remove the duplicate, but she cannot say which line is the duplicate. The relationship between the two lines is not established in the case. Asking the recurring system was refused by the desk because the request is an instruction. Nothing has been cancelled or changed. A person needs to review both lines, confirm whether they are duplicates, and confirm with the customer which one to cancel before any removal."}.
-57. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
-58. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
-59. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
-60. The case closed in `ESCALATED`: **escalate**.
+55. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+56. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+58. Called `ask_system` (attempt 1, key banking-018-at-02:do-ask:15).
+59. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order", "amount": "34.80"}.
+60. `ask_system` found {}.
+61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+62. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 8864 tokens in, 635 out, 7.621 s, cost $0.0214; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7259 tokens in, 274 out, 4.843 s, cost $0.0146; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've escalated this case to a person. Nothing has been cancelled or changed.
+> I've checked the recurring payments system for the two £34.80 payments to Northmere Heating. I haven't removed or changed anything. The check didn't add any new facts to the case, so I still don't know whether the two lines are duplicates or which one would be the duplicate.
 > 
-> I couldn't check the two £34.80 Northmere Heating payments myself. The desk refused my request to look them up in the standing orders system, because it treats this case as an instruction rather than a question. So I don't know yet whether they are duplicates.
-> 
-> Ms Ellison doesn't know which line is the duplicate, so I didn't cancel either one. My handover note asks the person to review both lines and confirm whether they are duplicates. It also asks them to agree with her which one to remove before anything is cancelled.
+> Mara is verified and has asked for the duplicate to be removed, but she doesn't know which line it is. Any cancellation has to wait until the records show how the two lines relate.

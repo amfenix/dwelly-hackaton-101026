@@ -4,7 +4,9 @@
 
 ## Summary
 
-Mara Ellery asked over secure chat whether her scheduled rent standing order was executed and what status the bank recorded. The desk checked the standing-order journal, which shows the run as not executed, and replied to her on secure chat saying exactly that, without establishing whether a later run will execute and without making any change or instruction. Her identity was not verified, and the case is closed with nothing left for a person. One discrepancy: the journal notes give a reason (insufficient cleared funds at the scheduled processing time), but the reply to her did not include it, and the agent's own summary wrongly says no reason is recorded.
+Mara Ellery, an unverified customer on secure chat, asked the desk to check whether her rent standing order was executed and what status the bank recorded. The desk found the scheduled run recorded as not executed and replied on secure chat with that status, noting it doesn't show whether a later run will execute and that no instruction or change was made. The case is closed with nothing left for a person.
+
+One correction to the agent's own account: the journal does give a reason, insufficient cleared funds at the scheduled processing time, but the reply to Mara did not include it.
 
 _Written by a model from the record below; the sections below are the record._
 

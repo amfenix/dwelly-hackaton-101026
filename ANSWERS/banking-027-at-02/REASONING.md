@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 50. `next_system`: not known → access (by `route-access`).
 51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=access).
+52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=access).
 53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-027-at-02:do-ask:15).
@@ -64,9 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7454 tokens in, 208 out, 4.647 s, cost $0.0144; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7415 tokens in, 387 out, 6.607 s, cost $0.0161; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The access system holds the answer on sign-in and recovery routes, and it isn't in the case yet, so I'll ask it.
-> I've asked the access system why Mara Ellison can't sign in and which recovery routes are open to her. Its answer hasn't come back yet, so nothing has been changed on her profile. I'll reply to her once the answer is in the case.
+> I checked the access system for Mara Ellison's sign-in problem, and the case is now closed at that step. The check added no new facts to the case: it shows no lockout reason and no recovery status.
+> 
+> Her identity is verified from the call, and she hasn't shared a password or code. The next step is to point her to H&V's secure recovery process so she can restore access herself. I haven't done that yet.

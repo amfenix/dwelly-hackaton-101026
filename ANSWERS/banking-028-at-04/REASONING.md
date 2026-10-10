@@ -52,7 +52,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
+51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
 52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
 53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
 54. Called `send_for_confirmation` (attempt 1, key banking-028-at-04:do-confirm:15).
@@ -63,8 +63,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5475 tokens in, 193 out, 5.121 s, cost $0.0103; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5381 tokens in, 283 out, 5.35 s, cost $0.0110; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> Nothing more is needed from the desk. The case is closed, and the bank has sent the replacement phone number to Elowen's secure portal to confirm. The portal message says no change will be made until she confirms there. Her email and verified call were requests, not authorisation, so the profile stays as it is until she does.
+> The case is closed. The bank has already sent a confirmation request through the secure portal, and no change has been made to the profile.
+> 
+> Elowen Mercer passed identification on the verified call. The replacement phone number will only be applied after she confirms it in the secure portal. Her email and her instruction on the call don't count as that confirmation. I took no further action.

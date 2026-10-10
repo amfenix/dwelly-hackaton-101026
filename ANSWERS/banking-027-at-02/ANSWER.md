@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a customer verified on a call, said she still can't sign in to her profile and asked for help restoring access, without sharing any password or verification code. The desk classified this as an access request and put a question to the access system. That query was the only action taken, so nothing on her profile has been changed. The access system's answer had not come back when the case closed, so the next step is left for a person to pick up from that answer.
+Mara Ellison, a customer on a verified call, said she still couldn't sign in to her profile and asked for help restoring access. The desk classified it as an access request and sent a query to the access system, which returned nothing, and the case closed at that step. Nothing has been done to restore her access yet; the agent's closing note says she still needs to be pointed to H&V's secure recovery process, but the record shows no action taken on that.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = access → true (next_system=access)
   - next_system absent → false (next_system=access)
   - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=access)
+  - request_type not in [register, change, authority] → true (request_type=access)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

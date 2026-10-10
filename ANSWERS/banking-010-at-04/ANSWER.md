@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, who is not verified, asked over secure chat whether the incoming £42.80 entry relates to her Northmere Home Supplies transfer, as Northmere had said it might be returned. The desk found an incoming credit of 42.80 and replied that the record shows an incoming payment of that amount, that this does not establish the sender's payment status, and that no payment was changed. Nothing is left open in the record, though the reply does not confirm the credit is the refund for that specific transfer.
+Elowen Marr, who was not verified, asked over secure chat whether the £42.80 incoming entry was for the specific Northmere Home Supplies transfer that might be returned. The desk found an incoming entry of 42.80 and replied that the incoming-payment record shows an incoming payment of 42.80, that this does not establish the sender's payment status, and that no payment was changed. The case is closed as replied, and the reply did not say the entry was confirmed as the refund for that specific transfer; the record shows nothing further left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5428 tokens in, 259 out, 4.522 s, cost $0.0108; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7657 tokens in, 328 out, 5.479 s, cost $0.0159; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I replied to the customer. The card system's record shows the replacement card as DISPATCHED, and the reply is limited to that. The record carries no delivery confirmation, so it doesn't show whether the card has arrived.
+> I sent the reply. The card system's record shows the replacement card as DISPATCHED. The record has no delivery confirmation, so the reply can't say the card has arrived.
 > 
-> The case facts list the customer as not verified. I treated this as a status question that the card record already answered, so I replied rather than escalating.
+> The customer's identity is not verified on this chat. I still replied, since this was only a status check and no change was requested.

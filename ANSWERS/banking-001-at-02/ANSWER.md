@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, who was not verified, asked through secure chat whether her £420 payment to Alder & Reed Workshop had actually been sent, since she could see the debit. The desk treated it as a status request about a transfer and asked the payment system about that £420 transfer. The case closed with that question sent, no answer is recorded yet, and nothing else is recorded as needed from a person.
+Mara Ellison, a customer on secure chat whose identity is not verified, asked whether H&V had sent her £420 payment to Alder & Reed Workshop, which she can see debited. The desk classified it as a transfer status request and put a query about the £420 transfer to the payment system. That query returned nothing, so the record does not say whether the payment was sent, and the case closed with the status still unanswered.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

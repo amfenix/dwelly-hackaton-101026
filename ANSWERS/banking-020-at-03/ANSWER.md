@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Wren asked in secure chat which regular payments are still active on her account before she makes any closure plans. The desk asked the recurring payments system and is now waiting, because that system's answer hasn't come back, so no actions were taken and nothing was changed. What remains is for the reply to be written once the answer arrives, and the record still lists Elena as not verified even though she says she completed the account-holder checks.
+Elena Wren asked over secure chat which regular payments are still active before she plans to close her account. The desk asked the recurring system, but no answer has come back, so the case closed in a final WAITING state with nothing disclosed. Her verification still shows as false in the record, and the desk refused both a repeat ask and an escalation because the case was no longer in the triaged state, so nothing in the record shows a person has been assigned. What remains is for someone to confirm her verification, get her active standing orders and Direct Debits, and give her the pre-closure guidance.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -78,6 +78,11 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira Ellery asked over secure chat to raise her standing order from £42.00 to £68.00 a month. The desk didn't make the change: because she had not yet confirmed it, and a change has to be confirmed by the customer in the secure portal rather than in chat, it sent her the change for confirmation. The standing order is unchanged until she confirms it herself in the portal, and nothing else is left for the desk.
+Mira Ellery asked over secure chat to raise her standing order from £42.00 to £68.00 a month. She hadn't confirmed the change and wasn't verified, and the desk's rule is that a change must be confirmed by the customer in the secure portal, not in chat. The desk therefore didn't change the order and instead sent her a confirmation request for the £68.00 amount. What is left is for Mira to confirm it herself; until then the standing order stays at £42.00.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -50,6 +50,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = none → true (confirmation=none)
+  - registration_asked absent → true (registration_asked=not known)
 - `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
   - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 

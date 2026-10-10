@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
 50. `next_system`: not known → documents (by `route-documents`).
 51. The agent asked for `ask_system` {"system": "documents"}.
-52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
+52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
 53. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-038-at-02:do-ask:15).
@@ -64,10 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5294 tokens in, 257 out, 4.547 s, cost $0.0106; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7331 tokens in, 294 out, 6.874 s, cost $0.0150; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the documents system whether an account confirmation can be made available to Mara Ellison in her secure portal. Nothing has been issued or sent yet. The next step depends on the documents system's answer, which hasn't come back.
+> I checked the documents system about Mara Ellison's request for an account confirmation letter in her secure portal. The system accepted the query and the case is now marked as asked. It has not yet returned an answer about the document.
 > 
-> The case facts also show the requester as not verified. Verification will need to be settled before any document is released.
+> Mara is still unverified, so nothing has been made available to her yet. The next step is to reply to her once the documents system's answer is in the case.

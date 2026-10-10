@@ -52,21 +52,22 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 50. `next_system`: not known → access (by `route-access`).
-51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=access).
-53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-027-at-03:do-ask:15).
-56. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
+51. The agent asked for `redirect_secure` {}.
+52. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
+53. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
+54. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
+55. Called `redirect_secure` (attempt 1, key banking-027-at-03:do-redirect:15).
+56. Action in the world: `redirect_secure` {"to": "Mara Ellison", "channel": "verified_call", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
+57. `redirect_secure` found {}.
+58. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
+59. The case closed in `REDIRECTED`: **redirect_secure**.
 
 ## Model calls
 
-4 calls, 7640 tokens in, 232 out, 4.934 s, cost $0.0150; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5277 tokens in, 330 out, 4.921 s, cost $0.0113; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The access system holds the answer on sign-in and recovery routes, and it isn't in the case yet, so I'll ask it.
-> I've sent the question to the access system, which holds the sign-in and recovery details for Mara's profile. Its answer hasn't come back yet, so I can't say what is blocking her sign-in or which recovery route applies. Nothing has been changed on her profile. I'm waiting for the answer before replying to her.
+> I've pointed Mara Ellison to H&V's secure recovery process, and the desk accepted it. The case is now closed as redirected.
+> 
+> She needs to complete the identity checks in the secure portal herself. The desk never handles passwords or verification codes, so we haven't asked her for either. I didn't query the access system first, because the request was about regaining sign-in access, which the secure process handles.

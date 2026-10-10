@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer on the secure portal, said she started registering her new tablet in the H&V app and left the screen before she could tell whether it had finished. The desk classified this as a status question about access and sent a query to the access system. The query returned nothing, and the desk has recorded no answer or further step, so the outcome of the registration is still unknown.
+Mara Ellison, a verified customer on the secure portal, wrote that she began registering her new tablet in the H&V app and left the screen before she could tell whether registration had finished. The desk classified this as a status question about access and asked the access system about it, which returned nothing. The case closed at the "asked" step, and a reply to Mara was refused because no registration result is on record, so she has not been told whether the tablet is registered. The record doesn't name a follow-up owner, so what happens next is left to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = access → true (next_system=access)
   - next_system absent → false (next_system=access)
   - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -72,6 +72,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=access); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=access); document_ready present is false (document_ready=not known)
 
 ## Final result
 

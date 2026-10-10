@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
 52. `next_system`: not known → documents (by `route-documents`).
 53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
+54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
 55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-049-at-02:do-ask:15).
@@ -66,8 +66,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5306 tokens in, 221 out, 4.111 s, cost $0.0102; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7316 tokens in, 301 out, 5.1 s, cost $0.0151; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the documents system whether the acquiring report for 1–7 July 2025 is available. Nothing has been sent to you yet, and I haven't escalated the case. The next step depends on what the documents system says about the report.
+> I checked the documents system for the acquiring report covering 1–7 July 2025. The case is now closed at that step. The check returned no new facts, so I can't yet say whether the report exists or is ready.
+> 
+> Mara Venn is not verified. The case holds no confirmation of her role as the shop's authorised manager. I did not escalate the file request or send anything to her.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Leona Voss, a viewer on secure chat, asked for the status of row SUP-17 in a batch that showed as processed. The desk checked the payment record and replied on secure chat that the row was rejected because the beneficiary details did not match the receiving institution's records, and that this does not authorise a retry; no new transfer was made. Nothing was changed on the payment, her identity was never verified (the desk treated this as acceptable for a read-only status question), and any correction of the beneficiary details is left for a person to handle.
+Leona Voss, a viewer whose identity was not verified, asked over secure chat whether row SUP-17 in her batch had actually been paid. The desk checked the payment record, found SUP-17 rejected because the beneficiary details did not match the receiving institution's records, and replied to her on secure chat with that status and reason. The reply also said this does not establish a different cause or authorise a retry, and that no new transfer was made. The case is closed with nothing left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 

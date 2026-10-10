@@ -61,11 +61,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. The case closed in `WAITING`: **wait**.
 58. The agent asked for `ask_system` {"system": "payment"}.
 59. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
+60. The agent asked for `escalate` {"note": "Leona Voss (role: viewer, unverified, secure chat) asks whether row SUP-17 in a supplier batch marked processed was paid or rejected. The payment system lookup was refused because the case is in WAITING, not TRIAGED. Identity is not verified and no payment record has been read, so no status can be stated yet. Please verify the requester and check the row status in the payment system."}.
+61. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 9014 tokens in, 291 out, 5.95 s, cost $0.0183; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10897 tokens in, 698 out, 9.024 s, cost $0.0262; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The payment system has already been asked about row SUP-17, and its answer hasn't come back yet. I'm leaving the case waiting. I haven't told the customer anything about whether the row was paid or rejected, because the case doesn't show that yet. The next step is to reply once the payment system's answer arrives.
+> I couldn't check row SUP-17, so I can't yet say whether it was paid or rejected.
+> 
+> The case is in a waiting state, and the desk refused both actions I tried:
+> - **Payment lookup:** refused because the case is not yet triaged.
+> - **Escalation to a person:** refused for the same reason.
+> 
+> The requester, Leona Voss, is a viewer and is not verified. No payment record has been read, so I haven't told her anything about the row. The case stays open for a person to pick up.

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elodie Mercer, a verified customer on the secure portal, asked to cancel the next run of her recurring studio-rent payment instruction. The desk did not cancel it: the case closed as "wait" because the recurring payments system had been asked about the instruction and its answer was not yet in. An attempt to submit the cancellation was refused, since the case was in the waiting state and the desk's confirmation check recorded "none" despite her portal message saying she confirmed. Nothing has been submitted or changed, so the instruction is not cancelled and a person needs to pick the case up once the recurring system answers.
+Elodie Mercer, verified on the secure portal, asked to cancel the next run of her recurring studio-rent payment instruction. The desk passed it to the recurring system, closed the case as waiting because that system's answer wasn't in yet, and cancelled nothing. Its attempts to submit the request and to escalate were both refused because the case was already in the waiting state, and the desk's facts still show no confirmation despite her written one. A person needs to check her confirmation against the portal record and decide whether to cancel the run, and she has not been told it is cancelled.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -86,6 +86,7 @@ No.
 Requests the policy refused:
 
 - `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); recurring_asked absent is false (recurring_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

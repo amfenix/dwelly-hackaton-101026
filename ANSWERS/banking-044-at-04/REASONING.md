@@ -71,12 +71,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7799 tokens in, 333 out, 6.505 s, cost $0.0163; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7681 tokens in, 381 out, 6.789 s, cost $0.0166; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I sent the reply. The record shows row SUP-17 was **rejected**, not paid, even though the batch as a whole is marked processed. The stated reason is that the beneficiary details did not match the receiving institution's records.
+> I sent the reply. The records show row SUP-17 was **rejected**, not paid. The reason on record is that the beneficiary details didn't match the receiving institution's records.
 > 
-> I only reported what the record shows. I didn't change, resubmit or correct anything on the payment. Leona is a viewer, so she can't make that correction herself.
+> The batch shows as processed even though this row was rejected. The records show no confirmation for the row. The case is now closed.
 > 
-> The case still shows the requester as not verified. I judged that acceptable here because this was a read-only status question and she says she is authorised to view the payouts. The reply gave no instructions to act on the payment.
+> Leona Voss is a viewer on the account and her identity was not verified. I treated the status check as within her viewing access.

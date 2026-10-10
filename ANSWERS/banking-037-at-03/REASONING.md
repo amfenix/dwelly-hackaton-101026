@@ -54,21 +54,23 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 52. `next_system`: not known → access (by `route-access`).
-53. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
-54. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-55. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-56. Called `send_for_confirmation` (attempt 1, key banking-037-at-03:do-confirm:15).
-57. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Elowen Marr"}.
-58. `send_for_confirmation` found {}.
-59. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-60. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+53. Rule `registration-waits` fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered absent → true (registered=not known). The team was asked; its answer is not in yet.
+54. State `TRIAGED` → `WAITING` (by `registration-waits`).
+55. The case closed in `WAITING`: **wait**.
+56. The agent asked for `submit_request` {}.
+57. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none).
+58. The agent asked for `escalate` {"note": "Verified customer (verified call) asks to correct the name on their H&V profile from \"Elowen Mar\" to \"Elowen Marr\". Identity checks completed. Please route to the data/profile team for a name correction. The customer knows they may be asked for supporting documents. The standard submit_request route was refused because the case is in WAITING state and the request type is a change, not an instruction. No change has been made."}.
+59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-3 calls, 5348 tokens in, 313 out, 11.063 s, cost $0.0112; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11011 tokens in, 650 out, 9.691 s, cost $0.0259; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> This case is closed. The desk has already sent the name correction from “Elowen Mar” to “Elowen Marr” to your secure portal for you to confirm.
+> I couldn't pass this on. Both attempts were refused, and the case is still in WAITING with no change made to the profile.
 > 
-> Nothing has been changed on your profile yet. The correction takes effect only after you confirm it in the portal. The data team may still ask you for supporting information.
+> - **Submit request:** refused. The desk accepts this route only for a registration or a confirmed instruction. This case is a profile change with no confirmation.
+> - **Escalate to a person:** refused. The desk only allows escalation once the case is TRIAGED, and this one is still WAITING.
+> 
+> The customer is verified and wants "Elowen Mar" corrected to "Elowen Marr". Nothing more can be done from here until the case moves out of WAITING. A person will need to pick it up from there.

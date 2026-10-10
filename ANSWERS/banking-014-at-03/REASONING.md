@@ -59,11 +59,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. Rule `recurring-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked → true (recurring_asked=True); recurring_status absent → true (recurring_status=not known). The system was asked; its answer is not in yet.
 56. State `TRIAGED` → `WAITING` (by `recurring-waits`).
 57. The case closed in `WAITING`: **wait**.
+58. The agent asked for `ask_system` {"system": "recurring"}.
+59. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring).
 
 ## Model calls
 
-3 calls, 5547 tokens in, 168 out, 4.748 s, cost $0.0101; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 9214 tokens in, 654 out, 9.52 s, cost $0.0222; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The case is waiting on the recurring-payments system, which I've already asked about this Direct Debit. Its answer isn't in the case yet, so there's nothing more for me to do now. I'm not replying to the customer or asking again until the answer arrives.
+> I've stopped here without taking any further action. The case is in a final WAITING state, and my attempt to query the recurring-payments system was refused.
+> 
+> - **Why the query was refused:** the desk's records show the recurring system has already been asked (`recurring_asked = True`). The case isn't in a state that allows a second query.
+> - **What the case doesn't contain:** the answer on the Northmere Water Services mandate. I have no mandate status to give Mara Ellery, so any reply would claim more than the records show.
+> - **Verification:** she is not verified (`verified = False`). That may be why the case is waiting.
+> - **What I left alone:** nothing was cancelled or changed. She only asked for the status, and that is all the case calls for.
+> 
+> The case stays open and goes to a person. That person should complete identity verification, then read the mandate status from the recurring system and reply to her.

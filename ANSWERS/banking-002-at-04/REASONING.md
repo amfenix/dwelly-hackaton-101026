@@ -68,10 +68,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7684 tokens in, 194 out, 6.864 s, cost $0.0146; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7639 tokens in, 312 out, 7.953 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to the customer. The incoming-payments check found no credit matching the kiln contribution, and the reply is limited to that.
-> 
-> The customer hasn't been verified, so I made no account changes and gave no further detail.
+> I replied to the customer. The incoming-payments check found no matching payment, so the reply reports that nothing has arrived in her H&V account. The desk wrote the wording, and it only states what the record shows. The case is now closed as replied.

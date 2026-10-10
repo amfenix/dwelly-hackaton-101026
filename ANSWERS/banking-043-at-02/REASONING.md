@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=payment_package).
 52. `next_system`: not known → payment (by `route-payment`).
 53. The agent asked for `ask_system` {"system": "payment"}.
-54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 55. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-043-at-02:do-ask:15).
@@ -63,11 +63,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 59. `ask_system` found {}.
 60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 61. The case closed in `ASKED`: **ask_system**.
+62. The agent asked for `reply` {}.
+63. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-4 calls, 8084 tokens in, 336 out, 6.986 s, cost $0.0169; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've asked the payment system for the status of the Northmere Studio Ltd payroll payment package. Once its answer is in the case, I'll tell you whether the package is waiting for your co-signer or has moved on. I haven't changed or approved anything on the package.
+5 calls, 10449 tokens in, 257 out, 6.691 s, cost $0.0208; models: claude-haiku-5-5, claude-sonnet-5-5.

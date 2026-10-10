@@ -68,8 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5373 tokens in, 218 out, 4.467 s, cost $0.0103; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7568 tokens in, 309 out, 5.753 s, cost $0.0156; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to the customer. The payment record shows the transfer instruction is at "awaiting authorisation" and that no confirmation has been issued. That means it has been saved but not yet sent. The reply covers this and the fact that she needs to authorise it herself. The bank did not authorise or send anything for her.
+> I've sent the reply. The payment record shows the transfer is saved but still awaiting authorisation, so it hasn't been sent to the bank yet. That's why there is no sent confirmation. The reply also covers the customer's question about whether they need to authorise it.
+> 
+> The customer's identity is not verified. The reply can only report what the record shows.

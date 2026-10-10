@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing as the company's authorised file uploader over secure chat (not verified), asked only whether H&V had received batch-041.csv under reference HV-041; she did not ask for any payment to be approved or released. The desk classified it as a status request and asked the payment system about the batch (HV-041, 420.00), and that query returned nothing. Receipt is therefore still unconfirmed, and no approval or release was made.
+Mara Ellison, an uploader on secure chat whose identity was not verified, asked the desk to check whether batch-041.csv (reference HV-041, £420.00) had been received, and said she was not asking for any payment to be approved or released. The desk treated it as a status request and sent a query about that batch to the payment system, which returned nothing. The case closed in the asked state with no confirmation of receipt on record, so whether the file arrived is still unanswered.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

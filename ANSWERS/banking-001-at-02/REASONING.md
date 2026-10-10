@@ -57,7 +57,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 54. `next_system`: not known → payment (by `route-payment`).
 55. The agent asked for `ask_system` {"system": "payment"}.
-56. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+56. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 57. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 58. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 59. Called `ask_system` (attempt 1, key banking-001-at-02:do-ask:15).
@@ -68,8 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5250 tokens in, 126 out, 5.595 s, cost $0.0091; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7339 tokens in, 330 out, 8.111 s, cost $0.0154; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payment system for the status of the £420 transfer to Alder & Reed Workshop. The answer will come back later, and nothing more is needed from the desk until then.
+> I checked the payment system for the status of your £420 transfer to Alder & Reed Workshop. That check is the bank's next step, and the case is now closed at that point.
+> 
+> The system's answer has not been added to the case yet, so I can't say whether H&V sent the payment. I don't want to guess beyond what the record shows. Until the status is in the case, the only confirmation is the debit in your account activity.
+> 
+> Your identity is also not verified on this chat. That may affect what we can share with you in this channel.

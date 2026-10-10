@@ -38,6 +38,13 @@ _ASKS_TO_CONFIRM = re.compile(
 )
 
 
+_AUTHORITY = re.compile(r"administrator|signatory", re.IGNORECASE)
+_REDIRECTS = re.compile(r"\bdirect(?:ing)? you to\b|\buse the (?:secure )?(?:recovery|pin) ", re.IGNORECASE)
+_CLARIFIES = re.compile(
+    r"\bplease tell (?:me|us) which\b|\bwhich (?:payment|card|attempt|instruction) you\b", re.IGNORECASE
+)
+
+
 def is_system(name: str) -> bool:
     """A journal, team, service or process, not a person or the bank's staff."""
     return bool(_SYSTEM_NAME.search(name)) and not _STAFF.search(name)
@@ -53,8 +60,14 @@ def label(event: dict[str, Any]) -> str:
     if not is_bank_side(recipient):  # said to the customer
         if _AUTOMATIC.search(sender) and not _STAFF.search(sender):
             return "wait"  # a system acting on its own; the bank had nothing to do
+        if _AUTHORITY.search(recipient):
+            return "forward_to_authority"  # sent to the person whose approval it needs
         if _ASKS_TO_CONFIRM.search(text) and not re.match(r"\W*\w*\s*confirmed", text, re.IGNORECASE):
             return "send_for_confirmation"
+        if _REDIRECTS.search(text):
+            return "redirect_secure"
+        if _CLARIFIES.search(text):
+            return "clarify"
         return "reply"
     if is_system(sender):
         return "wait"  # a system's answer to the bank

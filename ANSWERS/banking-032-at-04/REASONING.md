@@ -68,8 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7346 tokens in, 194 out, 4.772 s, cost $0.0141; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7169 tokens in, 282 out, 5.345 s, cost $0.0146; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've sent the reply. The documents system shows the January 2024 statement is available as an archived copy. The customer on this chat is not verified yet, so the reply is limited to what the record shows.
+> I replied to Mara Ellison. The documents system showed that a copy of her January 2024 statement is ready, so the reply tells her it is available.
+> 
+> The desk wrote the reply text, so I haven't seen its wording. Her identity is still unverified, and I took no step to verify it. The case is now closed with the reply as its outcome.

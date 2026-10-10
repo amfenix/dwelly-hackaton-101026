@@ -62,10 +62,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5526 tokens in, 221 out, 5.103 s, cost $0.0106; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5396 tokens in, 374 out, 6.285 s, cost $0.0119; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the business system about the payroll payment package. Its answer hasn't come back yet, so the case is waiting and I haven't done anything else.
-> 
-> I can't yet tell Mara whether the package is waiting for her co-signer or has moved on. When the answer arrives, the reply should stick to what the record shows. Mara's identity is also not verified in this channel, so no changes or instructions should go through this chat.
+> The case is already in its final state, WAITING. The business system has been asked about Northmere Studio Ltd's payroll payment package, and it has given no status yet. Asking again would add nothing, and I won't give Mara Ellery a status the records haven't shown. I'm taking no further action, and the case stays open until the business system's answer comes in.

@@ -57,13 +57,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. Rule `recurring-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked → true (recurring_asked=True); recurring_status absent → true (recurring_status=not known). The system was asked; its answer is not in yet.
 54. State `TRIAGED` → `WAITING` (by `recurring-waits`).
 55. The case closed in `WAITING`: **wait**.
+56. The agent asked for `ask_system` {"system": "recurring"}.
+57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring).
+58. The agent asked for `escalate` {"note": "Customer Mara Ellery (unverified, secure chat) asks whether her monthly rent standing order was executed this cycle and what status is recorded. The recurring system was already queried (recurring_asked=True), but the case holds no answer and no confirmation. A new recurring ask was refused because the case is in WAITING. Needs a person to check the standing-order run and verify the customer before any status is disclosed."}.
+59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-3 calls, 5320 tokens in, 204 out, 4.698 s, cost $0.0101; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11067 tokens in, 754 out, 10.516 s, cost $0.0271; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've already asked the recurring payments system about your standing order. Its answer hasn't come back yet, so nothing more can be done on this case right now.
+> I couldn't move this case forward, and it is still waiting.
 > 
-> The case is marked as waiting. I can't yet tell you whether the rent payment was sent or what status the bank has recorded. Once the system replies, we can answer you from what it shows.
+> - **Standing-order check:** The recurring system has already been asked about Mara Ellery's rent standing order. The case holds no answer or confirmation from it. A second ask was refused because the case is in WAITING, not TRIAGED.
+> - **Escalation:** I tried to hand the case to a person, and that was refused for the same reason.
+> - **Customer status:** Mara is not verified, so no payment status should be given to her yet.
+> 
+> I've sent nothing to her. The case needs to be triaged again, or a person needs to pick it up, so the standing-order run can be checked and she can be verified before anyone tells her the status.

@@ -1,10 +1,10 @@
 # Case banking-015-at-01: Cancel future Direct Debit collections
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: ask_system**  (final state `ASKED`)
 
 ## Summary
 
-The customer asked for their active Direct Debit mandate to Northmere Fitness to be cancelled so no future collections could be taken. The desk could not submit the request or ask the recurring system, because the customer's verification was not established and no confirmation of the cancellation had been given, so it escalated the case and cancelled nothing. A person still needs to verify the customer and get their confirmation (for example in the secure portal) before the cancellation goes to the Direct Debit team.
+The customer asked for the active Direct Debit mandate to Northmere Fitness to be cancelled so it can't be used for future collections. The desk did not cancel it: its attempt to submit the request was refused because the requester was not verified and the customer had given no confirmation. It then asked the recurring-payments system about the Direct Debit, and the case closed in that asked state. The record shows no cancellation and no answer from that system, so the mandate still appears as active and what happens next is left to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -30,7 +30,7 @@ Case reference: id banking-015-at-01, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `ask_system` (system: recurring, about: direct_debit), by rule `do-ask`
 
 ## Decision and why
 
@@ -38,8 +38,15 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `recurring-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - args.system = recurring → true (args.system=recurring)
+  - next_system = recurring → true (next_system=recurring)
+  - next_system absent → false (next_system=recurring)
+  - recurring_asked absent → true (recurring_asked=not known)
+  - request_type not in [register, change, authority] → true (request_type=instruction)
+- `ASK_PENDING` → `ASKED`: rule `do-ask`.
+  - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
@@ -49,7 +56,6 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
-- reason: **AGENT_ESCALATED**
 
 Where they came from:
 
@@ -58,8 +64,7 @@ Where they came from:
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
@@ -68,8 +73,7 @@ A person picking this up has the facts above, the actions already taken, and the
 Requests the policy refused:
 
 - `submit_request`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: next_system = business is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=recurring); verified is not known (verified=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
-- `ask_system`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction)
 
 ## Final result
 
-escalate (ESCALATED)
+ask_system (ASKED)

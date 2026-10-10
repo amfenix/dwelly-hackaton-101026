@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a status question about a monthly rent standing order, after a note that this cycle's rent payment wasn't visible. The desk classified it as a standing order status request and asked the recurring payments system about it, and that question has been sent. No answer has come back yet, so whether the payment went out is still unknown. The record shows nothing further for a person to do beyond waiting for that reply.
+The request was a status query about a standing order, apparently about a monthly rent payment that the desk couldn't see for this cycle. The desk classified it as a standing-order status question and asked the recurring-payments system about it, which was the only action taken. The system's answer isn't in the case, so the attempted reply to the customer was refused and nothing has been said about whether the payment was sent. What remains for a person is to pick up the case once the recurring-payments answer is available.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = recurring → true (next_system=recurring)
   - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -67,6 +67,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=recurring); document_ready present is false (document_ready=not known)
 
 ## Final result
 

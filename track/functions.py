@@ -1564,6 +1564,49 @@ def reply_customer(ctx: Context) -> dict[str, Any]:
     return {}
 
 
+# ------------------------------ speaking to the customer before any system answers
+
+_CLARIFY = {
+    "which_transaction": "To check this, please tell us which payment you mean: its date, amount and payee.",
+    "which_card": "To check this, please tell us which card and which attempt you mean: the date, the amount and "
+    "where it was used.",
+    "which_instruction": "To check this, please tell us which instruction you mean: the payee, the amount and "
+    "when it is due.",
+    "more_details": "To check this, please tell us the date, the amount and any reference you can see.",
+}
+_NEVER_ASKED = "We will never ask for your password, PIN or a verification code."
+
+
+@function
+def clarify_customer(ctx: Context) -> dict[str, Any]:
+    """Ask the customer for what a check needs; the wording is the desk's, never the agent's."""
+    need = str(_field(ctx, "clarify_need") or "more_details")
+    to = _field(ctx, "requester") or "the customer"
+    ctx.act("clarify", to=to, channel=_field(ctx, "channel"), text=f"{_CLARIFY[need]} {_NEVER_ASKED}")
+    return {}
+
+
+@function
+def redirect_secure(ctx: Context) -> dict[str, Any]:
+    """Point the customer to the bank's own secure process; the desk never handles a secret."""
+    to = _field(ctx, "requester") or "the customer"
+    text = (
+        "Please use the secure process in your secure portal to do this; it checks your identity there. "
+        f"{_NEVER_ASKED} Nothing on your profile was changed."
+    )
+    ctx.act("redirect_secure", to=to, channel=_field(ctx, "channel"), text=text)
+    return {}
+
+
+@function
+def forward_to_authority(ctx: Context) -> dict[str, Any]:
+    """Send the request to the person whose approval it needs; the desk approves nothing itself."""
+    about = _subject_description(ctx) or "the request"
+    ctx.act("forward_to_authority", to="the verified company administrator", about=about,
+            requester=_field(ctx, "requester"))  # fmt: skip
+    return {}
+
+
 # ------------------------------ compatibility with the original payments example
 
 _PAID: set[str] = set()

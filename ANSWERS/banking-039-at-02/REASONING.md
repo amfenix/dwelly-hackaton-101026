@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 50. `next_system`: not known → access (by `route-access`).
 51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
+52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
 53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-039-at-02:do-ask:15).
@@ -64,9 +64,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7487 tokens in, 208 out, 6.467 s, cost $0.0145; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5087 tokens in, 179 out, 4.424 s, cost $0.0094; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The access system holds the session list, and its answer isn't in the case yet, so I'll ask it.
-> I've asked the access system for the list of sign-in sessions on Nerys Wren's profile. Her identity was verified on the call. The answer hasn't come back yet, so I haven't replied to her. Once it arrives, I'll reply using only what the record shows.
+> I've asked the access system for the sign-in sessions on Nerys Wren's profile. The request was accepted and the case is now in the ASKED state. The next step is to reply to her using what the system returns.

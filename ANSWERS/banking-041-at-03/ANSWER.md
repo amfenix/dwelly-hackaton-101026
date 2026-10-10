@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing as the company's file uploader over secure chat, asked the desk to check only whether H&V received batch-041.csv (reference HV-041, £420.00 for Staff A). The desk asked the business system's import journal and closed the case as waiting, because that system's answer has not come back yet. No actions were taken and no payment was approved or released, and her identity was not verified. What is left is for the business system's reply to arrive so receipt can be confirmed to her.
+Mara Ellison, writing over secure chat as the company's file uploader (her identity is not verified), asked only whether H&V had received batch-041.csv under reference HV-041, and said she was not asking for any payment to be approved or released. The desk classified it as a status request, asked the business system to check its import journal, and closed the case as waiting because that system's answer had not come back. The desk's later attempts to ask again, reply and escalate to a person were all refused because the case was already in the waiting state, so no reply went to her and receipt of the file has not been confirmed.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -81,6 +81,12 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business)
+- `reply`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); document_ready present is false (document_ready=not known)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

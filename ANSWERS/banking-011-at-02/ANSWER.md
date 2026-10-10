@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing through secure chat without being verified, asked the desk to check when her active monthly household contribution standing order is next due. The desk classed this as a request for a record fact and put the question to the recurring payments system. That system had returned nothing when the case closed, so the due date is still unknown and nobody has told her yet. The record does not say who will pass the answer on once it arrives.
+Mara Ellison, an unverified customer on secure chat, asked the desk to check when her active monthly household contribution standing order is next due. The desk classed it as a request for a recorded fact and passed a question about the standing order to the recurring-payments system, and the case closed in that asked state. The desk then tried to send a reply, but that was refused, so she has not been given the date. The record shows no answer from the recurring system, and what happens next is left to a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = recurring → true (next_system=recurring)
   - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=record_fact)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -76,6 +76,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=recurring); document_ready present is false (document_ready=not known)
 
 ## Final result
 

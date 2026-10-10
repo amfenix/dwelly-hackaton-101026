@@ -52,22 +52,22 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 50. `next_system`: not known → recurring (by `route-recurring`).
-51. The agent asked for `submit_request` {}.
-52. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction); request_type = change → false (request_type=instruction); confirmation = given → false (confirmation=none).
-53. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
-54. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-55. Called `register_request` (attempt 1, key banking-013-at-03:do-request:15).
-56. Action in the world: `register_request` {"team": "recurring", "about": "standing_order"}.
-57. `register_request` found {}.
-58. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-59. The case closed in `REQUESTED`: **submit_request**.
+51. The agent asked for `ask_system` {"system": "recurring"}.
+52. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=instruction).
+53. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
+54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+55. Called `ask_system` (attempt 1, key banking-013-at-03:do-ask:15).
+56. Action in the world: `ask_system` {"system": "recurring", "about": "standing_order"}.
+57. `ask_system` found {}.
+58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+59. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-4 calls, 7802 tokens in, 359 out, 6.581 s, cost $0.0165; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9962 tokens in, 408 out, 6.351 s, cost $0.0213; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've passed your request to cancel the next run of your studio-rent recurring payment to the team that handles it. It isn't cancelled yet. The bank forwards the request but doesn't carry out the cancellation itself, so I can't confirm that the run has been stopped.
+> I asked the recurring-payments system about the studio-rent instruction. That was the next step, and the case is now closed at that step. No cancellation has been made, so I can't yet confirm to Elodie Mercer that the future run is cancelled.
 > 
-> Your identification checks were completed and you confirmed the cancellation in the secure portal. The portal showed the next run hadn't started when you wrote. You'll need to check the status of the instruction in the portal to see whether the cancellation has gone through.
+> The case record doesn't show any answer from that system yet, and the recorded confirmation is still "none". The portal message in event 3 does say she wants the run cancelled, but the desk hasn't registered it as a confirmation.

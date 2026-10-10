@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7419 tokens in, 218 out, 4.664 s, cost $0.0144; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7232 tokens in, 287 out, 5.645 s, cost $0.0148; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to the customer. The documents system had already confirmed that the January 2024 statement is ready, so I didn't need to ask it again. The case is now closed.
+> I replied to the customer, and the desk accepted it. The documents system showed the January 2024 statement is ready, so the reply tells her it's available.
 > 
-> The customer's identity is not verified, so the reply can only go as far as the record shows.
+> The customer isn't verified, so the reply only confirms what the record shows. It doesn't send or open the statement. The case is now closed as replied, and nothing else is pending.

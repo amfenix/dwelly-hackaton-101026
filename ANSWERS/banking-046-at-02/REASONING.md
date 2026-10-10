@@ -50,16 +50,24 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `request_type`: not known → instruction (by `triage`).
 47. `subject`: not known → role (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
-49. The agent asked for `submit_request` {}.
-50. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: next_system = business is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is not known (next_system=not known); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
-51. The agent asked for `ask_system` {"system": "business"}.
-52. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=business); next_system = payment is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: args.system = incoming is false (args.system=business); next_system = incoming is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: args.system = recurring is false (args.system=business); next_system = recurring is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: args.system = card is false (args.system=business); next_system = card is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: args.system = access is false (args.system=business); next_system = access is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: next_system = business is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: args.system = documents is false (args.system=business); next_system = documents is not known (next_system=not known); request_type not in [register, change, instruction, authority] is false (request_type=instruction).
-53. The agent asked for `escalate` {"note": "Mara Ellery, verified business administrator of Larkmere Studio Ltd, confirmed on a verified call that Owen Bell is a former employee. She instructs H&V to revoke his Payroll Approver role, which the portal still shows as active. She wants the review of any operations he previously authorised handled separately. The desk could not submit the revocation or ask the business system. The submission was refused because no next system is established and no confirmation is recorded. Please action or route the role revocation and check the administrator's mandate. Nothing has been revoked yet."}.
-54. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
-55. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
-56. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
-57. The case closed in `ESCALATED`: **escalate**.
+49. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=role).
+50. `next_system`: not known → business (by `route-business`).
+51. The agent asked for `submit_request` {}.
+52. Rule `business-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_asked absent → true (business_asked=not known); verified → true (verified=True); request_type = instruction → true (request_type=instruction); request_type = change → false (request_type=instruction); confirmation = given → false (confirmation=none).
+53. State `TRIAGED` → `REQUEST_PENDING` (by `business-instruction`).
+54. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+55. Called `register_request` (attempt 1, key banking-046-at-02:do-request:15).
+56. Action in the world: `register_request` {"team": "business", "about": "role"}.
+57. `register_request` found {}.
+58. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+59. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-5 calls, 12956 tokens in, 469 out, 7.965 s, cost $0.0279; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5322 tokens in, 371 out, 5.617 s, cost $0.0117; models: claude-haiku-5-5, claude-sonnet-5-5.
+
+## What the agent said
+
+> I've submitted the request to revoke Owen Bell's Payroll Approver role for Larkmere Studio Ltd. The desk accepted it, and the case now shows as requested. I haven't seen confirmation that the role is actually removed.
+> 
+> The administrator's identity and mandate were verified on the call, and the instruction was clear. I treated the review of Owen Bell's earlier operations as separate, as the customer asked, so this request doesn't cover it.

@@ -1,10 +1,10 @@
 # Case banking-013-at-05: Cancellation of a Future Payment Instruction
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: reply**  (final state `REPLIED`)
 
 ## Summary
 
-Elodie Mercer, a verified customer on the secure portal, asked to cancel the next run of her recurring studio-rent instruction (HV-013) and confirmed this in the portal. The desk did not submit the cancellation: the request was refused because its own confirmation fact stayed at "none", even though the recurring system now shows the instruction as CANCELLED, and the case was escalated. A person still needs to check the actual state of the instruction and whether the next run is cancelled, then either confirm that to her or process the cancellation through the proper confirmation step.
+Elodie Mercer, a verified customer on the secure portal, asked to cancel the future run of her recurring studio-rent payment instruction. The desk checked the standing-order record, which shows it as cancelled, and replied on the portal saying so, adding that this does not establish a refund or a future payment outcome and that no further change was made. The case is closed with nothing left for a person, though the confirmation field still reads "none" even though she confirmed in the portal, and the reply was based on the cancelled status instead.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -46,7 +46,10 @@ Case reference: id banking-013-at-05, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `reply` (to: Elodie Mercer, channel: secure_portal), by rule `do-reply`
+
+  > The standing-order record shows cancelled. This does not establish a refund or a future payment outcome. No additional instruction or change was made.
+
 
 ## Decision and why
 
@@ -54,8 +57,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `recurring-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - next_system = recurring → true (next_system=recurring)
+  - recurring_status present → true (recurring_status=CANCELLED)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -70,7 +77,6 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
-- reason: **AGENT_ESCALATED**
 
 Where they came from:
 
@@ -81,17 +87,12 @@ Where they came from:
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
 - nothing
 
-Requests the policy refused:
-
-- `submit_request`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: recurring_asked absent is false (recurring_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: next_system = business is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
-
 ## Final result
 
-escalate (ESCALATED)
+reply (REPLIED)

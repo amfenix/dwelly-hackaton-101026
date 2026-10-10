@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer, emailed asking the bank to update the address it uses for her correspondence. The desk did not change her profile. Because a change has to be confirmed by the customer in the secure portal, it sent her a profile change for confirmation and closed the case at that step. Her profile address stays as it is until she completes the confirmation in the secure portal, and the record shows no confirmation recorded yet.
+Mara Ellison, a verified customer, asked the desk to update the address it uses for her correspondence, but she made the request by email rather than in the secure portal, and no confirmation was on record. The desk did not change the profile; it sent the change to her for confirmation and closed the case at that point. What is left is for Mara to confirm the change in the secure portal, and the address stays as it is until she does.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -58,6 +58,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = none → true (confirmation=none)
+  - registration_asked absent → true (registration_asked=not known)
 - `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
   - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 

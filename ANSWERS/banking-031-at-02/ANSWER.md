@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, a customer writing over secure chat, said she still couldn't find her June statement in the portal and asked for it to be made available there, not sent by email. The desk classified this as a document request about a statement and asked the documents system about it; that request went through and the case closed as asked. Her identity was not verified, nothing has been sent to her, and the record shows no answer yet from the documents system, so what happens next is still open.
+Elowen Marr, writing over secure chat, said she still couldn't find her June statement in the portal and asked for it to be made available there, not sent by email. The desk classified this as a document request and asked the documents system about the statement, then closed the case at that step. The documents system's answer isn't in the record, so whether the statement exists or when it will appear is still open, and Elowen Marr remains unverified.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=document)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

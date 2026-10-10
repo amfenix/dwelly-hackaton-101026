@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 50. `next_system`: not known → access (by `route-access`).
 51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=access).
+52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=access).
 53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-027-at-04:do-ask:15).
@@ -61,13 +61,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. `ask_system` found {}.
 58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 59. The case closed in `ASKED`: **ask_system**.
+60. The agent asked for `reply` {}.
+61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=access); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=access); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-4 calls, 7713 tokens in, 231 out, 5.501 s, cost $0.0152; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11193 tokens in, 434 out, 6.949 s, cost $0.0241; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the access system about Mara's sign-in problem. The case is now waiting for its answer.
+> I asked the access system about Mara Ellison's sign-in problem, and that was the next step for this case. The case is now closed at that step, so I'm stopping here.
 > 
-> The case shows she has already completed the secure recovery checks in the portal. It doesn't yet show whether her profile can be used again, or whether something is still blocking it after the failed attempts. I haven't replied to her or passed on any request. The next step comes once the access system answers.
+> The access system hasn't given an answer yet. The facts still show no `access_status`, and my attempt to draft a reply was refused for that reason. I haven't told her anything about whether her access is restored.
+> 
+> What the case does show is that her identity was verified on the call and that the secure portal reported "Recovery checks completed securely. Return to sign-in." Nothing in the case confirms she can now sign in.

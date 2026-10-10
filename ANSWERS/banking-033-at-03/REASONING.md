@@ -62,10 +62,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5420 tokens in, 198 out, 4.568 s, cost $0.0102; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5281 tokens in, 335 out, 5.304 s, cost $0.0113; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've already asked the documents system about the CSV export for 6 to 9 May 2025. Its answer hasn't come back yet, so the case is waiting and I'm taking no further step now.
+> The export request for 6–9 May 2025 is already with the documents system, and the case is now waiting. I haven't taken any further action.
 > 
-> The case record shows no confirmation that the file exists. We can't yet tell Mara Ellison it is available in her secure portal. When the documents system replies, the desk can tell her what it shows.
+> The case record doesn't yet show that the file exists, so I can't say it's available in the secure portal. The customer isn't verified, so I haven't done anything beyond the request. The case is in a final waiting state, and nothing more can be done until the documents system confirms the file.

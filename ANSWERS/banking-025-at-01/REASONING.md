@@ -50,7 +50,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
 47. `next_system`: not known → card (by `route-card`).
 48. The agent asked for `ask_system` {"system": "card"}.
-49. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=reason).
+49. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=reason).
 50. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 51. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 52. Called `ask_system` (attempt 1, key banking-025-at-01:do-ask:15).
@@ -61,8 +61,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4936 tokens in, 127 out, 3.501 s, cost $0.0085; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6663 tokens in, 210 out, 5.16 s, cost $0.0128; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the card system why the £18.40 payment at North Quay Books was declined. The answer isn't in yet. Once it comes back, we can tell Mara the reason.
+> I asked the card system why the £18.40 payment at North Quay Books was declined. The request was accepted and the case is now in the "asked" state.
+> 
+> The card system hasn't given a reason yet. The case facts show only the payment details, with no decline reason. I haven't told Mara anything about the cause. The next step is to reply once the card system's answer is in the case.

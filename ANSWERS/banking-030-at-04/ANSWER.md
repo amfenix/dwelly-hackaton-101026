@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellery, verified in secure chat, asked whether her replacement card is being made and whether it has been sent. The desk checked the card journal for reference HV-030, which shows the replacement is in manufacture but does not confirm dispatch or delivery, and it made no changes to her account. The case is closed in a waiting state because the card system's answer is not in yet, so what is left is to tell her once that answer arrives.
+Maren Ellery, a verified customer on secure chat, asked whether her replacement card is being made and whether it has been sent. The desk checked the card journal, which shows the replacement is in manufacture but does not confirm dispatch or delivery, and it closed the case as "wait" because the card system's answer was not yet in. A second request to the card system was refused because the case was already in the waiting state, and no changes were made to her account. Nothing has been sent to Maren about the card's status, so the case stays open until the card system's answer arrives or a person picks it up.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -83,6 +83,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card)
 
 ## Final result
 

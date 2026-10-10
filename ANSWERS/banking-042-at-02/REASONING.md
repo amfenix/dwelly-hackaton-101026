@@ -55,7 +55,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 51. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
 52. `next_system`: not known → payment (by `route-payment`).
 53. The agent asked for `ask_system` {"system": "payment"}.
-54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
+54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
 55. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-042-at-02:do-ask:15).
@@ -66,8 +66,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5312 tokens in, 251 out, 5.218 s, cost $0.0105; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7233 tokens in, 282 out, 6.099 s, cost $0.0147; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payment system about batch HV-042 and the row-level validation errors. The answer will come back to the case later. I haven't sent you any report yet, and nothing has been changed on the batch.
+> I've asked the payment system for the details of batch HV-042. The request was accepted and the case is now at "asked". The system's answer isn't in the case yet, so I haven't replied to Nadia and I'm not taking any other step.
+> 
+> Nadia's identity is still unverified, and she has the viewer role. Nothing has been shared with her so far.

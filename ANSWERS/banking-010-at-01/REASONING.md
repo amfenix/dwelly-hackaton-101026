@@ -51,7 +51,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
 48. `next_system`: not known → incoming (by `route-incoming`).
 49. The agent asked for `ask_system` {"system": "incoming"}.
-50. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+50. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 51. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
 52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 53. Called `ask_system` (attempt 1, key banking-010-at-01:do-ask:15).
@@ -62,8 +62,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5172 tokens in, 132 out, 3.732 s, cost $0.0090; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7016 tokens in, 182 out, 4.673 s, cost $0.0131; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the incoming payments system whether the £42.80 refund from Northmere Home Supplies has arrived. The answer will come back later, so I can't confirm its status yet.
+> I checked the incoming payments system for the £42.80 refund from Northmere Home Supplies. The system has accepted the query, but the case doesn't yet hold an answer on whether the refund has arrived. The next step is to reply to you once that answer is available.

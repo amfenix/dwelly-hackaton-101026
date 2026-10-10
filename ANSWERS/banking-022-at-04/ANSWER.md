@@ -1,10 +1,10 @@
 # Case banking-022-at-04: Lost card blocked
 
-**Decision: reply**  (final state `REPLIED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Mara Ellison, a verified caller, said her debit card was missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk checked the card system, which already showed the card as blocked, so it made no new card change and replied on the verified call that the journal shows blocked. The reply also said this does not establish why the card is blocked or whether it can be used. The case is closed with nothing left for a person in the record.
+Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked. The desk found the card already marked BLOCKED and a case (HV-022) already opened and escalated by the service team, whose answer is not in yet, so it closed the case as waiting. The desk took no action itself, and its attempts to send a reply and to submit a new request were both refused because the case was in the waiting state; nothing in the record shows she has been told the card is blocked.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,10 +42,7 @@ Case reference: id banking-022-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `reply` (to: Mara Ellison, channel: verified_call), by rule `do-reply`
-
-  > The card journal shows blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made.
-
+- none
 
 ## Decision and why
 
@@ -53,12 +50,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `card-reply` accepted it.
+- `TRIAGED` → `WAITING`: rule `registration-waits` — The team was asked; its answer is not in yet.
   - state = TRIAGED → true (state=TRIAGED)
-  - next_system = card → true (next_system=card)
-  - card_status present → true (card_status=BLOCKED)
-- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
-  - state = REPLY_PENDING → true (state=REPLY_PENDING)
+  - registration_asked → true (registration_asked=True)
+  - registered absent → true (registered=not known)
 
 Facts established:
 
@@ -93,6 +88,11 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=WAITING); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card); document_ready present is false (document_ready=not known)
+- `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); card_asked absent is false (card_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
+
 ## Final result
 
-reply (REPLIED)
+wait (WAITING)

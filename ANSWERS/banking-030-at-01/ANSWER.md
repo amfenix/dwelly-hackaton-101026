@@ -4,7 +4,7 @@
 
 ## Summary
 
-The request was a status question about a card, apparently whether a replacement card is being made and has been sent. The desk classified it as a card status request and sent a query to the card system. The query returned nothing yet, and the case closed as asked. The record's only confirmation is a note that the secure portal accepted a replacement request, reference HV-030. Nothing is left for a person unless the card system's answer needs following up.
+The request was a status question about a card, and the desk decided to ask the card system about it. That query was sent and the case closed as asked. The record holds no card status, so nothing is known about whether the card is being made or has been sent, and no reply was written; the only confirmed fact is that the portal accepted the replacement request under reference HV-030. What the card system answers is left for a person to follow up.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

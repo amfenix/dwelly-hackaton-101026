@@ -49,18 +49,22 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. State `READING` → `TRIAGED` (by `triage`).
 46. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 47. `next_system`: not known → recurring (by `route-recurring`).
-48. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
+48. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
 49. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
 50. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
 51. Called `send_for_confirmation` (attempt 1, key banking-012-at-01:do-confirm:15).
 52. `send_for_confirmation` found {}.
 53. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
 54. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+55. The agent asked for `ask_system` {"system": "recurring"}.
+56. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-3 calls, 5223 tokens in, 258 out, 4.399 s, cost $0.0104; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5761 tokens in, 455 out, 6.038 s, cost $0.0134; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The case is already in its final state. The change to £68.00 has been sent to Mira's secure portal for her to confirm, and nothing more is needed from the desk. The bank does not change the standing order itself. It will only be amended once Mira confirms it in the portal.
+> I've stopped here. The case is at CONFIRMATION_SENT, which means the desk has already sent Mira a confirmation request for the change from £42.00 to £68.00. The desk refused my check of the recurring system because the case is no longer at the triage stage.
+> 
+> Nothing more should be done until Mira confirms. She hasn't authorised the change, and the bank can't approve it on her behalf. If she confirms, the case can move on to the change itself.

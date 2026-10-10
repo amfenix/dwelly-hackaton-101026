@@ -1,10 +1,10 @@
 # Case banking-046-at-04: Revoke a former employee’s role
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: reply**  (final state `REPLIED`)
 
 ## Summary
 
-Mara Ellery, on a verified call, asked the desk to revoke former employee Owen Bell's Payroll Approver role for Larkmere Studio Ltd and to keep the review of earlier operations separate. The business system had already been asked and returned a status of "OTHER", the desk's attempt to submit the request was refused, and the case was escalated, so the revocation has not been done by the desk. A person still needs to review the business record and handle the revocation.
+Mara Ellery, a verified caller, asked the desk to have H&V revoke former employee Owen Bell's Payroll Approver role. The desk passed the instruction to the business administrator process, which returned a status of "other" and said the admin-log status is available in the secure portal. The desk replied to her on the verified call saying the record shows "other", that this does not establish a recognized status, and that no approval or role change was made by the desk. The case is closed with nothing further queued, so whether the role was actually revoked has to be checked by a person in the secure portal.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,10 @@ Case reference: id banking-046-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `reply` (to: Mara Ellery, channel: verified_call), by rule `do-reply`
+
+  > The business record shows other. The answer does not establish a recognized business-record status. No additional approval or role change was made.
+
 
 ## Decision and why
 
@@ -50,8 +53,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `business-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - next_system = business → true (next_system=business)
+  - business_status present → true (business_status=OTHER)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -66,7 +73,6 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **business**
-- reason: **AGENT_ESCALATED**
 
 Where they came from:
 
@@ -77,17 +83,12 @@ Where they came from:
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
 - nothing
 
-Requests the policy refused:
-
-- `submit_request`: register: request_type = register is false (request_type=instruction); payment-instruction: next_system = payment is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: next_system = access is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: business_asked absent is false (business_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
-
 ## Final result
 
-escalate (ESCALATED)
+reply (REPLIED)

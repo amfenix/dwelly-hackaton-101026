@@ -52,7 +52,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
+51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
 52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
 53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
 54. Called `send_for_confirmation` (attempt 1, key banking-036-at-03:do-confirm:15).
@@ -63,10 +63,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5327 tokens in, 211 out, 4.657 s, cost $0.0102; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5127 tokens in, 182 out, 4.393 s, cost $0.0095; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The address change has been sent to Mara Ellison's secure portal for her to confirm. The case is now closed on our side, and nothing more is needed from us.
-> 
-> The bank hasn't changed the address itself. Her profile will update only after she confirms the change in the portal.
+> The case is already at its final state: a confirmation request has been sent to the customer for the address change. Nothing more is needed from the desk now. The change is only made once Mara Ellison confirms it in the secure profile process.

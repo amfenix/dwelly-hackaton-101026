@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellery, verified on a call as a customer, asked the desk to revoke former employee Owen Bell's Payroll Approver role. The desk classified this as an instruction about a role, passed it to the business system, and closed the case in WAITING because that system's answer has not come back yet. A later attempt to submit the request was refused because the case was no longer in the triaged state, so the role has not been revoked and the case now waits on the business system's reply.
+Mara Ellery, a verified administrator calling in, asked the desk to revoke former employee Owen Bell's Payroll Approver role for Larkmere Studio Ltd. The desk had already put the instruction to the business system and closed the case as waiting for its answer, which has not come back. The agent's later attempts to submit the request and to escalate it were both refused because the case was no longer in the triaged state, so the role has not been revoked and nothing has been handed to a person; the record shows no confirmation from the customer and no further step set for anyone.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -82,6 +82,7 @@ No.
 Requests the policy refused:
 
 - `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

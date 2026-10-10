@@ -59,15 +59,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. Rule `documents-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = documents → true (next_system=documents); documents_asked → true (documents_asked=True); document_ready absent → true (document_ready=not known). The system was asked; its answer is not in yet.
 56. State `TRIAGED` → `WAITING` (by `documents-waits`).
 57. The case closed in `WAITING`: **wait**.
+58. The agent asked for `ask_system` {"system": "documents"}.
+59. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True).
+60. The agent asked for `escalate` {"note": "Mara Venn (unverified, secure chat) says she is the authorised manager for North Quay Printworks. She requests the acquiring report for 1–7 July 2025 and says it is not showing as available. The documents system was already asked, but no availability answer is recorded in the case. The case is in WAITING and further document queries are refused. Please verify the requester's identity and authority, then check why the report is unavailable."}.
+61. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-3 calls, 5337 tokens in, 316 out, 5.193 s, cost $0.0113; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11153 tokens in, 810 out, 10.232 s, cost $0.0278; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The documents system has already been asked about this report, and its answer hasn't come back yet. The case is in a waiting state, so I'm not taking another step now.
+> I couldn't move this case forward, and it is still in WAITING.
 > 
-> I'm not escalating yet. Escalating would be premature before that answer arrives. Asking the documents system again would just duplicate the request. When the answer is in the case, the desk can reply to Mara Venn with what the record shows about the 1–7 July 2025 acquiring report. If the report turns out not to be available, a person can pick it up then.
+> - **Documents system:** the desk had already queried it, so a second query was refused. No answer about the acquiring report for 1–7 July 2025 is recorded in the case.
+> - **Escalation:** this was refused too, because escalation only works from the TRIAGED state and the case is in WAITING.
+> - **Customer:** Mara Venn is still unverified, so I can't confirm she is the authorised manager for North Quay Printworks.
 > 
-> Mara's identity is also not verified in this chat. That's another reason not to release or promise anything beyond what the bank's records show.
+> The case is closed on "wait" and stays open for a person to pick up. That person will need to verify Mara Venn's identity and authority, and find out why the report isn't showing as available.

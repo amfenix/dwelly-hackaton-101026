@@ -58,25 +58,25 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 55. `next_system`: not known → payment (by `asked-payment`).
 56. The agent asked for `ask_system` {"system": "payment"}.
-57. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); request_type not in [register, change, instruction, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=register).
-58. The agent asked for `submit_request` {}.
-59. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-60. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-61. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-62. Called `register_request` (attempt 1, key banking-006-at-04:do-request:15).
-63. Action in the world: `register_request` {"team": "payment", "about": "transfer"}.
-64. `register_request` found {}.
-65. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-66. The case closed in `REQUESTED`: **submit_request**.
+57. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register).
+58. The agent asked for `reply` {}.
+59. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=OTHER).
+60. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+61. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+62. Called `reply_customer` (attempt 1, key banking-006-at-04:do-reply:15).
+63. Action in the world: `reply` {"to": "Mira Ellison", "channel": "secure_chat", "text": "The payment record shows your an answer without a recognized payment status; 2 separate payment instructions. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made."}.
+64. `reply_customer` found {}.
+65. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+66. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 11510 tokens in, 594 out, 8.639 s, cost $0.0255; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11136 tokens in, 666 out, 9.674 s, cost $0.0251; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've passed Mira's request to the team that handles payment reviews. The review asks whether the two £84.20 transfers to North Quay Utilities are one instruction shown twice or two separate instructions. It also asks whether the Pending one can be stopped or returned.
+> I sent the reply to Mira, which closes the case. The reply reports what the payment records showed. They hold two entries to North Quay Utilities for £84.20. The payment status came back as "OTHER", which is not a clear completed or pending result, so the desk can't say more than that.
 > 
-> I haven't established the answers yet. The payment system wasn't asked, because the desk refused that step, and the case so far shows only that there are two entries. Nothing has been stopped, cancelled or returned. The review team decides what happens next.
+> I did not submit a stop or return request for the pending entry. Mira is not verified, and the records don't show whether the two entries are one instruction or two. The reply therefore does not confirm that the pending payment has been stopped or returned.
 > 
-> Mira's identity is also not verified in this case. Any instruction to stop or cancel the pending transfer would need that verification first.
+> My first attempt to query the payment system again was refused, because the payment records had already been checked for this case.

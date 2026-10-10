@@ -4,7 +4,7 @@
 
 ## Summary
 
-Someone from Mallow Pottery Works wrote asking to clarify the purpose of a transfer for a kiln repair, and the desk treated this as a request to look up a recorded fact about the transfer. It checked the record, found no confirmation and no sign of instruction outside the portal, and sent a query to the payment system about the transfer. That query is the only action taken: the payment system's answer hasn't come back, so what the purpose text says is still unknown, and nothing is left for a person unless the answer needs handling.
+Mallow Pottery Works wrote asking for the purpose of a transfer for a kiln repair, and the desk treated this as a request to look up a record fact about that transfer. It found no confirmation and no sign the transfer was instructed outside the portal, routed the case to the payment system, and asked it about the transfer. The payment system's answer is not in the case yet, so nothing has been changed or sent to Mallow Pottery Works, and the reply to the requester still has to wait for that payment record.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=record_fact)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

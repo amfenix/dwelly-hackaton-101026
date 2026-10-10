@@ -1,10 +1,10 @@
 # Case banking-018-at-02: Two Future Payments
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: ask_system**  (final state `ASKED`)
 
 ## Summary
 
-Mara Ellison, a verified caller, asked the desk to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate, but she could not say which line it was. The desk refused the agent's request to look in the recurring payments system because the request counts as an instruction, so it escalated the case without cancelling or changing anything. A person still needs to review both lines, confirm whether they are duplicates, and agree with her which one to cancel before anything is removed.
+Mara Ellison, verified on a call, asked the desk to find and remove a duplicate among two future £34.80 payments to Northmere Heating, though she didn't know which line was the duplicate. The desk treated it as a standing order query and asked the recurring payments system about the £34.80 standing order. The reply added no new facts, so nothing has been removed or changed. Whether the two lines are duplicates, and which one would be cancelled, is still undetermined and is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -34,7 +34,7 @@ Case reference: id banking-018-at-02, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `ask_system` (system: recurring, about: standing_order, amount: 34.80), by rule `do-ask`
 
 ## Decision and why
 
@@ -42,8 +42,15 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `recurring-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - args.system = recurring → true (args.system=recurring)
+  - next_system = recurring → true (next_system=recurring)
+  - next_system absent → false (next_system=recurring)
+  - recurring_asked absent → true (recurring_asked=not known)
+  - request_type not in [register, change, authority] → true (request_type=instruction)
+- `ASK_PENDING` → `ASKED`: rule `do-ask`.
+  - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
@@ -58,7 +65,6 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **recurring**
-- reason: **AGENT_ESCALATED**
 
 Where they came from:
 
@@ -68,17 +74,12 @@ Where they came from:
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
 - nothing
 
-Requests the policy refused:
-
-- `ask_system`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, instruction, authority] is false (request_type=instruction)
-
 ## Final result
 
-escalate (ESCALATED)
+ask_system (ASKED)

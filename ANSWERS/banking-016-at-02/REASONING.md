@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5476 tokens in, 332 out, 4.851 s, cost $0.0116; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7751 tokens in, 394 out, 6.183 s, cost $0.0168; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've passed your request to the team that handles Direct Debit disputes. It asks them to investigate the £18.40 Direct Debit to Northmere Water Services dated 9 July 2025, which you say is the wrong amount.
+> I've passed the customer's dispute of the £18.40 Northmere Water Services Direct Debit (9 July 2025) to the team that handles Direct Debit investigations. The desk accepted the request, and the case is now marked as requested.
 > 
-> I haven't checked the Direct Debit record myself, and I can't say yet whether the amount was wrong. The team will decide that in their review.
+> Tamsin Rook was verified on the call, and the statement entry identified the payment, so I didn't need to check the records or ask her anything first.

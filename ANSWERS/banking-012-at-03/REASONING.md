@@ -54,7 +54,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 52. `next_system`: not known → recurring (by `route-recurring`).
-53. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
+53. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
 54. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
 55. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
 56. Called `send_for_confirmation` (attempt 1, key banking-012-at-03:do-confirm:15).
@@ -65,8 +65,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5461 tokens in, 260 out, 4.364 s, cost $0.0109; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5269 tokens in, 304 out, 4.819 s, cost $0.0109; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The case is already closed. A confirmation of the change to £68.00 a month has been sent to Mira's secure portal. Nothing has changed on the standing order yet. It stays at £42.00 until she confirms the change herself in the portal, so there is nothing more for me to do.
+> The case is already closed. Its state is CONFIRMATION_SENT and the outcome is "send_for_confirmation". The standing order is still £42.00 a month. The change to £68.00 will only go ahead once Mira confirms it herself. She hasn't confirmed yet, and she isn't verified yet either. I'm not calling any other tool.

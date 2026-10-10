@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 50. `next_system`: not known → card (by `route-card`).
 51. The agent asked for `ask_system` {"system": "card"}.
-52. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=reason).
+52. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=reason).
 53. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-024-at-02:do-ask:15).
@@ -64,8 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5217 tokens in, 231 out, 4.835 s, cost $0.0101; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7165 tokens in, 281 out, 6.984 s, cost $0.0145; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the card system why Rowan's card was restricted and whether the restriction has been lifted. The answer isn't in yet, so there's nothing to tell Rowan for now. Once the card system responds, the desk can reply with what the record shows.
+> I've sent the question to the card system. I asked it why the card was restricted after the grocery decline and whether the restriction has been lifted. The case is now marked as asked, and no answer has come back yet.
+> 
+> Rowan's identity is still unverified, so the reply can't share card details until verification is done.

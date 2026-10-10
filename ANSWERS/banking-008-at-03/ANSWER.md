@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elena Marlow asked the desk, through secure chat, to look up the purpose text her transfer instruction to Mallow Pottery Works recorded for a kiln repair payment. The desk checked the payment system, which has been asked but hasn't answered yet, so the case closed as waiting and no actions were taken. Her identity is still marked as not verified in the record even though she says she completed the checks, so what remains is the payment system's answer and confirmation of her identity before any reply with the purpose text.
+Elena Marlow asked, in secure chat, what purpose text her transfer to Mallow Pottery Works for a kiln repair recorded. The desk could not confirm her identity (verified=False), classified the request as a record lookup on a payment, and closed the case in WAITING with no actions taken and no record disclosed. The follow-up requests to query the payment system, redirect to the secure process and escalate to a person were all refused because the case was already in WAITING, so the payment system's answer is still outstanding and the purpose text has not been looked up or given to her.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -78,6 +78,12 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment)
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=record_fact)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
 
 ## Final result
 

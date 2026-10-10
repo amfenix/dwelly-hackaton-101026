@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, a verified customer, asked to change her correspondence address on her profile. Because the request had no confirmation yet and a change has to be confirmed by the customer in the secure portal, the desk sent the change to her for confirmation and closed the case at that point. The address has not been changed; it will update only if she confirms it in the portal, and the record shows no further action for the desk.
+Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address on her profile. Her request also arrived by email, and the desk did not make the change from that. It sent her a confirmation request instead, because a change has to be confirmed by the customer in the secure portal. What is left is for Mara Ellison to confirm the change there, and the record shows no further action from the desk.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -50,6 +50,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = none → true (confirmation=none)
+  - registration_asked absent → true (registration_asked=not known)
 - `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
   - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 

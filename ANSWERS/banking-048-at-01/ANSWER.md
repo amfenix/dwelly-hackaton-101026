@@ -4,7 +4,7 @@
 
 ## Summary
 
-A buyer said they had sent payment for the workshop invoice and asked to be told when it arrives. The desk classed this as a status request about an incoming payment and put the question to the incoming payments system. That query is the only action taken, and the record shows no result from it, so whether the payment has arrived is still unknown. Nothing is recorded as left for a person.
+A buyer said they had sent payment for the workshop invoice and asked to be told when it arrives. The desk classed this as a status question about an incoming payment, found no confirmation of it in its own checks, and put the question to the incoming payments system. That system returned nothing, so the payment is not confirmed as received, and the case closed on that query with no further step recorded for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = incoming → true (next_system=incoming)
   - next_system absent → false (next_system=incoming)
   - incoming_asked absent → true (incoming_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=status)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

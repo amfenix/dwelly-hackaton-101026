@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7701 tokens in, 279 out, 5.537 s, cost $0.0155; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7649 tokens in, 398 out, 6.61 s, cost $0.0166; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to the customer, and the case is closed. The reply was based on the recurring-payments record, which shows the standing order as ACTIVE.
+> I've sent the reply to Elena Wren. The recurring-payments check had already run and showed an active standing order on the account. The reply reports only that record.
 > 
-> The case facts still list the customer as not verified, even though she says she completed the account-holder checks. The reply was written from the record only. I didn't take any action on the account or on closing it.
+> The case facts still show her as not verified, even though she says she completed the account-holder checks. The desk accepted the reply, and the case is now closed.

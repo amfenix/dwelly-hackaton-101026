@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 50. `next_system`: not known → access (by `route-access`).
 51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=document).
+52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
 53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-039-at-03:do-ask:15).
@@ -64,9 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7614 tokens in, 193 out, 5.608 s, cost $0.0146; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7411 tokens in, 347 out, 7.869 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The session list is held by the access system, and its answer isn't in the case yet, so I'm asking that system.
-> I've asked the access system for the list of sign-in sessions on your profile. Its answer hasn't come back yet, so I can't tell you what the list shows. Nothing has been sent to your secure portal so far.
+> I asked the access system for the sign-in sessions on Nerys Wren's profile, and it accepted the request. The case is now closed at this step, with the outcome recorded as "ask_system".
+> 
+> The case status doesn't yet show the session list or any answer from the access system, so I can't tell the customer what the sessions are. The reply to her, to be delivered through the secure portal as she asked, is still to be written once that answer is in the case.

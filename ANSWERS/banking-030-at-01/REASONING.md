@@ -48,7 +48,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 45. `next_system`: not known → card (by `route-card`).
 46. The agent asked for `ask_system` {"system": "card"}.
-47. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+47. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 48. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-030-at-01:do-ask:15).
@@ -59,8 +59,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4982 tokens in, 120 out, 3.69 s, cost $0.0086; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6711 tokens in, 277 out, 6.855 s, cost $0.0136; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the card system whether Maren's replacement card is being made and whether it has been sent. The answer will come back later, so there's nothing more to do on this case until then.
+> I queried the card system about Maren's replacement request (HV-030). The query was accepted, and the case is now closed with the outcome "ask_system".
+> 
+> The case record has no status for the card. It doesn't show whether the card is being made or has been sent. I haven't written a reply, because I would have had to guess at a status the record doesn't contain. The only confirmed fact is that the portal accepted the request under reference HV-030.

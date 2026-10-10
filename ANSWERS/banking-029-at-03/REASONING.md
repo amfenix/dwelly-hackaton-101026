@@ -57,11 +57,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 53. Rule `access-waits` fired: state = TRIAGED → true (state=TRIAGED); next_system = access → true (next_system=access); access_asked → true (access_asked=True); access_status absent → true (access_status=not known). The system was asked; its answer is not in yet.
 54. State `TRIAGED` → `WAITING` (by `access-waits`).
 55. The case closed in `WAITING`: **wait**.
+56. The agent asked for `ask_system` {"system": "access"}.
+57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access).
+58. The agent asked for `redirect_secure` {}.
+59. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=status).
 
 ## Model calls
 
-3 calls, 5322 tokens in, 165 out, 4.367 s, cost $0.0097; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 12486 tokens in, 862 out, 12.11 s, cost $0.0310; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've already asked the access system about the tablet's registration status, and its answer hasn't come back yet. The case is waiting on that answer, so I'm not taking another step now. Once the answer is in the case, we can tell Mara whether the tablet is linked and whether it can be used for banking.
+> I haven't been able to tell Mara whether her tablet is linked. The case is in a waiting state and the desk has closed it as "wait", so I've stopped.
+> 
+> - **No device answer:** The case records that the access system was asked. Nothing in the case says whether the registration finished or whether the tablet can be used for banking, so I can't claim either.
+> - **Refused calls:** A second request to the access system was refused because the case is waiting, not triaged. Redirecting her to the secure sign-in process was refused for the same reason, and because the request is a status question, not an access one.
+> - **Not verified:** The requester is not verified, so the bank shouldn't share account-specific device details with her yet.
+> 
+> The case stays open and goes to a person, who can verify her and check the device record.

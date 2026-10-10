@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara asked why her £18.40 card payment at North Quay Books was declined. The desk classed it as a card payment reason question and sent a query to the card system, with no confirmation needed and nothing instructed outside the portal. The case is closed as asked, and the record shows no reply from the card system yet, so the reason for the decline is still unknown.
+Mara asked why her £18.40 card payment at North Quay Books was declined. The desk classified it as a card-payment reason request and sent a query to the card system, which accepted it. The card system's answer isn't in the case yet, so nothing has been told to Mara about the reason, and that is still open.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -48,7 +48,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=reason)
+  - request_type not in [register, change, authority] → true (request_type=reason)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

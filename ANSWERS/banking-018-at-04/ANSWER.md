@@ -1,10 +1,10 @@
 # Case banking-018-at-04: Two Future Payments
 
-**Decision: escalate**  (final state `ESCALATED`)
+**Decision: reply**  (final state `REPLIED`)
 
 ## Summary
 
-Mara Ellison, a verified customer on a call, asked the desk to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate. The desk's checks found the two lines come from separate instruction records, one a standing order and one a direct debit mandate, so it could not establish that either is a duplicate. Mara also cannot say which line she means, so the desk escalated the case and cancelled nothing. A person still needs to review both lines, decide whether they are duplicates, and confirm with Mara which one to remove before anything is cancelled.
+Mara Ellison, verified by call, asked the desk to check two future £34.80 payments to Northmere Heating and remove the duplicate. The desk looked up the payments and found they were not clearly duplicates: the journal shows one standing order and one direct debit mandate, each with its own reference, and the payment status came back as "OTHER". It cancelled neither and made no new transfer, and it replied to her on the call, though the wording of that reply is garbled and says only that no recognised payment status was established. The case is closed as replied, so whether either payment should be removed is still undecided and nothing in the record assigns it to anyone.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -42,7 +42,10 @@ Case reference: id banking-018-at-04, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- none
+- `reply` (to: Mara Ellison, channel: verified_call), by rule `do-reply`
+
+  > The payment record shows your an answer without a recognized payment status. The answer does not establish a recognized payment status or the recipient's outcome. No new transfer was made.
+
 
 ## Decision and why
 
@@ -50,8 +53,12 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `ESCALATED`: the agent asked for `escalate`, rule `agent-escalates` accepted it.
+- `TRIAGED` → `REPLY_PENDING`: the agent asked for `reply`, rule `payment-reply` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
+  - next_system = payment → true (next_system=payment)
+  - payment_status present → true (payment_status=OTHER)
+- `REPLY_PENDING` → `REPLIED`: rule `do-reply`.
+  - state = REPLY_PENDING → true (state=REPLY_PENDING)
 
 Facts established:
 
@@ -68,7 +75,6 @@ Facts established:
 - instructed_outside_portal: **False**
 - request_type: **instruction**
 - next_system: **payment**
-- reason: **AGENT_ESCALATED**
 
 Where they came from:
 
@@ -80,17 +86,12 @@ Where they came from:
 
 ## Escalated
 
-Yes: the case ended as **escalate** in `ESCALATED`.
-A person picking this up has the facts above, the actions already taken, and the step-by-step record in REASONING.md.
+No.
 
 ## What failed
 
 - nothing
 
-Requests the policy refused:
-
-- `ask_system`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); request_type not in [register, change, instruction, authority] is false (request_type=instruction); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, instruction, authority] is false (request_type=instruction)
-
 ## Final result
 
-escalate (ESCALATED)
+reply (REPLIED)

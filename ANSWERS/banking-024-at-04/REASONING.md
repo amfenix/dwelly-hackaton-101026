@@ -69,10 +69,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7730 tokens in, 308 out, 5.934 s, cost $0.0159; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7475 tokens in, 340 out, 6.203 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I replied to Rowan, and the desk accepted the reply. The reply is limited to what the card record shows: the card is still restricted, and the category is a temporary security-related restriction. The record gives no more detail on the reason, and it does not show that the restriction has been lifted.
+> I've sent the reply to Rowan, and the case is now closed. The card record shows the card is currently restricted. The category is a temporary security-related restriction, and the record doesn't show it as lifted. The desk wrote the reply from that record, so it only covers what the record shows.
 > 
-> Rowan's identity is not verified on this chat, so the card record was the only source for the reply. The bank did not lift or change the restriction.
+> The customer hasn't been verified in this chat. The reply was still accepted, so I didn't hold it back.

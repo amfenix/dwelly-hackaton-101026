@@ -60,22 +60,22 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. State `READING` → `TRIAGED` (by `triage`).
 57. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
 58. `next_system`: not known → card (by `asked-card`).
-59. The agent asked for `reply` {}.
-60. Rule `card-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = card → true (next_system=card); card_status present → true (card_status=BLOCKED).
-61. State `TRIAGED` → `REPLY_PENDING` (by `card-reply`).
-62. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-63. Called `reply_customer` (attempt 1, key banking-022-at-04:do-reply:15).
-64. Action in the world: `reply` {"to": "Mara Ellison", "channel": "verified_call", "text": "The card journal shows blocked. This does not establish why the card is blocked or whether it can be used. No additional card change was made."}.
-65. `reply_customer` found {}.
-66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-67. The case closed in `REPLIED`: **reply**.
+59. Rule `registration-waits` fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered absent → true (registered=not known). The team was asked; its answer is not in yet.
+60. State `TRIAGED` → `WAITING` (by `registration-waits`).
+61. The case closed in `WAITING`: **wait**.
+62. The agent asked for `reply` {}.
+63. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card); document_ready present is false (document_ready=not known).
+64. The agent asked for `submit_request` {}.
+65. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); card_asked absent is false (card_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
 
 ## Model calls
 
-4 calls, 7783 tokens in, 367 out, 5.624 s, cost $0.0166; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11298 tokens in, 608 out, 8.839 s, cost $0.0261; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I replied to the customer. The card system already shows her debit card as blocked, so I didn't submit a new block request.
+> I couldn't take any further step on this case. The desk refused both a reply and a new block request, because the case is in a waiting state and is marked final.
 > 
-> The reply goes no further than that record. The case doesn't show who blocked the card or when. I also didn't order a replacement card, and I didn't look at any transactions at Alder Quay Market.
+> The records show Mara Ellison's debit card as BLOCKED. Her identity was verified on the call. I did not find out whether that block came from her request or was already in place.
+> 
+> No one has confirmed the block to her yet. The case stays open for a person to pick up and tell her the card is blocked.

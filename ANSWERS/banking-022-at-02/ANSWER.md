@@ -1,10 +1,10 @@
 # Case banking-022-at-02: Lost card blocked
 
-**Decision: submit_request**  (final state `REQUESTED`)
+**Decision: wait**  (final state `WAITING`)
 
 ## Summary
 
-Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk classified this as a card instruction and registered a request with the card team, which the system accepted. The record shows no confirmation that the block itself has taken effect, so that remains with the card team.
+Mara Ellison, a verified caller, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk routed the case to the card system, saw that the team had already been asked and its answer wasn't in, and closed the case in WAITING with no action taken. The agent's later attempts to look up the card, submit the block and escalate were all refused because the case was no longer in the triaged state, so the card has not been checked or blocked and a person still needs to follow up on the block request.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -34,7 +34,7 @@ Case reference: id banking-022-at-02, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: card, about: card), by rule `do-request`
+- none
 
 ## Decision and why
 
@@ -42,16 +42,10 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `card-instruction` accepted it.
+- `TRIAGED` → `WAITING`: rule `registration-waits` — The team was asked; its answer is not in yet.
   - state = TRIAGED → true (state=TRIAGED)
-  - next_system = card → true (next_system=card)
-  - card_asked absent → true (card_asked=not known)
-  - verified → true (verified=True)
-  - request_type = instruction → true (request_type=instruction)
-  - request_type = change → false (request_type=instruction)
-  - confirmation = given → false (confirmation=none)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+  - registration_asked → true (registration_asked=True)
+  - registered absent → true (registered=not known)
 
 Facts established:
 
@@ -82,6 +76,12 @@ No.
 
 - nothing
 
+Requests the policy refused:
+
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card)
+- `submit_request`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=card); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none)
+- `escalate`: agent-escalates: state = TRIAGED is false (state=WAITING)
+
 ## Final result
 
-submit_request (REQUESTED)
+wait (WAITING)

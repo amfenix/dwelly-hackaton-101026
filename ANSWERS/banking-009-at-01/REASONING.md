@@ -50,7 +50,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 47. `next_system`: not known → payment (by `route-payment`).
 48. The agent asked for `ask_system` {"system": "payment"}.
-49. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
+49. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
 50. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 51. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 52. Called `ask_system` (attempt 1, key banking-009-at-01:do-ask:15).
@@ -58,11 +58,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. `ask_system` found {}.
 55. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 56. The case closed in `ASKED`: **ask_system**.
+57. The agent asked for `reply` {}.
+58. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 5119 tokens in, 350 out, 4.274 s, cost $0.0103; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10195 tokens in, 437 out, 7.457 s, cost $0.0216; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payment system to confirm the amount sent on this transfer. The only figure we have so far is the £648.20 on the final payment line, and nothing yet confirms what was actually sent. I'll reply once the payment system answers.
+> I asked the payment system about this transfer, and that was the one step I could take. The case is now closed at that step, with no answer in it yet.
+> 
+> The record I have shows a final payment line of £648.20 sent to your property manager. Nothing else confirms the amount: the confirmation field is "none". The payment system has not yet returned the sent amount or status, so I can't tell you what H&V actually sent. I also can't say whether the £684.20 you remember entering was ever submitted.
+> 
+> I tried to reply to you, but the desk refused. It won't send a reply until the payment system's answer is recorded. The case is left for a person to pick up.

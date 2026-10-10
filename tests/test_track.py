@@ -121,9 +121,32 @@ def test_a_review_is_registered_not_asked() -> None:
     assert acts(case) == ["register_request"]
 
 
-def test_approval_for_someone_else_goes_to_a_person() -> None:
-    case = started(ASK, request_type="authority")
-    assert case.state == "ESCALATED" and case.fields["reason"] == "NO_AUTHORITY"
+def test_approval_for_someone_else_is_sent_to_that_person() -> None:
+    access = ("Secure chat", "Nadia Bell", "H&V business support agent", "Please give my new colleague access.")
+    case = started(access, request_type="authority", subject="role")
+    assert not case.send("submit_request").accepted  # nothing is granted by the desk
+    assert case.send("forward_to_authority").accepted and case.state == "FORWARDED"
+    forwarded = case.journal.of("action")[-1].data
+    assert (
+        forwarded["type"] == "forward_to_authority" and forwarded["args"]["to"] == "the verified company administrator"
+    )
+
+
+def test_the_customer_is_asked_only_while_the_case_names_nothing() -> None:
+    declined = ("External message", "Terminal", "Mara", "Payment not accepted. Please contact your bank.")
+    case = started(declined, request_type="reason", subject="card_payment")
+    assert case.send("clarify", {"need": "which_card"}).accepted and case.state == "CLARIFIED"
+    text = case.journal.of("action")[-1].data["args"]["text"]
+    assert "which card" in text and "never ask for your password, PIN" in text
+    assert not started(ASK).send("clarify", {"need": "which_transaction"}).accepted  # £420 to Alder Workshop is named
+
+
+def test_sign_in_goes_through_the_secure_process() -> None:
+    locked = ("Verified call", CUSTOMER, "H&V service agent", "I can't sign in to my profile.")
+    assert not started(locked).send("redirect_secure").accepted  # only for access requests
+    case = started(locked, request_type="access", subject="access")
+    assert case.send("redirect_secure").accepted and case.state == "REDIRECTED"
+    assert "secure process" in case.journal.of("action")[-1].data["args"]["text"]
 
 
 def test_an_unverified_instruction_goes_to_a_person() -> None:

@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mira Ellery, a verified customer on the secure portal, asked to raise her standing order to Westmere Garden Cooperative to £68.00 a month, and the desk recorded her confirmation of the change. It registered a change request with the recurring team about the standing order, and the case closed as requested. The standing order itself has not been changed, and the record shows no further steps beyond the recurring team receiving the request.
+Mira Ellery, a verified customer on the secure portal, asked to raise her standing order to Westmere Garden Cooperative from £42.00 to £68.00 a month and confirmed the change. The desk refused a preliminary ask of the recurring system, since a change request is not allowed that step, then submitted the request, and a request about the standing order was registered with the recurring team and the case closed as REQUESTED. The record does not show the standing order itself being changed, so that remains with the recurring team.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -94,6 +94,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change)
 
 ## Final result
 

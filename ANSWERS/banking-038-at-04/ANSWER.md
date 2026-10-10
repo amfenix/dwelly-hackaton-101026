@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison asked, over secure chat, for her account confirmation document to be made available only in her own secure portal. The desk found that account-confirmation-038.pdf is ready and replied in the chat saying it is available, while noting that this does not confirm it was downloaded or that funds were credited, and that no email was sent. The record shows she was not verified in this chat, and nothing further is left open for a person.
+Mara Ellison, writing over secure chat, asked for her account confirmation document to be available in her own secure portal only. The desk found account-confirmation-038.pdf ready and replied in secure chat that it is available, noting that this doesn't confirm it was downloaded or that funds were credited, and that no email was sent. The desk's checks list her as not verified, and the record doesn't show any check that the reply limits delivery to the portal, so a person may want to look at those points.
 
 _Written by a model from the record below; the sections below are the record._
 

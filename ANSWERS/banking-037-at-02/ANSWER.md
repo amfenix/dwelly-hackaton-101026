@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". The desk treated this as a profile change needing her confirmation, and since none had been given, it sent the change to her for confirmation and closed the case. The correction is not applied until she confirms it in the secure portal, and the data team may still ask her for supporting information.
+Elowen Marr, verified on a call, asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". Because a change has to be confirmed by the customer in the secure portal and none had been given, the desk sent her a confirmation request for the profile change and closed the case at that point. The record shows no further steps for the desk, and the change itself is not recorded as made.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -46,6 +46,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = none → true (confirmation=none)
+  - registration_asked absent → true (registration_asked=not known)
 - `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
   - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 

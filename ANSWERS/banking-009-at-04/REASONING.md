@@ -58,22 +58,24 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
 56. `next_system`: not known → payment (by `asked-payment`).
-57. The agent asked for `reply` {}.
-58. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
-59. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
-60. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-61. Called `reply_customer` (attempt 1, key banking-009-at-04:do-reply:15).
-62. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "verified_call", "text": "The payment record shows your £648.20 transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
-63. `reply_customer` found {}.
-64. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-65. The case closed in `REPLIED`: **reply**.
+57. The agent asked for `ask_system` {"system": "payment"}.
+58. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
+59. The agent asked for `reply` {}.
+60. Rule `payment-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = payment → true (next_system=payment); payment_status present → true (payment_status=SENT).
+61. State `TRIAGED` → `REPLY_PENDING` (by `payment-reply`).
+62. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
+63. Called `reply_customer` (attempt 1, key banking-009-at-04:do-reply:15).
+64. Action in the world: `reply` {"to": "Mara Ellwood", "channel": "verified_call", "text": "The payment record shows your £648.20 transfer as sent. This does not confirm receipt or credit by the recipient bank. No new transfer was made."}.
+65. `reply_customer` found {}.
+66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
+67. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-4 calls, 7770 tokens in, 359 out, 6.977 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10783 tokens in, 549 out, 7.718 s, cost $0.0232; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to Mara. The payment record shows the transfer to her property manager as sent for £648.20, which matches the final payment line. I did not confirm what she entered in the draft, because the draft isn't part of the completed record.
+> I replied to the customer, and the case is closed. The payment record shows the transfer to the property manager as £648.20 with status SENT. That matches the final payment line. The records don't show the £684.20 draft, so the reply can't confirm or explain that figure.
 > 
-> I did not look into the £684.20 she remembers, and no dispute or review was opened. The case is closed on the reply.
+> I first tried to query the payment system again. The desk refused because the payment record had already been read. The reply was written from the facts already in the case.

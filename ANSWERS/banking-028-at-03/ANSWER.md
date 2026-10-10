@@ -4,7 +4,7 @@
 
 ## Summary
 
-Elowen Mercer, a verified caller, asked to replace the phone number on her profile because she no longer has her old phone, and she asked what the approved way to confirm that is. The desk treated it as a change that has to be confirmed by the customer in the secure portal, not by email or chat, so it sent the change to her for confirmation and closed the case in that state. The number has not been changed, and it is left for her to confirm the change in the portal; a later request to ask the access system was refused because the case had already moved past the stage where that is allowed.
+Elowen Mercer, verified on a call, asked to change the phone number on her profile because she no longer has her old phone, and asked for the approved way to confirm a replacement. Her email was only a request, not authorisation, and a change has to be confirmed by the customer in the secure portal, so the desk sent the profile change to her for confirmation and closed the case at that point. The change itself has not been made; the record shows nothing further for anyone to do except her confirmation, which has not yet been received.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -50,6 +50,7 @@ How the case moved:
   - state = TRIAGED → true (state=TRIAGED)
   - request_type = change → true (request_type=change)
   - confirmation = none → true (confirmation=none)
+  - registration_asked absent → true (registration_asked=not known)
 - `CONFIRM_PENDING` → `CONFIRMATION_SENT`: rule `do-confirm`.
   - state = CONFIRM_PENDING → true (state=CONFIRM_PENDING)
 
@@ -77,10 +78,6 @@ No.
 ## What failed
 
 - nothing
-
-Requests the policy refused:
-
-- `ask_system`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change)
 
 ## Final result
 

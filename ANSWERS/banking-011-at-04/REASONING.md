@@ -69,10 +69,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5319 tokens in, 304 out, 6.075 s, cost $0.0110; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7380 tokens in, 238 out, 4.741 s, cost $0.0145; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to Mara Ellison with the answer from the bank's recurring-payments record. Her standing order is active and next runs on 3 September 2025. The reply was accepted and the case is closed.
+> I've sent the reply. The standing order is active and its next run date is 3 September 2025. That is the date the recurring system gave us.
 > 
-> The facts show the requester as not verified. I replied anyway because this was a read-only question and the date was already in the case. Nothing was changed on the standing order.
+> The case shows the customer as not verified. The policy accepted the reply, and I didn't submit any change to the standing order.

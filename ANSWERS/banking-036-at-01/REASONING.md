@@ -52,7 +52,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
+51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
 52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
 53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
 54. Called `send_for_confirmation` (attempt 1, key banking-036-at-01:do-confirm:15).
@@ -63,8 +63,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5213 tokens in, 220 out, 4.415 s, cost $0.0101; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5022 tokens in, 292 out, 5.228 s, cost $0.0104; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The case is closed. The address change has been sent to Mara Ellison's secure portal for her to confirm. Nothing has been changed on her profile yet, because the request came in by email and she isn't verified. The update only happens once she confirms it in the portal.
+> The case is already closed. Its state is CONFIRMATION_SENT with the outcome "send_for_confirmation", and no refusals are recorded.
+> 
+> Mara Ellison is not verified, and her request came by email, outside the portal. An email alone can't change her profile, and she says she understands that. The address change therefore waits for confirmation through the bank's secure process. I'm taking no further action.

@@ -52,7 +52,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
+51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
 52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
 53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
 54. Called `send_for_confirmation` (attempt 1, key banking-028-at-03:do-confirm:15).
@@ -60,17 +60,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. `send_for_confirmation` found {}.
 57. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
 58. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
-59. The agent asked for `ask_system` {"system": "access"}.
-60. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, instruction, authority] is false (request_type=change).
 
 ## Model calls
 
-4 calls, 9905 tokens in, 407 out, 6.698 s, cost $0.0213; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5305 tokens in, 320 out, 5.804 s, cost $0.0112; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The case is already final: the change has been sent to the customer's secure portal for confirmation. Nothing is left for me to do.
-> 
-> Elowen Mercer is verified, and her request to replace the phone number on her profile is a change. It was sent to her secure portal to confirm, so she approves it there herself. The bank has not changed the number.
-> 
-> My request to ask the access system was refused because the case is no longer at the stage where that is allowed. I took no other action.
+> The case is already closed, so I'm taking no further action. Its state is CONFIRMATION_SENT and the outcome is "send_for_confirmation". Elowen Mercer was verified on the call, and the desk has already sent the phone number change for confirmation through the bank's secure process. No refusals are recorded, and the case needs nothing more from me.

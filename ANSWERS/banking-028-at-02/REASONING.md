@@ -52,7 +52,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none). A change is confirmed by the customer in the secure portal, not in chat or by email.
+51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
 52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
 53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
 54. Called `send_for_confirmation` (attempt 1, key banking-028-at-02:do-confirm:15).
@@ -60,13 +60,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. `send_for_confirmation` found {}.
 57. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
 58. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+59. The agent asked for `ask_system` {"system": "access"}.
+60. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-3 calls, 5509 tokens in, 354 out, 5.84 s, cost $0.0120; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 9616 tokens in, 476 out, 7.451 s, cost $0.0214; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> The case is already closed, so I took no further action. A change request for the new phone number has been sent to Elowen Mercer's secure portal. It takes effect only after she confirms it there.
+> I made no change to the phone number on Elowen Mercer's profile. The case is already closed with the outcome "send for confirmation". A confirmation request has been sent, and the case has no confirmation recorded yet.
 > 
-> I didn't ask the access system or escalate, because the case record shows nothing is left to decide. No change has been made to the profile. The email and the call both gave the bank her instruction outside the portal, and neither counts as her authorisation.
+> My one action was a request to the access system. The desk refused it because the case is no longer open for new checks. That refusal doesn't change anything on the profile.
+> 
+> Nothing further is needed from the desk. The number can only change once Ms Mercer completes the confirmation through the bank's secure process.

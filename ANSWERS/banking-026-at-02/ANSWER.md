@@ -4,7 +4,7 @@
 
 ## Summary
 
-Maren Ellwood, a customer on secure chat who has not been verified, said she had forgotten her debit card PIN and asked for the safe way to deal with it, adding that she would not send the PIN in chat. The desk classified this as a card access request, saw that the Access team had already been asked and was escalating it, and put the case into a waiting state without taking any other action. What is left is the Access team's answer, which has not come in yet, and the case stays open until it does.
+Maren Ellwood, an unverified customer on secure chat, said she had forgotten her debit card PIN and asked for the safe way to deal with it. The desk classified it as a card access request, found the Access team had already been asked (it is escalating for the PIN route), and closed the case as waiting for their answer, which is not in yet. Two later attempts, to redirect her to the secure process and to ask the access system again, were refused because the case was already in WAITING, so no actions were taken and she has not received any guidance from the desk.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -74,6 +74,11 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING)
+- `ask_system`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access)
 
 ## Final result
 

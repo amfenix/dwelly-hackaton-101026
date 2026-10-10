@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 50. `next_system`: not known → access (by `route-access`).
 51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-029-at-01:do-ask:15).
@@ -61,11 +61,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. `ask_system` found {}.
 58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 59. The case closed in `ASKED`: **ask_system**.
+60. The agent asked for `reply` {}.
+61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=access); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=access); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 5127 tokens in, 125 out, 4.26 s, cost $0.0089; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10258 tokens in, 329 out, 6.762 s, cost $0.0212; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the access system whether your tablet registration finished and whether the device can be used for banking. I'll reply when its answer comes back. I haven't changed anything on your device or your account.
+> I asked the access system about the tablet registration, but the answer didn't come back into the case. The case is now closed at the "asked" step. A reply was refused because no registration result is on record, so I can't yet say whether the tablet is linked or can be used for banking.
+> 
+> Because the case is closed, it goes to a person to follow up. I haven't told Mara Ellison anything about the device, since the records show nothing either way.

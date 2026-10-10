@@ -59,13 +59,18 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `submit_request` {}.
 57. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
+58. The agent asked for `escalate` {"note": "Verified administrator Mara Ellery (Larkmere Studio Ltd) instructed by verified call to revoke former employee Owen Bell's Payroll Approver role; review of past operations to be handled separately. The desk refused the instruction because the case is WAITING, not TRIAGED, request_type is 'instruction' rather than 'change', and no confirmation is recorded. The business system has already been asked. Please review and revoke the role, or confirm the instruction with the customer."}.
+59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8558 tokens in, 387 out, 6.729 s, cost $0.0183; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11540 tokens in, 867 out, 11.289 s, cost $0.0291; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I couldn't submit the revocation. The case is in WAITING, and the policy only accepts the request once the case is triaged.
+> I haven't revoked Owen Bell's Payroll Approver role, and nothing has been handed to a person. Both of my attempts were refused, so the case is still waiting.
 > 
-> The business system has already been asked about Owen Bell's Payroll Approver role, and its answer hasn't come back. The desk has nothing further to do until it does. The role has not been revoked.
+> - **Revoke request:** The desk refused it. The case is in WAITING rather than TRIAGED, the request is typed as an "instruction" instead of a "change", and no confirmation is recorded. The business system had already been asked.
+> - **Escalation:** The desk refused this too, because the case also has to be TRIAGED before it can be escalated.
+> 
+> The case is left open for a person to pick up. Someone will need to either revoke the role or confirm the instruction with Mara Ellery. The review of Owen's earlier operations stays separate, as she asked.

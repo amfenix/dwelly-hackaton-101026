@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellwood, verified on a call, asked about her completed transfer, and she remembered the draft amount as £684.20 while the final line showed £648.20. The desk checked the payment record, which shows £648.20 as sent, and replied on the verified call that the transfer is recorded as sent, that this does not confirm receipt or credit by the recipient bank, and that no new transfer was made. The case is closed on that reply, with nothing left for a person in the record.
+Mara Ellwood, verified on a call, asked about her transfer, and the desk replied that the payment record shows £648.20 as sent. The reply said this does not confirm the recipient bank received or credited it, and that no new transfer was made. The desk's second request to query the payment system was refused because that record had already been read, and nothing is left for a person.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -90,6 +90,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `ask_system`: payment-ask: next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment)
 
 ## Final result
 

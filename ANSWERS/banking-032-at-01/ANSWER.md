@@ -4,7 +4,7 @@
 
 ## Summary
 
-Mara Ellison, writing over secure chat and not verified as the account holder, asked whether an archived copy of her January 2024 statement is available. The desk classified it as a document request and sent a query about the statement to the documents system, then closed the case at that point. The documents system's answer is not in the record, so whether a copy exists is still unknown and nothing has been sent to her.
+Mara Ellison, writing over secure chat and not identity-verified, asked whether an archived copy of her January 2024 statement is available. The desk classified it as a document request and asked the documents system about the statement, and that query went through with no error. Nothing has been sent to her yet; the documents system's answer is still to come, and the reply to her will depend on it.
 
 _Written by a model from the record below; the sections below are the record._
 
@@ -44,7 +44,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, instruction, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=document)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 

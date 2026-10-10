@@ -53,7 +53,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 50. `next_system`: not known → payment (by `route-payment`).
 51. The agent asked for `ask_system` {"system": "payment"}.
-52. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+52. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 53. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-050-at-02:do-ask:15).
@@ -64,10 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7759 tokens in, 316 out, 5.321 s, cost $0.0160; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7340 tokens in, 315 out, 5.832 s, cost $0.0152; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the payments system for the stage of the Alder Quay Supplies payment. The answer will come back to the case later. I haven't replied to Mara yet, because there is nothing in the case to tell her until it does.
+> I've asked the payment system for the stage of the Alder Quay Supplies payment. The case is now closed at that step, and the payment system's answer isn't in the case yet, so I can't tell Mara what stage the records show.
 > 
-> The case also shows Mara's identity as not yet verified. I'll keep that in mind when the reply is written.
+> One thing to know: the desk shows Mara Ellison as not verified. The case record says she is a signatory, but that isn't confirmed. Her identity and signatory role need to be checked before any payment details go to her.

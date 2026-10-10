@@ -48,7 +48,7 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 45. `next_system`: not known → recurring (by `route-recurring`).
 46. The agent asked for `ask_system` {"system": "recurring"}.
-47. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=status).
+47. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
 48. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-017-at-01:do-ask:15).
@@ -56,11 +56,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `ask_system` found {}.
 53. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 54. The case closed in `ASKED`: **ask_system**.
+55. The agent asked for `reply` {}.
+56. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=recurring); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-3 calls, 4986 tokens in, 154 out, 3.741 s, cost $0.0089; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9987 tokens in, 246 out, 5.791 s, cost $0.0198; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the recurring payments system about your rent standing order. It will show whether the payment was sent for this cycle and, if it wasn't, the reason. The answer isn't back yet, so I can't tell you either way for now. I'll reply once it arrives.
+> The case is final at the ASKED state. I asked the recurring-payments system about the standing order, and that was the one step this case allows.
+> 
+> The system's answer isn't in the case yet. `recurring_status` is still "not known", so I can't tell the customer whether the rent payment was sent or why it wasn't. My attempt to reply was refused for that reason. The case is now with a person to carry on.

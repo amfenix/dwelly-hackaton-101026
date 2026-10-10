@@ -68,8 +68,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5344 tokens in, 184 out, 4.764 s, cost $0.0099; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7565 tokens in, 321 out, 6.407 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've replied to the customer. The access system shows the tablet's registration as awaiting confirmation. That means the device is not yet linked and shouldn't be used for banking operations until the confirmation is completed.
+> I sent the reply. The access record shows the tablet's registration as AWAITING_CONFIRMATION. So the device is not yet confirmed as linked, and the reply tells her not to rely on it for banking operations yet. No confirmation has been recorded, and she hasn't been told to do anything outside the secure portal.

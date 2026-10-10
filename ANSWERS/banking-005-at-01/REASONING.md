@@ -46,20 +46,24 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 42. State `READING` → `TRIAGED` (by `triage`).
 43. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 44. `next_system`: not known → payment (by `route-payment`).
-45. The agent asked for `submit_request` {}.
-46. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-47. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-48. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-49. Called `register_request` (attempt 1, key banking-005-at-01:do-request:15).
-50. Action in the world: `register_request` {"team": "payment", "about": "transfer"}.
-51. `register_request` found {}.
-52. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-53. The case closed in `REQUESTED`: **submit_request**.
+45. The agent asked for `ask_system` {"system": "payment"}.
+46. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register).
+47. The agent asked for `submit_request` {}.
+48. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+49. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+50. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+51. Called `register_request` (attempt 1, key banking-005-at-01:do-request:15).
+52. Action in the world: `register_request` {"team": "payment", "about": "transfer"}.
+53. `register_request` found {}.
+54. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+55. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-4 calls, 7008 tokens in, 261 out, 4.84 s, cost $0.0140; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9528 tokens in, 291 out, 7.152 s, cost $0.0193; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've passed your request to seek the return of the £286.40 transfer to the team that handles returns. That team decides what happens next. The bank hasn't recovered the money or reversed the payment, and I can't say yet whether the return will succeed.
+> I've submitted your request to seek the return of the £286.40 transfer to the wrong saved recipient. It's now with the team that handles these cases.
+> 
+> I couldn't look up the payment record first, because the desk wouldn't run that check for a registration request. So the request rests on the amount and details you gave, and I haven't confirmed which payment or recipient it is. I can't say yet whether the money will come back.

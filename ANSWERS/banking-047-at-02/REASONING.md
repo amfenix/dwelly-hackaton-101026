@@ -50,10 +50,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `request_type`: not known → record_fact (by `triage`).
 47. `subject`: not known → limit (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
-49. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, role] → true (subject=limit, role=viewer).
+49. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=limit).
 50. `next_system`: not known → business (by `route-business`).
 51. The agent asked for `ask_system` {"system": "business"}.
-52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, instruction, authority] → true (request_type=record_fact).
+52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
 53. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-047-at-02:do-ask:15).
@@ -64,14 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7595 tokens in, 306 out, 6.202 s, cost $0.0156; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7362 tokens in, 341 out, 6.121 s, cost $0.0155; models: claude-haiku-5-5, claude-sonnet-5-5.
 
 ## What the agent said
 
-> I've asked the business system for the current outgoing-payment limit on your company profile. The answer isn't in yet, so I can't give you the figure. Once it arrives, I'll reply with what the record shows.
+> I've sent Maeve's request to the business system to look up the current outgoing-payment limit on her company profile. The system accepted it, and the case is closed at this step.
 > 
-> Two points on the case so far:
-> - The system lists you as a viewer on the profile.
-> - Your identity isn't verified on this chat yet.
-> 
-> I haven't submitted or changed anything, including the planned supplier payout you can see in the portal.
+> The business system's answer isn't in the case yet, so the limit itself is still unknown. Maeve has not been told anything. Her identity is still unverified (`verified` is false), and her role on record is viewer.
