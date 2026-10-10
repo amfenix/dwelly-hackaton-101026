@@ -17,7 +17,7 @@ from desk.generator import Generator
 from tests.conftest import MINI, FakeAnthropic, FakeClassifier, text_reply, tool_reply
 from tests.test_machine import functions
 
-TRACK = Path(__file__).resolve().parents[1] / "track"
+TRACK = Path(__file__).resolve().parents[1] / "examples" / "repairs"
 
 
 def write(tmp_path: Path, name: str, text: str) -> Path:

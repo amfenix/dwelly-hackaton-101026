@@ -14,7 +14,7 @@ from desk.policy import Policy, load_policy, parse_policy, read_yaml
 from tests.conftest import MINI, FakeAnthropic, FakeClassifier, text_reply, tool_reply
 from tests.test_machine import ANSWERS, functions
 
-TRACK = Path(__file__).resolve().parents[1] / "track"
+TRACK = Path(__file__).resolve().parents[1] / "examples" / "repairs"
 
 
 def test_one_tool_per_signal_then_case_status(mini: Policy) -> None:

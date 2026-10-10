@@ -18,7 +18,7 @@ from desk.evals import Factories
 from desk.generator import Generator
 from tests.conftest import FakeResponse, text_reply, tool_reply
 
-TRACK = Path(__file__).resolve().parents[1] / "track"
+TRACK = Path(__file__).resolve().parents[1] / "examples" / "repairs"
 
 
 class KeywordClassifier:

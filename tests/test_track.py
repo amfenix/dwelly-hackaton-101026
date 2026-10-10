@@ -1,12 +1,11 @@
-"""The example track's rules and functions: the agent's arguments are checked against the records."""
+"""The track's rules and functions: what pays, what goes to a person, and that a payment is made once."""
 
 from __future__ import annotations
 
-import threading
 from pathlib import Path
 from typing import Any
 
-from desk.machine import Case, Context, Services, load_functions
+from desk.machine import Case, Services, load_functions
 from desk.policy import load_policy
 from desk.runner import load_data
 from tests.conftest import FakeClassifier
@@ -17,52 +16,44 @@ FUNCTIONS, MODULE = load_functions(TRACK / "functions.py")
 WORLD = load_data(TRACK / "world.json")
 
 
-def triaged(category: str, trade: str = "plumbing", **case: Any) -> Case:
-    answers = {"is_emergency": 0.05, "category": category, "trade": trade}
-    machine = Case(
-        POLICY,
-        FUNCTIONS,
-        {"id": "t", "from": "sam.reed@example.com", "text": "x", **case},
-        WORLD,
-        Services(FakeClassifier(answers)),
-    )
+def started(category: str = "payment", sender: str = "ana.lopes@example.com", **request: Any) -> Case:
+    request = {"amount": "120.00", "payee": "P-ENERGY", **request}
+    case_input = {"id": "t", "from": sender, "text": "x", "request": request}
+    machine = Case(POLICY, FUNCTIONS, case_input, WORLD, Services(FakeClassifier({"category": category})))
     machine.start()
-    assert machine.state == "TRIAGED"
     return machine
 
 
-def test_a_booking_for_another_trade_than_the_classifier_found_is_refused() -> None:
-    case = triaged("repair", trade="plumbing")
-    refused = case.send("book_repair", {"trade": "electrical", "access": "weekdays"})
-    assert not refused.accepted and refused.reason is not None
-    assert "args.trade = trade is false (args.trade=electrical, trade=plumbing)" in refused.reason
-    accepted = case.send("book_repair", {"trade": "plumbing", "access": "weekdays"})
-    assert accepted.accepted and case.state == "DONE"
+def payments(case: Case) -> list[dict[str, Any]]:
+    return [e.data["args"] for e in case.journal.of("action") if e.data["type"] == "payment"]
 
 
-def test_a_reply_is_written_from_the_record_not_by_the_agent() -> None:
-    expected = {
-        "rent_due_date": "Your rent is due on day 1 of each month.",
-        "rent_amount": "Your rent is £1200.00 a month.",
-        "landlord": "Your landlord is Morgan Holt.",
-        "property": "Our records have your home as Flat 4, 9 Ashgrove Road.",
-    }
-    for about, text in expected.items():
-        case = triaged("question")
-        assert case.send("reply", {"about": about}).accepted
-        assert case.journal.of("action")[-1].data["args"] == {"to": "T-201", "text": text}
-    assert not triaged("question").send("reply", {"about": "deposit"}).accepted  # no such topic to pick
+def test_a_payment_within_the_limit_is_made_once() -> None:
+    case = started()
+    assert case.state == "TRIAGED"
+    assert case.send("pay").accepted and case.state == "DONE" and case.fields["paid"] is True
+    assert not case.send("pay").accepted  # the case has moved on: a second pay is refused
+    assert [(p["payee"], p["amount"]) for p in payments(case)] == [("P-ENERGY", "120.00")]
 
 
-def test_concurrent_retries_book_once() -> None:
-    case = triaged("repair")
-    case.fields.update(contractor="C-PIPE", quote=95, tenant="T-201")
-    trigger = next(t for t in POLICY.triggers if t.name == "book")
-    contexts = [Context(case, trigger, {}, attempt=1, key="race:book:1") for _ in range(8)]
-    threads = [threading.Thread(target=FUNCTIONS["book_contractor"], args=(ctx,)) for ctx in contexts]
-    for thread in threads:
-        thread.start()
-    for thread in threads:
-        thread.join()
-    booked = [e for e in case.journal.of("action") if e.data["type"] == "book_contractor"]
-    assert len(booked) == 1
+def test_over_the_limit_goes_to_a_person() -> None:
+    case = started(amount="900.00")
+    assert case.state == "ESCALATED" and case.fields["reason"] == "OVER_LIMIT" and not payments(case)
+
+
+def test_a_payee_the_customer_does_not_have_goes_to_a_person() -> None:
+    case = started(payee="P-UNKNOWN")
+    assert case.state == "ESCALATED" and case.fields["reason"] == "UNKNOWN_PAYEE"
+
+
+def test_a_sender_who_is_not_a_customer_goes_to_a_person() -> None:
+    case = started(sender="someone@example.net")
+    assert case.state == "ESCALATED" and case.fields["reason"] == "UNKNOWN_CUSTOMER"
+
+
+def test_pay_is_refused_for_anything_but_a_payment() -> None:
+    case = started(category="question")
+    refused = case.send("pay")
+    assert not refused.accepted and refused.reason is not None and "category = payment" in refused.reason
+    assert case.send("escalate", {"note": "a question for a person"}).accepted
+    assert case.fields["reason"] == "AGENT_ESCALATED" and not payments(case)

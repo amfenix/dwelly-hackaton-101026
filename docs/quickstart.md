@@ -19,6 +19,9 @@ every model call in `traces/`.
 | a test for every rule you add | `tests/test_track.py` |
 | the wording of classifier questions, the agent's choices | `evals/*.yaml` |
 
+`examples/repairs/` is a complete worked example to copy patterns from; the tests run it, so
+leave it as it is.
+
 `src/desk/` is the engine: leave it alone unless the whole team agrees on the change.
 How to write the policy and the functions: [policy.md](policy.md); its example loads as it is.
 

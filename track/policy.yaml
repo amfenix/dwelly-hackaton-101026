@@ -1,51 +1,42 @@
-# An example policy: a letting agency's repairs desk. Replace it with the event's track.
+# The track: a starting point for a payments desk. Replace and extend it for the event's track.
 #
 # How to read it: a case starts in NEW. Rules with no `on:` run by themselves, top to bottom,
 # the first true one each time. Rules with `on:` answer the agent's signals (its tools). The
 # agent never writes a field: functions and the classifier do. A case ends in a `final:` state,
 # and that state is the answer.
+#
+# Convention: a rule with `on:` only moves the case (`set:`, `to:`); code runs in rules with no
+# `on:`, fired by the state. A signal never calls a function directly, and a rule with no `on:`
+# fires once per visit to a state, so the agent cannot make a payment twice.
 
-policy: repairs-desk
+policy: payments-desk
 version: 1
 description: >
-  A letting agency's maintenance inbox. Tenants report repairs and ask questions; the desk books
-  an approved contractor when the landlord's spending limit allows it, answers simple questions,
-  and hands everything else to a person with the facts attached.
+  A bank's operations inbox. Customers ask for payments to be made; the desk pays a payee the
+  customer already has, within the customer's limit, and hands everything else to a person with
+  the facts attached.
 
 fields:
-  tenant:       { type: text,  description: the tenancy the sender is on }
-  landlord:     { type: text,  description: the property's landlord }
-  limit:        { type: money, description: what the landlord lets us spend without asking }
-  is_emergency: bool
-  category:     enum [repair, question, payment, complaint, other]
-  trade:        enum [plumbing, electrical, heating, locks, other]
-  contractor:   text
-  quote:        money
-  booked:       bool
-  reason:       enum [EMERGENCY, UNKNOWN_SENDER, UNCLEAR, OVER_LIMIT, NO_CONTRACTOR, ACTION_FAILED, AGENT_ESCALATED, NOT_HANDLED]
+  customer: { type: text,  description: the customer the sender is }
+  limit:    { type: money, description: what the desk may pay for this customer without asking }
+  amount:   { type: money, description: "the amount asked for, from the request's data" }
+  payee:    { type: text,  description: "a payee the customer already has, from the request's data" }
+  category: enum [payment, question, complaint, other]
+  paid:     bool
+  reason:   enum [UNKNOWN_CUSTOMER, UNKNOWN_PAYEE, OVER_LIMIT, ACTION_FAILED, AGENT_ESCALATED, NOT_HANDLED]
 
-states: [NEW, IDENTIFIED, TRIAGED, QUOTED, DONE, ANSWERED, ESCALATED]
+states: [NEW, IDENTIFIED, TRIAGED, PAYING, DONE, ESCALATED]
 initial: NEW
 final:
   DONE: act
-  ANSWERED: act
   ESCALATED: escalate
 
 signals:
-  book_repair:
+  pay:
     description: >
-      Book a contractor for a repair the tenant reported. The desk finds the landlord's approved
-      contractor for the trade, gets a quote, and books only within the landlord's limit;
-      otherwise the case goes to a person. Use it once per case, for a repair only.
-    args:
-      trade: { type: enum, values: [plumbing, electrical, heating, locks, other], description: the kind of work }
-      access: { type: text, description: "when the tenant said they can let the contractor in, in their words" }
-  reply:
-    description: >
-      Answer a tenant's question from the tenancy record: the desk writes the reply from the record,
-      so pick what the question is about. Not for repairs, money or complaints.
-    args:
-      about: { type: enum, values: [rent_due_date, rent_amount, landlord, property], description: what the tenant asked }
+      Make the payment the customer asked for. The desk pays the amount and the payee from the
+      request's data, never from your words, and only to a payee the customer already has within
+      their limit. Use it once, for a payment request only.
   escalate:
     description: >
       Hand the case to a person now. Use it when the case is outside what the other tools do,
@@ -57,82 +48,53 @@ triggers:
   # --- who wrote? Facts come from the records, not from the message.
   - name: identify
     when: "state = NEW"
-    call: find_sender
+    call: find_customer
     to: IDENTIFIED
 
-  - name: unknown-sender
-    when: "state = IDENTIFIED and tenant absent"
-    set: { reason: UNKNOWN_SENDER }
+  - name: unknown-customer
+    when: "state = IDENTIFIED and customer absent"
+    set: { reason: UNKNOWN_CUSTOMER }
     to: ESCALATED
 
-  # --- what is it about? One classifier call answers all three.
+  # --- what is it about?
   - name: triage
-    when: "state = IDENTIFIED and tenant present"
+    when: "state = IDENTIFIED and customer present"
     ask:
-      is_emergency:
-        noul: "Is anyone or the property in immediate danger: gas smell, fire, flooding, sparks, no heat for a vulnerable person?"
-        above: 0.7
-        below: 0.3
       category:
         choice: "What is the message mainly about?"
         options:
-          repair: something in the home is broken or not working
-          question: a question about the tenancy (rent, dates, contacts)
-          payment: a payment, refund, deposit or money owed
-          complaint: a complaint about the agency, a neighbour or a person
+          payment: a request to pay someone or move money
+          question: a question about an account or a payment
+          complaint: a complaint or a dispute
           other: anything else
-      trade:
-        choice: "If it is a repair, which trade does it need?"
-        options:
-          plumbing: taps, pipes, leaks, toilets, drains
-          electrical: sockets, lights, fuses, wiring
-          heating: boiler, radiators, hot water
-          locks: locks, doors, keys, windows
-          other: any other repair
     retry: 1
     to: TRIAGED
 
-  - name: emergency
-    when: "state = TRIAGED and is_emergency"
-    set: { reason: EMERGENCY }
-    to: ESCALATED
-
-  - name: emergency-unclear
-    when: "state = TRIAGED and is_emergency absent"
-    note: The classifier was not sure either way; danger is not guessed.
-    set: { reason: UNCLEAR }
-    to: ESCALATED
-
-  # --- a repair: quote first, then book only within the landlord's limit.
-  - name: quote-repair
-    on: book_repair
-    # The agent's trade must agree with the classifier's: a disagreement is refused, with both values.
-    when: "state = TRIAGED and category = repair and not is_emergency and args.trade = trade"
-    call: get_quote
-    to: QUOTED
-
-  - name: no-contractor
-    when: "state = QUOTED and contractor absent"
-    set: { reason: NO_CONTRACTOR }
+  - name: unknown-payee
+    when: "state = TRIAGED and category = payment and payee absent"
+    note: The payee is not one the customer already has, so a person checks it.
+    set: { reason: UNKNOWN_PAYEE }
     to: ESCALATED
 
   - name: over-limit
-    when: "state = QUOTED and quote > limit"
+    when: "state = TRIAGED and category = payment and amount > limit"
+    note: Over the customer's limit, so a person decides.
     set: { reason: OVER_LIMIT }
     to: ESCALATED
 
-  - name: book
-    when: "state = QUOTED and quote <= limit"
-    call: book_contractor
-    retry: 2
-    to: DONE
+  # --- the agent asks to pay: the signal only moves the case on.
+  - name: pay-requested
+    on: pay
+    when: "state = TRIAGED and category = payment and payee present and amount <= limit"
+    to: PAYING
 
-  # --- a question the record answers.
-  - name: answer-question
-    on: reply
-    when: "state = TRIAGED and category = question"
-    call: send_reply
-    to: ANSWERED
+  # --- the payment itself: fired by the state, once.
+  - name: pay
+    when: "state = PAYING"
+    call: make_payment
+    retry: 2
+    on_error: { set: { reason: ACTION_FAILED }, to: ESCALATED }
+    to: DONE
 
   # --- the agent hands over.
   - name: agent-escalates
@@ -153,4 +115,4 @@ briefing: brief
 
 agent:
   model: claude-sonnet-5-5
-  max_turns: 8
+  max_turns: 6

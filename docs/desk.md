@@ -4,8 +4,9 @@ An agent that works operational cases (messages, tickets, requests) to an outcom
 hand to a person — where **every action the agent asks for is accepted or refused by a written
 policy**, and every fact a decision rests on comes from the records, not from the agent.
 
-> The `track/` folder holds an example (a letting agency's repairs desk) until it is replaced by
-> the event's track. Everything else is the system.
+> `track/` holds the track: a starting point for a payments desk, to be grown into the event's
+> track. `examples/repairs/` is a complete worked example (a letting agency's repairs desk)
+> that the tests run end to end. Everything else is the system.
 
 ## 1. What we built
 
@@ -113,7 +114,7 @@ Tests and checks (no keys needed, no network):
 
 ```bash
 uv run pytest            # 100% line and branch coverage is enforced
-uv run ruff check src tests track && uv run ruff format --check src tests track && uv run mypy
+uv run ruff check src tests track examples && uv run ruff format --check src tests track examples && uv run mypy
 ```
 
 ## 5. Models, APIs and external services
@@ -143,7 +144,7 @@ No other service is called. Prices used for the cost figures are in `src/desk/ca
 - Rules are checked when the policy loads (names, types, values), but there is no proof that every
   combination of facts is covered; an uncovered case ends in `on_stall`.
 - One machine per case: a message with two requests is worked as one case with two signals.
-- A function with side effects must dedupe on `ctx.key` itself. The example keeps its keys in
+- A function with side effects must dedupe on `ctx.key` itself. The track keeps its keys in
   memory; a real integration passes the key to the external system, which dedupes across restarts.
 - `--replay` reproduces runs only when functions are deterministic given the case and the records.
 - The records (`world`) are shared by every case of a run; functions read them and must not
@@ -165,7 +166,8 @@ No other service is called. Prices used for the cost figures are in `src/desk/ca
 ```
 src/desk/        the engine: policy loader, conditions, state machine, agent, classifier, runner, evals
 track/           the track: policy.yaml, functions.py, world.json, cases.json
-evals/           evals on real models: classifier wording, the agent's first tool, generated text
+evals/           evals on real models: the track's classifier wording
+examples/        a complete worked example (repairs) with its own evals
 tests/           unit and end-to-end tests on fakes (no network)
 docs/desk.md     this document: how the system works and how to run it
 docs/policy.md   how to write the policy and the functions
@@ -183,7 +185,7 @@ change. `docs/policy.md` is the reference for both files.
 | let the agent do something new | a `signals:` entry and a rule with `on:` that accepts it | `desk check` lists the new tool |
 | look something up or act in the world | a `@function` in `track/functions.py`, named by a rule's `call:` | a test in `tests/test_track.py` |
 | ask a question about the text | a rule's `ask:` | an eval in `evals/` to tune the wording |
-| change what the agent reads first | the `briefing:` function | `desk eval evals/agent.yaml` |
+| change what the agent reads first | the `briefing:` function | an agent eval, as in `examples/repairs/evals/agent.yaml` |
 
 The loop while changing it:
 

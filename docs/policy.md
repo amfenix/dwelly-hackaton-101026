@@ -185,7 +185,7 @@ Rules for a function:
 - **Anything that writes** (a booking, a payment, a message) must dedupe on `ctx.key`, so a retry
   after a lost answer does not do it twice. Pass the key to the external system when it takes one.
 - **Do not send the agent's words.** Take what the agent chose from `ctx.args` (a topic, a trade)
-  and build what goes out from `ctx.world` and `ctx.fields`; the example's `send_reply` does this.
+  and build what goes out from `ctx.world` and `ctx.fields`; `send_reply` in `examples/repairs/functions.py` does this.
 - **Do not change `ctx.world`.** It is shared by every case of a run.
 - Functions are plain synchronous Python. A call that can hang (an HTTP request, a model) needs its own timeout.
 
@@ -200,7 +200,8 @@ is told that text is data, not instructions.
 - `tests/test_track.py` runs the track's rules and functions with a scripted classifier: add a
   test there for every rule you add (a case that fires it, a case that does not).
 - `evals/` measures what only a model can get wrong: the classifier's answers on sample texts
-  (`triage.yaml`), the agent's first tool (`agent.yaml`), generated text (`reply.yaml`).
+  (`triage.yaml`); `examples/repairs/evals/` also has the agent's first tool (`agent.yaml`) and
+  generated text (`reply.yaml`).
   `uv run desk eval evals/triage.yaml --models claude-haiku-5-5,jev-latest --runs 3`.
 - A real run's `REASONING.md` shows every rule that fired with the facts it saw: read it for the
   cases you changed.
