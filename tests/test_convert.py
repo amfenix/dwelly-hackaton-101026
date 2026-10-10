@@ -213,11 +213,11 @@ def test_whole_gives_every_event_and_attachment(track: Path) -> None:
     cases, expected = convert.convert(track, whole_cases=True)
     assert expected == {} and len(cases) == 1
     case = cases[0]
-    assert case["id"] == "1" and case["point"] == 5 and len(case["events"]) == 5  # ANSWERS/1/
+    assert case["id"] == "001" and case["point"] == 5 and len(case["events"]) == 5  # ANSWERS/001/
     assert len(case["attachments"]) == 3 and "actor_next" not in case
     make_case(track, "S48")
     ids = sorted(c["id"] for c in convert.convert(track, whole_cases=True)[0])
-    assert ids == ["1", "S48"]
+    assert ids == ["001", "S48"]
 
 
 def test_an_odd_case_is_converted_with_a_warning_and_only_an_empty_one_skipped(track: Path) -> None:

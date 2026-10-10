@@ -47,10 +47,14 @@ ORG_DETAILS = ["Bank", "Insurer", "Coordinator"]
 INTERNAL_CHANNELS = {"internal note"}
 
 _SYSTEM_RE = re.compile(r"\b(" + "|".join(SYSTEM_WORDS) + r")\b", re.IGNORECASE)
-_EVENT_RE = re.compile(r"^## (\d{4}-\d{2}-\d{2}) (\d{2}:\d{2}:\d{2}) UTC — event (\d+)\s*$")
+_EVENT_RE = re.compile(
+    r"^## (\d{4}-\d{2}-\d{2})"
+    r"(?: (\d{2}:\d{2}(?::\d{2})?)(?: ?UTC|[+-]\d{2}:\d{2})?| \([^)]*\))"
+    r" — event (\d+)(?: \([^)]*\))?\s*$"
+)
 _BULLET_RE = re.compile(r"^- \*\*([^*]+):\*\*\s*(.*)$")
 _ANCHOR_RE = re.compile(r"^<a id=\"[^\"]*\"></a>\s*$")
-_TITLE_RE = re.compile(r"^# Case [^:]+:\s*(.+)$")
+_TITLE_RE = re.compile(r"^# (?:Case [^:]+:\s*)?(.+)$")
 _PORTAL_STATUS_RE = re.compile(r"(?:^|[\n;|—])\s*(?:[\w-]+\s+){0,2}status\s*:\s*\S", re.IGNORECASE)
 
 
@@ -139,6 +143,7 @@ def _events(history: str, folder: Path, warnings: list[str] | None = None) -> li
     events = []
     for match, lines in blocks:
         date, time, seq = match.groups()
+        time = "00:00:00" if time is None else time if len(time) == 8 else f"{time}:00"  # not recorded / no seconds
         meta: dict[str, str] = {}
         body_start = 0
         for i, line in enumerate(lines):  # the bullets at the top of the block, then the body
@@ -303,8 +308,8 @@ def _case_dir(number: str) -> str:
 
 
 def _answer_id(number: str) -> str:
-    """A whole case's id is its folder under ANSWERS/, as the submission names it: `001` → `1`."""
-    return str(int(number)) if number.isdigit() else _case_dir(number)
+    """A whole case's id is its folder under ANSWERS/, named as the case folder: `001`."""
+    return _case_dir(number)
 
 
 def _desk_case(case: Case, point: int, whole: bool, placed: Mapping[Path, str] | None = None) -> dict[str, Any]:
