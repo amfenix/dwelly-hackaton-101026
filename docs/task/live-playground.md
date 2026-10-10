@@ -1,23 +1,10 @@
 # The live desk playground (with voice)
 
-Proposed and built by KaushikKC. Status: agreed with the team, with two changes from review (below);
-built on branch `kaushik/live-desk`.
-
 ## The idea in one line
 
 A **playground** where anyone picks, writes, speaks or simulates a call to the banking desk and
 **watches the real desk work on it live**: facts, triage, policy, Claude's decision, the policy's
 check and the final outcome, step by step as they happen.
-
-## Decisions from review
-
-1. **A separate dataset for voice.** Every call comes in on an unsafe channel: the bank doesn't
-   know who is speaking. So voice never reuses the public cases (portal, secure chat, verified
-   calls). It has its own 24 calls, `evals/voice/banking/calls.yaml`, each with the expected next
-   action and what must not happen ([evals/voice/README.md](../../evals/voice/README.md)).
-2. **Stateless.** The server keeps nothing between requests. Each run gets the whole case and
-   returns the whole outcome, the spoken answer included, in one stream. A call is one message:
-   it never continues an earlier call, and no case state is saved.
 
 ## Why
 
@@ -99,26 +86,3 @@ spoken answer ◄── ElevenLabs text-to-speech ◄── the outcome, in the 
 | Text-to-speech | ElevenLabs `eleven_flash_v2_5`: the bank speaks as "Alice" (British); the simulated caller as "George" |
 
 A real phone number (a telephony provider in front of the same server) stays optional and is not built.
-
-## What exists (branch `kaushik/live-desk`)
-
-- `flowkit/live/server.py`: the stateless server (Python standard library + PyYAML). It runs one
-  case through the real desk, streams every journal entry and model call, and speaks the outcome.
-  The engine (`src/desk/`) is not changed.
-- `flowkit/live/index.html`: the page, in the report's design, at `http://127.0.0.1:8770/live/`.
-  It also serves the report at `/report/`.
-- `evals/voice/`: the 24-call dataset, `build.py` → `track/voice/cases.json` and `expected.json`.
-- **Replay coverage:** 175 of the 208 public points replay cleanly. The other 33 were recorded
-  under an earlier policy, so they need live mode, or a fresh `desk run` to re-record them.
-- **Voice baseline:** the current policy matches **5 of 24** calls. It is safe on secrets and
-  attacks (it hands them to a person), but it starts account checks for unknown callers. The
-  gaps and the fixes they need are in [evals/voice/README.md](../../evals/voice/README.md).
-
-Run it: `uv run python flowkit/live/server.py`, then open `http://127.0.0.1:8770/live/`.
-
-## Questions for the team
-
-1. Should `build_report.py` link to **05 Live desk** from the other chapters?
-2. Policy and functions owners: the four fixes in `evals/voice/README.md` (the `Unverified call`
-   channel, a safety rule before routing, `refuse` and `redirect_secure`, fraud in progress first).
-3. Should we re-run `desk run` on the current policy so all 208 public points replay?
