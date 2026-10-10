@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Maren Ellwood, an unverified customer on secure chat, said she had forgotten her debit card PIN and asked for the safe way to deal with it. The desk classified it as a card access request, found the Access team had already been asked (it is escalating for the PIN route), and closed the case as waiting for their answer, which is not in yet. Two later attempts, to redirect her to the secure process and to ask the access system again, were refused because the case was already in WAITING, so no actions were taken and she has not received any guidance from the desk.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

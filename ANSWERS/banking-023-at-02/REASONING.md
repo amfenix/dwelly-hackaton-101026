@@ -48,8 +48,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-48. Classifier (claude claude-haiku-5-5) on `subject`: card_payment → card_payment.
+47. Classifier (jev jev-latest) on `request_type`: register, confidence 0.98 → register.
+48. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
 49. `request_type`: not known → register (by `triage`).
 50. `subject`: not known → card_payment (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
@@ -69,11 +69,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 11050 tokens in, 467 out, 6.997 s, cost $0.0237; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11094 tokens in, 813 out, 7.927 s, cost $0.0265; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> Asking the card system isn't allowed for a register request. I'll submit the dispute.
-> I've submitted the dispute for the £38.40 Fern & Finch Books purchase on 14 July 2025, and it has gone to the team that handles card disputes. The case is now in the requested state. I haven't yet told you how to protect your card.
+> Asking isn't needed for a register request; submit it.
+> I've passed Mara Ellery's dispute of the £38.40 Fern & Finch Books purchase on 14 July 2025 to the card team, and the case is now in the REQUESTED state. She was verified on the call, and the purchase is identified by merchant, amount and date.
 > 
-> Before submitting, I tried to look the purchase up in the card system. The desk refused that check for a request like this, so I didn't confirm the transaction against your card records first.
+> I first tried to look the card up in the card system, but the desk refused. Its checks don't allow a lookup for a register request, so I submitted the dispute directly. I didn't read the card's record, so I haven't checked which card was used or whether it is blocked. I also haven't given her any card-protection steps yet.

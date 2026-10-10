@@ -51,9 +51,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-51. Classifier (claude claude-haiku-5-5) on `subject`: batch → batch.
-52. `request_type`: not known → document (by `triage`).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+51. Classifier (jev jev-latest) on `subject`: batch, confidence 0.96 → batch.
+52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → batch (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
@@ -70,10 +70,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7591 tokens in, 445 out, 7.751 s, cost $0.0170; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7377 tokens in, 778 out, 7.854 s, cost $0.0187; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply. It tells the customer that batch HV-042 shows as VALIDATION_FAILED in the bank's records. I did not look up or share the row-level error report.
+> I sent the reply. The only thing the bank's records show for batch HV-042 is that it failed validation, so the reply is limited to that. I haven't seen the row-level error report and didn't claim anything about which rows need correcting.
 > 
-> Nadia Fenwick is not verified, and her role on the account is viewer. The desk's records didn't confirm that she can see that report, so I only passed on the status the business system had already returned. The case is now closed with that reply.
+> Nadia isn't verified and her role on the account is viewer. For those reasons I didn't query the documents system for the report.
+> 
+> The case is closed with that reply.

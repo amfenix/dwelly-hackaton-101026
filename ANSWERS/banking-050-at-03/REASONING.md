@@ -47,9 +47,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-47. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-48. `request_type`: not known → status (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+47. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → transfer (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -59,18 +59,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `ask_system` {"system": "payment"}.
 57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
-58. The agent asked for `escalate` {"note": "Requester Mara Ellison says she is a signatory for Northmere Studio Ltd and asks for the stage of the payment to Alder Quay Supplies. Identity is not verified (verified=False). The case shows payment_asked=True, but no payment record answer is in the case and the case is WAITING. A further payment ask was refused because the state is not TRIAGED. Please verify the requester, then read the payment record and report only the stage it shows. No confirmation of the payment exists yet."}.
-59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11263 tokens in, 912 out, 10.632 s, cost $0.0290; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7591 tokens in, 626 out, 5.808 s, cost $0.0176; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've made no progress on this case. It's still in WAITING, and both of my attempts were refused.
+> I haven't taken any further action on this case, and I can't tell Mara Ellison what stage the payment is at yet.
 > 
-> - **Payment lookup:** I tried to ask the payment system for the stage of the Alder Quay Supplies payment. The desk refused because the case is in WAITING, not TRIAGED. The case also already shows `payment_asked=True`, but no payment answer is in it.
-> - **Escalation:** I tried to hand the case to a person, noting that Mara Ellison is unverified and no payment answer is on file. That was refused for the same reason: the case isn't TRIAGED.
-> 
-> Mara Ellison hasn't been verified (`verified=False`), and no payment stage has been established. I can't tell her anything about the payment's stage yet. I'm stopping here, so the case stays open and goes to a person.
+> The desk has already asked the payment system about this transfer. The case is in a WAITING state, and no answer is on it yet. A second request to the payment system was refused because the case is not in the state that allows another one. Mara is also not verified, so the bank can't share payment details with her. The case stays open and goes to a person.

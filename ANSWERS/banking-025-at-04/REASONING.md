@@ -50,9 +50,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → none (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-50. Classifier (claude claude-haiku-5-5) on `subject`: card_payment → card_payment.
-51. `request_type`: not known → reason (by `triage`).
+49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+50. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+51. `request_type`: not known → question (by `triage`).
 52. `subject`: not known → card_payment (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
 54. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
@@ -62,11 +62,18 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 58. The case closed in `WAITING`: **wait**.
 59. The agent asked for `ask_system` {"system": "card"}.
 60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=card); next_system = payment is false (next_system=card); next_system absent is false (next_system=card); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=card); next_system = incoming is false (next_system=card); next_system absent is false (next_system=card); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=card); next_system = recurring is false (next_system=card); next_system absent is false (next_system=card); card-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=card); card_asked absent is false (card_asked=True); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=card); next_system = access is false (next_system=card); next_system absent is false (next_system=card); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=card); next_system = business is false (next_system=card); next_system absent is false (next_system=card); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=card); next_system = documents is false (next_system=card); next_system absent is false (next_system=card).
-61. The agent asked for `clarify` {"need": "which_card"}.
-62. Refused `clarify` in `WAITING`: clarify-transaction: state = TRIAGED is false (state=WAITING); args.need = which_transaction is false (args.need=which_card); amount absent is false (amount=18.40); clarify-card: state = TRIAGED is false (state=WAITING); amount absent is false (amount=18.40); clarify-instruction: state = TRIAGED is false (state=WAITING); args.need = which_instruction is false (args.need=which_card); amount absent is false (amount=18.40); clarify-details: state = TRIAGED is false (state=WAITING); args.need = more_details is false (args.need=which_card); amount absent is false (amount=18.40).
-63. The agent asked for `escalate` {"note": "Verified customer Mara Ellison asks why her £18.40 card payment at North Quay Books was declined. The card system lookup was refused because the case is in WAITING state, not TRIAGED. The clarify request was refused for the same reason. No card record has been read, so the decline reason is not known. Please check the declined £18.40 attempt at North Quay Books and reply to the customer."}.
-64. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+61. The agent asked for `escalate` {"note": "Verified customer Mara Ellison asks why her £18.40 card payment at North Quay Books was declined. The card system lookup was refused because the case is in WAITING state, although card_asked is already true. No decline reason is in the case, so I can't state one. Please check the card records for the declined £18.40 attempt at North Quay Books and reply to the customer."}.
+62. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12216 tokens in, 556 out, 7.785 s, cost $0.0274; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11935 tokens in, 985 out, 9.435 s, cost $0.0299; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I couldn't get Mara an answer, and the case is still open and waiting. The desk refused both steps I tried because the case is in a WAITING state rather than TRIAGED:
+> 
+> - **Card lookup:** I asked the card system about the declined £18.40 payment at North Quay Books, and the desk refused it.
+> - **Escalation:** I then tried to hand the case to a person with a note, and the desk refused that too.
+> 
+> Nothing in the case says why the payment was declined, so I can't give Mara a reason. The case isn't ready for another step, so I'm stopping here. It stays open for a person to pick up.

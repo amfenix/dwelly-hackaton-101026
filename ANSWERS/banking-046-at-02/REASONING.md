@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-45. Classifier (claude claude-haiku-5-5) on `subject`: role → role.
+44. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+45. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
 46. `request_type`: not known → instruction (by `triage`).
 47. `subject`: not known → role (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -64,10 +64,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5322 tokens in, 371 out, 5.617 s, cost $0.0117; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7232 tokens in, 565 out, 5.528 s, cost $0.0163; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the request to revoke Owen Bell's Payroll Approver role for Larkmere Studio Ltd. The desk accepted it, and the case now shows as requested. I haven't seen confirmation that the role is actually removed.
+> I submitted the request to revoke Owen Bell's Payroll Approver role for Larkmere Studio Ltd. The desk accepted it, and the case is now in the REQUESTED state.
 > 
-> The administrator's identity and mandate were verified on the call, and the instruction was clear. I treated the review of Owen Bell's earlier operations as separate, as the customer asked, so this request doesn't cover it.
+> Mara Ellery gave the instruction on a verified call, and the desk confirmed her identity and administrator mandate. The instruction was clear, so I didn't check the business system first. I haven't confirmed that the role has actually been removed.
+> 
+> The review of operations Owen Bell authorised earlier was not part of this request, and I haven't started it.

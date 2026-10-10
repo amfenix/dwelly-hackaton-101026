@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-45. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
+44. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+45. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
 46. `request_type`: not known → access (by `triage`).
 47. `subject`: not known → access (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -61,17 +61,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. `ask_system` found {}.
 58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 59. The case closed in `ASKED`: **ask_system**.
-60. The agent asked for `reply` {}.
-61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=access); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=access); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-5 calls, 11193 tokens in, 434 out, 6.949 s, cost $0.0241; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5070 tokens in, 580 out, 4.187 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the access system about Mara Ellison's sign-in problem, and that was the next step for this case. The case is now closed at that step, so I'm stopping here.
-> 
-> The access system hasn't given an answer yet. The facts still show no `access_status`, and my attempt to draft a reply was refused for that reason. I haven't told her anything about whether her access is restored.
-> 
-> What the case does show is that her identity was verified on the call and that the secure portal reported "Recovery checks completed securely. Return to sign-in." Nothing in the case confirms she can now sign in.
+> I've asked the access system for the current state of Mara Ellison's profile. Her recovery checks went through the secure portal and the portal told her to return to sign-in. The case facts don't show whether the profile is now unlocked. I'm leaving this step here until the access system's answer comes back.

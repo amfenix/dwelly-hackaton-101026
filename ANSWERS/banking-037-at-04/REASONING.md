@@ -50,8 +50,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → none (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-50. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
+49. Classifier (jev jev-latest) on `request_type`: change, confidence 0.44 → change.
+50. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 51. `request_type`: not known → change (by `triage`).
 52. `subject`: not known → profile (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
@@ -59,17 +59,22 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. `next_system`: not known → access (by `route-access`).
 56. The agent asked for `submit_request` {}.
 57. Refused `submit_request` in `TRIAGED`: register: request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); incoming-instruction: next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); recurring-instruction: next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); card-instruction: next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); access-instruction: request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); business-instruction: next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); documents-instruction: next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none).
-58. The agent asked for `ask_system` {"system": "access"}.
-59. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); access-ask: next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access); request_type not in [register, change, authority] is false (request_type=change).
-60. The agent asked for `reply` {}.
-61. Rule `registration-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); registration_asked → true (registration_asked=True); registered present → true (registered=True).
-62. State `TRIAGED` → `REPLY_PENDING` (by `registration-reply`).
-63. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
-64. Called `reply_customer` (attempt 1, key banking-037-at-04:do-reply:15).
-65. `reply_customer` found {}.
-66. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
-67. The case closed in `REPLIED`: **reply**.
+58. The agent asked for `escalate` {"note": "Verified caller (verified call) Elowen Marr asks to correct the name on their H&V profile from \"Elowen Mar\" to \"Elowen Marr\". This is a profile data change that the desk cannot carry out as an instruction. submit_request was refused because request_type is change, not instruction. Registration ref HV-037 is already on file. Please route to the data team. The customer understands supporting information may be requested."}.
+59. Rule `agent-escalates` (on `escalate`) fired: state = TRIAGED → true (state=TRIAGED).
+60. `reason`: not known → AGENT_ESCALATED (by `agent-escalates`).
+61. State `TRIAGED` → `ESCALATED` (by `agent-escalates`).
+62. The case closed in `ESCALATED`: **escalate**.
 
 ## Model calls
 
-5 calls, 10897 tokens in, 398 out, 7.786 s, cost $0.0232; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10955 tokens in, 1166 out, 11.86 s, cost $0.0298; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I escalated the case to a person, and the desk accepted it. The case is now in the ESCALATED state.
+> 
+> The customer is verified and wants the name on their profile corrected from "Elowen Mar" to "Elowen Marr". I first tried `submit_request`, but the desk refused it. A profile correction is a change request, not an instruction the desk can carry out directly.
+> 
+> The escalation note asks for the case to go to the data team. It mentions that the customer knows they may be asked for supporting information. It also records registration ref HV-037, which was already on file.
+> 
+> I did not change the name, and nothing has been confirmed to the customer yet.

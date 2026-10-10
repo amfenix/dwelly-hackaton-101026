@@ -1,12 +1,6 @@
 # Case banking-006-at-02: Two Similar Transfers
 
-**Decision: submit_request**  (final state `REQUESTED`)
-
-## Summary
-
-Mira Ellison, an unverified customer on secure chat, asked the desk to check whether two transfer instructions were separate and whether the pending one had been stopped or returned. The desk classed it as a request to register, refused the payment lookup because of that, and instead registered a request with the payment team about the transfer, so the case closed as REQUESTED. The desk did not establish whether the instructions are separate or whether the pending one was stopped or returned, so that remains open for a person, and her identity is still unverified.
-
-_Written by a model from the record below; the sections below are the record._
+**Decision: ask_system**  (final state `ASKED`)
 
 ## What the system received
 
@@ -34,7 +28,7 @@ Case reference: id banking-006-at-02, track Banking & Financial Services, case 0
 
 ## Actions taken
 
-- `register_request` (team: payment, about: transfer), by rule `do-request`
+- `ask_system` (system: payment, about: transfer), by rule `do-ask`
 
 ## Decision and why
 
@@ -42,12 +36,15 @@ How the case moved:
 
 - `READING` → `TRIAGED`: rule `triage`.
   - state = READING → true (state=READING)
-- `TRIAGED` → `REQUEST_PENDING`: the agent asked for `submit_request`, rule `register` accepted it.
+- `TRIAGED` → `ASK_PENDING`: the agent asked for `ask_system`, rule `payment-ask` accepted it.
   - state = TRIAGED → true (state=TRIAGED)
-  - request_type = register → true (request_type=register)
-  - registration_asked absent → true (registration_asked=not known)
-- `REQUEST_PENDING` → `REQUESTED`: rule `do-request`.
-  - state = REQUEST_PENDING → true (state=REQUEST_PENDING)
+  - args.system = payment → true (args.system=payment)
+  - next_system = payment → true (next_system=payment)
+  - next_system absent → false (next_system=payment)
+  - payment_asked absent → true (payment_asked=not known)
+  - request_type not in [register, change, authority] → true (request_type=question)
+- `ASK_PENDING` → `ASKED`: rule `do-ask`.
+  - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
@@ -58,7 +55,7 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **register**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:
@@ -74,10 +71,6 @@ No.
 
 - nothing
 
-Requests the policy refused:
-
-- `ask_system`: payment-ask: next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register)
-
 ## Final result
 
-submit_request (REQUESTED)
+ask_system (ASKED)

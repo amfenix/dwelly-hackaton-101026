@@ -2,12 +2,6 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
-## Summary
-
-Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address on her profile. Her request also arrived by email, and the desk did not make the change from that. It sent her a confirmation request instead, because a change has to be confirmed by the customer in the secure portal. What is left is for Mara Ellison to confirm the change there, and the record shows no further action from the desk.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

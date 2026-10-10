@@ -47,8 +47,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-47. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
+46. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+47. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
 48. `request_type`: not known → instruction (by `triage`).
 49. `subject`: not known → card (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
@@ -66,10 +66,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7210 tokens in, 317 out, 6.15 s, cost $0.0150; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6889 tokens in, 466 out, 4.304 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the card system for the customer's card records before making any change. That was the step I chose, and the case is now closed at that state. The block itself has not been submitted.
-> 
-> The customer is verified and the instruction is clear. The case doesn't say which card is meant, though. Checking the records first avoids blocking the wrong one.
+> I've queried the card system to find out which debit card Mara Ellison holds, so the right one gets blocked. That answer isn't in the case yet. The block itself hasn't been submitted, and the case now needs the card records read before the next step.

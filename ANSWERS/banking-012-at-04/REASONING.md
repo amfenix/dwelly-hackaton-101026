@@ -48,8 +48,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → requested (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-48. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+47. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
+48. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 49. `request_type`: not known → change (by `triage`).
 50. `subject`: not known → standing_order (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
@@ -61,10 +61,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5323 tokens in, 244 out, 4.602 s, cost $0.0104; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5030 tokens in, 583 out, 4.406 s, cost $0.0121; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is in the WAITING state and is final. Mira hasn't confirmed the change, and she isn't verified. The change request has gone to her for confirmation in the secure portal. Nothing else is due from the bank now. Submitting the change would act on an instruction she hasn't confirmed.
-> 
-> I'm stopping here and leaving the standing order at £42.00 until she confirms.
+> I haven't taken any action, and the case stays open, waiting for Mira. Her change from £42.00 to £68.00 a month has been sent to her for confirmation in the secure portal. She hasn't confirmed it, and she isn't verified yet. The bank can't change the standing order for her or on her behalf. The case status is WAITING and final until she confirms the change herself in her portal session.

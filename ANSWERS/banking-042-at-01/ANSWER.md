@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The desk treated this as a document request about a batch. It ran its lookups, which found nothing on the requester or the payment, and it routed the case to the payment system. It then sent the payment system a question about the batch, and the case closed in the "asked" state. A later attempt to send a reply was refused, because none of the conditions for replying were met: no payment status or other result had come back. Nothing further is recorded as pending for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -44,14 +38,14 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
 - subject: **batch**
-- request_type: **document**
+- request_type: **question**
 - next_system: **payment**
 
 ## Escalated

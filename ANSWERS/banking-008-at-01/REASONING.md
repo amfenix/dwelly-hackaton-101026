@@ -40,15 +40,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. `confirmation`: not known → none (by `read-confirmation`).
 37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-40. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-41. `request_type`: not known → record_fact (by `triage`).
+39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+40. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+41. `request_type`: not known → question (by `triage`).
 42. `subject`: not known → transfer (by `triage`).
 43. State `READING` → `TRIAGED` (by `triage`).
 44. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 45. `next_system`: not known → payment (by `route-payment`).
 46. The agent asked for `ask_system` {"system": "payment"}.
-47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
+47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 48. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-008-at-01:do-ask:15).
@@ -56,11 +56,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `ask_system` found {}.
 53. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 54. The case closed in `ASKED`: **ask_system**.
+55. The agent asked for `reply` {}.
+56. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-4 calls, 6864 tokens in, 197 out, 5.468 s, cost $0.0130; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've asked the payment system for the record of the transfer to Mallow Pottery Works. Its answer isn't in the case yet, so I can't tell you what purpose text you entered. Nothing has been changed or sent to Mallow Pottery Works. The next step is to reply to you once the payment record is available.
+5 calls, 8949 tokens in, 325 out, 4.595 s, cost $0.0173; models: claude-sonnet-5-5, jev-1.13.0.

@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellery, verified on a call, said she doesn't recognise the £38.40 Fern & Finch Books card purchase of 14 July 2025 and asked for it to be raised with the card team and for advice on protecting her card. The desk registered the enquiry with the card team as case HV-023, which records the enquiry only and is not a finding of fraud or a decision to refund, and sent her a reply. Two other requests, one to ask the card system and one to submit the request, were refused, and nothing is recorded as left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

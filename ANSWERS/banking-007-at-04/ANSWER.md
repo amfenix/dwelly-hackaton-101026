@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellwood asked over secure chat whether her transfer had reached the beneficiary. The desk checked the payment record, which shows the transfer as sent with no confirmation of receipt. It replied that the transfer is recorded as sent, that this does not confirm receipt or credit by the recipient bank, and that no new transfer was made. A second payment-system request was refused because the status was already in the case, and Mara's identity was not verified; the case is closed with nothing left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -71,7 +65,7 @@ Facts established:
 - payment_status: **SENT**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

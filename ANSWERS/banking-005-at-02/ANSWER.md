@@ -2,12 +2,6 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
-## Summary
-
-Leona Mercer, verified on a call, said she sent a £286.40 transfer to the wrong saved recipient and asked for a request to be registered to seek its return. The desk registered that request with the payment team, and the case closed as requested. The desk refused a lookup in the payment system because this was a registration request, so the payment details were not checked against bank records and the request rests on her account of events; the record lists no further steps.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

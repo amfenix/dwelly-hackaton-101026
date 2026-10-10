@@ -40,15 +40,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. `confirmation`: not known → none (by `read-confirmation`).
 37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-40. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
-41. `request_type`: not known → status (by `triage`).
+39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+40. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+41. `request_type`: not known → question (by `triage`).
 42. `subject`: not known → card (by `triage`).
 43. State `READING` → `TRIAGED` (by `triage`).
 44. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 45. `next_system`: not known → card (by `route-card`).
 46. The agent asked for `ask_system` {"system": "card"}.
-47. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
+47. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 48. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-021-at-01:do-ask:15).
@@ -59,10 +59,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6833 tokens in, 200 out, 4.734 s, cost $0.0130; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6449 tokens in, 406 out, 3.974 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the card system for the status of your replacement card. The query was accepted, but the system returned no dispatch or delivery details, and nothing new has been recorded on the case.
+> I asked the card system whether the replacement card has been dispatched. The request was accepted, and the case is now marked as asked. It is closed on that step.
 > 
-> So far, the only confirmation is the portal's: your request was received. I can't confirm dispatch or delivery, because no record shows either. The case is now closed on this step.
+> The card system's answer is not in the case yet. The facts still show no confirmation of dispatch or delivery. The only confirmation on record is the portal's message that the request was received, and that message does not say the card has been sent. I can't tell the customer the card has been dispatched.

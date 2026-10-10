@@ -235,3 +235,8 @@ def test_main_reads_dot_env_and_prints_only_names(track: Path, monkeypatch: pyte
     code, out = lines_of(["--env", "keys.env", "check"])
     assert code == 0 and out[0] == "keys.env: set DESK_SECRET"
     assert not any("s3cr3t-value" in line for line in out)
+
+
+def test_jev_is_the_default_classifier() -> None:
+    assert cli.parser().parse_args(["run"]).classifier == "jev"
+    assert cli.parser().parse_args(["run", "--classifier", "claude"]).classifier == "claude"

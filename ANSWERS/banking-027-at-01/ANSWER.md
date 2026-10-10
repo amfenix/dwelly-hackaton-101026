@@ -2,12 +2,6 @@
 
 **Decision: redirect_secure**  (final state `REDIRECTED`)
 
-## Summary
-
-The customer's request was about regaining access to their profile, after a sign-in in the H&V app was declined. The desk classified it as an access request and, rather than handling it itself, sent the customer a message to use the secure process in their secure portal, which checks identity there. The message also says the desk will never ask for a password, PIN or verification code, and that nothing on the profile was changed. The case is closed as redirected, and the customer has to complete the recovery themselves.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

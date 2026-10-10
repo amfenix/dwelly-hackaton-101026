@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Maren Ellery, a verified customer on secure chat, asked whether her replacement card is being made and whether it has been sent. The desk checked the card journal, which shows the replacement is in manufacture but does not confirm dispatch or delivery, and it closed the case as "wait" because the card system's answer was not yet in. A second request to the card system was refused because the case was already in the waiting state, and no changes were made to her account. Nothing has been sent to Maren about the card's status, so the case stays open until the card system's answer arrives or a person picks it up.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -66,7 +60,7 @@ Facts established:
 - card_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **card**
 
 Where they came from:

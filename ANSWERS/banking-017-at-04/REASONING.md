@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → standing_order (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7615 tokens in, 377 out, 8.158 s, cost $0.0164; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7233 tokens in, 547 out, 5.856 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply, and the case is closed. The bank's recurring-payments record shows the rent standing order as NOT_EXECUTED, so it wasn't sent this cycle. That matches what your landlord is seeing.
+> I've sent the reply. The bank's recurring-payments record shows your rent standing order as not executed for this cycle, and the desk's reply tells you that. The record doesn't give a reason, so the reply doesn't offer one.
 > 
-> The record doesn't say why it wasn't executed, so the reply doesn't give a reason. The requester also isn't verified on this chat, so the desk has made no changes to the standing order.
+> Your identity isn't verified in this chat, so the reply stays within what the record shows.

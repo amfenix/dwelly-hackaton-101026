@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Elise Rowan, a verified customer using the secure portal, said she saved a transfer instruction for an invoice but had not seen a confirmation that it was sent, so the desk treated this as a status question. It asked the payment system about the transfer and closed the case at that step. The payment system's answer is not in the case, and the desk's attempt to reply to her was refused because no payment status is on record, so she has not been told whether the transfer was submitted. A person still needs to read the payment record and get back to her.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -57,7 +51,7 @@ Facts established:
 - subject: **transfer**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

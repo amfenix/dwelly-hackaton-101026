@@ -2,12 +2,6 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
-## Summary
-
-Mara asked the desk to have a £4.50 paper statement fee dated 18 June 2025 reviewed, saying she had chosen electronic statements. The desk registered the request with the documents team about the fee, and the case closed as requested. Its attempt to query the documents system first was refused because this is a registration request, so her statement delivery records were not checked, and whether the fee will be changed is still undecided and left to the documents team.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

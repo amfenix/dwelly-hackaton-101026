@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellery asked over secure chat whether her Direct Debit mandate to Northmere Water Services is currently active, and said she did not want it cancelled. The desk checked the recurring record, which showed the mandate as active, and replied to her on secure chat with that status, noting that this doesn't guarantee a future payment will execute and that nothing was changed. She was not verified as the requester, but the reply went out and the case closed with nothing left for a person. One thing to note: the reply text says "standing-order record" rather than Direct Debit mandate.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -72,7 +66,7 @@ Facts established:
 - recurring_status: **ACTIVE**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
 
 Where they came from:

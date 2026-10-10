@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The customer asked for the active Direct Debit mandate to Northmere Fitness to be cancelled so it can't be used for future collections. The desk did not cancel it: its attempt to submit the request was refused because the requester was not verified and the customer had given no confirmation. It then asked the recurring-payments system about the Direct Debit, and the case closed in that asked state. The record shows no cancellation and no answer from that system, so the mandate still appears as active and what happens next is left to a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

@@ -50,32 +50,29 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → given (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-50. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+49. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+50. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 51. `request_type`: not known → change (by `triage`).
 52. `subject`: not known → standing_order (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
 54. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 55. `next_system`: not known → recurring (by `route-recurring`).
-56. The agent asked for `ask_system` {"system": "recurring"}.
-57. Refused `ask_system` in `TRIAGED`: payment-ask: args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); access-ask: args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
-58. The agent asked for `submit_request` {}.
-59. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → false (request_type=change); request_type = change → true (request_type=change); confirmation = given → true (confirmation=given).
-60. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
-61. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-62. Called `register_request` (attempt 1, key banking-012-at-05:do-request:15).
-63. Action in the world: `register_request` {"team": "recurring", "about": "standing_order"}.
-64. `register_request` found {}.
-65. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-66. The case closed in `REQUESTED`: **submit_request**.
+56. The agent asked for `submit_request` {}.
+57. Rule `recurring-instruction` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); next_system = recurring → true (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); verified → true (verified=True); request_type = instruction → false (request_type=change); request_type = change → true (request_type=change); confirmation = given → true (confirmation=given).
+58. State `TRIAGED` → `REQUEST_PENDING` (by `recurring-instruction`).
+59. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+60. Called `register_request` (attempt 1, key banking-012-at-05:do-request:15).
+61. Action in the world: `register_request` {"team": "recurring", "about": "standing_order"}.
+62. `register_request` found {}.
+63. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+64. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-6 calls, 12206 tokens in, 544 out, 9.35 s, cost $0.0259; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 8093 tokens in, 663 out, 5.401 s, cost $0.0177; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> Asking isn't allowed for a change request; the verified, confirmed instruction should be carried out.
-> I submitted Mira's confirmed change to the standing order for Westmere Garden Cooperative, from £42.00 to £68.00 a month. The desk accepted it and the case is now in the REQUESTED state. The standing order itself may not have changed yet.
+> I've submitted Mira's change for the standing order to Westmere Garden Cooperative, from £42.00 to £68.00 a month. The desk accepted it and the case is now in the REQUESTED state.
 > 
-> Mira was verified and confirmed the change in the secure portal. My first step was to ask the recurring system to check the order. The desk refused that, because a change request goes straight to submission.
+> I submitted it because she is verified and confirmed the change in the secure portal. The case also showed the recurring-payments system as the place to carry it out, and the instruction was clear. I haven't checked that the standing order itself now shows £68.00.

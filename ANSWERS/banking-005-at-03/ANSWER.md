@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Leona Mercer, a verified caller, asked the desk to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient. The desk routed the case to the payment system, then put it in a waiting state because the registration team had been asked and its answer had not come in. After that, the agent's attempts to query the payment system, submit the request and escalate were all refused because the case was no longer in the triaged state, so nothing was registered or escalated. The record names no next step, so the case sits waiting on the team's answer.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

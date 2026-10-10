@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The request was classed as a document request about account access. The desk passed it to the access system with an ask_system action, and the case closed in the ASKED state. The desk's later attempt to send a reply was refused because none of its reply rules applied once the case was in that state, and no access status had come back. Nothing is recorded as left for a person, but the access system's answer is still outstanding.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = access → true (next_system=access)
   - next_system absent → false (next_system=access)
   - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -53,7 +47,7 @@ Facts established:
 - subject: **access**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **access**
 
 Where they came from:

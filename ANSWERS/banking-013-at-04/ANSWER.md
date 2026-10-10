@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Elodie Mercer, verified on the secure portal, asked to cancel the next run of her recurring studio-rent payment instruction. The desk passed it to the recurring system, closed the case as waiting because that system's answer wasn't in yet, and cancelled nothing. Its attempts to submit the request and to escalate were both refused because the case was already in the waiting state, and the desk's facts still show no confirmation despite her written one. A person needs to check her confirmation against the portal record and decide whether to cancel the run, and she has not been told it is cancelled.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

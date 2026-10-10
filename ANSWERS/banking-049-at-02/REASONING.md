@@ -47,15 +47,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-47. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-48. `request_type`: not known → document (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+47. Classifier (jev jev-latest) on `subject`: document, confidence 0.99 → document.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → document (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
 52. `next_system`: not known → documents (by `route-documents`).
 53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
+54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-049-at-02:do-ask:15).
@@ -66,10 +66,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7316 tokens in, 301 out, 5.1 s, cost $0.0151; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6883 tokens in, 450 out, 4.285 s, cost $0.0145; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the documents system for the acquiring report covering 1–7 July 2025. The case is now closed at that step. The check returned no new facts, so I can't yet say whether the report exists or is ready.
+> I asked the documents system about the acquiring report for 1–7 July 2025. The case is now closed at that step, and the answer from the documents system is not in the case record. So I can't yet say whether the report exists or why it isn't showing as available.
 > 
-> Mara Venn is not verified. The case holds no confirmation of her role as the shop's authorised manager. I did not escalate the file request or send anything to her.
+> Mara Venn is also not verified on this chat, and she has not confirmed anything. I have not escalated the file request or released any file.

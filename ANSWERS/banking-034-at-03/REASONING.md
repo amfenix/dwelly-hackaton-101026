@@ -47,15 +47,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-47. Classifier (claude claude-haiku-5-5) on `subject`: fee → fee.
-48. `request_type`: not known → record_fact (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 0.66 → question.
+47. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → fee (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=fee).
 52. `next_system`: not known → documents (by `route-documents`).
 53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
+54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-034-at-03:do-ask:15).
@@ -68,4 +68,4 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10280 tokens in, 310 out, 6.958 s, cost $0.0202; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9912 tokens in, 415 out, 5.437 s, cost $0.0201; models: claude-sonnet-5-5, jev-1.13.0.

@@ -2,12 +2,6 @@
 
 **Decision: redirect_secure**  (final state `REDIRECTED`)
 
-## Summary
-
-Maren Ellwood wrote in secure chat that she had forgotten the PIN for her H&V debit card and asked for the safe way to deal with it. She was not verified in the chat, so the desk did not handle the PIN there. It sent her a message pointing her to the secure process in her portal, which checks her identity, and told her that nothing on her profile was changed. The case is closed as redirected, and nothing is left for a person on the desk.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

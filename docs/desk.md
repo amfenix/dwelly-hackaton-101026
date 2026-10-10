@@ -81,11 +81,11 @@ Prerequisites: Python 3.11+ and [uv](https://docs.astral.sh/uv/) (or pip).
 uv sync                                   # or: pip install -e .
 cp .env.example .env                      # then fill it in; or export the variables instead
 #   ANTHROPIC_API_KEY  Claude: the agent, the generator, the Claude classifier
-#   TYPESAFE_API_KEY   only for --classifier jev
+#   TYPESAFE_API_KEY   Jev, the default classifier
 
 uv run desk check                         # load the policy and functions, list the agent's tools
 uv run desk run                           # every case in track/cases.json → ANSWERS/, traces/, results.jsonl
-uv run desk run --classifier jev          # the same with TypeSafe's Jev as the classifier
+uv run desk run --classifier claude       # the same with Claude as the classifier
 uv run desk run --workers 4 --deadline 1500   # parallel; cases not reached in time are still answered
 uv run desk run --replay                  # reproduce the run in traces/ into replay/, offline
 diff -r ANSWERS replay/ANSWERS            # the same answers, from the recorded calls
@@ -98,8 +98,8 @@ uv run desk eval evals/triage.yaml --models claude-haiku-5-5,jev-latest --runs 3
 |---|---|---|
 | `--policy`, `--functions`, `--world`, `--cases` | `track/…` | the track's files |
 | `--out`, `--traces`, `--results` | `ANSWERS`, `traces`, `results.jsonl` | where the run writes (under `replay/` for a replay) |
-| `--classifier` | `claude` | `claude` or `jev` |
-| `--classifier-model` | `claude-haiku-5-5` / `jev-latest` | |
+| `--classifier` | `jev` | `jev` or `claude` |
+| `--classifier-model` | `jev-latest` / `claude-haiku-5-5` | |
 | `--generator-model` | `claude-sonnet-5-5` | the summary, and `ctx.generate` in functions |
 | `--agent-model` | the policy's `agent.model` | |
 | `--no-agent` | off | rules only; the agent is never asked |
@@ -122,9 +122,9 @@ uv run ruff check src tests track examples && uv run ruff format --check src tes
 | What | Used for | Configured by |
 |---|---|---|
 | Anthropic Claude API — `claude-sonnet-5-5` | the agent | `ANTHROPIC_API_KEY`; `agent.model` in the policy |
-| Anthropic Claude API — `claude-haiku-5-5` | the classifier (default backend), evals | `--classifier claude` |
+| Anthropic Claude API — `claude-haiku-5-5` | the classifier (alternative backend), evals | `--classifier claude` |
 | Anthropic Claude API — `claude-sonnet-5-5` | the generator: the summary in ANSWER.md, `ctx.generate` | `--generator-model` |
-| TypeSafe System One — Jev (`jev-latest`) | the classifier (alternative backend) | `TYPESAFE_API_KEY`; `--classifier jev` |
+| TypeSafe System One — Jev (`jev-latest`) | the classifier (default backend: 99% on the triage eval against haiku's 93%) | `TYPESAFE_API_KEY` |
 | Python packages | `anthropic`, `typesafe-sdk`, `pyyaml` | `pyproject.toml` |
 
 No other service is called. Prices used for the cost figures are in `src/desk/calls.py`.

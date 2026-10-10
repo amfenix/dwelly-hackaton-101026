@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Elise Rowan asked over secure chat for the current stage of her transfer, which had no sent confirmation, and whether she needed to authorise it. The desk checked the payment record, found it showing as awaiting authorisation, and replied on secure chat saying so, that the reply does not authorise the payment, and that no new transfer was made. Her identity was not verified, and nothing further is recorded as left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -71,7 +65,7 @@ Facts established:
 - payment_status: **AWAITING_AUTHORISATION**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

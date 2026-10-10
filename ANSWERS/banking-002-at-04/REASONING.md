@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: incoming_payment → incoming_payment.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+49. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → incoming_payment (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
@@ -68,8 +68,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7639 tokens in, 312 out, 7.953 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7206 tokens in, 492 out, 6.695 s, cost $0.0155; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer. The incoming-payments check found no matching payment, so the reply reports that nothing has arrived in her H&V account. The desk wrote the wording, and it only states what the record shows. The case is now closed as replied.
+> I've sent the customer a reply. The incoming-payments check found no record of the kiln contribution arriving in the account. The reply can only say that. It doesn't claim the payment is on its way or that it failed. The customer isn't verified, so the reply shouldn't include account details. The case is now closed as replied.

@@ -53,9 +53,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-53. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-54. `request_type`: not known → document (by `triage`).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: document, confidence 0.94 → document.
+54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → document (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
 57. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
@@ -72,12 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7760 tokens in, 358 out, 6.157 s, cost $0.0165; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7326 tokens in, 487 out, 5.003 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to the customer, and the case is closed. The documents system had already confirmed the record for payment HV-040 (£74.00) was ready, so no further checks were needed.
+> I replied to Mara Ellison, and the case is now closed with that reply. The documents system had already confirmed that the record for payment HV-040 (£74.00, 14 July 2025) is ready. The desk writes the reply text, so I haven't seen its exact wording.
 > 
-> The case facts show the customer as not verified. The reply was still accepted, and I did not look into that any further.
-> 
-> The reply can only say what the bank's record shows: the payment's status is SENT. The record has no confirmation of receipt from the contractor, and the customer already understands that is separate.
+> Mara is not verified. The reply can only report what the bank's record shows, which is a bank status of SENT. The record holds no confirmation from the contractor that the money arrived, so the reply can't claim one.

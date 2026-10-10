@@ -51,9 +51,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-51. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-52. `request_type`: not known → record_fact (by `triage`).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+51. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.97 → transfer.
+52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → transfer (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -72,10 +72,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10783 tokens in, 549 out, 7.718 s, cost $0.0232; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10203 tokens in, 520 out, 5.26 s, cost $0.0218; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer, and the case is closed. The payment record shows the transfer to the property manager as £648.20 with status SENT. That matches the final payment line. The records don't show the £684.20 draft, so the reply can't confirm or explain that figure.
-> 
-> I first tried to query the payment system again. The desk refused because the payment record had already been read. The reply was written from the facts already in the case.
+> I sent the reply. The payment record shows £648.20 as the amount sent, and the payment status is SENT. The record has nothing to show the draft was £684.20, so the reply doesn't claim anything about the draft. The desk writes the wording, so I haven't seen the final text. The case is now closed as replied.

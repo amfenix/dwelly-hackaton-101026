@@ -47,8 +47,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-47. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+46. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+47. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 48. `request_type`: not known → change (by `triage`).
 49. `subject`: not known → standing_order (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
@@ -62,13 +62,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 58. `send_for_confirmation` found {}.
 59. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
 60. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+61. The agent asked for `ask_system` {"system": "recurring"}.
+62. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-3 calls, 5286 tokens in, 364 out, 5.529 s, cost $0.0116; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5551 tokens in, 603 out, 4.445 s, cost $0.0133; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed at the state CONFIRMATION_SENT, with the outcome "send_for_confirmation". The standing order to Westmere Garden Cooperative is still £42.00 a month. The increase to £68.00 has not been made.
+> The standing order change is still waiting on Mira. I didn't submit it, because the case is in the CONFIRMATION_SENT state and she hasn't authorised the increase from £42.00 to £68.00. The desk refused my check of the recurring-payments records for that reason. The refusal also shows the case closing as "send_for_confirmation".
 > 
-> Mira is not verified and she has not confirmed the change. She also asked for it in chat rather than the portal. So the change can only go ahead once she confirms it herself. I'm not calling any more tools, because nothing further is needed from the desk.
+> Nothing more can be done until she confirms the change. If she does, the case will need handling again.

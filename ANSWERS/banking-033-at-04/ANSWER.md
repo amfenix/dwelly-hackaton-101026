@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellison asked over secure chat to be told when her CSV export of transactions for 6–9 May 2025 was available in her secure portal. The desk checked the documents system, found the export had been created, and replied in secure chat that the document record shows it is available, noting that this does not confirm it was downloaded and that no email was sent. The case is closed as replied, and nothing is left for a person; the record does not show her identity as verified.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -72,7 +66,7 @@ Facts established:
 - document_ready: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
 
 Where they came from:

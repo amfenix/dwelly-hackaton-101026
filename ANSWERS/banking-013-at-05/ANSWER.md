@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Elodie Mercer, a verified customer on the secure portal, asked to cancel the future run of her recurring studio-rent payment instruction. The desk checked the standing-order record, which shows it as cancelled, and replied on the portal saying so, adding that this does not establish a refund or a future payment outcome and that no further change was made. The case is closed with nothing left for a person, though the confirmation field still reads "none" even though she confirmed in the portal, and the reply was based on the cancelled status instead.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

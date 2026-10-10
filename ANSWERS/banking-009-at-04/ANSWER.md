@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellwood, verified on a call, asked about her transfer, and the desk replied that the payment record shows £648.20 as sent. The reply said this does not confirm the recipient bank received or credited it, and that no new transfer was made. The desk's second request to query the payment system was refused because that record had already been read, and nothing is left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -72,7 +66,7 @@ Facts established:
 - payment_status: **SENT**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Elowen Marr, writing on secure chat without yet being verified, asked the desk to check whether an incoming £42.80 entry matches the specific transfer Northmere Home Supplies said might be returned, and not some other payment. The desk treated it as a status request and sent a query about that £42.80 incoming payment to the incoming-payments system, then closed the case at that step. No answer has come back yet, so whether the entry matches is still unknown, and the record names no further step for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -48,7 +42,7 @@ How the case moved:
   - next_system = incoming → true (next_system=incoming)
   - next_system absent → false (next_system=incoming)
   - incoming_asked absent → true (incoming_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -63,7 +57,7 @@ Facts established:
 - counterparty: **Northmere Home Supplies**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
 
 Where they came from:

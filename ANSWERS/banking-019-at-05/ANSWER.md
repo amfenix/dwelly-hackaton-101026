@@ -2,12 +2,6 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
-## Summary
-
-Maeve Ellery, verified and writing through the secure portal, asked to move the next run of her standing order to Willow Yard Studios from 18 September to 22 September 2025, and she confirmed the change. The desk's query to the recurring system about the processing stage was refused, so it registered a change request with the recurring team instead, and the case closed as requested. The record doesn't show the date actually being changed or the processing stage being checked, so the recurring team still has to act on the request.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

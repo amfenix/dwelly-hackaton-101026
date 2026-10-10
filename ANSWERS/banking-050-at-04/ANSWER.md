@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellison, writing as company signatory on secure chat, asked the desk to check the stage of a transfer that Alder Quay Supplies says it has not received. The desk replied that the payment record shows the transfer as sent, that this does not confirm receipt or credit by the recipient bank, and that no new transfer was made. Her identity was not verified, and the case is closed with nothing further left for a person in the record.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -71,7 +65,7 @@ Facts established:
 - payment_status: **SENT**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

@@ -49,8 +49,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-49. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+48. Classifier (jev jev-latest) on `request_type`: change, confidence 0.98 → change.
+49. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 50. `request_type`: not known → change (by `triage`).
 51. `subject`: not known → standing_order (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
@@ -66,18 +66,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 62. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
 63. The agent asked for `ask_system` {"system": "recurring"}.
 64. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
-65. The agent asked for `reply` {}.
-66. Refused `reply` in `CONFIRMATION_SENT`: registration-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = documents is false (next_system=recurring); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-5 calls, 13899 tokens in, 439 out, 8.387 s, cost $0.0295; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7871 tokens in, 585 out, 5.501 s, cost $0.0177; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed. The outcome is that the change was sent to you for confirmation, and nothing further is needed from the desk.
-> This case is already closed with the outcome "send for confirmation", so no further step is available. The desk did not check whether the 18 September run can still be changed. The records hold no processing-stage information for it, so I can't say whether it can be moved to 22 September.
+> The case is closed with the outcome "send for confirmation". Nothing more can be done from here.
 > 
-> My attempt to query the recurring system was refused because the case had already moved to the confirmation-sent state. The reply tool was refused for the same reason.
+> I tried to check the standing order's processing stage in the recurring system, but the desk refused. The case was already in the confirmation-sent state, so no further checks were accepted. That means I never confirmed whether the 18 September run can still be moved to 22 September.
 > 
-> Nothing has been changed on your standing order to Willow Yard Studios. Any change to the date only takes effect once you confirm it through the secure process.
+> The change has gone to Maeve Ellery for secure confirmation. It will only take effect if she confirms it. Her identity is still unverified, and no confirmation has been received yet.

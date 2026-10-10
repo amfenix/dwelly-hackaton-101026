@@ -48,9 +48,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-48. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
-49. `request_type`: not known → status (by `triage`).
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+48. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+49. `request_type`: not known → question (by `triage`).
 50. `subject`: not known → card (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
 52. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
@@ -63,12 +63,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8697 tokens in, 415 out, 7.005 s, cost $0.0189; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8326 tokens in, 554 out, 5.048 s, cost $0.0184; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't taken a further step on this case. It is in a final WAITING state, and the desk refused my second request to the card system.
+> I've stopped here, and the case is left in WAITING for a person to pick up.
 > 
-> The facts show the card system was already asked (`card_asked` is true), and Maren's identity is verified. The case text contains no answer from the card system, so I can't tell her whether the card is being made or has been sent. Replying now would mean claiming more than the record shows.
+> The card system had already been asked (`card_asked` is true), and the state is final with outcome "wait". My second ask to the card system was refused for that reason. The case doesn't hold any record of whether the replacement card is being made or has been sent.
 > 
-> The case is closed as "wait", so it stays open until the card system's answer arrives or a person picks it up. Maren has not been told anything about the card's status yet.
+> I haven't told Maren anything about the card's status, because the records don't show it. Her replacement request, reference HV-030, was accepted.

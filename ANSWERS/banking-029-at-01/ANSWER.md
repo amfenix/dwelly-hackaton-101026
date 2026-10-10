@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Mara Ellison, a verified customer on the secure portal, wrote that she began registering her new tablet in the H&V app and left the screen before she could tell whether registration had finished. The desk classified this as a status question about access and asked the access system about it, which returned nothing. The case closed at the "asked" step, and a reply to Mara was refused because no registration result is on record, so she has not been told whether the tablet is registered. The record doesn't name a follow-up owner, so what happens next is left to a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = access → true (next_system=access)
   - next_system absent → false (next_system=access)
   - access_asked absent → true (access_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -57,7 +51,7 @@ Facts established:
 - subject: **access**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **access**
 
 Where they came from:

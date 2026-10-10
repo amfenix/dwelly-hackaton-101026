@@ -51,9 +51,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-51. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
-52. `request_type`: not known → record_fact (by `triage`).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+51. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → direct_debit (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
@@ -70,11 +70,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7720 tokens in, 255 out, 5.081 s, cost $0.0153; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7353 tokens in, 491 out, 4.78 s, cost $0.0158; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
 > The recurring system has already answered: the mandate is ACTIVE. I'll reply with that.
-> I sent the reply. The recurring system shows the Direct Debit mandate to Northmere Water Services as active. I did not cancel or change anything, and I did not assess what you owe.
+> I've sent the reply. It tells Mara Ellery that the bank's records show the Direct Debit mandate to Northmere Water Services is currently active.
 > 
-> The desk could not mark you as verified, but it accepted the reply and closed the case.
+> I didn't cancel or change anything, as she asked. I also didn't comment on what she owes the organisation. The case is closed with the reply.
+> 
+> Her identity is not marked as verified in the case. The reply only gives the mandate status, which the bank's records already showed.

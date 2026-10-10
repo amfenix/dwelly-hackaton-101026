@@ -48,8 +48,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-48. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+47. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.92 → instruction.
+48. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.66 → standing_order.
 49. `request_type`: not known → instruction (by `triage`).
 50. `subject`: not known → standing_order (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
@@ -67,10 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7259 tokens in, 274 out, 4.843 s, cost $0.0146; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6909 tokens in, 416 out, 3.893 s, cost $0.0142; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've checked the recurring payments system for the two £34.80 payments to Northmere Heating. I haven't removed or changed anything. The check didn't add any new facts to the case, so I still don't know whether the two lines are duplicates or which one would be the duplicate.
-> 
-> Mara is verified and has asked for the duplicate to be removed, but she doesn't know which line it is. Any cancellation has to wait until the records show how the two lines relate.
+> I've checked the recurring payments system for the two £34.80 Northmere Heating payments. That check was the next step, and the case is now closed at that point. The system's answer isn't in the case yet, so I don't know whether the two payments are duplicates or which one would be. I haven't removed or cancelled anything.

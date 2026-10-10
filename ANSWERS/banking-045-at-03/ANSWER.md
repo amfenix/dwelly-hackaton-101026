@@ -2,12 +2,6 @@
 
 **Decision: forward_to_authority**  (final state `FORWARDED`)
 
-## Summary
-
-Nadia Bell, an unverified customer on secure chat, followed up on an access request that still needs the company administrator's approval. The desk did not grant anything. It forwarded the request about her role to the verified company administrator, and the case closed as forwarded. The desk refused its attempt to check the company-administrator record in the business system, so that record was never read, and what remains is the administrator's approval.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user

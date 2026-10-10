@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → transfer (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7568 tokens in, 309 out, 5.753 s, cost $0.0156; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7228 tokens in, 542 out, 5.227 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The payment record shows the transfer is saved but still awaiting authorisation, so it hasn't been sent to the bank yet. That's why there is no sent confirmation. The reply also covers the customer's question about whether they need to authorise it.
+> I've sent the reply. The payment system shows the instruction as awaiting authorisation, so it hasn't been sent yet, which explains the missing confirmation. The reply tells Elise this, and that it won't go out until it is authorised.
 > 
-> The customer's identity is not verified. The reply can only report what the record shows.
+> I didn't ask the payment system again, because the case already held its answer. The requester isn't verified, so the reply is limited to what the record shows.

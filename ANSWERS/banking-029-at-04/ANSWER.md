@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellison, who was not verified, asked over secure chat whether her new tablet is linked before she uses it for banking. The desk checked the access record, which shows the device as awaiting confirmation, and replied in secure chat with that status, noting that no password or PIN was handled and no access change was made. The case closed as replied; no confirmation has been recorded, and the record shows nothing further left for a person. The agent's own note says the reply tells her not to rely on the tablet for banking yet, but the reply text actually sent does not say that.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -71,7 +65,7 @@ Facts established:
 - access_status: **AWAITING_CONFIRMATION**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **access**
 
 Where they came from:

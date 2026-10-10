@@ -49,8 +49,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-49. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
+48. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+49. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
 50. `request_type`: not known → access (by `triage`).
 51. `subject`: not known → card (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
@@ -68,11 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8480 tokens in, 430 out, 15.268 s, cost $0.0172; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 5523 tokens in, 756 out, 6.182 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> PIN issues go through the bank's secure process, so I'm pointing Maren to it.
-> I sent Maren to the bank's secure PIN process, and the case is now closed as redirected. The bank never sees or handles her PIN. The procedure is already open for her in the secure portal, so she needs to continue there.
+> I sent Maren to the bank's secure PIN process, and the desk accepted the step and closed the case as redirected. The secure portal already has the PIN procedure open for her. She finishes it there, so the bank never sees her PIN in chat.
 > 
-> Her identity is not verified in our records. The desk's access check returned an "OTHER" status, so I haven't told her anything beyond that.
+> One thing to know: the desk's checks still show her as not verified. The access system's answer came back as "OTHER", and I didn't report it separately.

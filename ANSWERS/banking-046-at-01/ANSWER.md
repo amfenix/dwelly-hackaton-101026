@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The request was an instruction about a role, and the desk found no confirmation and no sign it had been given outside the portal. An attempt to submit the request was refused because it was not a register request and had no verification or confirmation. The desk instead asked the business system about the role and closed the case in that asked state. The record lists nothing further for a person to do.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user

@@ -47,9 +47,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-47. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
-48. `request_type`: not known → document (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+47. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → access (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
@@ -59,15 +59,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `ask_system` {"system": "access"}.
 57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access).
+58. The agent asked for `escalate` {"note": "Verified customer Nerys Wren (secure portal) asks for the permitted list of sign-in sessions after an unusual new-device notification on 11 July 2025 08:42 UTC. She wants it delivered through the portal. The access system was already asked (access_asked=True), but no access answer is in the case. A second ask was refused because the case state is WAITING. Please retrieve the permitted session extract and deliver it via the secure portal. No secrets were shared."}.
+59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-4 calls, 8778 tokens in, 451 out, 7.396 s, cost $0.0195; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 12003 tokens in, 932 out, 10.016 s, cost $0.0295; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've stopped here without answering the customer. The case is in a waiting state, and the desk marks it as final with the outcome "wait".
+> I haven't been able to move this case forward, and it stays in the WAITING state.
 > 
-> The access system was already asked once (`access_asked` is true), and its answer isn't in the case yet. My second request to the access system was refused because the case isn't in the state that allows another ask. I haven't sent a reply, a request or an escalation, because nothing in the case supports one yet.
+> - **The access system:** the case already shows the access system was asked (`access_asked=True`), but no answer from it is recorded. My second request was refused because the case isn't in the TRIAGED state.
+> - **Escalation:** my escalation to a person was refused for the same reason.
+> - **Reply:** I haven't replied to Nerys Wren, because there is no session list in the case to report.
 > 
-> The customer, Nerys Wren, is verified and is asking through the secure portal for the permitted list of sign-in sessions on her profile. This is a read-only request, and the case holds no sign-in session information to share. The case stays open for a person to pick up.
+> The customer is verified and wants the permitted session extract delivered through the secure portal. Nothing more can be done until the case moves out of WAITING.

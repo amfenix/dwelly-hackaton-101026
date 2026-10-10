@@ -47,8 +47,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-47. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+46. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
+47. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 48. `request_type`: not known → change (by `triage`).
 49. `subject`: not known → standing_order (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
@@ -65,8 +65,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5269 tokens in, 304 out, 4.819 s, cost $0.0109; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4980 tokens in, 565 out, 4.077 s, cost $0.0118; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed. Its state is CONFIRMATION_SENT and the outcome is "send_for_confirmation". The standing order is still £42.00 a month. The change to £68.00 will only go ahead once Mira confirms it herself. She hasn't confirmed yet, and she isn't verified yet either. I'm not calling any other tool.
+> The case is already closed. Its outcome is "send for confirmation", and a confirmation request has been sent to Mira. I took no further action.
+> 
+> She isn't verified and hasn't confirmed the change. The standing order to Westmere Garden Cooperative therefore stays at £42.00 until she confirms the increase to £68.00 through the secure process.

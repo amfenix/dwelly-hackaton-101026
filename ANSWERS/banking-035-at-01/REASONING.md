@@ -43,8 +43,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. `confirmation`: not known → none (by `read-confirmation`).
 40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-43. Classifier (claude claude-haiku-5-5) on `subject`: fee → fee.
+42. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+43. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
 44. `request_type`: not known → register (by `triage`).
 45. `subject`: not known → fee (by `triage`).
 46. State `READING` → `TRIAGED` (by `triage`).
@@ -64,10 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8050 tokens in, 390 out, 6.226 s, cost $0.0174; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7652 tokens in, 536 out, 4.79 s, cost $0.0168; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I passed Mara's request to the team that handles fee reviews, and the desk accepted it. The case is now in the REQUESTED state. The request asks them to check whether the £4.50 paper statement fee dated 18 June 2025 was correctly applied, given she says she had chosen electronic statements.
+> I passed Mara's request to the team that handles fee disputes and reviews, and the case is now marked as requested. The review is about whether the £4.50 paper statement fee dated 18 June 2025 was correctly applied, given that she says she had chosen electronic statements.
 > 
-> I first tried to check her statement delivery records through the documents system. The desk refused that check because this is a registration request, so the records have not been checked. Nothing has been decided about the fee, and the portal notification itself says it doesn't confirm whether the fee will change.
+> I did not check her statement preference myself. My first attempt to look it up in the documents system was refused, because the desk treats this case as a request to register a dispute or review rather than a lookup. The fee has not been confirmed or changed.

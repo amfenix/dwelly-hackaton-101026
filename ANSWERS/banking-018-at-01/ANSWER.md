@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The request was to check whether two future £34.80 payments to Northmere Heating were duplicates and to remove the duplicate. The desk classed it as a standing order instruction and asked the recurring system about it. That is the only action taken: nothing was removed or cancelled, and the check returned no new facts, so it is still unknown whether the payments are duplicates. The case closed at that step, so a person needs to review the standing order records and decide whether the two lines are separate orders or one shown twice.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

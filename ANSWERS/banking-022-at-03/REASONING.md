@@ -51,8 +51,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-51. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
+50. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+51. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
 52. `request_type`: not known → instruction (by `triage`).
 53. `subject`: not known → card (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
@@ -70,4 +70,4 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 11245 tokens in, 498 out, 7.483 s, cost $0.0249; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10910 tokens in, 689 out, 6.228 s, cost $0.0249; models: claude-sonnet-5-5, jev-1.13.0.

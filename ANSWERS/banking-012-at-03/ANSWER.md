@@ -2,12 +2,6 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
-## Summary
-
-Mira Ellery asked over secure chat to raise her standing order from £42.00 to £68.00 a month. She hadn't confirmed the change and wasn't verified, and the desk's rule is that a change must be confirmed by the customer in the secure portal, not in chat. The desk therefore didn't change the order and instead sent her a confirmation request for the £68.00 amount. What is left is for Mira to confirm it herself; until then the standing order stays at £42.00.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

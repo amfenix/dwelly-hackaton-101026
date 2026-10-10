@@ -42,15 +42,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. `confirmation`: not known → none (by `read-confirmation`).
 39. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 40. Rule `triage` fired: state = READING → true (state=READING).
-41. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-42. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
-43. `request_type`: not known → record_fact (by `triage`).
+41. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+42. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+43. `request_type`: not known → question (by `triage`).
 44. `subject`: not known → direct_debit (by `triage`).
 45. State `READING` → `TRIAGED` (by `triage`).
 46. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
 47. `next_system`: not known → recurring (by `route-recurring`).
 48. The agent asked for `ask_system` {"system": "recurring"}.
-49. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
+49. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 50. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
 51. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 52. Called `ask_system` (attempt 1, key banking-014-at-01:do-ask:15).
@@ -61,9 +61,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7087 tokens in, 237 out, 4.775 s, cost $0.0138; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6683 tokens in, 462 out, 4.043 s, cost $0.0141; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The facts point to the recurring system, which holds Direct Debit mandates. I'll ask it whether the mandate is active.
-> I asked the recurring system whether the Northmere Water Services Direct Debit mandate is active. The request was accepted, but no answer has come back yet. So I can't say whether the mandate is active, and I haven't made any changes. The only thing on record is the Direct Debit collection on your March statement.
+> The answer sits in the recurring system (standing orders and Direct Debits), so I'll ask it.
+> I asked the recurring system whether the Northmere Water Services Direct Debit mandate is active. The request was accepted and the case is now closed at this step. No answer has come back yet, so the case file doesn't show whether the mandate is active. The only thing on record is the March statement entry, which is historic.
+> 
+> Nothing has been cancelled or changed, and I haven't assessed what you owe. The next step is to write to you with the mandate status once the recurring system's answer is in the case.

@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: batch → batch.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → batch (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -61,19 +61,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. The case closed in `WAITING`: **wait**.
 58. The agent asked for `ask_system` {"system": "payment"}.
 59. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
-60. The agent asked for `escalate` {"note": "Leona Voss (role: viewer, unverified, secure chat) asks whether row SUP-17 in a supplier batch marked processed was paid or rejected. The payment system lookup was refused because the case is in WAITING, not TRIAGED. Identity is not verified and no payment record has been read, so no status can be stated yet. Please verify the requester and check the row status in the payment system."}.
+60. The agent asked for `escalate` {"note": "Leona Voss (role: viewer, secure chat, identity NOT verified) asks whether row SUP-17 in a supplier batch marked processed was paid or rejected. The payment system lookup was refused because the case is in WAITING state, not TRIAGED. No payment status has been read, so none can be stated. A person needs to verify her identity and viewer entitlement, then check the SUP-17 row status."}.
 61. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 10897 tokens in, 698 out, 9.024 s, cost $0.0262; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10374 tokens in, 816 out, 7.719 s, cost $0.0251; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't check row SUP-17, so I can't yet say whether it was paid or rejected.
+> I couldn't move this case forward, and it is still open for a person to pick up.
 > 
-> The case is in a waiting state, and the desk refused both actions I tried:
-> - **Payment lookup:** refused because the case is not yet triaged.
-> - **Escalation to a person:** refused for the same reason.
+> - **Payment lookup:** the payment system refused my request to check row SUP-17. The case is in a WAITING state, and the lookup only works once the case is triaged.
+> - **Escalation:** the handover to a person was refused for the same reason.
+> - **Status of SUP-17:** I haven't read it, so I can't say whether it was paid or rejected.
+> - **Identity:** Leona Voss's identity is not verified. She is a viewer, and that would need to be checked before any payment detail is shared.
 > 
-> The requester, Leona Voss, is a viewer and is not verified. No payment record has been read, so I haven't told her anything about the row. The case stays open for a person to pick up.
+> I haven't tried any other tool, because none of the others fits this request.

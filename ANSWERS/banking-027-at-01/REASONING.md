@@ -40,8 +40,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. `confirmation`: not known → none (by `read-confirmation`).
 37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-40. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
+39. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+40. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
 41. `request_type`: not known → access (by `triage`).
 42. `subject`: not known → access (by `triage`).
 43. State `READING` → `TRIAGED` (by `triage`).
@@ -59,10 +59,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4924 tokens in, 291 out, 5.002 s, cost $0.0102; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4602 tokens in, 533 out, 4.007 s, cost $0.0107; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed the customer to H&V's secure recovery process so they can get back into their profile. The case is now closed as redirected.
-> 
-> I didn't look up their account or touch any credentials. The desk never handles passwords or PINs, so the customer has to complete recovery themselves through the secure process.
+> I've pointed the customer to H&V's secure recovery process to restore their sign-in. The desk accepted the redirect and closed the case. I didn't look at their access records first, because the portal had already declined the sign-in and told them to use recovery. The bank doesn't handle passwords or PINs, so the customer completes the recovery themselves.

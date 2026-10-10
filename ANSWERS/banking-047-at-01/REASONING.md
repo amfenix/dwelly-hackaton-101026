@@ -45,15 +45,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-45. Classifier (claude claude-haiku-5-5) on `subject`: limit → limit.
-46. `request_type`: not known → record_fact (by `triage`).
+44. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+45. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
+46. `request_type`: not known → question (by `triage`).
 47. `subject`: not known → limit (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=limit).
 50. `next_system`: not known → business (by `route-business`).
 51. The agent asked for `ask_system` {"system": "business"}.
-52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
+52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 53. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-047-at-01:do-ask:15).
@@ -64,10 +64,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6943 tokens in, 190 out, 4.85 s, cost $0.0132; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6603 tokens in, 389 out, 3.711 s, cost $0.0133; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the business system for the current outgoing-payment limit on Maeve's company profile. The request was accepted. The case now shows as final with the outcome "ask_system".
+> The facts point to the business system for company limits, so I'll ask it.
+> I asked the business system for the company's current outgoing-payment limit. The request was accepted and the case is now in the ASKED state. The case record doesn't contain the limit itself yet, so I can't give Maeve a figure.
 > 
-> The limit itself isn't in the case yet, so I can't give Maeve a figure. The case status lists no refusals.
+> The next step is to reply to her once the business system's answer is in the case.

@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Mara Ellison, a verified customer calling in, asked the desk to check whether two future £34.80 payments to Northmere Heating are duplicates and to remove the duplicate, though she doesn't know which line it is. The desk moved the case to WAITING on the payment system's answer, which hadn't come in, and closed it there as final; it cancelled nothing and removed nothing. A later request to ask the payment system again and an attempt to escalate with a note were both refused because the case was no longer in TRIAGED, so no person has been handed the case. Whether the lines are duplicates is still unchecked, and the record doesn't show who will pick it up.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

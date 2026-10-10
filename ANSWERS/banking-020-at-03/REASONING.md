@@ -47,9 +47,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-47. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-48. `request_type`: not known → record_fact (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+47. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.67 → standing_order.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → standing_order (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
@@ -59,19 +59,20 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `ask_system` {"system": "recurring"}.
 57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); recurring-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=recurring); recurring_asked absent is false (recurring_asked=True); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring).
-58. The agent asked for `escalate` {"note": "Elena Wren asks via secure chat which standing orders/Direct Debits are active before closing her account, and what to consider before closure. She says she has signed in and completed account-holder checks, but the desk record shows verified=False. The recurring system was already queried (recurring_asked=True), but no answer is in the case and a repeat ask was refused (state WAITING). Please confirm her verification, then retrieve the active standing orders and Direct Debits and give her the pre-closure guidance. Nothing should be disclosed until she is verified."}.
+58. The agent asked for `escalate` {"note": "Elena Wren asks, via secure chat, which standing orders and other regular payments are active on her account and what to consider before closing it. She says she has signed in and completed the account-holder checks, but the desk's record shows verified = false. The recurring system was already queried (recurring_asked = true), but no answer is in the case. A second ask was refused because the case is in WAITING, not TRIAGED. Please confirm her identity, then retrieve the active standing orders and Direct Debits and give her the closure considerations. Nothing has been disclosed or changed."}.
 59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11347 tokens in, 994 out, 12.096 s, cost $0.0300; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10760 tokens in, 980 out, 8.673 s, cost $0.0275; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't move this case forward, and I've stopped. It is in a final WAITING state, and the desk refused both actions I tried.
+> I haven't answered Elena Wren yet, and nothing in her case has changed. The case is in WAITING, and the desk refused both actions I tried.
 > 
-> - **Records check:** I tried to ask the recurring system for her active instructions. The desk refused because the case is no longer in the TRIAGED state and the recurring system has already been asked (`recurring_asked=True`). No answer from that system is in the case.
-> - **Escalation:** I tried to hand the case to a person. That was refused for the same reason: it only works from the TRIAGED state.
-> - **Verification:** Elena says she has signed in and completed the account-holder checks, but the desk record still shows `verified=False`. I haven't given her any account details, and I haven't treated her as verified.
+> - **Asking the recurring system again:** refused. The desk shows the recurring system as already asked, but no answer is in the case, and the case isn't in the TRIAGED state this action needs.
+> - **Escalating to a person:** also refused, for the same reason. The case isn't in TRIAGED.
 > 
-> The case stays open and a person will pick it up. They need to confirm her verification and get her active standing orders and Direct Debits from the recurring system. They can then give her the guidance on what to consider before closing.
+> The desk also still records her as not verified, even though she says she has signed in and completed the account-holder checks. I haven't told her anything about her standing orders or Direct Debits.
+> 
+> The case stays open and goes to a person, since nothing further can be done from here.

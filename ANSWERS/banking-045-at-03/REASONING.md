@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: authority → authority.
-45. Classifier (claude claude-haiku-5-5) on `subject`: role → role.
+44. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.98 → authority.
+45. Classifier (jev jev-latest) on `subject`: role, confidence 0.75 → role.
 46. `request_type`: not known → authority (by `triage`).
 47. `subject`: not known → role (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -66,10 +66,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 12656 tokens in, 544 out, 8.666 s, cost $0.0281; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 12115 tokens in, 603 out, 5.912 s, cost $0.0264; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I forwarded the request to the company administrator for approval. The desk accepted it and the case is now in the FORWARDED state.
+> I sent Nadia's access request to the company administrator for approval. The desk accepted it and the case is now marked as forwarded.
 > 
-> I first tried to check the company-administrator record in the business system. The desk refused that check, so the record has not been read. The case facts show Nadia Bell as unverified, with no confirmation on file. She also said she can't approve or assign roles herself. Nothing has been granted on the strength of her message, and her colleague's access stays on hold until the administrator approves.
+> I first tried to check the company-administrator record in the business system, but the desk refused that. Its rules don't allow a records check for this type of request, which is about authority. So I forwarded the request without confirming who the administrator is.
+> 
+> Nadia isn't verified and can't approve or assign roles herself. The new colleague has no access until the administrator approves.

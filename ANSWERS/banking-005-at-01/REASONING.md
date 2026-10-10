@@ -39,8 +39,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 35. Called `check_confirmation` (attempt 1, key banking-005-at-01:read-confirmation:11).
 36. `check_confirmation` found {}.
 37. Rule `triage` fired: state = READING → true (state=READING).
-38. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-39. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
+38. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+39. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
 40. `request_type`: not known → register (by `triage`).
 41. `subject`: not known → transfer (by `triage`).
 42. State `READING` → `TRIAGED` (by `triage`).
@@ -60,10 +60,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9528 tokens in, 291 out, 7.152 s, cost $0.0193; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9170 tokens in, 471 out, 5.875 s, cost $0.0192; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted your request to seek the return of the £286.40 transfer to the wrong saved recipient. It's now with the team that handles these cases.
+> I've submitted the request to seek the return of your £286.40 transfer to the wrong saved recipient, and the case is now at "requested".
 > 
-> I couldn't look up the payment record first, because the desk wouldn't run that check for a registration request. So the request rests on the amount and details you gave, and I haven't confirmed which payment or recipient it is. I can't say yet whether the money will come back.
+> I couldn't look up the transfer in the payment records first. The desk refused that check because the case is a registration request. I'm not claiming anything beyond what the request itself says. I can't say whether the money will come back, because that depends on the team that handles it.

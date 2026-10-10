@@ -45,15 +45,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-45. Classifier (claude claude-haiku-5-5) on `subject`: statement → statement.
-46. `request_type`: not known → document (by `triage`).
+44. Classifier (jev jev-latest) on `request_type`: question, confidence 0.56 → question.
+45. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+46. `request_type`: not known → question (by `triage`).
 47. `subject`: not known → statement (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=statement).
 50. `next_system`: not known → documents (by `route-documents`).
 51. The agent asked for `ask_system` {"system": "documents"}.
-52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
+52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 53. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-031-at-01:do-ask:15).
@@ -64,8 +64,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6936 tokens in, 161 out, 4.366 s, cost $0.0129; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6577 tokens in, 363 out, 3.542 s, cost $0.0130; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the documents system for your June 2025 statement. The case is now closed at this step. The check didn't return any statement details, so I can't yet say whether the statement exists or why it isn't showing in your portal.
+> I've asked the documents system about the June 2025 statement. The case is now closed at that step. The system's answer didn't come back into the case, so I don't yet know whether the statement exists or why it isn't showing in the portal. I haven't made anything available or told the customer anything about it.

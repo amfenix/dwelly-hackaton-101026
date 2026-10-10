@@ -42,8 +42,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. `confirmation`: not known → none (by `read-confirmation`).
 39. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 40. Rule `triage` fired: state = READING → true (state=READING).
-41. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-42. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+41. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
+42. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 43. `request_type`: not known → change (by `triage`).
 44. `subject`: not known → standing_order (by `triage`).
 45. State `READING` → `TRIAGED` (by `triage`).
@@ -56,15 +56,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 52. `send_for_confirmation` found {}.
 53. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
 54. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
-55. The agent asked for `ask_system` {"system": "recurring"}.
-56. Refused `ask_system` in `CONFIRMATION_SENT`: payment-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = payment is false (args.system=recurring); next_system = payment is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); incoming-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = incoming is false (args.system=recurring); next_system = incoming is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); recurring-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); card-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = card is false (args.system=recurring); next_system = card is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); access-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = access is false (args.system=recurring); next_system = access is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); business-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = business is false (args.system=recurring); next_system = business is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change); documents-ask: state = TRIAGED is false (state=CONFIRMATION_SENT); args.system = documents is false (args.system=recurring); next_system = documents is false (next_system=recurring); next_system absent is false (next_system=recurring); request_type not in [register, change, authority] is false (request_type=change).
 
 ## Model calls
 
-3 calls, 5761 tokens in, 455 out, 6.038 s, cost $0.0134; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4652 tokens in, 454 out, 3.522 s, cost $0.0100; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've stopped here. The case is at CONFIRMATION_SENT, which means the desk has already sent Mira a confirmation request for the change from £42.00 to £68.00. The desk refused my check of the recurring system because the case is no longer at the triage stage.
+> The case is closed. The desk has sent Mira a confirmation request for the standing order change from £42.00 to £68.00 to Westmere Garden Cooperative.
 > 
-> Nothing more should be done until Mira confirms. She hasn't authorised the change, and the bank can't approve it on her behalf. If she confirms, the case can move on to the change itself.
+> The change has not been made. Mira has not authorised it yet, and the desk does not act for her without that. Nothing further is needed from the desk now.

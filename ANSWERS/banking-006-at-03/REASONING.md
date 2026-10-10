@@ -47,9 +47,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-47. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-48. `request_type`: not known → register (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 0.78 → question.
+47. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → transfer (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -58,20 +58,21 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 54. State `TRIAGED` → `WAITING` (by `payment-waits`).
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `ask_system` {"system": "payment"}.
-57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register).
-58. The agent asked for `escalate` {"note": "Mira Ellison (unverified, secure chat) reports two similar outgoing transfers to North Quay Utilities for £84.20, one Completed and one Pending. She says only one was intended and asks whether they are separate instructions and whether the pending one can be stopped or returned. The payment system was already asked (payment_asked=True) but no answer is in the case, and a new payment query was refused because the case is in WAITING. Identity is not verified and there is no confirmation. A person needs to verify her, check the payment records to see whether this is a duplicate instruction or two separate ones, and then decide whether the pending entry can be stopped or the completed one returned. Do not claim a result before the records show it."}.
+57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
+58. The agent asked for `escalate` {"note": "Mira Ellison (unverified, secure chat) says she only meant one transfer to North Quay Utilities for £84.20. Her portal shows one Completed and one Pending entry. She asks whether they are separate instructions and whether the pending one can be stopped or returned. The payment system lookup was refused because the case state is WAITING, not TRIAGED, so the records have not been checked. Nothing is established about whether these are one instruction or two. No stop or return has been requested or made. A person needs to verify her identity, check the payment records for both entries, and then advise her."}.
 59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 13399 tokens in, 1038 out, 12.436 s, cost $0.0335; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 12017 tokens in, 905 out, 9.366 s, cost $0.0293; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't move this case forward. It is in a WAITING state, and the desk refused both of my attempts.
+> I couldn't take this case any further, and it is still open. The desk refused both of my attempts.
 > 
-> - **Payment records:** The request to look up the two transfers was refused because the case isn't in the state that allows it. The case also shows the payment system was already asked, but no answer is recorded. So I can't say whether the two £84.20 entries to North Quay Utilities are one instruction shown twice or two separate ones.
-> - **Escalation:** My escalation to a person was refused for the same reason, so no one has been handed the case.
-> - **Stopping or returning the pending transfer:** I haven't requested this. Mira's identity is not verified, and there is no confirmation on the case.
+> - **Payment records:** My lookup was refused because the case is in a WAITING state, not TRIAGED. I haven't seen the records for either North Quay Utilities entry. I can't yet say whether they are one instruction shown twice or two separate ones.
+> - **Escalation:** I then tried to hand the case to a person, and that was refused for the same reason.
+> - **Stop or return:** Nothing has been requested or changed on the pending £84.20 transfer.
+> - **Identity:** Mira Ellison is not verified, so nothing that acts on her payments should happen until she is.
 > 
-> The case is final with outcome "wait", so it stays open for a person to pick up. That person will need to verify Mira, check the payment records, and then decide whether the pending entry can be stopped or the completed one returned.
+> The case needs to be moved out of WAITING before anyone can check the payment records for both entries.

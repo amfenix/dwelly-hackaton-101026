@@ -50,9 +50,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → none (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-50. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
-51. `request_type`: not known → reason (by `triage`).
+49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+50. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+51. `request_type`: not known → question (by `triage`).
 52. `subject`: not known → card (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
 54. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
@@ -69,10 +69,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7475 tokens in, 340 out, 6.203 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7148 tokens in, 563 out, 5.605 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Rowan, and the case is now closed. The card record shows the card is currently restricted. The category is a temporary security-related restriction, and the record doesn't show it as lifted. The desk wrote the reply from that record, so it only covers what the record shows.
+> I sent Rowan a reply, and the desk accepted it and closed the case. The reply is based on the card record. It shows the card is still restricted, and the category is a temporary security-related restriction. So the restriction has not been lifted.
 > 
-> The customer hasn't been verified in this chat. The reply was still accepted, so I didn't hold it back.
+> The desk wrote the reply text, and I haven't seen it. Rowan's identity was not verified on this chat, so the reply should not go beyond that status and category.

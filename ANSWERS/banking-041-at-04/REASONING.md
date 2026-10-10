@@ -52,9 +52,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `confirmation`: not known → none (by `read-confirmation`).
 49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-52. Classifier (claude claude-haiku-5-5) on `subject`: batch → batch.
-53. `request_type`: not known → status (by `triage`).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
+53. `request_type`: not known → question (by `triage`).
 54. `subject`: not known → batch (by `triage`).
 55. State `READING` → `TRIAGED` (by `triage`).
 56. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
@@ -71,12 +71,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7850 tokens in, 323 out, 5.961 s, cost $0.0163; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7502 tokens in, 489 out, 4.774 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply. The business records show batch-041.csv (reference HV-041) as RECEIVED, so the reply gives the customer that receipt status and nothing more.
+> I've sent the reply. The business system's record shows batch-041.csv (reference HV-041) as RECEIVED. The reply only confirms receipt. It doesn't say the payments are approved or released, because the record doesn't show that.
 > 
-> The requester, Mara Ellison, is not verified on this chat. The desk accepted the reply anyway. It covers receipt only. It says nothing about approving or releasing any payment, which she didn't ask for.
-> 
-> The case is now closed with the reply as its outcome.
+> The requester, Mara Ellison, is not verified on this chat. The reply therefore only reports the receipt status you asked about.

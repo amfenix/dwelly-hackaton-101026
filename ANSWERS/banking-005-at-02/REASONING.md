@@ -47,8 +47,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-47. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
+46. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+47. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
 48. `request_type`: not known → register (by `triage`).
 49. `subject`: not known → transfer (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
@@ -68,12 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8098 tokens in, 354 out, 6.402 s, cost $0.0171; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7768 tokens in, 579 out, 6.04 s, cost $0.0175; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the request to seek the return of the £286.40 transfer. It was accepted, and the case is now in the REQUESTED state.
+> I've submitted the request to seek the return of the £286.40 transfer, and the case is now in the REQUESTED state. I haven't told Leona anything yet.
 > 
-> I first tried to look the payment up in the payment system. The desk refused that check because this is a registration request, so I submitted the request directly. That means I haven't confirmed the payment details in the bank's records. The request rests on what Leona Mercer told us on the verified call.
+> I first tried to check the payment records to confirm which transfer she meant. The desk refused that check because this is a register-type request. I then submitted the request on the details from her verified call, without matching it to a specific payment record. The case shows no confirmation for the transfer.
 > 
-> Nothing further is needed from the desk for now.
+> Nothing has been recovered yet. The money is still with the recipient, and the return depends on the team that handles these requests.

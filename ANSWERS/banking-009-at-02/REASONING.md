@@ -47,15 +47,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-47. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-48. `request_type`: not known → record_fact (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+47. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.96 → transfer.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → transfer (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 52. `next_system`: not known → payment (by `route-payment`).
 53. The agent asked for `ask_system` {"system": "payment"}.
-54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
+54. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 55. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-009-at-02:do-ask:15).
@@ -66,11 +66,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7259 tokens in, 390 out, 6.32 s, cost $0.0147; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6894 tokens in, 469 out, 4.473 s, cost $0.0147; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The facts say the next system is payment, and the customer wants the amount from the completed instruction. I'll check the payment records.
-> I've asked the payment system to check the amount on your completed transfer. The case is now marked as asked, and I have no answer to report yet.
+> I've asked the payment system to check the amount on the completed transfer. The case is now closed at that step, so I haven't yet reported a result to Mara.
 > 
-> The only amount on record so far is the £648.20 on the final payment line, which was sent to your property manager. No confirmation of that payment is on file yet. I can't verify the £684.20 you remember from the draft, because the desk only has the completed instruction to go on. We'll confirm the sent amount once the payment system replies.
+> The desk's records currently show £648.20 for this transfer, matching the final line in the secure portal. They don't show a £684.20 draft, and nothing in the case suggests the amount was changed. The payment system's answer hasn't come back into the case, so I can't yet confirm that £648.20 is what H&V actually sent.

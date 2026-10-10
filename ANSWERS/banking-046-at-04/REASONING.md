@@ -32,10 +32,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 28. Rule `read-business` fired: state = READING → true (state=READING).
 29. Called `check_business` (attempt 1, key banking-046-at-04:read-business:8).
 30. Note from `read-business`: event 3 (H&V admin process): I am submitting the verified administrator’s instruction to revoke Owen Bell’s Payroll Approver role for Larkmere Studio Ltd. The administrator’s mandate and the role to be removed have been checked. [facts: business_asked=True]
-31. Note from `read-business`: event 4 (H&V admin process): Revocation instruction processed. The admin-log status is available to the business administrator in the secure portal. [facts: business_status='OTHER']
-32. `check_business` found {"business_asked": true, "business_status": "OTHER"}.
+31. Note from `read-business`: event 4 (H&V admin process): Revocation instruction processed. The admin-log status is available to the business administrator in the secure portal. [facts: business_status='ROLE_REVOKED']
+32. `check_business` found {"business_asked": true, "business_status": "ROLE_REVOKED"}.
 33. `business_asked`: not known → True (by `read-business`).
-34. `business_status`: not known → OTHER (by `read-business`).
+34. `business_status`: not known → ROLE_REVOKED (by `read-business`).
 35. Rule `read-documents` fired: state = READING → true (state=READING).
 36. Called `check_documents` (attempt 1, key banking-046-at-04:read-documents:9).
 37. `check_documents` found {}.
@@ -49,29 +49,29 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-49. Classifier (claude claude-haiku-5-5) on `subject`: role → role.
+48. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+49. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
 50. `request_type`: not known → instruction (by `triage`).
 51. `subject`: not known → role (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
 54. `next_system`: not known → business (by `asked-business`).
 55. The agent asked for `reply` {}.
-56. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_status present → true (business_status=OTHER).
+56. Rule `business-reply` (on `reply`) fired: state = TRIAGED → true (state=TRIAGED); next_system = business → true (next_system=business); business_status present → true (business_status=ROLE_REVOKED).
 57. State `TRIAGED` → `REPLY_PENDING` (by `business-reply`).
 58. Rule `do-reply` fired: state = REPLY_PENDING → true (state=REPLY_PENDING).
 59. Called `reply_customer` (attempt 1, key banking-046-at-04:do-reply:15).
-60. Action in the world: `reply` {"to": "Mara Ellery", "channel": "verified_call", "text": "The business record shows other. The answer does not establish a recognized business-record status. No additional approval or role change was made."}.
+60. Action in the world: `reply` {"to": "Mara Ellery", "channel": "verified_call", "text": "The business record shows role_revoked. This does not establish any other role or permission change. No additional approval or role change was made."}.
 61. `reply_customer` found {}.
 62. State `REPLY_PENDING` → `REPLIED` (by `do-reply`).
 63. The case closed in `REPLIED`: **reply**.
 
 ## Model calls
 
-5 calls, 8391 tokens in, 758 out, 10.199 s, cost $0.0169; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 7827 tokens in, 654 out, 5.992 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer, and the case is closed. I didn't submit the revocation of Owen Bell's Payroll Approver role.
+> I've replied to the customer. The business system's record shows Owen Bell's Payroll Approver role as revoked, and the reply reports that. It doesn't claim anything about the separate review of earlier operations. The case is closed.
 > 
-> The business system's answer was marked OTHER, and the case doesn't show what it said. I treated it as an answer to report rather than a go-ahead to change the role. The desk writes the reply text, so I haven't seen what it told Mara Ellery.
+> I didn't submit a revocation request myself. The record already showed the role as revoked when I checked, so I replied rather than sending the instruction again.

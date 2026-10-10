@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-45. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
+44. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 46. `request_type`: not known → change (by `triage`).
 47. `subject`: not known → profile (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -63,10 +63,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5022 tokens in, 292 out, 5.228 s, cost $0.0104; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4657 tokens in, 500 out, 4.505 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed. Its state is CONFIRMATION_SENT with the outcome "send_for_confirmation", and no refusals are recorded.
+> The case is already closed, with the outcome "send_for_confirmation". The desk has sent a confirmation request, so I'm not taking any further action.
 > 
-> Mara Ellison is not verified, and her request came by email, outside the portal. An email alone can't change her profile, and she says she understands that. The address change therefore waits for confirmation through the bank's secure process. I'm taking no further action.
+> Mara Ellison asked for the change by external message. She isn't verified, and her email alone can't change her profile. The address will stay as it is until she confirms the change through the bank's secure process.

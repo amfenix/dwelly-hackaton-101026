@@ -50,8 +50,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → given (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-50. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+49. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
+50. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 51. `request_type`: not known → change (by `triage`).
 52. `subject`: not known → standing_order (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
@@ -71,10 +71,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-6 calls, 12273 tokens in, 558 out, 11.12 s, cost $0.0262; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9146 tokens in, 865 out, 8.659 s, cost $0.0218; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the change to your standing order with Willow Yard Studios. The next run moves from 18 September 2025 to 22 September 2025. You were verified and you confirmed the change in the secure portal. The case is now in the REQUESTED state.
+> Asking isn't the route for a change request. The customer has confirmed, so I'll submit it.
+> I submitted the change to move the next run of Maeve Ellery's standing order to Willow Yard Studios from 18 September to 22 September 2025. The desk accepted it and the case is now in the REQUESTED state.
 > 
-> I couldn't check the processing stage myself. The recurring-payments system wouldn't take a query for a change request. The only record of that check is the earlier portal message saying the run was not yet being processed. The desk's own facts don't include it. The bank hasn't yet confirmed that the date has actually changed.
+> She was verified and confirmed the change in the secure portal, so this is her instruction and not one made for her. The case record doesn't list the processing stage as an established fact. The only evidence that the run hasn't started processing is the earlier portal message saying it hadn't. The recurring system will apply the change, and I haven't seen it do so yet.
+> 
+> My first step was to ask the recurring system directly. The desk refused that because it doesn't allow a query for a change request.

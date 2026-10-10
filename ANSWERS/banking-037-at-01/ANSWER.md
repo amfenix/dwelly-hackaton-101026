@@ -2,12 +2,6 @@
 
 **Decision: escalate**  (final state `ESCALATED`)
 
-## Summary
-
-The customer asked to correct the name on their profile from "Elowen Mar" to "Elowen Marr". The desk classified it as a profile change and routed it toward the access system, but both the access lookup and the submit step were refused because the customer's identity was not verified. The agent then escalated the case, and nothing was changed on the profile. A person still needs to verify the customer and handle the name correction, which may need supporting documents.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

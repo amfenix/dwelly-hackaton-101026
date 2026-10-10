@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Mara Ellison, verified on a call, asked the desk to find and remove a duplicate among two future £34.80 payments to Northmere Heating, though she didn't know which line was the duplicate. The desk treated it as a standing order query and asked the recurring payments system about the £34.80 standing order. The reply added no new facts, so nothing has been removed or changed. Whether the two lines are duplicates, and which one would be cancelled, is still undetermined and is left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

@@ -50,9 +50,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → none (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-50. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-51. `request_type`: not known → reason (by `triage`).
+49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+50. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+51. `request_type`: not known → question (by `triage`).
 52. `subject`: not known → transfer (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
 54. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -62,21 +62,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 58. The case closed in `WAITING`: **wait**.
 59. The agent asked for `ask_system` {"system": "payment"}.
 60. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
-61. The agent asked for `escalate` {"note": "Verified customer Mara Ellery asks why her 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The portal shows the status but no reason. The payment system lookup was refused because the case state is WAITING, not TRIAGED, so the reason has not been established. Please check the payment record and reply to the customer."}.
-62. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12227 tokens in, 628 out, 9.138 s, cost $0.0281; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8302 tokens in, 568 out, 5.521 s, cost $0.0184; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The facts point to the payment system as the next place to look, so I'll check there for the reason the transfer wasn't completed.
-> I couldn't find out why the transfer wasn't completed, and the case is now waiting.
+> I couldn't look up why the 14 July transfer to Northmere Housing Co-operative wasn't completed, and the case is now closed in a waiting state.
 > 
-> - **Payment lookup:** I asked the payment system about the 14 July 2025 transfer to Northmere Housing Co-operative. The desk refused the request because the case is in the WAITING state, and the lookup only runs when it is TRIAGED.
-> - **Escalation:** I tried to escalate to a person with a note. The desk refused that too, for the same reason.
+> The desk refused my request to check the payment system. Its rule only allows that check while the case is in the TRIAGED state, and this case is in WAITING. The case status shows that state as final, so I have no further step to take.
 > 
-> Mara Ellery is verified, and her request is clear. The case record doesn't yet contain the reason the transfer failed, so I haven't told her one.
-> 
-> The case is closed with the outcome "wait", and I have no other action that would change that. A person will need to pick it up or move it out of WAITING.
+> The customer is verified and has asked a payment question. I can't give her a reason, because no payment record has been read yet. The case stays open and goes to a person to pick up.

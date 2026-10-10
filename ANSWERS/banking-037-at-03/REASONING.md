@@ -47,8 +47,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-47. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
+46. Classifier (jev jev-latest) on `request_type`: change, confidence 0.42 → change.
+47. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 48. `request_type`: not known → change (by `triage`).
 49. `subject`: not known → profile (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
@@ -59,18 +59,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `submit_request` {}.
 57. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=change); registration_asked absent is false (registration_asked=True); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=access); request_type = instruction is false (request_type=change); confirmation = given is false (confirmation=none).
-58. The agent asked for `escalate` {"note": "Verified customer (verified call) asks to correct the name on their H&V profile from \"Elowen Mar\" to \"Elowen Marr\". Identity checks completed. Please route to the data/profile team for a name correction. The customer knows they may be asked for supporting documents. The standard submit_request route was refused because the case is in WAITING state and the request type is a change, not an instruction. No change has been made."}.
+58. The agent asked for `escalate` {"note": "Verified caller (identification checks completed) asks to correct profile name from \"Elowen Mar\" to \"Elowen Marr\". Profile data change; no tool route accepts it (submit_request refused: request_type=change). Please route to the data team for a correction request; the customer understands supporting information may be required."}.
 59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11011 tokens in, 650 out, 9.691 s, cost $0.0259; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10630 tokens in, 798 out, 8.721 s, cost $0.0254; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't pass this on. Both attempts were refused, and the case is still in WAITING with no change made to the profile.
+> I couldn't pass this on. The case is still open and waiting, so a person will pick it up.
 > 
-> - **Submit request:** refused. The desk accepts this route only for a registration or a confirmed instruction. This case is a profile change with no confirmation.
-> - **Escalate to a person:** refused. The desk only allows escalation once the case is TRIAGED, and this one is still WAITING.
+> Two requests were refused:
+> - **Correction request:** `submit_request` was refused. The case is a profile change, and that tool only accepts registrations and confirmed instructions. It also requires the case to be triaged, and this one is still waiting.
+> - **Escalation:** `escalate` was refused for the same reason: the case isn't triaged yet.
 > 
-> The customer is verified and wants "Elowen Mar" corrected to "Elowen Marr". Nothing more can be done from here until the case moves out of WAITING. A person will need to pick it up from there.
+> Neither the data team nor anyone else has received the correction from "Elowen Mar" to "Elowen Marr". The customer is verified, and the profile name hasn't been changed.

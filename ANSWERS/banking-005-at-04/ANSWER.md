@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Leona Mercer, a verified customer on a verified call, asked H&V to register a request to seek the return of a £286.40 transfer she sent to the wrong saved recipient. The record shows the payment team had already registered the return request as HV-005, so the desk did not submit a new one (that attempt and a query to the payment system were both refused) and sent her a reply instead, closing the case. Registration does not confirm that the money will be returned, and the record lists nothing further for a person to do.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

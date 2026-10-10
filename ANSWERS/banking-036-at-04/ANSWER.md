@@ -2,12 +2,6 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
-## Summary
-
-Mara Ellison, a verified customer, asked the desk to update the address it uses for her correspondence after she moved within the UK. Her email alone cannot change her profile, so the desk sent her a request to confirm the profile change and closed the case at that point. What is left is for Mara to confirm the change in the secure portal, as the record still shows no confirmation from her.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

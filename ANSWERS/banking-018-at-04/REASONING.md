@@ -52,8 +52,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `confirmation`: not known → none (by `read-confirmation`).
 49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-52. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+51. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.89 → instruction.
+52. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.63 → standing_order.
 53. `request_type`: not known → instruction (by `triage`).
 54. `subject`: not known → standing_order (by `triage`).
 55. State `READING` → `TRIAGED` (by `triage`).
@@ -71,12 +71,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8528 tokens in, 555 out, 8.947 s, cost $0.0185; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 7976 tokens in, 909 out, 7.032 s, cost $0.0191; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I used the reply tool, and the desk accepted it. The case is now marked REPLIED and closed.
+> I've sent the reply to the customer, and the case is closed.
 > 
-> I chose to reply because the payment system had already answered. Its status came back as "OTHER", which still counts as an answer to report. I did not remove either payment, because nothing in the case shows which of the two lines is the duplicate, and Mara doesn't know either.
+> The payment system has already been checked, and its answer was "OTHER". That answer doesn't show the two £34.80 lines to Northmere Heating are duplicates, and the customer can't say which line is the duplicate. So I didn't remove or cancel anything. The reply reports only what the record shows.
 > 
-> I did not check the recurring system, even though the case subject is a standing order. If the standing order lines turn out to matter, that check hasn't been done.
+> I didn't query the recurring system, which holds standing orders, because the case pointed to the payment system as the next step. If the customer comes back wanting the two lines checked further, that would be the place to look.

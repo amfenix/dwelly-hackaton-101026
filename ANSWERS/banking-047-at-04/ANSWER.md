@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Maeve Calder asked over secure chat to confirm the company's current payment limit, and the desk replied to her with the business record's figure of a maximum of £20,000.00. The reply also said the record's status (OTHER) does not establish a recognized business-record status, and that no approval or role change was made. Maeve is not verified on this channel, and nothing is left open for a person in the record.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -72,7 +66,7 @@ Facts established:
 - business_limit: **20000.00**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **business**
 
 Where they came from:

@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Mara Ellwood, an unverified customer on secure chat, asked what stage her international transfer had reached and whether the beneficiary had confirmed receipt. The desk classified it as a transfer status request, found no confirmation on record, and put the case into waiting for the payment system's answer, which had not come in. The later attempts to query the payment system, send a reply and escalate to a person were all refused because the case was already in WAITING, so no reply went to the customer and nobody has yet verified her or checked the payment record.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -62,7 +56,7 @@ Facts established:
 - payment_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

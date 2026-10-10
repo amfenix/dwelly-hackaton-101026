@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-49. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-50. `request_type`: not known → document (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 0.95 → question.
+49. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → document (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
@@ -62,10 +62,14 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5281 tokens in, 335 out, 5.304 s, cost $0.0113; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4968 tokens in, 657 out, 5.171 s, cost $0.0127; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The export request for 6–9 May 2025 is already with the documents system, and the case is now waiting. I haven't taken any further action.
+> I'm leaving this case in its current waiting state and taking no further action.
 > 
-> The case record doesn't yet show that the file exists, so I can't say it's available in the secure portal. The customer isn't verified, so I haven't done anything beyond the request. The case is in a final waiting state, and nothing more can be done until the documents system confirms the file.
+> - **Records check:** The documents system has already been checked. It shows no confirmation that a CSV export for 6–9 May 2025 has been created.
+> - **Reply:** I can't tell Mara the file is ready, because the record doesn't show that.
+> - **Verification:** Mara isn't verified on this channel. I'm not sending any account-specific information or taking any action on her behalf.
+> 
+> The case is final with the outcome "wait". It will move again when the documents system shows the export exists.

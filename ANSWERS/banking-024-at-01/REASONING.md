@@ -37,15 +37,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Called `check_confirmation` (attempt 1, key banking-024-at-01:read-confirmation:11).
 34. `check_confirmation` found {}.
 35. Rule `triage` fired: state = READING → true (state=READING).
-36. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-37. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
-38. `request_type`: not known → reason (by `triage`).
+36. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+37. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+38. `request_type`: not known → question (by `triage`).
 39. `subject`: not known → card (by `triage`).
 40. State `READING` → `TRIAGED` (by `triage`).
 41. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card).
 42. `next_system`: not known → card (by `route-card`).
 43. The agent asked for `ask_system` {"system": "card"}.
-44. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=reason).
+44. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 45. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 46. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 47. Called `ask_system` (attempt 1, key banking-024-at-01:do-ask:15).
@@ -58,4 +58,4 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8849 tokens in, 144 out, 4.694 s, cost $0.0165; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 8469 tokens in, 324 out, 3.883 s, cost $0.0164; models: claude-sonnet-5-5, jev-1.13.0.

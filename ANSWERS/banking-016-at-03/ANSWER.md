@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Tamsin Rook, verified on a call, disputed an £18.40 Direct Debit to Northmere Water Services and asked for the Direct Debit team to investigate; the desk classified it as a registration request for the recurring system. The Direct Debit team had already been asked to register the review and its answer is not in yet, so the case closed as "wait" in WAITING with no actions taken. The agent's later attempts to query the recurring system, submit the request and escalate were all refused because the case was no longer in the TRIAGED state, so nothing further was done and the case is waiting on the team's reply.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

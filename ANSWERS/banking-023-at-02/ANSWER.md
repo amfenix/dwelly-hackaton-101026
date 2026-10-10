@@ -2,12 +2,6 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
-## Summary
-
-Mara Ellery, verified on a call, said she doesn't recognise a £38.40 Fern & Finch Books card purchase from 14 July 2025. She asked for it to be raised with the card team and for advice on protecting her card. The desk registered a request to the card team about the card payment and closed the case as requested. Its attempt to look the purchase up in the card system was refused, so the transaction was not checked against her card records, and the record shows no advice on protecting her card was given, so that is still outstanding.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

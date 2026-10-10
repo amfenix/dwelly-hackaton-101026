@@ -53,9 +53,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-53. Classifier (claude claude-haiku-5-5) on `subject`: incoming_payment → incoming_payment.
-54. `request_type`: not known → status (by `triage`).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → incoming_payment (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
 57. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
@@ -72,10 +72,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7914 tokens in, 310 out, 7.433 s, cost $0.0162; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7621 tokens in, 523 out, 4.754 s, cost $0.0166; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply, and the case is now closed as replied.
-> 
-> The incoming records show an entry of £42.80, which matches the amount of your transfer to Northmere Home Supplies. The records don't confirm that this entry is the refund for that specific transfer. The reply therefore reports the matching amount and doesn't say the refund has arrived.
+> I've sent the customer a reply based on what the incoming records show. The incoming check found an entry for £42.80. The records don't confirm it is the refund for the Northmere Home Supplies transfer (the confirmation field is "none"), so the reply shouldn't present it as confirmed. The case is now closed with that reply.

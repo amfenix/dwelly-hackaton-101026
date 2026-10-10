@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Mara Ellery, writing over secure chat (not verified), asked for the status of Northmere Studio Ltd's payroll payment package and whether the second signatory still needs to act. The desk asked the business system about the package's signing queue and took no other action, approving or releasing nothing. The business system's answer isn't in yet, so the case is waiting on that reply and no status has been given to her.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -63,7 +57,7 @@ Facts established:
 - business_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **business**
 
 Where they came from:

@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Elena Wren asked over secure chat which regular payments are still active before she plans any account closure. The desk checked the recurring-payments register, which showed the standing order as active, and replied on secure chat that the record shows active, that this does not guarantee a future payment will execute, and that nothing was changed. Her identity is still recorded as not verified, despite her saying she completed the account-holder checks, and the record lists no further steps for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -71,7 +65,7 @@ Facts established:
 - recurring_status: **ACTIVE**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
 
 Where they came from:

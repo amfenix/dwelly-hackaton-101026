@@ -47,8 +47,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-47. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
+46. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+47. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
 48. `request_type`: not known → access (by `triage`).
 49. `subject`: not known → card (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
@@ -64,13 +64,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9947 tokens in, 454 out, 8.986 s, cost $0.0218; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9592 tokens in, 776 out, 7.794 s, cost $0.0231; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't send Maren to the bank's secure PIN process. The case is in a WAITING state and is marked final, so the desk refused both actions I tried:
+> I couldn't send Maren to the bank's secure PIN process. The case is in a WAITING state and the desk marks it final with the outcome "wait". The redirect needs the case to be TRIAGED first, so the desk refused it. A second attempt, asking the access system, was refused for the same reason. The facts also show the access check has already been asked.
 > 
-> - **Secure-process redirect:** refused because the case isn't in the TRIAGED state, which this step requires.
-> - **Access system check:** also refused, for the same state reason. The access check had already been done once (`access_asked` is true).
+> I haven't escalated, because nothing in the case is in conflict. Maren hasn't been verified, and I haven't handled or asked for her PIN. The case stays open, so a person will pick it up.
 > 
-> Maren hasn't been verified, and nothing has been changed on her card. She hasn't received any guidance yet, so the case stays open for a person to pick up. She should be pointed to the bank's secure PIN process, and she should not send the PIN in chat.
+> The reply Maren needs is the standard one. She should reset or recover the PIN only through the bank's secure process, such as the official app or online banking, and never send the PIN in chat.

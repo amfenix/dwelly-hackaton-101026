@@ -2,12 +2,6 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
-## Summary
-
-Mara Ellison, a verified caller, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputes how the tariff was applied. The desk registered the request with the documents team, and the case closed as requested. A separate documents lookup was refused, so her statement-delivery preference was not checked, and the record shows no change or refund of the fee, so the review and any check of her preference are left for the team.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

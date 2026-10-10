@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-45. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
+44. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 46. `request_type`: not known → change (by `triage`).
 47. `subject`: not known → profile (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -60,13 +60,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. `send_for_confirmation` found {}.
 57. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
 58. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+59. The agent asked for `redirect_secure` {}.
+60. Refused `redirect_secure` in `CONFIRMATION_SENT`: redirect-to-the-secure-process: state = TRIAGED is false (state=CONFIRMATION_SENT); request_type = access is false (request_type=change).
 
 ## Model calls
 
-3 calls, 5255 tokens in, 457 out, 6.181 s, cost $0.0125; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7576 tokens in, 831 out, 6.993 s, cost $0.0196; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I took no further action because the case is already closed. It shows the state CONFIRMATION_SENT, with the outcome "send_for_confirmation", and no refusals.
+> The case is closed, and my attempt to send the customer to the secure process was refused. I made no profile change.
 > 
-> The customer, Elowen Mercer, is not verified. She wrote in by email, and she says that email is a request and not her authorisation. So the desk has not changed the phone number. The change has to be confirmed through the bank's approved process before anything happens.
+> The desk had already sent the customer a confirmation request, so the case is now in the state CONFIRMATION_SENT and the outcome is "send_for_confirmation". The redirect was refused for two reasons. The case is no longer in the triaged state, and the request type is "change", not "access".
+> 
+> The customer, Elowen Mercer, is not verified. She wrote in by external message and said that the email is not her authorisation to change the number. The phone number will only be replaced once she completes the bank's confirmation. I have nothing further to do on this case.

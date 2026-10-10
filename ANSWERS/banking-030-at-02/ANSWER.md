@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Maren Ellery asked over secure chat whether her replacement card is being made and whether it has been sent. The desk classified this as a card status request and put a query to the card system; the query was sent and the case closed at that step. The card system has returned no details, so the record doesn't show whether the card is being made or sent. Maren is not verified in this chat, so a person still needs to follow up with her and keep any reply within what the record shows.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -48,7 +42,7 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,7 +55,7 @@ Facts established:
 - subject: **card**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **card**
 
 Where they came from:

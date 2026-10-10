@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: payment_package → payment_package.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+49. Classifier (jev jev-latest) on `subject`: payment_package, confidence 1.00 → payment_package.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → payment_package (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
@@ -62,8 +62,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5396 tokens in, 374 out, 6.285 s, cost $0.0119; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4989 tokens in, 536 out, 5.502 s, cost $0.0115; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already in its final state, WAITING. The business system has been asked about Northmere Studio Ltd's payroll payment package, and it has given no status yet. Asking again would add nothing, and I won't give Mara Ellery a status the records haven't shown. I'm taking no further action, and the case stays open until the business system's answer comes in.
+> The case is already in its final state, WAITING. The business system has been asked, and no answer on the package's signing status has come back yet. The requester is also unverified, so I'm not taking another step now. A second query to the business system would add nothing, and I'm not sending a reply because there is no result to report. The case stays open until the business system's answer arrives.

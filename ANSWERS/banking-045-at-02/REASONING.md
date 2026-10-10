@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: authority → authority.
-45. Classifier (claude claude-haiku-5-5) on `subject`: role → role.
+44. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.98 → authority.
+45. Classifier (jev jev-latest) on `subject`: role, confidence 0.74 → role.
 46. `request_type`: not known → authority (by `triage`).
 47. `subject`: not known → role (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -64,8 +64,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5216 tokens in, 232 out, 4.939 s, cost $0.0101; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4855 tokens in, 431 out, 3.991 s, cost $0.0102; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've forwarded the access request to the company administrator for approval. The bank can't assign the role until the administrator approves it, because Nadia has said she has no authority to approve or assign roles. The desk accepted the request and the case is closed on our side.
+> I forwarded the access request to the company administrator for approval, and the desk accepted it. Nadia can't approve or assign roles herself. The new colleague gets no access until the administrator approves. The case is now marked as forwarded, and nothing further is needed from the desk.

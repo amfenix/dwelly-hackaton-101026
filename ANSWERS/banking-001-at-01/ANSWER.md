@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The customer asked whether H&V sent a £420 one-off payment to Alder & Reed Workshop, which they could see as a debit on their account. The desk classed it as a status request about a transfer, found no confirmation and no sign it was instructed outside the portal, and sent a query about the £420 transfer to the payment system. The case closed in the asked state, and a later attempt to send a reply was refused because no payment status had come back, so the customer has not yet been told whether the payment was sent.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -55,7 +49,7 @@ Facts established:
 - counterparty: **Alder & Reed Workshop**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Elowen Marr, a verified customer on a verified call, asked for the name on their profile to be corrected from "Elowen Mar" to "Elowen Marr". The desk placed the case in WAITING because the name review had already been opened and referred to the team, whose answer is not yet in, so no profile change has been made. The agent's attempts to submit the request and to escalate were both refused because the case was in WAITING, so a person will need to pick it up once the team responds.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

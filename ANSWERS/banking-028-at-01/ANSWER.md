@@ -2,12 +2,6 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
-## Summary
-
-Elowen Mercer wrote by email asking to change the phone number on her profile because she no longer has her old phone, and she asked what the approved way to confirm a replacement is. She is not verified, and a change must be confirmed by the customer in the secure portal rather than by email or chat, so the desk did not change the number and instead sent her a confirmation request for the profile change. The case is closed with that request sent, and the phone number stays as it was until she confirms the change.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -70,6 +64,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `redirect_secure`: redirect-to-the-secure-process: state = TRIAGED is false (state=CONFIRMATION_SENT); request_type = access is false (request_type=change)
 
 ## Final result
 

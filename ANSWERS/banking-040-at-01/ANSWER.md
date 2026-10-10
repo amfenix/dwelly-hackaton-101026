@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The customer asked for a document showing the current stage of their £74.00 payment to a repair contractor, so they could share evidence of it. The desk classified it as a document request and sent a query to the documents system about the £74.00 payment. The case closed as asked, and the bank's record showed the payment as sent on 14 July 2025 with reference HV-040. The desk's attempt to send a reply was refused because the case was already closed, so no reply went out and nothing in the record shows the document being produced or delivered.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -54,7 +48,7 @@ Facts established:
 - amount: **74.00**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
 
 Where they came from:

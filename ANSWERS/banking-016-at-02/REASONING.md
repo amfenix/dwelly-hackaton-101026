@@ -49,8 +49,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-49. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
+48. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+49. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
 50. `request_type`: not known → register (by `triage`).
 51. `subject`: not known → direct_debit (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7751 tokens in, 394 out, 6.183 s, cost $0.0168; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7407 tokens in, 606 out, 5.287 s, cost $0.0170; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've passed the customer's dispute of the £18.40 Northmere Water Services Direct Debit (9 July 2025) to the team that handles Direct Debit investigations. The desk accepted the request, and the case is now marked as requested.
+> I've submitted the dispute over the £18.40 Direct Debit to Northmere Water Services (9 July 2025) for investigation. The desk accepted it and the case is now in the REQUESTED state.
 > 
-> Tamsin Rook was verified on the call, and the statement entry identified the payment, so I didn't need to check the records or ask her anything first.
+> Tamsin Rook passed identification on the call and asked for the amount to be investigated. The statement entry also identifies the payment. I didn't check the Direct Debit records first, because nothing was unclear about which payment she meant.

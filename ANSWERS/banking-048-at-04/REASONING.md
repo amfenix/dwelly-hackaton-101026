@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: incoming_payment → incoming_payment.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → incoming_payment (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); incoming_asked → true (incoming_asked=True).
@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7682 tokens in, 399 out, 5.773 s, cost $0.0167; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7256 tokens in, 539 out, 4.755 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply. The incoming-payments check found no identifiable credit from the buyer on the account, so the reply tells the customer that nothing has arrived yet. The case is closed.
+> I've sent the reply to the customer. The incoming-payments check found no identifiable credit from the buyer on the business account, so the reply says only that. The bank can't confirm the payment has arrived. The desk accepted the reply and the case is closed.
 > 
-> Mara Ellison's identity is still unverified. I went ahead because the reply only reports what the incoming record shows and gives no account details. The reply text itself was written by the desk, and I haven't seen it.
+> The requester is still marked unverified in the case facts. I didn't hold the reply back for that, and the desk didn't refuse it.

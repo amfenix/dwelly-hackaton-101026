@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Leona Voss, an unverified viewer on secure chat, asked the desk to check whether row SUP-17 in a batch marked processed was actually paid. The desk read the request, classified it as a status question, and put the case in a waiting state because the payment system had been asked but its answer was not in. No payment record was read, so no status was given, and both later attempts, a repeat payment lookup and an escalation to a person, were refused because the case was already in WAITING. The case is closed in that waiting state with nothing done; the row's status and Leona Voss's identity are still unchecked, and no person has been handed the case.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -63,7 +57,7 @@ Facts established:
 - payment_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

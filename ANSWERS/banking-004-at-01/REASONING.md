@@ -40,15 +40,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Called `check_confirmation` (attempt 1, key banking-004-at-01:read-confirmation:11).
 37. `check_confirmation` found {}.
 38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-40. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-41. `request_type`: not known → reason (by `triage`).
+39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+40. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+41. `request_type`: not known → question (by `triage`).
 42. `subject`: not known → transfer (by `triage`).
 43. State `READING` → `TRIAGED` (by `triage`).
 44. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 45. `next_system`: not known → payment (by `route-payment`).
 46. The agent asked for `ask_system` {"system": "payment"}.
-47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=reason).
+47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 48. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-004-at-01:do-ask:15).
@@ -61,14 +61,4 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9959 tokens in, 406 out, 7.011 s, cost $0.0213; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I asked the payment system about the 14 July transfer to Northmere Housing Co-operative. The case is now closed at that step, and I haven't been able to give the customer a reason yet.
-> 
-> - **No answer in the case:** the payment system's answer hasn't been added, and `payment_status` is still unknown.
-> - **Reply refused:** the desk wouldn't let me reply because the case is still in the ASKED state, not TRIAGED.
-> - **Nothing to report:** I haven't seen a record that shows why the transfer wasn't completed, so I won't guess at a reason.
-> 
-> The case stays open and goes to a person to follow up.
+5 calls, 8809 tokens in, 325 out, 3.661 s, cost $0.0170; models: claude-sonnet-5-5, jev-1.13.0.

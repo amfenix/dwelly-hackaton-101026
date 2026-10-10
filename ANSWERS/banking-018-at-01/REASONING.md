@@ -43,8 +43,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. `confirmation`: not known → none (by `read-confirmation`).
 40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-43. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+42. Classifier (jev jev-latest) on `request_type`: instruction, confidence 0.92 → instruction.
+43. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.64 → standing_order.
 44. `request_type`: not known → instruction (by `triage`).
 45. `subject`: not known → standing_order (by `triage`).
 46. State `READING` → `TRIAGED` (by `triage`).
@@ -62,11 +62,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6922 tokens in, 295 out, 5.676 s, cost $0.0142; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6560 tokens in, 494 out, 6.003 s, cost $0.0143; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The facts point to the recurring system, which holds standing orders. I'll check there before changing anything.
-> I asked the recurring system about the two £34.80 Northmere Heating payments, and the desk accepted the request. The case has now reached its final state, but no new facts came back from that check. I don't know yet whether the two payments are duplicates, and I haven't removed or cancelled anything.
+> I've asked the recurring payments system about the two £34.80 payments to Northmere Heating. I haven't removed anything. I also don't yet know whether the two payments are duplicates.
 > 
-> The case is closed with this step, so a person will need to pick it up. They should read the standing order records and see whether the two lines are separate orders or one order showing twice. They should only remove a payment if the customer confirms which one to cancel.
+> The check was accepted, but the case shows no result from it yet. Nothing in the case ties the two payment lines together, so I can't confirm they're duplicates. The customer hasn't confirmed which one to remove, so a removal would be a guess.
+> 
+> The next step is to read the recurring system's answer when it arrives. If it shows two separate standing orders, the customer needs to say which one to cancel.

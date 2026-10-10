@@ -43,8 +43,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. `confirmation`: not known → none (by `read-confirmation`).
 40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-43. Classifier (claude claude-haiku-5-5) on `subject`: card_payment → card_payment.
+42. Classifier (jev jev-latest) on `request_type`: register, confidence 0.99 → register.
+43. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
 44. `request_type`: not known → register (by `triage`).
 45. `subject`: not known → card_payment (by `triage`).
 46. State `READING` → `TRIAGED` (by `triage`).
@@ -64,10 +64,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10296 tokens in, 413 out, 6.174 s, cost $0.0214; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7732 tokens in, 622 out, 6.388 s, cost $0.0178; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the dispute for the £38.40 Fern & Finch Books card purchase on 14 July 2025, and the case now shows as requested. The desk accepted the request.
+> I've passed the dispute for the £38.40 Fern & Finch Books purchase on 14 July 2025 to the team that handles card disputes. The case is now in the "requested" state.
 > 
-> I have not yet told you how to protect your card. The dispute covers the transaction, but it doesn't block or replace the card. I also haven't checked the card system, because the desk refused that lookup for this type of request.
+> Before that, I tried to look the payment up in the card system. The desk refused because this is a request to register a dispute, not a lookup. So I haven't checked the card records, and nothing so far shows who made the purchase.
+> 
+> I haven't given you any advice yet on protecting your card, and no card has been blocked. If you want the card blocked, tell us which card and give that instruction clearly. Never share your PIN or password with anyone, including us.

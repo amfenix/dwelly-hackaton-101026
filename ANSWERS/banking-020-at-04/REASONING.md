@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-49. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-50. `request_type`: not known → record_fact (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+49. Classifier (jev jev-latest) on `subject`: standing_order, confidence 0.69 → standing_order.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → standing_order (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); recurring_asked → true (recurring_asked=True).
@@ -68,10 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7649 tokens in, 398 out, 6.61 s, cost $0.0166; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7366 tokens in, 715 out, 7.289 s, cost $0.0181; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Elena Wren. The recurring-payments check had already run and showed an active standing order on the account. The reply reports only that record.
+> I sent the reply, and the desk accepted it and closed the case.
 > 
-> The case facts still show her as not verified, even though she says she completed the account-holder checks. The desk accepted the reply, and the case is now closed.
+> The recurring-payments check had already run. It showed the standing order as ACTIVE, so I replied from that result instead of asking the system again.
+> 
+> The case facts still list the customer as not verified, even though she says she signed in and passed the account-holder checks. I didn't resolve that mismatch before replying. I chose to reply anyway because the question is only informational and came in over secure chat.

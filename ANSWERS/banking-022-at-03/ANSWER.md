@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Mara Ellison, verified on a call, reported her debit card missing after a visit to Alder Quay Market and asked for it to be blocked immediately. The desk found that the card system and the service team had already been asked and that a case (HV-022) was open, so it closed the case as waiting, since the team's answer isn't in yet. The agent's later attempts to ask the card system again, submit a request and ask which card were all refused because the case was already in the waiting state; nothing was changed, and what remains is the team's answer on the block.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

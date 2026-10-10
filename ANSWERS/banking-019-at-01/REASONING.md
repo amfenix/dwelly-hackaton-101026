@@ -40,8 +40,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. Called `check_confirmation` (attempt 1, key banking-019-at-01:read-confirmation:11).
 37. `check_confirmation` found {}.
 38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-40. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+39. Classifier (jev jev-latest) on `request_type`: change, confidence 0.99 → change.
+40. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 41. `request_type`: not known → change (by `triage`).
 42. `subject`: not known → standing_order (by `triage`).
 43. State `READING` → `TRIAGED` (by `triage`).
@@ -60,4 +60,4 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 12170 tokens in, 684 out, 10.137 s, cost $0.0285; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11685 tokens in, 784 out, 8.835 s, cost $0.0273; models: claude-sonnet-5-5, jev-1.13.0.

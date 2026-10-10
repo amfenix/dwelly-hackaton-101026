@@ -49,8 +49,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-49. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+48. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+49. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 50. `request_type`: not known → instruction (by `triage`).
 51. `subject`: not known → standing_order (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
@@ -68,10 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7866 tokens in, 512 out, 7.123 s, cost $0.0182; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7973 tokens in, 1240 out, 10.679 s, cost $0.0245; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply. The recurring-payments record shows your studio-rent instruction as CANCELLED, so the reply confirms that the next run is cancelled and won't start. The case is now closed.
+> I replied to the customer, and the desk accepted the reply and closed the case.
 > 
-> One thing didn't line up. The case's confirmation field still reads "none", even though you confirmed the cancellation in the secure portal. I replied based on the record's CANCELLED status, not on that field.
+> I chose a reply because the recurring-payments check had already returned the status CANCELLED for the studio-rent instruction. The desk writes the reply, so I haven't seen its wording.
+> 
+> The case text conflicts on one point. The portal message in event 1 said the instruction was active, and the facts show `confirmation: none`. I treated the CANCELLED status as the record to report rather than submitting a new cancellation. If that status doesn't reflect a cancellation actually carried out, the customer may have been told it is cancelled when the next run could still go ahead.

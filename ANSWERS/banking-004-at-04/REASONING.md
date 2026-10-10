@@ -53,9 +53,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-53. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-54. `request_type`: not known → reason (by `triage`).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → transfer (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
 57. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -72,8 +72,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5246 tokens in, 274 out, 4.631 s, cost $0.0106; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4840 tokens in, 410 out, 3.29 s, cost $0.0099; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer, and the case is closed. The payment record shows the 14 July transfer to Northmere Housing Co-operative as DECLINED, with the reason "The receiving bank declined the transfer." That was the only reason on record. The reply therefore says nothing beyond it, and I didn't query the payment system again.
+> I've sent the reply to the customer, and the case is closed. The bank's payment record shows the 14 July 2025 transfer to Northmere Housing Co-operative as declined. The recorded reason is that the receiving bank declined it. The record gives no further detail, so the reply doesn't offer one.

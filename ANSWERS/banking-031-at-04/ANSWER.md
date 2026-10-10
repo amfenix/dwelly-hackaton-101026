@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Elowen Marr, who is not verified, wrote on secure chat that she couldn't find her June statement in the portal and wanted it made available there, not sent by email. The desk checked the documents record, which showed statement-031.pdf as available, and replied on secure chat saying so, adding that this doesn't confirm it was downloaded and that no email was sent. The case is closed as replied, and the record shows nothing left for a person to do.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -72,7 +66,7 @@ Facts established:
 - document_name: **statement-031.pdf**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
 
 Where they came from:

@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellison asked over secure chat whether an archived copy of her January 2024 statement was available. The desk checked the document record, found it available, and replied in the chat saying so, adding that this doesn't confirm a download or any credit and that no email was sent. The case is closed as replied; her identity was never verified, and the record shows nothing further left for a person to do.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -67,7 +61,7 @@ Facts established:
 - document_ready: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
 
 Where they came from:

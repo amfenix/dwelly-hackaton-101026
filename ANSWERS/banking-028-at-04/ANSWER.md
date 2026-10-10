@@ -2,12 +2,6 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
-## Summary
-
-Elowen Mercer, a verified customer, asked to change the phone number on her profile because she no longer has her old phone, and she asked for the approved way to confirm a replacement. The desk did not make the change: her email and her call don't count as authorisation, so it sent a confirmation request to her for the profile change and closed the case. What is left is for her to confirm the change in the secure portal, and the profile stays unchanged until she does.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

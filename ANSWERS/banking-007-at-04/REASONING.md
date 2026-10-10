@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → transfer (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -70,13 +70,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10789 tokens in, 467 out, 7.829 s, cost $0.0236; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10127 tokens in, 523 out, 5.838 s, cost $0.0217; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> Payment was already asked, so the answer is in the case. Reply.
-> I checked the payment record and replied to Mara Ellwood. The record shows the international transfer as sent. It shows no confirmation that the beneficiary has received it.
+> The payment system has already been asked, so the answer is in the case. Next is the reply.
+> I've sent the reply to Mara Ellwood. The payment record shows the transfer as SENT, and there is no confirmation yet that the beneficiary received it. The desk wrote the reply from those facts, and the case is now closed.
 > 
-> I asked the payment system for the status, but the desk refused because that check had already been run. The status was already in the case, so I used it for the reply.
-> 
-> The desk has not verified Mara's identity. The case is closed on the reply.
+> I asked the payment system again first, but the desk refused because that check had already been done.

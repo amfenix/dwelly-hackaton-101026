@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellison of Alder Quay Studio Ltd. asked over secure chat whether an identifiable credit had arrived for a workshop invoice her buyer says they paid. The desk checked the incoming account activity, found no matching credit, and replied on secure chat saying that no incoming payment was found, that this does not establish the sender didn't pay, and that no payment was made. Her identity was not verified, and the case is closed with nothing further left for a person in the record.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -71,7 +65,7 @@ Facts established:
 - incoming_found: **False**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
 
 Where they came from:

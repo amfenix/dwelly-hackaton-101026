@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Mara Ellwood, verified on a call, raised a transfer where she remembered the draft as £684.20 but the final line shows £648.20. The desk identified her, read the amount as £648.20, found no confirmation on file, and asked the payment system about the £648.20 transfer. The case is closed as asked, with no answer from the payment system recorded yet, so the sent amount is still unconfirmed and the £684.20 figure cannot be verified from the record.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -48,7 +42,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -62,7 +56,7 @@ Facts established:
 - amount: **648.20**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

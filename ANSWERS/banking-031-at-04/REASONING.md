@@ -50,9 +50,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → none (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-50. Classifier (claude claude-haiku-5-5) on `subject`: statement → statement.
-51. `request_type`: not known → document (by `triage`).
+49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.51 → question.
+50. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+51. `request_type`: not known → question (by `triage`).
 52. `subject`: not known → statement (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
 54. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
@@ -69,10 +69,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7556 tokens in, 281 out, 5.386 s, cost $0.0153; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7252 tokens in, 523 out, 5.138 s, cost $0.0159; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer. The documents system showed her June 2025 statement (statement-031.pdf) as ready, so the reply is based on that record.
+> I sent the customer a reply, and the case is now closed as replied. The documents system had already confirmed that the June 2025 statement (`statement-031.pdf`) is ready, so no further lookup was needed.
 > 
-> The case shows her as not verified. The desk accepted the reply without any refusal, and the case is now closed as replied. I did not check what the reply says about the portal.
+> The customer is not verified, so I did not take any action on the account. The reply was written by the desk, and I haven't seen its wording.

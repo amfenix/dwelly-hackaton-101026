@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellison, verified on a call, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputes how the tariff was applied. The desk registered the request as HV-035 and routed it to the Tariff Team, refused the attempts to query the documents system and to submit a further request, and sent her a reply confirming the registration. No decision on the fee has been made, so the dispute itself remains with the Tariff Team.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

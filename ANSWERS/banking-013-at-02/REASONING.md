@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-45. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+44. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+45. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 46. `request_type`: not known → instruction (by `triage`).
 47. `subject`: not known → standing_order (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -64,10 +64,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7490 tokens in, 411 out, 6.102 s, cost $0.0164; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7355 tokens in, 854 out, 6.907 s, cost $0.0194; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted your request to cancel the next run of your studio-rent standing order. It went to the recurring payments system, which carries out the cancellation, and the desk accepted it.
+> I've passed Elodie Mercer's request to cancel the next run of her studio-rent standing order to the recurring-payments system, and the desk accepted it. The cancellation has not been confirmed yet.
 > 
-> I can't confirm yet that the cancellation has gone through. The desk has only recorded the request as submitted. Before it takes effect, your secure portal still shows the instruction as active, with the next run not yet started. To check the result, look at the instruction in your secure portal. Please don't share any password or PIN with us to confirm it.
+> I submitted it because she was verified on the call and her instruction was clear. The portal event also shows the studio-rent instruction as active, with the next run not yet started. I didn't query the recurring system first to check the instruction's details.
+> 
+> She asked how to confirm the cancellation securely. That reply hasn't been written yet. Until the recurring system confirms the cancellation, she shouldn't be told it is done.

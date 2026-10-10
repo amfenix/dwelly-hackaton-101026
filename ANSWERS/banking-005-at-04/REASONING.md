@@ -52,8 +52,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `confirmation`: not known → none (by `read-confirmation`).
 49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-52. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
+51. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+52. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.99 → transfer.
 53. `request_type`: not known → register (by `triage`).
 54. `subject`: not known → transfer (by `triage`).
 55. State `READING` → `TRIAGED` (by `triage`).
@@ -74,8 +74,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 11524 tokens in, 496 out, 8.622 s, cost $0.0254; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11024 tokens in, 562 out, 6.817 s, cost $0.0239; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> Asking the payment system isn't allowed for a registration request, so I'll submit the request.
+> Asking was refused, so the next step is to submit the request.

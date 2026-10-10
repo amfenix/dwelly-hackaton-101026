@@ -47,8 +47,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-47. Classifier (claude claude-haiku-5-5) on `subject`: role → role.
+46. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+47. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
 48. `request_type`: not known → instruction (by `triage`).
 49. `subject`: not known → role (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
@@ -59,18 +59,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `submit_request` {}.
 57. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); business_asked absent is false (business_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
-58. The agent asked for `escalate` {"note": "Verified administrator Mara Ellery (Larkmere Studio Ltd) instructed by verified call to revoke former employee Owen Bell's Payroll Approver role; review of past operations to be handled separately. The desk refused the instruction because the case is WAITING, not TRIAGED, request_type is 'instruction' rather than 'change', and no confirmation is recorded. The business system has already been asked. Please review and revoke the role, or confirm the instruction with the customer."}.
-59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+58. The agent asked for `reply` {}.
+59. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); document_ready present is false (document_ready=not known).
+60. The agent asked for `escalate` {"note": "Verified administrator Mara Ellery (Larkmere Studio Ltd) instructed by verified call to revoke former employee Owen Bell's Payroll Approver role; review of earlier operations to be handled separately. Case is in WAITING state; submit_request and reply were refused (state not TRIAGED, confirmation=none, no business_status on record). Role revocation not yet carried out; please process or confirm the instruction."}.
+61. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11540 tokens in, 867 out, 11.289 s, cost $0.0291; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I haven't revoked Owen Bell's Payroll Approver role, and nothing has been handed to a person. Both of my attempts were refused, so the case is still waiting.
-> 
-> - **Revoke request:** The desk refused it. The case is in WAITING rather than TRIAGED, the request is typed as an "instruction" instead of a "change", and no confirmation is recorded. The business system had already been asked.
-> - **Escalation:** The desk refused this too, because the case also has to be TRIAGED before it can be escalated.
-> 
-> The case is left open for a person to pick up. Someone will need to either revoke the role or confirm the instruction with Mara Ellery. The review of Owen's earlier operations stays separate, as she asked.
+5 calls, 11293 tokens in, 880 out, 9.222 s, cost $0.0275; models: claude-sonnet-5-5, jev-1.13.0.

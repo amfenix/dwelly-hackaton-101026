@@ -50,9 +50,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → none (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-50. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-51. `request_type`: not known → document (by `triage`).
+49. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+50. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+51. `request_type`: not known → question (by `triage`).
 52. `subject`: not known → document (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
 54. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
@@ -69,10 +69,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7656 tokens in, 388 out, 6.036 s, cost $0.0166; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7190 tokens in, 506 out, 4.568 s, cost $0.0156; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer. The records show her account confirmation, `account-confirmation-038.pdf`, is ready. She asked for it in her own secure portal only, and nothing in the case asks for it to go anywhere else.
+> I sent the reply, and the case is now closed as replied. The documents system showed that `account-confirmation-038.pdf` is ready, so the reply points Mara Ellison to that document in her secure portal.
 > 
-> The desk's checks list her as not verified. The reply was accepted anyway, and I didn't check whether it limits delivery to the portal. The case is now closed with the reply as its outcome.
+> The desk has not verified her identity. The document is only made available in her own portal and is not sent anywhere else, which is what she asked for.

@@ -50,9 +50,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → none (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-50. Classifier (claude claude-haiku-5-5) on `subject`: limit → limit.
-51. `request_type`: not known → record_fact (by `triage`).
+49. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+50. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
+51. `request_type`: not known → question (by `triage`).
 52. `subject`: not known → limit (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
 54. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
@@ -69,12 +69,14 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8449 tokens in, 496 out, 8.437 s, cost $0.0177; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 7665 tokens in, 671 out, 5.905 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply with the company profile's current outgoing-payment limit, which the business records show as 20,000.00. The desk accepted it and the case is closed.
+> I sent Maeve a reply with the limit from the business records. The current outgoing-payment limit on her company profile is 20,000.00. The desk accepted the reply and the case is closed.
 > 
-> Maeve's role is viewer, which covers seeing limits, so I treated this as a read-only request. The case shows her as not verified on secure chat. I did not treat that as blocking, because nothing was changed or approved. The business system's status came back as OTHER, and the reply is based on that record.
+> Two things about the case:
+> - **Verification:** Maeve is not verified on secure chat. Her role is viewer, which can see limits, and the desk accepted the reply on that basis.
+> - **Business system status:** The business system returned a status of OTHER. I treated it as a valid answer and reported the limit it gave.
 > 
-> The planned supplier payout she can see in the portal has not been submitted, and the bank has taken no action on it.
+> Nothing was changed. The planned supplier payout she mentioned has not been submitted, and the reply doesn't act on it.

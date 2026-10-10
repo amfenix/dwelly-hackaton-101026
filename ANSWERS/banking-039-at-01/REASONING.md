@@ -40,15 +40,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. `confirmation`: not known → none (by `read-confirmation`).
 37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-40. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
-41. `request_type`: not known → document (by `triage`).
+39. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+40. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+41. `request_type`: not known → question (by `triage`).
 42. `subject`: not known → access (by `triage`).
 43. State `READING` → `TRIAGED` (by `triage`).
 44. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 45. `next_system`: not known → access (by `route-access`).
 46. The agent asked for `ask_system` {"system": "access"}.
-47. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
+47. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 48. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-039-at-01:do-ask:15).
@@ -61,4 +61,4 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 9158 tokens in, 143 out, 5.472 s, cost $0.0172; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 8788 tokens in, 324 out, 4.791 s, cost $0.0170; models: claude-sonnet-5-5, jev-1.13.0.

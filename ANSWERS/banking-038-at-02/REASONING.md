@@ -45,15 +45,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-45. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-46. `request_type`: not known → document (by `triage`).
+44. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+45. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+46. `request_type`: not known → question (by `triage`).
 47. `subject`: not known → document (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
 50. `next_system`: not known → documents (by `route-documents`).
 51. The agent asked for `ask_system` {"system": "documents"}.
-52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
+52. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 53. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-038-at-02:do-ask:15).
@@ -61,13 +61,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. `ask_system` found {}.
 58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 59. The case closed in `ASKED`: **ask_system**.
+60. The agent asked for `reply` {}.
+61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-4 calls, 7331 tokens in, 294 out, 6.874 s, cost $0.0150; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I checked the documents system about Mara Ellison's request for an account confirmation letter in her secure portal. The system accepted the query and the case is now marked as asked. It has not yet returned an answer about the document.
-> 
-> Mara is still unverified, so nothing has been made available to her yet. The next step is to reply to her once the documents system's answer is in the case.
+5 calls, 9681 tokens in, 437 out, 5.563 s, cost $0.0199; models: claude-sonnet-5-5, jev-1.13.0.

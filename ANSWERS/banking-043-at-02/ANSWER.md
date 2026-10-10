@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Mara Ellery, writing on secure chat (not verified as the account holder), asked whether Northmere Studio Ltd's payroll payment package was still waiting on her co-signer after she gave her consent. The desk classed it as a status request and passed a query about the package to the payment system, then closed the case in that asked state. The desk did not send Mara a reply, because its reply rules were refused in that state, so she has not yet been told the package status or whether the second signatory still needs to act.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -48,7 +42,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -62,7 +56,7 @@ Facts established:
 - counterparty: **Northmere Studio Ltd’s payroll payment package**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

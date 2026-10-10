@@ -45,15 +45,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-45. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
-46. `request_type`: not known → record_fact (by `triage`).
+44. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+45. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
+46. `request_type`: not known → question (by `triage`).
 47. `subject`: not known → standing_order (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=standing_order).
 50. `next_system`: not known → recurring (by `route-recurring`).
 51. The agent asked for `ask_system` {"system": "recurring"}.
-52. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
+52. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 53. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-011-at-02:do-ask:15).
@@ -61,9 +61,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. `ask_system` found {}.
 58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 59. The case closed in `ASKED`: **ask_system**.
-60. The agent asked for `reply` {}.
-61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=recurring); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-5 calls, 9894 tokens in, 302 out, 6.267 s, cost $0.0198; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9148 tokens in, 536 out, 5.227 s, cost $0.0198; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I asked the recurring payments system for the next run date of Mara Ellison's standing order, and the desk accepted the request. The case is now closed at that step.
+> 
+> The answer from the system isn't in the case yet. `case_status` shows no new facts after the lookup, so I can't give Mara a date. The customer is also still marked as not verified, which I didn't resolve.

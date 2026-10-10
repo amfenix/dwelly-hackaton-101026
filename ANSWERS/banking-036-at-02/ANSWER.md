@@ -2,12 +2,6 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
-## Summary
-
-Mara Ellison, a verified customer in the secure portal, asked to change her correspondence address on her profile. The desk found no confirmation yet, since her request was made by email and a change has to be confirmed in the secure portal, so it sent her a confirmation request and closed the case in that state. What is left is for her to confirm the change in the portal; the record does not show that the address has been updated.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -74,6 +68,10 @@ No.
 ## What failed
 
 - nothing
+
+Requests the policy refused:
+
+- `reply`: registration-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = payment is false (next_system=access); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = incoming is false (next_system=access); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = recurring is false (next_system=access); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = card is false (next_system=access); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = business is false (next_system=access); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=CONFIRMATION_SENT); next_system = documents is false (next_system=access); document_ready present is false (document_ready=not known)
 
 ## Final result
 

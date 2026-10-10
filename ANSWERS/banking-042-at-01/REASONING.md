@@ -37,15 +37,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 33. Called `check_confirmation` (attempt 1, key banking-042-at-01:read-confirmation:11).
 34. `check_confirmation` found {}.
 35. Rule `triage` fired: state = READING → true (state=READING).
-36. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-37. Classifier (claude claude-haiku-5-5) on `subject`: batch → batch.
-38. `request_type`: not known → document (by `triage`).
+36. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+37. Classifier (jev jev-latest) on `subject`: batch, confidence 0.95 → batch.
+38. `request_type`: not known → question (by `triage`).
 39. `subject`: not known → batch (by `triage`).
 40. State `READING` → `TRIAGED` (by `triage`).
 41. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
 42. `next_system`: not known → payment (by `route-payment`).
 43. The agent asked for `ask_system` {"system": "payment"}.
-44. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
+44. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 45. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 46. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 47. Called `ask_system` (attempt 1, key banking-042-at-01:do-ask:15).
@@ -58,4 +58,4 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 8890 tokens in, 145 out, 5.973 s, cost $0.0166; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 8516 tokens in, 325 out, 4.641 s, cost $0.0165; models: claude-sonnet-5-5, jev-1.13.0.

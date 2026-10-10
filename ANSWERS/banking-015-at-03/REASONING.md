@@ -48,8 +48,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-48. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
+47. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+48. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
 49. `request_type`: not known → instruction (by `triage`).
 50. `subject`: not known → direct_debit (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
@@ -67,12 +67,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5260 tokens in, 428 out, 5.292 s, cost $0.0121; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4879 tokens in, 594 out, 4.324 s, cost $0.0119; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the request to cancel Mara Ellison's Direct Debit mandate to Northmere Fitness, and the desk accepted it. The case is now in the REQUESTED state.
+> I've submitted the instruction to cancel Mara Ellison's Direct Debit mandate to Northmere Fitness. The desk accepted it and the case is now in the REQUESTED state.
 > 
-> She was verified on the call and clearly asked for this. The portal shows one active Northmere Fitness mandate, so there was no doubt about which one she meant. She also confirmed she understands this instructs the bank only and doesn't end her agreement with Northmere Fitness.
+> She was verified on the call, and the portal shows the mandate as Active. She also confirmed that this only stops her bank paying collections and doesn't cancel her agreement with Northmere Fitness.
 > 
-> I haven't confirmed that the mandate is actually cancelled yet.
+> I haven't confirmed that the mandate is now cancelled. The request has been passed on, and the recurring-payments system still has to carry it out.

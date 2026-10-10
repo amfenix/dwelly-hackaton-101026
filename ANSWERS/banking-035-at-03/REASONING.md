@@ -50,8 +50,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 46. `confirmation`: not known → none (by `read-confirmation`).
 47. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 48. Rule `triage` fired: state = READING → true (state=READING).
-49. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-50. Classifier (claude claude-haiku-5-5) on `subject`: fee → fee.
+49. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+50. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
 51. `request_type`: not known → register (by `triage`).
 52. `subject`: not known → fee (by `triage`).
 53. State `READING` → `TRIAGED` (by `triage`).
@@ -67,15 +67,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 14434 tokens in, 603 out, 10.357 s, cost $0.0323; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 14210 tokens in, 758 out, 9.376 s, cost $0.0322; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't changed anything on this case. It is now in a final WAITING state, and I haven't checked whether Mara chose electronic statements.
+> The case is waiting, and I have nothing more to do on it now. I couldn't take either step I tried, and the case status shows it is final with the outcome "wait".
 > 
-> - **Statement records:** my request to the documents system was refused because the case isn't in the TRIAGED state the desk needs.
-> - **Dispute registration:** my attempt to register the dispute was refused for the same reason. The case already shows `registration_asked = True`, so the review request appears to be registered already.
+> - **Review of the £4.50 fee:** The desk's records show that a request to register this review has already been made (`registration_asked` is true). A second submission was refused for that reason. I have not confirmed that the review was registered, and I have not made any change to the fee.
+> - **Statement preference:** My request to the documents system was refused because the case is in a waiting state. So I haven't checked whether Mara had chosen electronic statements.
 > 
-> Nothing else can be done from here. The case stays open for a person to pick up.
-> 
-> Mara should not be told whether the fee will be reversed. No record has confirmed her electronic-statement choice, and the portal notice says it doesn't confirm any change.
+> Mara has not been told the fee will be changed, and I haven't claimed that it will.

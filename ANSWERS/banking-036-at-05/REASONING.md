@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-45. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
+44. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 46. `request_type`: not known → change (by `triage`).
 47. `subject`: not known → profile (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -63,8 +63,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5223 tokens in, 280 out, 5.743 s, cost $0.0107; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4869 tokens in, 465 out, 4.098 s, cost $0.0106; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed at CONFIRMATION_SENT, so I'm not calling another tool. The desk has sent the address change for confirmation through the secure profile process. The request came in outside the portal, and the portal still records no confirmation. The customer's message in event 4 doesn't change that. Mara needs to confirm the change in the profile process itself, and the bank hasn't changed the address yet.
+> The case is closed at the confirmation step, so I'm taking no further action.
+> 
+> The state is CONFIRMATION_SENT and the outcome is send_for_confirmation. Mara Ellison is verified in the secure portal. The desk has recorded no confirmation yet, so the address change will go through the bank's secure profile process. I haven't changed her address, and no tool calls were refused.

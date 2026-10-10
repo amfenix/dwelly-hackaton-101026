@@ -51,9 +51,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-51. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-52. `request_type`: not known → document (by `triage`).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+51. Classifier (jev jev-latest) on `subject`: document, confidence 0.99 → document.
+52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → document (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7467 tokens in, 324 out, 5.362 s, cost $0.0156; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7133 tokens in, 521 out, 4.937 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer. The documents check had already run and showed the acquiring report for 1–7 July 2025 as ready, so no escalation was needed. The case is now marked replied and closed.
+> I replied to Mara Venn, and the case is now closed. The documents system shows the acquiring report for 1–7 July 2025 as ready, which contradicts her chat message saying it isn't showing as available. So I answered with that record instead of escalating the file request.
 > 
-> The requester, Mara Venn, is not verified on the secure chat channel. The reply therefore goes only on what the document record shows. Beyond sending that reply, I did not act on her request to escalate the file request.
+> Mara is not verified, so the reply can only say what the record shows. I didn't send or release the file myself, and the desk wrote the reply text.

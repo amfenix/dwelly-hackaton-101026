@@ -2,12 +2,6 @@
 
 **Decision: forward_to_authority**  (final state `FORWARDED`)
 
-## Summary
-
-Nadia Bell, an unverified customer writing over secure chat, followed up on an access request about a role and said the company administrator still needs to approve it. The desk classed it as an authority matter and forwarded it to the verified company administrator, and the case closed as forwarded. The record shows nothing further left for the desk; the approval itself rests with the administrator.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user

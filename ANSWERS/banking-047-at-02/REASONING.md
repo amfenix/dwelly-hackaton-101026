@@ -45,15 +45,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-45. Classifier (claude claude-haiku-5-5) on `subject`: limit → limit.
-46. `request_type`: not known → record_fact (by `triage`).
+44. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+45. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
+46. `request_type`: not known → question (by `triage`).
 47. `subject`: not known → limit (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [limit, "role"] → true (subject=limit).
 50. `next_system`: not known → business (by `route-business`).
 51. The agent asked for `ask_system` {"system": "business"}.
-52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
+52. Rule `business-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = business → true (args.system=business); next_system = business → true (next_system=business); next_system absent → false (next_system=business); business_asked absent → true (business_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 53. State `TRIAGED` → `ASK_PENDING` (by `business-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-047-at-02:do-ask:15).
@@ -61,13 +61,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. `ask_system` found {}.
 58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 59. The case closed in `ASKED`: **ask_system**.
+60. The agent asked for `reply` {}.
+61. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=business); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=business); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=business); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=business); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=business); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=business); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-4 calls, 7362 tokens in, 341 out, 6.121 s, cost $0.0155; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10401 tokens in, 603 out, 6.074 s, cost $0.0231; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent Maeve's request to the business system to look up the current outgoing-payment limit on her company profile. The system accepted it, and the case is closed at this step.
+> I checked the business system for Maeve's company payment limit. The case is now closed at that step, and I haven't been able to give her the limit.
 > 
-> The business system's answer isn't in the case yet, so the limit itself is still unknown. Maeve has not been told anything. Her identity is still unverified (`verified` is false), and her role on record is viewer.
+> The business system's answer isn't in the case, and a reply to Maeve was refused because of that. The desk only allows a reply once the case has moved on from the "asked" step and the business answer is on record. Neither had happened, and the case is closed (final), so I can't try again.
+> 
+> Maeve's identity is also not verified (verified is false). Her role is viewer, which matches what she says about being allowed to view limits. A person should pick this up, confirm who she is, and then give her the limit.

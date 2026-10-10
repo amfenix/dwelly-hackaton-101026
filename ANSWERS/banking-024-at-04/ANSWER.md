@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Rowan Ellery, writing over secure chat and not verified, said their card was declined at a grocery payment and asked for the category of the restriction and whether it had been lifted. The desk checked the card journal and replied in the chat that the card shows as restricted, with the recorded reason "temporary security-related restriction", that this does not disclose the basis of the restriction, and that no further card change was made. The reply did not say whether the restriction would be lifted, and the case is closed with nothing left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -72,7 +66,7 @@ Facts established:
 - card_reason: **temporary security-related restriction.**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **card**
 
 Where they came from:

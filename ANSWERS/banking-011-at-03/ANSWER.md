@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Mara Ellison, who is not verified, asked over secure chat for the next due date of her active monthly standing order. The desk set the case to wait because the recurring system had been asked and its answer was not yet in, so no date was given. A second ask to the recurring system and an escalation to a person were both refused because the case was already in WAITING, and the case stays there until the recurring system's answer arrives.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -62,7 +56,7 @@ Facts established:
 - recurring_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
 
 Where they came from:

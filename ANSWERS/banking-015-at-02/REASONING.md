@@ -47,8 +47,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-47. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
+46. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+47. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
 48. `request_type`: not known → instruction (by `triage`).
 49. `subject`: not known → direct_debit (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
@@ -66,10 +66,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5181 tokens in, 347 out, 4.67 s, cost $0.0112; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7251 tokens in, 598 out, 5.128 s, cost $0.0167; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've submitted the instruction to cancel your Northmere Fitness Direct Debit mandate, and the desk accepted it. Mara Ellison passed the identification checks on the verified call. She named the mandate, which the portal shows as active, so there was nothing to clarify.
+> I've submitted the cancellation of your Northmere Fitness Direct Debit mandate. The desk accepted the request, and the case is now at REQUESTED.
 > 
-> Once the cancellation goes through, Northmere Fitness shouldn't be able to collect against that mandate. This only stops the collections. It doesn't end your agreement with Northmere Fitness, so you'd still need to cancel the membership with them directly.
+> I submitted it because you're verified, the instruction was clear, and the secure portal shows exactly one active Northmere Fitness mandate. The desk hasn't yet confirmed that the mandate is cancelled.
+> 
+> This only stops the mandate at H&V. It doesn't end your agreement with Northmere Fitness, as you said you understood.

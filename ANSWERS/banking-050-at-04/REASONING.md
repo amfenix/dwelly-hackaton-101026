@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → transfer (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10798 tokens in, 470 out, 6.664 s, cost $0.0236; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10410 tokens in, 680 out, 6.722 s, cost $0.0238; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer, and the case is now closed as replied. The payment records show the transfer to Alder Quay Supplies at stage SENT, with no confirmation recorded. Asking the payment system again was refused because it had already been checked.
+> I sent the reply, and the case is now closed as replied. The reply tells the customer what H&V's records show for the Alder Quay Supplies payment: the status is SENT, with no confirmation recorded.
 > 
-> Mara Ellison's identity is not verified on this chat, so the reply is limited to what the record shows.
+> The desk's own policy refused a second payment lookup, because the payment system had already been asked. The customer, Mara Ellison, is still marked as not verified. I didn't try to resolve that before replying, and the reply was accepted.

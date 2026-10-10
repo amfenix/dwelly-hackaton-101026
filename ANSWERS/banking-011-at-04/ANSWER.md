@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellison, writing on secure chat, asked the desk to check when her active monthly household standing order is next due. The desk checked the standing-order record and replied on secure chat that it shows active with the next run on 2025-09-03, that this doesn't guarantee the future payment will execute, and that no instruction or change was made. The record lists her as not verified, and the case closed as replied with nothing left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -72,7 +66,7 @@ Facts established:
 - next_run: **2025-09-03**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
 
 Where they came from:

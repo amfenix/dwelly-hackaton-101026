@@ -48,15 +48,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-48. Classifier (claude claude-haiku-5-5) on `subject`: card_payment → card_payment.
-49. `request_type`: not known → reason (by `triage`).
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+48. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+49. `request_type`: not known → question (by `triage`).
 50. `subject`: not known → card_payment (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
 52. Rule `route-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [card, card_payment] → true (subject=card_payment).
 53. `next_system`: not known → card (by `route-card`).
 54. The agent asked for `ask_system` {"system": "card"}.
-55. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=reason).
+55. Rule `card-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = card → true (args.system=card); next_system = card → true (next_system=card); next_system absent → false (next_system=card); card_asked absent → true (card_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 56. State `TRIAGED` → `ASK_PENDING` (by `card-ask`).
 57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 58. Called `ask_system` (attempt 1, key banking-025-at-03:do-ask:15).
@@ -67,9 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7255 tokens in, 257 out, 4.885 s, cost $0.0145; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6789 tokens in, 363 out, 3.612 s, cost $0.0134; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The customer is verified and has named the payment (£18.40 at North Quay Books). The next system is card, so I'll check the card records for the reason it was declined.
-> I asked the card system why the £18.40 payment at North Quay Books was declined. The request was accepted and the case is now in the ASKED state. The case status doesn't show an answer yet, so I don't know the decline reason. The status marks this as final, so I'm stopping here. The case is with the card system, and a person will pick it up if it stays open.
+> I've asked the card system about the declined £18.40 payment at North Quay Books. The desk accepted the request and the case is now in the "asked" state. The card system's answer isn't in the case yet, so I don't know why the payment was declined. Nothing else has been done on the case.

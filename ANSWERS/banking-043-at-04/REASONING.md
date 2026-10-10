@@ -51,9 +51,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-51. Classifier (claude claude-haiku-5-5) on `subject`: payment_package → payment_package.
-52. `request_type`: not known → status (by `triage`).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.98 → question.
+51. Classifier (jev jev-latest) on `subject`: payment_package, confidence 1.00 → payment_package.
+52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → payment_package (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
@@ -70,10 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5404 tokens in, 284 out, 5.131 s, cost $0.0110; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5051 tokens in, 522 out, 4.712 s, cost $0.0115; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply, and the case is now closed as replied. The business system shows the package as awaiting the second signatory, so it hasn't moved on and your co-signer still has to act.
+> I sent the reply, and the case is closed. The business system shows the Northmere Studio Ltd payroll payment package as awaiting the second signatory. So the package hasn't moved on, and your co-signer still needs to act.
 > 
-> The desk writes the reply text, so I haven't seen its exact wording. The case also lists Mara Ellery as not verified.
+> I didn't read the reply text, because the desk writes it. I also didn't check the case status before replying. The case facts list Mara Ellery as not verified, and the reply went out anyway.

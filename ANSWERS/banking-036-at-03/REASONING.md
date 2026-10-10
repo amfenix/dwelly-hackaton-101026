@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-45. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
+44. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 46. `request_type`: not known → change (by `triage`).
 47. `subject`: not known → profile (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -63,8 +63,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5127 tokens in, 182 out, 4.393 s, cost $0.0095; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4797 tokens in, 398 out, 3.882 s, cost $0.0098; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already at its final state: a confirmation request has been sent to the customer for the address change. Nothing more is needed from the desk now. The change is only made once Mara Ellison confirms it in the secure profile process.
+> The case is already in its final state. A confirmation request has been sent to Mara Ellison through the secure portal. The address change can't go ahead until she confirms it there, because the email alone doesn't change her profile. I'm not taking any further action.

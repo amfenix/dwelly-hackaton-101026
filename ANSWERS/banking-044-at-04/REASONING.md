@@ -52,9 +52,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 48. `confirmation`: not known → none (by `read-confirmation`).
 49. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 50. Rule `triage` fired: state = READING → true (state=READING).
-51. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-52. Classifier (claude claude-haiku-5-5) on `subject`: batch → batch.
-53. `request_type`: not known → status (by `triage`).
+51. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+52. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
+53. `request_type`: not known → question (by `triage`).
 54. `subject`: not known → batch (by `triage`).
 55. State `READING` → `TRIAGED` (by `triage`).
 56. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -71,12 +71,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7681 tokens in, 381 out, 6.789 s, cost $0.0166; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7190 tokens in, 530 out, 4.83 s, cost $0.0159; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply. The records show row SUP-17 was **rejected**, not paid. The reason on record is that the beneficiary details didn't match the receiving institution's records.
+> I sent the reply. Row SUP-17 was rejected, not paid, because the beneficiary details didn't match the receiving institution's records. The batch showing "processed" only means the batch itself was handled. It doesn't mean every row in it was paid.
 > 
-> The batch shows as processed even though this row was rejected. The records show no confirmation for the row. The case is now closed.
+> One thing to be aware of: the desk has not verified Leona Voss, though she is a viewer and asked over secure chat. I answered on the strength of the payment record alone and did not act on her behalf.
 > 
-> Leona Voss is a viewer on the account and her identity was not verified. I treated the status check as within her viewing access.
+> The case is now closed with the reply.

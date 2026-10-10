@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-45. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
+44. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+45. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
 46. `request_type`: not known → access (by `triage`).
 47. `subject`: not known → access (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -64,10 +64,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5277 tokens in, 330 out, 4.921 s, cost $0.0113; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4890 tokens in, 488 out, 3.778 s, cost $0.0109; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed Mara Ellison to H&V's secure recovery process, and the desk accepted it. The case is now closed as redirected.
+> I've pointed Mara Ellison to H&V's secure recovery process in the portal, and the desk accepted it. The case is now closed as redirected.
 > 
-> She needs to complete the identity checks in the secure portal herself. The desk never handles passwords or verification codes, so we haven't asked her for either. I didn't query the access system first, because the request was about regaining sign-in access, which the secure process handles.
+> I chose this because her problem is signing in. Recovery and passwords go through the bank's secure process, not through the desk. She has been verified on the call, and no password or code was shared.
+> 
+> I didn't check the access system for the lockout status first.

@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Mara Ellery, an unverified customer on secure chat, asked whether her monthly rent standing order was executed and what status the bank recorded. The desk queried the recurring system, but its answer had not come in, so the case closed as "wait" in the WAITING state with no actions taken and nothing sent to her. A second ask to the recurring system and an escalation to a person were both refused because the case was no longer in TRIAGED, so someone still needs to check the standing-order run and verify her before any status is given.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -62,7 +56,7 @@ Facts established:
 - recurring_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **recurring**
 
 Where they came from:

@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The customer asked whether the Direct Debit mandate to Northmere Water Services is still active, after seeing one collection on their March statement. They did not ask for it to be cancelled or for anything owed to be assessed. The desk found nothing confirming the mandate's status, only the historic March statement entry, so it asked the recurring system about the Direct Debit. The request was accepted but no answer has come back, and no changes were made. What is left is the recurring system's reply on whether the mandate is active.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = recurring → true (next_system=recurring)
   - next_system absent → false (next_system=recurring)
   - recurring_asked absent → true (recurring_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -54,7 +48,7 @@ Facts established:
 - counterparty: **Northmere Water Services**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
 
 Where they came from:

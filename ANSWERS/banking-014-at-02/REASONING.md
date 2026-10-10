@@ -47,15 +47,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-47. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
-48. `request_type`: not known → record_fact (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+47. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → direct_debit (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `route-recurring` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [standing_order, direct_debit] → true (subject=direct_debit).
 52. `next_system`: not known → recurring (by `route-recurring`).
 53. The agent asked for `ask_system` {"system": "recurring"}.
-54. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=record_fact).
+54. Rule `recurring-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = recurring → true (args.system=recurring); next_system = recurring → true (next_system=recurring); next_system absent → false (next_system=recurring); recurring_asked absent → true (recurring_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 55. State `TRIAGED` → `ASK_PENDING` (by `recurring-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-014-at-02:do-ask:15).
@@ -63,11 +63,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 59. `ask_system` found {}.
 60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 61. The case closed in `ASKED`: **ask_system**.
+62. The agent asked for `reply` {}.
+63. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=recurring); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=recurring); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=recurring); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=recurring); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=recurring); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=recurring); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-4 calls, 7585 tokens in, 306 out, 5.688 s, cost $0.0155; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10818 tokens in, 630 out, 6.079 s, cost $0.0241; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent your question to our recurring payments records, which hold Direct Debit mandates. That check is made, but I don't have an answer for you yet. I haven't cancelled or changed anything, and I'm not looking at what you owe Northmere Water Services. You asked only for the mandate's status.
+> I've asked the recurring-payments system to check the status of the Northmere Water Services Direct Debit mandate. The case stops here for this step. I haven't replied to Ms Ellery yet because the system hasn't returned an answer.
+> 
+> My attempt to reply was refused. The desk won't accept a reply until the case moves to TRIAGED and a recurring status is recorded. Neither has happened yet, so the case is still in the ASKED state.
+> 
+> I haven't cancelled or changed anything, which matches her instruction. The case record also shows her identity as not verified, so the desk may limit what the reply can say.

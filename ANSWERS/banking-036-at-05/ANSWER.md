@@ -2,12 +2,6 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
-## Summary
-
-Mara Ellison, a verified customer, asked the desk to update the address it uses for her correspondence, but she made the request by email rather than in the secure portal, and no confirmation was on record. The desk did not change the profile; it sent the change to her for confirmation and closed the case at that point. What is left is for Mara to confirm the change in the secure portal, and the address stays as it is until she does.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

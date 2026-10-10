@@ -45,29 +45,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-45. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
+44. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+45. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
 46. `request_type`: not known → access (by `triage`).
 47. `subject`: not known → access (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 50. `next_system`: not known → access (by `route-access`).
-51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=access).
-53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
-54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
-55. Called `ask_system` (attempt 1, key banking-027-at-02:do-ask:15).
-56. Action in the world: `ask_system` {"system": "access", "about": "access"}.
-57. `ask_system` found {}.
-58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
-59. The case closed in `ASKED`: **ask_system**.
+51. The agent asked for `redirect_secure` {}.
+52. Rule `redirect-to-the-secure-process` (on `redirect_secure`) fired: state = TRIAGED → true (state=TRIAGED); request_type = access → true (request_type=access).
+53. State `TRIAGED` → `REDIRECT_PENDING` (by `redirect-to-the-secure-process`).
+54. Rule `do-redirect` fired: state = REDIRECT_PENDING → true (state=REDIRECT_PENDING).
+55. Called `redirect_secure` (attempt 1, key banking-027-at-02:do-redirect:15).
+56. Action in the world: `redirect_secure` {"to": "Mara Ellison", "channel": "verified_call", "text": "Please use the secure process in your secure portal to do this; it checks your identity there. We will never ask for your password, PIN or a verification code. Nothing on your profile was changed."}.
+57. `redirect_secure` found {}.
+58. State `REDIRECT_PENDING` → `REDIRECTED` (by `do-redirect`).
+59. The case closed in `REDIRECTED`: **redirect_secure**.
 
 ## Model calls
 
-4 calls, 7415 tokens in, 387 out, 6.607 s, cost $0.0161; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7305 tokens in, 678 out, 5.907 s, cost $0.0176; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the access system for Mara Ellison's sign-in problem, and the case is now closed at that step. The check added no new facts to the case: it shows no lockout reason and no recovery status.
+> I pointed Mara Ellison to the bank's secure recovery process, and the desk accepted it. The case is now marked as redirected and closed.
 > 
-> Her identity is verified from the call, and she hasn't shared a password or code. The next step is to point her to H&V's secure recovery process so she can restore access herself. I haven't done that yet.
+> I chose this over checking the access system first. Her problem is signing in, and recovery is handled through the secure process. The bank can't restore access for her or handle a password or code on the call.
+> 
+> I didn't look up the sign-in records, so I don't know why the sign-in was declined or whether the profile is locked after the failed attempts.

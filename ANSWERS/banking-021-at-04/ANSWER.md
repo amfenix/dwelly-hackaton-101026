@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellison asked over secure chat whether dispatch of her replacement card had been registered, since the portal only said the request was accepted. The desk checked the card journal, which shows the card as dispatched with no record of receipt, and replied to her on secure chat saying so and that no card change was made. Her identity was not verified on this chat, but the desk replied anyway because it was only a status check; the case is closed with nothing left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -71,7 +65,7 @@ Facts established:
 - card_status: **DISPATCHED**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **card**
 
 Where they came from:

@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → access (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
@@ -68,8 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7565 tokens in, 321 out, 6.407 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7234 tokens in, 510 out, 5.912 s, cost $0.0157; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply. The access record shows the tablet's registration as AWAITING_CONFIRMATION. So the device is not yet confirmed as linked, and the reply tells her not to rely on it for banking operations yet. No confirmation has been recorded, and she hasn't been told to do anything outside the secure portal.
+> I sent the reply to Mara Ellison. The access records show the tablet registration as awaiting confirmation. It is not yet linked, and there is no confirmation on file. The reply is written to say only that.
+> 
+> The customer is not verified on this chat. I did not add any account-specific detail beyond that status.

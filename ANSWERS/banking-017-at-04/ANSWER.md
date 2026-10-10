@@ -2,14 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellery, an unverified customer on secure chat, asked the desk to check whether her rent standing order was executed and what status the bank recorded. The desk found the scheduled run recorded as not executed and replied on secure chat with that status, noting it doesn't show whether a later run will execute and that no instruction or change was made. The case is closed with nothing left for a person.
-
-One correction to the agent's own account: the journal does give a reason, insufficient cleared funds at the scheduled processing time, but the reply to Mara did not include it.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -73,7 +65,7 @@ Facts established:
 - recurring_status: **NOT_EXECUTED**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **recurring**
 
 Where they came from:

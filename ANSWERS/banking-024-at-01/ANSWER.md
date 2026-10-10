@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The request was classified as a question about a card, asking for a reason, and the desk sent a query to the card system about it. That query went through and the case closed as asked. The desk then tried to send a reply, but that was refused because no card status or other result had come back, so nothing was answered directly and the case now waits on the card system's response.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,14 +38,14 @@ How the case moved:
   - next_system = card → true (next_system=card)
   - next_system absent → false (next_system=card)
   - card_asked absent → true (card_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=reason)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
 Facts established:
 
 - subject: **card**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **card**
 
 ## Escalated

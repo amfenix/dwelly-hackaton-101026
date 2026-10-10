@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Mara Ellison of Alder Quay Studio Ltd. asked over secure chat whether an identifiable credit for a workshop invoice payment has reached the company's account. The desk treated it as a status question about an incoming payment and sent the query to the incoming-payments system, which accepted it but has returned no answer yet. A reply to her was refused because no result is in the case, so she has not been told anything, and she remains unverified, so a person still needs to follow up once the system answers and her identity is confirmed.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -48,7 +42,7 @@ How the case moved:
   - next_system = incoming → true (next_system=incoming)
   - next_system absent → false (next_system=incoming)
   - incoming_asked absent → true (incoming_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=status)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -61,7 +55,7 @@ Facts established:
 - subject: **incoming_payment**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **incoming**
 
 Where they came from:

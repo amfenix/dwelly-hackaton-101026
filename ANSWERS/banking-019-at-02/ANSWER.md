@@ -2,12 +2,6 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
-## Summary
-
-Maeve Ellery asked the desk to move the next run of her standing order to Willow Yard Studios from 18 September to 22 September 2025, to check whether it could still be changed, and to send any eligible change to her for confirmation. The desk classed it as a change to a standing order and sent it to her for confirmation, which closed the case. The record shows no confirmation from her yet and that she is not verified, and the change as sent listed the 18 September date. A later request to check the recurring-payments system was refused because the case had already closed, so the processing stage of the 18 September run and the eligibility of the 22 September move were never confirmed. Nothing has been changed on the standing order, and the next step rests with Maeve Ellery to confirm in the secure portal.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

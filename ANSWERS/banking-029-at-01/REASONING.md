@@ -45,15 +45,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-45. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
-46. `request_type`: not known → status (by `triage`).
+44. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+45. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+46. `request_type`: not known → question (by `triage`).
 47. `subject`: not known → access (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=access).
 50. `next_system`: not known → access (by `route-access`).
 51. The agent asked for `ask_system` {"system": "access"}.
-52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
+52. Rule `access-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = access → true (args.system=access); next_system = access → true (next_system=access); next_system absent → false (next_system=access); access_asked absent → true (access_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 53. State `TRIAGED` → `ASK_PENDING` (by `access-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-029-at-01:do-ask:15).
@@ -66,10 +66,13 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10258 tokens in, 329 out, 6.762 s, cost $0.0212; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9163 tokens in, 606 out, 6.176 s, cost $0.0206; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the access system about the tablet registration, but the answer didn't come back into the case. The case is now closed at the "asked" step. A reply was refused because no registration result is on record, so I can't yet say whether the tablet is linked or can be used for banking.
+> I've queried the access system, which is the step the desk allows here. The answer isn't in the case facts yet, so I can't say whether the tablet is linked or can be used for banking.
+> I couldn't confirm whether your tablet is registered, so I can't yet tell you whether it can be used for banking.
 > 
-> Because the case is closed, it goes to a person to follow up. I haven't told Mara Ellison anything about the device, since the records show nothing either way.
+> I asked the access system about the registration. The case is now closed at that step, and no registration result came back. The desk therefore wouldn't let me send you a reply, because that would mean stating something no record shows.
+> 
+> Please don't assume the tablet is linked. Until it's confirmed, treat it as not ready for banking. If you want to be sure, you can restart the registration in the H&V app. The case has been left open, so a person at the bank will pick it up and check the registration.

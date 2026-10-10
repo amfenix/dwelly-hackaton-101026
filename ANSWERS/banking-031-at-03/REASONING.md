@@ -47,9 +47,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-47. Classifier (claude claude-haiku-5-5) on `subject`: statement → statement.
-48. `request_type`: not known → document (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 0.53 → question.
+47. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → statement (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
@@ -59,19 +59,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `ask_system` {"system": "documents"}.
 57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=documents); next_system = payment is false (next_system=documents); next_system absent is false (next_system=documents); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=documents); next_system = incoming is false (next_system=documents); next_system absent is false (next_system=documents); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=documents); next_system = recurring is false (next_system=documents); next_system absent is false (next_system=documents); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=documents); next_system = card is false (next_system=documents); next_system absent is false (next_system=documents); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=documents); next_system = access is false (next_system=documents); next_system absent is false (next_system=documents); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=documents); next_system = business is false (next_system=documents); next_system absent is false (next_system=documents); documents-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=documents); documents_asked absent is false (documents_asked=True).
-58. The agent asked for `reply` {}.
-59. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-5 calls, 11371 tokens in, 701 out, 10.387 s, cost $0.0272; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7565 tokens in, 672 out, 5.922 s, cost $0.0180; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've stopped here. The case is in a final WAITING state, and nothing more can be done from this desk right now.
+> The case is in a waiting state, and I'm stopping here without taking another step.
 > 
-> - **Documents check:** The desk has already asked the documents system (`documents_asked` is true). No result for the June 2025 statement has come back, so the desk has nothing to report to the customer.
-> - **Refused calls:** A second documents request was refused because that check has already run. A reply was refused because there is no document result (`document_ready` is not known).
-> - **Identity:** The requester, Elowen Marr, is not verified. I did not escalate or change anything, because no facts conflict and no instruction is waiting to be carried out.
+> The documents system has already been asked about the June 2025 statement. The desk refused a second ask because the case is no longer in the state that allows one. The case also doesn't yet hold an answer from the documents system. The requester is not verified, so the desk can't claim anything about the statement or act on the account yet.
 > 
-> The case stays open, and a person will pick it up if the documents result doesn't arrive.
+> Once the documents answer is in the case, the next step is to reply to the customer with it. The customer wants the statement in the secure portal only, not by email.

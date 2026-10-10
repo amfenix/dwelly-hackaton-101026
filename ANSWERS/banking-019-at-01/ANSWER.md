@@ -2,12 +2,6 @@
 
 **Decision: escalate**  (final state `ESCALATED`)
 
-## Summary
-
-The customer asked to move the date of their monthly standing order to Willow Yard Studios from 18 September 2025 to 22 September 2025, and to have the change checked and sent back for secure confirmation. The desk classified it as a change to a standing order and routed it to the recurring system, but its requests to ask that system, submit the request and redirect to secure confirmation were all refused by the rules. The agent then hit its turn limit and the case was escalated as not handled, with no actions taken, so a person needs to pick it up from here.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

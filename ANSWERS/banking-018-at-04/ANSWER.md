@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Mara Ellison, verified by call, asked the desk to check two future £34.80 payments to Northmere Heating and remove the duplicate. The desk looked up the payments and found they were not clearly duplicates: the journal shows one standing order and one direct debit mandate, each with its own reference, and the payment status came back as "OTHER". It cancelled neither and made no new transfer, and it replied to her on the call, though the wording of that reply is garbled and says only that no recognised payment status was established. The case is closed as replied, so whether either payment should be removed is still undecided and nothing in the record assigns it to anyone.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

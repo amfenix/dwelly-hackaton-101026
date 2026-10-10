@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Nerys Wren, a verified customer on the secure portal, asked for the permitted session extract for her profile. The desk found the access record showed the extract as provided, and it replied through the portal saying so, noting that no password or PIN was handled and no further access change was made. The case closed as replied; the record notes the origin of the new session was not determined, and that the confirmation check returned "none" even though her message asked for portal delivery, but it lists nothing else left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -75,7 +69,7 @@ Facts established:
 - access_status: **EXTRACT_PROVIDED**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **access**
 
 Where they came from:

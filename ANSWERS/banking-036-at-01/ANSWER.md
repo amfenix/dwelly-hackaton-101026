@@ -2,12 +2,6 @@
 
 **Decision: send_for_confirmation**  (final state `CONFIRMATION_SENT`)
 
-## Summary
-
-Mara Ellison, an unverified customer, emailed to say she had moved within the UK and asked the desk to update her correspondence address. The desk treated it as a profile change, and because a change has to be confirmed by the customer in the secure portal rather than by email, it sent her a confirmation request instead of changing anything. The profile is unchanged and the case is closed; the record shows nothing further for a person to do beyond her confirming the change.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

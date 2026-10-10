@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-49. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
-50. `request_type`: not known → document (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+49. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → access (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
@@ -68,10 +68,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6002 tokens in, 713 out, 8.686 s, cost $0.0115; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 5312 tokens in, 438 out, 3.459 s, cost $0.0094; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to the customer. The access system had already returned the permitted sign-in session extract (status EXTRACT_PROVIDED), and the customer is verified and asked for delivery through the secure portal. The reply was accepted and the case is closed.
-> 
-> I didn't call `case_status` before replying. The facts list `confirmation` as "none", but event 3 shows the customer confirmed portal delivery, so I treated that as covered.
+> I sent the reply to Nerys Wren. The access system had already returned the permitted session extract for her profile, so no further lookup was needed. The case is now closed with that reply.

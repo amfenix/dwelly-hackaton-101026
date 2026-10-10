@@ -48,15 +48,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-48. Classifier (claude claude-haiku-5-5) on `subject`: incoming_payment → incoming_payment.
-49. `request_type`: not known → status (by `triage`).
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+48. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+49. `request_type`: not known → question (by `triage`).
 50. `subject`: not known → incoming_payment (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
 52. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
 53. `next_system`: not known → incoming (by `route-incoming`).
 54. The agent asked for `ask_system` {"system": "incoming"}.
-55. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
+55. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 56. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
 57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 58. Called `ask_system` (attempt 1, key banking-010-at-02:do-ask:15).
@@ -67,12 +67,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7554 tokens in, 330 out, 6.509 s, cost $0.0157; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4895 tokens in, 385 out, 5.342 s, cost $0.0098; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the check on the £42.80 refund from Northmere Home Supplies to the incoming-payments records. The case is now closed on that step. The answer hasn't come back yet, so I can't say whether the refund has reached your account.
-> 
-> When the result comes back, we'll confirm whether an incoming entry matches your £42.80 transfer to Northmere Home Supplies. That way it won't be confused with another payment.
-> 
-> Your identity is not yet verified on this chat. That didn't block this status check.
+> I've checked the incoming payments records for the £42.80 Northmere Home Supplies refund. The result is now in the case, and the next step is to reply to you with what the records show. I haven't yet seen the result myself, so I can't say yet whether the refund has arrived.

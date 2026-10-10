@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Mara Ellison, writing over secure chat as the company's file uploader (her identity is not verified), asked only whether H&V had received batch-041.csv under reference HV-041, and said she was not asking for any payment to be approved or released. The desk classified it as a status request, asked the business system to check its import journal, and closed the case as waiting because that system's answer had not come back. The desk's later attempts to ask again, reply and escalate to a person were all refused because the case was already in the waiting state, so no reply went to her and receipt of the file has not been confirmed.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -64,7 +58,7 @@ Facts established:
 - business_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **business**
 
 Where they came from:

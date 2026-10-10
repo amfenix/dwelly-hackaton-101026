@@ -43,8 +43,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. `confirmation`: not known → none (by `read-confirmation`).
 40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-43. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
+42. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+43. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
 44. `request_type`: not known → register (by `triage`).
 45. `subject`: not known → direct_debit (by `triage`).
 46. State `READING` → `TRIAGED` (by `triage`).
@@ -64,10 +64,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10687 tokens in, 516 out, 7.555 s, cost $0.0239; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10144 tokens in, 597 out, 5.513 s, cost $0.0224; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I submitted the request, and the desk accepted it. The case is now in the REQUESTED state and closed. The dispute over the £18.40 Direct Debit to Northmere Water Services, dated 9 July 2025, goes to the team that handles disputes.
+> I've passed the customer's dispute of the £18.40 Direct Debit to Northmere Water Services (9 July 2025) to the team that handles disputes. The case is now in the REQUESTED state.
 > 
-> I first tried to check the Direct Debit in the recurring-payments system, but the desk refused. This case is a request to register a dispute, so it goes straight to the dispute team instead. I haven't confirmed the amount or the mandate details against the bank's records.
+> I first tried to look the Direct Debit up in the recurring payments system. The desk refused that, because the request is a dispute to register, not a question to research. Submitting the request was accepted.

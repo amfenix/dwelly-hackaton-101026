@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Maeve Calder, a verified customer using the business portal, asked what the current outgoing-payment limit is on her company profile before she arranges a supplier payout she has not yet submitted. The desk classified this as a request for a record fact and put the question about the limit to the business system, and that request went through with no error. The record shows no answer from the business system, so the limit figure has not been given to Maeve, and nothing in the record says who will pass it on.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = business → true (next_system=business)
   - next_system absent → false (next_system=business)
   - business_asked absent → true (business_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -57,7 +51,7 @@ Facts established:
 - subject: **limit**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **business**
 
 Where they came from:

@@ -2,12 +2,6 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
-## Summary
-
-The customer asked the desk to register a request to seek the return of a £286.40 transfer sent to the wrong saved recipient. The desk classified it as a registration request about a transfer, refused a separate "ask the payment system" step because the rules did not allow it for a registration, and registered the request with the payment team, where the case closed as submitted. Nothing in the record confirms which payment or recipient was involved beyond what the customer said, and whether the money comes back is not decided.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

@@ -47,15 +47,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-47. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-48. `request_type`: not known → document (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+47. Classifier (jev jev-latest) on `subject`: document, confidence 0.99 → document.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → document (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `route-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [statement, document, fee] → true (subject=document).
 52. `next_system`: not known → documents (by `route-documents`).
 53. The agent asked for `ask_system` {"system": "documents"}.
-54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=document).
+54. Rule `documents-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = documents → true (args.system=documents); next_system = documents → true (next_system=documents); next_system absent → false (next_system=documents); documents_asked absent → true (documents_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 55. State `TRIAGED` → `ASK_PENDING` (by `documents-ask`).
 56. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 57. Called `ask_system` (attempt 1, key banking-049-at-01:do-ask:15).
@@ -63,17 +63,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 59. `ask_system` found {}.
 60. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 61. The case closed in `ASKED`: **ask_system**.
-62. The agent asked for `reply` {}.
-63. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=documents); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=documents); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=documents); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=documents); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=documents); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=documents); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-5 calls, 10271 tokens in, 407 out, 7.033 s, cost $0.0220; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6597 tokens in, 368 out, 3.639 s, cost $0.0131; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the documents system for the acquiring report for 1–7 July 2025. It accepted the request, but its answer hasn't come back into the case. No `document_ready` fact is recorded, so I can't confirm the report exists or say what it contains.
-> 
-> I then tried to reply to Mara Venn, and the desk refused. A reply is only allowed once the case reaches the TRIAGED state with a document status on record. The case is still in the ASKED state, and the case status shows it as final.
-> 
-> I've stopped here and made no further calls. The case stays open, so a person will pick it up and check the documents system's result.
+> I've asked the documents system about the acquiring report for 1–7 July 2025 and the request was accepted. Its answer isn't in the case yet, so I can't confirm that the report exists or send you the file. The case is now in the "asked" state and is closed on my side. I'm stopping here.

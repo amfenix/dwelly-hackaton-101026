@@ -2,12 +2,6 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
-## Summary
-
-The customer asked for H&V to investigate an £18.40 Direct Debit to Northmere Water Services, which they dispute as the wrong amount. The desk classified it as a register request about a direct debit, refused the agent's attempt to query the recurring system first, and registered the request with the recurring team, closing the case as requested. Nothing in the record shows the amount or the mandate being checked against the bank's records, and no further step is recorded for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

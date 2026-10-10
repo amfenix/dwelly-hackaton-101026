@@ -45,28 +45,27 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-45. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
-46. `request_type`: not known → change (by `triage`).
+44. Classifier (jev jev-latest) on `request_type`: register, confidence 0.43 → register.
+45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
+46. `request_type`: not known → register (by `triage`).
 47. `subject`: not known → profile (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [access, profile] → true (subject=profile).
 50. `next_system`: not known → access (by `route-access`).
-51. Rule `change-needs-confirmation` fired: state = TRIAGED → true (state=TRIAGED); request_type = change → true (request_type=change); confirmation = none → true (confirmation=none); registration_asked absent → true (registration_asked=not known). A change is confirmed by the customer in the secure portal, not in chat or by email.
-52. State `TRIAGED` → `CONFIRM_PENDING` (by `change-needs-confirmation`).
-53. Rule `do-confirm` fired: state = CONFIRM_PENDING → true (state=CONFIRM_PENDING).
-54. Called `send_for_confirmation` (attempt 1, key banking-037-at-02:do-confirm:15).
-55. Action in the world: `send_for_confirmation` {"change": "profile", "to": "Elowen Marr"}.
-56. `send_for_confirmation` found {}.
-57. State `CONFIRM_PENDING` → `CONFIRMATION_SENT` (by `do-confirm`).
-58. The case closed in `CONFIRMATION_SENT`: **send_for_confirmation**.
+51. The agent asked for `submit_request` {}.
+52. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
+53. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
+54. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
+55. Called `register_request` (attempt 1, key banking-037-at-02:do-request:15).
+56. Action in the world: `register_request` {"team": "access", "about": "profile"}.
+57. `register_request` found {}.
+58. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
+59. The case closed in `REQUESTED`: **submit_request**.
 
 ## Model calls
 
-3 calls, 5226 tokens in, 428 out, 6.2 s, cost $0.0121; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7003 tokens in, 520 out, 5.646 s, cost $0.0154; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed, so I'm not taking another action. Its state is CONFIRMATION_SENT, the outcome is "send_for_confirmation", and no requests have been refused.
-> 
-> The customer was verified on the call. She asked for her profile name to be corrected from "Elowen Mar" to "Elowen Marr". A confirmation has gone out for that change, and nothing else is outstanding on the desk's side.
+> I've sent the name correction to the team that handles profile data changes. You're verified, and your instruction was clear: change "Elowen Mar" to "Elowen Marr". The request was accepted and the case is closed on our side. The data team may still ask you for supporting information before they update your profile.

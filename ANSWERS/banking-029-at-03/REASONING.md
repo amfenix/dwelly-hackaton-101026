@@ -47,9 +47,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-47. Classifier (claude claude-haiku-5-5) on `subject`: access → access.
-48. `request_type`: not known → status (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+47. Classifier (jev jev-latest) on `subject`: access, confidence 1.00 → access.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → access (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `asked-access` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); access_asked → true (access_asked=True).
@@ -60,18 +60,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 56. The agent asked for `ask_system` {"system": "access"}.
 57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=access); next_system = payment is false (next_system=access); next_system absent is false (next_system=access); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=access); next_system = incoming is false (next_system=access); next_system absent is false (next_system=access); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=access); next_system = recurring is false (next_system=access); next_system absent is false (next_system=access); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=access); next_system = card is false (next_system=access); next_system absent is false (next_system=access); access-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=access); access_asked absent is false (access_asked=True); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=access); next_system = business is false (next_system=access); next_system absent is false (next_system=access); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=access); next_system = documents is false (next_system=access); next_system absent is false (next_system=access).
 58. The agent asked for `redirect_secure` {}.
-59. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=status).
+59. Refused `redirect_secure` in `WAITING`: redirect-to-the-secure-process: state = TRIAGED is false (state=WAITING); request_type = access is false (request_type=question).
+60. The agent asked for `escalate` {"note": "Unverified customer (Mara Ellison, secure chat) asks whether a new tablet's mobile banking registration completed and if it can be used for banking. No device record has been read, and identity is not verified, so no status can be stated. The access system was already queried (access_asked=True) but there is no answer in the case. The desk refused further ask_system and redirect_secure calls because the case is in WAITING state, not TRIAGED. A person needs to verify the customer and check the device registration status."}.
+61. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12486 tokens in, 862 out, 12.11 s, cost $0.0310; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I haven't been able to tell Mara whether her tablet is linked. The case is in a waiting state and the desk has closed it as "wait", so I've stopped.
-> 
-> - **No device answer:** The case records that the access system was asked. Nothing in the case says whether the registration finished or whether the tablet can be used for banking, so I can't claim either.
-> - **Refused calls:** A second request to the access system was refused because the case is waiting, not triaged. Redirecting her to the secure sign-in process was refused for the same reason, and because the request is a status question, not an access one.
-> - **Not verified:** The requester is not verified, so the bank shouldn't share account-specific device details with her yet.
-> 
-> The case stays open and goes to a person, who can verify her and check the device record.
+5 calls, 10470 tokens in, 754 out, 8.116 s, cost $0.0247; models: claude-sonnet-5-5, jev-1.13.0.

@@ -40,8 +40,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. `confirmation`: not known → none (by `read-confirmation`).
 37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-40. Classifier (claude claude-haiku-5-5) on `subject`: role → role.
+39. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+40. Classifier (jev jev-latest) on `subject`: role, confidence 1.00 → role.
 41. `request_type`: not known → instruction (by `triage`).
 42. `subject`: not known → role (by `triage`).
 43. State `READING` → `TRIAGED` (by `triage`).
@@ -61,4 +61,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10304 tokens in, 373 out, 6.482 s, cost $0.0217; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10000 tokens in, 613 out, 6.156 s, cost $0.0223; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I checked the business system for Larkmere Studio Ltd. My first attempt to revoke Owen Bell's Payroll Approver role was refused because the desk hasn't verified the requester as an administrator. The case also has no confirmation of the instruction yet. The business check is now done, and the case is at the "asked" stage. The role has not been revoked.

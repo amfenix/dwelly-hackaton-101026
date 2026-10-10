@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-45. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
+44. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 46. `request_type`: not known → change (by `triage`).
 47. `subject`: not known → profile (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -63,10 +63,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5381 tokens in, 283 out, 5.35 s, cost $0.0110; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 5023 tokens in, 475 out, 4.337 s, cost $0.0110; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is closed. The bank has already sent a confirmation request through the secure portal, and no change has been made to the profile.
-> 
-> Elowen Mercer passed identification on the verified call. The replacement phone number will only be applied after she confirms it in the secure portal. Her email and her instruction on the call don't count as that confirmation. I took no further action.
+> The case is already closed. The replacement phone number has been sent to Elowen Mercer for confirmation in the secure portal, and nothing has been changed on her profile yet. The portal says the change will only be applied once she confirms it there. Her instruction came by call and email, not through the portal, so it can't count as that confirmation. No further action is needed from the desk.

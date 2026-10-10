@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Elena Wren asked over secure chat which regular payments are still active before she plans to close her account. The desk asked the recurring system, but no answer has come back, so the case closed in a final WAITING state with nothing disclosed. Her verification still shows as false in the record, and the desk refused both a repeat ask and an escalation because the case was no longer in the triaged state, so nothing in the record shows a person has been assigned. What remains is for someone to confirm her verification, get her active standing orders and Direct Debits, and give her the pre-closure guidance.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -62,7 +56,7 @@ Facts established:
 - recurring_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **recurring**
 
 Where they came from:

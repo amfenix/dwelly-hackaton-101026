@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The customer asked the desk to check a £3.20 fee shown beside a foreign-currency cash withdrawal in their secure portal, as they didn't understand what it was for or how it was calculated. The desk classed it as a request about a record fact on a fee, and passed the question about the £3.20 fee to the documents system, which closed the case in the asked state. The desk's attempt to send a reply was refused, so the customer has not been given an answer about the fee, and nothing in the record says what happens once the documents system responds.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=record_fact)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -54,7 +48,7 @@ Facts established:
 - amount: **3.20**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **record_fact**
+- request_type: **question**
 - next_system: **documents**
 
 Where they came from:

@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-Mara Ellison, a verified customer on the secure portal, asked for a CSV export of her transactions from 6 to 9 May 2025 and said she wasn't sure how to tell whether the export had been created. The desk classified this as a document request and sent a question about the document to the documents system, and the case closed in the asked state. A later attempt to send a reply was refused because the documents system had not yet reported whether the document was ready, so nothing has been confirmed to her about the export, and the record shows no further step.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = documents → true (next_system=documents)
   - next_system absent → false (next_system=documents)
   - documents_asked absent → true (documents_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=document)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -58,7 +52,7 @@ Facts established:
 - subject_date: **2025-05-09**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **documents**
 
 Where they came from:

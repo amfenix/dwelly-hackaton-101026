@@ -2,12 +2,6 @@
 
 **Decision: submit_request**  (final state `REQUESTED`)
 
-## Summary
-
-The customer asked the bank to investigate a posted card purchase at Fern & Finch Books for £38.40 on 14 July 2025 that they don't recognise, and to tell them how to protect their card. The desk registered a request with the card team about the card payment, and the case is closed as requested. The desk refused a lookup in the card system for this type of request, and the record shows no advice on protecting the card, so that part of the question is still unanswered and left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

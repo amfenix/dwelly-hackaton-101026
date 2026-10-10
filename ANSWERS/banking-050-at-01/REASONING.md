@@ -40,15 +40,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 36. `confirmation`: not known → none (by `read-confirmation`).
 37. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 38. Rule `triage` fired: state = READING → true (state=READING).
-39. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-40. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-41. `request_type`: not known → status (by `triage`).
+39. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+40. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+41. `request_type`: not known → question (by `triage`).
 42. `subject`: not known → transfer (by `triage`).
 43. State `READING` → `TRIAGED` (by `triage`).
 44. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 45. `next_system`: not known → payment (by `route-payment`).
 46. The agent asked for `ask_system` {"system": "payment"}.
-47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
+47. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 48. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 49. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 50. Called `ask_system` (attempt 1, key banking-050-at-01:do-ask:15).
@@ -59,10 +59,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 6824 tokens in, 219 out, 4.989 s, cost $0.0132; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6444 tokens in, 451 out, 4.428 s, cost $0.0136; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've asked the payment system for the status of this transfer. The case is now marked as asked, and no answer from the payment system is in the case yet, so I can't tell you what stage the payment has reached.
+> I asked the payment system about the Alder Quay Supplies payment, and the desk accepted the request. The case is now closed at that step.
 > 
-> What the records do show is that the Business portal recorded your authorisation for the Alder Quay Supplies materials invoice. They don't yet show whether the payment was sent, is pending, or is held.
+> The payment system's answer hasn't come back into the case yet. So I can't yet tell you which stage H&V's records show for the payment. The only record so far is the portal entry showing the authorisation was recorded.

@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Rowan Ellery, who is unverified and wrote in by secure chat, asked which category of restriction caused their card to be declined at a grocery payment and whether it has been lifted. The desk marked the card system as asked and set the case to wait for its answer, which has not come in. The agent's later attempts to ask the card system again and to escalate were both refused because the case was already in WAITING, so nothing about the restriction has been established or shared. A person still needs to verify Rowan and check the card record, or move the case out of WAITING.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -62,7 +56,7 @@ Facts established:
 - card_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **card**
 
 Where they came from:

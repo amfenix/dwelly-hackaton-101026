@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-49. Classifier (claude claude-haiku-5-5) on `subject`: statement → statement.
-50. `request_type`: not known → document (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: statement, confidence 1.00 → statement.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → statement (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7169 tokens in, 282 out, 5.345 s, cost $0.0146; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6910 tokens in, 485 out, 4.68 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I replied to Mara Ellison. The documents system showed that a copy of her January 2024 statement is ready, so the reply tells her it is available.
+> I replied to the customer. The documents system had already been checked and shows the January 2024 statement is ready. The desk accepted the reply and closed the case.
 > 
-> The desk wrote the reply text, so I haven't seen its wording. Her identity is still unverified, and I took no step to verify it. The case is now closed with the reply as its outcome.
+> The requester, Mara Ellison, is not verified. The reply only says the statement is available and does not claim anything beyond what the record shows.

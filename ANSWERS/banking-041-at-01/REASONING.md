@@ -48,15 +48,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-48. Classifier (claude claude-haiku-5-5) on `subject`: batch → batch.
-49. `request_type`: not known → status (by `triage`).
+47. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+48. Classifier (jev jev-latest) on `subject`: batch, confidence 1.00 → batch.
+49. `request_type`: not known → question (by `triage`).
 50. `subject`: not known → batch (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
 52. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=batch).
 53. `next_system`: not known → payment (by `route-payment`).
 54. The agent asked for `ask_system` {"system": "payment"}.
-55. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
+55. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 56. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
 57. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 58. Called `ask_system` (attempt 1, key banking-041-at-01:do-ask:15).
@@ -64,17 +64,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 60. `ask_system` found {}.
 61. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 62. The case closed in `ASKED`: **ask_system**.
-63. The agent asked for `reply` {}.
-64. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); next_system = incoming is false (next_system=payment); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=payment); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=payment); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=payment); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=payment); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=payment); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-5 calls, 10624 tokens in, 330 out, 6.079 s, cost $0.0219; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6936 tokens in, 476 out, 4.227 s, cost $0.0148; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the payment system about batch HV-041 (batch-041.csv). Its answer hasn't come back into the case yet, so I can't tell Mara whether the file was received.
+> I've asked the payment system about the receipt status of batch-041.csv (reference HV-041). The case is now in the ASKED state, and the desk's reply to Mara Ellison will need to wait for that answer.
 > 
-> I tried to send a reply, but the desk refused it. No payment status is recorded for this batch yet, and the case is still in the "asked" state. The case is closed at this step, so the reply will have to wait until the payment system's answer is in the case.
+> The case doesn't yet hold any record showing the file was received. Its confirmation field still reads "none", so the desk can't say either way yet.
 > 
-> I haven't confirmed or implied any receipt status, and nothing has been authorised on the company's behalf.
+> Mara is a verified, authorised file uploader, and she is only asking for the receipt status. She isn't asking the bank to authorise or approve any payments for the company.

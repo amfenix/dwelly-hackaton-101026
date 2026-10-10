@@ -49,8 +49,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-49. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
+48. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+49. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
 50. `request_type`: not known → access (by `triage`).
 51. `subject`: not known → card (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
@@ -68,8 +68,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 5696 tokens in, 134 out, 4.991 s, cost $0.0087; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 7707 tokens in, 831 out, 6.779 s, cost $0.0182; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've pointed Maren to the bank's secure process for getting her PIN back. The desk accepted the redirect and closed the case. Maren isn't verified, and the bank never handles a PIN in chat, so this was the right step.
+> I sent Maren to the bank's secure process for resetting a forgotten card PIN. The desk accepted the redirect and closed the case, so nothing further is needed here.
+> 
+> The bank never handles a PIN, and she hasn't been verified in this chat. The reply points her to the secure route and doesn't involve her sending or receiving a PIN in chat.
+> 
+> The access system had already answered with a status of OTHER. I did not report that answer to her. I chose the redirect because her request was specifically about a forgotten PIN.

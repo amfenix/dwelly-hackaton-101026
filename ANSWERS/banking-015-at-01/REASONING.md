@@ -42,8 +42,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 38. `confirmation`: not known → none (by `read-confirmation`).
 39. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 40. Rule `triage` fired: state = READING → true (state=READING).
-41. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-42. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
+41. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+42. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
 43. `request_type`: not known → instruction (by `triage`).
 44. `subject`: not known → direct_debit (by `triage`).
 45. State `READING` → `TRIAGED` (by `triage`).
@@ -63,12 +63,4 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10427 tokens in, 534 out, 7.255 s, cost $0.0235; models: claude-haiku-5-5, claude-sonnet-5-5.
-
-## What the agent said
-
-> I've checked the recurring-payments records for the Northmere Fitness Direct Debit. I haven't cancelled it yet.
-> 
-> My first attempt to submit the cancellation was refused. The desk hasn't verified the customer, and the customer hasn't confirmed the cancellation. The refusal also listed `request_type` as "instruction" where the policy rules expect "change". Until those checks pass, the bank can't carry out the instruction.
-> 
-> The case is now with the recurring system's answer, ready for the reply to the customer.
+5 calls, 10062 tokens in, 574 out, 5.0 s, cost $0.0220; models: claude-sonnet-5-5, jev-1.13.0.

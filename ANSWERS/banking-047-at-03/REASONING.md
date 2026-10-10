@@ -47,9 +47,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-47. Classifier (claude claude-haiku-5-5) on `subject`: limit → limit.
-48. `request_type`: not known → record_fact (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+47. Classifier (jev jev-latest) on `subject`: limit, confidence 1.00 → limit.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → limit (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `asked-business` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); business_asked → true (business_asked=True).
@@ -59,11 +59,18 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `ask_system` {"system": "business"}.
 57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); args.system = payment is false (args.system=business); next_system = payment is false (next_system=business); next_system absent is false (next_system=business); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=business); next_system = incoming is false (next_system=business); next_system absent is false (next_system=business); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=business); next_system = recurring is false (next_system=business); next_system absent is false (next_system=business); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=business); next_system = card is false (next_system=business); next_system absent is false (next_system=business); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=business); next_system = access is false (next_system=business); next_system absent is false (next_system=business); business-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=business); business_asked absent is false (business_asked=True); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=business); next_system = documents is false (next_system=business); next_system absent is false (next_system=business).
-58. The agent asked for `reply` {}.
-59. Refused `reply` in `WAITING`: registration-reply: state = TRIAGED is false (state=WAITING); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=business); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=business); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=WAITING); next_system = recurring is false (next_system=business); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=business); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=business); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=WAITING); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=business); document_ready present is false (document_ready=not known).
-60. The agent asked for `escalate` {"note": "Maeve Calder (role: viewer, secure chat, not verified) asks for the current outgoing-payment limit on the company profile. The business system was already asked, but no limit value or business_status is in the case. The case is in WAITING, so a reply and a repeat business lookup were both refused. Please verify the requester and confirm the limit, if she is entitled to see it. No payment has been submitted, and nothing was instructed outside the portal."}.
-61. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
+58. The agent asked for `escalate` {"note": "Maeve Calder (role: viewer, not verified, secure chat) asks for the current outgoing-payment limit on the company profile. The business system was already queried, but no limit value is recorded in the case and the case is stuck in WAITING. A further business ask was refused. Please verify the requester and confirm the limit from the business records. No payment has been submitted, and none should be arranged or approved on her behalf."}.
+59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11365 tokens in, 626 out, 8.553 s, cost $0.0264; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 10791 tokens in, 1025 out, 9.629 s, cost $0.0281; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> I couldn't move this case forward, and it is still open for a person to pick up.
+> 
+> - **What's missing:** The business system has already been asked, but no limit value was recorded in the case. Maeve hasn't been given a figure, and I can't give one without a record to read it from.
+> - **Why it's stuck:** The case is in a waiting state. A second request to the business system was refused because it had already been asked. My escalation to a person was refused for the same reason, since escalation only works once the case is triaged.
+> - **Verification:** Maeve is not verified. Her role is viewer, so she may be entitled to see limits, but she needs to be verified through the bank's normal process before any figure is shared.
+> - **Payment:** No payment has been submitted.

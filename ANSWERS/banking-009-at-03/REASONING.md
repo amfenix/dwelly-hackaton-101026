@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: record_fact → record_fact.
-49. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-50. `request_type`: not known → record_fact (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 0.99 → question.
+49. Classifier (jev jev-latest) on `subject`: transfer, confidence 0.94 → transfer.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → transfer (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -61,19 +61,18 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 57. The case closed in `WAITING`: **wait**.
 58. The agent asked for `ask_system` {"system": "payment"}.
 59. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
-60. The agent asked for `escalate` {"note": "Verified customer Mara Ellwood asks to confirm the amount actually sent. She remembers £684.20 in the draft, but the final payment line shows £648.20 (a possible digit transposition). The payment system check was refused because the case is in WAITING and not TRIAGED, so the payment record hasn't been read. Please check the completed payment instruction and confirm the sent amount to the customer. Don't rely on the portal line or the customer's memory of the draft."}.
-61. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12303 tokens in, 683 out, 10.26 s, cost $0.0288; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8415 tokens in, 598 out, 5.783 s, cost $0.0190; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't confirmed the amount that was sent, and I couldn't move the case forward.
+> I couldn't check the payment record, so I haven't confirmed the amount H&V sent. The desk refused my request to query the payment system because the case is in a WAITING state, not TRIAGED. The case status shows that state as final, and nothing further can be done from here.
 > 
-> - **What the case shows:** the portal's final payment line says £648.20. Mara remembers entering £684.20. The two figures differ by a possible digit swap.
-> - **What was refused:** my request to the payment system was refused because the case is in a WAITING state, not TRIAGED. My escalation to a person was refused for the same reason.
-> - **What's missing:** nobody has read the completed payment record. £648.20 is only what the portal line shows, so I can't tell Mara that it is the amount H&V actually sent.
+> What is established so far:
+> - Mara Ellwood has been verified on the call.
+> - The only amount on record is £648.20, which the secure portal shows as the final payment line to her property manager.
+> - Nothing shows what she entered in the draft, and the portal line is not a payment-system confirmation of what was sent. Her £684.20 is her recollection only.
 > 
-> The case is closed as "wait" and is left open for a person to pick up. That person should check the payment record, confirm the sent amount to Mara, and look into why the draft and final figures differ.
+> The case stays open for a person to pick up.

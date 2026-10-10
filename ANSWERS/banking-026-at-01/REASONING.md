@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: access → access.
-45. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
+44. Classifier (jev jev-latest) on `request_type`: access, confidence 1.00 → access.
+45. Classifier (jev jev-latest) on `subject`: card, confidence 0.99 → card.
 46. `request_type`: not known → access (by `triage`).
 47. `subject`: not known → card (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -64,9 +64,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 4986 tokens in, 175 out, 4.104 s, cost $0.0091; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4608 tokens in, 331 out, 2.826 s, cost $0.0087; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The customer has forgotten her PIN and wants the safe process. The right tool for PINs and passwords is redirect_secure.
-> I sent Maren to the bank's secure process for a forgotten PIN, and the case is now closed. The bank never handles a PIN in chat, so the reset itself happens in that secure process. She hasn't been verified in this chat, and no PIN was shared or requested.
+> The customer forgot her PIN and wants the safe process. The right tool for PIN matters is redirect_secure.
+> I've sent Maren to the bank's secure process for a forgotten PIN, and the case is now closed as redirected. She doesn't need to share her PIN in chat, and the desk never handles PINs.

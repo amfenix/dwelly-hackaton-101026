@@ -47,8 +47,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: instruction → instruction.
-47. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+46. Classifier (jev jev-latest) on `request_type`: instruction, confidence 1.00 → instruction.
+47. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 48. `request_type`: not known → instruction (by `triage`).
 49. `subject`: not known → standing_order (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
@@ -59,18 +59,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `submit_request` {}.
 57. Refused `submit_request` in `WAITING`: register: state = TRIAGED is false (state=WAITING); request_type = register is false (request_type=instruction); payment-instruction: state = TRIAGED is false (state=WAITING); next_system = payment is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); incoming-instruction: state = TRIAGED is false (state=WAITING); next_system = incoming is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); recurring-instruction: state = TRIAGED is false (state=WAITING); recurring_asked absent is false (recurring_asked=True); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); card-instruction: state = TRIAGED is false (state=WAITING); next_system = card is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); access-instruction: state = TRIAGED is false (state=WAITING); next_system = access is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); business-instruction: state = TRIAGED is false (state=WAITING); next_system = business is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none); documents-instruction: state = TRIAGED is false (state=WAITING); next_system = documents is false (next_system=recurring); request_type = change is false (request_type=instruction); confirmation = given is false (confirmation=none).
-58. The agent asked for `escalate` {"note": "Elodie Mercer (verified, secure portal) asks to cancel the next scheduled run of her active recurring studio-rent instruction before it starts. The portal and a verified call both show her intent, and event 3 is a written confirmation. The desk's facts still record confirmation = none, so the cancellation request was refused (state WAITING, request_type instruction, not TRIAGED). Nothing has been cancelled, and the bank must not tell her it has been. Please check the confirmation against the portal record and, if it is valid, cancel the next run. Then confirm the outcome to her through the secure channel."}.
+58. The agent asked for `escalate` {"note": "Verified customer Elodie Mercer (secure portal) asks to cancel the next scheduled run of her recurring studio-rent instruction before it starts. The portal shows the instruction is active and the next run has not started. She says in the portal that she confirms the cancellation. The desk's recorded confirmation is still \"none\", and the case state is WAITING rather than TRIAGED. Because of that, submit_request was refused for the recurring instruction. The recurring system was already queried, but no result is in the case. Nothing has been cancelled. Please check the confirmation and the recurring-instruction record. If the cancellation is valid, cancel the next run. Then tell the customer what the record shows, and don't confirm cancellation until it is done."}.
 59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 11529 tokens in, 854 out, 10.97 s, cost $0.0289; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11209 tokens in, 1185 out, 10.449 s, cost $0.0304; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I haven't cancelled the studio-rent run, and I can't confirm that it's cancelled.
+> I haven't cancelled the studio-rent run, and I can't confirm that it's cancelled. The case is still waiting and has been left open for a person to pick up.
 > 
-> - **Cancellation request:** the desk refused it. The case is in a waiting state, and the desk's records show no confirmation from Elodie, even though event 3 contains one.
-> - **Escalation:** the desk also refused this, because the case hasn't reached the stage where it can be escalated.
+> - **Cancellation request:** The desk refused it because it hasn't recorded Elodie's confirmation. Its record still says "none", even though she confirmed in the secure portal. The case state is also WAITING when the desk needs it to be TRIAGED.
+> - **Escalation:** I tried to hand it to a person, but the desk refused that for the same state reason.
+> - **Recurring record:** The recurring system was already queried, but the case holds no result from it. The only record is the portal message saying the instruction is active and the next run hasn't started.
 > 
-> The case stays open and goes to a person. The instruction is still active and the next run has not started. Elodie should be told nothing has been cancelled yet. A person needs to check her confirmation against the portal record before anyone acts on it.
+> Elodie shouldn't be told the instruction is cancelled until the desk records her confirmation and the cancellation goes through.

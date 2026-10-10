@@ -2,12 +2,6 @@
 
 **Decision: ask_system**  (final state `ASKED`)
 
-## Summary
-
-The customer asked why their 14 July 2025 transfer to Northmere Housing Co-operative was not completed. The desk identified it as a request for a reason and asked the payment system about the transfer. No answer from that system is in the record, and a reply to the customer was refused because the case was already in the asked state, so no reason has been given. The record shows the case closed at that step, and what happens next is for a person to follow up.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -44,7 +38,7 @@ How the case moved:
   - next_system = payment → true (next_system=payment)
   - next_system absent → false (next_system=payment)
   - payment_asked absent → true (payment_asked=not known)
-  - request_type not in [register, change, authority] → true (request_type=reason)
+  - request_type not in [register, change, authority] → true (request_type=question)
 - `ASK_PENDING` → `ASKED`: rule `do-ask`.
   - state = ASK_PENDING → true (state=ASK_PENDING)
 
@@ -53,7 +47,7 @@ Facts established:
 - subject: **transfer**
 - counterparty: **Northmere Housing Co-operative**
 - subject_date: **2025-07-14**
-- request_type: **reason**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

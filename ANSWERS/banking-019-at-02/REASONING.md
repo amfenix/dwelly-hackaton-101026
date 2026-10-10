@@ -49,8 +49,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-49. Classifier (claude claude-haiku-5-5) on `subject`: standing_order → standing_order.
+48. Classifier (jev jev-latest) on `request_type`: change, confidence 0.98 → change.
+49. Classifier (jev jev-latest) on `subject`: standing_order, confidence 1.00 → standing_order.
 50. `request_type`: not known → change (by `triage`).
 51. `subject`: not known → standing_order (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
@@ -69,12 +69,16 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 9495 tokens in, 340 out, 6.327 s, cost $0.0197; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 9209 tokens in, 589 out, 5.206 s, cost $0.0204; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed with the outcome "send_for_confirmation". The change to Maeve Ellery's standing order to Willow Yard Studios has been sent to her for secure confirmation.
+> The case is already in its final state: `CONFIRMATION_SENT`, with the outcome `send_for_confirmation`. Nothing more is needed from me, so I'm stopping here.
 > 
-> My check of the recurring-payments system was refused because the case had already moved past that stage. So I haven't confirmed the processing stage of the 18 September run, and I haven't confirmed that the 22 September move is eligible. The case records show no confirmation from her yet, and she is not verified. Nothing has been changed on the standing order.
+> I didn't get to check whether the 18 September run can still be changed. My query to the recurring-payments system was refused because the case had already moved past the stage where that check is allowed. So the standing order's processing stage is not known yet.
 > 
-> No further action is needed from me.
+> Two other facts on the case:
+> - Maeve Ellery is not verified.
+> - No confirmation has been received from her yet (`confirmation` is `none`).
+> 
+> The change to 22 September is therefore waiting on her secure confirmation. I haven't made any change to the standing order.

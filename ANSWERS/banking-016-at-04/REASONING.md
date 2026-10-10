@@ -54,8 +54,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 50. `confirmation`: not known → none (by `read-confirmation`).
 51. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 52. Rule `triage` fired: state = READING → true (state=READING).
-53. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-54. Classifier (claude claude-haiku-5-5) on `subject`: direct_debit → direct_debit.
+53. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+54. Classifier (jev jev-latest) on `subject`: direct_debit, confidence 1.00 → direct_debit.
 55. `request_type`: not known → register (by `triage`).
 56. `subject`: not known → direct_debit (by `triage`).
 57. State `READING` → `TRIAGED` (by `triage`).
@@ -76,8 +76,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 12145 tokens in, 494 out, 7.287 s, cost $0.0266; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11253 tokens in, 486 out, 4.957 s, cost $0.0235; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> Asking is refused because the request is a registration. So I'll submit it.
+> The request is a dispute to register, so I'll submit it.

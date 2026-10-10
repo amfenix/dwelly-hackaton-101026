@@ -45,33 +45,31 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-45. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-46. `request_type`: not known → register (by `triage`).
+44. Classifier (jev jev-latest) on `request_type`: question, confidence 0.72 → question.
+45. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+46. `request_type`: not known → question (by `triage`).
 47. `subject`: not known → transfer (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [transfer, batch, payment_package] → true (subject=transfer).
 50. `next_system`: not known → payment (by `route-payment`).
 51. The agent asked for `ask_system` {"system": "payment"}.
-52. Refused `ask_system` in `TRIAGED`: payment-ask: next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); incoming-ask: args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); recurring-ask: args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); card-ask: args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); access-ask: args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); business-ask: args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register); documents-ask: args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment); request_type not in [register, change, authority] is false (request_type=register).
-53. The agent asked for `submit_request` {}.
-54. Rule `register` (on `submit_request`) fired: state = TRIAGED → true (state=TRIAGED); request_type = register → true (request_type=register); registration_asked absent → true (registration_asked=not known).
-55. State `TRIAGED` → `REQUEST_PENDING` (by `register`).
-56. Rule `do-request` fired: state = REQUEST_PENDING → true (state=REQUEST_PENDING).
-57. Called `register_request` (attempt 1, key banking-006-at-02:do-request:15).
-58. Action in the world: `register_request` {"team": "payment", "about": "transfer"}.
-59. `register_request` found {}.
-60. State `REQUEST_PENDING` → `REQUESTED` (by `do-request`).
-61. The case closed in `REQUESTED`: **submit_request**.
+52. Rule `payment-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = payment → true (args.system=payment); next_system = payment → true (next_system=payment); next_system absent → false (next_system=payment); payment_asked absent → true (payment_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
+53. State `TRIAGED` → `ASK_PENDING` (by `payment-ask`).
+54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
+55. Called `ask_system` (attempt 1, key banking-006-at-02:do-ask:15).
+56. Action in the world: `ask_system` {"system": "payment", "about": "transfer"}.
+57. `ask_system` found {}.
+58. State `ASK_PENDING` → `ASKED` (by `do-ask`).
+59. The case closed in `ASKED`: **ask_system**.
 
 ## Model calls
 
-5 calls, 12156 tokens in, 528 out, 8.859 s, cost $0.0262; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 6910 tokens in, 465 out, 6.319 s, cost $0.0146; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I passed Mira's request to the team that handles disputes and reviews, and the case is now in the REQUESTED state. I haven't established whether the two North Quay Utilities entries for £84.20 are one instruction or two. I also don't know whether the pending one has been stopped or returned.
+> I've asked the payment system to look up the two North Quay Utilities transfers for £84.20. The case is now closed at this step.
 > 
-> My first step was to check the payment records for both entries. The desk refused that check because this case is classed as a request to register, not one to look up. Submitting the request was the step it accepted.
+> The payment system hasn't returned anything yet. So I can't say whether the two entries are one instruction shown twice or two separate instructions. I also can't say whether the pending one has been stopped or returned.
 > 
-> Mira's identity is also still unverified on this chat (the verified fact is False). That is a reason not to say anything more about the payments here.
+> Mira's identity is also still unverified on this chat. Before the bank stops or returns anything, she will need to be verified and give a clear instruction.

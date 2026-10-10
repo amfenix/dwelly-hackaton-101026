@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: authority → authority.
-45. Classifier (claude claude-haiku-5-5) on `subject`: role → role.
+44. Classifier (jev jev-latest) on `request_type`: authority, confidence 0.99 → authority.
+45. Classifier (jev jev-latest) on `subject`: role, confidence 0.74 → role.
 46. `request_type`: not known → authority (by `triage`).
 47. `subject`: not known → role (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -66,12 +66,12 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 11551 tokens in, 626 out, 8.251 s, cost $0.0259; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11352 tokens in, 804 out, 7.29 s, cost $0.0269; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I forwarded Nadia's access request to the company administrator for approval, and the desk accepted it. No access has been granted. The new colleague gets a role only if the administrator approves it.
+> I forwarded the new-user access request to the company administrator for approval, and the desk accepted it. The case is now in the FORWARDED state and closed on our side.
 > 
-> Nadia isn't verified and can't assign roles herself. Her request therefore goes to the administrator and isn't actioned on her say-so.
+> No access has been granted. The request is waiting for the administrator's decision, because Nadia isn't authorised to assign roles herself.
 > 
-> I first tried to look up the administrator record in the business system, but the desk refused that lookup for an authority-type request. I did not get a confirmed administrator record from it. The case is now closed as forwarded.
+> I first tried to look up the administrator record in the business system, but the desk refused that lookup for this type of request. I then forwarded the request directly. I didn't separately confirm who the authorised administrator is. The case's own events say that check was done, but the facts the desk recorded don't show it.

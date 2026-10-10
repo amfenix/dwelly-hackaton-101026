@@ -45,15 +45,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-45. Classifier (claude claude-haiku-5-5) on `subject`: incoming_payment → incoming_payment.
-46. `request_type`: not known → status (by `triage`).
+44. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+45. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+46. `request_type`: not known → question (by `triage`).
 47. `subject`: not known → incoming_payment (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
 49. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
 50. `next_system`: not known → incoming (by `route-incoming`).
 51. The agent asked for `ask_system` {"system": "incoming"}.
-52. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
+52. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 53. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
 54. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 55. Called `ask_system` (attempt 1, key banking-048-at-02:do-ask:15).
@@ -66,10 +66,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 10208 tokens in, 366 out, 6.889 s, cost $0.0215; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9798 tokens in, 589 out, 6.052 s, cost $0.0217; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I asked the incoming-payments system whether the credit has arrived. The system accepted the request, but no answer is in the case yet. A reply was refused because `incoming_found` isn't known, so I haven't written to the customer.
+> I asked the incoming-payments system whether a credit has arrived. The desk accepted the request, so that was the next step. A reply to the customer isn't possible yet because the system hasn't returned an answer. When I tried to reply, the desk refused because `incoming_found` isn't in the case. I'm stopping here, as the task allows one step.
 > 
-> The requester is still unverified. No account details should go back to her until the desk's checks confirm who she is.
+> The requester, Mara Ellison, is still marked as not verified. Any reply should not give out account details until she is verified.

@@ -47,9 +47,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 43. `confirmation`: not known → none (by `read-confirmation`).
 44. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 45. Rule `triage` fired: state = READING → true (state=READING).
-46. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-47. Classifier (claude claude-haiku-5-5) on `subject`: transfer → transfer.
-48. `request_type`: not known → status (by `triage`).
+46. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+47. Classifier (jev jev-latest) on `subject`: transfer, confidence 1.00 → transfer.
+48. `request_type`: not known → question (by `triage`).
 49. `subject`: not known → transfer (by `triage`).
 50. State `READING` → `TRIAGED` (by `triage`).
 51. Rule `asked-payment` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); payment_asked → true (payment_asked=True).
@@ -59,20 +59,19 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. The case closed in `WAITING`: **wait**.
 56. The agent asked for `ask_system` {"system": "payment"}.
 57. Refused `ask_system` in `WAITING`: payment-ask: state = TRIAGED is false (state=WAITING); next_system absent is false (next_system=payment); payment_asked absent is false (payment_asked=True); incoming-ask: state = TRIAGED is false (state=WAITING); args.system = incoming is false (args.system=payment); next_system = incoming is false (next_system=payment); next_system absent is false (next_system=payment); recurring-ask: state = TRIAGED is false (state=WAITING); args.system = recurring is false (args.system=payment); next_system = recurring is false (next_system=payment); next_system absent is false (next_system=payment); card-ask: state = TRIAGED is false (state=WAITING); args.system = card is false (args.system=payment); next_system = card is false (next_system=payment); next_system absent is false (next_system=payment); access-ask: state = TRIAGED is false (state=WAITING); args.system = access is false (args.system=payment); next_system = access is false (next_system=payment); next_system absent is false (next_system=payment); business-ask: state = TRIAGED is false (state=WAITING); args.system = business is false (args.system=payment); next_system = business is false (next_system=payment); next_system absent is false (next_system=payment); documents-ask: state = TRIAGED is false (state=WAITING); args.system = documents is false (args.system=payment); next_system = documents is false (next_system=payment); next_system absent is false (next_system=payment).
-58. The agent asked for `escalate` {"note": "Elise Rowan (unverified, secure chat) asks whether a saved invoice transfer instruction from the secure portal has been submitted, what stage it is at, and whether she must authorise it. No sent confirmation exists and it was not instructed outside the portal. The payment system was flagged as asked, but no answer is in the case. A repeat payment ask was refused because the case is in WAITING, not TRIAGED. Please verify her identity, check the instruction's stage in the payment records, and tell her whether authorisation is needed."}.
+58. The agent asked for `escalate` {"note": "Elise Rowan (unverified, secure chat) saved a transfer instruction for an invoice in the portal and sees no sent confirmation. She asks for its stage and whether she must authorise it. The payment system lookup was refused because the case is in WAITING, not TRIAGED, so the payment record has not been read. Please verify her identity and check the instruction's stage in the payment records."}.
 59. Refused `escalate` in `WAITING`: agent-escalates: state = TRIAGED is false (state=WAITING).
 
 ## Model calls
 
-5 calls, 12473 tokens in, 809 out, 10.673 s, cost $0.0304; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11972 tokens in, 804 out, 7.217 s, cost $0.0282; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I couldn't find out where Elise Rowan's transfer instruction is, so I haven't answered her. The case is stuck in a waiting state, and I'm stopping here.
+> I couldn't check Elise Rowan's saved transfer, and the case is still open and waiting.
 > 
-> - **Payment check:** The payment system was marked as already asked, but no answer is in the case. When I tried to ask it again, the desk refused. It only accepts that request when the case is in the triaged state, and this one is waiting.
-> - **Escalation:** The desk refused this too, for the same reason.
-> - **Case status:** The case is marked final with the outcome "wait". Nothing further can be done from here, so it stays open for a person to pick up.
-> - **Verification:** Elise is not verified. Someone needs to confirm her identity before any details about her payment go back to her.
+> - **Payment lookup:** the desk refused it because the case is in WAITING, not TRIAGED. The payment records haven't been read, so I can't say whether the instruction was submitted or what stage it is at.
+> - **Escalation:** the desk refused this too, for the same reason.
+> - **Authorisation:** I can't yet say whether she needs to authorise it. She is also not verified, so nothing about the payment should be shared with her yet.
 > 
-> What the case does show is that she has no sent confirmation and didn't give the instruction outside the portal. It doesn't show the stage of her instruction or whether she needs to authorise it, so I have nothing to tell her on either point.
+> A person needs to pick this up. They should verify her identity, then check the instruction's stage in the payment records and whether it needs her authorisation.

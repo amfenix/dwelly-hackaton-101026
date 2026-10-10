@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Mara Ellison, verified on a call, asked the desk to review a £4.50 paper statement fee dated 18 June 2025, saying she had chosen electronic statements and disputed how the tariff was applied. The desk read her request, found that the review had already been registered with the team, and closed the case in WAITING because the team's answer is not in yet. Its later attempts to ask the documents system and to submit the request were refused because the case was no longer in the triaged state, so nothing was changed, and a person needs to pick the case up, as nothing in the record confirms her electronic-statement choice or whether the fee will be reversed.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

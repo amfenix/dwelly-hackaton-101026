@@ -48,8 +48,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 44. `confirmation`: not known → none (by `read-confirmation`).
 45. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 46. Rule `triage` fired: state = READING → true (state=READING).
-47. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-48. Classifier (claude claude-haiku-5-5) on `subject`: fee → fee.
+47. Classifier (jev jev-latest) on `request_type`: register, confidence 1.00 → register.
+48. Classifier (jev jev-latest) on `subject`: fee, confidence 1.00 → fee.
 49. `request_type`: not known → register (by `triage`).
 50. `subject`: not known → fee (by `triage`).
 51. State `READING` → `TRIAGED` (by `triage`).
@@ -69,10 +69,11 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 8613 tokens in, 449 out, 7.714 s, cost $0.0191; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 8444 tokens in, 735 out, 6.541 s, cost $0.0204; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've registered Mara's request for H&V to review the £4.50 paper statement fee dated 18 June 2025. The case is now with the team that handles fee disputes.
+> Asking the documents system was refused for a register request, so I'll submit the review request.
+> I've submitted Mara's request for H&V to review the £4.50 paper statement fee dated 18 June 2025. The case is now with the team that handles fee disputes.
 > 
-> I didn't check her statement-delivery preference. The documents lookup was refused because this request is registered as a review, not a records query. So nobody has yet confirmed whether she had chosen electronic statements. The review team will need to check that, and the fee hasn't been changed or refunded.
+> I couldn't check her statement preference first. The desk refused my attempt to query the documents system, because this is a register request. So the desk hasn't confirmed whether she had chosen electronic statements, and nobody should tell her the fee will be changed. The review team will need to check her preference against the fee.

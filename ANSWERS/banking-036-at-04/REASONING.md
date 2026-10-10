@@ -45,8 +45,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 41. `confirmation`: not known → none (by `read-confirmation`).
 42. `instructed_outside_portal`: not known → True (by `read-confirmation`).
 43. Rule `triage` fired: state = READING → true (state=READING).
-44. Classifier (claude claude-haiku-5-5) on `request_type`: change → change.
-45. Classifier (claude claude-haiku-5-5) on `subject`: profile → profile.
+44. Classifier (jev jev-latest) on `request_type`: change, confidence 1.00 → change.
+45. Classifier (jev jev-latest) on `subject`: profile, confidence 1.00 → profile.
 46. `request_type`: not known → change (by `triage`).
 47. `subject`: not known → profile (by `triage`).
 48. State `READING` → `TRIAGED` (by `triage`).
@@ -63,14 +63,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5202 tokens in, 331 out, 5.207 s, cost $0.0112; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4856 tokens in, 425 out, 3.869 s, cost $0.0102; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The case is already closed. Its state is CONFIRMATION_SENT and the outcome is "send_for_confirmation", so a confirmation request has gone to Mara Ellison. I took no further action.
-> 
-> - **Verified:** Mara is verified in the secure portal.
-> - **Confirmation:** The record still shows confirmation as "none". Her portal message in event 4 doesn't change that, because the desk can't treat it as the confirmation itself.
-> - **How to finish:** The address change has to be completed and confirmed through the bank's secure profile process. The bank doesn't change the address from an email or a message alone.
-> 
-> No refusals are on record.
+> The case is already closed. A confirmation request has been sent to Mara Ellison, and the desk shows no refusals. Her identity is verified in the secure portal, but the confirmation fact still reads "none". The address change goes through the secure profile process once she confirms there, so there is nothing more for me to do now. I did not call any further tools.

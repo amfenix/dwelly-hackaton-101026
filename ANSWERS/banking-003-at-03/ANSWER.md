@@ -2,12 +2,6 @@
 
 **Decision: wait**  (final state `WAITING`)
 
-## Summary
-
-Elise Rowan, who is not verified and wrote over secure chat, asked whether her saved transfer instruction had been submitted, what stage it is at, and whether she needs to authorise it. The desk marked the payment system as asked and closed the case as "wait", but no answer from that system is in the record. Its later attempts to ask the payment system again and to escalate were both refused because the case was already in WAITING, so nothing was sent to her and no action was taken. A person still needs to verify her identity, check the instruction's stage in the payment records, and tell her whether she must authorise it.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer
@@ -62,7 +56,7 @@ Facts established:
 - payment_asked: **True**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **status**
+- request_type: **question**
 - next_system: **payment**
 
 Where they came from:

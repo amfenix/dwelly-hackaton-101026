@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Tamsin Rook, a verified customer on a call, asked the desk to have the Direct Debit team investigate a disputed £18.40 charge to Northmere Water Services. The desk found the review had already been registered under reference HV-016, so it refused the further system query and the submit attempt, and sent a reply to the customer confirming the registration. The case closed as replied, and the record lists nothing left for a person to do.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Bank customer

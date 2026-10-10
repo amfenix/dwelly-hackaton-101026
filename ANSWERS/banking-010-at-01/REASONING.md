@@ -43,15 +43,15 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 39. `confirmation`: not known → none (by `read-confirmation`).
 40. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 41. Rule `triage` fired: state = READING → true (state=READING).
-42. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-43. Classifier (claude claude-haiku-5-5) on `subject`: incoming_payment → incoming_payment.
-44. `request_type`: not known → status (by `triage`).
+42. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+43. Classifier (jev jev-latest) on `subject`: incoming_payment, confidence 1.00 → incoming_payment.
+44. `request_type`: not known → question (by `triage`).
 45. `subject`: not known → incoming_payment (by `triage`).
 46. State `READING` → `TRIAGED` (by `triage`).
 47. Rule `route-incoming` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); subject in [incoming_payment] → true (subject=incoming_payment).
 48. `next_system`: not known → incoming (by `route-incoming`).
 49. The agent asked for `ask_system` {"system": "incoming"}.
-50. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=status).
+50. Rule `incoming-ask` (on `ask_system`) fired: state = TRIAGED → true (state=TRIAGED); args.system = incoming → true (args.system=incoming); next_system = incoming → true (next_system=incoming); next_system absent → false (next_system=incoming); incoming_asked absent → true (incoming_asked=not known); request_type not in [register, change, authority] → true (request_type=question).
 51. State `TRIAGED` → `ASK_PENDING` (by `incoming-ask`).
 52. Rule `do-ask` fired: state = ASK_PENDING → true (state=ASK_PENDING).
 53. Called `ask_system` (attempt 1, key banking-010-at-01:do-ask:15).
@@ -59,11 +59,17 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 55. `ask_system` found {}.
 56. State `ASK_PENDING` → `ASKED` (by `do-ask`).
 57. The case closed in `ASKED`: **ask_system**.
+58. The agent asked for `reply` {}.
+59. Refused `reply` in `ASKED`: registration-reply: state = TRIAGED is false (state=ASKED); registration_asked is not known (registration_asked=not known); registered present is false (registered=not known); payment-reply: state = TRIAGED is false (state=ASKED); next_system = payment is false (next_system=incoming); payment_status present is false (payment_status=not known); incoming-reply: state = TRIAGED is false (state=ASKED); incoming_found present is false (incoming_found=not known); recurring-reply: state = TRIAGED is false (state=ASKED); next_system = recurring is false (next_system=incoming); recurring_status present is false (recurring_status=not known); card-reply: state = TRIAGED is false (state=ASKED); next_system = card is false (next_system=incoming); card_status present is false (card_status=not known); access-reply: state = TRIAGED is false (state=ASKED); next_system = access is false (next_system=incoming); access_status present is false (access_status=not known); business-reply: state = TRIAGED is false (state=ASKED); next_system = business is false (next_system=incoming); business_status present is false (business_status=not known); documents-reply: state = TRIAGED is false (state=ASKED); next_system = documents is false (next_system=incoming); document_ready present is false (document_ready=not known).
 
 ## Model calls
 
-4 calls, 7016 tokens in, 182 out, 4.673 s, cost $0.0131; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 9264 tokens in, 623 out, 5.95 s, cost $0.0209; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I checked the incoming payments system for the £42.80 refund from Northmere Home Supplies. The system has accepted the query, but the case doesn't yet hold an answer on whether the refund has arrived. The next step is to reply to you once that answer is available.
+> I couldn't confirm whether the £42.80 refund from Northmere Home Supplies has reached your account.
+> 
+> I asked the incoming payments system, but its answer isn't in the case record. The desk also refused my attempt to reply, because it has no record of whether an incoming payment was found. The case is closed at this step, so I can't make another check.
+> 
+> The only entry on record is your outgoing £42.80 transfer. Nothing shows that Northmere has sent a refund, or that it hasn't. I'm leaving the case for a person to pick up.

@@ -49,9 +49,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 45. `confirmation`: not known → none (by `read-confirmation`).
 46. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 47. Rule `triage` fired: state = READING → true (state=READING).
-48. Classifier (claude claude-haiku-5-5) on `request_type`: status → status.
-49. Classifier (claude claude-haiku-5-5) on `subject`: card → card.
-50. `request_type`: not known → status (by `triage`).
+48. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+49. Classifier (jev jev-latest) on `subject`: card, confidence 1.00 → card.
+50. `request_type`: not known → question (by `triage`).
 51. `subject`: not known → card (by `triage`).
 52. State `READING` → `TRIAGED` (by `triage`).
 53. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
@@ -68,10 +68,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7657 tokens in, 328 out, 5.479 s, cost $0.0159; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7243 tokens in, 543 out, 5.098 s, cost $0.0161; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I sent the reply. The card system's record shows the replacement card as DISPATCHED. The record has no delivery confirmation, so the reply can't say the card has arrived.
+> The card system's record shows the replacement card as DISPATCHED, so I sent the customer a reply based on that. The record only shows dispatch. It has no delivery confirmation, so the reply doesn't say the card has arrived. The case is now closed as replied.
 > 
-> The customer's identity is not verified on this chat. I still replied, since this was only a status check and no change was requested.
+> The customer's identity is not verified on this chat. I still sent the status, because it is a read-only answer to a question and the policy accepted the reply.

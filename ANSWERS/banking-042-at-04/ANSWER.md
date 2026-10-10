@@ -2,12 +2,6 @@
 
 **Decision: reply**  (final state `REPLIED`)
 
-## Summary
-
-Nadia Fenwick, a viewer on secure chat, said she had uploaded batch HV-042 but couldn't see which rows needed attention, and asked for help accessing the report. The desk asked the business, then replied on secure chat that its record shows validation_failed, that this does not establish that a corrected file was received or any payment made, and that no approval or role change was made. The row-level detail was not passed on in the reply, and the case is closed with nothing left for a person.
-
-_Written by a model from the record below; the sections below are the record._
-
 ## What the system received
 
 - Source role: Authorised business user
@@ -72,7 +66,7 @@ Facts established:
 - business_status: **VALIDATION_FAILED**
 - confirmation: **none**
 - instructed_outside_portal: **False**
-- request_type: **document**
+- request_type: **question**
 - next_system: **business**
 
 Where they came from:

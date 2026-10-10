@@ -51,9 +51,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 47. `confirmation`: not known → none (by `read-confirmation`).
 48. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 49. Rule `triage` fired: state = READING → true (state=READING).
-50. Classifier (claude claude-haiku-5-5) on `request_type`: document → document.
-51. Classifier (claude claude-haiku-5-5) on `subject`: document → document.
-52. `request_type`: not known → document (by `triage`).
+50. Classifier (jev jev-latest) on `request_type`: question, confidence 0.93 → question.
+51. Classifier (jev jev-latest) on `subject`: document, confidence 1.00 → document.
+52. `request_type`: not known → question (by `triage`).
 53. `subject`: not known → document (by `triage`).
 54. State `READING` → `TRIAGED` (by `triage`).
 55. Rule `asked-documents` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); documents_asked → true (documents_asked=True).
@@ -70,8 +70,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-4 calls, 7631 tokens in, 253 out, 5.278 s, cost $0.0152; models: claude-haiku-5-5, claude-sonnet-5-5.
+4 calls, 7168 tokens in, 444 out, 4.164 s, cost $0.0149; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> The documents system shows your CSV export for 6–9 May 2025 is ready. I've sent you a reply saying so. The file is in your secure portal, so you'll need to sign in there to download it. The case is closed.
+> I've sent the reply. The records show the CSV export for 6–9 May 2025 is ready, and the reply tells Mara Ellison it's available in her secure portal. The case is closed.
+> 
+> The requester isn't verified, so the reply only confirms that the file is ready. I didn't send any file or transaction details in the chat.

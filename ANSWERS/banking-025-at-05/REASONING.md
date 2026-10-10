@@ -53,9 +53,9 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (claude claude-haiku-5-5) on `request_type`: reason → reason.
-53. Classifier (claude claude-haiku-5-5) on `subject`: card_payment → card_payment.
-54. `request_type`: not known → reason (by `triage`).
+52. Classifier (jev jev-latest) on `request_type`: question, confidence 1.00 → question.
+53. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
+54. `request_type`: not known → question (by `triage`).
 55. `subject`: not known → card_payment (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
 57. Rule `asked-card` fired: state = TRIAGED → true (state=TRIAGED); next_system absent → true (next_system=not known); card_asked → true (card_asked=True).
@@ -72,10 +72,10 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-3 calls, 5224 tokens in, 239 out, 5.069 s, cost $0.0102; models: claude-haiku-5-5, claude-sonnet-5-5.
+3 calls, 4886 tokens in, 450 out, 4.0 s, cost $0.0105; models: claude-sonnet-5-5, jev-1.13.0.
 
 ## What the agent said
 
-> I've sent the reply to Mara. The card records show the £18.40 payment at North Quay Books was declined because her available balance was too low to cover it. The case is now closed.
+> I've sent Mara her reply. The card records show the £18.40 payment at North Quay Books was declined because her available balance was too low to cover it. The case is closed as replied.
 > 
-> The reason text in the record was cut off after "£18.", so I didn't check the full wording. I didn't look at the case status before replying.
+> The reason text in the records was cut off after "£18.", so the reply only says what the record shows. I didn't call `case_status` to see the full wording first.

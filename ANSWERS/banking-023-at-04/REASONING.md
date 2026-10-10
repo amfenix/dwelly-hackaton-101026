@@ -53,8 +53,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 49. `confirmation`: not known → none (by `read-confirmation`).
 50. `instructed_outside_portal`: not known → False (by `read-confirmation`).
 51. Rule `triage` fired: state = READING → true (state=READING).
-52. Classifier (claude claude-haiku-5-5) on `request_type`: register → register.
-53. Classifier (claude claude-haiku-5-5) on `subject`: card_payment → card_payment.
+52. Classifier (jev jev-latest) on `request_type`: register, confidence 0.98 → register.
+53. Classifier (jev jev-latest) on `subject`: card_payment, confidence 1.00 → card_payment.
 54. `request_type`: not known → register (by `triage`).
 55. `subject`: not known → card_payment (by `triage`).
 56. State `READING` → `TRIAGED` (by `triage`).
@@ -75,4 +75,8 @@ Every line below is a record of the run, in order: the agent's requests, the rul
 
 ## Model calls
 
-5 calls, 11791 tokens in, 421 out, 6.93 s, cost $0.0247; models: claude-haiku-5-5, claude-sonnet-5-5.
+5 calls, 11558 tokens in, 592 out, 6.285 s, cost $0.0252; models: claude-sonnet-5-5, jev-1.13.0.
+
+## What the agent said
+
+> Asking isn't allowed for a register request; submit it to the team.
