@@ -49,7 +49,7 @@ _CLARIFIES = re.compile(
 )
 
 
-_WILL_CHECK = re.compile(r"\bI(?:'|’)ll check\b|\bI will check\b|\bwe(?:'|’)ll check\b", re.IGNORECASE)
+_WILL_CHECK = re.compile(r"\b(?:I|we)(?:'|\u2019)ll check\b|\bI will check\b", re.IGNORECASE)
 
 
 def is_system(name: str) -> bool:
