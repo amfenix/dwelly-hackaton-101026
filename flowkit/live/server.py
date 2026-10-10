@@ -206,6 +206,11 @@ def _content(case: dict[str, Any]) -> Any:
     return events, case.get("request"), json.dumps(case.get("details"), sort_keys=True)
 
 
+def classifier_backend(replay: bool) -> str:
+    """Jev, as `desk run` uses and the committed traces record; Claude when a live run has no Jev key."""
+    return "jev" if replay or os.environ.get("TYPESAFE_API_KEY") else "claude"
+
+
 def run(desk: Desk, case: dict[str, Any], mode: str, emit: Emit, *, say: bool = False) -> None:
     """One case to the end, as runner.run_case does, with every step sent to `emit`; with `say`,
     the answer is spoken and sent as audio in the same stream. Nothing is kept afterwards."""
@@ -233,7 +238,9 @@ def run(desk: Desk, case: dict[str, Any], mode: str, emit: Emit, *, say: bool = 
     machine: Case | None = None
     try:
         case_input = setup.adapt_case(dict(case)) if setup.adapt_case else dict(case)
-        services = Services(classifier=make_classifier("claude", recorder), generator=None)
+        services = Services(
+            classifier=make_classifier(classifier_backend(replay is not None), recorder), generator=None
+        )
         machine = Case(setup.policy, setup.functions, case_input, setup.world, services, case_id, journal)
         machine.start()
         agent = Agent(setup.policy, recorder)  # always asked, as in `desk run`: a final state may still move
@@ -387,7 +394,7 @@ class Handler(BaseHTTPRequestHandler):
                     "voice": bool(os.environ.get("ELEVENLABS_API_KEY")),
                     "policy": f"{self.desk.setup.policy.name} v{self.desk.setup.policy.version}",
                     "agent_model": self.desk.setup.policy.agent.model,
-                    "classifier_model": "claude-haiku-5-5",
+                    "classifier_model": "jev-latest" if classifier_backend(False) == "jev" else "claude-haiku-5-5",
                 }
             )
         elif url.path == "/api/cases":
